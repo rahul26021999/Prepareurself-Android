@@ -1,0 +1,2 @@
+rootProject.name='PrepareUrself'
+include ':app'
