@@ -1,4 +1,4 @@
-package com.example.prepareurself;
+package com.example.prepareurself.Activites;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
@@ -8,6 +8,10 @@ import androidx.fragment.app.FragmentPagerAdapter;
 import androidx.viewpager.widget.ViewPager;
 
 import android.os.Bundle;
+
+import com.example.prepareurself.Fragments.LoginFragment;
+import com.example.prepareurself.Fragments.RegisterFragment;
+import com.example.prepareurself.R;
 
 import java.util.ArrayList;
 
