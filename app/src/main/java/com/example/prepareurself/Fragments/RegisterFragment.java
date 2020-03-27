@@ -1,7 +1,5 @@
 package com.example.prepareurself.Fragments;
 
-import android.content.Context;
-import android.media.MediaCodec;
 import android.os.Bundle;
 
 import androidx.fragment.app.Fragment;
@@ -17,17 +15,17 @@ import android.widget.EditText;
 import android.widget.Toast;
 
 import com.example.prepareurself.R;
-
-import org.w3c.dom.Text;
+import com.example.prepareurself.utils.Constants;
+import com.example.prepareurself.utils.Utility;
 
 
 /**
  * A simple {@link Fragment} subclass.
  */
 public class RegisterFragment extends Fragment implements View.OnClickListener {
-    EditText fullname, email, password, retype_password;
-    Button btn_register;
-    String TAG="onclick of register button";
+    private EditText etFullname, etEmail, etPassword, etRetypePassword;
+    private Button btnRegister;
+    private String TAG="onclick of register button";
     public RegisterFragment() {
         // Required empty public constructor
     }
@@ -39,16 +37,15 @@ public class RegisterFragment extends Fragment implements View.OnClickListener {
                              Bundle savedInstanceState) {
 
         View v=inflater.inflate(R.layout.fragment_register, container, false);
-        fullname =v.findViewById(R.id.et_name);
-        email=v.findViewById(R.id.et_email);
-        password=v.findViewById(R.id.et_password);
-        retype_password=v.findViewById(R.id.et_repassword);
-        btn_register=v.findViewById(R.id.btn_register);
-        btn_register.setOnClickListener(this);
-        // Inflate the layout for this fragment
+
+        etFullname =v.findViewById(R.id.et_name);
+        etEmail =v.findViewById(R.id.et_email);
+        etPassword =v.findViewById(R.id.et_password);
+        etRetypePassword =v.findViewById(R.id.et_repassword);
+        btnRegister =v.findViewById(R.id.btn_register);
+        btnRegister.setOnClickListener(this);
+
         return v;
-
-
 
     }
 
@@ -57,38 +54,38 @@ public class RegisterFragment extends Fragment implements View.OnClickListener {
 
         if (v.getId() == R.id.btn_register ){
 
-            String str_password=password.getText().toString().trim();
-            String str_retype_password=retype_password.getText().toString().trim();
-            String str_email=email.getText().toString().trim();
+            String str_password= etPassword.getText().toString().trim();
+            String str_retype_password= etRetypePassword.getText().toString().trim();
+            String str_email= etEmail.getText().toString().trim();
 
-            if(TextUtils.isEmpty(fullname.getText().toString().trim())){
+            if(TextUtils.isEmpty(etFullname.getText().toString().trim())){
                 //Toast.makeText(this.getActivity(),"you did not enter value",Toast.LENGTH_SHORT).show();
-                fullname.setError("field is empty");
+                etFullname.setError(Constants.CANNOTBEEMPTY);
                 return;
             }
-            if(TextUtils.isEmpty(email.getText().toString().trim())){
-                email.setError("field is empty");
+            if(TextUtils.isEmpty(etEmail.getText().toString().trim())){
+                etEmail.setError(Constants.CANNOTBEEMPTY);
                 return;
             }
-            if(!isValidEmail(str_email)){
-                email.setError("enter correct email");
+            if(!Utility.isValidEmail(str_email)){
+                etEmail.setError(Constants.INVALIDEMAIL);
                 return;
             }
-            if(TextUtils.isEmpty(password.getText().toString())){
-                password.setError("field is empty");
+            if(TextUtils.isEmpty(etPassword.getText().toString())){
+                etPassword.setError(Constants.CANNOTBEEMPTY);
                 return;
             }
-            if(TextUtils.isEmpty(retype_password.getText().toString())){
-                retype_password.setError("field is empty");
+            if(TextUtils.isEmpty(etRetypePassword.getText().toString())){
+                etRetypePassword.setError(Constants.CANNOTBEEMPTY);
                 return;
             }
-            if (!TextUtils.isEmpty(password.getText().toString().trim()) && !TextUtils.isEmpty(str_retype_password.trim())){
-                if(password.getText().toString().length()<8) {
-                    password.setError("length is less than 8");
+            if (!TextUtils.isEmpty(etPassword.getText().toString().trim()) && !TextUtils.isEmpty(str_retype_password.trim())){
+                if(etPassword.getText().toString().length()<8) {
+                    etPassword.setError(Constants.PASSWORDMUSTBEATLEAST8CHARACTERS);
                     return;
                 }
                 if (!str_password.equals(str_retype_password)){ ///use .equals functon rather than comparing
-                    Toast.makeText(this.getActivity(),"passwords dont match",Toast.LENGTH_SHORT).show();
+                    etRetypePassword.setError(Constants.PASSWORDNOTMATCHED);
                     return;
                 }
             }
@@ -97,11 +94,7 @@ public class RegisterFragment extends Fragment implements View.OnClickListener {
             Log.d(TAG,"heloo its working");
             //ether u can make evry if with return so next code doesnt work f any if fails to pass or you can put all is statemnts (validating code) in 1 function and then put else for work that has to be done on click of button
 
-
         }
 
-    }
-    public static boolean isValidEmail(CharSequence str_email){
-        return(Patterns.EMAIL_ADDRESS.matcher(str_email).matches());
     }
 }
