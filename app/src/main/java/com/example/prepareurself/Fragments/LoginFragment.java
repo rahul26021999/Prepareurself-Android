@@ -14,15 +14,16 @@ import android.widget.Button;
 import android.widget.EditText;
 
 import com.example.prepareurself.R;
+import com.example.prepareurself.utils.Constants;
 
 
 /**
  * A simple {@link Fragment} subclass.
  */
 public class LoginFragment extends Fragment implements View.OnClickListener {
-    EditText email, password;
-    Button login;
-    String TAG="login button";
+    private EditText etEmail, etPassword;
+    private Button btnLogin;
+    private String TAG="login button";
     public LoginFragment() {
         // Required empty public constructor
     }
@@ -33,33 +34,36 @@ public class LoginFragment extends Fragment implements View.OnClickListener {
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
         View v= inflater.inflate(R.layout.fragment_login, container, false);
-        email=v.findViewById(R.id.et_email);
-        password=v.findViewById(R.id.et_password);
-        login=v.findViewById(R.id.btn_login);
-        login.setOnClickListener(this);
+
+        etEmail =v.findViewById(R.id.et_email);
+        etPassword =v.findViewById(R.id.et_password);
+        btnLogin =v.findViewById(R.id.btn_login);
+        btnLogin.setOnClickListener(this);
+
         return v;
-        }
+    }
 
     @Override
     public void onClick(View v) {
         if (v.getId()==R.id.btn_login){
-            String str_email=email.getText().toString().trim();
-            String str_password=password.getText().toString().trim();
-            if(TextUtils.isEmpty(str_email)){
-                email.setError("field is empty");
+            String strEmail= etEmail.getText().toString().trim();
+            String strPassword= etPassword.getText().toString().trim();
+            if(TextUtils.isEmpty(strEmail)){
+                etEmail.setError(Constants.CANNOTBEEMPTY);
                 return;
             }
-            if(!isValidEmail(str_email)){
-                email.setError("email valid email");
+            if(!isValidEmail(strEmail)){
+                etEmail.setError(Constants.INVALIDEMAIL);
+                return;
             }
-            if(TextUtils.isEmpty(password.getText().toString())){
-                password.setError("field is empty");
+            if(TextUtils.isEmpty(strPassword)){
+                etPassword.setError(Constants.CANNOTBEEMPTY);
                 return;
             }
             Log.d(TAG,"login validation is working fine");
         }
 }
-    public static boolean isValidEmail(CharSequence str_email){
+    private boolean isValidEmail(CharSequence str_email){
         return(Patterns.EMAIL_ADDRESS.matcher(str_email).matches());
     }
 }
