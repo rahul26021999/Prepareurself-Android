@@ -4,6 +4,9 @@
     <color name="colorPrimaryDark">#00695C</color>
     <color name="colorAccent">#FF4081</color>
 
+    <color name="lightred">#ED2E55</color>
+    <color name="lightgreen">#469A0A</color>
+
     <!--quiz-->
     <color name="quiz_background">#27254b</color>
     <color name="quiz_selected_circler_color">#1368f1</color>
