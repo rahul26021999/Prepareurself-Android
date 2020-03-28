@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout android:layout_width="match_parent"
+    android:layout_height="?actionBarSize"
+    android:background="@drawable/quiz_option_background"
+    android:id="@+id/rel_option_quiz"
+    android:paddingStart="15dp"
+    android:paddingEnd="15dp"
+    android:layout_marginTop="10dp"
+    xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="The Science Museum"
+        android:fontFamily="@font/poppins_medium"
+        android:textColor="@color/quiz_question_text_color"
+        android:textSize="20sp"
+        android:id="@+id/tv_quiz_option"
+        android:layout_centerVertical="true"/>
+
+    <RelativeLayout
+        android:layout_width="35dp"
+        android:layout_height="35dp"
+        android:background="@drawable/quiz_option_background"
+        android:layout_alignParentEnd="true"
+        android:layout_centerVertical="true"
+        android:id="@+id/rel_img_option">
+
+        <ImageView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:src="@drawable/ic_action_check_white"
+            android:layout_centerInParent="true"
+            android:id="@+id/img_option"/>
+
+    </RelativeLayout>
+
+</RelativeLayout>
