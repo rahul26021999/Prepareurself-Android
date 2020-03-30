@@ -14,4 +14,8 @@ public class Utility {
         Toast.makeText(context,msg,Toast.LENGTH_SHORT).show();
     }
 
+    public static String[] splitName(Context context, String name){
+        return name.split(" ");
+    }
+
 }
