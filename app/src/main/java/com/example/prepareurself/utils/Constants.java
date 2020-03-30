@@ -15,5 +15,6 @@ public class Constants {
     public static final String USER_USERNAME = "user_username";
     public static final String USERPASSWORD = "user_password";
     public static final String USERID = "user_id";
+    public static final String EMAILALREADYEXSISTS = "Email Already Exist";
 
 }

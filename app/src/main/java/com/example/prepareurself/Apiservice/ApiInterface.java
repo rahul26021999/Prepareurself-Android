@@ -1,5 +1,6 @@
 package com.example.prepareurself.Apiservice;
 
+import com.example.prepareurself.authentication.registration.model.CheckUsernameResponse;
 import com.example.prepareurself.authentication.registration.model.RegisterResponseModel;
 
 import retrofit2.Call;
@@ -14,5 +15,8 @@ public interface ApiInterface {
                                              @Query("username") String username,
                                              @Query("password") String password,
                                              @Query("email") String email);
+
+    @POST("check-username")
+    Call<CheckUsernameResponse> checkUsername(@Query("username") String userName);
 
 }
