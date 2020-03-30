@@ -6,7 +6,6 @@ import android.os.Bundle;
 import androidx.fragment.app.Fragment;
 
 import android.text.TextUtils;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -15,8 +14,8 @@ import android.widget.EditText;
 
 import com.example.prepareurself.Apiservice.ApiRepository;
 import com.example.prepareurself.R;
+import com.example.prepareurself.authentication.registration.model.CheckUsernameResponse;
 import com.example.prepareurself.authentication.registration.model.RegisterResponseModel;
-import com.example.prepareurself.authentication.registration.model.User;
 import com.example.prepareurself.authentication.registration.presenter.RegisterPresenter;
 import com.example.prepareurself.utils.Constants;
 import com.example.prepareurself.utils.PrefManager;
@@ -127,7 +126,7 @@ public class RegisterFragment extends Fragment implements View.OnClickListener, 
 
             String username = etUsername.getText().toString().trim();
 
-            presenter.onRegister(firstName,lastName,username,str_password,str_email);
+            presenter.checkUsernameAndRegister(firstName,lastName,username,str_password,str_email);
         }
 
     }

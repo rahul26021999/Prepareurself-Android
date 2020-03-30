@@ -1,5 +1,6 @@
 package com.example.prepareurself.authentication.registration.view;
 
+import com.example.prepareurself.authentication.registration.model.CheckUsernameResponse;
 import com.example.prepareurself.authentication.registration.model.RegisterResponseModel;
 
 public interface RegisterViewAction {
@@ -8,5 +9,4 @@ public interface RegisterViewAction {
     void onFailure(String errorMsg);
     void showLoader();
     void hideLoader();
-
 }

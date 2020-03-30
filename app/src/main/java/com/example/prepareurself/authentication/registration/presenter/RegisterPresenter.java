@@ -4,9 +4,11 @@ import android.content.Context;
 import android.util.Log;
 
 import com.example.prepareurself.Apiservice.ApiRepository;
+import com.example.prepareurself.authentication.registration.model.CheckUsernameResponse;
 import com.example.prepareurself.authentication.registration.model.RegisterResponseModel;
 import com.example.prepareurself.authentication.registration.view.RegisterViewAction;
 import com.example.prepareurself.utils.Constants;
+import com.example.prepareurself.utils.Utility;
 
 import retrofit2.Call;
 import retrofit2.Callback;
@@ -24,7 +26,6 @@ public class RegisterPresenter {
     }
 
     public void onRegister(String firstname, String lastname, String username, String password, String email){
-        viewAction.showLoader();
         repository.registerUser(firstname, lastname, username, password, email, new Callback() {
             @Override
             public void onResponse(Call call, Response response) {
@@ -37,8 +38,8 @@ public class RegisterPresenter {
                         viewAction.onRegistrationSuccess(responseModel);
                     }else{
                         viewAction.onFailure(Constants.SOMETHINGWENTWRONG);
+                        viewAction.hideLoader();
                     }
-                    viewAction.hideLoader();
                 }else {
                     viewAction.onFailure(Constants.SOMETHINGWENTWRONG);
                     viewAction.hideLoader();
@@ -52,6 +53,36 @@ public class RegisterPresenter {
                 viewAction.onFailure(Constants.SOMETHINGWENTWRONG);
             }
         });
+    }
+
+    public void checkUsernameAndRegister(final String firstname, final String lastname, final String userName, final String password, final String email){
+        viewAction.showLoader();
+        repository.checkUsername(userName, new Callback() {
+            @Override
+            public void onResponse(Call call, Response response) {
+                if (response.body()!=null){
+                    CheckUsernameResponse checkUsernameResponse = (CheckUsernameResponse) response.body();
+//                    viewAction.onCheckUserName(checkUsernameResponse);
+                    if (checkUsernameResponse.error == 2){
+                        Utility.showToast(context,checkUsernameResponse.msg);
+                        viewAction.hideLoader();
+                    }else if (checkUsernameResponse.error == 0){
+                        onRegister(firstname, lastname,userName,password,email);
+                    }
+                    viewAction.hideLoader();
+                }else{
+                    viewAction.onFailure(Constants.SOMETHINGWENTWRONG);
+                    viewAction.hideLoader();
+                }
+            }
+
+            @Override
+            public void onFailure(Call call, Throwable t) {
+                viewAction.hideLoader();
+                viewAction.onFailure(Constants.SOMETHINGWENTWRONG);
+            }
+        });
+
     }
 
 }
