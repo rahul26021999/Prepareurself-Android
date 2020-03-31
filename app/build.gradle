@@ -1,3 +1,17 @@
+buildscript {
+    repositories {
+        maven { url 'https://plugins.gradle.org/m2/'}
+    }
+    dependencies {
+        classpath 'gradle.plugin.com.onesignal:onesignal-gradle-plugin:[0.12.4, 0.99.99]'
+    }
+}
+apply plugin: 'com.onesignal.androidsdk.onesignal-gradle-plugin'
+
+repositories {
+    maven { url 'https://maven.google.com' }
+}
+
 apply plugin: 'com.android.application'
 
 android {
@@ -5,6 +19,13 @@ android {
     buildToolsVersion "29.0.2"
 
     defaultConfig {
+
+        manifestPlaceholders = [
+                onesignal_app_id: 'cfac8b6e-f2a6-405d-8d84-f9b16cc013db',
+                // Project number pulled from dashboard, local value is ignored.
+                onesignal_google_project_number: 'REMOTE'
+        ]
+
         applicationId "com.example.prepareurself"
         minSdkVersion 23
         targetSdkVersion 29
@@ -38,8 +59,11 @@ dependencies {
     implementation 'androidx.recyclerview:recyclerview:1.2.0-alpha01'
 
     //socket.io
-    compile('com.github.nkzawa:socket.io-client:0.5.0') {
+    implementation('com.github.nkzawa:socket.io-client:0.5.0') {
         exclude group: 'org.json', module: 'json'
     }
+
+    //one signal
+    implementation 'com.onesignal:OneSignal:[3.13.0, 3.99.99]'
 
 }
