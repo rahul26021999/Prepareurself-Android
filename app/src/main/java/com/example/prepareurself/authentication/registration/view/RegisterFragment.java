@@ -1,6 +1,7 @@
 package com.example.prepareurself.authentication.registration.view;
 
 import android.app.ProgressDialog;
+import android.content.Intent;
 import android.os.Bundle;
 
 import androidx.fragment.app.Fragment;
@@ -13,6 +14,7 @@ import android.widget.Button;
 import android.widget.EditText;
 
 import com.example.prepareurself.Apiservice.ApiRepository;
+import com.example.prepareurself.Home.HomeActivity;
 import com.example.prepareurself.R;
 import com.example.prepareurself.authentication.registration.model.CheckUsernameResponse;
 import com.example.prepareurself.authentication.registration.model.RegisterResponseModel;
@@ -145,6 +147,9 @@ public class RegisterFragment extends Fragment implements View.OnClickListener, 
         prefManager.saveInteger(Constants.USERID,registerResponseModel.user_data.id);
 
         Utility.showToast(this.getActivity(),"Registration done!");
+        Intent intent=new Intent(getActivity(), HomeActivity.class);
+        startActivity(intent);
+        getActivity().finish();
 
     }
 
