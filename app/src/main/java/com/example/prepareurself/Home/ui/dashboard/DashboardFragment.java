@@ -4,6 +4,7 @@ import androidx.core.content.ContextCompat;
 import androidx.lifecycle.MutableLiveData;
 import androidx.lifecycle.ViewModelProviders;
 
+import android.animation.ObjectAnimator;
 import android.os.Bundle;
 
 import androidx.annotation.NonNull;
@@ -16,9 +17,11 @@ import androidx.viewpager2.widget.ViewPager2;
 
 import android.os.Handler;
 import android.text.Html;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.animation.AccelerateInterpolator;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
@@ -27,9 +30,12 @@ import com.example.prepareurself.Home.model.DashboardRecyclerviewModel;
 import com.example.prepareurself.Home.ui.adapters.CustomPagerAdapter;
 import com.example.prepareurself.Home.ui.adapters.DashboardRvAdapter;
 import com.example.prepareurself.R;
+import com.example.prepareurself.utils.FixedSpeedScroller;
+import com.example.prepareurself.utils.ZoomPageOutTransaformer;
 
 import org.w3c.dom.Text;
 
+import java.lang.reflect.Field;
 import java.util.List;
 import java.util.Observable;
 import java.util.Timer;
@@ -65,27 +71,60 @@ public class DashboardFragment extends Fragment {
 
         customPagerAdapter = new CustomPagerAdapter(this.getActivity(),data);
         viewPager.setAdapter(customPagerAdapter);
-        prepareDots(dotsPosition++);
-        createSlideShow();
+//        prepareDots(dotsPosition++);
+//        createSlideShow();
 
-        viewPager.addOnPageChangeListener(new ViewPager.OnPageChangeListener() {
+        try {
+            Field mScroller;
+            mScroller = ViewPager.class.getDeclaredField("mScroller");
+            mScroller.setAccessible(true);
+            FixedSpeedScroller scroller = new FixedSpeedScroller(viewPager.getContext(), new AccelerateInterpolator());
+            // scroller.setFixedDuration(5000);
+            mScroller.set(viewPager, scroller);
+        } catch (NoSuchFieldException | IllegalArgumentException | IllegalAccessException e) {
+        }
+
+        viewPager.setPageTransformer(true, new ZoomPageOutTransaformer());
+
+        final Handler handler = new Handler();
+        final Runnable update = new Runnable() {
             @Override
-            public void onPageScrolled(int position, float positionOffset, int positionOffsetPixels) {
-
+            public void run() {
+                if (viewPager.getCurrentItem()+1 == Integer.MAX_VALUE){
+                    currentPosition = 0;
+                }
+                Log.d("viewpager_position", currentPosition+"");
+                viewPager.setCurrentItem(currentPosition++,true);
             }
+        };
 
+        Timer swipeTimer = new Timer();
+        swipeTimer.schedule(new TimerTask() {
             @Override
-            public void onPageSelected(int position) {
-                if (dotsPosition>data.length-1)
-                    dotsPosition=0;
-                prepareDots(dotsPosition++);
+            public void run() {
+                handler.post(update);
             }
+        },2500,2500);
 
-            @Override
-            public void onPageScrollStateChanged(int state) {
-
-            }
-        });
+//        viewPager.addOnPageChangeListener(new ViewPager.OnPageChangeListener() {
+//            @Override
+//            public void onPageScrolled(int position, float positionOffset, int positionOffsetPixels) {
+//                if (position+1 == data.length){
+//                    currentPosition = 0;
+//                }else
+//                    currentPosition = position;
+//            }
+//
+//            @Override
+//            public void onPageSelected(int position) {
+//                currentPosition = position;
+//            }
+//
+//            @Override
+//            public void onPageScrollStateChanged(int state) {
+//
+//            }
+//        });
 
         MutableLiveData<List<DashboardRecyclerviewModel>> modelList = mViewModel.getModelList();
         dashboardRvAdapter = new DashboardRvAdapter(modelList.getValue(), this.getActivity());
