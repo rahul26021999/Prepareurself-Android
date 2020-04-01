@@ -15,4 +15,8 @@
     <color name="quiz_option_border_color">#1b446d</color>
     <color name="quiz_question_no_text">#8687b7</color>
 
+    <!--    dashboard-->
+    <color name="active_dots">#F31919</color>
+    <color name="inactive_dots">#C1B9B9</color>
+
 </resources>
