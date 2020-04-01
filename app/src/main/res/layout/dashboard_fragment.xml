@@ -3,16 +3,17 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:fitsSystemWindows="true"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    tools:context=".Home.ui.dashboard.DashboardFragment"
-    android:padding="20dp">
+    tools:context=".Home.ui.dashboard.DashboardFragment">
 
     <androidx.viewpager.widget.ViewPager
         android:layout_width="match_parent"
         android:layout_height="100dp"
         android:id="@+id/viewpager_dashboard"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"/>
+        app:layout_constraintTop_toTopOf="parent"
+        android:layout_margin="20dp"/>
 
     <LinearLayout
         android:layout_width="match_parent"
@@ -21,8 +22,20 @@
         android:orientation="horizontal"
         android:layout_marginTop="10dp"
         app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
         android:gravity="center_horizontal"
         app:layout_constraintTop_toBottomOf="@+id/viewpager_dashboard"/>
 
+
+    <androidx.recyclerview.widget.RecyclerView
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        app:layout_constraintTop_toBottomOf="@+id/dotsContainer"
+        android:layout_marginTop="10dp"
+        android:id="@+id/rv_main_dashboard"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constrainedHeight="true"/>
 
 </androidx.constraintlayout.widget.ConstraintLayout>

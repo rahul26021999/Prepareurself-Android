@@ -17,4 +17,8 @@ public class Constants {
     public static final String USERID = "user_id";
     public static final String EMAILALREADYEXSISTS = "Email Already Exist";
 
+    //IntegerConstants
+    public static final int COURSEVIEWTYPE = 1;
+    public static final int ADDVIEWTYPE = 2;
+
 }

@@ -1,6 +1,7 @@
 package com.example.prepareurself.Home.ui.dashboard;
 
 import androidx.core.content.ContextCompat;
+import androidx.lifecycle.MutableLiveData;
 import androidx.lifecycle.ViewModelProviders;
 
 import android.os.Bundle;
@@ -8,6 +9,8 @@ import android.os.Bundle;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
+import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
 import androidx.viewpager.widget.ViewPager;
 import androidx.viewpager2.widget.ViewPager2;
 
@@ -20,11 +23,15 @@ import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
+import com.example.prepareurself.Home.model.DashboardRecyclerviewModel;
 import com.example.prepareurself.Home.ui.adapters.CustomPagerAdapter;
+import com.example.prepareurself.Home.ui.adapters.DashboardRvAdapter;
 import com.example.prepareurself.R;
 
 import org.w3c.dom.Text;
 
+import java.util.List;
+import java.util.Observable;
 import java.util.Timer;
 import java.util.TimerTask;
 
@@ -38,6 +45,8 @@ public class DashboardFragment extends Fragment {
     String[] data = {"Slide view 1","Slide view 2","Slide view 3","Slide view 4","Slide view 5"};
     private LinearLayout dotsContainer;
     private int dotsPosition = 0;
+    private RecyclerView recyclerView;
+    private DashboardRvAdapter dashboardRvAdapter;
 
     public static DashboardFragment newInstance() {
         return new DashboardFragment();
@@ -46,9 +55,13 @@ public class DashboardFragment extends Fragment {
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container,
                              @Nullable Bundle savedInstanceState) {
+
+        mViewModel = ViewModelProviders.of(this).get(DashboardViewModel.class);
+
         View view = inflater.inflate(R.layout.dashboard_fragment, container, false);
         viewPager = view.findViewById(R.id.viewpager_dashboard);
         dotsContainer = view.findViewById(R.id.dotsContainer);
+        recyclerView = view.findViewById(R.id.rv_main_dashboard);
 
         customPagerAdapter = new CustomPagerAdapter(this.getActivity(),data);
         viewPager.setAdapter(customPagerAdapter);
@@ -74,13 +87,19 @@ public class DashboardFragment extends Fragment {
             }
         });
 
+        MutableLiveData<List<DashboardRecyclerviewModel>> modelList = mViewModel.getModelList();
+        dashboardRvAdapter = new DashboardRvAdapter(modelList.getValue(), this.getActivity());
+        LinearLayoutManager layoutManager = new LinearLayoutManager(this.getActivity(),RecyclerView.VERTICAL,false);
+        recyclerView.setLayoutManager(layoutManager);
+        recyclerView.setAdapter(dashboardRvAdapter);
+
         return view;
     }
 
     @Override
     public void onActivityCreated(@Nullable Bundle savedInstanceState) {
         super.onActivityCreated(savedInstanceState);
-        mViewModel = ViewModelProviders.of(this).get(DashboardViewModel.class);
+
         // TODO: Use the ViewModel
     }
 
