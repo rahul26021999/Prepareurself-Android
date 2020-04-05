@@ -1,10 +1,13 @@
-package com.example.prepareurself.authentication.registration.view;
+package com.example.prepareurself.authentication.ui;
 
 import android.app.ProgressDialog;
 import android.content.Intent;
 import android.os.Bundle;
 
+import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
+import androidx.lifecycle.Observer;
+import androidx.lifecycle.ViewModelProviders;
 
 import android.text.TextUtils;
 import android.util.Patterns;
@@ -14,11 +17,10 @@ import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.EditText;
 
-import com.example.prepareurself.Apiservice.ApiRepository;
 import com.example.prepareurself.Home.HomeActivity;
 import com.example.prepareurself.R;
-import com.example.prepareurself.authentication.registration.model.AuthenticationResponseModel;
-import com.example.prepareurself.authentication.registration.presenter.LoginPresenter;
+import com.example.prepareurself.authentication.data.model.AuthenticationResponseModel;
+import com.example.prepareurself.authentication.viewmodel.AuthViewModel;
 import com.example.prepareurself.utils.Constants;
 import com.example.prepareurself.utils.PrefManager;
 import com.example.prepareurself.utils.Utility;
@@ -27,13 +29,15 @@ import com.example.prepareurself.utils.Utility;
 /**
  * A simple {@link Fragment} subclass.
  */
-public class LoginFragment extends Fragment implements View.OnClickListener, RegisterViewAction {
+public class LoginFragment extends Fragment implements View.OnClickListener{
     private EditText etEmail, etPassword;
     private Button btnLogin;
     private String TAG="login button";
     private ProgressDialog progressDialog;
     private PrefManager prefManager;
-    private LoginPresenter loginPresenter;
+
+    private AuthViewModel viewModel;
+
     public LoginFragment() {
         // Required empty public constructor
     }
@@ -51,9 +55,16 @@ public class LoginFragment extends Fragment implements View.OnClickListener, Reg
         btnLogin.setOnClickListener(this);
         progressDialog=new ProgressDialog(this.getActivity());
         prefManager=new PrefManager(this.getActivity());
-        loginPresenter=new LoginPresenter(this.getActivity(),new ApiRepository(),this);
 
         return v;
+    }
+
+    @Override
+    public void onActivityCreated(@Nullable Bundle savedInstanceState) {
+        super.onActivityCreated(savedInstanceState);
+
+        viewModel = ViewModelProviders.of(this).get(AuthViewModel.class);
+
     }
 
     @Override
@@ -73,7 +84,35 @@ public class LoginFragment extends Fragment implements View.OnClickListener, Reg
                 etPassword.setError(Constants.CANNOTBEEMPTY);
                 return;
             }
-            loginPresenter.loginUser(strEmail,strPassword);
+
+            viewModel.login(strEmail,strPassword);
+
+            showLoader();
+
+            viewModel.getLoginResultMutableLiveData().observe(getActivity(), new Observer<AuthenticationResponseModel>() {
+                @Override
+                public void onChanged(AuthenticationResponseModel authenticationResponseModel) {
+                    if (authenticationResponseModel.getError_code() == 0){
+                        prefManager.saveBoolean(Constants.ISLOGGEDIN, true);
+
+                        prefManager.saveString(Constants.USERFIRSTNAME, authenticationResponseModel.getUser_data().getFirst_name());
+                        prefManager.saveString(Constants.USERLASTNAME, authenticationResponseModel.getUser_data().getLast_name());
+                        prefManager.saveString(Constants.USEREMAIL, authenticationResponseModel.getUser_data().getEmail());
+                        prefManager.saveString(Constants.USERPASSWORD, authenticationResponseModel.getUser_data().getPassword());
+                        prefManager.saveString(Constants.USER_USERNAME, authenticationResponseModel.getUser_data().getUsername());
+                        prefManager.saveInteger(Constants.USERID, authenticationResponseModel.getUser_data().getId());
+
+                        Utility.showToast(getActivity(),"Login done!");
+                        Intent intent=new Intent(getActivity(), HomeActivity.class);
+                        startActivity(intent);
+                        getActivity().finish();
+                    }else{
+                        Utility.showToast(getActivity(),authenticationResponseModel.getMsg());
+                    }
+
+                    hideLoader();
+                }
+            });
         }
 
 }
@@ -81,39 +120,14 @@ public class LoginFragment extends Fragment implements View.OnClickListener, Reg
         return(Patterns.EMAIL_ADDRESS.matcher(str_email).matches());
     }
 
-    @Override
-    public void onRegistrationSuccess(AuthenticationResponseModel authenticationResponseModel) {
-        prefManager.saveBoolean(Constants.ISLOGGEDIN, true);
-        // save the user data to prefmanager also
-
-        prefManager.saveString(Constants.USERFIRSTNAME, authenticationResponseModel.user_data.first_name);
-        prefManager.saveString(Constants.USERLASTNAME, authenticationResponseModel.user_data.last_name);
-        prefManager.saveString(Constants.USEREMAIL, authenticationResponseModel.user_data.email);
-        prefManager.saveString(Constants.USERPASSWORD, authenticationResponseModel.user_data.password);
-        prefManager.saveString(Constants.USER_USERNAME, authenticationResponseModel.user_data.username);
-        prefManager.saveInteger(Constants.USERID, authenticationResponseModel.user_data.id);
-
-        Utility.showToast(this.getActivity(),"Login done!");
-        Intent intent=new Intent(getActivity(), HomeActivity.class);
-        startActivity(intent);
-        getActivity().finish();
-    }
-
-    @Override
-    public void onFailure(String errorMsg) {
-        Utility.showToast(this.getActivity(),errorMsg);
-    }
-
-    @Override
-    public void showLoader() {
+    private void showLoader(){
         if (progressDialog!=null && !progressDialog.isShowing()){
             progressDialog.setMessage("Logging In...");
             progressDialog.show();
         }
     }
 
-    @Override
-    public void hideLoader() {
+    private void hideLoader(){
         if (progressDialog!=null &&  progressDialog.isShowing()){
             progressDialog.hide();
         }
