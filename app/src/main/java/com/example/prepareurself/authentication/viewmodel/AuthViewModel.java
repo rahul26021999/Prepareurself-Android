@@ -1,7 +1,5 @@
 package com.example.prepareurself.authentication.viewmodel;
 
-import android.util.Log;
-
 import androidx.lifecycle.LiveData;
 import androidx.lifecycle.MutableLiveData;
 import androidx.lifecycle.ViewModel;
@@ -11,15 +9,18 @@ import com.example.prepareurself.authentication.data.repository.AuthRepository;
 
 public class AuthViewModel extends ViewModel {
 
-    private MutableLiveData<Boolean> loaderVisibility = new MutableLiveData<>();
-    private LiveData<AuthenticationResponseModel> loginResultMutableLiveData = new MutableLiveData<>();
+    private LiveData<AuthenticationResponseModel> authenticationResponseModelMutableLiveData = new MutableLiveData<>();
 
-    public LiveData<AuthenticationResponseModel> getLoginResultMutableLiveData() {
-        return loginResultMutableLiveData;
+    public LiveData<AuthenticationResponseModel> getAuthenticationResponseModelMutableLiveData() {
+        return authenticationResponseModelMutableLiveData;
     }
 
     public void login(String email, String password){
-        loginResultMutableLiveData = AuthRepository.getInstance().login(email,password);
+        authenticationResponseModelMutableLiveData = AuthRepository.getInstance().login(email,password);
+    }
+
+    public void register(String firstname, String lastname, String email, String password){
+        authenticationResponseModelMutableLiveData = AuthRepository.getInstance().register(firstname, lastname, email, password);
     }
 
 }

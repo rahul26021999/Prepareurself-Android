@@ -48,7 +48,25 @@ public class AuthRepository {
             }
         });
 
-        Log.d("url_debug",apiInterface.loginUser(email,password).request().url().toString());
+        return data;
+    }
+
+    public LiveData<AuthenticationResponseModel> register(String firstName, String lastName, String email, String password){
+
+        final MutableLiveData<AuthenticationResponseModel> data = new MutableLiveData<>();
+
+        apiInterface.registerUser(firstName, lastName, password, email).enqueue(new Callback<AuthenticationResponseModel>() {
+            @Override
+            public void onResponse(Call<AuthenticationResponseModel> call, Response<AuthenticationResponseModel> response) {
+                AuthenticationResponseModel responseModel = response.body();
+                data.setValue(responseModel);
+            }
+
+            @Override
+            public void onFailure(Call<AuthenticationResponseModel> call, Throwable t) {
+                data.setValue(null);
+            }
+        });
 
         return data;
     }
