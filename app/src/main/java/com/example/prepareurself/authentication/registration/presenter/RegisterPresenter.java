@@ -5,7 +5,7 @@ import android.util.Log;
 
 import com.example.prepareurself.Apiservice.ApiRepository;
 import com.example.prepareurself.authentication.registration.model.CheckUsernameResponse;
-import com.example.prepareurself.authentication.registration.model.RegisterResponseModel;
+import com.example.prepareurself.authentication.registration.model.AuthenticationResponseModel;
 import com.example.prepareurself.authentication.registration.view.RegisterViewAction;
 import com.example.prepareurself.utils.Constants;
 import com.example.prepareurself.utils.Utility;
@@ -31,10 +31,10 @@ public class RegisterPresenter {
             public void onResponse(Call call, Response response) {
                 Log.d("register_url",response+"");
                 if (response.body()!=null){
-                    RegisterResponseModel responseModel = (RegisterResponseModel) response.body();
-                    if (responseModel.error == 1){
+                    AuthenticationResponseModel responseModel = (AuthenticationResponseModel) response.body();
+                    if (responseModel.error_code == 1){
                         viewAction.onFailure(Constants.INVALIDUSERDATA);
-                    }else if (responseModel.error == 0){
+                    }else if (responseModel.error_code == 0){
                         viewAction.onRegistrationSuccess(responseModel);
                     }else{
                         viewAction.onFailure(Constants.SOMETHINGWENTWRONG);

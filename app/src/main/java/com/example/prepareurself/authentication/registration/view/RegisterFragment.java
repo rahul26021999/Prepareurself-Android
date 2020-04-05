@@ -16,8 +16,7 @@ import android.widget.EditText;
 import com.example.prepareurself.Apiservice.ApiRepository;
 import com.example.prepareurself.Home.HomeActivity;
 import com.example.prepareurself.R;
-import com.example.prepareurself.authentication.registration.model.CheckUsernameResponse;
-import com.example.prepareurself.authentication.registration.model.RegisterResponseModel;
+import com.example.prepareurself.authentication.registration.model.AuthenticationResponseModel;
 import com.example.prepareurself.authentication.registration.presenter.RegisterPresenter;
 import com.example.prepareurself.utils.Constants;
 import com.example.prepareurself.utils.PrefManager;
@@ -135,16 +134,16 @@ public class RegisterFragment extends Fragment implements View.OnClickListener, 
 
 
     @Override
-    public void onRegistrationSuccess(RegisterResponseModel registerResponseModel) {
+    public void onRegistrationSuccess(AuthenticationResponseModel authenticationResponseModel) {
         prefManager.saveBoolean(Constants.ISLOGGEDIN, true);
         // save the user data to prefmanager also
 
-        prefManager.saveString(Constants.USERFIRSTNAME,registerResponseModel.user_data.first_name);
-        prefManager.saveString(Constants.USERLASTNAME,registerResponseModel.user_data.last_name);
-        prefManager.saveString(Constants.USEREMAIL,registerResponseModel.user_data.email);
-        prefManager.saveString(Constants.USERPASSWORD,registerResponseModel.user_data.password);
-        prefManager.saveString(Constants.USER_USERNAME,registerResponseModel.user_data.username);
-        prefManager.saveInteger(Constants.USERID,registerResponseModel.user_data.id);
+        prefManager.saveString(Constants.USERFIRSTNAME, authenticationResponseModel.user_data.first_name);
+        prefManager.saveString(Constants.USERLASTNAME, authenticationResponseModel.user_data.last_name);
+        prefManager.saveString(Constants.USEREMAIL, authenticationResponseModel.user_data.email);
+        prefManager.saveString(Constants.USERPASSWORD, authenticationResponseModel.user_data.password);
+        prefManager.saveString(Constants.USER_USERNAME, authenticationResponseModel.user_data.username);
+        prefManager.saveInteger(Constants.USERID, authenticationResponseModel.user_data.id);
 
         Utility.showToast(this.getActivity(),"Registration done!");
         Intent intent=new Intent(getActivity(), HomeActivity.class);
@@ -155,6 +154,7 @@ public class RegisterFragment extends Fragment implements View.OnClickListener, 
 
     @Override
     public void onFailure(String errorMsg) {
+
         Utility.showToast(this.getActivity(),errorMsg);
     }
 

@@ -6,7 +6,7 @@ import androidx.viewpager.widget.ViewPager;
 import android.content.Intent;
 import android.os.Bundle;
 
-import com.example.prepareurself.Fragments.LoginFragment;
+import com.example.prepareurself.authentication.registration.view.LoginFragment;
 import com.example.prepareurself.Home.HomeActivity;
 import com.example.prepareurself.authentication.registration.view.RegisterFragment;
 import com.example.prepareurself.R;

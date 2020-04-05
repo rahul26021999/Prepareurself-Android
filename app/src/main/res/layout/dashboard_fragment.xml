@@ -6,8 +6,6 @@
     android:fitsSystemWindows="true"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     tools:context=".Home.ui.dashboard.DashboardFragment">
-    tools:context=".Home.ui.dashboard.DashboardFragment"
-    android:padding="10dp">
 
     <androidx.viewpager.widget.ViewPager
         android:layout_width="match_parent"

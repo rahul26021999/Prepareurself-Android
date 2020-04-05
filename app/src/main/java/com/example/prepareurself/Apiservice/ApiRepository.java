@@ -19,5 +19,8 @@ public class ApiRepository {
     public void checkUsername(String userName, Callback callback){
         apiInterface.checkUsername(userName).enqueue(callback);
     }
+    public  void  loginUser(String email, String password, Callback callback){
+        apiInterface.loginUser(email,password).enqueue(callback);
+    }
 
 }
