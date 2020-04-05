@@ -56,7 +56,8 @@
         android:inputType="text"
         android:fontFamily="@font/roboto_regular"
         android:background="@drawable/et_custom"
-        android:textSize="15sp" />
+        android:textSize="15sp"
+        android:visibility="gone"/>
 
     <EditText
         android:id="@+id/et_email"

@@ -4,7 +4,10 @@ import android.app.ProgressDialog;
 import android.content.Intent;
 import android.os.Bundle;
 
+import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
+import androidx.lifecycle.Observer;
+import androidx.lifecycle.ViewModelProviders;
 
 import android.text.TextUtils;
 import android.view.LayoutInflater;
@@ -13,12 +16,10 @@ import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.EditText;
 
-import com.example.prepareurself.Apiservice.ApiRepository;
 import com.example.prepareurself.Home.HomeActivity;
 import com.example.prepareurself.R;
 import com.example.prepareurself.authentication.data.model.AuthenticationResponseModel;
-import com.example.prepareurself.authentication.registration.presenter.RegisterPresenter;
-import com.example.prepareurself.authentication.registration.view.RegisterViewAction;
+import com.example.prepareurself.authentication.viewmodel.AuthViewModel;
 import com.example.prepareurself.utils.Constants;
 import com.example.prepareurself.utils.PrefManager;
 import com.example.prepareurself.utils.Utility;
@@ -27,13 +28,14 @@ import com.example.prepareurself.utils.Utility;
 /**
  * A simple {@link Fragment} subclass.
  */
-public class RegisterFragment extends Fragment implements View.OnClickListener, RegisterViewAction {
-    private EditText etFullname, etEmail, etPassword, etRetypePassword, etUsername;
+public class RegisterFragment extends Fragment implements View.OnClickListener {
+    private EditText etFullname, etEmail, etPassword, etRetypePassword;
     private Button btnRegister;
     private String TAG="onclick of register button";
-    private RegisterPresenter presenter;
     private ProgressDialog dialog;
     private PrefManager prefManager;
+    private AuthViewModel viewModel;
+
     public RegisterFragment() {
         // Required empty public constructor
     }
@@ -51,15 +53,19 @@ public class RegisterFragment extends Fragment implements View.OnClickListener, 
         etPassword =v.findViewById(R.id.et_password);
         etRetypePassword =v.findViewById(R.id.et_repassword);
         btnRegister =v.findViewById(R.id.btn_register);
-        etUsername = v.findViewById(R.id.et_username);
         btnRegister.setOnClickListener(this);
 
         prefManager = new PrefManager(this.getActivity());
         dialog = new ProgressDialog(this.getActivity());
-        presenter = new RegisterPresenter(this.getActivity(),this,new ApiRepository());
-
+     
         return v;
 
+    }
+
+    @Override
+    public void onActivityCreated(@Nullable Bundle savedInstanceState) {
+        super.onActivityCreated(savedInstanceState);
+        viewModel = ViewModelProviders.of(this).get(AuthViewModel.class);
     }
 
     @Override
@@ -74,11 +80,6 @@ public class RegisterFragment extends Fragment implements View.OnClickListener, 
             if(TextUtils.isEmpty(etFullname.getText().toString().trim())){
                 //Toast.makeText(this.getActivity(),"you did not enter value",Toast.LENGTH_SHORT).show();
                 etFullname.setError(Constants.CANNOTBEEMPTY);
-                return;
-            }
-            if(TextUtils.isEmpty(etUsername.getText().toString().trim())){
-                //Toast.makeText(this.getActivity(),"you did not enter value",Toast.LENGTH_SHORT).show();
-                etUsername.setError(Constants.CANNOTBEEMPTY);
                 return;
             }
             if(TextUtils.isEmpty(etEmail.getText().toString().trim())){
@@ -126,50 +127,55 @@ public class RegisterFragment extends Fragment implements View.OnClickListener, 
                 }
             }
 
-            String username = etUsername.getText().toString().trim();
+            viewModel.register(firstName, lastName, str_email, str_password);
+            
+            showLoader();
+            
+            viewModel.getAuthenticationResponseModelMutableLiveData().observe(getActivity(), new Observer<AuthenticationResponseModel>() {
+                @Override
+                public void onChanged(AuthenticationResponseModel authenticationResponseModel) {
+                    if (authenticationResponseModel!=null){
+                        if (authenticationResponseModel.getError_code() == 1){
+                            Utility.showToast(getActivity(),Constants.INVALIDUSERDATA);
+                        }else if (authenticationResponseModel.getError_code() == 0){
+                            prefManager.saveBoolean(Constants.ISLOGGEDIN, true);
 
-            presenter.checkUsernameAndRegister(firstName,lastName,username,str_password,str_email);
+                            prefManager.saveString(Constants.USERFIRSTNAME, authenticationResponseModel.getUser_data().getFirst_name());
+                            prefManager.saveString(Constants.USERLASTNAME, authenticationResponseModel.getUser_data().getLast_name());
+                            prefManager.saveString(Constants.USEREMAIL, authenticationResponseModel.getUser_data().getEmail());
+                            prefManager.saveString(Constants.USERPASSWORD, authenticationResponseModel.getUser_data().getPassword());
+                            prefManager.saveString(Constants.USER_USERNAME, authenticationResponseModel.getUser_data().getUsername());
+                            prefManager.saveInteger(Constants.USERID, authenticationResponseModel.getUser_data().getId());
+
+                            Utility.showToast(getActivity(),"Registration done!");
+                            Intent intent=new Intent(getActivity(), HomeActivity.class);
+                            startActivity(intent);
+                            getActivity().finish();
+                        }else{
+                            Utility.showToast(getActivity(),Constants.SOMETHINGWENTWRONG);
+                        }
+                    }else{
+                        Utility.showToast(getActivity(),Constants.SOMETHINGWENTWRONG);
+                    }
+                    
+                    hideLoader();
+                }
+            });
+
         }
 
     }
+    
 
-
-    @Override
-    public void onRegistrationSuccess(AuthenticationResponseModel authenticationResponseModel) {
-        prefManager.saveBoolean(Constants.ISLOGGEDIN, true);
-        // save the user data to prefmanager also
-
-        prefManager.saveString(Constants.USERFIRSTNAME, authenticationResponseModel.getUser_data().getFirst_name());
-        prefManager.saveString(Constants.USERLASTNAME, authenticationResponseModel.getUser_data().getLast_name());
-        prefManager.saveString(Constants.USEREMAIL, authenticationResponseModel.getUser_data().getEmail());
-        prefManager.saveString(Constants.USERPASSWORD, authenticationResponseModel.getUser_data().getPassword());
-        prefManager.saveString(Constants.USER_USERNAME, authenticationResponseModel.getUser_data().getUsername());
-        prefManager.saveInteger(Constants.USERID, authenticationResponseModel.getUser_data().getId());
-
-        Utility.showToast(this.getActivity(),"Registration done!");
-        Intent intent=new Intent(getActivity(), HomeActivity.class);
-        startActivity(intent);
-        getActivity().finish();
-
-    }
-
-    @Override
-    public void onFailure(String errorMsg) {
-
-        Utility.showToast(this.getActivity(),errorMsg);
-    }
-
-    @Override
-    public void showLoader() {
+    private void showLoader(){
         if (dialog!=null && !dialog.isShowing()){
             dialog.setMessage("User is being created...");
             dialog.show();
         }
     }
 
-    @Override
-    public void hideLoader() {
-        if (dialog!=null && dialog.isShowing()){
+    private void hideLoader(){
+        if (dialog!=null &&  dialog.isShowing()){
             dialog.hide();
         }
     }
