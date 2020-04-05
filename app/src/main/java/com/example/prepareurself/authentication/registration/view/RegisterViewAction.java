@@ -1,6 +1,6 @@
 package com.example.prepareurself.authentication.registration.view;
 
-import com.example.prepareurself.authentication.registration.model.AuthenticationResponseModel;
+import com.example.prepareurself.authentication.data.model.AuthenticationResponseModel;
 
 public interface RegisterViewAction {
 

@@ -1,4 +1,4 @@
-package com.example.prepareurself.authentication.registration.view;
+package com.example.prepareurself.authentication.ui;
 
 import android.app.ProgressDialog;
 import android.content.Intent;
@@ -16,8 +16,9 @@ import android.widget.EditText;
 import com.example.prepareurself.Apiservice.ApiRepository;
 import com.example.prepareurself.Home.HomeActivity;
 import com.example.prepareurself.R;
-import com.example.prepareurself.authentication.registration.model.AuthenticationResponseModel;
+import com.example.prepareurself.authentication.data.model.AuthenticationResponseModel;
 import com.example.prepareurself.authentication.registration.presenter.RegisterPresenter;
+import com.example.prepareurself.authentication.registration.view.RegisterViewAction;
 import com.example.prepareurself.utils.Constants;
 import com.example.prepareurself.utils.PrefManager;
 import com.example.prepareurself.utils.Utility;
@@ -138,12 +139,12 @@ public class RegisterFragment extends Fragment implements View.OnClickListener, 
         prefManager.saveBoolean(Constants.ISLOGGEDIN, true);
         // save the user data to prefmanager also
 
-        prefManager.saveString(Constants.USERFIRSTNAME, authenticationResponseModel.user_data.first_name);
-        prefManager.saveString(Constants.USERLASTNAME, authenticationResponseModel.user_data.last_name);
-        prefManager.saveString(Constants.USEREMAIL, authenticationResponseModel.user_data.email);
-        prefManager.saveString(Constants.USERPASSWORD, authenticationResponseModel.user_data.password);
-        prefManager.saveString(Constants.USER_USERNAME, authenticationResponseModel.user_data.username);
-        prefManager.saveInteger(Constants.USERID, authenticationResponseModel.user_data.id);
+        prefManager.saveString(Constants.USERFIRSTNAME, authenticationResponseModel.getUser_data().getFirst_name());
+        prefManager.saveString(Constants.USERLASTNAME, authenticationResponseModel.getUser_data().getLast_name());
+        prefManager.saveString(Constants.USEREMAIL, authenticationResponseModel.getUser_data().getEmail());
+        prefManager.saveString(Constants.USERPASSWORD, authenticationResponseModel.getUser_data().getPassword());
+        prefManager.saveString(Constants.USER_USERNAME, authenticationResponseModel.getUser_data().getUsername());
+        prefManager.saveInteger(Constants.USERID, authenticationResponseModel.getUser_data().getId());
 
         Utility.showToast(this.getActivity(),"Registration done!");
         Intent intent=new Intent(getActivity(), HomeActivity.class);

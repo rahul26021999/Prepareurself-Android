@@ -1,7 +1,7 @@
 package com.example.prepareurself.Apiservice;
 
 import com.example.prepareurself.authentication.registration.model.CheckUsernameResponse;
-import com.example.prepareurself.authentication.registration.model.AuthenticationResponseModel;
+import com.example.prepareurself.authentication.data.model.AuthenticationResponseModel;
 
 import retrofit2.Call;
 import retrofit2.http.POST;
