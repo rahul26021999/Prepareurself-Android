@@ -3,7 +3,7 @@ package com.example.prepareurself.authentication.data.model;
 public class AuthenticationResponseModel {
     private int error_code;
     private String msg;
-    private User user_data;
+    private UserModel user_data;
 
     public AuthenticationResponseModel() {
     }
@@ -24,11 +24,11 @@ public class AuthenticationResponseModel {
         this.msg = msg;
     }
 
-    public User getUser_data() {
+    public UserModel getUser_data() {
         return user_data;
     }
 
-    public void setUser_data(User user_data) {
+    public void setUser_data(UserModel user_data) {
         this.user_data = user_data;
     }
 }
