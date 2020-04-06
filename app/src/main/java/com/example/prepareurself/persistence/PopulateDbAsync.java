@@ -1,6 +1,8 @@
-package com.example.prepareurself.persistence.repository;
+package com.example.prepareurself.persistence;
 
 import android.os.AsyncTask;
+
+import com.example.prepareurself.authentication.data.db.dao.UserRoomDao;
 
 public class PopulateDbAsync extends AsyncTask<Void, Void, Void> {
 

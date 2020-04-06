@@ -135,24 +135,15 @@ public class RegisterFragment extends Fragment implements View.OnClickListener {
                 @Override
                 public void onChanged(AuthenticationResponseModel authenticationResponseModel) {
                     if (authenticationResponseModel!=null){
-                        if (authenticationResponseModel.getError_code() == 1){
-                            Utility.showToast(getActivity(),Constants.INVALIDUSERDATA);
-                        }else if (authenticationResponseModel.getError_code() == 0){
+                        if (authenticationResponseModel.getError_code() == 0){
                             prefManager.saveBoolean(Constants.ISLOGGEDIN, true);
-
-                            prefManager.saveString(Constants.USERFIRSTNAME, authenticationResponseModel.getUser_data().getFirst_name());
-                            prefManager.saveString(Constants.USERLASTNAME, authenticationResponseModel.getUser_data().getLast_name());
-                            prefManager.saveString(Constants.USEREMAIL, authenticationResponseModel.getUser_data().getEmail());
-                            prefManager.saveString(Constants.USERPASSWORD, authenticationResponseModel.getUser_data().getPassword());
-                            prefManager.saveString(Constants.USER_USERNAME, authenticationResponseModel.getUser_data().getUsername());
-                            prefManager.saveInteger(Constants.USERID, authenticationResponseModel.getUser_data().getId());
 
                             Utility.showToast(getActivity(),"Registration done!");
                             Intent intent=new Intent(getActivity(), HomeActivity.class);
                             startActivity(intent);
                             getActivity().finish();
                         }else{
-                            Utility.showToast(getActivity(),Constants.SOMETHINGWENTWRONG);
+                            Utility.showToast(getActivity(),authenticationResponseModel.getMsg());
                         }
                     }else{
                         Utility.showToast(getActivity(),Constants.SOMETHINGWENTWRONG);
