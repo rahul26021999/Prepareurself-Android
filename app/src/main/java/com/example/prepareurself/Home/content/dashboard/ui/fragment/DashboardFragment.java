@@ -3,6 +3,7 @@ package com.example.prepareurself.Home.content.dashboard.ui.fragment;
 import androidx.lifecycle.Observer;
 import androidx.lifecycle.ViewModelProviders;
 
+import android.content.Context;
 import android.os.Bundle;
 
 import androidx.annotation.NonNull;
@@ -35,7 +36,7 @@ import java.util.List;
 import java.util.Timer;
 import java.util.TimerTask;
 
-public class DashboardFragment extends Fragment {
+public class DashboardFragment extends Fragment implements DashboardRvAdapter.DashBoardInteractor {
 
     private DashboardViewModel mViewModel;
     private ViewPager viewPager;
@@ -47,6 +48,13 @@ public class DashboardFragment extends Fragment {
     private int dotsPosition = 0;
     private RecyclerView recyclerView;
     private DashboardRvAdapter dashboardRvAdapter;
+
+    private HomeActivityInteractor listener;
+
+
+    public interface HomeActivityInteractor{
+        void onCourseClicked();
+    }
 
     public static DashboardFragment newInstance() {
         return new DashboardFragment();
@@ -64,14 +72,15 @@ public class DashboardFragment extends Fragment {
         recyclerView = view.findViewById(R.id.rv_main_dashboard);
 
         setUpViewPager();
-
+        dashboardRvAdapter = new DashboardRvAdapter(getActivity(), this);
+        LinearLayoutManager layoutManager = new LinearLayoutManager(getActivity(),RecyclerView.VERTICAL,false);
+        recyclerView.setLayoutManager(layoutManager);
+        recyclerView.setAdapter(dashboardRvAdapter);
         mViewModel.getModelList().observe(getActivity(), new Observer<List<DashboardRecyclerviewModel>>() {
             @Override
             public void onChanged(List<DashboardRecyclerviewModel> dashboardRecyclerviewModels) {
-                dashboardRvAdapter = new DashboardRvAdapter(dashboardRecyclerviewModels, getActivity());
-                LinearLayoutManager layoutManager = new LinearLayoutManager(getActivity(),RecyclerView.VERTICAL,false);
-                recyclerView.setLayoutManager(layoutManager);
-                recyclerView.setAdapter(dashboardRvAdapter);
+                dashboardRvAdapter.setData(dashboardRecyclerviewModels);
+                dashboardRvAdapter.notifyDataSetChanged();
             }
         });
 
@@ -164,4 +173,19 @@ public class DashboardFragment extends Fragment {
 
     }
 
+    @Override
+    public void onCourseCliked() {
+        listener.onCourseClicked();
+    }
+
+    @Override
+    public void onAttach(@NonNull Context context) {
+        super.onAttach(context);
+        try {
+            listener = (HomeActivityInteractor) context;
+        } catch (ClassCastException e) {
+            throw new ClassCastException(context.toString() + " must implement HomeActivityInteractor");
+        }
+
+    }
 }

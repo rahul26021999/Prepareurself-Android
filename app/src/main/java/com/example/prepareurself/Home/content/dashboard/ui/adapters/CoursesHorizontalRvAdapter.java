@@ -17,10 +17,12 @@ public class CoursesHorizontalRvAdapter extends RecyclerView.Adapter<CoursesHori
 
     Context context;
     ArrayList<String> courseNames;
+    private DashboardRvInteractor listener;
 
-    public CoursesHorizontalRvAdapter(Context context, ArrayList<String> courseNames) {
+    public CoursesHorizontalRvAdapter(Context context, ArrayList<String> courseNames, DashboardRvInteractor listener) {
         this.context = context;
         this.courseNames = courseNames;
+        this.listener = listener;
     }
 
     @NonNull
@@ -33,6 +35,12 @@ public class CoursesHorizontalRvAdapter extends RecyclerView.Adapter<CoursesHori
     @Override
     public void onBindViewHolder(@NonNull CoursesHorizontalViewHolder holder, int position) {
         holder.bindView(courseNames.get(position));
+        holder.itemView.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                listener.onCourseClicked();
+            }
+        });
     }
 
     @Override
@@ -52,6 +60,10 @@ public class CoursesHorizontalRvAdapter extends RecyclerView.Adapter<CoursesHori
         public void bindView(String courseName){
             tvCourseName.setText(courseName);
         }
+    }
+
+    public interface DashboardRvInteractor{
+        void onCourseClicked();
     }
 
 }

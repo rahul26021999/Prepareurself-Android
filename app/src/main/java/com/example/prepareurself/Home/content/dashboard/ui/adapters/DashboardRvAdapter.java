@@ -19,14 +19,20 @@ import java.util.List;
 import static com.example.prepareurself.utils.Constants.ADDVIEWTYPE;
 import static com.example.prepareurself.utils.Constants.COURSEVIEWTYPE;
 
-public class DashboardRvAdapter extends RecyclerView.Adapter {
+public class DashboardRvAdapter extends RecyclerView.Adapter implements CoursesHorizontalRvAdapter.DashboardRvInteractor {
 
     private List<DashboardRecyclerviewModel> modelList;
     private Context context;
+    private DashBoardInteractor listener;
 
-    public DashboardRvAdapter(List<DashboardRecyclerviewModel> modelList, Context context) {
-        this.modelList = modelList;
+    public DashboardRvAdapter(Context context, DashBoardInteractor listener) {
+//        this.modelList = modelList;
         this.context = context;
+        this.listener = listener;
+    }
+
+    public void setData(List<DashboardRecyclerviewModel> modelList){
+        this.modelList = modelList;
     }
 
     @Override
@@ -63,7 +69,7 @@ public class DashboardRvAdapter extends RecyclerView.Adapter {
             case COURSEVIEWTYPE :
                 int courseImage = modelList.get(position).getImageResource();
                 ArrayList<String> courses = modelList.get(position).getCourseName();
-                ((CourseViewHolder) holder).bindCoursesView(courseImage,courses);
+                ((CourseViewHolder) holder).bindCoursesView(courseImage,courses, this);
                 break;
             case ADDVIEWTYPE :
                 String adText = modelList.get(position).getAddText();
@@ -90,8 +96,8 @@ public class DashboardRvAdapter extends RecyclerView.Adapter {
             rvCourses = itemView.findViewById(R.id.rv_courses_dashboard);
         }
 
-        public void bindCoursesView(int courseImage, ArrayList<String> courses){
-            CoursesHorizontalRvAdapter adapter = new CoursesHorizontalRvAdapter(context,courses);
+        public void bindCoursesView(int courseImage, ArrayList<String> courses, CoursesHorizontalRvAdapter.DashboardRvInteractor interactor){
+            CoursesHorizontalRvAdapter adapter = new CoursesHorizontalRvAdapter(context,courses, interactor);
             LinearLayoutManager layoutManager = new LinearLayoutManager(context,RecyclerView.HORIZONTAL,false);
             rvCourses.setLayoutManager(layoutManager);
             rvCourses.setAdapter(adapter);
@@ -110,6 +116,15 @@ public class DashboardRvAdapter extends RecyclerView.Adapter {
         public void bindAddView(String adText){
             tvAdText.setText(adText);
         }
+    }
+
+    @Override
+    public void onCourseClicked() {
+        listener.onCourseCliked();
+    }
+
+    public interface DashBoardInteractor{
+        void onCourseCliked();
     }
 
 }
