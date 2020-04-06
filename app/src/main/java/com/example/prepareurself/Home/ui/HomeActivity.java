@@ -1,11 +1,14 @@
 package com.example.prepareurself.Home.ui;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.Menu;
 import android.widget.TextView;
 
+import com.example.prepareurself.Home.content.courses.ui.activity.CoursesActivity;
+import com.example.prepareurself.Home.content.dashboard.ui.fragment.DashboardFragment;
 import com.example.prepareurself.Home.viewmodel.HomeActivityViewModel;
 import com.example.prepareurself.R;
 import com.example.prepareurself.authentication.data.model.UserModel;
@@ -23,7 +26,7 @@ import androidx.drawerlayout.widget.DrawerLayout;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
 
-public class HomeActivity extends AppCompatActivity implements NavigationView.OnNavigationItemSelectedListener {
+public class HomeActivity extends AppCompatActivity implements NavigationView.OnNavigationItemSelectedListener, DashboardFragment.HomeActivityInteractor {
 
     private AppBarConfiguration mAppBarConfiguration;
     private TextView tvNameNavHeader;
@@ -104,6 +107,11 @@ public class HomeActivity extends AppCompatActivity implements NavigationView.On
 
         return true;
 
+    }
+
+    @Override
+    public void onCourseClicked() {
+        startActivity(new Intent(HomeActivity.this, CoursesActivity.class));
     }
 
     @Override
