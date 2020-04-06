@@ -1,19 +1,17 @@
-package com.example.prepareurself.Home.ui.adapters;
+package com.example.prepareurself.Home.content.dashboard.ui.adapters;
 
 import android.content.Context;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
-import com.example.prepareurself.Home.model.DashboardRecyclerviewModel;
+import com.example.prepareurself.Home.content.dashboard.model.DashboardRecyclerviewModel;
 import com.example.prepareurself.R;
-import com.example.prepareurself.utils.Constants;
 
 import java.util.ArrayList;
 import java.util.List;

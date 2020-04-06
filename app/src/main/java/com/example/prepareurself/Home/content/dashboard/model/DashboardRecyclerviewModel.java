@@ -1,4 +1,4 @@
-package com.example.prepareurself.Home.model;
+package com.example.prepareurself.Home.content.dashboard.model;
 
 
 import java.util.ArrayList;

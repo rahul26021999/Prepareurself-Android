@@ -1,10 +1,8 @@
-package com.example.prepareurself.Home.ui.dashboard;
+package com.example.prepareurself.Home.content.dashboard.ui.fragment;
 
-import androidx.core.content.ContextCompat;
-import androidx.lifecycle.MutableLiveData;
+import androidx.lifecycle.Observer;
 import androidx.lifecycle.ViewModelProviders;
 
-import android.animation.ObjectAnimator;
 import android.os.Bundle;
 
 import androidx.annotation.NonNull;
@@ -13,7 +11,6 @@ import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 import androidx.viewpager.widget.ViewPager;
-import androidx.viewpager2.widget.ViewPager2;
 
 import android.os.Handler;
 import android.text.Html;
@@ -22,22 +19,19 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.view.animation.AccelerateInterpolator;
-import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
-import com.example.prepareurself.Home.model.DashboardRecyclerviewModel;
-import com.example.prepareurself.Home.ui.adapters.CustomPagerAdapter;
-import com.example.prepareurself.Home.ui.adapters.DashboardRvAdapter;
+import com.example.prepareurself.Home.content.dashboard.viewmodel.DashboardViewModel;
+import com.example.prepareurself.Home.content.dashboard.model.DashboardRecyclerviewModel;
+import com.example.prepareurself.Home.content.dashboard.ui.adapters.CustomPagerAdapter;
+import com.example.prepareurself.Home.content.dashboard.ui.adapters.DashboardRvAdapter;
 import com.example.prepareurself.R;
 import com.example.prepareurself.utils.FixedSpeedScroller;
 import com.example.prepareurself.utils.ZoomPageOutTransaformer;
 
-import org.w3c.dom.Text;
-
 import java.lang.reflect.Field;
 import java.util.List;
-import java.util.Observable;
 import java.util.Timer;
 import java.util.TimerTask;
 
@@ -69,6 +63,22 @@ public class DashboardFragment extends Fragment {
         dotsContainer = view.findViewById(R.id.dotsContainer);
         recyclerView = view.findViewById(R.id.rv_main_dashboard);
 
+        setUpViewPager();
+
+        mViewModel.getModelList().observe(getActivity(), new Observer<List<DashboardRecyclerviewModel>>() {
+            @Override
+            public void onChanged(List<DashboardRecyclerviewModel> dashboardRecyclerviewModels) {
+                dashboardRvAdapter = new DashboardRvAdapter(dashboardRecyclerviewModels, getActivity());
+                LinearLayoutManager layoutManager = new LinearLayoutManager(getActivity(),RecyclerView.VERTICAL,false);
+                recyclerView.setLayoutManager(layoutManager);
+                recyclerView.setAdapter(dashboardRvAdapter);
+            }
+        });
+
+        return view;
+    }
+
+    private void setUpViewPager() {
         customPagerAdapter = new CustomPagerAdapter(this.getActivity(),data);
         viewPager.setAdapter(customPagerAdapter);
 //        prepareDots(dotsPosition++);
@@ -105,14 +115,6 @@ public class DashboardFragment extends Fragment {
                 handler.post(update);
             }
         },5000,5000);
-
-        MutableLiveData<List<DashboardRecyclerviewModel>> modelList = mViewModel.getModelList();
-        dashboardRvAdapter = new DashboardRvAdapter(modelList.getValue(), this.getActivity());
-        LinearLayoutManager layoutManager = new LinearLayoutManager(this.getActivity(),RecyclerView.VERTICAL,false);
-        recyclerView.setLayoutManager(layoutManager);
-        recyclerView.setAdapter(dashboardRvAdapter);
-
-        return view;
     }
 
     @Override

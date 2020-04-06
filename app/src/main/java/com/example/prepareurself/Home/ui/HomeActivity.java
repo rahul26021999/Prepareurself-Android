@@ -1,4 +1,4 @@
-package com.example.prepareurself.Home;
+package com.example.prepareurself.Home.ui;
 
 import android.os.Bundle;
 import android.view.MenuItem;

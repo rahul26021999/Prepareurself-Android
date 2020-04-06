@@ -10,7 +10,7 @@
         android:layout_height="match_parent"
         android:fitsSystemWindows="true"
         xmlns:app="http://schemas.android.com/apk/res-auto"
-        tools:context=".Home.ui.dashboard.DashboardFragment">
+        tools:context=".Home.content.dashboard.ui.fragment.DashboardFragment">
 
         <androidx.viewpager.widget.ViewPager
             android:layout_width="match_parent"

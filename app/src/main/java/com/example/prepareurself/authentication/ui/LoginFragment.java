@@ -17,7 +17,7 @@ import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.EditText;
 
-import com.example.prepareurself.Home.HomeActivity;
+import com.example.prepareurself.Home.ui.HomeActivity;
 import com.example.prepareurself.R;
 import com.example.prepareurself.authentication.data.model.AuthenticationResponseModel;
 import com.example.prepareurself.authentication.viewmodel.AuthViewModel;

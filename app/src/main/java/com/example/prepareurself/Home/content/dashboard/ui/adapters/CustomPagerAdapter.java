@@ -1,4 +1,4 @@
-package com.example.prepareurself.Home.ui.adapters;
+package com.example.prepareurself.Home.content.dashboard.ui.adapters;
 
 import android.content.Context;
 import android.view.LayoutInflater;
