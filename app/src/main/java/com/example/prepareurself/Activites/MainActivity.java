@@ -7,7 +7,7 @@ import android.content.Intent;
 import android.os.Bundle;
 
 import com.example.prepareurself.authentication.ui.LoginFragment;
-import com.example.prepareurself.Home.HomeActivity;
+import com.example.prepareurself.Home.ui.HomeActivity;
 import com.example.prepareurself.authentication.ui.RegisterFragment;
 import com.example.prepareurself.R;
 import com.example.prepareurself.adapters.AuthenticationPagerAdapter;

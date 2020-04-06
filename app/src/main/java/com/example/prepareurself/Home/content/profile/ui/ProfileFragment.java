@@ -1,4 +1,4 @@
-package com.example.prepareurself.Home.ui.profile;
+package com.example.prepareurself.Home.content.profile.ui;
 
 import androidx.lifecycle.Observer;
 import androidx.lifecycle.ViewModelProviders;
@@ -14,10 +14,9 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
 
+import com.example.prepareurself.Home.content.profile.viewmodel.ProfileViewModel;
 import com.example.prepareurself.R;
 import com.example.prepareurself.authentication.data.model.UserModel;
-
-import org.w3c.dom.Text;
 
 public class ProfileFragment extends Fragment {
 

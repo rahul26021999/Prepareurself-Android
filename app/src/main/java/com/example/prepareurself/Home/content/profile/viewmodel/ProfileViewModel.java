@@ -1,4 +1,4 @@
-package com.example.prepareurself.Home.ui.profile;
+package com.example.prepareurself.Home.content.profile.viewmodel;
 
 import android.app.Application;
 
