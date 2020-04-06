@@ -104,27 +104,7 @@ public class DashboardFragment extends Fragment {
             public void run() {
                 handler.post(update);
             }
-        },2500,2500);
-
-//        viewPager.addOnPageChangeListener(new ViewPager.OnPageChangeListener() {
-//            @Override
-//            public void onPageScrolled(int position, float positionOffset, int positionOffsetPixels) {
-//                if (position+1 == data.length){
-//                    currentPosition = 0;
-//                }else
-//                    currentPosition = position;
-//            }
-//
-//            @Override
-//            public void onPageSelected(int position) {
-//                currentPosition = position;
-//            }
-//
-//            @Override
-//            public void onPageScrollStateChanged(int state) {
-//
-//            }
-//        });
+        },5000,5000);
 
         MutableLiveData<List<DashboardRecyclerviewModel>> modelList = mViewModel.getModelList();
         dashboardRvAdapter = new DashboardRvAdapter(modelList.getValue(), this.getActivity());
