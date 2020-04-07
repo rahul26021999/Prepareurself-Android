@@ -32,6 +32,10 @@
     <string name="login_failed">"Login failed"</string>
     <string name="menu_profile">Profile</string>
 
+
+
+    <string name="error_player">There was an error initializing the YouTubePlayer (%1$s)</string>
+
     <!-- TODO: Remove or change this placeholder text -->
     <string name="hello_blank_fragment">Hello blank fragment</string>
     <string name="title_activity_courses">CoursesActivity</string>

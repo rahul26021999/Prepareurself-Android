@@ -21,9 +21,11 @@ public class VideoResoursesRvAdapter extends RecyclerView.Adapter<VideoResourses
 
     Context context;
     List<VideoResources> videoResources;
+    private VideoResourceInteractor listener;
 
-    public VideoResoursesRvAdapter(Context context) {
+    public VideoResoursesRvAdapter(Context context, VideoResourceInteractor listener) {
         this.context = context;
+        this.listener = listener;
     }
 
     public void setVideoResources(List<VideoResources> videoResources) {
@@ -42,6 +44,12 @@ public class VideoResoursesRvAdapter extends RecyclerView.Adapter<VideoResourses
     public void onBindViewHolder(@NonNull VideoResourcesViewHolder holder, int position) {
         VideoResources v1 = videoResources.get(position);
         holder.bindView(v1);
+        holder.itemView.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                listener.videoClicked();
+            }
+        });
     }
 
     @Override
@@ -70,6 +78,10 @@ public class VideoResoursesRvAdapter extends RecyclerView.Adapter<VideoResourses
                     .into(imageView);
             tvTitle.setText(v1.getVideoTitle());
         }
+    }
+
+    public interface VideoResourceInteractor{
+        void videoClicked();
     }
 
 }

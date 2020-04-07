@@ -3,6 +3,7 @@ package com.example.prepareurself.Home.content.courses.ui.fragments;
 import androidx.lifecycle.Observer;
 import androidx.lifecycle.ViewModelProviders;
 
+import android.content.Intent;
 import android.os.Bundle;
 
 import androidx.annotation.NonNull;
@@ -18,11 +19,12 @@ import android.view.ViewGroup;
 import com.example.prepareurself.Home.content.courses.model.VideoResources;
 import com.example.prepareurself.Home.content.courses.ui.adapter.VideoResoursesRvAdapter;
 import com.example.prepareurself.Home.content.courses.viewmodel.VideoResourceViewModel;
+import com.example.prepareurself.Home.content.courses.youtubevideoplayer.YoutubePlayerActivity;
 import com.example.prepareurself.R;
 
 import java.util.List;
 
-public class VideoResourceFragment extends Fragment {
+public class VideoResourceFragment extends Fragment implements VideoResoursesRvAdapter.VideoResourceInteractor {
 
     private VideoResourceViewModel mViewModel;
     private RecyclerView rvVideoResources;
@@ -47,7 +49,7 @@ public class VideoResourceFragment extends Fragment {
         super.onActivityCreated(savedInstanceState);
         mViewModel = ViewModelProviders.of(this).get(VideoResourceViewModel.class);
 
-        adapter = new VideoResoursesRvAdapter(getActivity());
+        adapter = new VideoResoursesRvAdapter(getActivity(), this);
         LinearLayoutManager layoutManager = new LinearLayoutManager(getActivity(),RecyclerView.VERTICAL,false);
         rvVideoResources.setLayoutManager(layoutManager);
         rvVideoResources.setAdapter(adapter);
@@ -62,4 +64,8 @@ public class VideoResourceFragment extends Fragment {
 
     }
 
+    @Override
+    public void videoClicked() {
+        startActivity(new Intent(getActivity(), YoutubePlayerActivity.class));
+    }
 }
