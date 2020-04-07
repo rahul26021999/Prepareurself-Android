@@ -1,5 +1,6 @@
 package com.example.prepareurself.Home.content.courses.ui.fragments;
 
+import androidx.lifecycle.Observer;
 import androidx.lifecycle.ViewModelProviders;
 
 import android.os.Bundle;
@@ -7,17 +8,25 @@ import android.os.Bundle;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
+import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
 
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
+import com.example.prepareurself.Home.content.courses.model.VideoResources;
+import com.example.prepareurself.Home.content.courses.ui.adapter.VideoResoursesRvAdapter;
 import com.example.prepareurself.Home.content.courses.viewmodel.VideoResourceViewModel;
 import com.example.prepareurself.R;
+
+import java.util.List;
 
 public class VideoResourceFragment extends Fragment {
 
     private VideoResourceViewModel mViewModel;
+    private RecyclerView rvVideoResources;
+    private VideoResoursesRvAdapter adapter;
 
     public static VideoResourceFragment newInstance() {
         return new VideoResourceFragment();
@@ -26,14 +35,31 @@ public class VideoResourceFragment extends Fragment {
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container,
                              @Nullable Bundle savedInstanceState) {
-        return inflater.inflate(R.layout.video_resource_fragment, container, false);
+        View view = inflater.inflate(R.layout.video_resource_fragment, container, false);
+
+        rvVideoResources = view.findViewById(R.id.rv_video_resources);
+
+        return view;
     }
 
     @Override
     public void onActivityCreated(@Nullable Bundle savedInstanceState) {
         super.onActivityCreated(savedInstanceState);
         mViewModel = ViewModelProviders.of(this).get(VideoResourceViewModel.class);
-        // TODO: Use the ViewModel
+
+        adapter = new VideoResoursesRvAdapter(getActivity());
+        LinearLayoutManager layoutManager = new LinearLayoutManager(getActivity(),RecyclerView.VERTICAL,false);
+        rvVideoResources.setLayoutManager(layoutManager);
+        rvVideoResources.setAdapter(adapter);
+
+        mViewModel.getListLiveData().observe(getActivity(), new Observer<List<VideoResources>>() {
+            @Override
+            public void onChanged(List<VideoResources> videoResources) {
+                adapter.setVideoResources(videoResources);
+                adapter.notifyDataSetChanged();
+            }
+        });
+
     }
 
 }
