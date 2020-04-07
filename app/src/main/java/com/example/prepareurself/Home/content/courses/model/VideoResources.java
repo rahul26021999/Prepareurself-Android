@@ -2,9 +2,17 @@ package com.example.prepareurself.Home.content.courses.model;
 
 public class VideoResources {
 
-    private String imageUrl, videoTitle, videoId;
+    private String imageUrl, videoTitle, videoId, videoCode;
 
     public VideoResources() {
+    }
+
+    public String getVideoCode() {
+        return videoCode;
+    }
+
+    public void setVideoCode(String videoCode) {
+        this.videoCode = videoCode;
     }
 
     public String getImageUrl() {

@@ -17,6 +17,9 @@ public class Constants {
     public static final String USERID = "user_id";
     public static final String EMAILALREADYEXSISTS = "Email Already Exist";
 
+
+    public static final String YOUTUBE_PLAYER_API_KEY = "AIzaSyArc8y68czCqQzsaLJL_3X2AaWirUUO5uk";
+
     //IntegerConstants
     public static final int COURSEVIEWTYPE = 1;
     public static final int ADDVIEWTYPE = 2;

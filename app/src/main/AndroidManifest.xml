@@ -13,10 +13,11 @@
         android:supportsRtl="true"
         android:theme="@style/AppTheme"
         android:usesCleartextTraffic="true">
+        <activity android:name=".Home.content.courses.youtubevideoplayer.YoutubePlayerActivity"></activity>
         <activity
             android:name=".Home.content.courses.ui.activity.CoursesActivity"
             android:label="@string/title_activity_courses"
-            android:theme="@style/AppTheme"></activity>
+            android:theme="@style/AppTheme" />
         <activity
             android:name=".ui.login.LoginActivity"
             android:label="@string/title_activity_login" />
