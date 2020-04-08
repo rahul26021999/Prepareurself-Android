@@ -1,4 +1,4 @@
-package com.example.prepareurself.Home.content.courses.ui.adapter;
+package com.example.prepareurself.Home.content.resources.ui.adapter;
 
 import android.content.Context;
 

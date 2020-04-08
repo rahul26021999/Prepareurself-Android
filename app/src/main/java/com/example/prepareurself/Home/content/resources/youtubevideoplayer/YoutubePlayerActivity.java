@@ -1,12 +1,10 @@
-package com.example.prepareurself.Home.content.courses.youtubevideoplayer;
-
-import androidx.appcompat.app.AppCompatActivity;
+package com.example.prepareurself.Home.content.resources.youtubevideoplayer;
 
 import android.content.Intent;
 import android.os.Bundle;
 import android.text.TextUtils;
 
-import com.example.prepareurself.Home.content.courses.model.VideoResources;
+import com.example.prepareurself.Home.content.resources.model.VideoResources;
 import com.example.prepareurself.R;
 import com.example.prepareurself.utils.Constants;
 import com.example.prepareurself.utils.Utility;

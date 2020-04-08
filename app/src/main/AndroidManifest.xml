@@ -13,9 +13,10 @@
         android:supportsRtl="true"
         android:theme="@style/AppTheme"
         android:usesCleartextTraffic="true">
-        <activity android:name=".Home.content.courses.youtubevideoplayer.YoutubePlayerActivity"></activity>
+        <activity android:name=".Home.content.courses.ui.activity.CoursesActivity"></activity>
+        <activity android:name=".Home.content.resources.youtubevideoplayer.YoutubePlayerActivity" />
         <activity
-            android:name=".Home.content.courses.ui.activity.CoursesActivity"
+            android:name=".Home.content.resources.ui.activity.ResourcesActivity"
             android:label="@string/title_activity_courses"
             android:theme="@style/AppTheme" />
         <activity

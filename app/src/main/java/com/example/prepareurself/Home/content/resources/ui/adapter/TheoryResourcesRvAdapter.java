@@ -1,4 +1,4 @@
-package com.example.prepareurself.Home.content.courses.ui.adapter;
+package com.example.prepareurself.Home.content.resources.ui.adapter;
 
 import android.content.Context;
 import android.view.LayoutInflater;
@@ -13,8 +13,6 @@ import androidx.recyclerview.widget.RecyclerView;
 import com.bumptech.glide.Glide;
 import com.example.prepareurself.Home.content.courses.model.TheoryResources;
 import com.example.prepareurself.R;
-
-import org.w3c.dom.Text;
 
 import java.util.List;
 

@@ -1,4 +1,4 @@
-package com.example.prepareurself.Home.content.courses.viewmodel;
+package com.example.prepareurself.Home.content.resources.viewmodel;
 
 import android.app.Application;
 
@@ -51,7 +51,4 @@ public class TheoryResourceViewModel extends AndroidViewModel {
 
         return listMutableLiveData;
     }
-
-
-
 }

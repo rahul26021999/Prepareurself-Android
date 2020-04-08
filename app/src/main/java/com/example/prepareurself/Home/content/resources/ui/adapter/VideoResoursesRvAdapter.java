@@ -1,4 +1,4 @@
-package com.example.prepareurself.Home.content.courses.ui.adapter;
+package com.example.prepareurself.Home.content.resources.ui.adapter;
 
 import android.content.Context;
 import android.view.LayoutInflater;
@@ -11,7 +11,7 @@ import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.bumptech.glide.Glide;
-import com.example.prepareurself.Home.content.courses.model.VideoResources;
+import com.example.prepareurself.Home.content.resources.model.VideoResources;
 import com.example.prepareurself.R;
 import com.example.prepareurself.utils.Constants;
 import com.example.prepareurself.utils.Utility;

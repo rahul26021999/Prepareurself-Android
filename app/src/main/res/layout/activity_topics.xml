@@ -4,24 +4,24 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".Home.content.resources.ui.activity.ResourcesActivity">
+    tools:context=".Home.content.courses.ui.activity.CoursesActivity">
 
     <com.google.android.material.tabs.TabLayout
-        android:id="@+id/tabs_topics"
+        android:id="@+id/tabs_courses"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         style="@style/TabTextStyle"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"/>
 
     <androidx.viewpager.widget.ViewPager
-        android:id="@+id/view_pager_resources"
+        android:id="@+id/view_pager_courses"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/tabs_topics"
+        app:layout_constraintBottom_toTopOf="@+id/tabs_courses"
         app:layout_behavior="@string/appbar_scrolling_view_behavior" />
 
 
