@@ -12,27 +12,27 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
-import com.example.prepareurself.Home.content.courses.viewmodel.TheoryResourceViewModel;
+import com.example.prepareurself.Home.content.courses.viewmodels.ResourcesViewModel;
 import com.example.prepareurself.R;
 
-public class TheoryResourceFragment extends Fragment {
+public class ResourcesFragment extends Fragment {
 
-    private TheoryResourceViewModel mViewModel;
+    private ResourcesViewModel mViewModel;
 
-    public static TheoryResourceFragment newInstance() {
-        return new TheoryResourceFragment();
+    public static ResourcesFragment newInstance() {
+        return new ResourcesFragment();
     }
 
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container,
                              @Nullable Bundle savedInstanceState) {
-        return inflater.inflate(R.layout.theory_resource_fragment, container, false);
+        return inflater.inflate(R.layout.resources_fragment, container, false);
     }
 
     @Override
     public void onActivityCreated(@Nullable Bundle savedInstanceState) {
         super.onActivityCreated(savedInstanceState);
-        mViewModel = ViewModelProviders.of(this).get(TheoryResourceViewModel.class);
+        mViewModel = ViewModelProviders.of(this).get(ResourcesViewModel.class);
         // TODO: Use the ViewModel
     }
 

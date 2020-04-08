@@ -1,4 +1,4 @@
-package com.example.prepareurself.Home.content.courses.ui.fragments;
+package com.example.prepareurself.Home.content.resources.ui.fragments;
 
 import androidx.lifecycle.Observer;
 import androidx.lifecycle.ViewModelProviders;
@@ -16,10 +16,10 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
-import com.example.prepareurself.Home.content.courses.model.VideoResources;
-import com.example.prepareurself.Home.content.courses.ui.adapter.VideoResoursesRvAdapter;
-import com.example.prepareurself.Home.content.courses.viewmodel.VideoResourceViewModel;
-import com.example.prepareurself.Home.content.courses.youtubevideoplayer.YoutubePlayerActivity;
+import com.example.prepareurself.Home.content.resources.model.VideoResources;
+import com.example.prepareurself.Home.content.resources.ui.adapter.VideoResoursesRvAdapter;
+import com.example.prepareurself.Home.content.resources.viewmodel.VideoResourceViewModel;
+import com.example.prepareurself.Home.content.resources.youtubevideoplayer.YoutubePlayerActivity;
 import com.example.prepareurself.R;
 
 import java.util.List;

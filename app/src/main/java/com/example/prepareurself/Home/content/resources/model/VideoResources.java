@@ -1,4 +1,4 @@
-package com.example.prepareurself.Home.content.courses.model;
+package com.example.prepareurself.Home.content.resources.model;
 
 public class VideoResources {
 

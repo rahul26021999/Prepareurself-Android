@@ -1,4 +1,4 @@
-package com.example.prepareurself.Home.content.courses.viewmodel;
+package com.example.prepareurself.Home.content.resources.viewmodel;
 
 import androidx.lifecycle.ViewModel;
 

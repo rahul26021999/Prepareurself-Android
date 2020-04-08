@@ -1,4 +1,4 @@
-package com.example.prepareurself.Home.content.courses.viewmodel;
+package com.example.prepareurself.Home.content.resources.viewmodel;
 
 import android.app.Application;
 
@@ -7,7 +7,7 @@ import androidx.lifecycle.AndroidViewModel;
 import androidx.lifecycle.LiveData;
 import androidx.lifecycle.MutableLiveData;
 
-import com.example.prepareurself.Home.content.courses.model.VideoResources;
+import com.example.prepareurself.Home.content.resources.model.VideoResources;
 
 import java.util.ArrayList;
 import java.util.List;
