@@ -13,6 +13,11 @@ import androidx.recyclerview.widget.RecyclerView;
 import com.bumptech.glide.Glide;
 import com.example.prepareurself.Home.content.resources.model.VideoResources;
 import com.example.prepareurself.R;
+import com.example.prepareurself.utils.Constants;
+import com.example.prepareurself.utils.Utility;
+import com.google.android.youtube.player.YouTubeInitializationResult;
+import com.google.android.youtube.player.YouTubeThumbnailLoader;
+import com.google.android.youtube.player.YouTubeThumbnailView;
 
 import java.util.List;
 
@@ -42,14 +47,16 @@ public class VideoResoursesRvAdapter extends RecyclerView.Adapter<VideoResourses
 
     @Override
     public void onBindViewHolder(@NonNull VideoResourcesViewHolder holder, int position) {
-        VideoResources v1 = videoResources.get(position);
+        final VideoResources v1 = videoResources.get(position);
         holder.bindView(v1);
         holder.itemView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                listener.videoClicked();
+                listener.videoClicked(v1);
             }
         });
+
+
     }
 
     @Override
@@ -59,29 +66,51 @@ public class VideoResoursesRvAdapter extends RecyclerView.Adapter<VideoResourses
 
     class VideoResourcesViewHolder extends RecyclerView.ViewHolder{
 
-        ImageView imageView;
+        YouTubeThumbnailView imageView;
         TextView tvTitle;
+        View bottomView;
 
         public VideoResourcesViewHolder(@NonNull View itemView) {
             super(itemView);
 
             imageView = itemView.findViewById(R.id.img_video_resources_adapter);
             tvTitle = itemView.findViewById(R.id.tv_video_resources_title);
-
         }
 
-        public void bindView(VideoResources v1) {
-            Glide.with(context)
-                    .load(v1.getImageUrl())
-                    .centerCrop()
-                    .placeholder(R.drawable.person_placeholder)
-                    .into(imageView);
+        public void bindView(final VideoResources v1) {
+
+            imageView.initialize(Constants.YOUTUBE_PLAYER_API_KEY, new YouTubeThumbnailView.OnInitializedListener() {
+                @Override
+                public void onInitializationSuccess(YouTubeThumbnailView youTubeThumbnailView, final YouTubeThumbnailLoader youTubeThumbnailLoader) {
+                    youTubeThumbnailLoader.setVideo(v1.getVideoCode());
+
+                    youTubeThumbnailLoader.setOnThumbnailLoadedListener(new YouTubeThumbnailLoader.OnThumbnailLoadedListener() {
+                        @Override
+                        public void onThumbnailLoaded(YouTubeThumbnailView youTubeThumbnailView, String s) {
+                            youTubeThumbnailLoader.release();
+                        }
+
+                        @Override
+                        public void onThumbnailError(YouTubeThumbnailView youTubeThumbnailView, YouTubeThumbnailLoader.ErrorReason errorReason) {
+                            Utility.showToast(context,Constants.UNABLETOLOADVIDEOSATTHEMOMENT);
+                        }
+                    });
+
+                }
+
+                @Override
+                public void onInitializationFailure(YouTubeThumbnailView youTubeThumbnailView, YouTubeInitializationResult youTubeInitializationResult) {
+                    String errorMessage = String.format(
+                            context.getString(R.string.error_player), youTubeInitializationResult.toString());
+                    Utility.showToast(context,errorMessage);
+                }
+            });
             tvTitle.setText(v1.getVideoTitle());
         }
     }
 
     public interface VideoResourceInteractor{
-        void videoClicked();
+        void videoClicked(VideoResources videoResources);
     }
 
 }

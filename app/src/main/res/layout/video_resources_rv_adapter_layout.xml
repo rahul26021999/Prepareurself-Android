@@ -1,22 +1,27 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.cardview.widget.CardView xmlns:android="http://schemas.android.com/apk/res/android"
-    android:layout_width="match_parent"
-    android:layout_height="200dp"
+<androidx.cardview.widget.CardView android:layout_width="match_parent"
+    android:layout_height="wrap_content"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    android:layout_margin="10dp">
+    app:layout_constraintStart_toStartOf="parent"
+    android:id="@+id/card_video_resource"
+    app:layout_constraintTop_toTopOf="parent"
+    app:layout_constraintEnd_toEndOf="parent"
+    android:layout_marginBottom="10dp"
+    xmlns:android="http://schemas.android.com/apk/res/android">
 
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
-        android:layout_height="match_parent">
+        android:layout_height="wrap_content">
 
-        <ImageView
+        <com.google.android.youtube.player.YouTubeThumbnailView
             android:layout_width="match_parent"
-            android:layout_height="150dp"
+            android:layout_height="200dp"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             android:id="@+id/img_video_resources_adapter"
-            android:src="@drawable/side_nav_bar"/>
+            android:background="@android:color/darker_gray"
+            android:scaleType="centerCrop"/>
 
         <TextView
             android:layout_width="wrap_content"
@@ -25,10 +30,10 @@
             app:layout_constraintStart_toStartOf="parent"
             android:text="This is a Title"
             android:layout_margin="10dp"
-            android:textSize="16sp"
+            android:textSize="12sp"
             android:textColor="#000"
             android:id="@+id/tv_video_resources_title"
-            android:fontFamily="@font/poppins_semibold"/>
+            android:fontFamily="@font/poppins_medium"/>
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 

@@ -21,6 +21,7 @@ import com.example.prepareurself.Home.content.resources.ui.adapter.VideoResourse
 import com.example.prepareurself.Home.content.resources.viewmodel.VideoResourceViewModel;
 import com.example.prepareurself.Home.content.resources.youtubevideoplayer.YoutubePlayerActivity;
 import com.example.prepareurself.R;
+import com.example.prepareurself.utils.Constants;
 
 import java.util.List;
 
@@ -65,7 +66,9 @@ public class VideoResourceFragment extends Fragment implements VideoResoursesRvA
     }
 
     @Override
-    public void videoClicked() {
-        startActivity(new Intent(getActivity(), YoutubePlayerActivity.class));
+    public void videoClicked(VideoResources videoResources) {
+        Intent intent = new Intent(getActivity(), YoutubePlayerActivity.class);
+        intent.putExtra(Constants.VIDEOID,videoResources.getVideoCode());
+        startActivity(intent);
     }
 }
