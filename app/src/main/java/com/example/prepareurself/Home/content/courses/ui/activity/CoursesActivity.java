@@ -9,8 +9,6 @@ import android.view.MenuItem;
 import com.example.prepareurself.Home.content.courses.ui.fragments.ProjectsFragment;
 import com.example.prepareurself.Home.content.courses.ui.fragments.ResourcesFragment;
 import com.example.prepareurself.Home.content.resources.ui.adapter.SectionsPagerAdapter;
-import com.example.prepareurself.Home.content.resources.ui.fragments.TheoryResourceFragment;
-import com.example.prepareurself.Home.content.resources.ui.fragments.VideoResourceFragment;
 import com.example.prepareurself.R;
 import com.google.android.material.tabs.TabLayout;
 
