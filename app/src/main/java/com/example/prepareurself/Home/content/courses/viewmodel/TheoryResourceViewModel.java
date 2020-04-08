@@ -47,6 +47,8 @@ public class TheoryResourceViewModel extends AndroidViewModel {
         theoryResources.add(t3);
         theoryResources.add(t4);
 
+        listMutableLiveData.setValue(theoryResources);
+
         return listMutableLiveData;
     }
 

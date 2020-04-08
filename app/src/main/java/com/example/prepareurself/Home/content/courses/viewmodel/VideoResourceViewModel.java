@@ -24,26 +24,26 @@ public class VideoResourceViewModel extends AndroidViewModel {
 
         VideoResources v1 = new VideoResources();
         v1.setVideoId("1");
-        v1.setVideoTitle("This is Video 1");
-        v1.setVideoCode("X2COHLCv0eQ");
+        v1.setVideoTitle("KR$NA - UNTITLED (FULL VIDEO) | KALAMKAAR");
+        v1.setVideoCode("2KsrtJ3VtZs");
         v1.setImageUrl("https://bs-uploads.toptal.io/blackfish-uploads/blog/post/seo/og_image_file/og_image/15921/secure-rest-api-in-nodejs-18f43b3033c239da5d2525cfd9fdc98f.png");
 
         VideoResources v2 = new VideoResources();
         v2.setVideoId("2");
-        v2.setVideoCode("X2COHLCv0eQ");
-        v2.setVideoTitle("This is Video 2");
+        v2.setVideoCode("fHSo2cpyIas");
+        v2.setVideoTitle("KR$NA - SEEDHA MAKEOVER | KALAMKAAR");
         v2.setImageUrl("https://bs-uploads.toptal.io/blackfish-uploads/blog/post/seo/og_image_file/og_image/15921/secure-rest-api-in-nodejs-18f43b3033c239da5d2525cfd9fdc98f.png");
 
         VideoResources v3 = new VideoResources();
         v3.setVideoId("3");
-        v3.setVideoCode("X2COHLCv0eQ");
-        v3.setVideoTitle("This is Video 3");
+        v3.setVideoCode("KPEJDCFe3-A");
+        v3.setVideoTitle("KR$NA - MAHARANI (FULL VIDEO) | KALAMKAAR");
         v3.setImageUrl("https://bs-uploads.toptal.io/blackfish-uploads/blog/post/seo/og_image_file/og_image/15921/secure-rest-api-in-nodejs-18f43b3033c239da5d2525cfd9fdc98f.png");
 
         VideoResources v4 = new VideoResources();
         v4.setVideoId("4");
-        v4.setVideoCode("X2COHLCv0eQ");
-        v4.setVideoTitle("This is Video 4");
+        v4.setVideoCode("92ltAWKDAJ4");
+        v4.setVideoTitle("KARMA : GODZILLA | DEEP KALSI | KALAMKAAR");
         v4.setImageUrl("https://bs-uploads.toptal.io/blackfish-uploads/blog/post/seo/og_image_file/og_image/15921/secure-rest-api-in-nodejs-18f43b3033c239da5d2525cfd9fdc98f.png");
 
         List<VideoResources> videoResources = new ArrayList<>();

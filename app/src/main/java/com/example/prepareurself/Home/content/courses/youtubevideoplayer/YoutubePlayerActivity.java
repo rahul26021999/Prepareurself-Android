@@ -2,7 +2,9 @@ package com.example.prepareurself.Home.content.courses.youtubevideoplayer;
 
 import androidx.appcompat.app.AppCompatActivity;
 
+import android.content.Intent;
 import android.os.Bundle;
+import android.text.TextUtils;
 
 import com.example.prepareurself.Home.content.courses.model.VideoResources;
 import com.example.prepareurself.R;
@@ -17,7 +19,8 @@ public class YoutubePlayerActivity extends YouTubeBaseActivity implements YouTub
 
     private static final int RECOVERY_DIALOG_REQUEST = 1;
     YouTubePlayerView youTubePlayerView;
-    VideoResources v1;
+    //VideoResources v1;
+    String videoCode = "";
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -28,19 +31,28 @@ public class YoutubePlayerActivity extends YouTubeBaseActivity implements YouTub
 
         youTubePlayerView.initialize(Constants.YOUTUBE_PLAYER_API_KEY,this);
 
-        v1 = new VideoResources();
-        v1.setVideoId("1");
-        v1.setVideoTitle("This is Video 1");
-        v1.setVideoCode("X2COHLCv0eQ");
-        v1.setImageUrl("https://bs-uploads.toptal.io/blackfish-uploads/blog/post/seo/og_image_file/og_image/15921/secure-rest-api-in-nodejs-18f43b3033c239da5d2525cfd9fdc98f.png");
+        Intent intent = getIntent();
+
+        videoCode = intent.getStringExtra(Constants.VIDEOID);
+
+//        v1 = new VideoResources();
+//        v1.setVideoId("1");
+//        v1.setVideoTitle("This is Video 1");
+//        v1.setVideoCode("X2COHLCv0eQ");
+//        v1.setImageUrl("https://bs-uploads.toptal.io/blackfish-uploads/blog/post/seo/og_image_file/og_image/15921/secure-rest-api-in-nodejs-18f43b3033c239da5d2525cfd9fdc98f.png");
 
     }
 
     @Override
     public void onInitializationSuccess(YouTubePlayer.Provider provider, YouTubePlayer youTubePlayer, boolean b) {
         if (!b){
-            youTubePlayer.loadVideo(v1.getVideoCode());
-            youTubePlayer.setPlayerStyle(YouTubePlayer.PlayerStyle.DEFAULT);
+            if (!TextUtils.isEmpty(videoCode)){
+                youTubePlayer.loadVideo(videoCode);
+                youTubePlayer.setPlayerStyle(YouTubePlayer.PlayerStyle.DEFAULT);
+            }else{
+                Utility.showToast(this,Constants.SOMETHINGWENTWRONG);
+            }
+
         }
     }
 

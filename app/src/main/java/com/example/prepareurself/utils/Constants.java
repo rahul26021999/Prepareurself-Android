@@ -24,4 +24,6 @@ public class Constants {
     public static final int COURSEVIEWTYPE = 1;
     public static final int ADDVIEWTYPE = 2;
 
+    public static final String UNABLETOLOADVIDEOSATTHEMOMENT = "Unable to load videos at the moment";
+    public static final String VIDEOID = "video_id";
 }
