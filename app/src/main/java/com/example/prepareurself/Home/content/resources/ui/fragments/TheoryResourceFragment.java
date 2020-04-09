@@ -3,6 +3,7 @@ package com.example.prepareurself.Home.content.resources.ui.fragments;
 import androidx.lifecycle.Observer;
 import androidx.lifecycle.ViewModelProviders;
 
+import android.content.Intent;
 import android.os.Bundle;
 
 import androidx.annotation.NonNull;
@@ -20,10 +21,11 @@ import com.example.prepareurself.Home.content.resources.ui.adapter.TheoryResourc
 import com.example.prepareurself.Home.content.resources.viewmodel.TheoryResourceViewModel;
 
 import com.example.prepareurself.R;
+import com.example.prepareurself.utils.Utility;
 
 import java.util.List;
 
-public class TheoryResourceFragment extends Fragment {
+public class TheoryResourceFragment extends Fragment implements TheoryResourcesRvAdapter.TheoryResourceRvInteractor {
 
     private TheoryResourceViewModel mViewModel;
     private RecyclerView rvTheoryResources;
@@ -49,7 +51,7 @@ public class TheoryResourceFragment extends Fragment {
         mViewModel = ViewModelProviders.of(this).get(TheoryResourceViewModel.class);
         // TODO: Use the ViewModel
         //added code
-        adapter1=new TheoryResourcesRvAdapter(getActivity());
+        adapter1=new TheoryResourcesRvAdapter(getActivity(), this);
         LinearLayoutManager linearLayoutManager1=new LinearLayoutManager(getActivity(),RecyclerView.VERTICAL,false);
         rvTheoryResources.setLayoutManager(linearLayoutManager1);
         rvTheoryResources.setAdapter(adapter1);
@@ -63,4 +65,8 @@ public class TheoryResourceFragment extends Fragment {
         });
     }
 
+    @Override
+    public void onResourceClicked(TheoryResources resource) {
+        Utility.redirectUsingCustomTab(getActivity(),resource.getContentUrl());
+    }
 }
