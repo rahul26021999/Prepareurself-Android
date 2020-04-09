@@ -11,6 +11,7 @@ import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.bumptech.glide.Glide;
+import com.example.prepareurself.Home.content.courses.model.Resource;
 import com.example.prepareurself.Home.content.courses.model.TheoryResources;
 import com.example.prepareurself.R;
 
@@ -19,14 +20,16 @@ import java.util.List;
 public class TheoryResourcesRvAdapter extends RecyclerView.Adapter<TheoryResourcesRvAdapter.TheoryResourcesViewHolder> {
     Context context;
     List<TheoryResources> theoryResources;
+    private TheoryResourceRvInteractor listener;
 
     public void setTheoryResources(List<TheoryResources> theoryResources) {
         this.theoryResources = theoryResources;
     }
 
 
-    public TheoryResourcesRvAdapter(Context context){
+    public TheoryResourcesRvAdapter(Context context, TheoryResourceRvInteractor listener){
         this.context=context;
+        this.listener = listener;
     }
 
 
@@ -39,8 +42,16 @@ public class TheoryResourcesRvAdapter extends RecyclerView.Adapter<TheoryResourc
 
     @Override
     public void onBindViewHolder(@NonNull TheoryResourcesViewHolder holder, int position) {
-        TheoryResources theoryResources1=theoryResources.get(position);
+        final TheoryResources theoryResources1=theoryResources.get(position);
         holder.bindview(theoryResources1);
+
+        holder.itemView.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                listener.onResourceClicked(theoryResources1);
+            }
+        });
+
     }
 
     @Override
@@ -66,6 +77,10 @@ public class TheoryResourcesRvAdapter extends RecyclerView.Adapter<TheoryResourc
 
         }
 
+    }
+
+    public interface TheoryResourceRvInteractor{
+        void onResourceClicked(TheoryResources resource);
     }
 
 

@@ -1,9 +1,17 @@
 package com.example.prepareurself.Home.content.courses.model;
 
 public class TheoryResources {
-    private String imageUrl, theoryTitle, theoryId;
+    private String imageUrl, theoryTitle, theoryId, contentUrl;
 
     public TheoryResources() {
+    }
+
+    public String getContentUrl() {
+        return contentUrl;
+    }
+
+    public void setContentUrl(String contentUrl) {
+        this.contentUrl = contentUrl;
     }
 
     public String getImageUrl() {

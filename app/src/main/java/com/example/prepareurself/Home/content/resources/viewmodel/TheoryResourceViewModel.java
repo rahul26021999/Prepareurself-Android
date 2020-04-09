@@ -24,20 +24,24 @@ public class TheoryResourceViewModel extends AndroidViewModel {
         TheoryResources t1=new TheoryResources();
         t1.setTheoryId("1");
         t1.setTheoryTitle("this is resource 1");
+        t1.setContentUrl("https://www.w3schools.com/react/default.asp");
         t1.setImageUrl("https://pngimage.net/wp-content/uploads/2018/06/w3schools-logo-png-2.png");
 
         TheoryResources t2=new TheoryResources();
         t2.setTheoryId("2");
+        t2.setContentUrl("https://www.w3schools.com/react/default.asp");
         t2.setTheoryTitle("this is resource 2");
         t2.setImageUrl("https://pngimage.net/wp-content/uploads/2018/06/w3schools-logo-png-2.png");
 
         TheoryResources t3=new TheoryResources();
         t3.setTheoryId("3");
+        t3.setContentUrl("https://www.w3schools.com/react/default.asp");
         t3.setTheoryTitle("this is resource 3");
         t3.setImageUrl("https://pngimage.net/wp-content/uploads/2018/06/w3schools-logo-png-2.png");
 
         TheoryResources t4=new TheoryResources();
         t4.setTheoryId("4");
+        t4.setContentUrl("https://www.w3schools.com/react/default.asp");
         t4.setTheoryTitle("this is resource 4");
         t4.setImageUrl("https://pngimage.net/wp-content/uploads/2018/06/w3schools-logo-png-2.png");
 
