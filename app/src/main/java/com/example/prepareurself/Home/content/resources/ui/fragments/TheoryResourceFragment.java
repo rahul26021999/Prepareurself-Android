@@ -16,17 +16,20 @@ import android.view.View;
 import android.view.ViewGroup;
 
 import com.example.prepareurself.Home.content.courses.data.model.TheoryResources;
+import com.example.prepareurself.Home.content.resources.data.model.ResourceModel;
+import com.example.prepareurself.Home.content.resources.ui.activity.ResourcesActivity;
 import com.example.prepareurself.Home.content.resources.ui.adapter.TheoryResourcesRvAdapter;
-import com.example.prepareurself.Home.content.resources.viewmodel.TheoryResourceViewModel;
+import com.example.prepareurself.Home.content.resources.viewmodel.ResourceViewModel;
 
 import com.example.prepareurself.R;
+import com.example.prepareurself.utils.Constants;
 import com.example.prepareurself.utils.Utility;
 
 import java.util.List;
 
 public class TheoryResourceFragment extends Fragment implements TheoryResourcesRvAdapter.TheoryResourceRvInteractor {
 
-    private TheoryResourceViewModel mViewModel;
+    private ResourceViewModel mViewModel;
     private RecyclerView rvTheoryResources;
     private TheoryResourcesRvAdapter adapter1;
 
@@ -47,25 +50,24 @@ public class TheoryResourceFragment extends Fragment implements TheoryResourcesR
     @Override
     public void onActivityCreated(@Nullable Bundle savedInstanceState) {
         super.onActivityCreated(savedInstanceState);
-        mViewModel = ViewModelProviders.of(this).get(TheoryResourceViewModel.class);
-        // TODO: Use the ViewModel
-        //added code
+        mViewModel = ViewModelProviders.of(this).get(ResourceViewModel.class);
+
         adapter1=new TheoryResourcesRvAdapter(getActivity(), this);
         LinearLayoutManager linearLayoutManager1=new LinearLayoutManager(getActivity(),RecyclerView.VERTICAL,false);
         rvTheoryResources.setLayoutManager(linearLayoutManager1);
         rvTheoryResources.setAdapter(adapter1);
 
-        mViewModel.getListLiveData().observe(getActivity(), new Observer<List<TheoryResources>>() {
-            @Override
-            public void onChanged(List<TheoryResources> theoryResources) {
-                adapter1.setTheoryResources(theoryResources);
-                adapter1.notifyDataSetChanged();
-            }
-        });
+       mViewModel.getListLiveData(ResourcesActivity.topicID,Constants.THEORY).observe(getActivity(), new Observer<List<ResourceModel>>() {
+           @Override
+           public void onChanged(List<ResourceModel> resourceModels) {
+               adapter1.setResourcesList(resourceModels);
+               adapter1.notifyDataSetChanged();
+           }
+       });
     }
 
     @Override
-    public void onResourceClicked(TheoryResources resource) {
-        Utility.redirectUsingCustomTab(getActivity(),resource.getContentUrl());
+    public void onResourceClicked(ResourceModel resource) {
+        Utility.redirectUsingCustomTab(getActivity(),resource.getLink());
     }
 }
