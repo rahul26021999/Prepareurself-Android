@@ -6,7 +6,7 @@ import androidx.annotation.NonNull;
 import androidx.lifecycle.AndroidViewModel;
 import androidx.lifecycle.MutableLiveData;
 
-import com.example.prepareurself.Home.content.courses.model.Resource;
+import com.example.prepareurself.Home.content.courses.data.model.Resource;
 
 import java.util.ArrayList;
 import java.util.List;

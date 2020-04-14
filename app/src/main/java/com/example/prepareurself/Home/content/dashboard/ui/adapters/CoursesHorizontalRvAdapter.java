@@ -4,24 +4,29 @@ import android.content.Context;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ImageView;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.bumptech.glide.Glide;
+import com.example.prepareurself.Home.content.dashboard.data.model.CourseModel;
 import com.example.prepareurself.R;
+import com.example.prepareurself.utils.Constants;
 
 import java.util.ArrayList;
+import java.util.List;
 
 public class CoursesHorizontalRvAdapter extends RecyclerView.Adapter<CoursesHorizontalRvAdapter.CoursesHorizontalViewHolder> {
 
     Context context;
-    ArrayList<String> courseNames;
+    List<CourseModel> courses;
     private DashboardRvInteractor listener;
 
-    public CoursesHorizontalRvAdapter(Context context, ArrayList<String> courseNames, DashboardRvInteractor listener) {
+    public CoursesHorizontalRvAdapter(Context context, List<CourseModel> courses, DashboardRvInteractor listener) {
         this.context = context;
-        this.courseNames = courseNames;
+        this.courses = courses;
         this.listener = listener;
     }
 
@@ -34,7 +39,7 @@ public class CoursesHorizontalRvAdapter extends RecyclerView.Adapter<CoursesHori
 
     @Override
     public void onBindViewHolder(@NonNull CoursesHorizontalViewHolder holder, int position) {
-        holder.bindView(courseNames.get(position));
+        holder.bindView(context,courses.get(position));
         holder.itemView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -45,20 +50,25 @@ public class CoursesHorizontalRvAdapter extends RecyclerView.Adapter<CoursesHori
 
     @Override
     public int getItemCount() {
-        return courseNames.size();
+        return courses.size();
     }
 
     static class CoursesHorizontalViewHolder extends RecyclerView.ViewHolder{
 
         TextView tvCourseName;
+        ImageView imageView;
 
         public CoursesHorizontalViewHolder(@NonNull View itemView) {
             super(itemView);
             tvCourseName = itemView.findViewById(R.id.tv_course_name_viewtype);
+            imageView = itemView.findViewById(R.id.image_course_viewtype);
         }
 
-        public void bindView(String courseName){
-            tvCourseName.setText(courseName);
+        public void bindView(Context context,CourseModel course){
+            Glide.with(context).load(
+                    Constants.COURSEIMAGEBASEUSRL+ course.getImage_url())
+                    .into(imageView);
+            tvCourseName.setText(course.getName());
         }
     }
 

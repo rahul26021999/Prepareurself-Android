@@ -10,7 +10,8 @@ import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
-import com.example.prepareurself.Home.content.dashboard.model.DashboardRecyclerviewModel;
+import com.example.prepareurself.Home.content.dashboard.data.model.CourseModel;
+import com.example.prepareurself.Home.content.dashboard.data.model.DashboardRecyclerviewModel;
 import com.example.prepareurself.R;
 
 import java.util.ArrayList;
@@ -26,7 +27,6 @@ public class DashboardRvAdapter extends RecyclerView.Adapter implements CoursesH
     private DashBoardInteractor listener;
 
     public DashboardRvAdapter(Context context, DashBoardInteractor listener) {
-//        this.modelList = modelList;
         this.context = context;
         this.listener = listener;
     }
@@ -67,9 +67,9 @@ public class DashboardRvAdapter extends RecyclerView.Adapter implements CoursesH
     public void onBindViewHolder(@NonNull RecyclerView.ViewHolder holder, int position) {
         switch (modelList.get(position).getViewType()){
             case COURSEVIEWTYPE :
-                int courseImage = modelList.get(position).getImageResource();
-                ArrayList<String> courses = modelList.get(position).getCourseName();
-                ((CourseViewHolder) holder).bindCoursesView(courseImage,courses, this);
+                String categoryName = modelList.get(position).getCategoryName();
+                List<CourseModel> courses = modelList.get(position).getCourses();
+                ((CourseViewHolder) holder).bindCoursesView(categoryName,courses, this);
                 break;
             case ADDVIEWTYPE :
                 String adText = modelList.get(position).getAddText();
@@ -82,7 +82,11 @@ public class DashboardRvAdapter extends RecyclerView.Adapter implements CoursesH
 
     @Override
     public int getItemCount() {
-        return modelList.size();
+        if (modelList!=null){
+            return modelList.size();
+        }else{
+            return 0;
+        }
     }
 
     class CourseViewHolder extends RecyclerView.ViewHolder{
@@ -96,7 +100,8 @@ public class DashboardRvAdapter extends RecyclerView.Adapter implements CoursesH
             rvCourses = itemView.findViewById(R.id.rv_courses_dashboard);
         }
 
-        public void bindCoursesView(int courseImage, ArrayList<String> courses, CoursesHorizontalRvAdapter.DashboardRvInteractor interactor){
+        public void bindCoursesView(String categoryName, List<CourseModel> courses, CoursesHorizontalRvAdapter.DashboardRvInteractor interactor){
+            tvCourses.setText(categoryName);
             CoursesHorizontalRvAdapter adapter = new CoursesHorizontalRvAdapter(context,courses, interactor);
             LinearLayoutManager layoutManager = new LinearLayoutManager(context,RecyclerView.HORIZONTAL,false);
             rvCourses.setLayoutManager(layoutManager);

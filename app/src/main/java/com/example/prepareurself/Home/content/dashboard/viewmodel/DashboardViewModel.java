@@ -1,9 +1,18 @@
 package com.example.prepareurself.Home.content.dashboard.viewmodel;
 
+import android.app.Application;
+import android.util.Log;
+
+import androidx.annotation.NonNull;
+import androidx.lifecycle.AndroidViewModel;
+import androidx.lifecycle.LiveData;
 import androidx.lifecycle.MutableLiveData;
 import androidx.lifecycle.ViewModel;
 
-import com.example.prepareurself.Home.content.dashboard.model.DashboardRecyclerviewModel;
+import com.example.prepareurself.Home.content.dashboard.data.db.repository.CourseDbRepository;
+import com.example.prepareurself.Home.content.dashboard.data.model.CourseModel;
+import com.example.prepareurself.Home.content.dashboard.data.model.DashboardRecyclerviewModel;
+import com.example.prepareurself.Home.content.dashboard.data.repository.CourseRepository;
 import com.example.prepareurself.R;
 
 import java.util.ArrayList;
@@ -11,56 +20,27 @@ import java.util.List;
 
 import static com.example.prepareurself.utils.Constants.COURSEVIEWTYPE;
 
-public class DashboardViewModel extends ViewModel {
+public class DashboardViewModel extends AndroidViewModel {
 
-    MutableLiveData<List<DashboardRecyclerviewModel>> listMutableLiveData = new MutableLiveData<>();
-    MutableLiveData<ArrayList<String>> courseNames = new MutableLiveData<>();
-    MutableLiveData<ArrayList<String>> quizeNames = new MutableLiveData<>();
+    private LiveData<List<CourseModel>> liveCourses = new MutableLiveData<>();
+    CourseRepository courseRepository;
+    CourseDbRepository courseDbRepository;
 
-    public MutableLiveData<List<DashboardRecyclerviewModel>> getModelList(){
-        List<DashboardRecyclerviewModel> modelList = new ArrayList<>();
-
-        modelList.add(new DashboardRecyclerviewModel(COURSEVIEWTYPE, R.mipmap.ic_launcher,getCourseNames().getValue()));
-        modelList.add(new DashboardRecyclerviewModel(COURSEVIEWTYPE, R.mipmap.ic_launcher,getQizzes().getValue()));
-      //  modelList.add(new DashboardRecyclerviewModel(ADDVIEWTYPE,"This is add 1"));
-        modelList.add(new DashboardRecyclerviewModel(COURSEVIEWTYPE, R.mipmap.ic_launcher,getCourseNames().getValue()));
-        //modelList.add(new DashboardRecyclerviewModel(ADDVIEWTYPE,"This is add 2"));
-        modelList.add(new DashboardRecyclerviewModel(COURSEVIEWTYPE, R.mipmap.ic_launcher,getCourseNames().getValue()));
-
-        listMutableLiveData.setValue(modelList);
-
-        return listMutableLiveData;
-
+    public DashboardViewModel(@NonNull Application application) {
+        super(application);
+        courseRepository = new CourseRepository(application);
+        courseDbRepository = new CourseDbRepository(application);
     }
 
-    private MutableLiveData<ArrayList<String>> getCourseNames(){
-        ArrayList<String> data = new ArrayList<>();
-        data.add("Android");
-        data.add("NodeJS");
-        data.add("AngularJs");
-        data.add("ReactJs");
-        data.add("Laravel");
-        data.add("Machine Learning");
-        data.add("Cloud Computing");
-
-        courseNames.setValue(data);
-
-        return courseNames;
+    public void getCourses(String token){
+        liveCourses = courseRepository.getCourses(token);
+        if (liveCourses.getValue()==null){
+            liveCourses = courseDbRepository.getAllCourses();
+        }
     }
 
-    private MutableLiveData<ArrayList<String>> getQizzes(){
-        ArrayList<String> data = new ArrayList<>();
-        data.add("Quiz 1");
-        data.add("Quiz 2");
-        data.add("Quiz 3");
-        data.add("Quiz 4");
-        data.add("Quiz 5");
-        data.add("Quiz 5");
-        data.add("Quiz 6");
-
-        courseNames.setValue(data);
-
-        return courseNames;
+    public LiveData<List<CourseModel>> getLiveCourses(){
+        return liveCourses;
     }
 
 }

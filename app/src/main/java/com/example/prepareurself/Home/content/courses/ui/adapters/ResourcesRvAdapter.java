@@ -11,7 +11,7 @@ import androidx.annotation.NonNull;
 import androidx.constraintlayout.widget.ConstraintLayout;
 import androidx.recyclerview.widget.RecyclerView;
 
-import com.example.prepareurself.Home.content.courses.model.Resource;
+import com.example.prepareurself.Home.content.courses.data.model.Resource;
 import com.example.prepareurself.R;
 
 import java.util.List;

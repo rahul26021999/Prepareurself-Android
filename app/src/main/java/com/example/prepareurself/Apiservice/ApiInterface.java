@@ -1,6 +1,9 @@
 package com.example.prepareurself.Apiservice;
 
+import com.example.prepareurself.Home.content.dashboard.data.model.GetCourseResponseModel;
 import com.example.prepareurself.authentication.data.model.AuthenticationResponseModel;
+
+import java.util.List;
 
 import retrofit2.Call;
 import retrofit2.http.POST;
@@ -17,6 +20,9 @@ public interface ApiInterface {
     @POST("login")
     Call<AuthenticationResponseModel> loginUser(@Query("email")String email,
                                                 @Query("password")String password);
+
+    @POST("get-courses")
+    Call<GetCourseResponseModel> getCourses(@Query("token") String token);
 
 
 }

@@ -6,9 +6,8 @@ import androidx.annotation.NonNull;
 import androidx.lifecycle.AndroidViewModel;
 import androidx.lifecycle.LiveData;
 import androidx.lifecycle.MutableLiveData;
-import androidx.lifecycle.ViewModel;
 
-import com.example.prepareurself.Home.content.courses.model.TheoryResources;
+import com.example.prepareurself.Home.content.courses.data.model.TheoryResources;
 
 import java.util.ArrayList;
 import java.util.List;

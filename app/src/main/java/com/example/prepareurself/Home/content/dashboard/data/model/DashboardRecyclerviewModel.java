@@ -1,7 +1,8 @@
-package com.example.prepareurself.Home.content.dashboard.model;
+package com.example.prepareurself.Home.content.dashboard.data.model;
 
 
 import java.util.ArrayList;
+import java.util.List;
 
 public class DashboardRecyclerviewModel {
 
@@ -9,20 +10,29 @@ public class DashboardRecyclerviewModel {
 
     // course view type
     private int imageResource;
-    private ArrayList<String> courseName;
+    private List<CourseModel> courses;
+    private String categoryName;
 
     //add view type
     private String addText;
 
-    public DashboardRecyclerviewModel(int viewType, int imageResource, ArrayList<String> courseName ) {
-        this.imageResource = imageResource;
-        this.courseName = courseName;
+    public DashboardRecyclerviewModel(int viewType, String categoryName, List<CourseModel> courses) {
+        this.categoryName = categoryName;
+        this.courses = courses;
         this.viewType = viewType;
     }
 
     public DashboardRecyclerviewModel(int viewType,String addText) {
         this.addText = addText;
         this.viewType = viewType;
+    }
+
+    public String getCategoryName() {
+        return categoryName;
+    }
+
+    public void setCategoryName(String categoryName) {
+        this.categoryName = categoryName;
     }
 
     public String getAddText() {
@@ -41,12 +51,12 @@ public class DashboardRecyclerviewModel {
         this.imageResource = imageResource;
     }
 
-    public ArrayList<String> getCourseName() {
-        return courseName;
+    public List<CourseModel> getCourses() {
+        return courses;
     }
 
-    public void setCourseName(ArrayList<String> courseName) {
-        this.courseName = courseName;
+    public void setCourses(List<CourseModel> courses) {
+        this.courses = courses;
     }
 
     public int getViewType() {
