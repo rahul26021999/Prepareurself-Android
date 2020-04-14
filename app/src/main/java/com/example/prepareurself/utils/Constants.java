@@ -31,4 +31,7 @@ public class Constants {
     public static final String COURSEIMAGEBASEUSRL = "http://prepareurself.tk/uploads/courses/";
     public static final String COURSEID = "course_id";
     public static final String TOPICSBASEURL = "http://prepareurself.tk/uploads/topics/";
+    public static final String TOPICID = "topic_id";
+    public static final String THEORY = "theory";
+    public static final String VIDEO = "video";
 }

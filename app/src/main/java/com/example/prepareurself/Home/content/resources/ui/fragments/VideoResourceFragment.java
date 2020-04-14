@@ -16,9 +16,11 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
+import com.example.prepareurself.Home.content.resources.data.model.ResourceModel;
 import com.example.prepareurself.Home.content.resources.model.VideoResources;
+import com.example.prepareurself.Home.content.resources.ui.activity.ResourcesActivity;
 import com.example.prepareurself.Home.content.resources.ui.adapter.VideoResoursesRvAdapter;
-import com.example.prepareurself.Home.content.resources.viewmodel.VideoResourceViewModel;
+import com.example.prepareurself.Home.content.resources.viewmodel.ResourceViewModel;
 import com.example.prepareurself.Home.content.resources.youtubevideoplayer.YoutubePlayerActivity;
 import com.example.prepareurself.R;
 import com.example.prepareurself.utils.Constants;
@@ -27,7 +29,7 @@ import java.util.List;
 
 public class VideoResourceFragment extends Fragment implements VideoResoursesRvAdapter.VideoResourceInteractor {
 
-    private VideoResourceViewModel mViewModel;
+    private ResourceViewModel mViewModel;
     private RecyclerView rvVideoResources;
     private VideoResoursesRvAdapter adapter;
 
@@ -48,17 +50,17 @@ public class VideoResourceFragment extends Fragment implements VideoResoursesRvA
     @Override
     public void onActivityCreated(@Nullable Bundle savedInstanceState) {
         super.onActivityCreated(savedInstanceState);
-        mViewModel = ViewModelProviders.of(this).get(VideoResourceViewModel.class);
+        mViewModel = ViewModelProviders.of(this).get(ResourceViewModel.class);
 
         adapter = new VideoResoursesRvAdapter(getActivity(), this);
         LinearLayoutManager layoutManager = new LinearLayoutManager(getActivity(),RecyclerView.VERTICAL,false);
         rvVideoResources.setLayoutManager(layoutManager);
         rvVideoResources.setAdapter(adapter);
 
-        mViewModel.getListLiveData().observe(getActivity(), new Observer<List<VideoResources>>() {
+        mViewModel.getListLiveData(ResourcesActivity.topicID,Constants.VIDEO).observe(getActivity(), new Observer<List<ResourceModel>>() {
             @Override
-            public void onChanged(List<VideoResources> videoResources) {
-                adapter.setVideoResources(videoResources);
+            public void onChanged(List<ResourceModel> resourceModels) {
+                adapter.setResourceModels(resourceModels);
                 adapter.notifyDataSetChanged();
             }
         });
@@ -66,9 +68,9 @@ public class VideoResourceFragment extends Fragment implements VideoResoursesRvA
     }
 
     @Override
-    public void videoClicked(VideoResources videoResources) {
+    public void videoClicked(ResourceModel videoResources, String videoCode) {
         Intent intent = new Intent(getActivity(), YoutubePlayerActivity.class);
-        intent.putExtra(Constants.VIDEOID,videoResources.getVideoCode());
+        intent.putExtra(Constants.VIDEOID,videoCode);
         startActivity(intent);
     }
 }

@@ -10,15 +10,23 @@ import com.example.prepareurself.Home.content.courses.data.db.dao.TopicsRoomDao;
 import com.example.prepareurself.Home.content.courses.data.model.TopicsModel;
 import com.example.prepareurself.Home.content.dashboard.data.db.dao.CourseRoomDao;
 import com.example.prepareurself.Home.content.dashboard.data.model.CourseModel;
+import com.example.prepareurself.Home.content.resources.data.db.dao.ResourcesRoomDao;
+import com.example.prepareurself.Home.content.resources.data.model.ResourceModel;
 import com.example.prepareurself.authentication.data.db.dao.UserRoomDao;
 import com.example.prepareurself.authentication.data.model.UserModel;
 
-@Database(entities = {UserModel.class, CourseModel.class, TopicsModel.class}, version = 1)
+@Database(entities = {
+        UserModel.class,
+        CourseModel.class,
+        TopicsModel.class,
+        ResourceModel.class
+}, version = 1)
 public abstract class AppDatabase extends RoomDatabase {
 
     public abstract UserRoomDao userRoomDao();
     public abstract CourseRoomDao courseRoomDao();
     public abstract TopicsRoomDao topicsRoomDao();
+    public abstract ResourcesRoomDao resourcesRoomDao();
 
     private static AppDatabase INSTANCE;
 

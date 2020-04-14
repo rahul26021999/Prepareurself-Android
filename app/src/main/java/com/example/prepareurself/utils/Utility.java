@@ -10,6 +10,11 @@ import androidx.core.content.ContextCompat;
 
 import com.example.prepareurself.R;
 
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
+
+import javax.xml.transform.stream.StreamSource;
+
 public class Utility {
 
     public static boolean isValidEmail(CharSequence str_email){
@@ -35,6 +40,18 @@ public class Utility {
         CustomTabsIntent customTabsIntent = intentBuilder.build();
 
         customTabsIntent.launchUrl(context, uri);
+    }
+
+    public static String getVideoCode(String youtubeUrl){
+        String pattern = "https?:\\/\\/(?:[0-9A-Z-]+\\.)?(?:youtu\\.be\\/|youtube\\.com\\S*[^\\w\\-\\s])([\\w\\-]{11})(?=[^\\w\\-]|$)(?![?=&+%\\w]*(?:['\"][^<>]*>|<\\/a>))[?=&+%\\w]*";
+
+        Pattern compiledPattern = Pattern.compile(pattern,
+                Pattern.CASE_INSENSITIVE);
+        Matcher matcher = compiledPattern.matcher(youtubeUrl);
+        if (matcher.find()) {
+            return matcher.group(1);
+        }/*from w  w  w.  j a  va  2 s .c om*/
+        return null;
     }
 
 }

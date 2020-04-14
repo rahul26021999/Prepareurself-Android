@@ -50,6 +50,12 @@ public class ResourcesRvAdapter extends RecyclerView.Adapter<ResourcesRvAdapter.
     public void onBindViewHolder(@NonNull final ResourceViewHolder holder, final int position) {
         final TopicsModel topicsModel = topics.get(position);
         holder.bindView(topicsModel);
+        holder.itemView.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                listener.onResourceClicked(topicsModel);
+            }
+        });
 
 //        if (currentPosition == position){
 //            rotationAngle = rotationAngle == 0 ? 180 : 0;  //toggle
@@ -120,7 +126,7 @@ public class ResourcesRvAdapter extends RecyclerView.Adapter<ResourcesRvAdapter.
     }
 
     public interface ResourceRvInteractor{
-        void onResourceClicked(Resource resource);
+        void onResourceClicked(TopicsModel topicsModel);
     }
 
 }

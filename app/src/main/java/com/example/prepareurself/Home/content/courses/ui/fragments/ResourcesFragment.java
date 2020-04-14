@@ -23,6 +23,7 @@ import com.example.prepareurself.Home.content.courses.ui.adapters.ResourcesRvAda
 import com.example.prepareurself.Home.content.courses.viewmodels.TopicViewModel;
 import com.example.prepareurself.Home.content.resources.ui.activity.ResourcesActivity;
 import com.example.prepareurself.R;
+import com.example.prepareurself.utils.Constants;
 
 import java.util.List;
 
@@ -66,7 +67,9 @@ public class ResourcesFragment extends Fragment implements ResourcesRvAdapter.Re
     }
 
     @Override
-    public void onResourceClicked(Resource resource) {
-        startActivity(new Intent(getActivity(), ResourcesActivity.class));
+    public void onResourceClicked(TopicsModel topicsModel) {
+        Intent intent = new Intent(getActivity(), ResourcesActivity.class);
+        intent.putExtra(Constants.TOPICID,topicsModel.getId());
+        startActivity(intent);
     }
 }
