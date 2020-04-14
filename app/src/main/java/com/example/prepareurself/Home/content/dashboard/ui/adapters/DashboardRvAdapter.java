@@ -1,5 +1,6 @@
 package com.example.prepareurself.Home.content.dashboard.ui.adapters;
 
+import android.app.Activity;
 import android.content.Context;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -23,10 +24,10 @@ import static com.example.prepareurself.utils.Constants.COURSEVIEWTYPE;
 public class DashboardRvAdapter extends RecyclerView.Adapter implements CoursesHorizontalRvAdapter.DashboardRvInteractor {
 
     private List<DashboardRecyclerviewModel> modelList;
-    private Context context;
+    private Activity context;
     private DashBoardInteractor listener;
 
-    public DashboardRvAdapter(Context context, DashBoardInteractor listener) {
+    public DashboardRvAdapter(Activity context, DashBoardInteractor listener) {
         this.context = context;
         this.listener = listener;
     }
