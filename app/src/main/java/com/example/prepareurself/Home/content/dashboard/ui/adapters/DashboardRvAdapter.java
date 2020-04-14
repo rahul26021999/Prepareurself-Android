@@ -1,7 +1,6 @@
 package com.example.prepareurself.Home.content.dashboard.ui.adapters;
 
 import android.app.Activity;
-import android.content.Context;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -15,7 +14,6 @@ import com.example.prepareurself.Home.content.dashboard.data.model.CourseModel;
 import com.example.prepareurself.Home.content.dashboard.data.model.DashboardRecyclerviewModel;
 import com.example.prepareurself.R;
 
-import java.util.ArrayList;
 import java.util.List;
 
 import static com.example.prepareurself.utils.Constants.ADDVIEWTYPE;
@@ -125,12 +123,12 @@ public class DashboardRvAdapter extends RecyclerView.Adapter implements CoursesH
     }
 
     @Override
-    public void onCourseClicked() {
-        listener.onCourseCliked();
+    public void onCourseClicked(CourseModel courseModel) {
+        listener.onCourseClicked(courseModel);
     }
 
     public interface DashBoardInteractor{
-        void onCourseCliked();
+        void onCourseClicked(CourseModel courseModel);
     }
 
 }

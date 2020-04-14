@@ -1,5 +1,6 @@
 package com.example.prepareurself.Apiservice;
 
+import com.example.prepareurself.Home.content.courses.data.model.GetTopicResponseModel;
 import com.example.prepareurself.Home.content.dashboard.data.model.GetCourseResponseModel;
 import com.example.prepareurself.authentication.data.model.AuthenticationResponseModel;
 
@@ -23,6 +24,9 @@ public interface ApiInterface {
 
     @POST("get-courses")
     Call<GetCourseResponseModel> getCourses(@Query("token") String token);
+
+    @POST("get-topics")
+    Call<GetTopicResponseModel> getTopics(@Query("token") String token, @Query("course_id") int courseId);
 
 
 }

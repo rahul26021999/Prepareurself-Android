@@ -8,10 +8,12 @@ import android.view.Menu;
 import android.widget.TextView;
 
 import com.example.prepareurself.Home.content.courses.ui.activity.CoursesActivity;
+import com.example.prepareurself.Home.content.dashboard.data.model.CourseModel;
 import com.example.prepareurself.Home.content.dashboard.ui.fragment.DashboardFragment;
 import com.example.prepareurself.Home.viewmodel.HomeActivityViewModel;
 import com.example.prepareurself.R;
 import com.example.prepareurself.authentication.data.model.UserModel;
+import com.example.prepareurself.utils.Constants;
 import com.google.android.material.navigation.NavigationView;
 
 import androidx.annotation.NonNull;
@@ -110,8 +112,10 @@ public class HomeActivity extends AppCompatActivity implements NavigationView.On
     }
 
     @Override
-    public void onCourseClicked() {
-        startActivity(new Intent(HomeActivity.this, CoursesActivity.class));
+    public void onCourseClicked(CourseModel courseModel) {
+        Intent intent = new Intent(HomeActivity.this,CoursesActivity.class);
+        intent.putExtra(Constants.COURSEID,courseModel.getId());
+        startActivity(intent);
     }
 
     @Override

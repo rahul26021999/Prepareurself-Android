@@ -56,7 +56,7 @@ public class DashboardFragment extends Fragment implements DashboardRvAdapter.Da
 
 
     public interface HomeActivityInteractor{
-        void onCourseClicked();
+        void onCourseClicked(CourseModel courseModel);
     }
 
     public static DashboardFragment newInstance() {
@@ -150,8 +150,8 @@ public class DashboardFragment extends Fragment implements DashboardRvAdapter.Da
 
 
     @Override
-    public void onCourseCliked() {
-        listener.onCourseClicked();
+    public void onCourseClicked(CourseModel courseModel) {
+        listener.onCourseClicked(courseModel);
     }
 
     @Override

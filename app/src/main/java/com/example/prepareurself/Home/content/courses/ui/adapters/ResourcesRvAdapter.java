@@ -11,15 +11,20 @@ import androidx.annotation.NonNull;
 import androidx.constraintlayout.widget.ConstraintLayout;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.bumptech.glide.Glide;
 import com.example.prepareurself.Home.content.courses.data.model.Resource;
+import com.example.prepareurself.Home.content.courses.data.model.TopicsModel;
 import com.example.prepareurself.R;
+import com.example.prepareurself.utils.Constants;
+
+import org.w3c.dom.Text;
 
 import java.util.List;
 
 public class ResourcesRvAdapter extends RecyclerView.Adapter<ResourcesRvAdapter.ResourceViewHolder> {
 
     private Context context;
-    private List<Resource> resources;
+    private List<TopicsModel> topics;
     private int rotationAngle = 0;
     private int currentPosition = -1;
     private ResourceRvInteractor listener;
@@ -29,8 +34,8 @@ public class ResourcesRvAdapter extends RecyclerView.Adapter<ResourcesRvAdapter.
         this.listener = listener;
     }
 
-    public void setResources(List<Resource> resources){
-        this.resources = resources;
+    public void setTopics(List<TopicsModel> topics){
+        this.topics = topics;
     }
 
     @NonNull
@@ -43,62 +48,73 @@ public class ResourcesRvAdapter extends RecyclerView.Adapter<ResourcesRvAdapter.
 
     @Override
     public void onBindViewHolder(@NonNull final ResourceViewHolder holder, final int position) {
-        final Resource resource = resources.get(position);
-        holder.bindView(resource);
+        final TopicsModel topicsModel = topics.get(position);
+        holder.bindView(topicsModel);
 
-        if (currentPosition == position){
-            rotationAngle = rotationAngle == 0 ? 180 : 0;  //toggle
-            holder.imgExpansion.animate().rotation(rotationAngle).setDuration(500).start();
-        }
-
-        holder.imgExpansion.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                currentPosition = position;
-                boolean expanded = resource.getExpanded();
-                resource.setExpanded(!expanded);
-                notifyItemChanged(position);
-
-            }
-        });
-
-        holder.itemView.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                listener.onResourceClicked(resource);
-            }
-        });
+//        if (currentPosition == position){
+//            rotationAngle = rotationAngle == 0 ? 180 : 0;  //toggle
+//            holder.imgExpansion.animate().rotation(rotationAngle).setDuration(500).start();
+//        }
+//
+//        holder.imgExpansion.setOnClickListener(new View.OnClickListener() {
+//            @Override
+//            public void onClick(View v) {
+//                currentPosition = position;
+//                boolean expanded = topicsModel.getExpanded();
+//                resource.setExpanded(!expanded);
+//                notifyItemChanged(position);
+//
+//            }
+//        });
+//
+//        holder.itemView.setOnClickListener(new View.OnClickListener() {
+//            @Override
+//            public void onClick(View v) {
+//                listener.onResourceClicked(resource);
+//            }
+//        });
 
     }
 
     @Override
     public int getItemCount() {
-        return resources.size();
+        if (topics!=null)
+            return topics.size();
+        else
+            return 0;
     }
 
     public class ResourceViewHolder extends RecyclerView.ViewHolder{
 
-        private ImageView imgExpansion;
-        private TextView tvResourceDescription, tvResourceTitle;
-        private ConstraintLayout descriptionLayout;
+        private ImageView imageView;
+        private TextView tvTitle;
+        private TextView tvDescription;
+
 
         public ResourceViewHolder(@NonNull View itemView) {
             super(itemView);
 
-            imgExpansion = itemView.findViewById(R.id.img_resource_title_expansion);
-            tvResourceDescription = itemView.findViewById(R.id.tv_resouce_description);
-            tvResourceTitle = itemView.findViewById(R.id.tv_resource_title);
-            descriptionLayout = itemView.findViewById(R.id.view_resource_decription_parent);
+            imageView = itemView.findViewById(R.id.topic_image);
+            tvTitle = itemView.findViewById(R.id.tv_title_topic);
+            tvDescription = itemView.findViewById(R.id.tv_decription_topic);
 
         }
 
-        public void bindView(Resource resource) {
-            boolean expanded = resource.getExpanded();
+        public void bindView(TopicsModel topicsModel) {
+//            boolean expanded = topicsModel.getExpanded();
+//
+//            descriptionLayout.setVisibility(expanded ? View.VISIBLE : View.GONE);
+//
+//            tvResourceDescription.setText(topicsModel.getDescription());
+//            tvResourceTitle.setText(topicsModel.getTitle());
 
-            descriptionLayout.setVisibility(expanded ? View.VISIBLE : View.GONE);
-
-            tvResourceDescription.setText(resource.getDescription());
-            tvResourceTitle.setText(resource.getTitle());
+            Glide.with(context)
+                    .load(Constants.TOPICSBASEURL + topicsModel.getImage_url())
+                    .placeholder(R.drawable.placeholder)
+                    .error(R.drawable.ic_image_loading_error)
+                    .into(imageView);
+            tvTitle.setText(topicsModel.getName());
+            tvDescription.setText(topicsModel.getDescription());
 
         }
     }

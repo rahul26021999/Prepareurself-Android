@@ -29,4 +29,6 @@ public class Constants {
     public static final String JWTTOKEN = "jwt_token";
     public static final String TECHSTACK = "Tech-Stack";
     public static final String COURSEIMAGEBASEUSRL = "http://prepareurself.tk/uploads/courses/";
+    public static final String COURSEID = "course_id";
+    public static final String TOPICSBASEURL = "http://prepareurself.tk/uploads/topics/";
 }
