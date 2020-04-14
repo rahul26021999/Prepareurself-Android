@@ -1,6 +1,7 @@
 package com.example.prepareurself.authentication.data.model;
 
 import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
 import androidx.room.ColumnInfo;
 import androidx.room.Entity;
 import androidx.room.PrimaryKey;
@@ -40,6 +41,46 @@ public class UserModel {
     @ColumnInfo(name = "updated_at")
     @SerializedName("updated_at")
     private String updated_at;
+
+    @Nullable
+    @ColumnInfo(name = "username")
+    @SerializedName("username")
+    private String username;
+
+    @Nullable
+    @ColumnInfo(name = "profile_image")
+    @SerializedName("profile_image")
+    private String profile_image;
+
+    @Nullable
+    @ColumnInfo(name = "dob")
+    @SerializedName("dob")
+    private String dob;
+
+    @Nullable
+    @ColumnInfo(name = "android_token")
+    @SerializedName("android_token")
+    private String android_token;
+
+    @Nullable
+    @ColumnInfo(name = "phone_number")
+    @SerializedName("phone_number")
+    private String phone_number;
+
+    @Nullable
+    @ColumnInfo(name = "user_status")
+    @SerializedName("user_status")
+    private String user_status;
+
+    @Nullable
+    @ColumnInfo(name = "email_verified_at")
+    @SerializedName("email_verified_at")
+    private String email_verified_at;
+
+    @Nullable
+    @ColumnInfo(name = "last_login_at")
+    @SerializedName("last_login_at")
+    private String last_login_at;
 
     public int getId() {
         return id;
@@ -92,5 +133,77 @@ public class UserModel {
 
     public void setUpdated_at(@NonNull String updated_at) {
         this.updated_at = updated_at;
+    }
+
+    @Nullable
+    public String getUsername() {
+        return username;
+    }
+
+    public void setUsername(@Nullable String username) {
+        this.username = username;
+    }
+
+    @Nullable
+    public String getProfile_image() {
+        return profile_image;
+    }
+
+    public void setProfile_image(@Nullable String profile_image) {
+        this.profile_image = profile_image;
+    }
+
+    @Nullable
+    public String getDob() {
+        return dob;
+    }
+
+    public void setDob(@Nullable String dob) {
+        this.dob = dob;
+    }
+
+    @Nullable
+    public String getAndroid_token() {
+        return android_token;
+    }
+
+    public void setAndroid_token(@Nullable String android_token) {
+        this.android_token = android_token;
+    }
+
+    @Nullable
+    public String getPhone_number() {
+        return phone_number;
+    }
+
+    public void setPhone_number(@Nullable String phone_number) {
+        this.phone_number = phone_number;
+    }
+
+    @Nullable
+    public String getUser_status() {
+        return user_status;
+    }
+
+    public void setUser_status(@Nullable String user_status) {
+        this.user_status = user_status;
+    }
+
+    @Nullable
+    public String getEmail_verified_at() {
+        return email_verified_at;
+    }
+
+    public void setEmail_verified_at(@Nullable String email_verified_at) {
+        this.email_verified_at = email_verified_at;
+    }
+
+    @Nullable
+    public String getLast_login_at() {
+        return last_login_at;
+    }
+
+    public void setLast_login_at(@Nullable String last_login_at) {
+        this.last_login_at = last_login_at;
     }
 }

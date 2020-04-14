@@ -19,6 +19,7 @@ import android.widget.EditText;
 import com.example.prepareurself.Home.ui.HomeActivity;
 import com.example.prepareurself.R;
 import com.example.prepareurself.authentication.data.model.AuthenticationResponseModel;
+import com.example.prepareurself.authentication.data.model.Error;
 import com.example.prepareurself.authentication.viewmodel.AuthViewModel;
 import com.example.prepareurself.utils.Constants;
 import com.example.prepareurself.utils.PrefManager;
@@ -135,7 +136,7 @@ public class RegisterFragment extends Fragment implements View.OnClickListener {
                 @Override
                 public void onChanged(AuthenticationResponseModel authenticationResponseModel) {
                     if (authenticationResponseModel!=null){
-                        if (authenticationResponseModel.getError_code() == 0){
+                        if (authenticationResponseModel.isSuccess()){
                             prefManager.saveBoolean(Constants.ISLOGGEDIN, true);
 
                             Utility.showToast(getActivity(),"Registration done!");
@@ -143,7 +144,24 @@ public class RegisterFragment extends Fragment implements View.OnClickListener {
                             startActivity(intent);
                             getActivity().finish();
                         }else{
-                            Utility.showToast(getActivity(),authenticationResponseModel.getMsg());
+                            Error error  = authenticationResponseModel.getErrors();
+                            if (error!=null){
+                                if (error.getPassword()!=null){
+                                    Utility.showToast(getActivity(),error.getPassword().get(0));
+                                }
+
+                                if (error.getEmail()!=null){
+                                    etEmail.setError(error.getEmail().get(0));
+//                                    Utility.showToast(getActivity(),error.getEmail().get(0));
+                                }
+
+                                if (error.getFirst_name()!=null){
+                                    Utility.showToast(getActivity(),error.getFirst_name().get(0));
+                                }
+                            }else{
+                                Utility.showToast(getActivity(),Constants.SOMETHINGWENTWRONG);
+                            }
+
                         }
                     }else{
                         Utility.showToast(getActivity(),Constants.SOMETHINGWENTWRONG);

@@ -11,7 +11,7 @@ import retrofit2.converter.gson.GsonConverterFactory;
 
 public class ApiClient {
 
-    public static final String BASEURL =  "http://192.168.0.6:8000/api/"; // this is our base url, this will be same for all the endpoints
+    public static final String BASEURL =  "http://prepareurself.tk/api/"; // this is our base url, this will be same for all the endpoints
 
     public static Retrofit retrofit = null;
 
