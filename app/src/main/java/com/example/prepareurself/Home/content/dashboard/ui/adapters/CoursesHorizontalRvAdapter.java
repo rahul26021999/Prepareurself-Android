@@ -37,12 +37,12 @@ public class CoursesHorizontalRvAdapter extends RecyclerView.Adapter<CoursesHori
     }
 
     @Override
-    public void onBindViewHolder(@NonNull CoursesHorizontalViewHolder holder, int position) {
+    public void onBindViewHolder(@NonNull CoursesHorizontalViewHolder holder, final int position) {
         holder.bindView(context,courses.get(position));
         holder.itemView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                listener.onCourseClicked();
+                listener.onCourseClicked(courses.get(position));
             }
         });
     }
@@ -77,7 +77,7 @@ public class CoursesHorizontalRvAdapter extends RecyclerView.Adapter<CoursesHori
     }
 
     public interface DashboardRvInteractor{
-        void onCourseClicked();
+        void onCourseClicked(CourseModel courseModel);
     }
 
 }

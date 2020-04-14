@@ -17,8 +17,10 @@ import android.view.View;
 import android.view.ViewGroup;
 
 import com.example.prepareurself.Home.content.courses.data.model.Resource;
+import com.example.prepareurself.Home.content.courses.data.model.TopicsModel;
+import com.example.prepareurself.Home.content.courses.ui.activity.CoursesActivity;
 import com.example.prepareurself.Home.content.courses.ui.adapters.ResourcesRvAdapter;
-import com.example.prepareurself.Home.content.courses.viewmodels.ResourcesViewModel;
+import com.example.prepareurself.Home.content.courses.viewmodels.TopicViewModel;
 import com.example.prepareurself.Home.content.resources.ui.activity.ResourcesActivity;
 import com.example.prepareurself.R;
 
@@ -26,7 +28,7 @@ import java.util.List;
 
 public class ResourcesFragment extends Fragment implements ResourcesRvAdapter.ResourceRvInteractor {
 
-    private ResourcesViewModel mViewModel;
+    private TopicViewModel mViewModel;
     private RecyclerView recyclerView;
     private ResourcesRvAdapter adapter;
 
@@ -46,20 +48,20 @@ public class ResourcesFragment extends Fragment implements ResourcesRvAdapter.Re
     @Override
     public void onActivityCreated(@Nullable Bundle savedInstanceState) {
         super.onActivityCreated(savedInstanceState);
-        mViewModel = ViewModelProviders.of(this).get(ResourcesViewModel.class);
+        mViewModel = ViewModelProviders.of(this).get(TopicViewModel.class);
 
         adapter = new ResourcesRvAdapter(getActivity(), this);
         LinearLayoutManager layoutManager = new LinearLayoutManager(getActivity());
         recyclerView.setLayoutManager(layoutManager);
         recyclerView.setAdapter(adapter);
 
-        mViewModel.getListMutableLiveData().observe(getActivity(), new Observer<List<Resource>>() {
-            @Override
-            public void onChanged(List<Resource> resources) {
-                adapter.setResources(resources);
-                adapter.notifyDataSetChanged();
-            }
-        });
+       mViewModel.getLiveData(CoursesActivity.courseId).observe(getActivity(), new Observer<List<TopicsModel>>() {
+           @Override
+           public void onChanged(List<TopicsModel> topicsModels) {
+               adapter.setTopics(topicsModels);
+               adapter.notifyDataSetChanged();
+           }
+       });
 
     }
 

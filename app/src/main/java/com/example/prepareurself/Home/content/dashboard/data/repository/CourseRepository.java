@@ -31,8 +31,6 @@ public class CourseRepository {
     public LiveData<List<CourseModel>> getCourses(String token){
         final MutableLiveData<List<CourseModel>> data = new MutableLiveData<>();
 
-        Log.d("url_debug",apiInterface.getCourses(token).request().url().toString());
-
         apiInterface.getCourses(token).enqueue(new Callback<GetCourseResponseModel>() {
             @Override
             public void onResponse(Call<GetCourseResponseModel> call, Response<GetCourseResponseModel> response) {
