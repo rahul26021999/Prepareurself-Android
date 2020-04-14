@@ -12,6 +12,8 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        android:id="@+id/rv_theory_resources"/>
+        android:id="@+id/rv_theory_resources"
+        app:layout_constrainedHeight="true"
+        android:layout_marginBottom="?actionBarSize"/>
 
 </androidx.constraintlayout.widget.ConstraintLayout>
