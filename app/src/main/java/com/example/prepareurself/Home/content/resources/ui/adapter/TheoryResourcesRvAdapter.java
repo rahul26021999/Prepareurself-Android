@@ -11,8 +11,7 @@ import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.bumptech.glide.Glide;
-import com.example.prepareurself.Home.content.courses.model.Resource;
-import com.example.prepareurself.Home.content.courses.model.TheoryResources;
+import com.example.prepareurself.Home.content.courses.data.model.TheoryResources;
 import com.example.prepareurself.R;
 
 import java.util.List;

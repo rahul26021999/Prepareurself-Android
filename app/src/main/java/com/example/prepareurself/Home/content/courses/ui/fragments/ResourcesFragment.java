@@ -16,7 +16,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
-import com.example.prepareurself.Home.content.courses.model.Resource;
+import com.example.prepareurself.Home.content.courses.data.model.Resource;
 import com.example.prepareurself.Home.content.courses.ui.adapters.ResourcesRvAdapter;
 import com.example.prepareurself.Home.content.courses.viewmodels.ResourcesViewModel;
 import com.example.prepareurself.Home.content.resources.ui.activity.ResourcesActivity;

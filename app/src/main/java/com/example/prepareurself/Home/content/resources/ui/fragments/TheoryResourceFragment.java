@@ -3,7 +3,6 @@ package com.example.prepareurself.Home.content.resources.ui.fragments;
 import androidx.lifecycle.Observer;
 import androidx.lifecycle.ViewModelProviders;
 
-import android.content.Intent;
 import android.os.Bundle;
 
 import androidx.annotation.NonNull;
@@ -16,7 +15,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
-import com.example.prepareurself.Home.content.courses.model.TheoryResources;
+import com.example.prepareurself.Home.content.courses.data.model.TheoryResources;
 import com.example.prepareurself.Home.content.resources.ui.adapter.TheoryResourcesRvAdapter;
 import com.example.prepareurself.Home.content.resources.viewmodel.TheoryResourceViewModel;
 

@@ -95,6 +95,7 @@ public class LoginFragment extends Fragment implements View.OnClickListener{
                     if (authenticationResponseModel!=null){
                         if (authenticationResponseModel.isSuccess()){
                             prefManager.saveBoolean(Constants.ISLOGGEDIN, true);
+                            prefManager.saveString(Constants.JWTTOKEN,authenticationResponseModel.getToken());
 
                             Utility.showToast(getActivity(),"Login done!");
                             Intent intent=new Intent(getActivity(), HomeActivity.class);

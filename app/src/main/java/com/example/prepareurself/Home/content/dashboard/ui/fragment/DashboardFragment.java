@@ -14,24 +14,26 @@ import androidx.recyclerview.widget.RecyclerView;
 import androidx.viewpager.widget.ViewPager;
 
 import android.os.Handler;
-import android.text.Html;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.view.animation.AccelerateInterpolator;
 import android.widget.LinearLayout;
-import android.widget.TextView;
 
+import com.example.prepareurself.Home.content.dashboard.data.model.CourseModel;
 import com.example.prepareurself.Home.content.dashboard.viewmodel.DashboardViewModel;
-import com.example.prepareurself.Home.content.dashboard.model.DashboardRecyclerviewModel;
+import com.example.prepareurself.Home.content.dashboard.data.model.DashboardRecyclerviewModel;
 import com.example.prepareurself.Home.content.dashboard.ui.adapters.CustomPagerAdapter;
 import com.example.prepareurself.Home.content.dashboard.ui.adapters.DashboardRvAdapter;
 import com.example.prepareurself.R;
+import com.example.prepareurself.utils.Constants;
 import com.example.prepareurself.utils.FixedSpeedScroller;
+import com.example.prepareurself.utils.PrefManager;
 import com.example.prepareurself.utils.ZoomPageOutTransaformer;
 
 import java.lang.reflect.Field;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Timer;
 import java.util.TimerTask;
@@ -50,6 +52,7 @@ public class DashboardFragment extends Fragment implements DashboardRvAdapter.Da
     private DashboardRvAdapter dashboardRvAdapter;
 
     private HomeActivityInteractor listener;
+    private PrefManager prefManager;
 
 
     public interface HomeActivityInteractor{
@@ -64,34 +67,52 @@ public class DashboardFragment extends Fragment implements DashboardRvAdapter.Da
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container,
                              @Nullable Bundle savedInstanceState) {
 
-        mViewModel = ViewModelProviders.of(this).get(DashboardViewModel.class);
 
         View view = inflater.inflate(R.layout.dashboard_fragment, container, false);
         viewPager = view.findViewById(R.id.viewpager_dashboard);
         dotsContainer = view.findViewById(R.id.dotsContainer);
         recyclerView = view.findViewById(R.id.rv_main_dashboard);
 
+        prefManager = new PrefManager(getActivity());
+
         setUpViewPager();
+
+        return view;
+    }
+
+    @Override
+    public void onActivityCreated(@Nullable Bundle savedInstanceState) {
+        super.onActivityCreated(savedInstanceState);
+
+        mViewModel = ViewModelProviders.of(this).get(DashboardViewModel.class);
+
+        mViewModel.getCourses(prefManager.getString(Constants.JWTTOKEN));
+
         dashboardRvAdapter = new DashboardRvAdapter(getActivity(), this);
         LinearLayoutManager layoutManager = new LinearLayoutManager(getActivity(),RecyclerView.VERTICAL,false);
         recyclerView.setLayoutManager(layoutManager);
         recyclerView.setAdapter(dashboardRvAdapter);
-        mViewModel.getModelList().observe(getActivity(), new Observer<List<DashboardRecyclerviewModel>>() {
+
+        final List<DashboardRecyclerviewModel> dashboardRecyclerviewModelList = new ArrayList<>();
+
+        mViewModel.getLiveCourses().observe(getActivity(), new Observer<List<CourseModel>>() {
             @Override
-            public void onChanged(List<DashboardRecyclerviewModel> dashboardRecyclerviewModels) {
-                dashboardRvAdapter.setData(dashboardRecyclerviewModels);
-                dashboardRvAdapter.notifyDataSetChanged();
+            public void onChanged(List<CourseModel> courseModels) {
+                if (courseModels!=null){
+                    DashboardRecyclerviewModel dashboardRecyclerviewModel = new DashboardRecyclerviewModel(Constants.COURSEVIEWTYPE,Constants.TECHSTACK,courseModels);
+                    dashboardRecyclerviewModelList.add(dashboardRecyclerviewModel);
+                    dashboardRvAdapter.setData(dashboardRecyclerviewModelList);
+                    dashboardRvAdapter.notifyDataSetChanged();
+                }
             }
         });
 
-        return view;
+
     }
 
     private void setUpViewPager() {
         customPagerAdapter = new CustomPagerAdapter(this.getActivity(),data);
         viewPager.setAdapter(customPagerAdapter);
-//        prepareDots(dotsPosition++);
-//        createSlideShow();
 
         try {
             Field mScroller;
@@ -126,52 +147,6 @@ public class DashboardFragment extends Fragment implements DashboardRvAdapter.Da
         },5000,5000);
     }
 
-    @Override
-    public void onActivityCreated(@Nullable Bundle savedInstanceState) {
-        super.onActivityCreated(savedInstanceState);
-
-        // TODO: Use the ViewModel
-    }
-
-    private void createSlideShow(){
-
-        final Handler handler = new Handler();
-
-        final Runnable runnable =  new Runnable(){
-            @Override
-            public void run() {
-                if (currentPosition == Integer.MAX_VALUE)
-                    currentPosition = 0;
-
-                viewPager.setCurrentItem(currentPosition++, true);
-            }
-        };
-
-        timer = new Timer();
-        timer.schedule(new TimerTask() {
-            @Override
-            public void run() {
-                handler.post(runnable);
-            }
-        },250,2500);
-    }
-
-    private void prepareDots(int currentSlidePosition){
-
-        TextView[] dot = new TextView[data.length];
-        dotsContainer.removeAllViews();
-        for (int i=0; i< dot.length; i++) {
-            dot[i] = new TextView(this.getActivity());
-            dot[i].setText(Html.fromHtml("&#9673;"));
-            dot[i].setTextSize(8F);
-            dot[i].setTextColor(this.getResources().getColor(R.color.inactive_dots));
-            dotsContainer.addView(dot[i]);
-        }
-        //active dot
-        dot[currentSlidePosition].setTextColor(this.getResources().getColor(R.color.active_dots));
-
-
-    }
 
     @Override
     public void onCourseCliked() {

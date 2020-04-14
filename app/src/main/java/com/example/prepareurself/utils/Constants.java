@@ -26,4 +26,7 @@ public class Constants {
 
     public static final String UNABLETOLOADVIDEOSATTHEMOMENT = "Unable to load videos at the moment";
     public static final String VIDEOID = "video_id";
+    public static final String JWTTOKEN = "jwt_token";
+    public static final String TECHSTACK = "Tech-Stack";
+    public static final String COURSEIMAGEBASEUSRL = "http://prepareurself.tk/uploads/courses/";
 }

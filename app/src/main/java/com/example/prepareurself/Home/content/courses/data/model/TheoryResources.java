@@ -1,4 +1,4 @@
-package com.example.prepareurself.Home.content.courses.model;
+package com.example.prepareurself.Home.content.courses.data.model;
 
 public class TheoryResources {
     private String imageUrl, theoryTitle, theoryId, contentUrl;
