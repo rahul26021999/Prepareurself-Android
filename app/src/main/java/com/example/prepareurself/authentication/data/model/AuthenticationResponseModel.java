@@ -2,10 +2,37 @@ package com.example.prepareurself.authentication.data.model;
 
 public class AuthenticationResponseModel {
     private int error_code;
-    private String msg;
-    private UserModel user_data;
+    private String msg = null;
+    private boolean success;
+    private String token  = null;
+    private UserModel user = null;
+    private Error errors = null;
 
     public AuthenticationResponseModel() {
+    }
+
+    public Error getErrors() {
+        return errors;
+    }
+
+    public void setErrors(Error errors) {
+        this.errors = errors;
+    }
+
+    public boolean isSuccess() {
+        return success;
+    }
+
+    public void setSuccess(boolean success) {
+        this.success = success;
+    }
+
+    public String getToken() {
+        return token;
+    }
+
+    public void setToken(String token) {
+        this.token = token;
     }
 
     public int getError_code() {
@@ -24,11 +51,11 @@ public class AuthenticationResponseModel {
         this.msg = msg;
     }
 
-    public UserModel getUser_data() {
-        return user_data;
+    public UserModel getUser() {
+        return user;
     }
 
-    public void setUser_data(UserModel user_data) {
-        this.user_data = user_data;
+    public void setUser(UserModel user) {
+        this.user = user;
     }
 }

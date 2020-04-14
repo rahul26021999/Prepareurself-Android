@@ -10,6 +10,11 @@ import com.example.prepareurself.Apiservice.ApiInterface;
 import com.example.prepareurself.authentication.data.model.AuthenticationResponseModel;
 import com.example.prepareurself.authentication.data.db.repository.UserDBRepository;
 
+import org.json.JSONException;
+import org.json.JSONObject;
+
+import java.io.IOException;
+
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
@@ -33,15 +38,27 @@ public class AuthRepository {
             public void onResponse(Call<AuthenticationResponseModel> call, Response<AuthenticationResponseModel> response) {
                 AuthenticationResponseModel responseModel = response.body();
                 if (responseModel!=null){
-                    if (responseModel.getError_code() == 0){
+                    if (responseModel.isSuccess()){
                         data.setValue(responseModel);
                         userDBRepository.clearUser();
-                        userDBRepository.insertUser(responseModel.getUser_data());
+                        userDBRepository.insertUser(responseModel.getUser());
                     }else{
                         data.setValue(responseModel);
                     }
                 }else{
-                    data.setValue(null);
+                    if (response.errorBody()!=null){
+                        try {
+                            AuthenticationResponseModel model = new AuthenticationResponseModel();
+                            JSONObject jsonObject = new JSONObject(response.errorBody().string());
+                            model.setMsg(jsonObject.getString("message"));
+                            data.setValue(model);
+                        } catch (JSONException | IOException e) {
+                            e.printStackTrace();
+                            data.setValue(null);
+                        }
+                    }else{
+                        data.setValue(null);
+                    }
                 }
             }
 
@@ -63,10 +80,10 @@ public class AuthRepository {
             public void onResponse(Call<AuthenticationResponseModel> call, Response<AuthenticationResponseModel> response) {
                 AuthenticationResponseModel responseModel = response.body();
                 if (responseModel != null) {
-                    if (responseModel.getError_code() == 0){
+                    if (responseModel.isSuccess()){
                         data.setValue(responseModel);
                         userDBRepository.clearUser();
-                        userDBRepository.insertUser(responseModel.getUser_data());
+                        userDBRepository.insertUser(responseModel.getUser());
                     }else{
                         data.setValue(responseModel);
                     }
