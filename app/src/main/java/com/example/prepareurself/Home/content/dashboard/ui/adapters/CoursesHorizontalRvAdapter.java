@@ -1,6 +1,6 @@
 package com.example.prepareurself.Home.content.dashboard.ui.adapters;
 
-import android.content.Context;
+import android.app.Activity;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -15,16 +15,15 @@ import com.example.prepareurself.Home.content.dashboard.data.model.CourseModel;
 import com.example.prepareurself.R;
 import com.example.prepareurself.utils.Constants;
 
-import java.util.ArrayList;
 import java.util.List;
 
 public class CoursesHorizontalRvAdapter extends RecyclerView.Adapter<CoursesHorizontalRvAdapter.CoursesHorizontalViewHolder> {
 
-    Context context;
+    Activity context;
     List<CourseModel> courses;
     private DashboardRvInteractor listener;
 
-    public CoursesHorizontalRvAdapter(Context context, List<CourseModel> courses, DashboardRvInteractor listener) {
+    public CoursesHorizontalRvAdapter(Activity context, List<CourseModel> courses, DashboardRvInteractor listener) {
         this.context = context;
         this.courses = courses;
         this.listener = listener;
@@ -64,11 +63,16 @@ public class CoursesHorizontalRvAdapter extends RecyclerView.Adapter<CoursesHori
             imageView = itemView.findViewById(R.id.image_course_viewtype);
         }
 
-        public void bindView(Context context,CourseModel course){
+        public void bindView(Activity context, CourseModel course){
+
             Glide.with(context).load(
                     Constants.COURSEIMAGEBASEUSRL+ course.getImage_url())
+                    .placeholder(R.drawable.placeholder)
+                    .error(R.drawable.ic_image_loading_error)
                     .into(imageView);
+
             tvCourseName.setText(course.getName());
+
         }
     }
 

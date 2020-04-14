@@ -99,6 +99,7 @@ public class DashboardFragment extends Fragment implements DashboardRvAdapter.Da
             @Override
             public void onChanged(List<CourseModel> courseModels) {
                 if (courseModels!=null){
+                    dashboardRecyclerviewModelList.clear();
                     DashboardRecyclerviewModel dashboardRecyclerviewModel = new DashboardRecyclerviewModel(Constants.COURSEVIEWTYPE,Constants.TECHSTACK,courseModels);
                     dashboardRecyclerviewModelList.add(dashboardRecyclerviewModel);
                     dashboardRvAdapter.setData(dashboardRecyclerviewModelList);
