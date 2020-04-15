@@ -26,7 +26,7 @@ android {
                 onesignal_google_project_number: 'REMOTE'
         ]
 
-        applicationId "com.example.prepareurself"
+        applicationId "com.prepare.prepareurself"
         minSdkVersion 23
         targetSdkVersion 29
         versionCode 1
