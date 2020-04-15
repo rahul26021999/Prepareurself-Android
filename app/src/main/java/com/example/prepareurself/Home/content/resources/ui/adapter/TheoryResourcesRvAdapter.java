@@ -1,6 +1,7 @@
 package com.example.prepareurself.Home.content.resources.ui.adapter;
 
 import android.content.Context;
+import android.graphics.drawable.Drawable;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -10,9 +11,11 @@ import android.widget.TextView;
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.bumptech.glide.GenericTransitionOptions;
 import com.bumptech.glide.Glide;
 import com.example.prepareurself.Home.content.resources.data.model.ResourceModel;
 import com.example.prepareurself.R;
+import com.example.prepareurself.utils.Utility;
 
 import java.util.List;
 
@@ -84,6 +87,8 @@ public class TheoryResourcesRvAdapter extends RecyclerView.Adapter<TheoryResourc
             Glide.with(context).load(
                     resourceModel.getImage_url())
                     .placeholder(R.drawable.placeholder)
+                    .override(300,300)
+                    .transition(GenericTransitionOptions.<Drawable>with(Utility.getAnimationObject()))
                     .error(R.drawable.ic_image_loading_error)
                     .into(imageView);
 

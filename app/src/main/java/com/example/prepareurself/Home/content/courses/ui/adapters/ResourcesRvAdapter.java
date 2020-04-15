@@ -1,6 +1,7 @@
 package com.example.prepareurself.Home.content.courses.ui.adapters;
 
 import android.content.Context;
+import android.graphics.drawable.Drawable;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -10,10 +11,12 @@ import android.widget.TextView;
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.bumptech.glide.GenericTransitionOptions;
 import com.bumptech.glide.Glide;
 import com.example.prepareurself.Home.content.courses.data.model.TopicsModel;
 import com.example.prepareurself.R;
 import com.example.prepareurself.utils.Constants;
+import com.example.prepareurself.utils.Utility;
 
 
 import java.util.List;
@@ -113,6 +116,8 @@ public class ResourcesRvAdapter extends RecyclerView.Adapter<ResourcesRvAdapter.
 
             Glide.with(context)
                     .load(Constants.TOPICSBASEURL + topicsModel.getImage_url())
+                    .override(200,200)
+                    .transition(GenericTransitionOptions.<Drawable>with(Utility.getAnimationObject()))
                     .placeholder(R.drawable.placeholder)
                     .error(R.drawable.ic_image_loading_error)
                     .into(imageView);
