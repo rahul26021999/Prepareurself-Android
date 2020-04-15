@@ -8,14 +8,14 @@
 
     <fragment
         android:id="@+id/nav_dashboard_fragment"
-        android:name="com.example.prepareurself.Home.content.dashboard.ui.fragment.DashboardFragment"
+        android:name="com.prepare.prepareurself.Home.content.dashboard.ui.fragment.DashboardFragment"
         android:label="@string/menu_dashboard"
         tools:layout="@layout/dashboard_fragment">
     </fragment>
 
     <fragment
         android:id="@+id/nav_profile_fragment"
-        android:name="com.example.prepareurself.Home.content.profile.ui.ProfileFragment"
+        android:name="com.prepare.prepareurself.Home.content.profile.ui.ProfileFragment"
         android:label="@string/menu_profile"
         tools:layout="@layout/profile_fragment">
 
