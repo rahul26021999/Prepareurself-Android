@@ -34,12 +34,12 @@ public class DashboardViewModel extends AndroidViewModel {
 
     public void getCourses(String token){
         liveCourses = courseRepository.getCourses(token);
-        if (liveCourses.getValue()==null){
-            liveCourses = courseDbRepository.getAllCourses();
-        }
     }
 
     public LiveData<List<CourseModel>> getLiveCourses(){
+        if (liveCourses.getValue()==null){
+            liveCourses = courseDbRepository.getAllCourses();
+        }
         return liveCourses;
     }
 
