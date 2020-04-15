@@ -23,6 +23,7 @@ import com.prepare.prepareurself.Home.content.resources.viewmodel.ResourceViewMo
 import com.prepare.prepareurself.Home.content.resources.youtubevideoplayer.YoutubePlayerActivity;
 import com.prepare.prepareurself.R;
 import com.prepare.prepareurself.utils.Constants;
+import com.prepare.prepareurself.utils.DividerItemDecoration;
 
 import java.util.List;
 
@@ -54,6 +55,7 @@ public class VideoResourceFragment extends Fragment implements VideoResoursesRvA
         adapter = new VideoResoursesRvAdapter(getActivity(), this);
         LinearLayoutManager layoutManager = new LinearLayoutManager(getActivity(),RecyclerView.VERTICAL,false);
         rvVideoResources.setLayoutManager(layoutManager);
+        rvVideoResources.addItemDecoration(new DividerItemDecoration(getActivity()));
         rvVideoResources.setAdapter(adapter);
 
         mViewModel.getListLiveData(ResourcesActivity.topicID,Constants.VIDEO).observe(getActivity(), new Observer<List<ResourceModel>>() {
@@ -69,7 +71,11 @@ public class VideoResourceFragment extends Fragment implements VideoResoursesRvA
     @Override
     public void videoClicked(ResourceModel videoResources, String videoCode) {
         Intent intent = new Intent(getActivity(), YoutubePlayerActivity.class);
-        intent.putExtra(Constants.VIDEOID,videoCode);
+        intent.putExtra(Constants.VIDEOCODE,videoCode);
+        intent.putExtra(Constants.VIDEOID,videoResources.getId());
+        intent.putExtra(Constants.VIDEOTITLE, videoResources.getTitle());
+        intent.putExtra(Constants.VIDEODESCRIPTION, videoResources.getDescription());
+
         startActivity(intent);
     }
 }

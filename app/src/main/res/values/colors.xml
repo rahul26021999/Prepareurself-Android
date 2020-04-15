@@ -18,5 +18,6 @@
     <!--    dashboard-->
     <color name="active_dots">#F31919</color>
     <color name="inactive_dots">#C1B9B9</color>
+    <color name="black">#000</color>
 
 </resources>
