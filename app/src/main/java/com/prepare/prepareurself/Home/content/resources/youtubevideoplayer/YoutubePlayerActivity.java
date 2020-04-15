@@ -3,7 +3,11 @@ package com.prepare.prepareurself.Home.content.resources.youtubevideoplayer;
 import android.content.Intent;
 import android.os.Bundle;
 import android.text.TextUtils;
+import android.widget.TextView;
 
+import androidx.lifecycle.ViewModelProviders;
+
+import com.prepare.prepareurself.Home.content.resources.viewmodel.ResourceViewModel;
 import com.prepare.prepareurself.R;
 import com.prepare.prepareurself.utils.Constants;
 import com.prepare.prepareurself.utils.Utility;
@@ -18,6 +22,11 @@ public class YoutubePlayerActivity extends YouTubeBaseActivity implements YouTub
     YouTubePlayerView youTubePlayerView;
     //VideoResources v1;
     String videoCode = "";
+    int videoId ;
+    String videoTitle="";
+    String videoDescription="";
+
+    private TextView tvTitle,tvDescription;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -25,12 +34,18 @@ public class YoutubePlayerActivity extends YouTubeBaseActivity implements YouTub
         setContentView(R.layout.activity_youtube_player);
 
         youTubePlayerView = findViewById(R.id.youtube_playerview);
-
-        youTubePlayerView.initialize(Constants.YOUTUBE_PLAYER_API_KEY,this);
+        tvTitle = findViewById(R.id.tv_youtube_title);
+        tvDescription = findViewById(R.id.tv_youtube_description);
 
         Intent intent = getIntent();
 
-        videoCode = intent.getStringExtra(Constants.VIDEOID);
+        videoCode = intent.getStringExtra(Constants.VIDEOCODE);
+        videoId = intent.getIntExtra(Constants.VIDEOID, -1);
+        videoTitle = intent.getStringExtra(Constants.VIDEOTITLE);
+        videoDescription = intent.getStringExtra(Constants.VIDEODESCRIPTION);
+
+        tvTitle.setText(videoTitle);
+        tvDescription.setText(videoDescription);
 
 //        v1 = new VideoResources();
 //        v1.setVideoId("1");
@@ -62,5 +77,11 @@ public class YoutubePlayerActivity extends YouTubeBaseActivity implements YouTub
                     getString(R.string.error_player), youTubeInitializationResult.toString());
             Utility.showToast(this,errorMessage);
         }
+    }
+
+    @Override
+    protected void onResume() {
+        super.onResume();
+        youTubePlayerView.initialize(Constants.YOUTUBE_PLAYER_API_KEY,this);
     }
 }

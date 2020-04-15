@@ -25,7 +25,7 @@ public class Constants {
     public static final int ADDVIEWTYPE = 2;
 
     public static final String UNABLETOLOADVIDEOSATTHEMOMENT = "Unable to load videos at the moment";
-    public static final String VIDEOID = "video_id";
+    public static final String VIDEOCODE = "video_code";
     public static final String JWTTOKEN = "jwt_token";
     public static final String TECHSTACK = "Tech-Stack";
     public static final String COURSEIMAGEBASEUSRL = "http://prepareurself.tk/uploads/courses/";
@@ -35,4 +35,7 @@ public class Constants {
     public static final String THEORY = "theory";
     public static final String VIDEO = "video";
     public static final String THEORYRESOURCEBASEURL = "http://prepareurself.tk/uploads/resources/";
+    public static final String VIDEOID = "video_id";
+    public static final String VIDEODESCRIPTION = "video_decription";
+    public static final String VIDEOTITLE = "video_title";
 }
