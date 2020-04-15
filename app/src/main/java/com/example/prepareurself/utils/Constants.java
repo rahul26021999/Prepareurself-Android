@@ -34,4 +34,5 @@ public class Constants {
     public static final String TOPICID = "topic_id";
     public static final String THEORY = "theory";
     public static final String VIDEO = "video";
+    public static final String THEORYRESOURCEBASEURL = "http://prepareurself.tk/uploads/resources/";
 }
