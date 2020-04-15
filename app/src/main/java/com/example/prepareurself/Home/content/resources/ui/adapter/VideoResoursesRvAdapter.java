@@ -11,7 +11,6 @@ import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.prepareurself.Home.content.resources.data.model.ResourceModel;
-import com.example.prepareurself.Home.content.resources.model.VideoResources;
 import com.example.prepareurself.R;
 import com.example.prepareurself.utils.Constants;
 import com.example.prepareurself.utils.Utility;

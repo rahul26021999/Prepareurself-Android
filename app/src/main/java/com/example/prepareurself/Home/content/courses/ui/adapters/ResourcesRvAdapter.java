@@ -8,16 +8,13 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
-import androidx.constraintlayout.widget.ConstraintLayout;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.bumptech.glide.Glide;
-import com.example.prepareurself.Home.content.courses.data.model.Resource;
 import com.example.prepareurself.Home.content.courses.data.model.TopicsModel;
 import com.example.prepareurself.R;
 import com.example.prepareurself.utils.Constants;
 
-import org.w3c.dom.Text;
 
 import java.util.List;
 
