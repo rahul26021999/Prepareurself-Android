@@ -12,22 +12,18 @@ import com.google.gson.annotations.SerializedName;
 public class UserModel {
 
     @PrimaryKey
-    @NonNull
     @ColumnInfo(name = "id")
     @SerializedName("id")
     private int id;
 
-    @NonNull
     @ColumnInfo(name = "first_name")
     @SerializedName("first_name")
     private String first_name;
 
-    @NonNull
     @ColumnInfo(name = "last_name")
     @SerializedName("last_name")
     private String last_name;
 
-    @NonNull
     @ColumnInfo(name = "email")
     @SerializedName("email")
     private String email;
