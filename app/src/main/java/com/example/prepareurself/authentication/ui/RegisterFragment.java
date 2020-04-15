@@ -10,6 +10,7 @@ import androidx.lifecycle.Observer;
 import androidx.lifecycle.ViewModelProviders;
 
 import android.text.TextUtils;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -128,10 +129,13 @@ public class RegisterFragment extends Fragment implements View.OnClickListener {
                 }
             }
 
+            Log.d("name_debug",firstName + " "+ lastName);
+
+
             viewModel.register(firstName, lastName, str_email, str_password);
-            
+
             showLoader();
-            
+
             viewModel.getAuthenticationResponseModelMutableLiveData().observe(getActivity(), new Observer<AuthenticationResponseModel>() {
                 @Override
                 public void onChanged(AuthenticationResponseModel authenticationResponseModel) {
@@ -167,7 +171,7 @@ public class RegisterFragment extends Fragment implements View.OnClickListener {
                     }else{
                         Utility.showToast(getActivity(),Constants.SOMETHINGWENTWRONG);
                     }
-                    
+
                     hideLoader();
                 }
             });
