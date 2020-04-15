@@ -75,7 +75,7 @@ public class DashboardFragment extends Fragment implements DashboardRvAdapter.Da
 
         prefManager = new PrefManager(getActivity());
 
-        setUpViewPager();
+//        setUpViewPager();
 
         return view;
     }
