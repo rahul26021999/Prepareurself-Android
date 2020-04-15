@@ -1,6 +1,8 @@
 package com.example.prepareurself.Home.content.dashboard.ui.adapters;
 
+import android.animation.ObjectAnimator;
 import android.app.Activity;
+import android.graphics.drawable.Drawable;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -10,10 +12,14 @@ import android.widget.TextView;
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.bumptech.glide.GenericTransitionOptions;
 import com.bumptech.glide.Glide;
+import com.bumptech.glide.load.engine.DiskCacheStrategy;
+import com.bumptech.glide.request.transition.ViewPropertyTransition;
 import com.example.prepareurself.Home.content.dashboard.data.model.CourseModel;
 import com.example.prepareurself.R;
 import com.example.prepareurself.utils.Constants;
+import com.example.prepareurself.utils.Utility;
 
 import java.util.List;
 
@@ -68,6 +74,9 @@ public class CoursesHorizontalRvAdapter extends RecyclerView.Adapter<CoursesHori
             Glide.with(context).load(
                     Constants.COURSEIMAGEBASEUSRL+ course.getImage_url())
                     .placeholder(R.drawable.placeholder)
+                    .override(200,200)
+                    .diskCacheStrategy(DiskCacheStrategy.RESOURCE)
+                    .transition(GenericTransitionOptions.<Drawable>with(Utility.getAnimationObject()))
                     .error(R.drawable.ic_image_loading_error)
                     .into(imageView);
 

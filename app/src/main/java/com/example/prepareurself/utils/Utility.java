@@ -1,13 +1,16 @@
 package com.example.prepareurself.utils;
 
+import android.animation.ObjectAnimator;
 import android.content.Context;
 import android.net.Uri;
 import android.util.Patterns;
+import android.view.View;
 import android.widget.Toast;
 
 import androidx.browser.customtabs.CustomTabsIntent;
 import androidx.core.content.ContextCompat;
 
+import com.bumptech.glide.request.transition.ViewPropertyTransition;
 import com.example.prepareurself.R;
 
 import java.util.regex.Matcher;
@@ -52,6 +55,20 @@ public class Utility {
             return matcher.group(1);
         }/*from w  w  w.  j a  va  2 s .c om*/
         return null;
+    }
+
+    public static ViewPropertyTransition.Animator getAnimationObject(){
+
+        return new ViewPropertyTransition.Animator() {
+            @Override
+            public void animate(View view) {
+                view.setAlpha(0f);
+
+                ObjectAnimator fadeAnim = ObjectAnimator.ofFloat(view, "alpha", 0f, 1f);
+                fadeAnim.setDuration(2500);
+                fadeAnim.start();
+            }
+        };
     }
 
 }
