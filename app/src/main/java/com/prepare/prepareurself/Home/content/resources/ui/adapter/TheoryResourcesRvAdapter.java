@@ -7,12 +7,15 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.bumptech.glide.GenericTransitionOptions;
 import com.bumptech.glide.Glide;
+import com.like.LikeButton;
+import com.like.OnLikeListener;
 import com.prepare.prepareurself.Home.content.resources.data.model.ResourceModel;
 import com.prepare.prepareurself.R;
 import com.prepare.prepareurself.utils.Constants;
@@ -48,10 +51,21 @@ public class TheoryResourcesRvAdapter extends RecyclerView.Adapter<TheoryResourc
         final ResourceModel theoryResources1= resourcesList.get(position);
         holder.bindview(theoryResources1);
 
-        holder.itemView.setOnClickListener(new View.OnClickListener() {
+        holder.tvTitle.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 listener.onResourceClicked(theoryResources1);
+            }
+        });
+        holder.hitLike.setOnLikeListener(new OnLikeListener() {
+            @Override
+            public void liked(LikeButton likeButton) {
+                listener.OnLikeButtonClicked(theoryResources1,true);
+            }
+
+            @Override
+            public void unLiked(LikeButton likeButton) {
+                listener.OnLikeButtonClicked(theoryResources1,false);
             }
         });
 
@@ -66,22 +80,18 @@ public class TheoryResourcesRvAdapter extends RecyclerView.Adapter<TheoryResourc
     }
 
     class TheoryResourcesViewHolder extends  RecyclerView.ViewHolder{
-//        ImageView theoryimageView;
-//        TextView theoryTvTitle;
 
+        private LikeButton hitLike;
         private ImageView imageView;
         private TextView tvTitle;
         private TextView tvDescription;
 
         public TheoryResourcesViewHolder(@NonNull View itemView) {
             super(itemView);
-//            theoryimageView=itemView.findViewById(R.id.img_theory_resources_adapter);
-//             theoryTvTitle = itemView.findViewById(R.id.tv_theory_resources_title);
-
             imageView = itemView.findViewById(R.id.topic_image);
             tvTitle = itemView.findViewById(R.id.tv_title_topic);
             tvDescription = itemView.findViewById(R.id.tv_decription_topic);
-
+            hitLike=itemView.findViewById(R.id.hitLike);
         }
 
         public  void bindview(ResourceModel resourceModel){
@@ -89,6 +99,7 @@ public class TheoryResourcesRvAdapter extends RecyclerView.Adapter<TheoryResourc
                     Constants.THEORYRESOURCEBASEURL + resourceModel.getImage_url())
                     .placeholder(R.drawable.placeholder)
                     .override(300,300)
+                    .fitCenter()
                     .transition(GenericTransitionOptions.<Drawable>with(Utility.getAnimationObject()))
                     .error(R.drawable.ic_image_loading_error)
                     .into(imageView);
@@ -102,6 +113,7 @@ public class TheoryResourcesRvAdapter extends RecyclerView.Adapter<TheoryResourc
 
     public interface TheoryResourceRvInteractor{
         void onResourceClicked(ResourceModel resource);
+        void OnLikeButtonClicked(ResourceModel resource,Boolean checked);
     }
 
 

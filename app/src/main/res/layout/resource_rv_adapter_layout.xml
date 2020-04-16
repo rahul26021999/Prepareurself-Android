@@ -3,7 +3,7 @@
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    android:padding="10dp">
+    xmlns:tools="http://schemas.android.com/tools">
 
     <androidx.cardview.widget.CardView
         android:layout_width="match_parent"
@@ -13,91 +13,93 @@
         app:layout_constraintTop_toTopOf="parent"
         android:id="@+id/card_resource_title">
 
-        <androidx.constraintlayout.widget.ConstraintLayout
+        <RelativeLayout
             android:layout_width="match_parent"
             android:layout_height="160dp"
             android:padding="10dp">
 
-            <ImageView
+            <androidx.cardview.widget.CardView
                 android:layout_width="150dp"
-                android:layout_height="150dp"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toTopOf="parent"
-                android:id="@+id/topic_image"
-                android:src="@drawable/placeholder"
-                android:scaleType="fitXY"/>
-
+                android:id="@+id/image"
+                app:cardCornerRadius="12dp"
+                app:cardElevation="0dp"
+                android:layout_height="130dp">
+                <ImageView
+                    android:layout_width="150dp"
+                    android:layout_height="130dp"
+                    android:scaleType="fitStart"
+                    android:id="@+id/topic_image"
+                    android:src="@drawable/placeholder" />
+            </androidx.cardview.widget.CardView>
             <TextView
-                android:layout_width="220dp"
+                android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                app:layout_constraintStart_toEndOf="@id/topic_image"
-                app:layout_constraintTop_toTopOf="parent"
-                android:layout_marginTop="10dp"
+                android:layout_toRightOf="@id/image"
                 android:text="This is the title of the topicsknkljdnfkjdn"
-                android:textSize="16sp"
+                android:textSize="14sp"
                 android:singleLine="false"
                 android:minLines="1"
                 android:textColor="#000"
-                android:layout_marginStart="5dp"
+                android:layout_marginStart="10dp"
+                android:layout_marginEnd="5dp"
                 android:fontFamily="@font/poppins_medium"
                 android:id="@+id/tv_title_topic"/>
 
             <TextView
-                android:layout_width="220dp"
+                android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                app:layout_constraintStart_toEndOf="@id/topic_image"
-                app:layout_constraintTop_toBottomOf="@id/tv_title_topic"
+                android:layout_toRightOf="@id/image"
+                android:layout_below="@+id/tv_title_topic"
                 android:layout_marginTop="10dp"
+                android:layout_marginEnd="10dp"
                 android:text="This is the title of the topics"
                 android:textSize="12sp"
-                android:layout_marginStart="5dp"
+                android:singleLine="true"
+                android:ellipsize="end"
+                android:layout_marginStart="10dp"
                 android:fontFamily="@font/poppins_medium"
                 android:id="@+id/tv_decription_topic"/>
 
-<!--            <TextView-->
-<!--                android:layout_width="wrap_content"-->
-<!--                android:layout_height="wrap_content"-->
-<!--                app:layout_constraintStart_toStartOf="parent"-->
-<!--                app:layout_constraintTop_toTopOf="parent"-->
-<!--                app:layout_constraintBottom_toBottomOf="parent"-->
-<!--                android:text="This is a title"-->
-<!--                android:textSize="16sp"-->
-<!--                android:id="@+id/tv_resource_title"-->
-<!--                android:textColor="#000"-->
-<!--                android:fontFamily="@font/poppins_medium"/>-->
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_toRightOf="@id/image"
+                android:layout_below="@+id/tv_decription_topic"
+                android:layout_marginTop="10dp"
+                android:textColor="@color/colorAccent"
+                android:textSize="10sp"
+                android:text="10 views"
+                android:singleLine="true"
+                android:layout_marginStart="10dp"
+                android:fontFamily="@font/poppins_medium"
+                android:id="@+id/no_of_views"/>
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_toRightOf="@id/no_of_views"
+                android:layout_below="@+id/tv_decription_topic"
+                android:layout_marginTop="10dp"
+                android:textColor="@color/colorAccent"
+                android:textSize="10sp"
+                android:text="10 likes"
+                android:singleLine="true"
+                android:layout_marginStart="10dp"
+                android:fontFamily="@font/poppins_medium"
+                android:id="@+id/tv_no_of_resources"/>
 
-<!--            <ImageView-->
-<!--                android:layout_width="35dp"-->
-<!--                android:layout_height="35dp"-->
-<!--                android:id="@+id/img_resource_title_expansion"-->
-<!--                app:layout_constraintEnd_toEndOf="parent"-->
-<!--                app:layout_constraintTop_toTopOf="parent"-->
-<!--                app:layout_constraintBottom_toBottomOf="parent"-->
-<!--                android:src="@drawable/ic_action_down_black"/>-->
+            <com.like.LikeButton
+                app:icon_type="thumb"
+                app:icon_size="25dp"
+                android:layout_alignParentBottom="true"
+                android:layout_alignParentEnd="true"
+                android:layout_marginEnd="18dp"
+                android:layout_marginBottom="10dp"
+                android:id="@+id/hitLike"
+                android:layout_width="20dp"
+                android:layout_height="20dp"/>
 
-        </androidx.constraintlayout.widget.ConstraintLayout>
+        </RelativeLayout>
 
     </androidx.cardview.widget.CardView>
-
-    <androidx.constraintlayout.widget.ConstraintLayout
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/card_resource_title"
-        android:padding="10dp"
-        android:visibility="gone"
-        android:id="@+id/view_resource_decription_parent">
-
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:id="@+id/tv_resouce_description"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent"
-            android:text="This is a description of the resource"
-            android:fontFamily="@font/poppins_medium"/>
-
-    </androidx.constraintlayout.widget.ConstraintLayout>
 
 </androidx.constraintlayout.widget.ConstraintLayout>

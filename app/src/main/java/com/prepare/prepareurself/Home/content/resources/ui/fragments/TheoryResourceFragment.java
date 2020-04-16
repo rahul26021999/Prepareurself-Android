@@ -15,6 +15,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AbsListView;
+import android.widget.Toast;
 
 import com.prepare.prepareurself.Home.content.resources.data.model.ResourceModel;
 import com.prepare.prepareurself.Home.content.resources.data.model.ResourcesResponse;
@@ -124,5 +125,10 @@ public class TheoryResourceFragment extends Fragment implements TheoryResourcesR
     @Override
     public void onResourceClicked(ResourceModel resource) {
         Utility.redirectUsingCustomTab(getActivity(),resource.getLink());
+    }
+
+    @Override
+    public void OnLikeButtonClicked(ResourceModel resource, Boolean checked) {
+        Toast.makeText(getContext(),"Liked button clicked",Toast.LENGTH_SHORT).show();
     }
 }
