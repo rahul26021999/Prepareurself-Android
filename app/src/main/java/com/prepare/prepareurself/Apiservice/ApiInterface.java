@@ -26,7 +26,9 @@ public interface ApiInterface {
 
     @POST("get-topics")
     Call<GetTopicResponseModel> getTopics(@Query("token") String token,
-                                          @Query("course_id") int courseId);
+                                          @Query("course_id") int courseId,
+                                          @Query("count") int count,
+                                          @Query("page_number") int pageNumber);
 
     @POST("get-resources")
     Call<GetResourcesResponse> getResources(@Query("token") String token,

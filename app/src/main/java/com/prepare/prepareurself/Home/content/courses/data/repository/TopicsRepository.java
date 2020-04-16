@@ -1,6 +1,7 @@
 package com.prepare.prepareurself.Home.content.courses.data.repository;
 
 import android.app.Application;
+import android.util.Log;
 
 import androidx.lifecycle.LiveData;
 import androidx.lifecycle.MutableLiveData;
@@ -10,6 +11,7 @@ import com.prepare.prepareurself.Apiservice.ApiInterface;
 import com.prepare.prepareurself.Home.content.courses.data.db.repository.TopicsDbRepository;
 import com.prepare.prepareurself.Home.content.courses.data.model.GetTopicResponseModel;
 import com.prepare.prepareurself.Home.content.courses.data.model.TopicsModel;
+import com.prepare.prepareurself.Home.content.courses.data.model.TopicsResponseModel;
 
 import java.util.List;
 
@@ -27,35 +29,36 @@ public class TopicsRepository {
         topicsDbRepository = new TopicsDbRepository(application);
     }
 
-    public LiveData<List<TopicsModel>> getTopicsByIId(String token, int courseId){
-        final MutableLiveData<List<TopicsModel>> data = new MutableLiveData<>();
+    public LiveData<TopicsResponseModel> getTopicsByIId(String token, int courseId, int count, int pageNumber){
+        final MutableLiveData<TopicsResponseModel> topicResponse = new MutableLiveData<>();
 
-        apiInterface.getTopics(token,courseId).enqueue(new Callback<GetTopicResponseModel>() {
+        Log.d("url_debug",apiInterface.getTopics(token,courseId,count,pageNumber).request().url().toString());
+        apiInterface.getTopics(token,courseId, count, pageNumber).enqueue(new Callback<GetTopicResponseModel>() {
             @Override
             public void onResponse(Call<GetTopicResponseModel> call, Response<GetTopicResponseModel> response) {
                 GetTopicResponseModel responseModel = response.body();
                 if (responseModel!=null){
                     if (responseModel.getError_code() == 0){
-                        topicsDbRepository.deleteAllTopics();
+                       // topicsDbRepository.deleteAllTopics();
                         for (TopicsModel topicsModel : responseModel.getTopics().getData()) {
                             topicsDbRepository.insertTopic(topicsModel);
                         }
-                        data.setValue(responseModel.getTopics().getData());
+                        topicResponse.setValue(responseModel.getTopics());
                     }else{
-                        data.setValue(null);
+                        topicResponse.setValue(null);
                     }
                 }else{
-                    data.setValue(null);
+                    topicResponse.setValue(null);
                 }
             }
 
             @Override
             public void onFailure(Call<GetTopicResponseModel> call, Throwable t) {
-                data.setValue(null);
+                topicResponse.setValue(null);
             }
         });
 
-        return data;
+        return topicResponse;
 
     }
 
