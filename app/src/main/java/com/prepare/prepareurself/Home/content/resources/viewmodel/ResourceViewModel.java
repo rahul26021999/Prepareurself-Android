@@ -9,6 +9,7 @@ import androidx.lifecycle.MutableLiveData;
 
 import com.prepare.prepareurself.Home.content.resources.data.db.repository.ResourcesDbRepository;
 import com.prepare.prepareurself.Home.content.resources.data.model.ResourceModel;
+import com.prepare.prepareurself.Home.content.resources.data.model.ResourcesResponse;
 import com.prepare.prepareurself.Home.content.resources.data.repository.ResourceRespository;
 
 import java.util.List;
@@ -16,6 +17,7 @@ import java.util.List;
 public class ResourceViewModel extends AndroidViewModel {
 
     private LiveData<List<ResourceModel>> listLiveData = new MutableLiveData<>();
+    private LiveData<ResourcesResponse> responseLiveData = new MutableLiveData<>();
 
     private ResourceRespository resourceRespository;
     private ResourcesDbRepository resourcesDbRepository;
@@ -26,8 +28,12 @@ public class ResourceViewModel extends AndroidViewModel {
         resourcesDbRepository = new ResourcesDbRepository(application);
     }
 
-    public void fetchResources(String token, int topicId){
-        listLiveData = resourceRespository.getResourcesByID(token,topicId);
+    public void fetchResources(String token, int topicId, int pageNumber, int count, String type){
+        responseLiveData = resourceRespository.getResourcesByID(token,topicId, pageNumber, count, type);
+    }
+
+    public LiveData<ResourcesResponse> getResponseLiveData() {
+        return responseLiveData;
     }
 
     public LiveData<List<ResourceModel>> getListLiveData(int topicId, String type) {

@@ -48,9 +48,9 @@ public class ResourcesActivity extends AppCompatActivity {
 
         prefManager = new PrefManager(ResourcesActivity.this);
 
-        if (topicID!=-1){
-            viewModel.fetchResources(prefManager.getString(Constants.JWTTOKEN),topicID);
-        }
+//        if (topicID!=-1){
+//            viewModel.fetchResources(prefManager.getString(Constants.JWTTOKEN),topicID);
+//        }
 
         SectionsPagerAdapter sectionsPagerAdapter = new SectionsPagerAdapter(getSupportFragmentManager());
         sectionsPagerAdapter.addFragment(VideoResourceFragment.newInstance(),"Videos");

@@ -25,10 +25,15 @@ public interface ApiInterface {
     Call<GetCourseResponseModel> getCourses(@Query("token") String token);
 
     @POST("get-topics")
-    Call<GetTopicResponseModel> getTopics(@Query("token") String token, @Query("course_id") int courseId);
+    Call<GetTopicResponseModel> getTopics(@Query("token") String token,
+                                          @Query("course_id") int courseId);
 
     @POST("get-resources")
-    Call<GetResourcesResponse> getResources(@Query("token") String token, @Query("topic_id") int topicId);
+    Call<GetResourcesResponse> getResources(@Query("token") String token,
+                                            @Query("topic_id") int topicId,
+                                            @Query("page_number") int pageNumber,
+                                            @Query("count") int count,
+                                            @Query("type") String type);
 
 
 }
