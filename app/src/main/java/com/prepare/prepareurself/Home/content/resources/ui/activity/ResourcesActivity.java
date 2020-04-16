@@ -43,8 +43,8 @@ public class ResourcesActivity extends AppCompatActivity {
 
         viewPager = findViewById(R.id.view_pager_resources);
         tabs = findViewById(R.id.tabs_topics);
-        relVideo = findViewById(R.id.rel_resource_videos);
-        relTheory = findViewById(R.id.rel_resource_theory);
+//        relVideo = findViewById(R.id.rel_resource_videos);
+//        relTheory = findViewById(R.id.rel_resource_theory);
         tvTopVideo = findViewById(R.id.tv_resouce_heading_video);
         tvTopTheory = findViewById(R.id.tv_resouce_heading_theory);
 
@@ -65,14 +65,14 @@ public class ResourcesActivity extends AppCompatActivity {
         viewPager.setAdapter(sectionsPagerAdapter);
         tabs.setupWithViewPager(viewPager);
 
-        relVideo.setOnClickListener(new View.OnClickListener() {
+        tvTopVideo.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 viewPager.setCurrentItem(0, true);
             }
         });
 
-        relTheory.setOnClickListener(new View.OnClickListener() {
+        tvTopTheory.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 viewPager.setCurrentItem(1, true);
