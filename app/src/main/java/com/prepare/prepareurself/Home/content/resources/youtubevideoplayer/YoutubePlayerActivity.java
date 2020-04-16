@@ -5,9 +5,12 @@ import android.os.Bundle;
 import android.text.TextUtils;
 import android.widget.TextView;
 
-import androidx.lifecycle.ViewModelProviders;
+import androidx.recyclerview.widget.RecyclerView;
+import androidx.recyclerview.widget.StaggeredGridLayoutManager;
 
-import com.prepare.prepareurself.Home.content.resources.viewmodel.ResourceViewModel;
+import com.prepare.prepareurself.Home.content.resources.data.db.repository.ResourcesDbRepository;
+import com.prepare.prepareurself.Home.content.resources.data.model.ResourceModel;
+import com.prepare.prepareurself.Home.content.resources.ui.adapter.RelatedVideosRvAdapter;
 import com.prepare.prepareurself.R;
 import com.prepare.prepareurself.utils.Constants;
 import com.prepare.prepareurself.utils.Utility;
@@ -16,36 +19,57 @@ import com.google.android.youtube.player.YouTubeInitializationResult;
 import com.google.android.youtube.player.YouTubePlayer;
 import com.google.android.youtube.player.YouTubePlayerView;
 
+import java.util.List;
+
 public class YoutubePlayerActivity extends YouTubeBaseActivity implements YouTubePlayer.OnInitializedListener {
 
     private static final int RECOVERY_DIALOG_REQUEST = 1;
     YouTubePlayerView youTubePlayerView;
     //VideoResources v1;
     String videoCode = "";
-    int videoId ;
+    int resourceId, videoTopicId ;
     String videoTitle="";
     String videoDescription="";
+    RecyclerView rvRelatedVideos;
+
+    private ResourcesDbRepository resourcesDbRepository;
 
     private TextView tvTitle,tvDescription;
+    private RelatedVideosRvAdapter adapter;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_youtube_player);
 
+        resourcesDbRepository = new ResourcesDbRepository(getApplication());
+        adapter = new RelatedVideosRvAdapter(this);
+
         youTubePlayerView = findViewById(R.id.youtube_playerview);
         tvTitle = findViewById(R.id.tv_youtube_title);
         tvDescription = findViewById(R.id.tv_youtube_description);
+        rvRelatedVideos = findViewById(R.id.rv_relatedvideos_youtube);
 
         Intent intent = getIntent();
 
         videoCode = intent.getStringExtra(Constants.VIDEOCODE);
-        videoId = intent.getIntExtra(Constants.VIDEOID, -1);
+        resourceId = intent.getIntExtra(Constants.RESOURCEID, -1);
         videoTitle = intent.getStringExtra(Constants.VIDEOTITLE);
         videoDescription = intent.getStringExtra(Constants.VIDEODESCRIPTION);
+        videoTopicId = intent.getIntExtra(Constants.TOPICID, -1);
 
         tvTitle.setText(videoTitle);
         tvDescription.setText(videoDescription);
+
+        StaggeredGridLayoutManager layoutManager = new StaggeredGridLayoutManager(2,StaggeredGridLayoutManager.VERTICAL);
+        rvRelatedVideos.setLayoutManager(layoutManager);
+        rvRelatedVideos.setAdapter(adapter);
+
+        //List<ResourceModel> resourceModels = resourcesDbRepository.getResourceResourcesExcept(videoTopicId,Constants.VIDEO, resourceId).getValue();
+        List<ResourceModel> resourceModels = resourcesDbRepository.getResourcesByID(videoTopicId,Constants.VIDEO).getValue();
+
+        adapter.setResources(resourceModels);
+        adapter.notifyDataSetChanged();
 
 //        v1 = new VideoResources();
 //        v1.setVideoId("1");

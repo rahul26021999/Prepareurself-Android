@@ -26,6 +26,11 @@ public class ResourcesDbRepository {
         return listLiveData;
     }
 
+    public LiveData<List<ResourceModel>> getResourceResourcesExcept(int topic_id, String type, int resource_id){
+        listLiveData = resourcesRoomDao.getResourceByIdExcept(topic_id,type,resource_id);
+        return listLiveData;
+    }
+
     public void insertResource(ResourceModel resourceModel){
         new insertAsyncResource(resourcesRoomDao).execute(resourceModel);
     }
