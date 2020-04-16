@@ -97,7 +97,6 @@ public class ResourcesFragment extends Fragment implements ResourcesRvAdapter.Re
 
                             if (isScrolling && (rvCurrentItems + rvScrolledOutItems) == rvTotalItems && rvCurrentPage<=rvLastPage){
                                 isScrolling = false;
-//                                int nextPageNumber = Utility.getNextPageNumber(topicsResponseModel.getNext_page_url());
                                 mViewModel.getCourseById(prefManager.getString(Constants.JWTTOKEN),
                                         CoursesActivity.courseId,
                                         10,
