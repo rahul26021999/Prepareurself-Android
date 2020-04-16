@@ -16,9 +16,7 @@
         android:id="@+id/rv_video_resources"
         tools:listitem="@layout/video_resources_rv_adapter_layout"
         app:layout_constrainedHeight="true"
-        android:visibility="visible"
         android:layout_marginTop="10dp"
-        android:background="@android:color/transparent"
-        android:layout_marginBottom="?actionBarSize"/>
+        android:background="@android:color/transparent"/>
 
 </androidx.constraintlayout.widget.ConstraintLayout>

@@ -1,10 +1,10 @@
 package com.prepare.prepareurself.Home.content.resources.ui.activity;
 
 import android.content.Intent;
-import android.graphics.Color;
 import android.os.Bundle;
 import android.view.MenuItem;
 import android.view.View;
+import android.widget.ImageView;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 
@@ -15,47 +15,36 @@ import com.prepare.prepareurself.Home.content.resources.viewmodel.ResourceViewMo
 import com.prepare.prepareurself.R;
 import com.prepare.prepareurself.utils.Constants;
 import com.prepare.prepareurself.utils.PrefManager;
-import com.google.android.material.tabs.TabLayout;
 
 import androidx.lifecycle.ViewModelProviders;
 import androidx.viewpager.widget.ViewPager;
 import androidx.appcompat.app.AppCompatActivity;
 
-public class ResourcesActivity extends AppCompatActivity {
+public class ResourcesActivity extends AppCompatActivity implements View.OnClickListener {
 
     private ViewPager viewPager;
-    private TabLayout tabs;
     private ResourceViewModel viewModel;
 
     private PrefManager prefManager;
 
     private RelativeLayout relVideo, relTheory;
     private TextView tvTopVideo, tvTopTheory;
-
+    private ImageView BackBtn;
     public static int topicID;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_courses);
+        setContentView(R.layout.activity_resources);
 
         viewModel = ViewModelProviders.of(this).get(ResourceViewModel.class);
 
         viewPager = findViewById(R.id.view_pager_resources);
-        tabs = findViewById(R.id.tabs_topics);
-//        relVideo = findViewById(R.id.rel_resource_videos);
-//        relTheory = findViewById(R.id.rel_resource_theory);
         tvTopVideo = findViewById(R.id.tv_resouce_heading_video);
         tvTopTheory = findViewById(R.id.tv_resouce_heading_theory);
-
+        BackBtn=findViewById(R.id.backBtn);
         Intent intent = getIntent();
         topicID = intent.getIntExtra(Constants.TOPICID,-1);
-
-
-//        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
-//        getSupportActionBar().setDisplayShowHomeEnabled(true);
-//
-//        getSupportActionBar().setTitle("Resources");
 
         prefManager = new PrefManager(ResourcesActivity.this);
 
@@ -63,21 +52,11 @@ public class ResourcesActivity extends AppCompatActivity {
         sectionsPagerAdapter.addFragment(VideoResourceFragment.newInstance(),"Videos");
         sectionsPagerAdapter.addFragment(TheoryResourceFragment.newInstance(),"Theories");
         viewPager.setAdapter(sectionsPagerAdapter);
-        tabs.setupWithViewPager(viewPager);
 
-        tvTopVideo.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                viewPager.setCurrentItem(0, true);
-            }
-        });
 
-        tvTopTheory.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                viewPager.setCurrentItem(1, true);
-            }
-        });
+        BackBtn.setOnClickListener(this);
+        tvTopVideo.setOnClickListener(this);
+        tvTopTheory.setOnClickListener(this);
 
         viewPager.addOnPageChangeListener(new ViewPager.OnPageChangeListener() {
             @Override
@@ -102,8 +81,6 @@ public class ResourcesActivity extends AppCompatActivity {
             }
         });
 
-
-
     }
 
 
@@ -117,5 +94,21 @@ public class ResourcesActivity extends AppCompatActivity {
         }
 
         return super.onOptionsItemSelected(item);
+    }
+
+    @Override
+    public void onClick(View v) {
+        switch (v.getId())
+        {
+            case R.id.backBtn:
+                onBackPressed();
+                break;
+            case R.id.tv_resouce_heading_theory:
+                    viewPager.setCurrentItem(0, true);
+                    break;
+            case R.id.tv_resouce_heading_video:
+                viewPager.setCurrentItem(1, true);
+                break;
+        }
     }
 }

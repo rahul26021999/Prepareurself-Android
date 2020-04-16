@@ -1,0 +1,102 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/colorPrimaryLight"
+    tools:context=".Home.content.resources.ui.activity.ResourcesActivity">
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="130dp"
+        android:id="@+id/topbar"
+        android:background="@color/colorPrimaryDark"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent">
+
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:gravity="center_vertical"
+            android:padding="16dp">
+
+            <ImageView
+                android:layout_width="40dp"
+                android:layout_height="40dp"
+                android:padding="9dp"
+                android:background="?attr/selectableItemBackgroundBorderless"
+                android:id="@+id/backBtn"
+                android:src="@drawable/ic_arrow_back_24dp" />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Resources"
+                android:textColor="@color/white"
+                android:textSize="20sp"
+                android:layout_centerHorizontal="true"
+                android:layout_centerVertical="true" />
+        </RelativeLayout>
+    </RelativeLayout>
+
+    <androidx.cardview.widget.CardView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="105dp"
+        android:layout_marginStart="20dp"
+        app:cardCornerRadius="23dp"
+        android:layout_marginEnd="20dp"
+        android:id="@+id/card_resource_heading">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:weightSum="2"
+            android:orientation="horizontal">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Videos"
+                android:padding="13dp"
+                android:layout_weight="1"
+                android:background="?attr/selectableItemBackground"
+                android:textAllCaps="true"
+                android:textStyle="bold"
+                android:fontFamily="@font/proximanovaregular"
+                android:textColor="@color/blue"
+                android:textSize="14sp"
+                android:gravity="center"
+                android:id="@+id/tv_resouce_heading_video"/>
+
+            <View
+                android:layout_width="1dp"
+                android:layout_height="match_parent"
+                android:background="@color/lightGrey"/>
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Theory"
+                android:padding="13dp"
+                android:background="?attr/selectableItemBackground"
+                android:layout_weight="1"
+                android:textAllCaps="true"
+                android:fontFamily="@font/proximanovaregular"
+                android:textColor="@color/lightgrey"
+                android:textStyle="bold"
+                android:textSize="14sp"
+                android:gravity="center"
+                android:id="@+id/tv_resouce_heading_theory"/>
+
+        </LinearLayout>
+
+    </androidx.cardview.widget.CardView>
+    <androidx.viewpager.widget.ViewPager
+        android:id="@+id/view_pager_resources"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_below="@+id/topbar"
+        android:layout_marginTop="10dp"
+        app:layout_behavior="@string/appbar_scrolling_view_behavior" />
+</RelativeLayout>
