@@ -42,5 +42,7 @@
     <string name="tab_text_2">Tab 2</string>
     <string name="courses">Courses</string>
 
+    <string name="edit_profile">Edit Profile</string>
+    <string name="display">Display Name</string>
 
 </resources>

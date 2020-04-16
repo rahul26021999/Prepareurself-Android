@@ -5,7 +5,7 @@
     <uses-permission android:name="android.permission.INTERNET" />
 
     <application
-        android:name="com.prepare.prepareurself.utils.BaseApplication"
+        android:name=".utils.BaseApplication"
         android:allowBackup="true"
         android:icon="@mipmap/ic_logo"
         android:label="@string/app_name"
@@ -13,25 +13,30 @@
         android:supportsRtl="true"
         android:theme="@style/AppTheme"
         android:usesCleartextTraffic="true">
-        <activity android:name="com.prepare.prepareurself.Home.content.courses.ui.activity.CoursesActivity"></activity>
-        <activity android:name="com.prepare.prepareurself.Home.content.resources.youtubevideoplayer.YoutubePlayerActivity" />
+       <!-- <activity android:name=".Home.content.edit_profile"></activity>-->
+        <activity android:name=".Home.content.edit_profile"
+            android:theme="@style/AppTheme1">
+
+        </activity>
+        <activity android:name=".Home.content.courses.ui.activity.CoursesActivity" />
+        <activity android:name=".Home.content.resources.youtubevideoplayer.YoutubePlayerActivity" />
         <activity
-            android:name="com.prepare.prepareurself.Home.content.resources.ui.activity.ResourcesActivity"
+            android:name=".Home.content.resources.ui.activity.ResourcesActivity"
             android:label="@string/title_activity_courses"
             android:theme="@style/AppTheme" />
         <activity
             android:name=".ui.login.LoginActivity"
             android:label="@string/title_activity_login" />
         <activity
-            android:name="com.prepare.prepareurself.Home.ui.HomeActivity"
+            android:name=".Home.ui.HomeActivity"
             android:label="@string/title_activity_home"
             android:theme="@style/AppTheme.NoActionBar" />
-        <activity android:name="com.prepare.prepareurself.utils.QuizBaseActivity" />
+        <activity android:name=".utils.QuizBaseActivity" />
         <activity
-            android:name="com.prepare.prepareurself.quiz.QuizActivity"
+            android:name=".quiz.QuizActivity"
             android:theme="@style/AppTheme.NoActionBar" />
         <activity
-            android:name="com.prepare.prepareurself.Activites.MainActivity"
+            android:name=".Activites.MainActivity"
             android:theme="@style/AppTheme.NoActionBar">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
@@ -39,6 +44,7 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
+
 
         <meta-data
             android:name="preloaded_fonts"
