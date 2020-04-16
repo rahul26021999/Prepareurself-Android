@@ -3,7 +3,8 @@
     <color name="colorPrimary">#27254b</color>
     <color name="colorPrimaryDark">#27254b</color>
     <color name="colorAccent">#27254b</color>
-
+    <color name="colorWhite">#FFFFFF</color>
+    <color name="colorBlack">#000000</color>
     <color name="lightred">#ED2E55</color>
     <color name="lightgreen">#469A0A</color>
 
@@ -26,5 +27,17 @@
 
     <color name="lightGrey">#f3f3f3</color>
     <color name="white">#fff</color>
+
+    <color name="colorPrimary1">#008577</color>
+    <color name="colorPrimaryDar1">#293859</color>
+    <color name="colorAccent1">#D81B60</color>
+    <color name="white">#ffffff</color>
+    <color name="grey">#E9EAEE</color>
+    <color name="yellow">#F8BA0F</color>
+    <color name="goodgrey">#535353</color>
+    <color name="blue">#293859</color>
+    <color name="lightgrey">#EEEEEE</color>
+
+
 
 </resources>
