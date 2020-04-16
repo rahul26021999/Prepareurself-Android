@@ -14,7 +14,7 @@
         app:layout_constraintTop_toTopOf="parent"
         android:background="@color/lightGrey"
         app:layout_constraintEnd_toEndOf="parent"
-        tools:listitem="@layout/resource_rv_adapter_layout"
+        tools:listitem="@layout/theory_rv_adapter_layout"
         android:id="@+id/rv_theory_resources"
         app:layout_constrainedHeight="true"
         android:layout_marginBottom="?actionBarSize"/>

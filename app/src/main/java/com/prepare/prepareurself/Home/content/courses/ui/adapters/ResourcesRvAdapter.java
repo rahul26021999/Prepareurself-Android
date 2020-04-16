@@ -41,7 +41,7 @@ public class ResourcesRvAdapter extends RecyclerView.Adapter<ResourcesRvAdapter.
     @NonNull
     @Override
     public ResourceViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
-        View view = LayoutInflater.from(context).inflate(R.layout.resource_rv_adapter_layout,parent, false);
+        View view = LayoutInflater.from(context).inflate(R.layout.resources_rv_adapter_layout,parent, false);
 
         return new ResourceViewHolder(view);
     }
@@ -94,16 +94,12 @@ public class ResourcesRvAdapter extends RecyclerView.Adapter<ResourcesRvAdapter.
 
         private ImageView imageView;
         private TextView tvTitle;
-        private TextView tvDescription;
 
 
         public ResourceViewHolder(@NonNull View itemView) {
             super(itemView);
-
             imageView = itemView.findViewById(R.id.topic_image);
             tvTitle = itemView.findViewById(R.id.tv_title_topic);
-            tvDescription = itemView.findViewById(R.id.tv_decription_topic);
-
         }
 
         public void bindView(TopicsModel topicsModel) {
@@ -122,7 +118,6 @@ public class ResourcesRvAdapter extends RecyclerView.Adapter<ResourcesRvAdapter.
                     .error(R.drawable.ic_image_loading_error)
                     .into(imageView);
             tvTitle.setText(topicsModel.getName());
-            tvDescription.setText(topicsModel.getDescription());
 
         }
     }
