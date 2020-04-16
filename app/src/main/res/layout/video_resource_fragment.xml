@@ -4,6 +4,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:background="@android:color/transparent"
     tools:context=".Home.content.resources.ui.fragments.VideoResourceFragment">
 
     <androidx.recyclerview.widget.RecyclerView
@@ -15,6 +16,9 @@
         android:id="@+id/rv_video_resources"
         tools:listitem="@layout/video_resources_rv_adapter_layout"
         app:layout_constrainedHeight="true"
+        android:visibility="visible"
+        android:layout_marginTop="10dp"
+        android:background="@android:color/transparent"
         android:layout_marginBottom="?actionBarSize"/>
 
 </androidx.constraintlayout.widget.ConstraintLayout>

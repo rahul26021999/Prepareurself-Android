@@ -65,7 +65,7 @@ public class VideoResourceFragment extends Fragment implements VideoResoursesRvA
         adapter = new VideoResoursesRvAdapter(getActivity(), this);
         final LinearLayoutManager layoutManager = new LinearLayoutManager(getActivity(),RecyclerView.VERTICAL,false);
         rvVideoResources.setLayoutManager(layoutManager);
-        rvVideoResources.addItemDecoration(new DividerItemDecoration(getActivity()));
+      //  rvVideoResources.addItemDecoration(new DividerItemDecoration(getActivity()));
         rvVideoResources.setAdapter(adapter);
 
         if (ResourcesActivity.topicID!=-1){
