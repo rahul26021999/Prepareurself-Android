@@ -62,11 +62,11 @@ public class ResourcesActivity extends AppCompatActivity implements View.OnClick
             @Override
             public void onPageScrolled(int position, float positionOffset, int positionOffsetPixels) {
                 if (position==0){
-                    tvTopVideo.setTextColor(getResources().getColor(R.color.black));
-                    tvTopTheory.setTextColor(getResources().getColor(R.color.dark_grey));
+                    tvTopVideo.setTextColor(getResources().getColor(R.color.colorPrimaryDark));
+                    tvTopTheory.setTextColor(getResources().getColor(R.color.lightgrey));
                 }else if (position == 1){
-                    tvTopVideo.setTextColor(getResources().getColor(R.color.dark_grey));
-                    tvTopTheory.setTextColor(getResources().getColor(R.color.black));
+                    tvTopVideo.setTextColor(getResources().getColor(R.color.lightgrey));
+                    tvTopTheory.setTextColor(getResources().getColor(R.color.colorPrimaryDark));
                 }
             }
 
