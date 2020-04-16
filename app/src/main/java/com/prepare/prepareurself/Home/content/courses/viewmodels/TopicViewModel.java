@@ -9,6 +9,7 @@ import androidx.lifecycle.MutableLiveData;
 
 import com.prepare.prepareurself.Home.content.courses.data.db.repository.TopicsDbRepository;
 import com.prepare.prepareurself.Home.content.courses.data.model.TopicsModel;
+import com.prepare.prepareurself.Home.content.courses.data.model.TopicsResponseModel;
 import com.prepare.prepareurself.Home.content.courses.data.repository.TopicsRepository;
 
 import java.util.List;
@@ -16,6 +17,7 @@ import java.util.List;
 public class TopicViewModel extends AndroidViewModel {
 
     private LiveData<List<TopicsModel>> liveData = new MutableLiveData<>();
+    private LiveData<TopicsResponseModel> topicsResponseModelLiveData = new MutableLiveData<>();
     TopicsDbRepository topicsDbRepository;
     TopicsRepository topicsRepository;
 
@@ -25,8 +27,12 @@ public class TopicViewModel extends AndroidViewModel {
         topicsDbRepository = new TopicsDbRepository(application);
     }
 
-    public void getCourseById(String token, int courseId){
-        liveData = topicsRepository.getTopicsByIId(token,courseId);
+    public LiveData<TopicsResponseModel> getTopicsResponseModelLiveData() {
+        return topicsResponseModelLiveData;
+    }
+
+    public void getCourseById(String token, int courseId, int count, int pageNumber){
+        topicsResponseModelLiveData = topicsRepository.getTopicsByIId(token,courseId, count, pageNumber);
     }
 
     public LiveData<List<TopicsModel>> getLiveData(int courseId) {

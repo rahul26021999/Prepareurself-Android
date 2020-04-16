@@ -51,9 +51,9 @@ public class CoursesActivity extends AppCompatActivity {
 
         getSupportActionBar().setTitle("Tech Stack");
 
-        if (courseId != -1){
-            topicViewModel.getCourseById(prefManager.getString(Constants.JWTTOKEN),courseId);
-        }
+//        if (courseId != -1){
+//            topicViewModel.getCourseById(prefManager.getString(Constants.JWTTOKEN),courseId);
+//        }
 
         SectionsPagerAdapter sectionsPagerAdapter = new SectionsPagerAdapter(getSupportFragmentManager());
         sectionsPagerAdapter.addFragment(ProjectsFragment.newInstance(),"Projects");

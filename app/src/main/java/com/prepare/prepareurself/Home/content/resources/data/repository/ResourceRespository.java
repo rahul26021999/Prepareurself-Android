@@ -32,7 +32,6 @@ public class ResourceRespository {
     public LiveData<ResourcesResponse> getResourcesByID(String token, int topicId, int pageNumber, int count, String resourceType){
 
         final MutableLiveData<ResourcesResponse> data = new MutableLiveData<>();
-        final MutableLiveData<List<ResourceModel>> resources  = new MutableLiveData<>();
 
         apiInterface.getResources(token,topicId, pageNumber, count, resourceType).enqueue(new Callback<GetResourcesResponse>() {
             @Override
@@ -43,7 +42,6 @@ public class ResourceRespository {
                         for (ResourceModel resourceModel : resourcesResponse.getResources().getData()) {
                             resourcesDbRepository.insertResource(resourceModel);
                         }
-                        resources.setValue(resourcesResponse.getResources().getData());
                         data.setValue(resourcesResponse.getResources());
                     }else{
                         data.setValue(null);
