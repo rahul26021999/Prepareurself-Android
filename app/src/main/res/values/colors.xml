@@ -7,6 +7,8 @@
     <color name="lightred">#ED2E55</color>
     <color name="lightgreen">#469A0A</color>
 
+    <color name="dark_grey">#aaa</color>
+
     <!--quiz-->
     <color name="quiz_background">#27254b</color>
     <color name="quiz_selected_circler_color">#1368f1</color>
@@ -19,6 +21,9 @@
     <color name="active_dots">#F31919</color>
     <color name="inactive_dots">#C1B9B9</color>
     <color name="black">#000</color>
+    <color name="resource_background">#f2f3f7</color>
+    <color name="resource_active_color">#5b6063</color>
+
     <color name="lightGrey">#f3f3f3</color>
     <color name="white">#fff</color>
 
