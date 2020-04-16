@@ -25,6 +25,7 @@ import com.prepare.prepareurself.Home.content.resources.viewmodel.ResourceViewMo
 
 import com.prepare.prepareurself.R;
 import com.prepare.prepareurself.utils.Constants;
+import com.prepare.prepareurself.utils.DividerItemDecoration;
 import com.prepare.prepareurself.utils.PrefManager;
 import com.prepare.prepareurself.utils.Utility;
 
@@ -64,6 +65,8 @@ public class TheoryResourceFragment extends Fragment implements TheoryResourcesR
         final LinearLayoutManager layoutManager=new LinearLayoutManager(getActivity(),RecyclerView.VERTICAL,false);
         rvTheoryResources.setLayoutManager(layoutManager);
         rvTheoryResources.setAdapter(adapter1);
+        DividerItemDecoration decoration = new DividerItemDecoration(requireContext(),R.drawable.theory_resource_divider);
+        rvTheoryResources.addItemDecoration(decoration);
 
         if (ResourcesActivity.topicID!=-1){
             mViewModel.fetchResources(prefManager.getString(Constants.JWTTOKEN),
