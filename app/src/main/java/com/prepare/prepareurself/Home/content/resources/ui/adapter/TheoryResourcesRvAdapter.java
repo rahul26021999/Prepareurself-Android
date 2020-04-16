@@ -99,7 +99,6 @@ public class TheoryResourcesRvAdapter extends RecyclerView.Adapter<TheoryResourc
                     Constants.THEORYRESOURCEBASEURL + resourceModel.getImage_url())
                     .placeholder(R.drawable.placeholder)
                     .override(300,300)
-                    .fitCenter()
                     .transition(GenericTransitionOptions.<Drawable>with(Utility.getAnimationObject()))
                     .error(R.drawable.ic_image_loading_error)
                     .into(imageView);
