@@ -131,9 +131,10 @@ public class VideoResourceFragment extends Fragment implements VideoResoursesRvA
     public void videoClicked(ResourceModel videoResources, String videoCode) {
         Intent intent = new Intent(getActivity(), YoutubePlayerActivity.class);
         intent.putExtra(Constants.VIDEOCODE,videoCode);
-        intent.putExtra(Constants.VIDEOID,videoResources.getId());
+        intent.putExtra(Constants.RESOURCEID,videoResources.getId());
         intent.putExtra(Constants.VIDEOTITLE, videoResources.getTitle());
         intent.putExtra(Constants.VIDEODESCRIPTION, videoResources.getDescription());
+        intent.putExtra(Constants.TOPICID,ResourcesActivity.topicID);
 
         startActivity(intent);
     }

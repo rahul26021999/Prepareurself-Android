@@ -38,4 +38,5 @@ public class Constants {
     public static final String VIDEOID = "video_id";
     public static final String VIDEODESCRIPTION = "video_decription";
     public static final String VIDEOTITLE = "video_title";
+    public static final String RESOURCEID = "resource_id";
 }
