@@ -39,7 +39,7 @@ public class VideoResourceFragment extends Fragment implements VideoResoursesRvA
     private VideoResoursesRvAdapter adapter;
     private PrefManager prefManager;
     private Boolean isScrolling = false;
-    private int rvCurrentItems, rvTotalItems, rvScrolledOutItems;
+    private int rvCurrentItems, rvTotalItems, rvScrolledOutItems, rvLastPage, rvCurrentPage=1;
 
     public static VideoResourceFragment newInstance() {
         return new VideoResourceFragment();
@@ -71,9 +71,10 @@ public class VideoResourceFragment extends Fragment implements VideoResoursesRvA
         if (ResourcesActivity.topicID!=-1){
             mViewModel.fetchResources(prefManager.getString(Constants.JWTTOKEN),
                     ResourcesActivity.topicID,
-                    1,
+                    rvCurrentPage,
                     10,
                     Constants.VIDEO);
+            rvCurrentPage+=1;
         }
 
         mViewModel.getResponseLiveData().observe(getActivity(), new Observer<ResourcesResponse>() {
@@ -97,14 +98,17 @@ public class VideoResourceFragment extends Fragment implements VideoResoursesRvA
                             rvTotalItems = layoutManager.getItemCount();
                             rvScrolledOutItems = layoutManager.findFirstVisibleItemPosition();
 
-                            if (isScrolling && (rvCurrentItems + rvScrolledOutItems) == rvTotalItems && resourcesResponse.getNext_page_url()!=null){
+                            rvLastPage = resourcesResponse.getLast_page();
+
+                            if (isScrolling && (rvCurrentItems + rvScrolledOutItems) == rvTotalItems && rvCurrentPage <= rvLastPage){
                                 isScrolling = false;
-                                int nextPageNumber = Utility.getNextPageNumber(resourcesResponse.getNext_page_url());
                                 mViewModel.fetchResources(prefManager.getString(Constants.JWTTOKEN),
                                         ResourcesActivity.topicID,
-                                        nextPageNumber,
+                                        rvCurrentPage,
                                         10,
                                         Constants.VIDEO);
+                                rvCurrentPage+=1;
+
                             }
 
                         }
