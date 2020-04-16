@@ -104,10 +104,10 @@ public class ResourcesActivity extends AppCompatActivity implements View.OnClick
                 onBackPressed();
                 break;
             case R.id.tv_resouce_heading_theory:
-                    viewPager.setCurrentItem(0, true);
+                    viewPager.setCurrentItem(1, true);
                     break;
             case R.id.tv_resouce_heading_video:
-                viewPager.setCurrentItem(1, true);
+                viewPager.setCurrentItem(0, true);
                 break;
         }
     }

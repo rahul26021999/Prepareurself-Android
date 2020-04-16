@@ -66,7 +66,7 @@
                 android:textColor="@color/colorPrimaryDark"
                 android:textStyle="bold"
                 android:fontFamily="@font/proximanovaregular"
-                android:textSize="14sp"
+                android:textSize="13sp"
                 android:gravity="center"
                 android:id="@+id/tv_resouce_heading_video"/>
 
@@ -85,7 +85,7 @@
                 android:fontFamily="@font/proximanovaregular"
                 android:textColor="@color/lightGrey"
                 android:textStyle="bold"
-                android:textSize="14sp"
+                android:textSize="13sp"
                 android:gravity="center"
                 android:id="@+id/tv_resouce_heading_theory"/>
 

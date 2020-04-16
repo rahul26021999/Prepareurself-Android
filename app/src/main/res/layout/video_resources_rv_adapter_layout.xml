@@ -3,10 +3,13 @@
     android:layout_height="wrap_content"
     xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
     app:cardCornerRadius="10dp"
     android:layout_marginStart="15dp"
     android:layout_marginEnd="15dp"
-    android:layout_marginTop="10dp">
+    app:cardElevation="0dp"
+    android:layout_marginBottom="5dp"
+    android:layout_marginTop="5dp">
 
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
@@ -15,7 +18,7 @@
 
         <com.google.android.youtube.player.YouTubeThumbnailView
             android:layout_width="match_parent"
-            android:layout_height="200dp"
+            android:layout_height="180dp"
             android:scaleType="centerCrop"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent"
@@ -27,18 +30,21 @@
             android:layout_height="wrap_content"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
-            android:paddingEnd="10dp"
+            android:paddingEnd="20dp"
+            android:background="?attr/selectableItemBackgroundBorderless"
             android:paddingStart="20dp"
             app:layout_constraintTop_toBottomOf="@+id/img_video_resources_adapter">
 
             <TextView
-                android:layout_width="wrap_content"
+                android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:text="This is a Title kjbjc lknk lkk lmj k klj l lkj'kdv pjop pmkmv pokopk km "
-                android:textSize="16sp"
-                android:layout_marginTop="10dp"
+                tools:text="This is a Title kjbjc lknk lkk lmj k klj l lkj'kdv pjop pmkmv pokopk km "
+                android:textSize="14sp"
+                android:layout_marginTop="5dp"
                 android:singleLine="false"
-                android:textColor="#000"
+                android:maxLines="2"
+                android:ellipsize="end"
+                android:textColor="@color/blue"
                 android:id="@+id/tv_video_resources_title"
                 android:fontFamily="@font/poppins_medium" />
 

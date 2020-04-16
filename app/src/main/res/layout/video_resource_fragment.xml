@@ -12,6 +12,7 @@
         android:layout_height="match_parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
+        android:overScrollMode="ifContentScrolls"
         app:layout_constraintEnd_toEndOf="parent"
         android:id="@+id/rv_video_resources"
         tools:listitem="@layout/video_resources_rv_adapter_layout"
