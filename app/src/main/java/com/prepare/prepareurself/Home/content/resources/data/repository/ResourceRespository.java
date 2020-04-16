@@ -11,6 +11,7 @@ import com.prepare.prepareurself.Apiservice.ApiInterface;
 import com.prepare.prepareurself.Home.content.resources.data.db.repository.ResourcesDbRepository;
 import com.prepare.prepareurself.Home.content.resources.data.model.GetResourcesResponse;
 import com.prepare.prepareurself.Home.content.resources.data.model.ResourceModel;
+import com.prepare.prepareurself.Home.content.resources.data.model.ResourcesResponse;
 
 import java.util.List;
 
@@ -28,22 +29,22 @@ public class ResourceRespository {
         resourcesDbRepository = new ResourcesDbRepository(application);
     }
 
-    public LiveData<List<ResourceModel>> getResourcesByID(String token, int topicId){
+    public LiveData<ResourcesResponse> getResourcesByID(String token, int topicId, int pageNumber, int count, String resourceType){
 
-        final MutableLiveData<List<ResourceModel>> data = new MutableLiveData<>();
+        final MutableLiveData<ResourcesResponse> data = new MutableLiveData<>();
+        final MutableLiveData<List<ResourceModel>> resources  = new MutableLiveData<>();
 
-        Log.d("debug","this is a");
-        apiInterface.getResources(token,topicId).enqueue(new Callback<GetResourcesResponse>() {
+        apiInterface.getResources(token,topicId, pageNumber, count, resourceType).enqueue(new Callback<GetResourcesResponse>() {
             @Override
             public void onResponse(Call<GetResourcesResponse> call, Response<GetResourcesResponse> response) {
                 GetResourcesResponse resourcesResponse = response.body();
                 if (resourcesResponse!=null){
                     if (resourcesResponse.getError_code()==0){
-                        resourcesDbRepository.deleteAllResources();
                         for (ResourceModel resourceModel : resourcesResponse.getResources().getData()) {
                             resourcesDbRepository.insertResource(resourceModel);
                         }
-                        data.setValue(resourcesResponse.getResources().getData());
+                        resources.setValue(resourcesResponse.getResources().getData());
+                        data.setValue(resourcesResponse.getResources());
                     }else{
                         data.setValue(null);
                     }

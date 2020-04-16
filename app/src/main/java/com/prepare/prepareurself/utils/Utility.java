@@ -69,4 +69,7 @@ public class Utility {
         };
     }
 
+    public static int getNextPageNumber(String next_page_url) {
+        return Integer.parseInt(next_page_url.split("=")[1]);
+    }
 }
