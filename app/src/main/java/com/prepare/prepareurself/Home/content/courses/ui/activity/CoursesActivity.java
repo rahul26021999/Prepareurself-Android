@@ -6,6 +6,8 @@ import androidx.viewpager.widget.ViewPager;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.util.Base64;
+import android.util.Log;
 import android.view.MenuItem;
 
 import com.prepare.prepareurself.Home.content.courses.ui.fragments.ProjectsFragment;
@@ -16,6 +18,8 @@ import com.prepare.prepareurself.R;
 import com.prepare.prepareurself.utils.Constants;
 import com.prepare.prepareurself.utils.PrefManager;
 import com.google.android.material.tabs.TabLayout;
+
+import java.io.UnsupportedEncodingException;
 
 public class CoursesActivity extends AppCompatActivity {
 
@@ -42,18 +46,13 @@ public class CoursesActivity extends AppCompatActivity {
 
         Intent intent = getIntent();
 
-        if (intent!=null){
-            courseId = intent.getIntExtra(Constants.COURSEID, -1);
-        }
+        courseId = intent.getIntExtra(Constants.COURSEID, -1);
 
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
         getSupportActionBar().setDisplayShowHomeEnabled(true);
 
         getSupportActionBar().setTitle("Tech Stack");
 
-//        if (courseId != -1){
-//            topicViewModel.getCourseById(prefManager.getString(Constants.JWTTOKEN),courseId);
-//        }
 
         SectionsPagerAdapter sectionsPagerAdapter = new SectionsPagerAdapter(getSupportFragmentManager());
         sectionsPagerAdapter.addFragment(ProjectsFragment.newInstance(),"Projects");

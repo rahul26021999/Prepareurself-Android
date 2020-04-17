@@ -38,13 +38,23 @@
                    android:textSize="14sp"
                    android:singleLine="false"
                    android:minLines="1"
-
                    android:layout_toRightOf="@id/image"
                    android:textColor="#000"
                    android:layout_marginStart="15dp"
                    android:layout_marginEnd="5dp"
                    android:fontFamily="@font/poppins_medium"
-                   android:id="@+id/tv_title_topic"/>
+                   android:id="@+id/tv_title_topic"
+                   android:layout_toLeftOf="@+id/img_share_theory_resource"/>
+
+
+            <ImageView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:src="@drawable/ic_image_share"
+                android:layout_alignParentEnd="true"
+                android:layout_marginEnd="5dp"
+                android:id="@+id/img_share_theory_resource"/>
+
 
                <TextView
                    android:layout_width="wrap_content"

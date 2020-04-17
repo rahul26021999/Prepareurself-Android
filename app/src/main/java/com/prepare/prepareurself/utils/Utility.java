@@ -2,7 +2,14 @@ package com.prepare.prepareurself.utils;
 
 import android.animation.ObjectAnimator;
 import android.content.Context;
+import android.content.Intent;
+import android.graphics.Bitmap;
+import android.graphics.Canvas;
+import android.graphics.Color;
+import android.graphics.drawable.Drawable;
 import android.net.Uri;
+import android.util.Base64;
+import android.util.Log;
 import android.util.Patterns;
 import android.view.View;
 import android.widget.Toast;
@@ -13,6 +20,9 @@ import androidx.core.content.ContextCompat;
 import com.bumptech.glide.request.transition.ViewPropertyTransition;
 import com.prepare.prepareurself.R;
 
+import java.io.File;
+import java.io.FileOutputStream;
+import java.io.UnsupportedEncodingException;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
@@ -71,5 +81,49 @@ public class Utility {
 
     public static int getNextPageNumber(String next_page_url) {
         return Integer.parseInt(next_page_url.split("=")[1]);
+    }
+
+    public static Bitmap getBitmapFromView(View view){
+        Bitmap returnedBitmap = Bitmap.createBitmap(view.getWidth(), view.getHeight(), Bitmap.Config.ARGB_8888);
+        Canvas canvas = new Canvas(returnedBitmap);
+        Drawable bgDrawable = view.getBackground();
+        if (bgDrawable!=null){
+            bgDrawable.draw(canvas);
+        }else{
+            canvas.drawColor(Color.WHITE);
+        }
+        view.draw(canvas);
+        return returnedBitmap;
+    }
+
+    public static void shareContent(Context context,Bitmap bitmap, String text){
+        try{
+            File file = new File(context.getExternalCacheDir(),"share.png");
+            FileOutputStream fout = new FileOutputStream(file);
+            bitmap.compress(Bitmap.CompressFormat.PNG, 100, fout);
+            fout.flush();
+            fout.close();
+            file.setReadable(true, false);
+            final Intent intent = new Intent(Intent.ACTION_SEND);
+            intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+            intent.putExtra(Intent.EXTRA_TEXT, text);
+            intent.putExtra(Intent.EXTRA_STREAM, Uri.fromFile(file));
+            intent.setType("image/png");
+            context.startActivity(Intent.createChooser(intent,"Share Via"));
+        }catch (Exception e){
+            e.printStackTrace();
+        }
+    }
+
+    public static String base64Encode(int id) throws UnsupportedEncodingException {
+        byte[] data = String.valueOf(id).getBytes("UTF-8");
+        return Base64.encodeToString(data, Base64.DEFAULT);
+    }
+
+    public static int base64Decode(String tempData) throws UnsupportedEncodingException {
+        String encoded_id = tempData.substring(1);
+        byte[] data1 = Base64.decode(encoded_id, Base64.DEFAULT);
+        String text = new String(data1, "UTF-8");
+        return Integer.parseInt(text);
     }
 }

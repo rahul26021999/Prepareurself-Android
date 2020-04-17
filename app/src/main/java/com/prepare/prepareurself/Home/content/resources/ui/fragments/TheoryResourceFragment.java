@@ -3,6 +3,10 @@ package com.prepare.prepareurself.Home.content.resources.ui.fragments;
 import androidx.lifecycle.Observer;
 import androidx.lifecycle.ViewModelProviders;
 
+import android.content.Context;
+import android.content.Intent;
+import android.graphics.Bitmap;
+import android.net.Uri;
 import android.os.Bundle;
 
 import androidx.annotation.NonNull;
@@ -17,6 +21,7 @@ import android.view.ViewGroup;
 import android.widget.AbsListView;
 import android.widget.Toast;
 
+import com.prepare.prepareurself.Home.content.dashboard.ui.fragment.DashboardFragment;
 import com.prepare.prepareurself.Home.content.resources.data.model.ResourceModel;
 import com.prepare.prepareurself.Home.content.resources.data.model.ResourcesResponse;
 import com.prepare.prepareurself.Home.content.resources.ui.activity.ResourcesActivity;
@@ -29,6 +34,8 @@ import com.prepare.prepareurself.utils.DividerItemDecoration;
 import com.prepare.prepareurself.utils.PrefManager;
 import com.prepare.prepareurself.utils.Utility;
 
+import java.io.File;
+import java.io.FileOutputStream;
 import java.util.List;
 
 public class TheoryResourceFragment extends Fragment implements TheoryResourcesRvAdapter.TheoryResourceRvInteractor {
@@ -39,6 +46,12 @@ public class TheoryResourceFragment extends Fragment implements TheoryResourcesR
     private PrefManager prefManager;
     private Boolean isScrolling = false;
     private int rvCurrentItems, rvTotalItems, rvScrolledOutItems, rvLastPage, rvCurrentPage=1;
+
+    private TheoryResourceFragmentInteractor listener;
+
+    public interface TheoryResourceFragmentInteractor{
+        void shareContent(Bitmap bitmap, String text);
+    }
 
     public static TheoryResourceFragment newInstance() {
         return new TheoryResourceFragment();
@@ -133,5 +146,22 @@ public class TheoryResourceFragment extends Fragment implements TheoryResourcesR
     @Override
     public void OnLikeButtonClicked(ResourceModel resource, Boolean checked) {
         Toast.makeText(getContext(),"Liked button clicked",Toast.LENGTH_SHORT).show();
+    }
+
+    @Override
+    public void onResourceShared(Bitmap bitmap, String text) {
+       // Utility.shareContent(getActivity(),bitmap,text);
+        listener.shareContent(bitmap, text);
+    }
+
+    @Override
+    public void onAttach(@NonNull Context context) {
+        super.onAttach(context);
+        try {
+            listener = (TheoryResourceFragment.TheoryResourceFragmentInteractor) context;
+        } catch (ClassCastException e) {
+            throw new ClassCastException(context.toString() + " must implement TheoryResourceFragmentInteractor");
+        }
+
     }
 }
