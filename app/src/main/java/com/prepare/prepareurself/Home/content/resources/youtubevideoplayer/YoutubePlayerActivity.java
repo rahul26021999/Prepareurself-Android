@@ -1,8 +1,13 @@
 package com.prepare.prepareurself.Home.content.resources.youtubevideoplayer;
 
 import android.content.Intent;
+import android.graphics.Bitmap;
+import android.net.Uri;
 import android.os.Bundle;
 import android.text.TextUtils;
+import android.util.Log;
+import android.view.View;
+import android.widget.ImageView;
 import android.widget.TextView;
 
 import androidx.recyclerview.widget.RecyclerView;
@@ -19,6 +24,7 @@ import com.google.android.youtube.player.YouTubeInitializationResult;
 import com.google.android.youtube.player.YouTubePlayer;
 import com.google.android.youtube.player.YouTubePlayerView;
 
+import java.io.UnsupportedEncodingException;
 import java.util.List;
 
 public class YoutubePlayerActivity extends YouTubeBaseActivity implements YouTubePlayer.OnInitializedListener {
@@ -31,11 +37,15 @@ public class YoutubePlayerActivity extends YouTubeBaseActivity implements YouTub
     String videoTitle="";
     String videoDescription="";
     RecyclerView rvRelatedVideos;
+    String bitmapUriString="";
+    Uri bitmapUri;
 
     private ResourcesDbRepository resourcesDbRepository;
 
     private TextView tvTitle,tvDescription;
     private RelatedVideosRvAdapter adapter;
+    private ImageView imageView;
+    private Boolean isDeepLinked = false;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -49,17 +59,63 @@ public class YoutubePlayerActivity extends YouTubeBaseActivity implements YouTub
         tvTitle = findViewById(R.id.tv_youtube_title);
         tvDescription = findViewById(R.id.tv_youtube_description);
         rvRelatedVideos = findViewById(R.id.rv_relatedvideos_youtube);
+        imageView = findViewById(R.id.img_share_youtube_video);
 
         Intent intent = getIntent();
 
-        videoCode = intent.getStringExtra(Constants.VIDEOCODE);
-        resourceId = intent.getIntExtra(Constants.RESOURCEID, -1);
-        videoTitle = intent.getStringExtra(Constants.VIDEOTITLE);
-        videoDescription = intent.getStringExtra(Constants.VIDEODESCRIPTION);
-        videoTopicId = intent.getIntExtra(Constants.TOPICID, -1);
+        if (intent.getData()!=null){
+            try {
+                String tempData = intent.getData().toString().split("video_resource")[1];
+                videoCode = Utility.base64DecodeForString(tempData);
+                youTubePlayerView.initialize(Constants.YOUTUBE_PLAYER_API_KEY,this);
+                isDeepLinked = true;
+            } catch (UnsupportedEncodingException e) {
+                e.printStackTrace();
+            }
+        }else{
+            videoCode = intent.getStringExtra(Constants.VIDEOCODE);
+            resourceId = intent.getIntExtra(Constants.RESOURCEID, -1);
+            videoTitle = intent.getStringExtra(Constants.VIDEOTITLE);
+            videoDescription = intent.getStringExtra(Constants.VIDEODESCRIPTION);
+            videoTopicId = intent.getIntExtra(Constants.TOPICID, -1);
+            bitmapUriString = intent.getStringExtra(Constants.BITMAPURI);
+            bitmapUri = Uri.parse(bitmapUriString);
+        }
+
 
         tvTitle.setText(videoTitle);
         tvDescription.setText(videoDescription);
+
+        imageView.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+
+                try {
+                    String encodedVideoCode = Utility.base64EncodeForString(videoCode);
+//                    String encodeVideoTitle = Utility.base64EncodeForString(videoTitle);
+//                    String encodedDecription = Utility.base64EncodeForString(videoDescription);
+//                    String encodedBitmapString = Utility.base64EncodeForString(videoDescription);
+
+                    String text = videoTitle + "\n"
+                            + "http://prepareurself.tk/video_resource/"
+                            + encodedVideoCode;
+//                            + encodeVideoTitle + "/"
+//                            + encodedDecription + "/"
+//                            + encodedBitmapString;
+
+                    //Utility.shareContent(getApplicationContext(),bitmapUri,text);
+                    final Intent intent = new Intent(Intent.ACTION_SEND);
+                    intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+                    intent.putExtra(Intent.EXTRA_TEXT, text);
+                    intent.putExtra(Intent.EXTRA_STREAM, bitmapUri);
+                    intent.setType("image/png");
+                    startActivity(Intent.createChooser(intent,"Share Via"));
+
+                } catch (UnsupportedEncodingException e) {
+                    e.printStackTrace();
+                }
+            }
+        });
 
         StaggeredGridLayoutManager layoutManager = new StaggeredGridLayoutManager(2,StaggeredGridLayoutManager.VERTICAL);
         rvRelatedVideos.setLayoutManager(layoutManager);
@@ -71,11 +127,7 @@ public class YoutubePlayerActivity extends YouTubeBaseActivity implements YouTub
         adapter.setResources(resourceModels);
         adapter.notifyDataSetChanged();
 
-//        v1 = new VideoResources();
-//        v1.setVideoId("1");
-//        v1.setVideoTitle("This is Video 1");
-//        v1.setVideoCode("X2COHLCv0eQ");
-//        v1.setImageUrl("https://bs-uploads.toptal.io/blackfish-uploads/blog/post/seo/og_image_file/og_image/15921/secure-rest-api-in-nodejs-18f43b3033c239da5d2525cfd9fdc98f.png");
+
 
     }
 

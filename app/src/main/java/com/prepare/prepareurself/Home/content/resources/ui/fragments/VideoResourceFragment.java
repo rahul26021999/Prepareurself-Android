@@ -4,6 +4,8 @@ import androidx.lifecycle.Observer;
 import androidx.lifecycle.ViewModelProviders;
 
 import android.content.Intent;
+import android.graphics.Bitmap;
+import android.net.Uri;
 import android.os.Bundle;
 
 import androidx.annotation.NonNull;
@@ -30,6 +32,7 @@ import com.prepare.prepareurself.utils.DividerItemDecoration;
 import com.prepare.prepareurself.utils.PrefManager;
 import com.prepare.prepareurself.utils.Utility;
 
+import java.io.IOException;
 import java.util.List;
 
 public class VideoResourceFragment extends Fragment implements VideoResoursesRvAdapter.VideoResourceInteractor {
@@ -128,13 +131,19 @@ public class VideoResourceFragment extends Fragment implements VideoResoursesRvA
     }
 
     @Override
-    public void videoClicked(ResourceModel videoResources, String videoCode) {
+    public void videoClicked(ResourceModel videoResources, String videoCode, Bitmap bitmap) {
         Intent intent = new Intent(getActivity(), YoutubePlayerActivity.class);
         intent.putExtra(Constants.VIDEOCODE,videoCode);
         intent.putExtra(Constants.RESOURCEID,videoResources.getId());
         intent.putExtra(Constants.VIDEOTITLE, videoResources.getTitle());
         intent.putExtra(Constants.VIDEODESCRIPTION, videoResources.getDescription());
         intent.putExtra(Constants.TOPICID,ResourcesActivity.topicID);
+        try {
+            Uri bitmapUri = Utility.getUriOfBitmap(bitmap, getActivity());
+            intent.putExtra(Constants.BITMAPURI,bitmapUri.toString());
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
 
         startActivity(intent);
     }
