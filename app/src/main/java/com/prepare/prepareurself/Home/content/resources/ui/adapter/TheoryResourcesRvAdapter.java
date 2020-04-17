@@ -105,6 +105,7 @@ public class TheoryResourcesRvAdapter extends RecyclerView.Adapter<TheoryResourc
         private TextView tvTitle;
         private TextView tvDescription;
         private ImageView imgShare;
+        private TextView tvViews, tvLikes;
 
         public TheoryResourcesViewHolder(@NonNull View itemView) {
             super(itemView);
@@ -113,6 +114,8 @@ public class TheoryResourcesRvAdapter extends RecyclerView.Adapter<TheoryResourc
             tvDescription = itemView.findViewById(R.id.tv_decription_topic);
             hitLike=itemView.findViewById(R.id.hitLike);
             imgShare = itemView.findViewById(R.id.img_share_theory_resource);
+            tvViews = itemView.findViewById(R.id.no_of_views);
+            tvLikes = itemView.findViewById(R.id.tv_no_of_likes);
 
         }
 
@@ -127,7 +130,14 @@ public class TheoryResourcesRvAdapter extends RecyclerView.Adapter<TheoryResourc
 
             tvTitle.setText(resourceModel.getTitle());
             tvDescription.setText(resourceModel.getDescription());
+            tvViews.setText(resourceModel.getViews()+" views");
+            tvLikes.setText(resourceModel.getTotal_likes() + " likes");
 
+            if (resourceModel.getLike() == 0){
+                hitLike.setEnabled(true);
+            }else{
+                hitLike.setEnabled(false);
+            }
 
         }
 

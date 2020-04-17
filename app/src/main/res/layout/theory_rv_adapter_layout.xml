@@ -96,7 +96,7 @@
                    android:singleLine="true"
                    android:layout_marginStart="10dp"
                    android:fontFamily="@font/poppins_medium"
-                   android:id="@+id/tv_no_of_resources"/>
+                   android:id="@+id/tv_no_of_likes"/>
 
                <com.like.LikeButton
                    app:icon_type="thumb"
