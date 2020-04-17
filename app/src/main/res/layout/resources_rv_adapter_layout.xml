@@ -1,54 +1,98 @@
 <?xml version="1.0" encoding="utf-8"?>
 <RelativeLayout
     xmlns:android="http://schemas.android.com/apk/res/android"
-    android:layout_width="match_parent"
+    android:layout_width="180dp"
     android:layout_height="wrap_content"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    xmlns:tools="http://schemas.android.com/tools">
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_marginEnd="10dp"
+    android:layout_marginStart="10dp"
+    android:layout_marginTop="20dp">
+
 
     <androidx.cardview.widget.CardView
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        app:cardBackgroundColor="@color/white"
-        android:id="@+id/card_resource_title">
+        app:cardCornerRadius="10dp">
 
-        <RelativeLayout
+        <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:background="@color/white"
-            android:padding="20dp">
+            android:orientation="vertical"
+            android:background="@color/white">
 
-            <androidx.cardview.widget.CardView
-                android:layout_width="150dp"
-                android:id="@+id/image"
-                app:cardCornerRadius="12dp"
-                app:cardElevation="0dp"
-                android:layout_height="130dp">
-                <ImageView
-                    android:layout_width="150dp"
-                    android:layout_height="130dp"
-                    android:scaleType="centerCrop"
-                    android:id="@+id/topic_image"
-                    android:src="@drawable/placeholder" />
-            </androidx.cardview.widget.CardView>
+            <ImageView
+                android:layout_width="match_parent"
+                android:layout_height="150dp"
+                android:src="@drawable/placeholder"
+                android:scaleType="centerCrop"
+                android:id="@+id/topic_image"/>
 
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="This is the title of the topicsknkljdnfkjdn"
+                android:text="This is topic title"
                 android:textSize="14sp"
-                android:singleLine="false"
-                android:minLines="1"
-                android:layout_toRightOf="@id/image"
-                android:textColor="#000"
-                android:layout_marginStart="15dp"
-                android:layout_marginEnd="5dp"
-                android:fontFamily="@font/poppins_medium"
-                android:id="@+id/tv_title_topic"/>
+                android:textColor="@color/colorPrimaryDark"
+                android:fontFamily="@font/proximanovaregular"
+                android:paddingTop="10dp"
+                android:paddingBottom="10dp"
+                android:id="@+id/tv_title_topic"
+                android:gravity="center"
+                android:singleLine="true"
+                android:maxLines="1"
+                android:marqueeRepeatLimit="marquee_forever"
+                android:layout_gravity="center"
+                />
 
-
-        </RelativeLayout>
+        </LinearLayout>
 
     </androidx.cardview.widget.CardView>
+
+<!--    <androidx.cardview.widget.CardView-->
+<!--        android:layout_width="200dp"-->
+<!--        android:layout_height="wrap_content"-->
+<!--        app:cardBackgroundColor="@color/white"-->
+<!--        android:id="@+id/card_resource_title"-->
+<!--        android:visibility="gone">-->
+
+<!--        <RelativeLayout-->
+<!--            android:layout_width="match_parent"-->
+<!--            android:layout_height="wrap_content"-->
+<!--            android:background="@color/white"-->
+<!--            android:padding="20dp">-->
+
+<!--            <androidx.cardview.widget.CardView-->
+<!--                android:layout_width="150dp"-->
+<!--                android:id="@+id/image"-->
+<!--                app:cardCornerRadius="12dp"-->
+<!--                app:cardElevation="0dp"-->
+<!--                android:layout_height="130dp">-->
+<!--                <ImageView-->
+<!--                    android:layout_width="150dp"-->
+<!--                    android:layout_height="130dp"-->
+<!--                    android:scaleType="centerCrop"-->
+<!--                    android:id="@+id/topic_image"-->
+<!--                    android:src="@drawable/placeholder" />-->
+<!--            </androidx.cardview.widget.CardView>-->
+
+<!--            <TextView-->
+<!--                android:layout_width="wrap_content"-->
+<!--                android:layout_height="wrap_content"-->
+<!--                android:text="This is the title of the topicsknkljdnfkjdn"-->
+<!--                android:textSize="14sp"-->
+<!--                android:singleLine="false"-->
+<!--                android:minLines="1"-->
+<!--                android:layout_toRightOf="@id/image"-->
+<!--                android:textColor="#000"-->
+<!--                android:layout_marginStart="15dp"-->
+<!--                android:layout_marginEnd="5dp"-->
+<!--                android:fontFamily="@font/poppins_medium"-->
+<!--                android:id="@+id/tv_title_topic"/>-->
+
+
+<!--        </RelativeLayout>-->
+
+<!--    </androidx.cardview.widget.CardView>-->
 
 </RelativeLayout>
