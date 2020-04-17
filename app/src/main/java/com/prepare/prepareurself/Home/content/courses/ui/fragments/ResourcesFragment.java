@@ -9,8 +9,10 @@ import android.os.Bundle;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
+import androidx.recyclerview.widget.GridLayoutManager;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
+import androidx.recyclerview.widget.StaggeredGridLayoutManager;
 
 import android.view.LayoutInflater;
 import android.view.View;
@@ -60,7 +62,8 @@ public class ResourcesFragment extends Fragment implements ResourcesRvAdapter.Re
         prefManager = new PrefManager(getActivity());
 
         adapter = new ResourcesRvAdapter(getActivity(), this);
-        final LinearLayoutManager layoutManager = new LinearLayoutManager(getActivity());
+        //final LinearLayoutManager layoutManager = new LinearLayoutManager(getActivity());
+        final GridLayoutManager layoutManager = new GridLayoutManager(getActivity(),2,RecyclerView.VERTICAL,false);
         recyclerView.setLayoutManager(layoutManager);
         recyclerView.setAdapter(adapter);
 
