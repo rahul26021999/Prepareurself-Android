@@ -45,4 +45,17 @@
     <string name="edit_profile">Edit Profile</string>
     <string name="display">Display Name</string>
 
+    <string-array name="array_techstacks">
+        <item>Android</item>
+        <item>Node.js</item>
+        <item>Laravel</item>
+        <item>Php</item>
+        <item>C++</item>
+        <item>Java</item>
+        <item>DDMS</item>
+        <item>JavaScript</item>
+        <item>Pyhton</item>
+    </string-array>
+
+
 </resources>

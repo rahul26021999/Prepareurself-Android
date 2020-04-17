@@ -6,7 +6,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="@color/grey"
-    tools:context=".Home.content.edit_profile"
+    tools:context=".Home.content.profile.ui.ProfileFragment"
     android:orientation="vertical">
     <LinearLayout
         android:layout_width="match_parent"
@@ -96,7 +96,7 @@
 
                     <ImageView
                         android:layout_width="150dp"
-                        android:layout_height="120dp"
+                        android:layout_height="140dp"
                         android:scaleType="centerCrop"
                         android:src="@drawable/person_placeholder" />
 
@@ -113,9 +113,9 @@
                         android:layout_height="wrap_content"
                         android:layout_marginTop="20dp"
                         android:fontFamily="@font/proximanovaregular"
-                        android:text="Rimjhim Vaish"
+                        android:text="rimjhimvaish@gmail.com"
                         android:textColor="#424242"
-                        android:textSize="21sp"
+                        android:textSize="15sp"
                         android:textStyle="bold" />
 
                 </LinearLayout>
@@ -204,11 +204,11 @@
                             android:layout_height="wrap_content"
                             android:layout_weight="1" />
 
-                        <Button
+                        <TextView
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:text="Edit"
-                            android:background="@color/colorWhite"
+                            android:id="@+id/tv_aboutme_edit"
                             android:textColor="#FFCF66"
                             android:layout_marginEnd="10dp"
                             android:textSize="14sp" />
@@ -234,14 +234,32 @@
                                 android:padding="10dp"
                                 android:src="@drawable/ic_cake_black_24dp" />
 
-                            <TextView
+                            <LinearLayout
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
-                                android:layout_marginLeft="20dp"
-                                android:text="24/12/1998"
-                                android:textSize="15sp"
-                                android:textColor="@color/goodgrey"
-                                android:fontFamily="@font/proximanovaregular" />
+                                android:layout_gravity="center_vertical"
+                                android:orientation="vertical">
+                                <TextView
+                                    android:layout_width="wrap_content"
+                                    android:layout_height="wrap_content"
+                                    android:id="@+id/tv_dob"
+                                    android:layout_marginLeft="20dp"
+                                    android:text="24/12/1998"
+                                    android:textSize="15sp"
+                                    android:textColor="@color/goodgrey"
+                                    android:fontFamily="@font/proximanovaregular"/>
+                                <EditText
+                                    android:layout_width="match_parent"
+                                    android:layout_height="wrap_content"
+                                    android:id="@+id/et_dob"
+                                    android:layout_marginLeft="20dp"
+                                    android:text="24/12/1998"
+                                    android:textSize="15sp"
+                                    android:textColor="@color/goodgrey"
+                                    android:fontFamily="@font/proximanovaregular"
+                                    android:visibility="gone"/>
+
+                            </LinearLayout>
                         </LinearLayout>
 
                         <LinearLayout
@@ -256,16 +274,34 @@
                                 android:layout_height="40dp"
                                 android:background="@drawable/circular_grey_bordersolid"
                                 android:padding="10dp"
-                                android:src="@drawable/ic_email_24dp" />
+                                android:src="@drawable/ic_person_black_24dp" />
 
-                            <TextView
+                            <LinearLayout
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
-                                android:layout_marginLeft="20dp"
-                                android:textColor="@color/goodgrey"
-                                android:text="sanskar@theindianappguy.com"
-                                android:textSize="15sp"
-                                android:fontFamily="@font/proximanovaregular" />
+                                android:layout_gravity="center_vertical"
+                                android:orientation="vertical">
+                                <TextView
+                                    android:layout_width="wrap_content"
+                                    android:layout_height="wrap_content"
+                                    android:id="@+id/tv_name"
+                                    android:layout_marginLeft="20dp"
+                                    android:textColor="@color/goodgrey"
+                                    android:text="Rimjhim Vaish"
+                                    android:textSize="15sp"
+                                    android:fontFamily="@font/proximanovaregular" />
+                                <EditText
+                                    android:layout_width="wrap_content"
+                                    android:layout_height="wrap_content"
+                                    android:id="@+id/et_name"
+                                    android:layout_marginLeft="20dp"
+                                    android:textColor="@color/goodgrey"
+                                    android:text="Rimjhim Vaish"
+                                    android:textSize="15sp"
+                                    android:fontFamily="@font/proximanovaregular"
+                                    android:visibility="gone"/>
+                            </LinearLayout>
+
                         </LinearLayout>
 
                         <LinearLayout
@@ -282,18 +318,48 @@
                                 android:padding="10dp"
                                 android:src="@drawable/ic_call_24dp" />
 
-                            <TextView
+                            <LinearLayout
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
-                                android:layout_marginLeft="20dp"
-                                android:text="9560366178"
-                                android:textSize="15sp"
-                                android:textColor="@color/goodgrey"
-                                android:fontFamily="@font/proximanovaregular" />
+                                android:layout_gravity="center_vertical"
+                                android:orientation="vertical">
+                                <TextView
+                                    android:layout_width="wrap_content"
+                                    android:layout_height="wrap_content"
+                                    android:id="@+id/tv_call"
+                                    android:layout_marginLeft="20dp"
+                                    android:text="9560366178"
+                                    android:textSize="15sp"
+                                    android:textColor="@color/goodgrey"
+                                    android:fontFamily="@font/proximanovaregular" />
+                                <EditText
+                                    android:layout_width="wrap_content"
+                                    android:layout_height="wrap_content"
+                                    android:id="@+id/et_call"
+                                    android:layout_marginLeft="20dp"
+                                    android:text="9560366178"
+                                    android:textSize="15sp"
+                                    android:textColor="@color/goodgrey"
+                                    android:fontFamily="@font/proximanovaregular"
+                                    android:visibility="gone"/>
+                            </LinearLayout>
                         </LinearLayout>
 
                     </LinearLayout>
+                    <Button
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:id="@+id/btn_aboutme"
+                        android:text="save"
+                        android:layout_marginTop="5dp"
+                        android:textSize="15sp"
+                        android:textColor="@color/white"
+                        android:layout_gravity="center"
+                        android:background="@drawable/profile_preferences_button"
+                        android:visibility="gone"
+                        />
                 </LinearLayout>
+
                 <!--about me ended-->
             </LinearLayout>
 
@@ -333,6 +399,7 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:text="Edit"
+                        android:id="@+id/tv_preference_edit"
                         android:textColor="#FFCF66"
                         android:layout_marginEnd="10dp"
                         android:textSize="14sp" />

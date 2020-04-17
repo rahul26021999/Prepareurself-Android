@@ -13,11 +13,11 @@
         android:supportsRtl="true"
         android:theme="@style/AppTheme"
         android:usesCleartextTraffic="true">
-       <!-- <activity android:name=".Home.content.edit_profile"></activity>-->
-        <activity android:name=".Home.content.edit_profile"
-            android:theme="@style/AppTheme1">
+        <activity android:name=".Home.content.EditProfile.edit_profile_activity"
+            android:theme="@style/ProfileTheme">
 
         </activity>
+        <!-- <activity android:name=".Home.content.edit_profile"></activity> -->
         <activity android:name=".Home.content.courses.ui.activity.CoursesActivity" />
         <activity android:name=".Home.content.resources.youtubevideoplayer.YoutubePlayerActivity" />
         <activity
@@ -44,7 +44,6 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-
 
         <meta-data
             android:name="preloaded_fonts"
