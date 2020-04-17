@@ -3,6 +3,7 @@ package com.prepare.prepareurself.Apiservice;
 import com.prepare.prepareurself.Home.content.courses.data.model.GetTopicResponseModel;
 import com.prepare.prepareurself.Home.content.dashboard.data.model.GetCourseResponseModel;
 import com.prepare.prepareurself.Home.content.resources.data.model.GetResourcesResponse;
+import com.prepare.prepareurself.Home.content.resources.data.model.ResourceViewsResponse;
 import com.prepare.prepareurself.authentication.data.model.AuthenticationResponseModel;
 
 import retrofit2.Call;
@@ -36,6 +37,9 @@ public interface ApiInterface {
                                             @Query("page_number") int pageNumber,
                                             @Query("count") int count,
                                             @Query("type") String type);
+    @POST("view-resource")
+    Call<ResourceViewsResponse> resourceViewed(@Query("token") String token,
+                                               @Query("resource_id") int resourceId);
 
 
 }
