@@ -1,6 +1,7 @@
 package com.prepare.prepareurself.Home.content.resources.ui.adapter;
 
 import android.content.Context;
+import android.graphics.Bitmap;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -45,7 +46,7 @@ public class VideoResoursesRvAdapter extends RecyclerView.Adapter<VideoResourses
     }
 
     @Override
-    public void onBindViewHolder(@NonNull VideoResourcesViewHolder holder, int position) {
+    public void onBindViewHolder(@NonNull final VideoResourcesViewHolder holder, int position) {
         final ResourceModel v1 = resourceModels.get(position);
         final String videoCode = Utility.getVideoCode(v1.getLink());
         holder.bindView(v1, videoCode);
@@ -53,7 +54,8 @@ public class VideoResoursesRvAdapter extends RecyclerView.Adapter<VideoResourses
         holder.itemView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                listener.videoClicked(v1,videoCode);
+                Bitmap bitmap = Utility.getBitmapFromView(holder.imageView);
+                listener.videoClicked(v1,videoCode, bitmap);
             }
         });
 
@@ -130,7 +132,7 @@ public class VideoResoursesRvAdapter extends RecyclerView.Adapter<VideoResourses
     }
 
     public interface VideoResourceInteractor{
-        void videoClicked(ResourceModel videoResources, String videoCode);
+        void videoClicked(ResourceModel videoResources, String videoCode, Bitmap bitmap);
     }
 
 }

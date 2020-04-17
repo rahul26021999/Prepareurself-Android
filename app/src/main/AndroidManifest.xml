@@ -21,7 +21,24 @@
         </activity>
         <activity android:name=".Home.content.courses.ui.activity.CoursesActivity" >
         </activity>
-        <activity android:name=".Home.content.resources.youtubevideoplayer.YoutubePlayerActivity" />
+        <activity android:name=".Home.content.resources.youtubevideoplayer.YoutubePlayerActivity" >
+
+            <intent-filter>
+
+                <action android:name="android.intent.action.VIEW"/>
+
+                <category android:name="android.intent.category.BROWSABLE"/>
+
+                <category android:name="android.intent.category.DEFAULT"/>
+
+                <data android:scheme="http"
+                    android:host="prepareurself.tk"
+                    android:pathPrefix="/video_resource"
+                    />
+
+            </intent-filter>
+
+        </activity>
         <activity
             android:name=".Home.content.resources.ui.activity.ResourcesActivity"
             android:label="@string/title_activity_courses"

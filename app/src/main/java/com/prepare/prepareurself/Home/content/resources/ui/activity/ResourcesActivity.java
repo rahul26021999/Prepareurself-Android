@@ -23,8 +23,7 @@ import androidx.lifecycle.ViewModelProviders;
 import androidx.viewpager.widget.ViewPager;
 import androidx.appcompat.app.AppCompatActivity;
 
-import java.io.File;
-import java.io.FileOutputStream;
+import java.io.IOException;
 import java.io.UnsupportedEncodingException;
 
 public class ResourcesActivity extends AppCompatActivity implements View.OnClickListener, TheoryResourceFragment.TheoryResourceFragmentInteractor {
@@ -63,7 +62,7 @@ public class ResourcesActivity extends AppCompatActivity implements View.OnClick
         if (intent.getData()!=null){
             try {
                 String tempData = intent.getData().toString().split("resource_theory")[1];
-                topicID =  Utility.base64Decode(tempData);
+                topicID =  Utility.base64DecodeForInt(tempData);
                 viewPager.setCurrentItem(1, true);
             } catch (UnsupportedEncodingException e) {
                 e.printStackTrace();
@@ -116,7 +115,13 @@ public class ResourcesActivity extends AppCompatActivity implements View.OnClick
 
     @Override
     public void shareContent(Bitmap bitmap, String text) {
-        Utility.shareContent(this,bitmap,text);
+        try {
+            Uri bitmapUri = Utility.getUriOfBitmap(bitmap, this);
+            Utility.shareContent(this,bitmapUri,text);
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+
     }
 
     @Override
