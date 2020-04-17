@@ -132,6 +132,9 @@ public class VideoResourceFragment extends Fragment implements VideoResoursesRvA
 
     @Override
     public void videoClicked(ResourceModel videoResources, String videoCode, Bitmap bitmap) {
+
+        mViewModel.resourceViewed(prefManager.getString(Constants.JWTTOKEN),videoResources.getId());
+
         Intent intent = new Intent(getActivity(), YoutubePlayerActivity.class);
         intent.putExtra(Constants.VIDEOCODE,videoCode);
         intent.putExtra(Constants.RESOURCEID,videoResources.getId());

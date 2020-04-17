@@ -28,6 +28,10 @@ public class ResourceViewModel extends AndroidViewModel {
         resourcesDbRepository = new ResourcesDbRepository(application);
     }
 
+    public void resourceViewed(String token, int resourceId){
+        resourceRespository.resourceViewed(token,resourceId);
+    }
+
     public void fetchResources(String token, int topicId, int pageNumber, int count, String type){
         responseLiveData = resourceRespository.getResourcesByID(token,topicId, pageNumber, count, type);
     }

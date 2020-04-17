@@ -11,6 +11,7 @@ import com.prepare.prepareurself.Apiservice.ApiInterface;
 import com.prepare.prepareurself.Home.content.resources.data.db.repository.ResourcesDbRepository;
 import com.prepare.prepareurself.Home.content.resources.data.model.GetResourcesResponse;
 import com.prepare.prepareurself.Home.content.resources.data.model.ResourceModel;
+import com.prepare.prepareurself.Home.content.resources.data.model.ResourceViewsResponse;
 import com.prepare.prepareurself.Home.content.resources.data.model.ResourcesResponse;
 
 import java.util.List;
@@ -59,6 +60,25 @@ public class ResourceRespository {
 
         return data;
 
+    }
+
+    public void resourceViewed(String token, int resourceId){
+        apiInterface.resourceViewed(token, resourceId).enqueue(new Callback<ResourceViewsResponse>() {
+            @Override
+            public void onResponse(Call<ResourceViewsResponse> call, Response<ResourceViewsResponse> response) {
+                ResourceViewsResponse resourceViewsResponse = response.body();
+                if (resourceViewsResponse!=null){
+                    Log.d("resource_viewed",resourceViewsResponse.getMsg());
+                }else{
+                    Log.d("resource_viewed","null response");
+                }
+            }
+
+            @Override
+            public void onFailure(Call<ResourceViewsResponse> call, Throwable t) {
+                Log.d("resource_viewed","failure "+ t.getLocalizedMessage());
+            }
+        });
     }
 
 }
