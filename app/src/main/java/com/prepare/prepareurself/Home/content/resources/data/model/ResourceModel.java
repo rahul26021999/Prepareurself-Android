@@ -50,6 +50,42 @@ public class ResourceModel {
     @SerializedName("updated_at")
     private String updated_at;
 
+    @ColumnInfo(name = "views")
+    @SerializedName("views")
+    private int views;
+
+    @ColumnInfo(name = "like")
+    @SerializedName("like")
+    private int like;
+
+    @ColumnInfo(name = "total_likes")
+    @SerializedName("total_likes")
+    private int total_likes;
+
+    public int getViews() {
+        return views;
+    }
+
+    public void setViews(int views) {
+        this.views = views;
+    }
+
+    public int getLike() {
+        return like;
+    }
+
+    public void setLike(int like) {
+        this.like = like;
+    }
+
+    public int getTotal_likes() {
+        return total_likes;
+    }
+
+    public void setTotal_likes(int total_likes) {
+        this.total_likes = total_likes;
+    }
+
     public int getId() {
         return id;
     }
