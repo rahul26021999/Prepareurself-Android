@@ -14,6 +14,7 @@ import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 import androidx.recyclerview.widget.StaggeredGridLayoutManager;
 
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -67,6 +68,7 @@ public class ResourcesFragment extends Fragment implements ResourcesRvAdapter.Re
         recyclerView.setLayoutManager(layoutManager);
         recyclerView.setAdapter(adapter);
 
+        Log.d("course_id",CoursesActivity.courseId+"");
         if (CoursesActivity.courseId!=-1){
             mViewModel.getCourseById(prefManager.getString(Constants.JWTTOKEN),
                     CoursesActivity.courseId,

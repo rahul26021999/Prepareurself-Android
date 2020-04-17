@@ -1,6 +1,8 @@
 package com.prepare.prepareurself.Home.content.resources.ui.activity;
 
 import android.content.Intent;
+import android.graphics.Bitmap;
+import android.net.Uri;
 import android.os.Bundle;
 import android.view.MenuItem;
 import android.view.View;
@@ -15,12 +17,17 @@ import com.prepare.prepareurself.Home.content.resources.viewmodel.ResourceViewMo
 import com.prepare.prepareurself.R;
 import com.prepare.prepareurself.utils.Constants;
 import com.prepare.prepareurself.utils.PrefManager;
+import com.prepare.prepareurself.utils.Utility;
 
 import androidx.lifecycle.ViewModelProviders;
 import androidx.viewpager.widget.ViewPager;
 import androidx.appcompat.app.AppCompatActivity;
 
-public class ResourcesActivity extends AppCompatActivity implements View.OnClickListener {
+import java.io.File;
+import java.io.FileOutputStream;
+import java.io.UnsupportedEncodingException;
+
+public class ResourcesActivity extends AppCompatActivity implements View.OnClickListener, TheoryResourceFragment.TheoryResourceFragmentInteractor {
 
     private ViewPager viewPager;
     private ResourceViewModel viewModel;
@@ -44,7 +51,7 @@ public class ResourcesActivity extends AppCompatActivity implements View.OnClick
         tvTopTheory = findViewById(R.id.tv_resouce_heading_theory);
         BackBtn=findViewById(R.id.backBtn);
         Intent intent = getIntent();
-        topicID = intent.getIntExtra(Constants.TOPICID,-1);
+
 
         prefManager = new PrefManager(ResourcesActivity.this);
 
@@ -53,6 +60,17 @@ public class ResourcesActivity extends AppCompatActivity implements View.OnClick
         sectionsPagerAdapter.addFragment(TheoryResourceFragment.newInstance(),"Theories");
         viewPager.setAdapter(sectionsPagerAdapter);
 
+        if (intent.getData()!=null){
+            try {
+                String tempData = intent.getData().toString().split("resource_theory")[1];
+                topicID =  Utility.base64Decode(tempData);
+                viewPager.setCurrentItem(1, true);
+            } catch (UnsupportedEncodingException e) {
+                e.printStackTrace();
+            }
+        }else{
+            topicID = intent.getIntExtra(Constants.TOPICID,-1);
+        }
 
         BackBtn.setOnClickListener(this);
         tvTopVideo.setOnClickListener(this);
@@ -94,6 +112,11 @@ public class ResourcesActivity extends AppCompatActivity implements View.OnClick
         }
 
         return super.onOptionsItemSelected(item);
+    }
+
+    @Override
+    public void shareContent(Bitmap bitmap, String text) {
+        Utility.shareContent(this,bitmap,text);
     }
 
     @Override
