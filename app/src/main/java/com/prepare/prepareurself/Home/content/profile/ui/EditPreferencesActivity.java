@@ -8,6 +8,7 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import android.os.Bundle;
 import android.text.Editable;
+import android.text.LoginFilter;
 import android.text.TextWatcher;
 import android.util.Log;
 import android.view.Menu;
@@ -22,6 +23,8 @@ import com.prepare.prepareurself.Home.content.profile.ui.adapter.PreferrenceRecy
 import com.prepare.prepareurself.Home.content.profile.data.model.PreferredTechStack;
 import com.prepare.prepareurself.Home.content.profile.viewmodel.ProfileViewModel;
 import com.prepare.prepareurself.R;
+import com.prepare.prepareurself.utils.Constants;
+import com.prepare.prepareurself.utils.PrefManager;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -34,13 +37,16 @@ public class EditPreferencesActivity extends AppCompatActivity implements Recycl
     private EditText userInput;
     private ChipGroup coursechipgroup;
     private List<PreferredTechStack> newtechstacklist=new ArrayList<>();
-    //techstack t;
+
     String[] user_courses={"m","n","o","q"}; //use rpreferences
     int i;
-    private List<PreferredTechStack> tempPreferredTechStackList = new ArrayList<>();
+    private List<PreferredTechStack> existingStacks = new ArrayList<>();
 
     private ProfileViewModel profileViewModel;
-    List<PreferredTechStack> tempList = new ArrayList<>();
+
+    private List<Integer> finalListIds = new ArrayList<>();
+
+    private PrefManager prefManager;
 
 
 
@@ -50,6 +56,8 @@ public class EditPreferencesActivity extends AppCompatActivity implements Recycl
         setContentView(R.layout.activity_edit_profile);
 
         profileViewModel = ViewModelProviders.of(this).get(ProfileViewModel.class);
+
+        prefManager = new PrefManager(this);
 
         recyclerView=findViewById(R.id.recyclerView);
         userInput=findViewById(R.id.edit_stackname);
@@ -77,12 +85,28 @@ public class EditPreferencesActivity extends AppCompatActivity implements Recycl
             }
         });
 
+
+
         profileViewModel.getPreferredTechStacks().observe(this, new Observer<List<PreferredTechStack>>() {
             @Override
             public void onChanged(final List<PreferredTechStack> preferredTechStacks) {
                 radapter.setList(preferredTechStacks);
                 radapter.notifyDataSetChanged();
+            }
+        });
 
+        profileViewModel.getEditableStacks().observe(this, new Observer<List<PreferredTechStack>>() {
+            @Override
+            public void onChanged(List<PreferredTechStack> preferredTechStacks) {
+
+                existingStacks = preferredTechStacks;
+
+                Log.d("chip_debug","on chnged called");
+
+                for (PreferredTechStack preferredTechStack : existingStacks){
+                    finalListIds.add(preferredTechStack.getId());
+                    addChip(preferredTechStack);
+                }
             }
         });
 
@@ -115,21 +139,21 @@ public class EditPreferencesActivity extends AppCompatActivity implements Recycl
         }
     }
 
-    @Override
-    public void onItemSelected(PreferredTechStack tstack, int position) {
-        tempPreferredTechStackList.add(position, tstack);
+    public void addChip(PreferredTechStack p){
         Chip chip=new Chip(this);
-        chip.setText(tstack.getCourse_name());
+        chip.setText(p.getCourse_name());
         //chip.setChipIcon(ContextCompat.getDrawable(this,R.drawable.active_dot_drawable));
         chip.setCheckable(false);
         chip.setCloseIconVisible(true);
         chip.setClickable(true);
         coursechipgroup.addView(chip);
         coursechipgroup.setVisibility(View.VISIBLE);
-        chip.setOnCloseIconClickListener(this);
 
+    }
 
-
+    @Override
+    public void onItemSelected(final PreferredTechStack preferredTechStack, int position) {
+        profileViewModel.addStacks(preferredTechStack);
     }
 
     private void getCourses(){
@@ -166,7 +190,7 @@ public class EditPreferencesActivity extends AppCompatActivity implements Recycl
         menuItem.setOnMenuItemClickListener(new MenuItem.OnMenuItemClickListener() {
             @Override
             public boolean onMenuItemClick(MenuItem item) {
-
+                profileViewModel.updatePrefernces(prefManager.getString(Constants.JWTTOKEN),finalListIds);
                 return true;
             }
         });

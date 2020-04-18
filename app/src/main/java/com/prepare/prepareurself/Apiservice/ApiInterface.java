@@ -1,11 +1,15 @@
 package com.prepare.prepareurself.Apiservice;
 
+import androidx.annotation.IntegerRes;
+
 import com.prepare.prepareurself.Home.content.courses.data.model.GetTopicResponseModel;
 import com.prepare.prepareurself.Home.content.dashboard.data.model.GetCourseResponseModel;
 import com.prepare.prepareurself.Home.content.resources.data.model.GetResourcesResponse;
 import com.prepare.prepareurself.Home.content.resources.data.model.ResourceLikesResponse;
 import com.prepare.prepareurself.Home.content.resources.data.model.ResourceViewsResponse;
 import com.prepare.prepareurself.authentication.data.model.AuthenticationResponseModel;
+
+import java.util.List;
 
 import retrofit2.Call;
 import retrofit2.http.POST;
@@ -47,6 +51,17 @@ public interface ApiInterface {
     Call<ResourceLikesResponse> resourceLiked(@Query("token") String token,
                                               @Query("resource_id") int resource_id,
                                               @Query("like")Boolean like )  ;
+    @POST("update-user")
+    Call<String> updateUser(@Query("token") String token,
+                            @Query("first_name") String firstName,
+                            @Query("last_name") String lastName,
+                            @Query("dob") String dob,
+                            @Query("phone_number") String phoneNumber);
+
+
+    @POST("update-user")
+    Call<String> updatePreference(@Query("token") String token,
+                                  @Query("preferences") List<Integer> integers);
 
 
 }

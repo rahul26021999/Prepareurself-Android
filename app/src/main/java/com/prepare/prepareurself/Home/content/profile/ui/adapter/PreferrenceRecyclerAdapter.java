@@ -42,8 +42,14 @@ public class PreferrenceRecyclerAdapter extends RecyclerView.Adapter<Preferrence
     }
 
     @Override
-    public void onBindViewHolder(@NonNull MyViewHolder holder, int position) {
+    public void onBindViewHolder(@NonNull MyViewHolder holder, final int position) {
         holder.course_name.setText(preferredTechStacksFiltered.get(position).getCourse_name());
+        holder.itemView.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                itemSelectedListener.onItemSelected(preferredTechStacksFiltered.get(position),position);
+            }
+        });
 
     }
 
@@ -56,7 +62,7 @@ public class PreferrenceRecyclerAdapter extends RecyclerView.Adapter<Preferrence
             return 0;
     }
 
-    class MyViewHolder extends  RecyclerView.ViewHolder implements  View.OnClickListener{
+    class MyViewHolder extends  RecyclerView.ViewHolder{
         TextView course_name;
         LinearLayout rootview;
 
@@ -64,13 +70,6 @@ public class PreferrenceRecyclerAdapter extends RecyclerView.Adapter<Preferrence
             super(itemView);
             course_name=itemView.findViewById(R.id.text_item);
             rootview=itemView.findViewById(R.id.rootview);
-            rootview.setOnClickListener(this);
-        }
-
-        @Override
-        public void onClick(View v) {
-            itemSelectedListener.onItemSelected(preferredTechStacks.get(getAdapterPosition()), getAdapterPosition());
-
         }
     }
 
