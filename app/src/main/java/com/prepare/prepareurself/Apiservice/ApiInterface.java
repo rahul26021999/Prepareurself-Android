@@ -3,6 +3,7 @@ package com.prepare.prepareurself.Apiservice;
 import com.prepare.prepareurself.Home.content.courses.data.model.GetTopicResponseModel;
 import com.prepare.prepareurself.Home.content.dashboard.data.model.GetCourseResponseModel;
 import com.prepare.prepareurself.Home.content.resources.data.model.GetResourcesResponse;
+import com.prepare.prepareurself.Home.content.resources.data.model.ResourceLikesResponse;
 import com.prepare.prepareurself.Home.content.resources.data.model.ResourceViewsResponse;
 import com.prepare.prepareurself.authentication.data.model.AuthenticationResponseModel;
 
@@ -40,6 +41,12 @@ public interface ApiInterface {
     @POST("view-resource")
     Call<ResourceViewsResponse> resourceViewed(@Query("token") String token,
                                                @Query("resource_id") int resourceId);
+
+    //likes-api
+    @POST("hit-like")
+    Call<ResourceLikesResponse> resourceLiked(@Query("token") String token,
+                                              @Query("resource_id") int resource_id,
+                                              @Query("like")Boolean like )  ;
 
 
 }
