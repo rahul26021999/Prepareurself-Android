@@ -14,7 +14,7 @@
         android:supportsRtl="true"
         android:theme="@style/AppTheme"
         android:usesCleartextTraffic="true">
-        <activity android:name=".Home.content.EditProfile.edit_profile_activity"
+        <activity android:name=".Home.content.profile.ui.EditProfileActivity"
             android:theme="@style/ProfileTheme">
 
         </activity>

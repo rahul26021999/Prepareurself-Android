@@ -1,12 +1,10 @@
-package com.prepare.prepareurself.Home.content.EditProfile;
+package com.prepare.prepareurself.Home.content.profile.ui;
 
 import androidx.appcompat.app.AppCompatActivity;
-import androidx.core.content.ContextCompat;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import android.os.Bundle;
-import android.system.StructUtsname;
 import android.text.Editable;
 import android.text.TextWatcher;
 import android.util.Log;
@@ -14,20 +12,20 @@ import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
-import android.widget.Button;
 import android.widget.EditText;
 
 import com.google.android.material.chip.Chip;
 import com.google.android.material.chip.ChipGroup;
+import com.prepare.prepareurself.Home.content.profile.ui.adapter.RecyclerAdapter;
+import com.prepare.prepareurself.Home.content.profile.data.model.techstack;
 import com.prepare.prepareurself.R;
 
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.List;
 
-public class edit_profile_activity extends AppCompatActivity implements RecyclerItemSelectedListener, View.OnClickListener {
+public class EditProfileActivity extends AppCompatActivity implements RecyclerItemSelectedListener, View.OnClickListener {
     private RecyclerView recyclerView;
-    private  RecyclerAdapter radapter;
+    private RecyclerAdapter radapter;
     private List<techstack> techstackList=new ArrayList<>();
 
     private EditText userInput;
@@ -69,12 +67,12 @@ public class edit_profile_activity extends AppCompatActivity implements Recycler
                 //List<techstack> newtechstacklist=new ArrayList<>();
 
 
-             for (com.prepare.prepareurself.Home.content.EditProfile.techstack t : techstackList){
+             for (techstack t : techstackList){
                  if (t.getCourse_name().toLowerCase().trim().contains(userinput)){
                      newtechstacklist.add(t);
                  }
              }
-             radapter=new RecyclerAdapter(edit_profile_activity.this, newtechstacklist);
+             radapter=new RecyclerAdapter(EditProfileActivity.this, newtechstacklist);
              recyclerView.setAdapter(radapter);
 
             }

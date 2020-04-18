@@ -5,7 +5,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical"
-    tools:context=".Home.content.EditProfile.edit_profile_activity">
+    tools:context=".Home.content.profile.ui.EditProfileActivity">
 
     <com.google.android.material.chip.ChipGroup
         android:layout_width="match_parent"
