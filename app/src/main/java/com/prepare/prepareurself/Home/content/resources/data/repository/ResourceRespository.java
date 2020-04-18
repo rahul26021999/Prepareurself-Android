@@ -10,6 +10,7 @@ import com.prepare.prepareurself.Apiservice.ApiClient;
 import com.prepare.prepareurself.Apiservice.ApiInterface;
 import com.prepare.prepareurself.Home.content.resources.data.db.repository.ResourcesDbRepository;
 import com.prepare.prepareurself.Home.content.resources.data.model.GetResourcesResponse;
+import com.prepare.prepareurself.Home.content.resources.data.model.ResourceLikesResponse;
 import com.prepare.prepareurself.Home.content.resources.data.model.ResourceModel;
 import com.prepare.prepareurself.Home.content.resources.data.model.ResourceViewsResponse;
 import com.prepare.prepareurself.Home.content.resources.data.model.ResourcesResponse;
@@ -77,6 +78,26 @@ public class ResourceRespository {
             @Override
             public void onFailure(Call<ResourceViewsResponse> call, Throwable t) {
                 Log.d("resource_viewed","failure "+ t.getLocalizedMessage());
+            }
+        });
+    }
+
+    //wrte here for likes
+    public  void  resourceLiked(String token, int resource_id , Boolean like){
+        apiInterface.resourceLiked(token, resource_id, like).enqueue(new Callback<ResourceLikesResponse>() {
+            @Override
+            public void onResponse(Call<ResourceLikesResponse> call, Response<ResourceLikesResponse> response) {
+                ResourceLikesResponse resourceLikesResponse = response.body();
+                if (resourceLikesResponse!=null){
+                    Log.d("resource_Liked",resourceLikesResponse.getMessage());
+                }else{
+                    Log.d("resource_Liked","null response");
+                }
+            }
+
+            @Override
+            public void onFailure(Call<ResourceLikesResponse> call, Throwable t) {
+                Log.d("resource_Liked","failure "+ t.getLocalizedMessage());
             }
         });
     }

@@ -31,6 +31,10 @@ public class ResourceViewModel extends AndroidViewModel {
     public void resourceViewed(String token, int resourceId){
         resourceRespository.resourceViewed(token,resourceId);
     }
+    // create like method
+    public  void  resourcesLiked(String token, int resourceId, Boolean like){
+        resourceRespository.resourceLiked(token,resourceId,like);
+    }
 
     public void fetchResources(String token, int topicId, int pageNumber, int count, String type){
         responseLiveData = resourceRespository.getResourcesByID(token,topicId, pageNumber, count, type);
