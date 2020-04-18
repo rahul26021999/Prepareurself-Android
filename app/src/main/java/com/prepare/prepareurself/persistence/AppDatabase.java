@@ -6,7 +6,9 @@ import androidx.room.Database;
 import androidx.room.Room;
 import androidx.room.RoomDatabase;
 
+import com.prepare.prepareurself.Home.content.courses.data.db.dao.ProjectsRoomDao;
 import com.prepare.prepareurself.Home.content.courses.data.db.dao.TopicsRoomDao;
+import com.prepare.prepareurself.Home.content.courses.data.model.ProjectsModel;
 import com.prepare.prepareurself.Home.content.courses.data.model.TopicsModel;
 import com.prepare.prepareurself.Home.content.dashboard.data.db.dao.CourseRoomDao;
 import com.prepare.prepareurself.Home.content.dashboard.data.model.CourseModel;
@@ -19,7 +21,8 @@ import com.prepare.prepareurself.authentication.data.model.UserModel;
         UserModel.class,
         CourseModel.class,
         TopicsModel.class,
-        ResourceModel.class
+        ResourceModel.class,
+        ProjectsModel.class
 }, version = 1)
 public abstract class AppDatabase extends RoomDatabase {
 
@@ -27,6 +30,7 @@ public abstract class AppDatabase extends RoomDatabase {
     public abstract CourseRoomDao courseRoomDao();
     public abstract TopicsRoomDao topicsRoomDao();
     public abstract ResourcesRoomDao resourcesRoomDao();
+    public abstract ProjectsRoomDao projectsRoomDao();
 
     private static AppDatabase INSTANCE;
 

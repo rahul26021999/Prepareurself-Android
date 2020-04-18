@@ -2,6 +2,7 @@ package com.prepare.prepareurself.Apiservice;
 
 import androidx.annotation.IntegerRes;
 
+import com.prepare.prepareurself.Home.content.courses.data.model.GetProjectResponse;
 import com.prepare.prepareurself.Home.content.courses.data.model.GetTopicResponseModel;
 import com.prepare.prepareurself.Home.content.dashboard.data.model.GetCourseResponseModel;
 import com.prepare.prepareurself.Home.content.resources.data.model.GetResourcesResponse;
@@ -62,6 +63,12 @@ public interface ApiInterface {
     @POST("update-user")
     Call<String> updatePreference(@Query("token") String token,
                                   @Query("preferences") List<Integer> integers);
+
+    @POST("get-projects")
+    Call<GetProjectResponse> getProjects(@Query("token") String token,
+                                         @Query("course_id") int courseId,
+                                         @Query("count") int count,
+                                         @Query("page") int pageNumber);
 
 
 }
