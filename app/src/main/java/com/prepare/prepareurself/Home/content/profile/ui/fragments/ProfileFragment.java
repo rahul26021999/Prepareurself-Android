@@ -25,6 +25,9 @@ import com.prepare.prepareurself.Home.content.profile.ui.EditPreferencesActivity
 import com.prepare.prepareurself.Home.content.profile.viewmodel.ProfileViewModel;
 import com.prepare.prepareurself.R;
 import com.prepare.prepareurself.authentication.data.model.UserModel;
+import com.prepare.prepareurself.utils.Constants;
+import com.prepare.prepareurself.utils.PrefManager;
+import com.prepare.prepareurself.utils.Utility;
 
 import java.util.Calendar;
 
@@ -37,9 +40,10 @@ public class ProfileFragment extends Fragment {
     TextView  t_userinfo, t_preferences, tv_preference_edit, tv_aboutme_edit;
     TextView tv_dob, tv_name,tv_call;
     EditText et_dob,et_name, et_call;
-    Button btn_aboutme;
+    Button btn_save;
     DatePickerDialog datePickerDialog;
     TextView tv_email_profile;
+    private PrefManager prefManager;
 
     public static ProfileFragment newInstance() {
         return new ProfileFragment();
@@ -48,6 +52,7 @@ public class ProfileFragment extends Fragment {
     @Override
     public View onCreateView(@NonNull final LayoutInflater inflater, @Nullable ViewGroup container,
                              @Nullable Bundle savedInstanceState) {
+
         View view = inflater.inflate(R.layout.profile_fragment, container, false);
         l_userinfo=view.findViewById(R.id.userinfolayout);
         l_preferences=view.findViewById(R.id.preferenceslayout);
@@ -62,76 +67,10 @@ public class ProfileFragment extends Fragment {
         et_name=view.findViewById(R.id.et_name);
         et_call=view.findViewById(R.id.et_call);
         tv_email_profile = view.findViewById(R.id.tv_email_profile);
-        btn_aboutme=view.findViewById(R.id.btn_aboutme);
+        btn_save =view.findViewById(R.id.btn_aboutme);
 
         l_userinfo.setVisibility(View.VISIBLE);
         l_preferences.setVisibility(View.GONE);
-        t_userinfo.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                l_userinfo.setVisibility(View.VISIBLE);
-                l_preferences.setVisibility(View.GONE);
-                t_userinfo.setTextColor(getResources().getColor(R.color.blue));
-                t_preferences.setTextColor(getResources().getColor(R.color.grey));
-            }
-        });
-
-        t_preferences.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                l_userinfo.setVisibility(View.GONE);
-                l_preferences.setVisibility(View.VISIBLE);
-                t_userinfo.setTextColor(getResources().getColor(R.color.grey));
-                t_preferences.setTextColor(getResources().getColor(R.color.blue));
-            }
-        });
-        tv_aboutme_edit.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                tv_dob.setVisibility(View.GONE);
-                tv_name.setVisibility(View.GONE);
-                tv_call.setVisibility(View.GONE);
-                et_dob.setVisibility(View.VISIBLE);
-                et_name.setVisibility(View.VISIBLE);
-                et_call.setVisibility(View.VISIBLE);
-                btn_aboutme.setVisibility(View.VISIBLE);
-            }
-        });
-
-        et_dob.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                setdatepicker();
-            }
-        });
-        tv_preference_edit.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                Intent intent=new Intent(getActivity(), EditPreferencesActivity.class);
-                startActivity(intent);
-
-            }
-        });
-        btn_aboutme.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                tv_dob.setVisibility(View.VISIBLE);
-                tv_name.setVisibility(View.VISIBLE);
-                tv_call.setVisibility(View.VISIBLE);
-                et_dob.setVisibility(View.GONE);
-                et_name.setVisibility(View.GONE);
-                et_call.setVisibility(View.GONE);
-                String userdob=et_dob.getText().toString();
-                String username=et_name.getText().toString();
-                String userphnumber= et_call.getText().toString();
-                tv_dob.setText(userdob);
-                tv_name.setText(username);
-                tv_call.setText(userphnumber);
-                btn_aboutme.setVisibility(View.GONE);
-
-            }
-        });
-
 
         /*tvName = view.findViewById(R.id.tv_name_profile);
         tvEmail = view.findViewById(R.id.tv_email_profile);
@@ -169,6 +108,8 @@ public class ProfileFragment extends Fragment {
         super.onActivityCreated(savedInstanceState);
         mViewModel = ViewModelProviders.of(this).get(ProfileViewModel.class);
 
+        prefManager = new PrefManager(getActivity());
+
         mViewModel.getUserModelLiveData().observe(getActivity(), new Observer<UserModel>() {
             @Override
             public void onChanged(UserModel userModel) {
@@ -194,6 +135,91 @@ public class ProfileFragment extends Fragment {
                     tv_call.setText("Click Edit to update your Contact");
                     et_call.setHint("Enter your Contact Number");
                 }
+
+            }
+        });
+
+
+
+        t_userinfo.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                l_userinfo.setVisibility(View.VISIBLE);
+                l_preferences.setVisibility(View.GONE);
+                t_userinfo.setTextColor(getResources().getColor(R.color.blue));
+                t_preferences.setTextColor(getResources().getColor(R.color.grey));
+            }
+        });
+
+        t_preferences.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                l_userinfo.setVisibility(View.GONE);
+                l_preferences.setVisibility(View.VISIBLE);
+                t_userinfo.setTextColor(getResources().getColor(R.color.grey));
+                t_preferences.setTextColor(getResources().getColor(R.color.blue));
+            }
+        });
+        tv_aboutme_edit.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                tv_dob.setVisibility(View.GONE);
+                tv_name.setVisibility(View.GONE);
+                tv_call.setVisibility(View.GONE);
+                et_dob.setVisibility(View.VISIBLE);
+                et_name.setVisibility(View.VISIBLE);
+                et_call.setVisibility(View.VISIBLE);
+                btn_save.setVisibility(View.VISIBLE);
+            }
+        });
+
+        et_dob.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                setdatepicker();
+            }
+        });
+        tv_preference_edit.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent=new Intent(getActivity(), EditPreferencesActivity.class);
+                startActivity(intent);
+
+            }
+        });
+        btn_save.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                tv_dob.setVisibility(View.VISIBLE);
+                tv_name.setVisibility(View.VISIBLE);
+                tv_call.setVisibility(View.VISIBLE);
+                et_dob.setVisibility(View.GONE);
+                et_name.setVisibility(View.GONE);
+                et_call.setVisibility(View.GONE);
+                String userdob=et_dob.getText().toString();
+                String username=et_name.getText().toString();
+                String userphnumber= et_call.getText().toString();
+                tv_dob.setText(userdob);
+                tv_name.setText(username);
+                tv_call.setText(userphnumber);
+                btn_save.setVisibility(View.GONE);
+
+                String firstName = "", lastName = "";
+                // first convert name to first name and last name
+                String[] name = Utility.splitName(getActivity(),username);
+                if (name.length>0){
+                    if (name.length == 1){
+                        firstName = name[0];
+                    }else if (name.length == 2){
+                        firstName = name[0];
+                        lastName = name[1];
+                    }else{
+                        firstName = name[0];
+                        lastName = name[name.length-1];
+                    }
+                }
+
+                mViewModel.updateUser(prefManager.getString(Constants.JWTTOKEN),firstName,lastName,userdob,userphnumber);
 
             }
         });
