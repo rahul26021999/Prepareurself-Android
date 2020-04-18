@@ -1,6 +1,8 @@
 package com.prepare.prepareurself.Home.content.profile.ui;
 
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.lifecycle.Observer;
+import androidx.lifecycle.ViewModelProviders;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
@@ -16,45 +18,48 @@ import android.widget.EditText;
 
 import com.google.android.material.chip.Chip;
 import com.google.android.material.chip.ChipGroup;
-import com.prepare.prepareurself.Home.content.profile.ui.adapter.RecyclerAdapter;
-import com.prepare.prepareurself.Home.content.profile.data.model.techstack;
+import com.prepare.prepareurself.Home.content.profile.ui.adapter.PreferrenceRecyclerAdapter;
+import com.prepare.prepareurself.Home.content.profile.data.model.PreferredTechStack;
+import com.prepare.prepareurself.Home.content.profile.viewmodel.ProfileViewModel;
 import com.prepare.prepareurself.R;
 
 import java.util.ArrayList;
 import java.util.List;
 
-public class EditProfileActivity extends AppCompatActivity implements RecyclerItemSelectedListener, View.OnClickListener {
+public class EditPreferencesActivity extends AppCompatActivity implements RecyclerItemSelectedListener, View.OnClickListener {
     private RecyclerView recyclerView;
-    private RecyclerAdapter radapter;
-    private List<techstack> techstackList=new ArrayList<>();
+    private PreferrenceRecyclerAdapter radapter;
+    private List<PreferredTechStack> preferredTechStackList =new ArrayList<>();
 
     private EditText userInput;
     private ChipGroup coursechipgroup;
-    private List<techstack> newtechstacklist=new ArrayList<>();
+    private List<PreferredTechStack> newtechstacklist=new ArrayList<>();
     //techstack t;
     String[] user_courses={"m","n","o","q"}; //use rpreferences
     int i;
-    private List<techstack> tempTechstackList = new ArrayList<>();
+    private List<PreferredTechStack> tempPreferredTechStackList = new ArrayList<>();
+
+    private ProfileViewModel profileViewModel;
+    List<PreferredTechStack> tempList = new ArrayList<>();
 
 
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_edit_profile_activity);
+        setContentView(R.layout.activity_edit_profile);
+
+        profileViewModel = ViewModelProviders.of(this).get(ProfileViewModel.class);
 
         recyclerView=findViewById(R.id.recyclerView);
         userInput=findViewById(R.id.edit_stackname);
         coursechipgroup=findViewById(R.id.chipGroup);
-        setusercourse();
 
 
         recyclerView.setLayoutManager(new LinearLayoutManager(this));
-        getCourses();
-        radapter=new RecyclerAdapter(this, techstackList);
+        radapter=new PreferrenceRecyclerAdapter(this);
         recyclerView.setAdapter(radapter);
 
-        //
         userInput.addTextChangedListener(new TextWatcher() {
             @Override
             public void beforeTextChanged(CharSequence s, int start, int count, int after) {
@@ -63,25 +68,24 @@ public class EditProfileActivity extends AppCompatActivity implements RecyclerIt
 
             @Override
             public void onTextChanged(CharSequence s, int start, int before, int count) {
-                String userinput=s.toString();
-                //List<techstack> newtechstacklist=new ArrayList<>();
-
-
-             for (techstack t : techstackList){
-                 if (t.getCourse_name().toLowerCase().trim().contains(userinput)){
-                     newtechstacklist.add(t);
-                 }
-             }
-             radapter=new RecyclerAdapter(EditProfileActivity.this, newtechstacklist);
-             recyclerView.setAdapter(radapter);
-
+                radapter.getFilter().filter(s);
             }
 
             @Override
             public void afterTextChanged(Editable s) {
+                radapter.getFilter().filter(s.toString());
+            }
+        });
+
+        profileViewModel.getPreferredTechStacks().observe(this, new Observer<List<PreferredTechStack>>() {
+            @Override
+            public void onChanged(final List<PreferredTechStack> preferredTechStacks) {
+                radapter.setList(preferredTechStacks);
+                radapter.notifyDataSetChanged();
 
             }
         });
+
 
     }
 
@@ -112,8 +116,8 @@ public class EditProfileActivity extends AppCompatActivity implements RecyclerIt
     }
 
     @Override
-    public void onItemSelected(techstack tstack, int position) {
-        tempTechstackList.add(position, tstack);
+    public void onItemSelected(PreferredTechStack tstack, int position) {
+        tempPreferredTechStackList.add(position, tstack);
         Chip chip=new Chip(this);
         chip.setText(tstack.getCourse_name());
         //chip.setChipIcon(ContextCompat.getDrawable(this,R.drawable.active_dot_drawable));
@@ -135,7 +139,7 @@ public class EditProfileActivity extends AppCompatActivity implements RecyclerIt
         //List<String> courses=
         //int count =0;
         for(String Course : courses){
-            techstackList.add(new techstack(Course));
+            preferredTechStackList.add(new PreferredTechStack());
            // count++;
 
         }
@@ -149,7 +153,7 @@ public class EditProfileActivity extends AppCompatActivity implements RecyclerIt
         coursechipgroup.removeView(chip);
     }
     public  void updateListitem(){
-        techstack t=new techstack(user_courses[i]);
+        PreferredTechStack t=new PreferredTechStack();
         newtechstacklist.add(t);
         radapter.notifyDataSetChanged();
     }

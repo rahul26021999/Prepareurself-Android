@@ -14,7 +14,7 @@
         android:supportsRtl="true"
         android:theme="@style/AppTheme"
         android:usesCleartextTraffic="true">
-        <activity android:name=".Home.content.profile.ui.EditProfileActivity"
+        <activity android:name=".Home.content.profile.ui.EditPreferencesActivity"
             android:theme="@style/ProfileTheme">
 
         </activity>
@@ -24,8 +24,11 @@
         <activity android:name=".Home.content.resources.youtubevideoplayer.YoutubePlayerActivity" >
 
             <intent-filter>
+
                 <action android:name="android.intent.action.VIEW"/>
+
                 <category android:name="android.intent.category.BROWSABLE"/>
+
                 <category android:name="android.intent.category.DEFAULT"/>
                 <data android:scheme="prepareurself_course" android:host="prepareurself.tk" />
             </intent-filter>
@@ -37,8 +40,11 @@
             android:theme="@style/AppTheme.NoActionBar" >
 
             <intent-filter>
+
                 <action android:name="android.intent.action.VIEW"/>
+
                 <category android:name="android.intent.category.BROWSABLE"/>
+
                 <category android:name="android.intent.category.DEFAULT"/>
                 <data android:scheme="prepareurself_resource" android:host="prepareurself.tk"/>
             </intent-filter>
