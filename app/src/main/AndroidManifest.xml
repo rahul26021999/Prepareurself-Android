@@ -14,7 +14,7 @@
         android:supportsRtl="true"
         android:theme="@style/AppTheme"
         android:usesCleartextTraffic="true">
-        <activity android:name=".Home.content.profile.ui.EditProfileActivity"
+        <activity android:name=".Home.content.profile.ui.EditPreferencesActivity"
             android:theme="@style/ProfileTheme">
 
         </activity>
@@ -52,9 +52,8 @@
 
                 <category android:name="android.intent.category.DEFAULT"/>
 
-                <data android:scheme="http"
+                <data android:scheme="something"
                     android:host="prepareurself.tk"
-                    android:pathPrefix="/resource_theory"
                     />
 
             </intent-filter>
