@@ -21,7 +21,7 @@ import android.widget.EditText;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
-import com.prepare.prepareurself.Home.content.profile.ui.EditProfileActivity;
+import com.prepare.prepareurself.Home.content.profile.ui.EditPreferencesActivity;
 import com.prepare.prepareurself.Home.content.profile.viewmodel.ProfileViewModel;
 import com.prepare.prepareurself.R;
 import com.prepare.prepareurself.authentication.data.model.UserModel;
@@ -107,7 +107,7 @@ public class ProfileFragment extends Fragment {
         tv_preference_edit.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent intent=new Intent(getActivity(), EditProfileActivity.class);
+                Intent intent=new Intent(getActivity(), EditPreferencesActivity.class);
                 startActivity(intent);
 
             }
