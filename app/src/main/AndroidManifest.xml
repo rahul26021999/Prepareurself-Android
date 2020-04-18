@@ -24,18 +24,10 @@
         <activity android:name=".Home.content.resources.youtubevideoplayer.YoutubePlayerActivity" >
 
             <intent-filter>
-
                 <action android:name="android.intent.action.VIEW"/>
-
                 <category android:name="android.intent.category.BROWSABLE"/>
-
                 <category android:name="android.intent.category.DEFAULT"/>
-
-                <data android:scheme="http"
-                    android:host="prepareurself.tk"
-                    android:pathPrefix="/video_resource"
-                    />
-
+                <data android:scheme="prepareurself_course" android:host="prepareurself.tk" />
             </intent-filter>
 
         </activity>
@@ -45,18 +37,10 @@
             android:theme="@style/AppTheme.NoActionBar" >
 
             <intent-filter>
-
                 <action android:name="android.intent.action.VIEW"/>
-
                 <category android:name="android.intent.category.BROWSABLE"/>
-
                 <category android:name="android.intent.category.DEFAULT"/>
-
-                <data android:scheme="http"
-                    android:host="prepareurself.tk"
-                    android:pathPrefix="/resource_theory"
-                    />
-
+                <data android:scheme="prepareurself_resource" android:host="prepareurself.tk"/>
             </intent-filter>
 
         </activity>
@@ -66,7 +50,15 @@
         <activity
             android:name=".Home.ui.HomeActivity"
             android:label="@string/title_activity_home"
-            android:theme="@style/AppTheme.NoActionBar" />
+            android:theme="@style/AppTheme.NoActionBar" >
+
+            <intent-filter>
+                <action android:name="android.intent.action.VIEW"/>
+                <category android:name="android.intent.category.BROWSABLE"/>
+                <category android:name="android.intent.category.DEFAULT"/>
+                <data android:scheme="prepareurself_home" android:host="prepareurself.tk" />
+            </intent-filter>
+        </activity>
         <activity android:name=".utils.QuizBaseActivity" />
         <activity
             android:name=".quiz.QuizActivity"
