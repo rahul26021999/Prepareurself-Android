@@ -6,7 +6,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="@color/grey"
-    tools:context=".Home.content.profile.ui.ProfileFragment"
+    tools:context=".Home.content.profile.ui.fragments.ProfileFragment"
     android:orientation="vertical">
     <LinearLayout
         android:layout_width="match_parent"
@@ -113,10 +113,10 @@
                         android:layout_height="wrap_content"
                         android:layout_marginTop="20dp"
                         android:fontFamily="@font/proximanovaregular"
-                        android:text="rimjhimvaish@gmail.com"
                         android:textColor="#424242"
                         android:textSize="15sp"
-                        android:textStyle="bold" />
+                        android:textStyle="bold"
+                        android:id="@+id/tv_email_profile"/>
 
                 </LinearLayout>
 
@@ -244,7 +244,6 @@
                                     android:layout_height="wrap_content"
                                     android:id="@+id/tv_dob"
                                     android:layout_marginLeft="20dp"
-                                    android:text="24/12/1998"
                                     android:textSize="15sp"
                                     android:textColor="@color/goodgrey"
                                     android:fontFamily="@font/proximanovaregular"/>
@@ -253,7 +252,6 @@
                                     android:layout_height="wrap_content"
                                     android:id="@+id/et_dob"
                                     android:layout_marginLeft="20dp"
-                                    android:text="24/12/1998"
                                     android:textSize="15sp"
                                     android:textColor="@color/goodgrey"
                                     android:fontFamily="@font/proximanovaregular"
@@ -287,7 +285,6 @@
                                     android:id="@+id/tv_name"
                                     android:layout_marginLeft="20dp"
                                     android:textColor="@color/goodgrey"
-                                    android:text="Rimjhim Vaish"
                                     android:textSize="15sp"
                                     android:fontFamily="@font/proximanovaregular" />
                                 <EditText
@@ -296,7 +293,6 @@
                                     android:id="@+id/et_name"
                                     android:layout_marginLeft="20dp"
                                     android:textColor="@color/goodgrey"
-                                    android:text="Rimjhim Vaish"
                                     android:textSize="15sp"
                                     android:fontFamily="@font/proximanovaregular"
                                     android:visibility="gone"/>
@@ -328,7 +324,6 @@
                                     android:layout_height="wrap_content"
                                     android:id="@+id/tv_call"
                                     android:layout_marginLeft="20dp"
-                                    android:text="9560366178"
                                     android:textSize="15sp"
                                     android:textColor="@color/goodgrey"
                                     android:fontFamily="@font/proximanovaregular" />
@@ -337,7 +332,6 @@
                                     android:layout_height="wrap_content"
                                     android:id="@+id/et_call"
                                     android:layout_marginLeft="20dp"
-                                    android:text="9560366178"
                                     android:textSize="15sp"
                                     android:textColor="@color/goodgrey"
                                     android:fontFamily="@font/proximanovaregular"

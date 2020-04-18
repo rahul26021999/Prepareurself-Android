@@ -1,4 +1,4 @@
-package com.prepare.prepareurself.Home.content.profile.ui;
+package com.prepare.prepareurself.Home.content.profile.ui.fragments;
 
 import androidx.lifecycle.Observer;
 import androidx.lifecycle.ViewModelProviders;
@@ -11,7 +11,7 @@ import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 
-import android.provider.ContactsContract;
+import android.text.TextUtils;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -21,7 +21,7 @@ import android.widget.EditText;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
-import com.prepare.prepareurself.Home.content.EditProfile.edit_profile_activity;
+import com.prepare.prepareurself.Home.content.profile.ui.EditProfileActivity;
 import com.prepare.prepareurself.Home.content.profile.viewmodel.ProfileViewModel;
 import com.prepare.prepareurself.R;
 import com.prepare.prepareurself.authentication.data.model.UserModel;
@@ -39,6 +39,7 @@ public class ProfileFragment extends Fragment {
     EditText et_dob,et_name, et_call;
     Button btn_aboutme;
     DatePickerDialog datePickerDialog;
+    TextView tv_email_profile;
 
     public static ProfileFragment newInstance() {
         return new ProfileFragment();
@@ -60,7 +61,9 @@ public class ProfileFragment extends Fragment {
         et_dob=view.findViewById(R.id.et_dob);
         et_name=view.findViewById(R.id.et_name);
         et_call=view.findViewById(R.id.et_call);
+        tv_email_profile = view.findViewById(R.id.tv_email_profile);
         btn_aboutme=view.findViewById(R.id.btn_aboutme);
+
         l_userinfo.setVisibility(View.VISIBLE);
         l_preferences.setVisibility(View.GONE);
         t_userinfo.setOnClickListener(new View.OnClickListener() {
@@ -86,12 +89,6 @@ public class ProfileFragment extends Fragment {
             @Override
             public void onClick(View v) {
                 tv_dob.setVisibility(View.GONE);
-                et_dob.setOnClickListener(new View.OnClickListener() {
-                    @Override
-                    public void onClick(View v) {
-                        setdatepicker();
-                    }
-                });
                 tv_name.setVisibility(View.GONE);
                 tv_call.setVisibility(View.GONE);
                 et_dob.setVisibility(View.VISIBLE);
@@ -100,10 +97,17 @@ public class ProfileFragment extends Fragment {
                 btn_aboutme.setVisibility(View.VISIBLE);
             }
         });
+
+        et_dob.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                setdatepicker();
+            }
+        });
         tv_preference_edit.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent intent=new Intent(getActivity(), edit_profile_activity.class);
+                Intent intent=new Intent(getActivity(), EditProfileActivity.class);
                 startActivity(intent);
 
             }
@@ -171,8 +175,29 @@ public class ProfileFragment extends Fragment {
                 String name = userModel.getFirst_name() + " " + userModel.getLast_name();
                 /*tvName.setText(name);
                 tvEmail.setText(userModel.getEmail());*/
+                tv_email_profile.setText(userModel.getEmail());
+
+                tv_dob.setText(userModel.getDob());
+                tv_name.setText(userModel.getFirst_name() + " " + userModel.getLast_name());
+                tv_call.setText(userModel.getPhone_number());
+
+                et_dob.setText(userModel.getDob());
+                et_name.setText(userModel.getFirst_name() + " " + userModel.getLast_name());
+                et_call.setText(userModel.getPhone_number());
+
+                if (TextUtils.isEmpty(userModel.getDob())){
+                    tv_dob.setText("Click Edit to update your birthday");
+                    et_dob.setHint("Tap to update your birthday");
+                }
+
+                if (TextUtils.isEmpty(userModel.getPhone_number())){
+                    tv_call.setText("Click Edit to update your Contact");
+                    et_call.setHint("Enter your Contact Number");
+                }
+
             }
         });
+
 
     }
 

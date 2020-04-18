@@ -1,4 +1,4 @@
-package com.prepare.prepareurself.Home.content.EditProfile;
+package com.prepare.prepareurself.Home.content.profile.data.model;
 
 public class techstack {
 

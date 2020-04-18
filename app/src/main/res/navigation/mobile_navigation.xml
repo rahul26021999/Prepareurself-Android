@@ -15,7 +15,7 @@
 
     <fragment
         android:id="@+id/nav_profile_fragment"
-        android:name="com.prepare.prepareurself.Home.content.profile.ui.ProfileFragment"
+        android:name="com.prepare.prepareurself.Home.content.profile.ui.fragments.ProfileFragment"
         android:label="@string/menu_profile"
         tools:layout="@layout/profile_fragment">
 

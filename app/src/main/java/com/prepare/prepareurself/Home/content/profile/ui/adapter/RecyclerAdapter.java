@@ -1,4 +1,4 @@
-package com.prepare.prepareurself.Home.content.EditProfile;
+package com.prepare.prepareurself.Home.content.profile.ui.adapter;
 
 import android.content.Context;
 import android.view.LayoutInflater;
@@ -10,6 +10,8 @@ import android.widget.TextView;
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.prepare.prepareurself.Home.content.profile.ui.RecyclerItemSelectedListener;
+import com.prepare.prepareurself.Home.content.profile.data.model.techstack;
 import com.prepare.prepareurself.R;
 
 import java.util.List;
@@ -17,7 +19,7 @@ import java.util.List;
 public class RecyclerAdapter extends RecyclerView.Adapter<RecyclerAdapter.MyViewHolder>
 {   private Context context;
     private List<techstack> techstackList;
-    private  RecyclerItemSelectedListener itemSelectedListener;
+    private RecyclerItemSelectedListener itemSelectedListener;
 
 
     public RecyclerAdapter(Context context, List<techstack> techstackList) {
