@@ -16,13 +16,16 @@ import com.prepare.prepareurself.Home.content.resources.data.db.dao.ResourcesRoo
 import com.prepare.prepareurself.Home.content.resources.data.model.ResourceModel;
 import com.prepare.prepareurself.authentication.data.db.dao.UserRoomDao;
 import com.prepare.prepareurself.authentication.data.model.UserModel;
+import com.prepare.prepareurself.utils.youtubeplaylistapi.db.PlaylistVideosDao;
+import com.prepare.prepareurself.utils.youtubeplaylistapi.models.VideoContentDetails;
 
 @Database(entities = {
         UserModel.class,
         CourseModel.class,
         TopicsModel.class,
         ResourceModel.class,
-        ProjectsModel.class
+        ProjectsModel.class,
+        VideoContentDetails.class
 }, version = 1)
 public abstract class AppDatabase extends RoomDatabase {
 
@@ -31,6 +34,7 @@ public abstract class AppDatabase extends RoomDatabase {
     public abstract TopicsRoomDao topicsRoomDao();
     public abstract ResourcesRoomDao resourcesRoomDao();
     public abstract ProjectsRoomDao projectsRoomDao();
+    public abstract PlaylistVideosDao playlistVideosDao();
 
     private static AppDatabase INSTANCE;
 

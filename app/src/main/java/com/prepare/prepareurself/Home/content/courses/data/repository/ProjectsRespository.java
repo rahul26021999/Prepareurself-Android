@@ -8,10 +8,15 @@ import androidx.lifecycle.MutableLiveData;
 
 import com.prepare.prepareurself.Apiservice.ApiClient;
 import com.prepare.prepareurself.Apiservice.ApiInterface;
+import com.prepare.prepareurself.Apiservice.YoutubeApiInterface;
 import com.prepare.prepareurself.Home.content.courses.data.db.repository.ProjectsDbRepository;
 import com.prepare.prepareurself.Home.content.courses.data.model.GetProjectResponse;
 import com.prepare.prepareurself.Home.content.courses.data.model.ProjectResponse;
 import com.prepare.prepareurself.Home.content.courses.data.model.ProjectsModel;
+import com.prepare.prepareurself.utils.Constants;
+import com.prepare.prepareurself.utils.youtubeplaylistapi.db.PlaylistVideosDbRepository;
+import com.prepare.prepareurself.utils.youtubeplaylistapi.models.VideoItemWrapper;
+import com.prepare.prepareurself.utils.youtubeplaylistapi.models.YoutubePlaylistResponseModel;
 
 import retrofit2.Call;
 import retrofit2.Callback;
@@ -21,10 +26,46 @@ public class ProjectsRespository {
 
     private ApiInterface apiInterface;
     private ProjectsDbRepository projectsDbRepository;
+    private YoutubeApiInterface youtubeApiInterface;
+    private PlaylistVideosDbRepository playlistVideosDbRepository;
 
     public ProjectsRespository(Application application){
         apiInterface = ApiClient.getApiClient().create(ApiInterface.class);
+        youtubeApiInterface = ApiClient.getYoutubeApiClient().create(YoutubeApiInterface.class);
         projectsDbRepository = new ProjectsDbRepository(application);
+        playlistVideosDbRepository = new PlaylistVideosDbRepository(application);
+    }
+
+    public LiveData<YoutubePlaylistResponseModel> getVideosFromPlaylist(String pageToken, String playlistId){
+
+        Log.d("youtube_api_debug",youtubeApiInterface.getPlaylist("contentDetails,id",pageToken,playlistId, Constants.YOUTUBE_PLAYER_API_KEY)
+        .request().url().toString());
+        final MutableLiveData<YoutubePlaylistResponseModel> data = new MutableLiveData<>();
+        youtubeApiInterface.getPlaylist("contentDetails,id",pageToken,playlistId, Constants.YOUTUBE_PLAYER_API_KEY)
+                .enqueue(new Callback<YoutubePlaylistResponseModel>() {
+                    @Override
+                    public void onResponse(Call<YoutubePlaylistResponseModel> call, Response<YoutubePlaylistResponseModel> response) {
+                        YoutubePlaylistResponseModel responseModel = response.body();
+                        if (responseModel!=null){
+                            if (responseModel.getItems()!=null){
+                                for (VideoItemWrapper videoItemWrapper : responseModel.getItems()){
+                                    playlistVideosDbRepository.insertVideoContentDetail(videoItemWrapper.getContentDetails());
+                                }
+                            }
+                            data.setValue(responseModel);
+                        }else{
+                            data.setValue(null);
+                        }
+                    }
+
+                    @Override
+                    public void onFailure(Call<YoutubePlaylistResponseModel> call, Throwable t) {
+                        data.setValue(null);
+                        Log.d("youtube_api_debug",t.getLocalizedMessage()+"");
+                    }
+                });
+
+        return data;
     }
 
     public LiveData<ProjectResponse> getProjects(String token, int courseId, String level, int count, int page){
