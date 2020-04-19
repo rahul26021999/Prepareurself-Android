@@ -67,6 +67,18 @@ public class Utility {
         return null;
     }
 
+    public static String getVideoPlaylistId(String youtubeUrl){
+        String pattern = "^(?:https?:\\/\\/)?(?:www\\.)?youtu\\.?be(?:\\.com)?.*?(?:v|list)=(.*?)(?:&|$)|^(?:https?:\\/\\/)?(?:www\\.)?youtu\\.?be(?:\\.com)?(?:(?!=).)*\\/(.*)$";
+
+        Pattern compiledPattern = Pattern.compile(pattern,
+                Pattern.CASE_INSENSITIVE);
+        Matcher matcher = compiledPattern.matcher(youtubeUrl);
+        if (matcher.find()) {
+            return matcher.group(1);
+        }/*from w  w  w.  j a  va  2 s .c om*/
+        return null;
+    }
+
     public static ViewPropertyTransition.Animator getAnimationObject(){
 
         return new ViewPropertyTransition.Animator() {

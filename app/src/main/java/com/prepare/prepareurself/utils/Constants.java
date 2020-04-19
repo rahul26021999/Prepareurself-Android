@@ -41,4 +41,5 @@ public class Constants {
     public static final String RESOURCEID = "resource_id";
     public static final String BITMAPURI = "bitmap_uri";
     public static final String PROJECTSIMAGEBASEURL = "http://prepareurself.tk/uploads/projects/";
+    public static final String PROJECTID = "project_id";
 }
