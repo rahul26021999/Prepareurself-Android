@@ -11,9 +11,10 @@ import retrofit2.converter.gson.GsonConverterFactory;
 
 public class ApiClient {
 
-    public static final String BASEURL =  "http://prepareurself.tk/api/"; // this is our base url, this will be same for all the endpoints
+    public static final String BASEURL =  "http://prepareurself.tk/api/";
+    public static final String YOUTUBEAPIBASEURL = "https://www.googleapis.com/youtube/v3/";
 
-    public static Retrofit retrofit = null;
+    public static Retrofit retrofit = null, youtubeRetrofit = null;
 
     public static Retrofit getApiClient() {
         Gson gson = new GsonBuilder()
@@ -33,5 +34,26 @@ public class ApiClient {
 
         return retrofit;
     }
+
+    public static Retrofit getYoutubeApiClient(){
+        Gson gson = new GsonBuilder()
+                .setLenient()
+                .create();
+        OkHttpClient okHttpClient = new OkHttpClient.Builder()
+                .readTimeout(100, TimeUnit.SECONDS)
+                .connectTimeout(100, TimeUnit.SECONDS)
+                .build();
+        if (youtubeRetrofit==null) {
+            youtubeRetrofit=new Retrofit.Builder()
+                    .baseUrl(YOUTUBEAPIBASEURL)
+                    .client(okHttpClient)
+                    .addConverterFactory(GsonConverterFactory.create(gson))
+                    .build();
+        }
+
+        return youtubeRetrofit;
+    }
+
+
 
 }
