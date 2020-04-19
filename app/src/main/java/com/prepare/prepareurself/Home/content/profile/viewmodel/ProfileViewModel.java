@@ -14,6 +14,7 @@ import com.prepare.prepareurself.authentication.data.db.repository.UserDBReposit
 import com.prepare.prepareurself.authentication.data.model.UserModel;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
 
 public class ProfileViewModel extends AndroidViewModel {
@@ -22,7 +23,7 @@ public class ProfileViewModel extends AndroidViewModel {
     private UserDBRepository userDBRepository;
     private ProfileRepository profileRepository;
 
-    private MutableLiveData<List<PreferredTechStack>> listLiveData = new MutableLiveData<>();
+    private MutableLiveData<HashMap<String,PreferredTechStack>> listLiveData = new MutableLiveData<>();
     public MutableLiveData<List<PreferredTechStack>> listLiveDataEditable = new MutableLiveData<>();
 
     public ProfileViewModel(@NonNull Application application) {
@@ -86,9 +87,9 @@ public class ProfileViewModel extends AndroidViewModel {
 
     }
 
-    public LiveData<List<PreferredTechStack>> getPreferredTechStacks(){
+    public LiveData<HashMap<String,PreferredTechStack>> getPreferredTechStacks(){
 
-        List<PreferredTechStack> preferredTechStacks = new ArrayList<>();
+        HashMap<String,PreferredTechStack> preferredTechStacks = new HashMap<>();
 
         PreferredTechStack p1 = new PreferredTechStack();
         PreferredTechStack p2 = new PreferredTechStack();
@@ -103,9 +104,11 @@ public class ProfileViewModel extends AndroidViewModel {
         p3.setId(3);
         p3.setCourse_name("Node");
 
-        preferredTechStacks.add(p1);
-        preferredTechStacks.add(p2);
-        preferredTechStacks.add(p3);
+
+        preferredTechStacks.put(p1.getCourse_name(),p1);
+        preferredTechStacks.put(p3.getCourse_name(),p3);
+        preferredTechStacks.put(p2.getCourse_name(),p2);
+
 
         listLiveData.setValue(preferredTechStacks);
 

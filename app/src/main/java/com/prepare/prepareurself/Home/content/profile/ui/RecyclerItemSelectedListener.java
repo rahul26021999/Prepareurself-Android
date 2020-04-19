@@ -4,7 +4,7 @@ import com.prepare.prepareurself.Home.content.profile.data.model.PreferredTechSt
 
 public interface RecyclerItemSelectedListener {
     public
-     void  onItemSelected(PreferredTechStack PreferredTechStack, int position);
+     void  onItemSelected(int position);
 
 
 }

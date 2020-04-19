@@ -42,12 +42,12 @@ public class PreferrenceRecyclerAdapter extends RecyclerView.Adapter<Preferrence
     }
 
     @Override
-    public void onBindViewHolder(@NonNull MyViewHolder holder, final int position) {
+    public void onBindViewHolder(@NonNull final MyViewHolder holder, final int position) {
         holder.course_name.setText(preferredTechStacksFiltered.get(position).getCourse_name());
         holder.itemView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                itemSelectedListener.onItemSelected(preferredTechStacksFiltered.get(position),position);
+                itemSelectedListener.onItemSelected(position);
             }
         });
 
