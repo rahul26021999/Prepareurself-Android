@@ -1,5 +1,6 @@
 package com.prepare.prepareurself.Home.content.courses.data.model;
 
+import androidx.annotation.Nullable;
 import androidx.room.ColumnInfo;
 import androidx.room.Entity;
 import androidx.room.PrimaryKey;
@@ -18,6 +19,7 @@ public class ProjectsModel {
     @SerializedName("name")
     private String name;
 
+    @Nullable
     @ColumnInfo(name = "description")
     @SerializedName("description")
     private String description;
@@ -38,6 +40,7 @@ public class ProjectsModel {
     @SerializedName("link")
     private String link;
 
+    @Nullable
     @ColumnInfo(name = "playlist")
     @SerializedName("playlist")
     private  String playlist;

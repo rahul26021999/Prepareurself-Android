@@ -3,6 +3,7 @@ package com.prepare.prepareurself.Home.content.courses.ui.fragments;
 import androidx.lifecycle.Observer;
 import androidx.lifecycle.ViewModelProviders;
 
+import android.content.Intent;
 import android.os.Bundle;
 
 import androidx.annotation.NonNull;
@@ -20,6 +21,7 @@ import android.widget.AbsListView;
 import com.prepare.prepareurself.Home.content.courses.data.model.ProjectResponse;
 import com.prepare.prepareurself.Home.content.courses.data.model.ProjectsModel;
 import com.prepare.prepareurself.Home.content.courses.ui.activity.CoursesActivity;
+import com.prepare.prepareurself.Home.content.courses.ui.activity.ProjectsActivity;
 import com.prepare.prepareurself.Home.content.courses.ui.adapters.ProjectsRvAdapter;
 import com.prepare.prepareurself.Home.content.courses.viewmodels.ProjectsViewModel;
 import com.prepare.prepareurself.Home.content.resources.ui.activity.ResourcesActivity;
@@ -125,6 +127,8 @@ public class ProjectsFragment extends Fragment implements ProjectsRvAdapter.Proj
 
     @Override
     public void onProjectClicked(ProjectsModel projectsModel) {
-
+        Intent intent = new Intent(getActivity(), ProjectsActivity.class);
+        intent.putExtra(Constants.PROJECTID,projectsModel.getId());
+        startActivity(intent);
     }
 }
