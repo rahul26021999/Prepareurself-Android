@@ -15,12 +15,14 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.AbsListView;
 
 import com.prepare.prepareurself.Home.content.courses.data.model.ProjectResponse;
 import com.prepare.prepareurself.Home.content.courses.data.model.ProjectsModel;
 import com.prepare.prepareurself.Home.content.courses.ui.activity.CoursesActivity;
 import com.prepare.prepareurself.Home.content.courses.ui.adapters.ProjectsRvAdapter;
 import com.prepare.prepareurself.Home.content.courses.viewmodels.ProjectsViewModel;
+import com.prepare.prepareurself.Home.content.resources.ui.activity.ResourcesActivity;
 import com.prepare.prepareurself.R;
 import com.prepare.prepareurself.utils.Constants;
 import com.prepare.prepareurself.utils.DividerItemDecoration;
@@ -33,6 +35,8 @@ public class ProjectsFragment extends Fragment implements ProjectsRvAdapter.Proj
     private ProjectsViewModel mViewModel;
     private RecyclerView recyclerView;
     private PrefManager prefManager;
+    private Boolean isScrolling = false;
+    private int rvCurrentItems, rvTotalItems, rvScrolledOutItems, rvLastPage, rvCurrentPage=1;
 
     public static ProjectsFragment newInstance() {
         return new ProjectsFragment();
@@ -54,9 +58,16 @@ public class ProjectsFragment extends Fragment implements ProjectsRvAdapter.Proj
         mViewModel = ViewModelProviders.of(this).get(ProjectsViewModel.class);
         prefManager = new PrefManager(getActivity());
 
-        mViewModel.fetchProjects(prefManager.getString(Constants.JWTTOKEN), CoursesActivity.courseId,"",10,1);
+        if(CoursesActivity.courseId!=-1){
+            mViewModel.fetchProjects(prefManager.getString(Constants.JWTTOKEN),
+                    CoursesActivity.courseId,
+                    "",
+                    10,
+                    rvCurrentPage);
+            rvCurrentPage+=1;
+        }
 
-        LinearLayoutManager layoutManager = new LinearLayoutManager(getActivity());
+        final LinearLayoutManager layoutManager = new LinearLayoutManager(getActivity());
         final ProjectsRvAdapter adapter = new ProjectsRvAdapter(getActivity(), this);
         recyclerView.setLayoutManager(layoutManager);
         DividerItemDecoration decoration = new DividerItemDecoration(requireContext(),R.drawable.theory_resource_divider);
@@ -65,8 +76,39 @@ public class ProjectsFragment extends Fragment implements ProjectsRvAdapter.Proj
 
         mViewModel.getProjectResponseMutableLiveData().observe(getActivity(), new Observer<ProjectResponse>() {
             @Override
-            public void onChanged(ProjectResponse projectResponse) {
-                Log.d("response_debug",projectResponse+"");
+            public void onChanged(final ProjectResponse projectResponse) {
+                recyclerView.addOnScrollListener(new RecyclerView.OnScrollListener() {
+                    @Override
+                    public void onScrollStateChanged(@NonNull RecyclerView recyclerView, int newState) {
+                        super.onScrollStateChanged(recyclerView, newState);
+                        if (newState == AbsListView.OnScrollListener.SCROLL_STATE_TOUCH_SCROLL){
+                            isScrolling = true;
+                        }
+                    }
+
+                    @Override
+                    public void onScrolled(@NonNull RecyclerView recyclerView, int dx, int dy) {
+                        super.onScrolled(recyclerView, dx, dy);
+
+                        rvCurrentItems = layoutManager.getChildCount();
+                        rvTotalItems = layoutManager.getItemCount();
+                        rvScrolledOutItems = layoutManager.findFirstVisibleItemPosition();
+
+                        rvLastPage = projectResponse.getLast_page();
+
+                        if (isScrolling && (rvCurrentItems + rvScrolledOutItems) == rvTotalItems && rvCurrentPage <= rvLastPage){
+                            isScrolling = false;
+                            mViewModel.fetchProjects(prefManager.getString(Constants.JWTTOKEN),
+                                    CoursesActivity.courseId,
+                                    "",
+                                    10,
+                                    rvCurrentPage);
+                            rvCurrentPage+=1;
+
+                        }
+
+                    }
+                });
             }
         });
 
