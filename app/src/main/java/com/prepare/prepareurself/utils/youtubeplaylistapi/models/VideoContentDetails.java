@@ -1,5 +1,6 @@
 package com.prepare.prepareurself.utils.youtubeplaylistapi.models;
 
+
 import androidx.annotation.NonNull;
 import androidx.room.ColumnInfo;
 import androidx.room.Entity;
@@ -7,17 +8,10 @@ import androidx.room.PrimaryKey;
 
 import com.google.gson.annotations.SerializedName;
 
-@Entity( tableName = "playlistVideos")
 public class VideoContentDetails {
 
-    @NonNull
-    @PrimaryKey
-    @ColumnInfo(name = "videoId")
-    @SerializedName("videoId")
     private String videoId;
 
-    @ColumnInfo(name = "videoPublishedAt")
-    @SerializedName("videoPublishedAt")
     private String videoPublishedAt;
 
     public VideoContentDetails() {

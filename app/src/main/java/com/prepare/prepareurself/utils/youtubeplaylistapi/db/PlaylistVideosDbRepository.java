@@ -5,62 +5,64 @@ import android.os.AsyncTask;
 
 import androidx.lifecycle.LiveData;
 
-import com.prepare.prepareurself.authentication.data.db.dao.UserRoomDao;
-import com.prepare.prepareurself.authentication.data.model.UserModel;
 import com.prepare.prepareurself.persistence.AppDatabase;
-import com.prepare.prepareurself.utils.youtubeplaylistapi.models.VideoContentDetails;
+import com.prepare.prepareurself.utils.youtubeplaylistapi.models.VideoItemWrapper;
 
 import java.util.List;
 
 public class PlaylistVideosDbRepository {
 
-    private PlaylistVideosDao playlistVideosDao;
+    private PlaylistContentDeatilsDao playlistContentDeatilsDao;
 
     public PlaylistVideosDbRepository(Application application){
         AppDatabase db = AppDatabase.getDatabase(application);
-        playlistVideosDao = db.playlistVideosDao();
+        playlistContentDeatilsDao = db.playlistVideosDao();
     }
 
-    public LiveData<List<VideoContentDetails>> getVideoContentDetails(){
-        return playlistVideosDao.getVideoContentDetails();
+    public LiveData<List<VideoItemWrapper>> getVideoContentDetails(){
+        return playlistContentDeatilsDao.getVideoItemWrappers();
     }
 
-    public void insertVideoContentDetail(VideoContentDetails videoContentDetails){
-        new insertAsyncTask(playlistVideosDao).execute(videoContentDetails);
+    public LiveData<List<VideoItemWrapper>> getVideoItemWrapperByPlaylistId(String playlistId){
+        return playlistContentDeatilsDao.getVideoItemWrapperByPlaylistId(playlistId);
+    }
+
+    public void insertVideoContentDetail(VideoItemWrapper videoContentDetails){
+        new insertAsyncTask(playlistContentDeatilsDao).execute(videoContentDetails);
     }
 
     public void deleteVideoContentDetails(){
-        new deleteAsyncTask(playlistVideosDao).execute();
+        new deleteAsyncTask(playlistContentDeatilsDao).execute();
     }
 
 
-    private static class insertAsyncTask extends AsyncTask<VideoContentDetails,Void, Void> {
+    private static class insertAsyncTask extends AsyncTask<VideoItemWrapper,Void, Void> {
 
-        private PlaylistVideosDao videosDao;
+        private PlaylistContentDeatilsDao videosDao;
 
-        insertAsyncTask(PlaylistVideosDao dao){
+        insertAsyncTask(PlaylistContentDeatilsDao dao){
             videosDao = dao;
         }
 
         @Override
-        protected Void doInBackground(VideoContentDetails... videoContentDetails) {
-            videosDao.insertVideoContent(videoContentDetails[0]);
+        protected Void doInBackground(VideoItemWrapper... videoContentDetails) {
+            videosDao.insertVideoItemWrapper(videoContentDetails[0]);
 
             return null;
         }
     }
 
-    private static class deleteAsyncTask extends AsyncTask<VideoContentDetails,Void, Void>{
+    private static class deleteAsyncTask extends AsyncTask<VideoItemWrapper,Void, Void>{
 
-        private PlaylistVideosDao videosDao;
+        private PlaylistContentDeatilsDao videosDao;
 
-        deleteAsyncTask(PlaylistVideosDao dao){
+        deleteAsyncTask(PlaylistContentDeatilsDao dao){
             videosDao = dao;
         }
 
         @Override
-        protected Void doInBackground(VideoContentDetails... videoContentDetails) {
-            videosDao.deleteVideoContentDetails();
+        protected Void doInBackground(VideoItemWrapper... videoContentDetails) {
+            videosDao.deleteVideoItemWrappers();
 
             return null;
         }

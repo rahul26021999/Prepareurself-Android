@@ -9,7 +9,8 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         tools:context=".Home.content.courses.ui.activity.ProjectsActivity"
-        android:background="@color/grey">
+        android:background="@color/white"
+        android:paddingBottom="20dp">
 
         <androidx.cardview.widget.CardView
             android:layout_width="150dp"
@@ -24,7 +25,8 @@
             <ImageView
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
-                android:id="@+id/image_project"/>
+                android:id="@+id/image_project"
+                android:scaleType="fitXY"/>
 
 
         </androidx.cardview.widget.CardView>
@@ -90,8 +92,23 @@
             tools:listitem="@layout/playlist_videos_item_layout"
             app:layout_constraintTop_toBottomOf="@+id/tv_reference_heading"
             android:layout_marginTop="10dp"
-            android:id="@+id/rv_prjects_videos"/>
+            android:id="@+id/rv_prjects_videos"
+            android:background="@android:color/transparent"/>
 
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Loading Content..."
+            android:textStyle="normal"
+            android:textSize="16sp"
+            android:id="@+id/tv_loading_project"
+            android:textColor="@color/colorPrimaryDark"
+            android:fontFamily="@font/proximanovaregular"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/tv_reference_heading"
+            />
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 

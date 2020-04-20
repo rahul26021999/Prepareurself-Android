@@ -14,6 +14,7 @@ import com.prepare.prepareurself.Home.content.courses.data.model.ProjectsModel;
 import com.prepare.prepareurself.Home.content.courses.data.repository.ProjectsRespository;
 import com.prepare.prepareurself.utils.youtubeplaylistapi.db.PlaylistVideosDbRepository;
 import com.prepare.prepareurself.utils.youtubeplaylistapi.models.VideoContentDetails;
+import com.prepare.prepareurself.utils.youtubeplaylistapi.models.VideoItemWrapper;
 import com.prepare.prepareurself.utils.youtubeplaylistapi.models.YoutubePlaylistResponseModel;
 
 import java.util.List;
@@ -27,7 +28,7 @@ public class ProjectsViewModel extends AndroidViewModel {
     private LiveData<ProjectResponse> projectResponseMutableLiveData = new MutableLiveData<>();
     private LiveData<List<ProjectsModel>> listLiveData = new MutableLiveData<>();
     private LiveData<YoutubePlaylistResponseModel> youtubePlaylistResponseModelLiveData = new MutableLiveData<>();
-    private LiveData<List<VideoContentDetails>> videoContentsLiveData = new MutableLiveData<>();
+    private LiveData<List<VideoItemWrapper>> videoContentsLiveData = new MutableLiveData<>();
 
     public ProjectsViewModel(@NonNull Application application) {
         super(application);
@@ -54,22 +55,14 @@ public class ProjectsViewModel extends AndroidViewModel {
         return dbRepository.getProjectsById(id);
     }
 
-    public void fetchVideosFromPlaylist(String pageToken, String playlistId){
+    public LiveData<YoutubePlaylistResponseModel> fetchVideosFromPlaylist(String pageToken, String playlistId){
         youtubePlaylistResponseModelLiveData =  respository.getVideosFromPlaylist(pageToken,playlistId);
-        Log.d("youtube_api_debug","viewmodel "+youtubePlaylistResponseModelLiveData+"");
-    }
-
-    public LiveData<YoutubePlaylistResponseModel> getVideosFromPlaylist(){
         return youtubePlaylistResponseModelLiveData;
     }
 
-
-    public LiveData<List<VideoContentDetails>> getVideoContentsLiveData(){
-
+    public LiveData<List<VideoItemWrapper>> getVideoContentsLiveData(String playlistId){
+        videoContentsLiveData = playlistVideosDbRepository.getVideoItemWrapperByPlaylistId(playlistId);
         return videoContentsLiveData;
     }
 
-    public void fetchVidesFromDb() {
-        videoContentsLiveData = playlistVideosDbRepository.getVideoContentDetails();
-    }
 }
