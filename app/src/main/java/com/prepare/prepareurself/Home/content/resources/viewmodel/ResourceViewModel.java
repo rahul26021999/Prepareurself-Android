@@ -32,7 +32,7 @@ public class ResourceViewModel extends AndroidViewModel {
         resourceRespository.resourceViewed(token,resourceId);
     }
     // create like method
-    public  void  resourcesLiked(String token, int resourceId, Boolean like){
+    public  void  resourcesLiked(String token, int resourceId, int like){
         resourceRespository.resourceLiked(token,resourceId,like);
     }
 

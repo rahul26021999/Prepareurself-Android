@@ -145,7 +145,7 @@ public class TheoryResourceFragment extends Fragment implements TheoryResourcesR
     }
 
     @Override
-    public void OnLikeButtonClicked(ResourceModel resource, Boolean checked) {
+    public void OnLikeButtonClicked(ResourceModel resource, int checked) {
         Toast.makeText(getContext(),"Liked button clicked",Toast.LENGTH_SHORT).show();
         //liikkkee code added
         mViewModel.resourcesLiked(prefManager.getString(Constants.JWTTOKEN),resource.getId(),checked);

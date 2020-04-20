@@ -79,12 +79,15 @@ public class TheoryResourcesRvAdapter extends RecyclerView.Adapter<TheoryResourc
         holder.hitLike.setOnLikeListener(new OnLikeListener() {
             @Override
             public void liked(LikeButton likeButton) {
-                listener.OnLikeButtonClicked(theoryResources1,true);
+                listener.OnLikeButtonClicked(theoryResources1,0);
+                holder.tvLikes.setText(theoryResources1.getTotal_likes()+1 + " likes");
+
             }
 
             @Override
             public void unLiked(LikeButton likeButton) {
-                listener.OnLikeButtonClicked(theoryResources1,false);
+                listener.OnLikeButtonClicked(theoryResources1,1);
+                holder.tvLikes.setText(theoryResources1.getTotal_likes() + " likes");
             }
         });
 
@@ -133,10 +136,10 @@ public class TheoryResourcesRvAdapter extends RecyclerView.Adapter<TheoryResourc
             tvViews.setText(resourceModel.getViews()+" views");
             tvLikes.setText(resourceModel.getTotal_likes() + " likes");
 
-            if (resourceModel.getLike() == 0){
-                hitLike.setEnabled(true);
+            if (resourceModel.getLike() == 1){
+                hitLike.setLiked(true);
             }else{
-                hitLike.setEnabled(false);
+                hitLike.setLiked(false);
             }
 
         }
@@ -145,7 +148,7 @@ public class TheoryResourcesRvAdapter extends RecyclerView.Adapter<TheoryResourc
 
     public interface TheoryResourceRvInteractor{
         void onResourceClicked(ResourceModel resource);
-        void OnLikeButtonClicked(ResourceModel resource,Boolean checked);
+        void OnLikeButtonClicked(ResourceModel resource,int checked);
         void onResourceShared(Bitmap bitmap, String text);
     }
 
