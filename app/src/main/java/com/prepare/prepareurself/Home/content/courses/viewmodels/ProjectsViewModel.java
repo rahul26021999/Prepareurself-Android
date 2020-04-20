@@ -1,6 +1,7 @@
 package com.prepare.prepareurself.Home.content.courses.viewmodels;
 
 import android.app.Application;
+import android.util.Log;
 
 import androidx.annotation.NonNull;
 import androidx.lifecycle.AndroidViewModel;
@@ -54,7 +55,8 @@ public class ProjectsViewModel extends AndroidViewModel {
     }
 
     public void fetchVideosFromPlaylist(String pageToken, String playlistId){
-        youtubePlaylistResponseModelLiveData = respository.getVideosFromPlaylist(pageToken,playlistId);
+        youtubePlaylistResponseModelLiveData =  respository.getVideosFromPlaylist(pageToken,playlistId);
+        Log.d("youtube_api_debug","viewmodel "+youtubePlaylistResponseModelLiveData+"");
     }
 
     public LiveData<YoutubePlaylistResponseModel> getVideosFromPlaylist(){
@@ -63,11 +65,11 @@ public class ProjectsViewModel extends AndroidViewModel {
 
 
     public LiveData<List<VideoContentDetails>> getVideoContentsLiveData(){
-        if (videoContentsLiveData.getValue() == null){
-            videoContentsLiveData = playlistVideosDbRepository.getVideoContentDetails();
-        }
 
         return videoContentsLiveData;
     }
 
+    public void fetchVidesFromDb() {
+        videoContentsLiveData = playlistVideosDbRepository.getVideoContentDetails();
+    }
 }

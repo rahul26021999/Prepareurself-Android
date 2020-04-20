@@ -5,6 +5,7 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.lifecycle.Observer;
 import androidx.lifecycle.ViewModelProviders;
 import androidx.recyclerview.widget.GridLayoutManager;
+import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import android.content.Intent;
@@ -12,6 +13,7 @@ import android.graphics.drawable.Drawable;
 import android.os.Bundle;
 import android.text.Html;
 import android.text.LoginFilter;
+import android.text.TextUtils;
 import android.util.Log;
 import android.view.MenuItem;
 import android.widget.AbsListView;
@@ -41,7 +43,8 @@ public class ProjectsActivity extends AppCompatActivity{
     private PlaylistVideosRvAdapter adapter;
     private Boolean isScrolling = false;
     private int rvCurrentItems, rvTotalItems, rvScrolledOutItems, rvLastPage;
-    private String rvCurrentPageToken = "";
+    private String rvNextPageToken = "";
+    int counter = 0;
 
 
     @Override
@@ -92,51 +95,22 @@ public class ProjectsActivity extends AppCompatActivity{
             tvProjectDescription.setText(Html.fromHtml(projectsModel.getDescription()));
 
         adapter = new PlaylistVideosRvAdapter(ProjectsActivity.this);
-        final GridLayoutManager layoutManager = new GridLayoutManager(ProjectsActivity.this,2, RecyclerView.VERTICAL, false);
+        final LinearLayoutManager layoutManager = new LinearLayoutManager(ProjectsActivity.this, RecyclerView.HORIZONTAL, false);
         recyclerView.setLayoutManager(layoutManager);
         recyclerView.setAdapter(adapter);
         recyclerView.setNestedScrollingEnabled(false);
 
-        viewModel.fetchVideosFromPlaylist(rvCurrentPageToken,"PLnfB3OWST3K3lCSi_YUrBujaAs0bFt4tz");
+        final String playlist = "PLnfB3OWST3K3lCSi_YUrBujaAs0bFt4tz";
 
-        viewModel.getVideosFromPlaylist()
-                .observe(this, new Observer<YoutubePlaylistResponseModel>() {
-                    @Override
-                    public void onChanged(final YoutubePlaylistResponseModel youtubePlaylistResponseModel) {
+        viewModel.fetchVideosFromPlaylist("",playlist);
 
-                        if (youtubePlaylistResponseModel!=null){
-
-                            recyclerView.addOnScrollListener(new RecyclerView.OnScrollListener() {
-                                @Override
-                                public void onScrollStateChanged(@NonNull RecyclerView recyclerView, int newState) {
-                                    super.onScrollStateChanged(recyclerView, newState);
-                                    if (newState == AbsListView.OnScrollListener.SCROLL_STATE_TOUCH_SCROLL){
-                                        isScrolling = true;
-                                    }
-                                }
-
-                                @Override
-                                public void onScrolled(@NonNull RecyclerView recyclerView, int dx, int dy) {
-                                    super.onScrolled(recyclerView, dx, dy);
-
-                                    rvCurrentItems = layoutManager.getChildCount();
-                                    rvTotalItems = layoutManager.getItemCount();
-                                    rvScrolledOutItems = layoutManager.findFirstVisibleItemPosition();
-
-                                    rvCurrentPageToken = youtubePlaylistResponseModel.getNextPageToken();
-
-                                    if (isScrolling && (rvCurrentItems + rvScrolledOutItems) == rvTotalItems && rvCurrentPageToken!=null){
-                                        isScrolling = false;
-                                        viewModel.fetchVideosFromPlaylist(rvCurrentPageToken,"PLnfB3OWST3K3lCSi_YUrBujaAs0bFt4tz");
-                                    }
-
-                                }
-                            });
-
-                        }
-
-                    }
-                });
+        viewModel.getVideosFromPlaylist().observe(this, new Observer<YoutubePlaylistResponseModel>() {
+            @Override
+            public void onChanged(YoutubePlaylistResponseModel youtubePlaylistResponseModel) {
+                Log.d("youtube_api_debug","on chng" + youtubePlaylistResponseModel+"");
+                viewModel.fetchVideosFromPlaylist(youtubePlaylistResponseModel.getNextPageToken(),playlist);
+            }
+        });
 
         viewModel.getVideoContentsLiveData().observe(this, new Observer<List<VideoContentDetails>>() {
             @Override

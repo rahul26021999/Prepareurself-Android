@@ -36,6 +36,8 @@ public class ProjectsRespository {
         playlistVideosDbRepository = new PlaylistVideosDbRepository(application);
     }
 
+  //  CAUQAA CAoQAA CA8QAA CBQQAA CBkQAA
+
     public LiveData<YoutubePlaylistResponseModel> getVideosFromPlaylist(String pageToken, String playlistId){
 
         Log.d("youtube_api_debug",youtubeApiInterface.getPlaylist("contentDetails,id",pageToken,playlistId, Constants.YOUTUBE_PLAYER_API_KEY)
@@ -53,6 +55,7 @@ public class ProjectsRespository {
                                 }
                             }
                             data.setValue(responseModel);
+                            Log.d("youtube_api_debug",responseModel+"");
                         }else{
                             data.setValue(null);
                         }
@@ -62,8 +65,11 @@ public class ProjectsRespository {
                     public void onFailure(Call<YoutubePlaylistResponseModel> call, Throwable t) {
                         data.setValue(null);
                         Log.d("youtube_api_debug",t.getLocalizedMessage()+"");
+                        Log.d("youtube_api_debug",data.getValue()+" error response");
                     }
                 });
+
+
 
         return data;
     }
