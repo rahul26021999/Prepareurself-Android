@@ -36,6 +36,7 @@ public class ProfileRepository {
     }
 
     public void updatePreferences(String token, List<Integer> integers) {
+        Log.d("update_prefernce_respon",apiInterface.updatePreference(token,integers).request().url().toString());
         apiInterface.updatePreference(token,integers).enqueue(new Callback<String>() {
             @Override
             public void onResponse(Call<String> call, Response<String> response) {
