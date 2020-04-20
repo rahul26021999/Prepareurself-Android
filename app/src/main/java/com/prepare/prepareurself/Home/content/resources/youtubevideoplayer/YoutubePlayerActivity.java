@@ -6,6 +6,7 @@ import android.content.res.Configuration;
 import android.graphics.drawable.Drawable;
 import android.net.Uri;
 import android.os.Bundle;
+import android.text.TextUtils;
 import android.view.View;
 import android.widget.Button;
 import android.widget.ImageView;
@@ -15,6 +16,8 @@ import android.widget.Toast;
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.content.ContextCompat;
+import androidx.lifecycle.Observer;
+import androidx.lifecycle.ViewModelProviders;
 import androidx.recyclerview.widget.RecyclerView;
 import androidx.recyclerview.widget.StaggeredGridLayoutManager;
 
@@ -31,18 +34,19 @@ import com.prepare.prepareurself.Home.content.resources.ui.adapter.RelatedVideos
 import com.prepare.prepareurself.R;
 import com.prepare.prepareurself.utils.Constants;
 import com.prepare.prepareurself.utils.Utility;
+import com.prepare.prepareurself.utils.youtubeplaylistapi.models.VideoItemWrapper;
 import com.prepare.prepareurself.utils.youtubeplaylistapi.utils.FullScreenHelper;
+import com.prepare.prepareurself.utils.youtubeplaylistapi.viewmodel.YoutubeViewModel;
 
 import java.io.UnsupportedEncodingException;
 import java.util.List;
 
 public class YoutubePlayerActivity extends AppCompatActivity {
 
-    private static final int RECOVERY_DIALOG_REQUEST = 1;
     YouTubePlayerView youTubePlayerView;
     //VideoResources v1;
     String videoCode = "";
-    int resourceId, videoTopicId ;
+    int resourceId =-1, videoTopicId ;
     String videoTitle="";
     String videoDescription="";
     RecyclerView rvRelatedVideos;
@@ -58,10 +62,18 @@ public class YoutubePlayerActivity extends AppCompatActivity {
 
     private FullScreenHelper fullScreenHelper = new FullScreenHelper(this);
 
+    private String videoItemWrapperId = "";
+    private String videoItemWrapperPlaylistId = "";
+    private int projectId =-1;
+
+    private YoutubeViewModel viewModel;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_youtube_player);
+
+        viewModel = ViewModelProviders.of(this).get(YoutubeViewModel.class);
 
         resourcesDbRepository = new ResourcesDbRepository(getApplication());
         adapter = new RelatedVideosRvAdapter(this);
@@ -77,42 +89,63 @@ public class YoutubePlayerActivity extends AppCompatActivity {
         if (intent.getData()!=null){
             try {
                 String tempData = intent.getData().toString().split("video_resource")[1];
-                videoCode = Utility.base64DecodeForString(tempData);
+                resourceId = Utility.base64DecodeForInt(tempData);
               //  youTubePlayerView.initialize(Constants.YOUTUBE_PLAYER_API_KEY,this);
+                setupUiWithVideoCode(resourceId);
+
                 isDeepLinked = true;
             } catch (UnsupportedEncodingException e) {
                 e.printStackTrace();
             }
-        }else{
+        }else if (intent.getIntExtra(Constants.PROJECTID,-1)!=-1){
+            videoItemWrapperId = intent.getStringExtra(Constants.VideoItemWrapperId);
+            videoItemWrapperPlaylistId = intent.getStringExtra(Constants.VideoItemWrapperPlaylistId);
+            videoCode = intent.getStringExtra(Constants.VIDEOCODE);
+            projectId = intent.getIntExtra(Constants.PROJECTID, -1);
+
+            setupUiWithVideoWrapperView(videoCode,videoItemWrapperPlaylistId);
+
+        }else if (intent.getIntExtra(Constants.RESOURCEID,-1)!=-1){
             videoCode = intent.getStringExtra(Constants.VIDEOCODE);
             resourceId = intent.getIntExtra(Constants.RESOURCEID, -1);
-            videoTitle = intent.getStringExtra(Constants.VIDEOTITLE);
-            videoDescription = intent.getStringExtra(Constants.VIDEODESCRIPTION);
-            videoTopicId = intent.getIntExtra(Constants.TOPICID, -1);
             bitmapUriString = intent.getStringExtra(Constants.BITMAPURI);
             bitmapUri = Uri.parse(bitmapUriString);
+
+            if (resourceId!=-1){
+                setupUiWithResource(resourceId, videoCode);
+            }
+
         }
-
-
-        tvTitle.setText(videoTitle);
-        tvDescription.setText(videoDescription);
 
         imageView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
 
                 try {
-                    String encodedVideoCode = Utility.base64EncodeForString(videoCode);
 
-                    String text = videoTitle + "\n"
-                            + "http://prepareurself.tk/video_resource/"
-                            + encodedVideoCode;
+                    String text = "";
+
+                    if (resourceId!=-1){
+                        String encodedVideoCode = Utility.base64EncodeForInt(resourceId);
+
+                        text = videoTitle + "\n"
+                                + "prepareurself.tk/prepareurself_course/"
+                                + encodedVideoCode;
+                    }else if (projectId!=-1){
+                        String encodedVideoCode = Utility.base64EncodeForInt(projectId);
+
+                        text = videoTitle + "\n"
+                                + "prepareurself.tk/prepareurself_course/"
+                                + encodedVideoCode;
+                    }
+
                     final Intent intent = new Intent(Intent.ACTION_SEND);
                     intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
                     intent.putExtra(Intent.EXTRA_TEXT, text);
                     intent.putExtra(Intent.EXTRA_STREAM, bitmapUri);
                     intent.setType("image/png");
-                    startActivity(Intent.createChooser(intent,"Share Via"));
+                    if (!TextUtils.isEmpty(text))
+                        startActivity(Intent.createChooser(intent,"Share Via"));
 
                 } catch (UnsupportedEncodingException e) {
                     e.printStackTrace();
@@ -120,7 +153,7 @@ public class YoutubePlayerActivity extends AppCompatActivity {
             }
         });
 
-        initYouTubePlayerView(videoCode);
+   //     initYouTubePlayerView(videoCode);
 
 //        StaggeredGridLayoutManager layoutManager = new StaggeredGridLayoutManager(2,StaggeredGridLayoutManager.VERTICAL);
 //        rvRelatedVideos.setLayoutManager(layoutManager);
@@ -133,6 +166,55 @@ public class YoutubePlayerActivity extends AppCompatActivity {
 //        adapter.notifyDataSetChanged();
 
 
+
+    }
+
+    private void setupUiWithVideoCode(int resourceId) {
+
+        viewModel.getResourceByResourceId(resourceId,Constants.VIDEO)
+                .observe(this, new Observer<ResourceModel>() {
+                    @Override
+                    public void onChanged(ResourceModel resourceModel) {
+                        if (resourceModel!=null){
+                            String videoCode = Utility.getVideoCode(resourceModel.getLink());
+                            initYouTubePlayerView(videoCode);
+                            tvTitle.setText(resourceModel.getTitle());
+                            tvDescription.setText(resourceModel.getDescription());
+                        }else{
+                            tvTitle.setText("Invalid URL");
+                            tvDescription.setVisibility(View.GONE);
+                            imageView.setVisibility(View.GONE);
+                        }
+                    }
+                });
+
+    }
+
+    private void setupUiWithResource(int resourceId, String videoCode) {
+
+        initYouTubePlayerView(videoCode);
+
+        viewModel.getResourceByResourceId(resourceId,Constants.VIDEO)
+                .observe(this, new Observer<ResourceModel>() {
+                    @Override
+                    public void onChanged(ResourceModel resourceModel) {
+                        tvTitle.setText(resourceModel.getTitle());
+                        tvDescription.setText(resourceModel.getDescription());
+                    }
+                });
+    }
+
+    private void setupUiWithVideoWrapperView(String videoCode, String videoItemWrapperPlaylistId) {
+        initYouTubePlayerView(videoCode);
+
+        viewModel.getVideoItemWrapperLiveData(videoCode,videoItemWrapperPlaylistId)
+                .observe(this, new Observer<VideoItemWrapper>() {
+                    @Override
+                    public void onChanged(VideoItemWrapper videoItemWrapper) {
+                        tvTitle.setText(videoItemWrapper.getSnippet().getTitle());
+                        tvDescription.setText(videoItemWrapper.getSnippet().getDescription());
+                    }
+                });
 
     }
 
@@ -151,7 +233,7 @@ public class YoutubePlayerActivity extends AppCompatActivity {
     }
 
     private void initYouTubePlayerView(final String videoCode) {
-        initPlayerMenu();
+        //initPlayerMenu();
 
         // The player will automatically release itself when the activity is destroyed.
         // The player will automatically pause when the activity is stopped
@@ -208,7 +290,7 @@ public class YoutubePlayerActivity extends AppCompatActivity {
                 setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_LANDSCAPE);
                 fullScreenHelper.enterFullScreen();
 
-                addCustomActionsToPlayer();
+               // addCustomActionsToPlayer();
             }
 
             @Override
@@ -216,7 +298,7 @@ public class YoutubePlayerActivity extends AppCompatActivity {
                 setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_PORTRAIT);
                 fullScreenHelper.exitFullScreen();
 
-                removeCustomActionsFromPlayer();
+             //   removeCustomActionsFromPlayer();
             }
         });
     }

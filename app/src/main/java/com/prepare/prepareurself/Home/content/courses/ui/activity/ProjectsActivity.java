@@ -1,10 +1,8 @@
 package com.prepare.prepareurself.Home.content.courses.ui.activity;
 
-import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.lifecycle.Observer;
 import androidx.lifecycle.ViewModelProviders;
-import androidx.recyclerview.widget.GridLayoutManager;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
@@ -12,10 +10,8 @@ import android.content.Intent;
 import android.graphics.drawable.Drawable;
 import android.os.Bundle;
 import android.text.Html;
-import android.util.Log;
 import android.view.MenuItem;
 import android.view.View;
-import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.TextView;
 
@@ -24,20 +20,16 @@ import com.bumptech.glide.Glide;
 import com.prepare.prepareurself.Home.content.courses.data.model.ProjectsModel;
 import com.prepare.prepareurself.Home.content.courses.ui.adapters.PlaylistVideosRvAdapter;
 import com.prepare.prepareurself.Home.content.courses.viewmodels.ProjectsViewModel;
+import com.prepare.prepareurself.Home.content.resources.youtubevideoplayer.YoutubePlayerActivity;
 import com.prepare.prepareurself.R;
 import com.prepare.prepareurself.utils.Constants;
 import com.prepare.prepareurself.utils.Utility;
-import com.prepare.prepareurself.utils.youtubeplaylistapi.models.VideoContentDetails;
 import com.prepare.prepareurself.utils.youtubeplaylistapi.models.VideoItemWrapper;
 import com.prepare.prepareurself.utils.youtubeplaylistapi.models.YoutubePlaylistResponseModel;
 
-import java.text.ParseException;
-import java.util.Collections;
-import java.util.Comparator;
-import java.util.Date;
 import java.util.List;
 
-public class ProjectsActivity extends AppCompatActivity{
+public class ProjectsActivity extends AppCompatActivity implements PlaylistVideosRvAdapter.PlaylistVideoRvInteractor {
 
     int projectId = -1;
     private ProjectsViewModel viewModel;
@@ -103,7 +95,7 @@ public class ProjectsActivity extends AppCompatActivity{
         if (projectsModel.getPlaylist()!=null) {
             playlist = Utility.getVideoPlaylistId(projectsModel.getPlaylist());
 
-            adapter = new PlaylistVideosRvAdapter(ProjectsActivity.this);
+            adapter = new PlaylistVideosRvAdapter(ProjectsActivity.this, this);
             final LinearLayoutManager layoutManager = new LinearLayoutManager(ProjectsActivity.this, RecyclerView.HORIZONTAL, false);
             recyclerView.setLayoutManager(layoutManager);
             recyclerView.setAdapter(adapter);
@@ -140,6 +132,16 @@ public class ProjectsActivity extends AppCompatActivity{
                 }
             }
         });
+    }
+
+    @Override
+    public void onVideoClicked(VideoItemWrapper videoItemWrapper, String videoCode) {
+        Intent intent = new Intent(ProjectsActivity.this, YoutubePlayerActivity.class);
+        intent.putExtra(Constants.PROJECTID, projectId);
+        intent.putExtra(Constants.VideoItemWrapperId, videoItemWrapper.getId());
+        intent.putExtra(Constants.VIDEOCODE, videoCode);
+        intent.putExtra(Constants.VideoItemWrapperPlaylistId,videoItemWrapper.getSnippet().getPlaylistId());
+        startActivity(intent);
     }
 
     @Override

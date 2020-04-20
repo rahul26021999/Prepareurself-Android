@@ -19,7 +19,8 @@
             android:name=".Home.content.profile.ui.EditPreferencesActivity"
             android:theme="@style/ProfileTheme"></activity>
         <activity android:name=".Home.content.courses.ui.activity.CoursesActivity"></activity>
-        <activity android:name=".Home.content.resources.youtubevideoplayer.YoutubePlayerActivity">
+        <activity android:name=".Home.content.resources.youtubevideoplayer.YoutubePlayerActivity"
+            android:theme="@style/AppTheme.NoActionBar">
             <intent-filter>
                 <action android:name="android.intent.action.VIEW" />
 
