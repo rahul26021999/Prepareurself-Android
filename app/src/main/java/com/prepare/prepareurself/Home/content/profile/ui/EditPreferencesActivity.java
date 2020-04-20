@@ -134,8 +134,12 @@ public class EditPreferencesActivity extends AppCompatActivity implements Recycl
         menuItem.setOnMenuItemClickListener(new MenuItem.OnMenuItemClickListener() {
             @Override
             public boolean onMenuItemClick(MenuItem item) {
+                List<Integer> finalListIds = new ArrayList<>();
+                for (PreferredTechStack preferredTechStack: userPrefrence){
+                    finalListIds.add(preferredTechStack.getId());
+                }
                 Toast.makeText(getApplicationContext(),"save clicked",Toast.LENGTH_SHORT).show();
-//                profileViewModel.updatePrefernces(prefManager.getString(Constants.JWTTOKEN),finalListIds);
+                profileViewModel.updatePrefernces(prefManager.getString(Constants.JWTTOKEN),finalListIds);
                 return true;
             }
         });
