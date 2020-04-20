@@ -51,7 +51,7 @@ public interface ApiInterface {
     @POST("hit-like")
     Call<ResourceLikesResponse> resourceLiked(@Query("token") String token,
                                               @Query("resource_id") int resource_id,
-                                              @Query("like")Boolean like )  ;
+                                              @Query("like")int like )  ;
     @POST("update-user")
     Call<String> updateUser(@Query("token") String token,
                             @Query("first_name") String firstName,

@@ -1,6 +1,7 @@
 package com.prepare.prepareurself.Home.content.courses.ui.activity;
 
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.cardview.widget.CardView;
 import androidx.lifecycle.Observer;
 import androidx.lifecycle.ViewModelProviders;
 import androidx.recyclerview.widget.LinearLayoutManager;
@@ -40,6 +41,8 @@ public class ProjectsActivity extends AppCompatActivity implements PlaylistVideo
     private String rvNextPageToken = "";
     String playlist;
     private TextView tvLoading;
+    private CardView cardImageView;
+    private ImageView videoImageView;
 
 
     @Override
@@ -54,8 +57,11 @@ public class ProjectsActivity extends AppCompatActivity implements PlaylistVideo
         imageProject = findViewById(R.id.image_project);
         recyclerView = findViewById(R.id.rv_prjects_videos);
         tvLoading = findViewById(R.id.tv_loading_project);
+        cardImageView = findViewById(R.id.card_project_image);
+        videoImageView = findViewById(R.id.project_video_image_view);
 
         recyclerView.setVisibility(View.GONE);
+        cardImageView.setVisibility(View.GONE);
         tvLoading.setVisibility(View.VISIBLE);
 
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
@@ -104,6 +110,9 @@ public class ProjectsActivity extends AppCompatActivity implements PlaylistVideo
 
             getVideos(rvNextPageToken, playlist);
 
+        }else if (projectsModel.getLink()!=null){
+            recyclerView.setVisibility(View.GONE);
+
         }
 
     }
@@ -127,6 +136,7 @@ public class ProjectsActivity extends AppCompatActivity implements PlaylistVideo
                         });
                     }
                 }else{
+                    cardImageView.setVisibility(View.GONE);
                     recyclerView.setVisibility(View.GONE);
                     tvLoading.setVisibility(View.VISIBLE);
                     tvLoading.setText("Playlist Not found");

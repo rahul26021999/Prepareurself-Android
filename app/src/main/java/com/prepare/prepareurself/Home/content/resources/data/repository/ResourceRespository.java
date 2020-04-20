@@ -83,7 +83,7 @@ public class ResourceRespository {
     }
 
     //wrte here for likes
-    public  void  resourceLiked(String token, int resource_id , Boolean like){
+    public  void  resourceLiked(String token, int resource_id , int like){
         apiInterface.resourceLiked(token, resource_id, like).enqueue(new Callback<ResourceLikesResponse>() {
             @Override
             public void onResponse(Call<ResourceLikesResponse> call, Response<ResourceLikesResponse> response) {

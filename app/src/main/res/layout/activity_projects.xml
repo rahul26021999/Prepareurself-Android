@@ -110,6 +110,30 @@
             app:layout_constraintTop_toBottomOf="@+id/tv_reference_heading"
             />
 
+        <androidx.cardview.widget.CardView
+            android:layout_width="180dp"
+            android:layout_height="150dp"
+            app:layout_constraintStart_toStartOf="parent"
+            android:layout_marginStart="10dp"
+            android:id="@+id/card_project_image"
+            android:visibility="gone"
+            app:layout_constraintTop_toBottomOf="@+id/tv_reference_heading">
+
+            <RelativeLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent">
+
+                <ImageView
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:src="@drawable/placeholder"
+                    android:id="@+id/project_video_image_view"
+                    android:scaleType="fitXY"/>
+
+            </RelativeLayout>
+
+        </androidx.cardview.widget.CardView>
+
     </androidx.constraintlayout.widget.ConstraintLayout>
 
 </androidx.core.widget.NestedScrollView>
