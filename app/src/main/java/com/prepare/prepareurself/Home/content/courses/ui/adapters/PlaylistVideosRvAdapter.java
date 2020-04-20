@@ -23,9 +23,11 @@ public class PlaylistVideosRvAdapter extends RecyclerView.Adapter<PlaylistVideos
 
     private List<VideoItemWrapper> videoContentDetails;
     private Context context;
+    private PlaylistVideoRvInteractor listener;
 
-    public PlaylistVideosRvAdapter(Context context) {
+    public PlaylistVideosRvAdapter(Context context, PlaylistVideoRvInteractor listener) {
         this.context = context;
+        this.listener = listener;
     }
 
     public void setVideoContentDetails(List<VideoItemWrapper> videoContentDetails){
@@ -42,8 +44,14 @@ public class PlaylistVideosRvAdapter extends RecyclerView.Adapter<PlaylistVideos
 
     @Override
     public void onBindViewHolder(@NonNull PlaylistVideosViewHolder holder, int position) {
-        VideoItemWrapper v = videoContentDetails.get(position);
+        final VideoItemWrapper v = videoContentDetails.get(position);
         holder.bindView(v);
+        holder.itemView.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                listener.onVideoClicked(v, v.getContentDetails().getVideoId());
+            }
+        });
     }
 
     @Override
@@ -77,45 +85,12 @@ public class PlaylistVideosRvAdapter extends RecyclerView.Adapter<PlaylistVideos
                     .placeholder(R.drawable.placeholder)
                     .error(R.drawable.ic_image_loading_error)
                     .into(youTubeThumbnailView);
-
-
-
-//            if (readyForLoadingYoutubeThumbnail){
-//                readyForLoadingYoutubeThumbnail = false;
-//                youTubeThumbnailView.initialize(Constants.YOUTUBE_PLAYER_API_KEY, new YouTubeThumbnailView.OnInitializedListener() {
-//                    @Override
-//                    public void onInitializationSuccess(YouTubeThumbnailView youTubeThumbnailView, final YouTubeThumbnailLoader youTubeThumbnailLoader) {
-//                        youTubeThumbnailLoader.setVideo(contentDetails.getVideoId());
-//
-//                        youTubeThumbnailLoader.setOnThumbnailLoadedListener(new YouTubeThumbnailLoader.OnThumbnailLoadedListener() {
-//                            @Override
-//                            public void onThumbnailLoaded(YouTubeThumbnailView youTubeThumbnailView, String s) {
-//                                youTubeThumbnailLoader.release();
-//                            }
-//
-//                            @Override
-//                            public void onThumbnailError(YouTubeThumbnailView youTubeThumbnailView, YouTubeThumbnailLoader.ErrorReason errorReason) {
-//                                Utility.showToast(context,Constants.UNABLETOLOADVIDEOSATTHEMOMENT);
-//                            }
-//                        });
-//
-//                        readyForLoadingYoutubeThumbnail = true;
-//
-//                    }
-//
-//                    @Override
-//                    public void onInitializationFailure(YouTubeThumbnailView youTubeThumbnailView, YouTubeInitializationResult youTubeInitializationResult) {
-//                        String errorMessage = String.format(
-//                                context.getString(R.string.error_player), youTubeInitializationResult.toString());
-//                        Utility.showToast(context,errorMessage);
-//
-//                        readyForLoadingYoutubeThumbnail = true;
-//                    }
-//                });
-//            }
-
         }
 
+    }
+
+    public interface PlaylistVideoRvInteractor{
+        void onVideoClicked(VideoItemWrapper videoItemWrapper, String videoCode);
     }
 
 }

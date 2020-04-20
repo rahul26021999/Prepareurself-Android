@@ -23,6 +23,10 @@ public class PlaylistVideosDbRepository {
         return playlistContentDeatilsDao.getVideoItemWrappers();
     }
 
+    public LiveData<VideoItemWrapper> getVideoItemWrapperByVideoIdAndPlaylistId(String videoCode, String playlistId){
+        return playlistContentDeatilsDao.getVideoItemWrapperByVideoCodeAndPlaylistId(videoCode,playlistId);
+    }
+
     public LiveData<List<VideoItemWrapper>> getVideoItemWrapperByPlaylistId(String playlistId){
         return playlistContentDeatilsDao.getVideoItemWrapperByPlaylistId(playlistId);
     }

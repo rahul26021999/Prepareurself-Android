@@ -39,6 +39,11 @@ public class ResourcesDbRepository {
         new deleteAsyncResources(resourcesRoomDao).execute();
     }
 
+    public LiveData<ResourceModel> getResourceByResourceId(int resourceId, String type) {
+        return resourcesRoomDao.getResourceByResourceId(resourceId,type);
+    }
+
+
     private class insertAsyncResource extends AsyncTask<ResourceModel, Void, Void> {
         private ResourcesRoomDao asyncResourcesRoomDao;
 

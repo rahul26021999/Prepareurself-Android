@@ -42,4 +42,6 @@ public class Constants {
     public static final String BITMAPURI = "bitmap_uri";
     public static final String PROJECTSIMAGEBASEURL = "http://prepareurself.tk/uploads/projects/";
     public static final String PROJECTID = "project_id";
+    public static final String VideoItemWrapperPlaylistId = "video_item_wrapper_playlist";
+    public static final String VideoItemWrapperId = "video_item_player_id";
 }

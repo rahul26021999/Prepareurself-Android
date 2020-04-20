@@ -23,6 +23,9 @@ public interface PlaylistContentDeatilsDao {
     @Query("SELECT * FROM playlistItemWrapper WHERE snippet_playlistId=:playlistId")
     LiveData<List<VideoItemWrapper>> getVideoItemWrapperByPlaylistId(String playlistId);
 
+    @Query("SELECT * FROM playlistItemWrapper WHERE content_videoId=:videoCode AND snippet_playlistId=:playlistId")
+    LiveData<VideoItemWrapper> getVideoItemWrapperByVideoCodeAndPlaylistId(String videoCode, String playlistId);
+
     @Query("DELETE FROM playlistItemWrapper")
     void deleteVideoItemWrappers();
 

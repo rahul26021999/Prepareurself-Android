@@ -22,6 +22,9 @@ public interface ResourcesRoomDao {
     @Query("SELECT * FROM resources WHERE id != :resource_id AND course_topic_id=:topic_id AND type =:type")
     LiveData<List<ResourceModel>> getResourceByIdExcept(int topic_id, String type, int resource_id);
 
+    @Query("SELECT * FROM resources WHERE id=:resourceId AND type=:type")
+    LiveData<ResourceModel> getResourceByResourceId(int resourceId, String type);
+
     @Query("DELETE FROM resources")
     void deleteAllResources();
 
