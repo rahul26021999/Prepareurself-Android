@@ -40,10 +40,8 @@ public class ProjectsRespository {
 
     public LiveData<YoutubePlaylistResponseModel> getVideosFromPlaylist(String pageToken, String playlistId){
 
-        Log.d("youtube_api_debug",youtubeApiInterface.getPlaylist("contentDetails,id",pageToken,playlistId, Constants.YOUTUBE_PLAYER_API_KEY)
-        .request().url().toString());
         final MutableLiveData<YoutubePlaylistResponseModel> data = new MutableLiveData<>();
-        youtubeApiInterface.getPlaylist("contentDetails,id",pageToken,playlistId, Constants.YOUTUBE_PLAYER_API_KEY)
+        youtubeApiInterface.getPlaylist("contentDetails,id,snippet",pageToken,playlistId, Constants.YOUTUBE_PLAYER_API_KEY)
                 .enqueue(new Callback<YoutubePlaylistResponseModel>() {
                     @Override
                     public void onResponse(Call<YoutubePlaylistResponseModel> call, Response<YoutubePlaylistResponseModel> response) {
@@ -51,11 +49,10 @@ public class ProjectsRespository {
                         if (responseModel!=null){
                             if (responseModel.getItems()!=null){
                                 for (VideoItemWrapper videoItemWrapper : responseModel.getItems()){
-                                    playlistVideosDbRepository.insertVideoContentDetail(videoItemWrapper.getContentDetails());
+                                    playlistVideosDbRepository.insertVideoContentDetail(videoItemWrapper);
                                 }
                             }
                             data.setValue(responseModel);
-                            Log.d("youtube_api_debug",responseModel+"");
                         }else{
                             data.setValue(null);
                         }
@@ -65,7 +62,6 @@ public class ProjectsRespository {
                     public void onFailure(Call<YoutubePlaylistResponseModel> call, Throwable t) {
                         data.setValue(null);
                         Log.d("youtube_api_debug",t.getLocalizedMessage()+"");
-                        Log.d("youtube_api_debug",data.getValue()+" error response");
                     }
                 });
 

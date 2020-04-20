@@ -25,6 +25,9 @@ import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.UnsupportedEncodingException;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
+import java.util.Date;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
@@ -68,15 +71,13 @@ public class Utility {
     }
 
     public static String getVideoPlaylistId(String youtubeUrl){
-        String pattern = "^(?:https?:\\/\\/)?(?:www\\.)?youtu\\.?be(?:\\.com)?.*?(?:v|list)=(.*?)(?:&|$)|^(?:https?:\\/\\/)?(?:www\\.)?youtu\\.?be(?:\\.com)?(?:(?!=).)*\\/(.*)$";
+        String temp = youtubeUrl.split("list=")[1];
 
-        Pattern compiledPattern = Pattern.compile(pattern,
-                Pattern.CASE_INSENSITIVE);
-        Matcher matcher = compiledPattern.matcher(youtubeUrl);
-        if (matcher.find()) {
-            return matcher.group(1);
-        }/*from w  w  w.  j a  va  2 s .c om*/
-        return null;
+        if (temp.contains("&")){
+            temp = temp.split("&")[0];
+        }
+
+        return temp;
     }
 
     public static ViewPropertyTransition.Animator getAnimationObject(){
@@ -152,5 +153,10 @@ public class Utility {
         byte[] data1 = Base64.decode(encoded_id, Base64.DEFAULT);
         String text = new String(data1, "UTF-8");
         return Integer.parseInt(text);
+    }
+
+    public static Date stringToDate(String date) throws ParseException {
+
+        return new SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss.SSSZ").parse(date);
     }
 }

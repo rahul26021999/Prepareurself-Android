@@ -1,17 +1,53 @@
 package com.prepare.prepareurself.utils.youtubeplaylistapi.models;
 
+import androidx.annotation.NonNull;
+import androidx.room.ColumnInfo;
+import androidx.room.Embedded;
+import androidx.room.Entity;
+import androidx.room.PrimaryKey;
+
+import com.google.gson.annotations.SerializedName;
 import com.prepare.prepareurself.utils.youtubeplaylistapi.models.VideoContentDetails;
 
 import java.util.List;
 
+@Entity(tableName = "playlistItemWrapper")
 public class VideoItemWrapper {
-    private String kind;
-    private String etag;
+
+    @NonNull
+    @PrimaryKey
+    @ColumnInfo(name = "id")
+    @SerializedName("id")
     private String id;
-    public VideoContentDetails contentDetails;
+
+    @ColumnInfo(name = "kind")
+    @SerializedName("kind")
+    private String kind;
+
+    @ColumnInfo(name = "etag")
+    @SerializedName("etag")
+    private String etag;
+
+
+    @SerializedName("contentDetails")
+    @Embedded(prefix = "content_")
+    private VideoContentDetails contentDetails;
+
+    @SerializedName("snippet")
+    @Embedded(prefix = "snippet_")
+    private VideoSnippet snippet;
+
 
     public VideoItemWrapper(){
 
+    }
+
+    public VideoSnippet getSnippet() {
+        return snippet;
+    }
+
+    public void setSnippet(VideoSnippet snippet) {
+        this.snippet = snippet;
     }
 
     public String getKind() {

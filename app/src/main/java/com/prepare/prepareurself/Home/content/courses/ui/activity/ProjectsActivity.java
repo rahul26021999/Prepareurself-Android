@@ -12,11 +12,10 @@ import android.content.Intent;
 import android.graphics.drawable.Drawable;
 import android.os.Bundle;
 import android.text.Html;
-import android.text.LoginFilter;
-import android.text.TextUtils;
 import android.util.Log;
 import android.view.MenuItem;
-import android.widget.AbsListView;
+import android.view.View;
+import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.TextView;
 
@@ -29,8 +28,13 @@ import com.prepare.prepareurself.R;
 import com.prepare.prepareurself.utils.Constants;
 import com.prepare.prepareurself.utils.Utility;
 import com.prepare.prepareurself.utils.youtubeplaylistapi.models.VideoContentDetails;
+import com.prepare.prepareurself.utils.youtubeplaylistapi.models.VideoItemWrapper;
 import com.prepare.prepareurself.utils.youtubeplaylistapi.models.YoutubePlaylistResponseModel;
 
+import java.text.ParseException;
+import java.util.Collections;
+import java.util.Comparator;
+import java.util.Date;
 import java.util.List;
 
 public class ProjectsActivity extends AppCompatActivity{
@@ -41,10 +45,9 @@ public class ProjectsActivity extends AppCompatActivity{
     private ImageView imageProject;
     private RecyclerView recyclerView;
     private PlaylistVideosRvAdapter adapter;
-    private Boolean isScrolling = false;
-    private int rvCurrentItems, rvTotalItems, rvScrolledOutItems, rvLastPage;
     private String rvNextPageToken = "";
-    int counter = 0;
+    String playlist;
+    private TextView tvLoading;
 
 
     @Override
@@ -58,6 +61,10 @@ public class ProjectsActivity extends AppCompatActivity{
         tvProjectDescription = findViewById(R.id.tv_project_decription);
         imageProject = findViewById(R.id.image_project);
         recyclerView = findViewById(R.id.rv_prjects_videos);
+        tvLoading = findViewById(R.id.tv_loading_project);
+
+        recyclerView.setVisibility(View.GONE);
+        tvLoading.setVisibility(View.VISIBLE);
 
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
         getSupportActionBar().setDisplayShowHomeEnabled(true);
@@ -74,7 +81,6 @@ public class ProjectsActivity extends AppCompatActivity{
                 }
             });
         }
-
 
     }
 
@@ -94,32 +100,46 @@ public class ProjectsActivity extends AppCompatActivity{
         if (projectsModel.getDescription()!=null)
             tvProjectDescription.setText(Html.fromHtml(projectsModel.getDescription()));
 
-        adapter = new PlaylistVideosRvAdapter(ProjectsActivity.this);
-        final LinearLayoutManager layoutManager = new LinearLayoutManager(ProjectsActivity.this, RecyclerView.HORIZONTAL, false);
-        recyclerView.setLayoutManager(layoutManager);
-        recyclerView.setAdapter(adapter);
-        recyclerView.setNestedScrollingEnabled(false);
+        if (projectsModel.getPlaylist()!=null) {
+            playlist = Utility.getVideoPlaylistId(projectsModel.getPlaylist());
 
-        final String playlist = "PLnfB3OWST3K3lCSi_YUrBujaAs0bFt4tz";
+            adapter = new PlaylistVideosRvAdapter(ProjectsActivity.this);
+            final LinearLayoutManager layoutManager = new LinearLayoutManager(ProjectsActivity.this, RecyclerView.HORIZONTAL, false);
+            recyclerView.setLayoutManager(layoutManager);
+            recyclerView.setAdapter(adapter);
+            recyclerView.setNestedScrollingEnabled(false);
 
-        viewModel.fetchVideosFromPlaylist("",playlist);
 
-        viewModel.getVideosFromPlaylist().observe(this, new Observer<YoutubePlaylistResponseModel>() {
+            getVideos(rvNextPageToken, playlist);
+
+            viewModel.getVideoContentsLiveData(playlist).observe(ProjectsActivity.this, new Observer<List<VideoItemWrapper>>() {
+                @Override
+                public void onChanged(List<VideoItemWrapper> videoContentDetails) {
+                    tvLoading.setVisibility(View.GONE);
+                    recyclerView.setVisibility(View.VISIBLE);
+                    adapter.setVideoContentDetails(videoContentDetails);
+                    adapter.notifyDataSetChanged();
+                }
+            });
+
+        }
+
+    }
+
+    public void getVideos(String token, final String playlist){
+        viewModel.fetchVideosFromPlaylist(token,playlist).observe(this, new Observer<YoutubePlaylistResponseModel>() {
             @Override
             public void onChanged(YoutubePlaylistResponseModel youtubePlaylistResponseModel) {
-                Log.d("youtube_api_debug","on chng" + youtubePlaylistResponseModel+"");
-                viewModel.fetchVideosFromPlaylist(youtubePlaylistResponseModel.getNextPageToken(),playlist);
+                if (youtubePlaylistResponseModel!=null){
+                    if (youtubePlaylistResponseModel.getNextPageToken()!=null)
+                        getVideos(youtubePlaylistResponseModel.getNextPageToken(),playlist);
+                }else{
+                    recyclerView.setVisibility(View.GONE);
+                    tvLoading.setVisibility(View.VISIBLE);
+                    tvLoading.setText("Playlist Not found");
+                }
             }
         });
-
-        viewModel.getVideoContentsLiveData().observe(this, new Observer<List<VideoContentDetails>>() {
-            @Override
-            public void onChanged(List<VideoContentDetails> videoContentDetails) {
-                adapter.setVideoContentDetails(videoContentDetails);
-                adapter.notifyDataSetChanged();
-            }
-        });
-
     }
 
     @Override

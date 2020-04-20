@@ -5,6 +5,8 @@ import android.content.Context;
 import androidx.room.Database;
 import androidx.room.Room;
 import androidx.room.RoomDatabase;
+import androidx.room.TypeConverter;
+import androidx.room.TypeConverters;
 
 import com.prepare.prepareurself.Home.content.courses.data.db.dao.ProjectsRoomDao;
 import com.prepare.prepareurself.Home.content.courses.data.db.dao.TopicsRoomDao;
@@ -16,8 +18,12 @@ import com.prepare.prepareurself.Home.content.resources.data.db.dao.ResourcesRoo
 import com.prepare.prepareurself.Home.content.resources.data.model.ResourceModel;
 import com.prepare.prepareurself.authentication.data.db.dao.UserRoomDao;
 import com.prepare.prepareurself.authentication.data.model.UserModel;
-import com.prepare.prepareurself.utils.youtubeplaylistapi.db.PlaylistVideosDao;
+import com.prepare.prepareurself.utils.persitenceUtils.ThumbnaiTypeConverter;
+import com.prepare.prepareurself.utils.persitenceUtils.VideoContentDetailsConverter;
+import com.prepare.prepareurself.utils.persitenceUtils.VideoSnippetConverter;
+import com.prepare.prepareurself.utils.youtubeplaylistapi.db.PlaylistContentDeatilsDao;
 import com.prepare.prepareurself.utils.youtubeplaylistapi.models.VideoContentDetails;
+import com.prepare.prepareurself.utils.youtubeplaylistapi.models.VideoItemWrapper;
 
 @Database(entities = {
         UserModel.class,
@@ -25,8 +31,11 @@ import com.prepare.prepareurself.utils.youtubeplaylistapi.models.VideoContentDet
         TopicsModel.class,
         ResourceModel.class,
         ProjectsModel.class,
-        VideoContentDetails.class
+        VideoItemWrapper.class
 }, version = 1)
+@TypeConverters({VideoContentDetailsConverter.class,
+        VideoSnippetConverter.class,
+        ThumbnaiTypeConverter.class})
 public abstract class AppDatabase extends RoomDatabase {
 
     public abstract UserRoomDao userRoomDao();
@@ -34,7 +43,7 @@ public abstract class AppDatabase extends RoomDatabase {
     public abstract TopicsRoomDao topicsRoomDao();
     public abstract ResourcesRoomDao resourcesRoomDao();
     public abstract ProjectsRoomDao projectsRoomDao();
-    public abstract PlaylistVideosDao playlistVideosDao();
+    public abstract PlaylistContentDeatilsDao playlistVideosDao();
 
     private static AppDatabase INSTANCE;
 
