@@ -104,16 +104,6 @@ public class ProjectsActivity extends AppCompatActivity implements PlaylistVideo
 
             getVideos(rvNextPageToken, playlist);
 
-            viewModel.getVideoContentsLiveData(playlist).observe(ProjectsActivity.this, new Observer<List<VideoItemWrapper>>() {
-                @Override
-                public void onChanged(List<VideoItemWrapper> videoContentDetails) {
-                    tvLoading.setVisibility(View.GONE);
-                    recyclerView.setVisibility(View.VISIBLE);
-                    adapter.setVideoContentDetails(videoContentDetails);
-                    adapter.notifyDataSetChanged();
-                }
-            });
-
         }
 
     }
@@ -125,6 +115,17 @@ public class ProjectsActivity extends AppCompatActivity implements PlaylistVideo
                 if (youtubePlaylistResponseModel!=null){
                     if (youtubePlaylistResponseModel.getNextPageToken()!=null)
                         getVideos(youtubePlaylistResponseModel.getNextPageToken(),playlist);
+                    else{
+                        viewModel.getVideoContentsLiveData(playlist).observe(ProjectsActivity.this, new Observer<List<VideoItemWrapper>>() {
+                            @Override
+                            public void onChanged(List<VideoItemWrapper> videoContentDetails) {
+                                tvLoading.setVisibility(View.GONE);
+                                recyclerView.setVisibility(View.VISIBLE);
+                                adapter.setVideoContentDetails(videoContentDetails);
+                                adapter.notifyDataSetChanged();
+                            }
+                        });
+                    }
                 }else{
                     recyclerView.setVisibility(View.GONE);
                     tvLoading.setVisibility(View.VISIBLE);
