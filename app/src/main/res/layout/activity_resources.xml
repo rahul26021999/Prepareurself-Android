@@ -5,7 +5,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="@color/colorPrimaryLight"
-    tools:context=".Home.content.resources.ui.activity.ResourcesActivity">
+    tools:context=".resources.ui.activity.ResourcesActivity">
 
     <RelativeLayout
         android:layout_width="match_parent"

@@ -1,13 +1,11 @@
 package com.prepare.prepareurself.Apiservice;
 
-import androidx.annotation.IntegerRes;
-
-import com.prepare.prepareurself.Home.content.courses.data.model.GetProjectResponse;
-import com.prepare.prepareurself.Home.content.courses.data.model.GetTopicResponseModel;
+import com.prepare.prepareurself.courses.data.model.GetProjectResponse;
+import com.prepare.prepareurself.courses.data.model.GetTopicResponseModel;
 import com.prepare.prepareurself.Home.content.dashboard.data.model.GetCourseResponseModel;
-import com.prepare.prepareurself.Home.content.resources.data.model.GetResourcesResponse;
-import com.prepare.prepareurself.Home.content.resources.data.model.ResourceLikesResponse;
-import com.prepare.prepareurself.Home.content.resources.data.model.ResourceViewsResponse;
+import com.prepare.prepareurself.resources.data.model.GetResourcesResponse;
+import com.prepare.prepareurself.resources.data.model.ResourceLikesResponse;
+import com.prepare.prepareurself.resources.data.model.ResourceViewsResponse;
 import com.prepare.prepareurself.authentication.data.model.AuthenticationResponseModel;
 
 import java.util.List;

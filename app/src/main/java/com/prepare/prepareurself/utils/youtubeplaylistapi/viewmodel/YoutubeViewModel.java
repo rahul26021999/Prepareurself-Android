@@ -5,11 +5,9 @@ import android.app.Application;
 import androidx.annotation.NonNull;
 import androidx.lifecycle.AndroidViewModel;
 import androidx.lifecycle.LiveData;
-import androidx.lifecycle.MutableLiveData;
 
-import com.prepare.prepareurself.Home.content.courses.data.model.TopicsModel;
-import com.prepare.prepareurself.Home.content.resources.data.db.repository.ResourcesDbRepository;
-import com.prepare.prepareurself.Home.content.resources.data.model.ResourceModel;
+import com.prepare.prepareurself.resources.data.db.repository.ResourcesDbRepository;
+import com.prepare.prepareurself.resources.data.model.ResourceModel;
 import com.prepare.prepareurself.utils.youtubeplaylistapi.db.PlaylistVideosDbRepository;
 import com.prepare.prepareurself.utils.youtubeplaylistapi.models.VideoItemWrapper;
 

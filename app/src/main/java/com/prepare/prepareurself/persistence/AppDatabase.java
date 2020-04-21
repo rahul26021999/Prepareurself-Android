@@ -5,24 +5,22 @@ import android.content.Context;
 import androidx.room.Database;
 import androidx.room.Room;
 import androidx.room.RoomDatabase;
-import androidx.room.TypeConverter;
 import androidx.room.TypeConverters;
 
-import com.prepare.prepareurself.Home.content.courses.data.db.dao.ProjectsRoomDao;
-import com.prepare.prepareurself.Home.content.courses.data.db.dao.TopicsRoomDao;
-import com.prepare.prepareurself.Home.content.courses.data.model.ProjectsModel;
-import com.prepare.prepareurself.Home.content.courses.data.model.TopicsModel;
+import com.prepare.prepareurself.courses.data.db.dao.ProjectsRoomDao;
+import com.prepare.prepareurself.courses.data.db.dao.TopicsRoomDao;
+import com.prepare.prepareurself.courses.data.model.ProjectsModel;
+import com.prepare.prepareurself.courses.data.model.TopicsModel;
 import com.prepare.prepareurself.Home.content.dashboard.data.db.dao.CourseRoomDao;
 import com.prepare.prepareurself.Home.content.dashboard.data.model.CourseModel;
-import com.prepare.prepareurself.Home.content.resources.data.db.dao.ResourcesRoomDao;
-import com.prepare.prepareurself.Home.content.resources.data.model.ResourceModel;
+import com.prepare.prepareurself.resources.data.db.dao.ResourcesRoomDao;
+import com.prepare.prepareurself.resources.data.model.ResourceModel;
 import com.prepare.prepareurself.authentication.data.db.dao.UserRoomDao;
 import com.prepare.prepareurself.authentication.data.model.UserModel;
 import com.prepare.prepareurself.utils.persitenceUtils.ThumbnaiTypeConverter;
 import com.prepare.prepareurself.utils.persitenceUtils.VideoContentDetailsConverter;
 import com.prepare.prepareurself.utils.persitenceUtils.VideoSnippetConverter;
 import com.prepare.prepareurself.utils.youtubeplaylistapi.db.PlaylistContentDeatilsDao;
-import com.prepare.prepareurself.utils.youtubeplaylistapi.models.VideoContentDetails;
 import com.prepare.prepareurself.utils.youtubeplaylistapi.models.VideoItemWrapper;
 
 @Database(entities = {

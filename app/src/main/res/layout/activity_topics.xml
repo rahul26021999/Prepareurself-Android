@@ -4,7 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".Home.content.courses.ui.activity.CoursesActivity">
+    tools:context=".courses.ui.activity.CoursesActivity">
 
     <com.google.android.material.tabs.TabLayout
         android:id="@+id/tabs_courses"
