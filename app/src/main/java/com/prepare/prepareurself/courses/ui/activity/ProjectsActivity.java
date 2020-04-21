@@ -102,6 +102,7 @@ public class ProjectsActivity extends AppCompatActivity implements PlaylistVideo
                 if (tvViewPlaylist.getVisibility() == View.VISIBLE){
                     if (!TextUtils.isEmpty(playlist)){
                         Intent playlistIntent = new Intent(ProjectsActivity.this, VideoActivity.class);
+                        playlistIntent.putExtra(Constants.PLAYLIST,true);
                         playlistIntent.putExtra(Constants.VideoItemWrapperPlaylistId,playlist);
                         playlistIntent.putExtra(Constants.VIDEOTITLE,projectTitle);
                         playlistIntent.putExtra(Constants.VIDEODESCRIPTION,projectDescription);
@@ -236,11 +237,12 @@ public class ProjectsActivity extends AppCompatActivity implements PlaylistVideo
 
     @Override
     public void onVideoClicked(VideoItemWrapper videoItemWrapper, String videoCode) {
-        Intent intent = new Intent(ProjectsActivity.this, YoutubePlayerActivity.class);
-        intent.putExtra(Constants.PROJECTID, projectId);
-        intent.putExtra(Constants.VideoItemWrapperId, videoItemWrapper.getId());
-        intent.putExtra(Constants.VIDEOCODE, videoCode);
+        Intent intent = new Intent(ProjectsActivity.this, VideoActivity.class);
+        intent.putExtra(Constants.SINGLEVIDEO,true);
+        intent.putExtra(Constants.VIDEOINDEX, videoItemWrapper.getSnippet().getPosition());
         intent.putExtra(Constants.VideoItemWrapperPlaylistId,videoItemWrapper.getSnippet().getPlaylistId());
+        intent.putExtra(Constants.VIDEOTITLE,projectTitle);
+        intent.putExtra(Constants.VIDEODESCRIPTION,projectDescription);
         startActivity(intent);
     }
 
