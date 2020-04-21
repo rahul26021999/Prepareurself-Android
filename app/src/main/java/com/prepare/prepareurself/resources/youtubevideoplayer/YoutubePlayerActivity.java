@@ -7,6 +7,7 @@ import android.graphics.drawable.Drawable;
 import android.net.Uri;
 import android.os.Bundle;
 import android.text.TextUtils;
+import android.util.Log;
 import android.view.View;
 import android.widget.ImageView;
 import android.widget.TextView;
@@ -83,16 +84,19 @@ public class YoutubePlayerActivity extends AppCompatActivity {
         Intent intent = getIntent();
 
         if (intent.getData()!=null){
-            try {
-                String tempData = intent.getData().toString().split("video_resource")[1];
-                resourceId = Utility.base64DecodeForInt(tempData);
-              //  youTubePlayerView.initialize(Constants.YOUTUBE_PLAYER_API_KEY,this);
-                setupUiWithVideoCode(resourceId);
+//            try {
+//                String tempData = intent.getData().toString().split("video_resource")[1];
+//                resourceId = Utility.base64DecodeForInt(tempData);
+//              //  youTubePlayerView.initialize(Constants.YOUTUBE_PLAYER_API_KEY,this);
+//                setupUiWithVideoCode(resourceId);
+//
+//                isDeepLinked = true;
+//            } catch (UnsupportedEncodingException e) {
+//                e.printStackTrace();
+//            }
 
-                isDeepLinked = true;
-            } catch (UnsupportedEncodingException e) {
-                e.printStackTrace();
-            }
+            Log.d("deeplink_debug","youtube avtivity : "+getIntent().getData()+"");
+
         }else if (intent.getIntExtra(Constants.PROJECTID,-1)!=-1){
             videoItemWrapperId = intent.getStringExtra(Constants.VideoItemWrapperId);
             videoItemWrapperPlaylistId = intent.getStringExtra(Constants.VideoItemWrapperPlaylistId);

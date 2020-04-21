@@ -6,6 +6,7 @@ import androidx.viewpager.widget.ViewPager;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.MenuItem;
 
 import com.prepare.prepareurself.courses.ui.fragments.ProjectsFragment;
@@ -42,7 +43,12 @@ public class CoursesActivity extends AppCompatActivity {
 
         Intent intent = getIntent();
 
-        courseId = intent.getIntExtra(Constants.COURSEID, -1);
+        if (intent.getData()!=null){
+            Log.d("deeplink_debug","course avtivity : "+getIntent().getData()+"");
+        }else{
+            courseId = intent.getIntExtra(Constants.COURSEID, -1);
+        }
+
 
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
         getSupportActionBar().setDisplayShowHomeEnabled(true);

@@ -4,6 +4,7 @@ import android.content.Intent;
 import android.graphics.Bitmap;
 import android.net.Uri;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.ImageView;
@@ -60,13 +61,15 @@ public class ResourcesActivity extends AppCompatActivity implements View.OnClick
         viewPager.setAdapter(sectionsPagerAdapter);
 
         if (intent.getData()!=null){
-            try {
-                String tempData = intent.getData().toString().split("resource_theory")[1];
-                topicID =  Utility.base64DecodeForInt(tempData);
-                viewPager.setCurrentItem(1, true);
-            } catch (UnsupportedEncodingException e) {
-                e.printStackTrace();
-            }
+            Log.d("deeplink_debug","resource activity "+intent.getData()+"");
+//            try {
+//
+////                String tempData = intent.getData().toString().split("resource_theory")[1];
+////                topicID =  Utility.base64DecodeForInt(tempData);
+////                viewPager.setCurrentItem(1, true);
+//            } catch (UnsupportedEncodingException e) {
+//                e.printStackTrace();
+//            }
         }else{
             topicID = intent.getIntExtra(Constants.TOPICID,-1);
         }

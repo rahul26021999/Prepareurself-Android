@@ -8,8 +8,8 @@ import android.view.Menu;
 import android.widget.TextView;
 
 import com.prepare.prepareurself.courses.ui.activity.CoursesActivity;
-import com.prepare.prepareurself.Home.content.dashboard.data.model.CourseModel;
-import com.prepare.prepareurself.Home.content.dashboard.ui.fragment.DashboardFragment;
+import com.prepare.prepareurself.dashboard.data.model.CourseModel;
+import com.prepare.prepareurself.dashboard.ui.fragment.DashboardFragment;
 import com.prepare.prepareurself.Home.viewmodel.HomeActivityViewModel;
 import com.prepare.prepareurself.R;
 import com.prepare.prepareurself.authentication.data.model.UserModel;
