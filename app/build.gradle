@@ -87,5 +87,8 @@ dependencies {
     //android-youtube-player
     implementation 'com.pierfrancescosoffritti.androidyoutubeplayer:core:10.0.5'
 
+    //expandable view
+    implementation 'net.cachapa.expandablelayout:expandablelayout:2.9.2'
+
 
 }

@@ -42,6 +42,14 @@
             app:icon_size="25dp"
             android:layout_alignParentEnd="true"/>
 
+        <ImageView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:src="@drawable/ic_action_down_black"
+            android:layout_alignParentEnd="true"
+            android:layout_marginEnd="10dp"
+            android:id="@+id/img_down_video"/>
+
     </RelativeLayout>
 
 
@@ -55,6 +63,29 @@
         android:layout_marginEnd="5dp"
         android:id="@+id/view_divider_youtube"
         android:layout_below="@+id/rel_title_youtube"/>
+
+    <net.cachapa.expandablelayout.ExpandableLayout
+        android:id="@+id/expandable_layout"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        app:el_duration="1000"
+        app:el_expanded="false"
+        app:el_parallax="0.5"
+        android:layout_below="@id/view_divider_youtube">
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textSize="16sp"
+            android:paddingEnd="5dp"
+            android:paddingStart="10dp"
+            android:fontFamily="@font/proximanovaregular"
+            android:id="@+id/tv_youtube_description"
+            android:layout_marginTop="5dp"
+            android:layout_alignParentStart="true"
+            android:layout_toStartOf="@+id/img_share_youtube_video"/>
+
+    </net.cachapa.expandablelayout.ExpandableLayout>
 
     <androidx.core.widget.NestedScrollView
         android:layout_width="match_parent"
@@ -71,17 +102,6 @@
                 android:layout_height="wrap_content"
                 android:id="@+id/rel_video_description">
 
-                <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:textSize="16sp"
-                    android:paddingEnd="5dp"
-                    android:paddingStart="10dp"
-                    android:fontFamily="@font/proximanovaregular"
-                    android:id="@+id/tv_youtube_description"
-                    android:layout_marginTop="5dp"
-                    android:layout_alignParentStart="true"
-                    android:layout_toStartOf="@+id/img_share_youtube_video"/>
 
                 <ImageView
                     android:layout_width="wrap_content"
