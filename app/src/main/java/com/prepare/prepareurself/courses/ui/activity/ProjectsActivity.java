@@ -11,6 +11,7 @@ import android.content.Intent;
 import android.graphics.drawable.Drawable;
 import android.os.Bundle;
 import android.text.Html;
+import android.text.TextUtils;
 import android.util.Log;
 import android.view.MenuItem;
 import android.view.View;
@@ -29,6 +30,7 @@ import com.prepare.prepareurself.utils.Utility;
 import com.prepare.prepareurself.utils.youtubeplaylistapi.models.SingleVIdeoItemWrapper;
 import com.prepare.prepareurself.utils.youtubeplaylistapi.models.VideoItemWrapper;
 import com.prepare.prepareurself.utils.youtubeplaylistapi.models.YoutubePlaylistResponseModel;
+import com.prepare.prepareurself.utils.youtubeplaylistapi.ui.VideoActivity;
 
 import java.util.List;
 
@@ -46,6 +48,7 @@ public class ProjectsActivity extends AppCompatActivity implements PlaylistVideo
     private CardView cardImageView;
     private ImageView videoImageView;
     private TextView tvCardVideoTitle, tvReferenceHeader;
+    private String videoTitle = "", videoDescription="", videoCode ="";
 
 
     @Override
@@ -90,6 +93,7 @@ public class ProjectsActivity extends AppCompatActivity implements PlaylistVideo
             });
         }
 
+
     }
 
     private void updateUIWithProject(ProjectsModel projectsModel) {
@@ -129,28 +133,47 @@ public class ProjectsActivity extends AppCompatActivity implements PlaylistVideo
 
             recyclerView.setVisibility(View.GONE);
             cardImageView.setVisibility(View.VISIBLE);
-            String videoCode = Utility.getVideoCode(projectsModel.getLink());
+            final String videoCode = Utility.getVideoCode(projectsModel.getLink());
             loadCardImageViewWithVideo(videoCode);
+
+
+            cardImageView.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    if (!TextUtils.isEmpty(videoTitle)){
+                        Intent intent = new Intent(ProjectsActivity.this,VideoActivity.class);
+                        intent.putExtra(Constants.VIDEOCODE,videoCode);
+                        intent.putExtra(Constants.PROJECTID, projectId);
+                        intent.putExtra(Constants.VIDEOTITLE, videoTitle);
+                        intent.putExtra(Constants.VIDEODESCRIPTION, videoDescription);
+                        startActivity(intent);
+                    }
+                    Log.d("click_debug","jksbvjkd");
+                }
+            });
         }
 
     }
 
-    private void loadCardImageViewWithVideo(String videoCode) {
+    private void loadCardImageViewWithVideo(final String videoCode) {
 
         viewModel.fetchVideoDetails(videoCode).observe(this, new Observer<SingleVIdeoItemWrapper>() {
             @Override
-            public void onChanged(SingleVIdeoItemWrapper singleVIdeoItemWrapper) {
+            public void onChanged(final SingleVIdeoItemWrapper singleVIdeoItemWrapper) {
 
                 if (singleVIdeoItemWrapper!=null){
                     tvLoading.setVisibility(View.GONE);
                     recyclerView.setVisibility(View.GONE);
                     tvCardVideoTitle.setText(singleVIdeoItemWrapper.getSnippet().getTitle());
+                    videoTitle = singleVIdeoItemWrapper.getSnippet().getTitle();
+                    videoDescription = singleVIdeoItemWrapper.getSnippet().getDescription();
                     Glide.with(ProjectsActivity.this)
                             .load(singleVIdeoItemWrapper.getSnippet().getThumbnails().getMaxres().getUrl())
                             .transition(GenericTransitionOptions.<Drawable>with(Utility.getAnimationObject()))
                             .placeholder(R.drawable.placeholder)
                             .error(R.drawable.ic_image_loading_error)
                             .into(videoImageView);
+
                 }
             }
         });

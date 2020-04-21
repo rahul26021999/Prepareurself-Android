@@ -1,0 +1,125 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".utils.youtubeplaylistapi.ui.VideoActivity">
+
+    <com.google.android.youtube.player.YouTubePlayerView
+        android:layout_width="match_parent"
+        android:layout_height="300dp"
+        android:id="@+id/youtube_playerview"/>
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/youtube_playerview"
+        android:layout_marginTop="20dp"
+        android:paddingStart="10dp"
+        android:paddingEnd="10dp"
+        android:id="@+id/rel_title_youtube">
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            app:layout_constraintEnd_toStartOf="@+id/like_button_youtube"
+            android:textSize="16sp"
+            android:textColor="@color/colorPrimaryDark"
+            android:fontFamily="@font/proximanovaregular"
+            android:id="@+id/tv_youtube_title"
+            android:layout_marginEnd="5dp"
+            android:textStyle="bold"
+            android:layout_toStartOf="@+id/like_button_youtube"
+            android:layout_alignParentStart="true"/>
+
+        <com.like.LikeButton
+            android:layout_width="25dp"
+            android:layout_height="25dp"
+            android:id="@+id/like_button_youtube"
+            app:icon_type="thumb"
+            android:layout_marginEnd="20dp"
+            app:icon_size="25dp"
+            android:layout_alignParentEnd="true"/>
+
+    </RelativeLayout>
+
+
+
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="1dp"
+        android:background="@android:color/darker_gray"
+        android:layout_marginTop="10dp"
+        android:layout_marginStart="10dp"
+        android:layout_marginEnd="5dp"
+        android:id="@+id/view_divider_youtube"
+        android:layout_below="@+id/rel_title_youtube"/>
+
+    <androidx.core.widget.NestedScrollView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:fillViewport="true"
+        android:layout_below="@+id/view_divider_youtube">
+
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+
+            <RelativeLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:id="@+id/rel_video_description">
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:textSize="16sp"
+                    android:paddingEnd="5dp"
+                    android:paddingStart="10dp"
+                    android:fontFamily="@font/proximanovaregular"
+                    android:id="@+id/tv_youtube_description"
+                    android:layout_marginTop="5dp"
+                    android:layout_alignParentStart="true"
+                    android:layout_toStartOf="@+id/img_share_youtube_video"/>
+
+                <ImageView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:src="@drawable/ic_image_share"
+                    android:id="@+id/img_share_youtube_video"
+                    android:layout_alignParentEnd="true"
+                    android:layout_marginEnd="20dp"
+                    android:layout_marginTop="10dp"/>
+
+            </RelativeLayout>
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_below="@+id/rel_video_description"
+                android:layout_marginTop="20dp"
+                android:text="Related Videos"
+                android:textColor="@color/colorPrimaryDark"
+                android:textStyle="bold"
+                android:paddingStart="10dp"
+                android:fontFamily="@font/proximanovaregular"
+                android:textSize="16sp"
+                android:visibility="gone"
+                android:id="@+id/tv_relatedVideos_youtube"/>
+
+            <androidx.recyclerview.widget.RecyclerView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="10dp"
+                android:layout_marginStart="10dp"
+                android:layout_marginEnd="10dp"
+                android:visibility="gone"
+                android:layout_below="@+id/tv_relatedVideos_youtube"
+                android:id="@+id/rv_relatedvideos_youtube"/>
+
+        </RelativeLayout>
+
+    </androidx.core.widget.NestedScrollView>
+
+</RelativeLayout>

@@ -14,29 +14,24 @@
         android:supportsRtl="true"
         android:theme="@style/AppTheme"
         android:usesCleartextTraffic="true">
+        <activity android:name=".utils.youtubeplaylistapi.ui.VideoActivity"></activity>
         <activity android:name=".courses.ui.activity.ProjectsActivity">
+            <intent-filter>
+                <action android:name="android.intent.action.VIEW" />
 
-           <intent-filter>
+                <category android:name="android.intent.category.BROWSABLE" />
+                <category android:name="android.intent.category.DEFAULT" />
 
-               <action android:name="android.intent.action.VIEW" />
-
-               <category android:name="android.intent.category.BROWSABLE" />
-               <category android:name="android.intent.category.DEFAULT" />
-
-               <data
-                   android:host="app.prepareurself"
-                   android:scheme="project" />
-
-           </intent-filter>
-
+                <data
+                    android:host="app.prepareurself"
+                    android:scheme="project" />
+            </intent-filter>
         </activity>
         <activity
             android:name=".profile.ui.EditPreferencesActivity"
-            android:theme="@style/ProfileTheme"></activity>
+            android:theme="@style/ProfileTheme" />
         <activity android:name=".courses.ui.activity.CoursesActivity">
-
             <intent-filter>
-
                 <action android:name="android.intent.action.VIEW" />
 
                 <category android:name="android.intent.category.BROWSABLE" />
@@ -45,11 +40,10 @@
                 <data
                     android:host="app.prepareurself"
                     android:scheme="course" />
-
             </intent-filter>
-
         </activity>
-        <activity android:name=".resources.youtubevideoplayer.YoutubePlayerActivity"
+        <activity
+            android:name=".resources.youtubevideoplayer.YoutubePlayerActivity"
             android:theme="@style/AppTheme.NoActionBar">
             <intent-filter>
                 <action android:name="android.intent.action.VIEW" />
@@ -83,8 +77,7 @@
         <activity
             android:name=".Home.ui.HomeActivity"
             android:label="@string/title_activity_home"
-            android:theme="@style/AppTheme.NoActionBar">
-        </activity>
+            android:theme="@style/AppTheme.NoActionBar"></activity>
         <activity android:name=".utils.QuizBaseActivity" />
         <activity
             android:name=".quiz.QuizActivity"
@@ -94,15 +87,14 @@
             android:theme="@style/AppTheme.NoActionBar">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
+                <action android:name="android.intent.action.VIEW" />
 
-                    <action android:name="android.intent.action.VIEW" />
+                <category android:name="android.intent.category.BROWSABLE" />
+                <category android:name="android.intent.category.DEFAULT" />
 
-                    <category android:name="android.intent.category.BROWSABLE" />
-                    <category android:name="android.intent.category.DEFAULT" />
-
-                    <data
-                        android:host="app.prepareurself"
-                        android:scheme="install" />
+                <data
+                    android:host="app.prepareurself"
+                    android:scheme="install" />
 
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
