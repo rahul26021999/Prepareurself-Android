@@ -14,11 +14,41 @@
         android:supportsRtl="true"
         android:theme="@style/AppTheme"
         android:usesCleartextTraffic="true">
-        <activity android:name=".courses.ui.activity.ProjectsActivity"></activity>
+        <activity android:name=".courses.ui.activity.ProjectsActivity">
+
+           <intent-filter>
+
+               <action android:name="android.intent.action.VIEW" />
+
+               <category android:name="android.intent.category.BROWSABLE" />
+               <category android:name="android.intent.category.DEFAULT" />
+
+               <data
+                   android:host="app.prepareurself"
+                   android:scheme="project" />
+
+           </intent-filter>
+
+        </activity>
         <activity
-            android:name=".Home.content.profile.ui.EditPreferencesActivity"
+            android:name=".profile.ui.EditPreferencesActivity"
             android:theme="@style/ProfileTheme"></activity>
-        <activity android:name=".courses.ui.activity.CoursesActivity"></activity>
+        <activity android:name=".courses.ui.activity.CoursesActivity">
+
+            <intent-filter>
+
+                <action android:name="android.intent.action.VIEW" />
+
+                <category android:name="android.intent.category.BROWSABLE" />
+                <category android:name="android.intent.category.DEFAULT" />
+
+                <data
+                    android:host="app.prepareurself"
+                    android:scheme="course" />
+
+            </intent-filter>
+
+        </activity>
         <activity android:name=".resources.youtubevideoplayer.YoutubePlayerActivity"
             android:theme="@style/AppTheme.NoActionBar">
             <intent-filter>
@@ -28,8 +58,8 @@
                 <category android:name="android.intent.category.DEFAULT" />
 
                 <data
-                    android:host="prepareurself.tk"
-                    android:scheme="prepareurself_course" />
+                    android:host="app.prepareurself"
+                    android:scheme="video" />
             </intent-filter>
         </activity>
         <activity
@@ -43,8 +73,8 @@
                 <category android:name="android.intent.category.DEFAULT" />
 
                 <data
-                    android:host="prepareurself.tk"
-                    android:scheme="prepareurself_resource" />
+                    android:host="app.prepareurself"
+                    android:scheme="theory" />
             </intent-filter>
         </activity>
         <activity
@@ -54,26 +84,25 @@
             android:name=".Home.ui.HomeActivity"
             android:label="@string/title_activity_home"
             android:theme="@style/AppTheme.NoActionBar">
-            <intent-filter>
-                <action android:name="android.intent.action.VIEW" />
-
-                <category android:name="android.intent.category.BROWSABLE" />
-                <category android:name="android.intent.category.DEFAULT" />
-
-                <data
-                    android:host="prepareurself.tk"
-                    android:scheme="prepareurself_home" />
-            </intent-filter>
         </activity>
         <activity android:name=".utils.QuizBaseActivity" />
         <activity
             android:name=".quiz.QuizActivity"
             android:theme="@style/AppTheme.NoActionBar" />
         <activity
-            android:name=".Activites.MainActivity"
+            android:name=".authentication.ui.AuthenticationActivity"
             android:theme="@style/AppTheme.NoActionBar">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
+
+                    <action android:name="android.intent.action.VIEW" />
+
+                    <category android:name="android.intent.category.BROWSABLE" />
+                    <category android:name="android.intent.category.DEFAULT" />
+
+                    <data
+                        android:host="app.prepareurself"
+                        android:scheme="install" />
 
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>

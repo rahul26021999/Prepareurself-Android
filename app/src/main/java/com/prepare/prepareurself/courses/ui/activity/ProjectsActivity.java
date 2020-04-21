@@ -11,6 +11,7 @@ import android.content.Intent;
 import android.graphics.drawable.Drawable;
 import android.os.Bundle;
 import android.text.Html;
+import android.util.Log;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.ImageView;
@@ -69,7 +70,12 @@ public class ProjectsActivity extends AppCompatActivity implements PlaylistVideo
 
         Intent intent = getIntent();
 
-        projectId = intent.getIntExtra(Constants.PROJECTID,-1);
+        if (intent.getData()!=null){
+            Log.d("deelink_debug","project activity : "+intent.getData());
+        }else{
+            projectId = intent.getIntExtra(Constants.PROJECTID,-1);
+        }
+
 
         if (projectId != -1){
             viewModel.getProjectById(projectId).observe(this, new Observer<ProjectsModel>() {
