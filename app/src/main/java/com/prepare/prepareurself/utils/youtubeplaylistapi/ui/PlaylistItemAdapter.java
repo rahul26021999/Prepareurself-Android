@@ -20,6 +20,7 @@ public class PlaylistItemAdapter extends RecyclerView.Adapter<PlaylistItemAdapte
     private Context context;
     private List<VideoItemWrapper> videoItemWrappers;
     private PlaylistItemListener listener;
+    private int selectedPosition = 0;
 
     public PlaylistItemAdapter(Context context, PlaylistItemListener listener) {
         this.context = context;
@@ -30,6 +31,16 @@ public class PlaylistItemAdapter extends RecyclerView.Adapter<PlaylistItemAdapte
         this.videoItemWrappers = videoItemWrappers;
     }
 
+    public void onNextClicked(){
+        selectedPosition = selectedPosition + 1;
+        notifyDataSetChanged();
+    }
+
+    public void onPreviousClicked(){
+        selectedPosition = selectedPosition -1;
+        notifyDataSetChanged();
+    }
+
     @NonNull
     @Override
     public PlaylistItemViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
@@ -38,15 +49,24 @@ public class PlaylistItemAdapter extends RecyclerView.Adapter<PlaylistItemAdapte
     }
 
     @Override
-    public void onBindViewHolder(@NonNull PlaylistItemViewHolder holder, int position) {
+    public void onBindViewHolder(@NonNull final PlaylistItemViewHolder holder, final int position) {
         final VideoItemWrapper videoItemWrapper = videoItemWrappers.get(position);
         holder.bindView(videoItemWrapper);
         holder.itemView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                selectedPosition = position;
                 listener.onItemClicked(videoItemWrapper);
+                notifyDataSetChanged();
             }
         });
+
+        if (position == selectedPosition){
+            holder.textView.setTextColor(context.getResources().getColor(R.color.green));
+        }else{
+            holder.textView.setTextColor(context.getResources().getColor(R.color.colorPrimaryDark));
+        }
+
     }
 
     @Override

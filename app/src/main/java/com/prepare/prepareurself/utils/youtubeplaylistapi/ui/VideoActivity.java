@@ -54,6 +54,8 @@ public class VideoActivity extends YouTubeBaseActivity implements YouTubePlayer.
     private VideoViewModel videoViewModel;
 
     private TextView tvTitle, tvDescription;
+    private YouTubePlayer mYoutubePlayer;
+    private PlaylistItemAdapter playlistItemAdapter;
 
     @Nullable
     private ViewModelStore viewModelStore = null;
@@ -98,7 +100,7 @@ public class VideoActivity extends YouTubeBaseActivity implements YouTubePlayer.
 
             playlistItemRecyclerView.setVisibility(View.VISIBLE);
 
-            final PlaylistItemAdapter playlistItemAdapter = new PlaylistItemAdapter(getApplicationContext(),this);
+            playlistItemAdapter = new PlaylistItemAdapter(getApplicationContext(),this);
             LinearLayoutManager layoutManager = new LinearLayoutManager(this);
             playlistItemRecyclerView.setLayoutManager(layoutManager);
             DividerItemDecoration decoration = new DividerItemDecoration(this,R.drawable.theory_resource_divider);
@@ -138,8 +140,25 @@ public class VideoActivity extends YouTubeBaseActivity implements YouTubePlayer.
                 youTubePlayer.loadVideo(videoCode);
                 youTubePlayer.setPlayerStyle(YouTubePlayer.PlayerStyle.DEFAULT);
             }else if (!TextUtils.isEmpty(playlistId)){
-                youTubePlayer.loadPlaylist(playlistId);
-                youTubePlayer.setPlayerStyle(YouTubePlayer.PlayerStyle.DEFAULT);
+                mYoutubePlayer = youTubePlayer;
+                mYoutubePlayer.loadPlaylist(playlistId);
+                mYoutubePlayer.setPlayerStyle(YouTubePlayer.PlayerStyle.DEFAULT);
+                mYoutubePlayer.setPlaylistEventListener(new YouTubePlayer.PlaylistEventListener() {
+                    @Override
+                    public void onPrevious() {
+                        playlistItemAdapter.onPreviousClicked();
+                    }
+
+                    @Override
+                    public void onNext() {
+                        playlistItemAdapter.onNextClicked();
+                    }
+
+                    @Override
+                    public void onPlaylistEnded() {
+
+                    }
+                });
             } else{
                 Utility.showToast(this,Constants.SOMETHINGWENTWRONG);
             }
@@ -160,7 +179,9 @@ public class VideoActivity extends YouTubeBaseActivity implements YouTubePlayer.
 
     @Override
     public void onItemClicked(VideoItemWrapper videoItemWrapper) {
-
+        if (mYoutubePlayer!=null){
+            mYoutubePlayer.loadPlaylist(playlistId,videoItemWrapper.getSnippet().getPosition(),0);
+        }
     }
 
     @NonNull
