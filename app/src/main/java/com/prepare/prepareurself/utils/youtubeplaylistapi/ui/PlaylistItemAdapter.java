@@ -31,6 +31,10 @@ public class PlaylistItemAdapter extends RecyclerView.Adapter<PlaylistItemAdapte
         this.videoItemWrappers = videoItemWrappers;
     }
 
+    public void setSelectedPosition(int position){
+        selectedPosition = position;
+    }
+
     public void onNextClicked(){
         selectedPosition = selectedPosition + 1;
         notifyDataSetChanged();
