@@ -44,7 +44,8 @@ public class Constants {
     public static final String PROJECTID = "project_id";
     public static final String VideoItemWrapperPlaylistId = "video_item_wrapper_playlist";
     public static final String VideoItemWrapperId = "video_item_player_id";
-    public static final String SINGLEVIDEO = "single_video";
+    public static final String SINGLEVIDEOOFPLAYLIST = "single_video_from_playlist";
     public static final String VIDEOINDEX = "video_index";
     public static final String PLAYLIST = "playlist";
+    public static final String SINGLEVIDEO = "single_video";
 }
