@@ -6,6 +6,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
+import android.widget.TextView;
 
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
@@ -65,6 +66,7 @@ public class PlaylistVideosRvAdapter extends RecyclerView.Adapter<PlaylistVideos
     public class PlaylistVideosViewHolder extends RecyclerView.ViewHolder{
 
         ImageView youTubeThumbnailView;
+        TextView tvTitle;
 
         private boolean readyForLoadingYoutubeThumbnail = true;
 
@@ -72,18 +74,20 @@ public class PlaylistVideosRvAdapter extends RecyclerView.Adapter<PlaylistVideos
             super(itemView);
 
             youTubeThumbnailView = itemView.findViewById(R.id.playlist_videos_thumnail);
+            tvTitle = itemView.findViewById(R.id.tv_playlist_video_title);
 
         }
 
         public void bindView(final VideoItemWrapper contentDetails){
 
             Glide.with(context)
-                    .load(contentDetails.getSnippet().getThumbnails().getMedium().getUrl())
-                    .override(180,150)
+                    .load(contentDetails.getSnippet().getThumbnails().getHigh().getUrl())
                     .transition(GenericTransitionOptions.<Drawable>with(Utility.getAnimationObject()))
                     .placeholder(R.drawable.placeholder)
                     .error(R.drawable.ic_image_loading_error)
                     .into(youTubeThumbnailView);
+
+            tvTitle.setText(contentDetails.getSnippet().getTitle());
         }
 
     }

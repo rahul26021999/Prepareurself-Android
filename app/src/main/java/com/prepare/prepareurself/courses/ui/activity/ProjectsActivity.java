@@ -43,11 +43,11 @@ public class ProjectsActivity extends AppCompatActivity implements PlaylistVideo
     private RecyclerView recyclerView;
     private PlaylistVideosRvAdapter adapter;
     private String rvNextPageToken = "";
-    String playlist;
+    String playlist="";
     private TextView tvLoading;
     private CardView cardImageView;
     private ImageView videoImageView;
-    private TextView tvCardVideoTitle, tvReferenceHeader;
+    private TextView tvCardVideoTitle, tvReferenceHeader, tvViewPlaylist;
     private String videoTitle = "", videoDescription="", videoCode ="";
 
 
@@ -67,9 +67,11 @@ public class ProjectsActivity extends AppCompatActivity implements PlaylistVideo
         videoImageView = findViewById(R.id.project_video_image_view);
         tvCardVideoTitle = findViewById(R.id.tv_card_video_project);
         tvReferenceHeader = findViewById(R.id.tv_reference_heading);
+        tvViewPlaylist = findViewById(R.id.tv_viewfullplaylist);
 
         recyclerView.setVisibility(View.GONE);
         cardImageView.setVisibility(View.GONE);
+        tvViewPlaylist.setVisibility(View.GONE);
         tvLoading.setVisibility(View.VISIBLE);
 
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
@@ -92,6 +94,19 @@ public class ProjectsActivity extends AppCompatActivity implements PlaylistVideo
                 }
             });
         }
+
+        tvViewPlaylist.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                if (tvViewPlaylist.getVisibility() == View.VISIBLE){
+                    if (!TextUtils.isEmpty(playlist)){
+                        Intent playlistIntent = new Intent(ProjectsActivity.this, VideoActivity.class);
+                        playlistIntent.putExtra(Constants.VideoItemWrapperPlaylistId,playlist);
+                        startActivity(playlistIntent);
+                    }
+                }
+            }
+        });
 
 
     }
@@ -119,7 +134,7 @@ public class ProjectsActivity extends AppCompatActivity implements PlaylistVideo
             playlist = Utility.getVideoPlaylistId(projectsModel.getPlaylist());
 
             adapter = new PlaylistVideosRvAdapter(ProjectsActivity.this, this);
-            final LinearLayoutManager layoutManager = new LinearLayoutManager(ProjectsActivity.this, RecyclerView.HORIZONTAL, false);
+            final LinearLayoutManager layoutManager = new LinearLayoutManager(ProjectsActivity.this, RecyclerView.VERTICAL, false);
             recyclerView.setLayoutManager(layoutManager);
             recyclerView.setAdapter(adapter);
             recyclerView.setNestedScrollingEnabled(false);
@@ -127,11 +142,13 @@ public class ProjectsActivity extends AppCompatActivity implements PlaylistVideo
 
             getVideos(rvNextPageToken, playlist);
 
+
         }else if (projectsModel.getLink()!=null){
 
             tvReferenceHeader.setText("Video");
 
             recyclerView.setVisibility(View.GONE);
+            tvViewPlaylist.setVisibility(View.GONE);
             cardImageView.setVisibility(View.VISIBLE);
             final String videoCode = Utility.getVideoCode(projectsModel.getLink());
             loadCardImageViewWithVideo(videoCode);
@@ -164,6 +181,7 @@ public class ProjectsActivity extends AppCompatActivity implements PlaylistVideo
                 if (singleVIdeoItemWrapper!=null){
                     tvLoading.setVisibility(View.GONE);
                     recyclerView.setVisibility(View.GONE);
+                    tvViewPlaylist.setVisibility(View.GONE);
                     tvCardVideoTitle.setText(singleVIdeoItemWrapper.getSnippet().getTitle());
                     videoTitle = singleVIdeoItemWrapper.getSnippet().getTitle();
                     videoDescription = singleVIdeoItemWrapper.getSnippet().getDescription();
@@ -193,6 +211,7 @@ public class ProjectsActivity extends AppCompatActivity implements PlaylistVideo
                             public void onChanged(List<VideoItemWrapper> videoContentDetails) {
                                 tvLoading.setVisibility(View.GONE);
                                 recyclerView.setVisibility(View.VISIBLE);
+                                tvViewPlaylist.setVisibility(View.VISIBLE);
                                 adapter.setVideoContentDetails(videoContentDetails);
                                 adapter.notifyDataSetChanged();
                             }
@@ -202,6 +221,7 @@ public class ProjectsActivity extends AppCompatActivity implements PlaylistVideo
                     cardImageView.setVisibility(View.GONE);
                     recyclerView.setVisibility(View.GONE);
                     tvLoading.setVisibility(View.VISIBLE);
+                    tvViewPlaylist.setVisibility(View.GONE);
                     tvLoading.setText("Playlist Not found");
                 }
             }

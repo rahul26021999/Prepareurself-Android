@@ -24,6 +24,7 @@ public class VideoActivity extends YouTubeBaseActivity implements YouTubePlayer.
     String title = "";
     String decription = "";
     int projectId = -1;
+    String playlistId = "";
 
     private TextView tvTitle, tvDescription;
 
@@ -47,6 +48,8 @@ public class VideoActivity extends YouTubeBaseActivity implements YouTubePlayer.
             tvTitle.setText(title);
             tvDescription.setText(decription);
 
+        }else if (intent.getStringExtra(Constants.VideoItemWrapperPlaylistId)!=null){
+            playlistId = intent.getStringExtra(Constants.VideoItemWrapperPlaylistId);
         }
         youTubePlayerView.initialize(Constants.YOUTUBE_PLAYER_API_KEY,this);
     }
@@ -57,7 +60,10 @@ public class VideoActivity extends YouTubeBaseActivity implements YouTubePlayer.
             if (!TextUtils.isEmpty(videoCode)){
                 youTubePlayer.loadVideo(videoCode);
                 youTubePlayer.setPlayerStyle(YouTubePlayer.PlayerStyle.DEFAULT);
-            }else{
+            }else if (!TextUtils.isEmpty(playlistId)){
+                youTubePlayer.loadPlaylist(playlistId);
+                youTubePlayer.setPlayerStyle(YouTubePlayer.PlayerStyle.DEFAULT);
+            } else{
                 Utility.showToast(this,Constants.SOMETHINGWENTWRONG);
             }
 
