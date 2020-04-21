@@ -1,6 +1,15 @@
 package com.prepare.prepareurself.utils.youtubeplaylistapi.ui;
 
+import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.lifecycle.LifecycleOwner;
+import androidx.lifecycle.Observer;
+import androidx.lifecycle.ViewModelProvider;
+import androidx.lifecycle.ViewModelStore;
+import androidx.lifecycle.ViewModelStoreOwner;
+import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
 
 import android.content.Intent;
 import android.media.Image;
@@ -17,11 +26,16 @@ import com.google.android.youtube.player.YouTubePlayerView;
 import com.like.LikeButton;
 import com.prepare.prepareurself.R;
 import com.prepare.prepareurself.utils.Constants;
+import com.prepare.prepareurself.utils.DividerItemDecoration;
 import com.prepare.prepareurself.utils.Utility;
+import com.prepare.prepareurself.utils.youtubeplaylistapi.models.VideoItemWrapper;
+import com.prepare.prepareurself.utils.youtubeplaylistapi.viewmodel.VideoViewModel;
 
 import net.cachapa.expandablelayout.ExpandableLayout;
 
-public class VideoActivity extends YouTubeBaseActivity implements YouTubePlayer.OnInitializedListener {
+import java.util.List;
+
+public class VideoActivity extends YouTubeBaseActivity implements YouTubePlayer.OnInitializedListener, PlaylistItemAdapter.PlaylistItemListener, ViewModelStoreOwner {
 
     private static final int RECOVERY_DIALOG_REQUEST = 1;
     YouTubePlayerView youTubePlayerView;
@@ -35,13 +49,23 @@ public class VideoActivity extends YouTubeBaseActivity implements YouTubePlayer.
     ImageView imageViewShare;
     ExpandableLayout expandableLayout;
     ImageView imageDown;
+    RecyclerView playlistItemRecyclerView;
+
+    private VideoViewModel videoViewModel;
 
     private TextView tvTitle, tvDescription;
+    private YouTubePlayer mYoutubePlayer;
+    private PlaylistItemAdapter playlistItemAdapter;
+
+    @Nullable
+    private ViewModelStore viewModelStore = null;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_video);
+
+        videoViewModel = getViewModelProvider().get(VideoViewModel.class);
 
         youTubePlayerView = findViewById(R.id.youtube_playerview);
         tvTitle = findViewById(R.id.tv_youtube_title);
@@ -50,6 +74,7 @@ public class VideoActivity extends YouTubeBaseActivity implements YouTubePlayer.
         likeButton = findViewById(R.id.like_button_youtube);
         imageDown = findViewById(R.id.img_down_video);
         expandableLayout = findViewById(R.id.expandable_layout);
+        playlistItemRecyclerView = findViewById(R.id.rv_playlist_item_player);
 
         Intent intent = getIntent();
 
@@ -62,6 +87,8 @@ public class VideoActivity extends YouTubeBaseActivity implements YouTubePlayer.
             tvTitle.setText(title);
             tvDescription.setText(decription);
 
+            playlistItemRecyclerView.setVisibility(View.GONE);
+
         }else if (intent.getStringExtra(Constants.VideoItemWrapperPlaylistId)!=null){
             imageViewShare.setVisibility(View.GONE);
             likeButton.setVisibility(View.GONE);
@@ -70,6 +97,23 @@ public class VideoActivity extends YouTubeBaseActivity implements YouTubePlayer.
             decription = intent.getStringExtra(Constants.VIDEODESCRIPTION);
             tvTitle.setText(title);
             tvDescription.setText(decription);
+
+            playlistItemRecyclerView.setVisibility(View.VISIBLE);
+
+            playlistItemAdapter = new PlaylistItemAdapter(getApplicationContext(),this);
+            LinearLayoutManager layoutManager = new LinearLayoutManager(this);
+            playlistItemRecyclerView.setLayoutManager(layoutManager);
+            DividerItemDecoration decoration = new DividerItemDecoration(this,R.drawable.theory_resource_divider);
+            playlistItemRecyclerView.addItemDecoration(decoration);
+            playlistItemRecyclerView.setAdapter(playlistItemAdapter);
+
+            videoViewModel.getListLiveData(playlistId).observeForever(new Observer<List<VideoItemWrapper>>() {
+                @Override
+                public void onChanged(List<VideoItemWrapper> videoItemWrappers) {
+                    playlistItemAdapter.setVideoItemWrappers(videoItemWrappers);
+                    playlistItemAdapter.notifyDataSetChanged();
+                }
+            });
 
         }
         youTubePlayerView.initialize(Constants.YOUTUBE_PLAYER_API_KEY,this);
@@ -96,8 +140,25 @@ public class VideoActivity extends YouTubeBaseActivity implements YouTubePlayer.
                 youTubePlayer.loadVideo(videoCode);
                 youTubePlayer.setPlayerStyle(YouTubePlayer.PlayerStyle.DEFAULT);
             }else if (!TextUtils.isEmpty(playlistId)){
-                youTubePlayer.loadPlaylist(playlistId);
-                youTubePlayer.setPlayerStyle(YouTubePlayer.PlayerStyle.DEFAULT);
+                mYoutubePlayer = youTubePlayer;
+                mYoutubePlayer.loadPlaylist(playlistId);
+                mYoutubePlayer.setPlayerStyle(YouTubePlayer.PlayerStyle.DEFAULT);
+                mYoutubePlayer.setPlaylistEventListener(new YouTubePlayer.PlaylistEventListener() {
+                    @Override
+                    public void onPrevious() {
+                        playlistItemAdapter.onPreviousClicked();
+                    }
+
+                    @Override
+                    public void onNext() {
+                        playlistItemAdapter.onNextClicked();
+                    }
+
+                    @Override
+                    public void onPlaylistEnded() {
+
+                    }
+                });
             } else{
                 Utility.showToast(this,Constants.SOMETHINGWENTWRONG);
             }
@@ -116,4 +177,34 @@ public class VideoActivity extends YouTubeBaseActivity implements YouTubePlayer.
         }
     }
 
+    @Override
+    public void onItemClicked(VideoItemWrapper videoItemWrapper) {
+        if (mYoutubePlayer!=null){
+            mYoutubePlayer.loadPlaylist(playlistId,videoItemWrapper.getSnippet().getPosition(),0);
+        }
+    }
+
+    @NonNull
+    @Override
+    public ViewModelStore getViewModelStore() {
+        Object nonConfigurationInstance = getLastNonConfigurationInstance();
+        if (nonConfigurationInstance instanceof ViewModelStore) {
+            viewModelStore = (ViewModelStore) nonConfigurationInstance;
+        }
+        if (viewModelStore == null) {
+            viewModelStore = new ViewModelStore();
+        }
+        return viewModelStore;
+    }
+
+    @Override
+    public Object onRetainNonConfigurationInstance() {
+        return viewModelStore;
+    }
+
+    public ViewModelProvider getViewModelProvider() {
+        ViewModelProvider.Factory factory =
+                ViewModelProvider.AndroidViewModelFactory.getInstance(getApplication());
+        return new ViewModelProvider(getViewModelStore(), factory);
+    }
 }
