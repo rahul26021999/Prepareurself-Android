@@ -87,10 +87,18 @@
 
     </net.cachapa.expandablelayout.ExpandableLayout>
 
+
+    <androidx.recyclerview.widget.RecyclerView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:id="@+id/rv_playlist_item_player"
+        android:layout_below="@+id/expandable_layout"/>
+
     <androidx.core.widget.NestedScrollView
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:fillViewport="true"
+        android:visibility="gone"
         android:layout_below="@+id/view_divider_youtube">
 
         <RelativeLayout
