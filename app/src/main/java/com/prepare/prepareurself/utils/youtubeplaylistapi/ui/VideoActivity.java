@@ -2,8 +2,6 @@ package com.prepare.prepareurself.utils.youtubeplaylistapi.ui;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
-import androidx.appcompat.app.AppCompatActivity;
-import androidx.lifecycle.LifecycleOwner;
 import androidx.lifecycle.Observer;
 import androidx.lifecycle.ViewModelProvider;
 import androidx.lifecycle.ViewModelStore;
@@ -12,7 +10,6 @@ import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import android.content.Intent;
-import android.media.Image;
 import android.os.Bundle;
 import android.text.TextUtils;
 import android.view.View;
@@ -79,11 +76,12 @@ public class VideoActivity extends YouTubeBaseActivity implements YouTubePlayer.
 
         Intent intent = getIntent();
 
-        if (intent.getIntExtra(Constants.PROJECTID, -1)!=-1){
+        if (intent.getBooleanExtra(Constants.SINGLEVIDEO, false)){
+            imageViewShare.setVisibility(View.GONE);
+            likeButton.setVisibility(View.GONE);
             videoCode = intent.getStringExtra(Constants.VIDEOCODE);
             title = intent.getStringExtra(Constants.VIDEOTITLE);
             decription = intent.getStringExtra(Constants.VIDEODESCRIPTION);
-            projectId = intent.getIntExtra(Constants.PROJECTID,-1);
 
             tvTitle.setText(title);
             tvDescription.setText(decription);
@@ -116,7 +114,7 @@ public class VideoActivity extends YouTubeBaseActivity implements YouTubePlayer.
                 }
             });
 
-        }else if (intent.getBooleanExtra(Constants.SINGLEVIDEO, false)){
+        }else if (intent.getBooleanExtra(Constants.SINGLEVIDEOOFPLAYLIST, false)){
             playlistId = intent.getStringExtra(Constants.VideoItemWrapperPlaylistId);
             videoIndex = intent.getIntExtra(Constants.VIDEOINDEX, -1);
             title = intent.getStringExtra(Constants.VIDEOTITLE);

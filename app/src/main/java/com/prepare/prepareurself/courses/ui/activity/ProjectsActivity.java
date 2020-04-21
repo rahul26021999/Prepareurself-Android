@@ -23,7 +23,6 @@ import com.bumptech.glide.Glide;
 import com.prepare.prepareurself.courses.data.model.ProjectsModel;
 import com.prepare.prepareurself.courses.ui.adapters.PlaylistVideosRvAdapter;
 import com.prepare.prepareurself.courses.viewmodels.ProjectsViewModel;
-import com.prepare.prepareurself.resources.youtubevideoplayer.YoutubePlayerActivity;
 import com.prepare.prepareurself.R;
 import com.prepare.prepareurself.utils.Constants;
 import com.prepare.prepareurself.utils.Utility;
@@ -167,9 +166,9 @@ public class ProjectsActivity extends AppCompatActivity implements PlaylistVideo
                     if (!TextUtils.isEmpty(videoTitle)){
                         Intent intent = new Intent(ProjectsActivity.this,VideoActivity.class);
                         intent.putExtra(Constants.VIDEOCODE,videoCode);
-                        intent.putExtra(Constants.PROJECTID, projectId);
                         intent.putExtra(Constants.VIDEOTITLE, videoTitle);
                         intent.putExtra(Constants.VIDEODESCRIPTION, videoDescription);
+                        intent.putExtra(Constants.SINGLEVIDEO,true);
                         startActivity(intent);
                     }
                     Log.d("click_debug","jksbvjkd");
@@ -238,7 +237,7 @@ public class ProjectsActivity extends AppCompatActivity implements PlaylistVideo
     @Override
     public void onVideoClicked(VideoItemWrapper videoItemWrapper, String videoCode) {
         Intent intent = new Intent(ProjectsActivity.this, VideoActivity.class);
-        intent.putExtra(Constants.SINGLEVIDEO,true);
+        intent.putExtra(Constants.SINGLEVIDEOOFPLAYLIST,true);
         intent.putExtra(Constants.VIDEOINDEX, videoItemWrapper.getSnippet().getPosition());
         intent.putExtra(Constants.VideoItemWrapperPlaylistId,videoItemWrapper.getSnippet().getPlaylistId());
         intent.putExtra(Constants.VIDEOTITLE,projectTitle);
