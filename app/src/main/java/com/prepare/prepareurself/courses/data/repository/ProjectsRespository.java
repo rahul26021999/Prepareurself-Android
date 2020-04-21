@@ -15,8 +15,11 @@ import com.prepare.prepareurself.courses.data.model.ProjectResponse;
 import com.prepare.prepareurself.courses.data.model.ProjectsModel;
 import com.prepare.prepareurself.utils.Constants;
 import com.prepare.prepareurself.utils.youtubeplaylistapi.db.PlaylistVideosDbRepository;
+import com.prepare.prepareurself.utils.youtubeplaylistapi.db.SingleVideoItemWrapperRespository;
+import com.prepare.prepareurself.utils.youtubeplaylistapi.models.SingleVIdeoItemWrapper;
 import com.prepare.prepareurself.utils.youtubeplaylistapi.models.VideoItemWrapper;
 import com.prepare.prepareurself.utils.youtubeplaylistapi.models.YoutubePlaylistResponseModel;
+import com.prepare.prepareurself.utils.youtubeplaylistapi.models.YoutubeSingleVideoResponseModel;
 
 import retrofit2.Call;
 import retrofit2.Callback;
@@ -28,12 +31,14 @@ public class ProjectsRespository {
     private ProjectsDbRepository projectsDbRepository;
     private YoutubeApiInterface youtubeApiInterface;
     private PlaylistVideosDbRepository playlistVideosDbRepository;
+    private SingleVideoItemWrapperRespository singleVideoItemWrapperRespository;
 
     public ProjectsRespository(Application application){
         apiInterface = ApiClient.getApiClient().create(ApiInterface.class);
         youtubeApiInterface = ApiClient.getYoutubeApiClient().create(YoutubeApiInterface.class);
         projectsDbRepository = new ProjectsDbRepository(application);
         playlistVideosDbRepository = new PlaylistVideosDbRepository(application);
+        singleVideoItemWrapperRespository = new SingleVideoItemWrapperRespository(application);
     }
 
   //  CAUQAA CAoQAA CA8QAA CBQQAA CBkQAA
@@ -107,4 +112,33 @@ public class ProjectsRespository {
 
     }
 
+    public LiveData<SingleVIdeoItemWrapper> getVideosDetails(String videoCode) {
+
+        final MutableLiveData<SingleVIdeoItemWrapper> data = new MutableLiveData<>();
+
+        Log.d("course_api_debug",youtubeApiInterface.getVideoDeatils("contentDetails,id,snippet",videoCode,Constants.YOUTUBE_PLAYER_API_KEY).request().url().toString());
+
+        youtubeApiInterface.getVideoDeatils("contentDetails,id,snippet",videoCode,Constants.YOUTUBE_PLAYER_API_KEY)
+                .enqueue(new Callback<YoutubeSingleVideoResponseModel>() {
+                    @Override
+                    public void onResponse(Call<YoutubeSingleVideoResponseModel> call, Response<YoutubeSingleVideoResponseModel> response) {
+                        YoutubeSingleVideoResponseModel responseModel = response.body();
+                        if (responseModel!=null){
+                            singleVideoItemWrapperRespository.insertVideoContentDetail(
+                                responseModel.getItems().get(0)
+                            );
+                            data.setValue(responseModel.getItems().get(0));
+                        }else{
+                            data.setValue(null);
+                        }
+                    }
+
+                    @Override
+                    public void onFailure(Call<YoutubeSingleVideoResponseModel> call, Throwable t) {
+                        data.setValue(null);
+                    }
+                });
+
+        return data;
+    }
 }

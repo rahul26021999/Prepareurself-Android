@@ -1,6 +1,7 @@
 package com.prepare.prepareurself.dashboard.data.repository;
 
 import android.app.Application;
+import android.util.Log;
 
 import androidx.lifecycle.LiveData;
 import androidx.lifecycle.MutableLiveData;
@@ -10,6 +11,7 @@ import com.prepare.prepareurself.Apiservice.ApiInterface;
 import com.prepare.prepareurself.dashboard.data.db.repository.CourseDbRepository;
 import com.prepare.prepareurself.dashboard.data.model.CourseModel;
 import com.prepare.prepareurself.dashboard.data.model.GetCourseResponseModel;
+import com.prepare.prepareurself.utils.Utility;
 
 import java.util.List;
 
@@ -34,14 +36,17 @@ public class CourseRepository {
             @Override
             public void onResponse(Call<GetCourseResponseModel> call, Response<GetCourseResponseModel> response) {
                 GetCourseResponseModel responseModel = response.body();
+
+                Log.d("course_api_debug",responseModel+" ,kj");
+
                 if (responseModel!=null){
                     if (responseModel.getError_code()==0){
                         courseDbRepository.deleteAllCourses();
                         for (CourseModel course: responseModel.getCourses()) {
                             courseDbRepository.insertCourse(course);
                         }
-                        data.setValue(courseDbRepository.getAllCourses().getValue());
-                    }else{
+                        data.setValue(responseModel.getCourses());
+                    }else if (responseModel.getError_code()==1){
                         data.setValue(null);
                     }
                 }else{
@@ -52,6 +57,8 @@ public class CourseRepository {
             @Override
             public void onFailure(Call<GetCourseResponseModel> call, Throwable t) {
                 data.setValue(null);
+                Log.d("course_api_debug",t.getLocalizedMessage());
+
             }
         });
 

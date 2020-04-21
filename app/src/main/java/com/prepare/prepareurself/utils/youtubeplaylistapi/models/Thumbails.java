@@ -10,10 +10,42 @@ public class Thumbails {
     @SerializedName(value = "medium")
     private MediumThumbnail medium;
 
+    @SerializedName(value = "high")
+    private HighThumbnail high;
+
+    @SerializedName(value = "standard")
+    private StandardThumbnail standard;
+
+    @SerializedName(value = "maxres")
+    private MaxResThumbnail maxres;
+
     public Thumbails(){
 
     }
 
+    public HighThumbnail getHigh() {
+        return high;
+    }
+
+    public void setHigh(HighThumbnail high) {
+        this.high = high;
+    }
+
+    public StandardThumbnail getStandard() {
+        return standard;
+    }
+
+    public void setStandard(StandardThumbnail standard) {
+        this.standard = standard;
+    }
+
+    public MaxResThumbnail getMaxres() {
+        return maxres;
+    }
+
+    public void setMaxres(MaxResThumbnail maxres) {
+        this.maxres = maxres;
+    }
 
     public MediumThumbnail getMedium() {
         return medium;

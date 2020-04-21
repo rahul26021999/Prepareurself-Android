@@ -12,6 +12,8 @@ import com.prepare.prepareurself.courses.data.model.ProjectResponse;
 import com.prepare.prepareurself.courses.data.model.ProjectsModel;
 import com.prepare.prepareurself.courses.data.repository.ProjectsRespository;
 import com.prepare.prepareurself.utils.youtubeplaylistapi.db.PlaylistVideosDbRepository;
+import com.prepare.prepareurself.utils.youtubeplaylistapi.db.SingleVideoItemWrapperRespository;
+import com.prepare.prepareurself.utils.youtubeplaylistapi.models.SingleVIdeoItemWrapper;
 import com.prepare.prepareurself.utils.youtubeplaylistapi.models.VideoItemWrapper;
 import com.prepare.prepareurself.utils.youtubeplaylistapi.models.YoutubePlaylistResponseModel;
 
@@ -22,7 +24,9 @@ public class ProjectsViewModel extends AndroidViewModel {
     private ProjectsRespository respository;
     private ProjectsDbRepository dbRepository;
     private PlaylistVideosDbRepository playlistVideosDbRepository;
+    private SingleVideoItemWrapperRespository singleVideoItemWrapperRespository;
 
+    private LiveData<SingleVIdeoItemWrapper> singleVIdeoItemWrapperLiveData = new MutableLiveData<>();
     private LiveData<ProjectResponse> projectResponseMutableLiveData = new MutableLiveData<>();
     private LiveData<List<ProjectsModel>> listLiveData = new MutableLiveData<>();
     private LiveData<YoutubePlaylistResponseModel> youtubePlaylistResponseModelLiveData = new MutableLiveData<>();
@@ -33,6 +37,7 @@ public class ProjectsViewModel extends AndroidViewModel {
         respository = new ProjectsRespository(application);
         dbRepository = new ProjectsDbRepository(application);
         playlistVideosDbRepository = new PlaylistVideosDbRepository(application);
+        singleVideoItemWrapperRespository = new SingleVideoItemWrapperRespository(application);
     }
 
     public void fetchProjects(String token, int courseId, String level, int count, int page){
@@ -63,4 +68,12 @@ public class ProjectsViewModel extends AndroidViewModel {
         return videoContentsLiveData;
     }
 
+    public LiveData<SingleVIdeoItemWrapper> fetchVideoDetails(String videoCode) {
+       singleVIdeoItemWrapperLiveData =  respository.getVideosDetails(videoCode);
+       if (singleVIdeoItemWrapperLiveData.getValue() == null){
+           singleVIdeoItemWrapperLiveData = singleVideoItemWrapperRespository.getVideoContentDetails(videoCode);
+       }
+
+       return singleVIdeoItemWrapperLiveData;
+    }
 }
