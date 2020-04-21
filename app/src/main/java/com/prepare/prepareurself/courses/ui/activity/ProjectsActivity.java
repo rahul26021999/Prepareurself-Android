@@ -49,7 +49,8 @@ public class ProjectsActivity extends AppCompatActivity implements PlaylistVideo
     private ImageView videoImageView;
     private TextView tvCardVideoTitle, tvReferenceHeader, tvViewPlaylist;
     private String videoTitle = "", videoDescription="", videoCode ="";
-
+    private String projectTitle = "";
+    private String projectDescription = "";
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -102,6 +103,8 @@ public class ProjectsActivity extends AppCompatActivity implements PlaylistVideo
                     if (!TextUtils.isEmpty(playlist)){
                         Intent playlistIntent = new Intent(ProjectsActivity.this, VideoActivity.class);
                         playlistIntent.putExtra(Constants.VideoItemWrapperPlaylistId,playlist);
+                        playlistIntent.putExtra(Constants.VIDEOTITLE,projectTitle);
+                        playlistIntent.putExtra(Constants.VIDEODESCRIPTION,projectDescription);
                         startActivity(playlistIntent);
                     }
                 }
@@ -123,9 +126,12 @@ public class ProjectsActivity extends AppCompatActivity implements PlaylistVideo
                 .error(R.drawable.ic_image_loading_error)
                 .into(imageProject);
 
-        tvProjectTitle.setText(projectsModel.getName());
-        if (projectsModel.getDescription()!=null)
+        projectTitle = projectsModel.getName();
+        tvProjectTitle.setText(projectTitle);
+        if (projectsModel.getDescription()!=null){
             tvProjectDescription.setText(Html.fromHtml(projectsModel.getDescription()));
+            projectDescription = Html.fromHtml(projectsModel.getDescription()).toString();
+        }
 
         if (projectsModel.getPlaylist()!=null) {
 
