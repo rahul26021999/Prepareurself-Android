@@ -21,6 +21,8 @@ import com.prepare.prepareurself.utils.persitenceUtils.ThumbnaiTypeConverter;
 import com.prepare.prepareurself.utils.persitenceUtils.VideoContentDetailsConverter;
 import com.prepare.prepareurself.utils.persitenceUtils.VideoSnippetConverter;
 import com.prepare.prepareurself.utils.youtubeplaylistapi.db.PlaylistContentDeatilsDao;
+import com.prepare.prepareurself.utils.youtubeplaylistapi.db.SingleVideoItemDao;
+import com.prepare.prepareurself.utils.youtubeplaylistapi.models.SingleVIdeoItemWrapper;
 import com.prepare.prepareurself.utils.youtubeplaylistapi.models.VideoItemWrapper;
 
 @Database(entities = {
@@ -29,7 +31,8 @@ import com.prepare.prepareurself.utils.youtubeplaylistapi.models.VideoItemWrappe
         TopicsModel.class,
         ResourceModel.class,
         ProjectsModel.class,
-        VideoItemWrapper.class
+        VideoItemWrapper.class,
+        SingleVIdeoItemWrapper.class
 }, version = 1)
 @TypeConverters({VideoContentDetailsConverter.class,
         VideoSnippetConverter.class,
@@ -42,6 +45,7 @@ public abstract class AppDatabase extends RoomDatabase {
     public abstract ResourcesRoomDao resourcesRoomDao();
     public abstract ProjectsRoomDao projectsRoomDao();
     public abstract PlaylistContentDeatilsDao playlistVideosDao();
+    public abstract SingleVideoItemDao singleVideoItemDao();
 
     private static AppDatabase INSTANCE;
 

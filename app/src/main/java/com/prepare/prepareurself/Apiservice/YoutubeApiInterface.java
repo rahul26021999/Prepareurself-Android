@@ -1,6 +1,7 @@
 package com.prepare.prepareurself.Apiservice;
 
 import com.prepare.prepareurself.utils.youtubeplaylistapi.models.YoutubePlaylistResponseModel;
+import com.prepare.prepareurself.utils.youtubeplaylistapi.models.YoutubeSingleVideoResponseModel;
 
 import retrofit2.Call;
 import retrofit2.http.GET;
@@ -13,5 +14,10 @@ public interface YoutubeApiInterface {
                                                    @Query("pageToken") String pageToken,
                                                    @Query("playlistId") String playlistId,
                                                    @Query("key") String APIKEY);
+
+    @GET("videos")
+    Call<YoutubeSingleVideoResponseModel> getVideoDeatils(@Query("part") String part,
+                                                          @Query("id") String videoId,
+                                                          @Query("key") String APIKEY);
 
 }

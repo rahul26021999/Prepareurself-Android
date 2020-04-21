@@ -9,6 +9,7 @@ import androidx.lifecycle.MutableLiveData;
 
 import com.prepare.prepareurself.dashboard.data.db.repository.CourseDbRepository;
 import com.prepare.prepareurself.dashboard.data.model.CourseModel;
+import com.prepare.prepareurself.dashboard.data.model.GetCourseResponseModel;
 import com.prepare.prepareurself.dashboard.data.repository.CourseRepository;
 
 import java.util.List;
@@ -16,6 +17,7 @@ import java.util.List;
 public class DashboardViewModel extends AndroidViewModel {
 
     private LiveData<List<CourseModel>> liveCourses = new MutableLiveData<>();
+    private LiveData<GetCourseResponseModel> getCourseResponseModelLiveData = new MutableLiveData<>();
     CourseRepository courseRepository;
     CourseDbRepository courseDbRepository;
 
@@ -27,6 +29,10 @@ public class DashboardViewModel extends AndroidViewModel {
 
     public void getCourses(String token){
         liveCourses = courseRepository.getCourses(token);
+    }
+
+    public LiveData<GetCourseResponseModel> getCourseResponseModelLiveData(){
+        return getCourseResponseModelLiveData;
     }
 
     public LiveData<List<CourseModel>> getLiveCourses(){

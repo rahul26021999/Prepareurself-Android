@@ -93,6 +93,7 @@
             app:layout_constraintTop_toBottomOf="@+id/tv_reference_heading"
             android:layout_marginTop="10dp"
             android:id="@+id/rv_prjects_videos"
+            android:visibility="gone"
             android:background="@android:color/transparent"/>
 
 
@@ -108,27 +109,44 @@
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/tv_reference_heading"
-            />
+            android:visibility="gone"/>
 
         <androidx.cardview.widget.CardView
-            android:layout_width="180dp"
+            android:layout_width="match_parent"
             android:layout_height="150dp"
             app:layout_constraintStart_toStartOf="parent"
             android:layout_marginStart="10dp"
             android:id="@+id/card_project_image"
-            android:visibility="gone"
+            android:visibility="visible"
+            android:layout_marginTop="10dp"
+            android:background="@android:color/transparent"
             app:layout_constraintTop_toBottomOf="@+id/tv_reference_heading">
 
             <RelativeLayout
                 android:layout_width="match_parent"
-                android:layout_height="match_parent">
+                android:layout_height="match_parent"
+                android:background="@color/white">
 
                 <ImageView
-                    android:layout_width="match_parent"
+                    android:layout_width="150dp"
                     android:layout_height="match_parent"
                     android:src="@drawable/placeholder"
                     android:id="@+id/project_video_image_view"
                     android:scaleType="fitXY"/>
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:id="@+id/tv_card_video_project"
+                    android:layout_toEndOf="@+id/project_video_image_view"
+                    android:textSize="16sp"
+                    android:fontFamily="@font/proximanovaregular"
+                    android:textStyle="bold"
+                    android:textColor="@color/colorPrimaryDark"
+                    android:layout_marginTop="5dp"
+                    android:paddingEnd="10dp"
+                    android:text="kdjfbvjdfvnfiovno hofv opjop pojpo 'poj pio'pjp 'pojp  ;lm;lvlkn ilknkofn m lknjio  ifvoifhv oijiov oijdiofv oij"
+                    android:layout_marginStart="10dp"/>
 
             </RelativeLayout>
 

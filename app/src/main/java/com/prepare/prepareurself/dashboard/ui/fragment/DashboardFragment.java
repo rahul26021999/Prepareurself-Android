@@ -1,6 +1,7 @@
 package com.prepare.prepareurself.dashboard.ui.fragment;
 
 import androidx.lifecycle.Observer;
+import androidx.lifecycle.ViewModelProvider;
 import androidx.lifecycle.ViewModelProviders;
 
 import android.content.Context;
@@ -22,6 +23,7 @@ import android.view.animation.AccelerateInterpolator;
 import android.widget.LinearLayout;
 
 import com.prepare.prepareurself.dashboard.data.model.CourseModel;
+import com.prepare.prepareurself.dashboard.data.model.GetCourseResponseModel;
 import com.prepare.prepareurself.dashboard.viewmodel.DashboardViewModel;
 import com.prepare.prepareurself.dashboard.data.model.DashboardRecyclerviewModel;
 import com.prepare.prepareurself.dashboard.ui.adapters.CustomPagerAdapter;
@@ -30,6 +32,7 @@ import com.prepare.prepareurself.R;
 import com.prepare.prepareurself.utils.Constants;
 import com.prepare.prepareurself.utils.FixedSpeedScroller;
 import com.prepare.prepareurself.utils.PrefManager;
+import com.prepare.prepareurself.utils.Utility;
 import com.prepare.prepareurself.utils.ZoomPageOutTransaformer;
 
 import java.lang.reflect.Field;
@@ -84,7 +87,8 @@ public class DashboardFragment extends Fragment implements DashboardRvAdapter.Da
     public void onActivityCreated(@Nullable Bundle savedInstanceState) {
         super.onActivityCreated(savedInstanceState);
 
-        mViewModel = ViewModelProviders.of(this).get(DashboardViewModel.class);
+        mViewModel = new ViewModelProvider(this).get(DashboardViewModel.class);
+
 
         mViewModel.getCourses(prefManager.getString(Constants.JWTTOKEN));
 
@@ -98,12 +102,17 @@ public class DashboardFragment extends Fragment implements DashboardRvAdapter.Da
         mViewModel.getLiveCourses().observe(getActivity(), new Observer<List<CourseModel>>() {
             @Override
             public void onChanged(List<CourseModel> courseModels) {
+
+                Log.d("course_api_debug",courseModels+" onchange");
+
                 if (courseModels!=null){
                     dashboardRecyclerviewModelList.clear();
                     DashboardRecyclerviewModel dashboardRecyclerviewModel = new DashboardRecyclerviewModel(Constants.COURSEVIEWTYPE,Constants.TECHSTACK,courseModels);
                     dashboardRecyclerviewModelList.add(dashboardRecyclerviewModel);
                     dashboardRvAdapter.setData(dashboardRecyclerviewModelList);
                     dashboardRvAdapter.notifyDataSetChanged();
+                }else{
+                    Utility.showToast(getActivity(), Constants.SOMETHINGWENTWRONG);
                 }
             }
         });

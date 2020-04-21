@@ -26,6 +26,7 @@ import com.prepare.prepareurself.resources.youtubevideoplayer.YoutubePlayerActiv
 import com.prepare.prepareurself.R;
 import com.prepare.prepareurself.utils.Constants;
 import com.prepare.prepareurself.utils.Utility;
+import com.prepare.prepareurself.utils.youtubeplaylistapi.models.SingleVIdeoItemWrapper;
 import com.prepare.prepareurself.utils.youtubeplaylistapi.models.VideoItemWrapper;
 import com.prepare.prepareurself.utils.youtubeplaylistapi.models.YoutubePlaylistResponseModel;
 
@@ -44,6 +45,7 @@ public class ProjectsActivity extends AppCompatActivity implements PlaylistVideo
     private TextView tvLoading;
     private CardView cardImageView;
     private ImageView videoImageView;
+    private TextView tvCardVideoTitle, tvReferenceHeader;
 
 
     @Override
@@ -60,6 +62,8 @@ public class ProjectsActivity extends AppCompatActivity implements PlaylistVideo
         tvLoading = findViewById(R.id.tv_loading_project);
         cardImageView = findViewById(R.id.card_project_image);
         videoImageView = findViewById(R.id.project_video_image_view);
+        tvCardVideoTitle = findViewById(R.id.tv_card_video_project);
+        tvReferenceHeader = findViewById(R.id.tv_reference_heading);
 
         recyclerView.setVisibility(View.GONE);
         cardImageView.setVisibility(View.GONE);
@@ -105,6 +109,9 @@ public class ProjectsActivity extends AppCompatActivity implements PlaylistVideo
             tvProjectDescription.setText(Html.fromHtml(projectsModel.getDescription()));
 
         if (projectsModel.getPlaylist()!=null) {
+
+            tvReferenceHeader.setText("Playlist");
+
             playlist = Utility.getVideoPlaylistId(projectsModel.getPlaylist());
 
             adapter = new PlaylistVideosRvAdapter(ProjectsActivity.this, this);
@@ -117,9 +124,36 @@ public class ProjectsActivity extends AppCompatActivity implements PlaylistVideo
             getVideos(rvNextPageToken, playlist);
 
         }else if (projectsModel.getLink()!=null){
-            recyclerView.setVisibility(View.GONE);
 
+            tvReferenceHeader.setText("Video");
+
+            recyclerView.setVisibility(View.GONE);
+            cardImageView.setVisibility(View.VISIBLE);
+            String videoCode = Utility.getVideoCode(projectsModel.getLink());
+            loadCardImageViewWithVideo(videoCode);
         }
+
+    }
+
+    private void loadCardImageViewWithVideo(String videoCode) {
+
+        viewModel.fetchVideoDetails(videoCode).observe(this, new Observer<SingleVIdeoItemWrapper>() {
+            @Override
+            public void onChanged(SingleVIdeoItemWrapper singleVIdeoItemWrapper) {
+
+                if (singleVIdeoItemWrapper!=null){
+                    tvLoading.setVisibility(View.GONE);
+                    recyclerView.setVisibility(View.GONE);
+                    tvCardVideoTitle.setText(singleVIdeoItemWrapper.getSnippet().getTitle());
+                    Glide.with(ProjectsActivity.this)
+                            .load(singleVIdeoItemWrapper.getSnippet().getThumbnails().getMaxres().getUrl())
+                            .transition(GenericTransitionOptions.<Drawable>with(Utility.getAnimationObject()))
+                            .placeholder(R.drawable.placeholder)
+                            .error(R.drawable.ic_image_loading_error)
+                            .into(videoImageView);
+                }
+            }
+        });
 
     }
 
