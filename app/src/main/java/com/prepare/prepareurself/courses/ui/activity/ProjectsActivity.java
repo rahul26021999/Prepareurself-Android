@@ -80,7 +80,7 @@ public class ProjectsActivity extends AppCompatActivity implements PlaylistVideo
         Intent intent = getIntent();
 
         if (intent.getData()!=null){
-            Log.d("deelink_debug","project activity : "+intent.getData());
+            projectId = Integer.parseInt(intent.getData().toString().split("&id=")[1]);
         }else{
             projectId = intent.getIntExtra(Constants.PROJECTID,-1);
         }

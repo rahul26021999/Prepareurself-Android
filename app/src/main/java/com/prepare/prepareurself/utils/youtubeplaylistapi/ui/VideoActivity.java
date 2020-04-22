@@ -10,8 +10,11 @@ import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import android.content.Intent;
+import android.graphics.Bitmap;
+import android.net.Uri;
 import android.os.Bundle;
 import android.text.TextUtils;
+import android.util.Log;
 import android.view.View;
 import android.widget.ImageView;
 import android.widget.TextView;
@@ -30,6 +33,7 @@ import com.prepare.prepareurself.utils.youtubeplaylistapi.viewmodel.VideoViewMod
 
 import net.cachapa.expandablelayout.ExpandableLayout;
 
+import java.io.UnsupportedEncodingException;
 import java.util.List;
 
 public class VideoActivity extends YouTubeBaseActivity implements YouTubePlayer.OnInitializedListener, PlaylistItemAdapter.PlaylistItemListener, ViewModelStoreOwner {
@@ -48,12 +52,14 @@ public class VideoActivity extends YouTubeBaseActivity implements YouTubePlayer.
     ImageView imageDown;
     RecyclerView playlistItemRecyclerView;
     private int videoIndex = -1;
+    private String bitmapUri;
 
     private VideoViewModel videoViewModel;
 
     private TextView tvTitle, tvDescription;
     private YouTubePlayer mYoutubePlayer;
     private PlaylistItemAdapter playlistItemAdapter;
+    private int resourceId =-1;
 
     @Nullable
     private ViewModelStore viewModelStore = null;
@@ -143,6 +149,34 @@ public class VideoActivity extends YouTubeBaseActivity implements YouTubePlayer.
                 }
             });
 
+        }else if (intent.getBooleanExtra(Constants.RESOURCEVIDEO,false)){
+            imageViewShare.setVisibility(View.VISIBLE);
+            likeButton.setVisibility(View.GONE);
+            videoCode = intent.getStringExtra(Constants.VIDEOCODE);
+            title = intent.getStringExtra(Constants.VIDEOTITLE);
+            decription = intent.getStringExtra(Constants.VIDEODESCRIPTION);
+            bitmapUri = intent.getStringExtra(Constants.BITMAPURI);
+            resourceId = intent.getIntExtra(Constants.RESOURCEID, -1);
+
+            tvTitle.setText(title);
+            tvDescription.setText(decription);
+
+            imageViewShare.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    Uri uri = Uri.parse(bitmapUri);
+                    try {
+                        String encodedId = Utility.base64EncodeForInt(resourceId);
+                        String text = "prepareurself.tk/video/"+encodedId;
+                        share(uri,text);
+                    } catch (UnsupportedEncodingException e) {
+                        e.printStackTrace();
+                    }
+                }
+            });
+
+        }else if (intent.getData()!=null){
+            Log.d("deeplink_debug",intent.getData().toString());
         }
         youTubePlayerView.initialize(Constants.YOUTUBE_PLAYER_API_KEY,this);
 
@@ -159,6 +193,10 @@ public class VideoActivity extends YouTubeBaseActivity implements YouTubePlayer.
             }
         });
 
+    }
+
+    private void share(Uri uri, String text) {
+        Utility.shareContent(this,uri,text);
     }
 
     @Override

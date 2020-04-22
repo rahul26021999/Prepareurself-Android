@@ -1,6 +1,7 @@
 package com.prepare.prepareurself.courses.ui.adapters;
 
 import android.content.Context;
+import android.graphics.Bitmap;
 import android.graphics.drawable.Drawable;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -18,6 +19,7 @@ import com.prepare.prepareurself.R;
 import com.prepare.prepareurself.utils.Constants;
 import com.prepare.prepareurself.utils.Utility;
 
+import java.io.UnsupportedEncodingException;
 import java.util.List;
 
 public class ProjectsRvAdapter extends RecyclerView.Adapter<ProjectsRvAdapter.ProjectsViewHolder> {
@@ -43,7 +45,7 @@ public class ProjectsRvAdapter extends RecyclerView.Adapter<ProjectsRvAdapter.Pr
     }
 
     @Override
-    public void onBindViewHolder(@NonNull ProjectsViewHolder holder, int position) {
+    public void onBindViewHolder(@NonNull final ProjectsViewHolder holder, int position) {
         final ProjectsModel projectsModel = projectsModels.get(position);
 
         holder.bindView(projectsModel);
@@ -52,6 +54,20 @@ public class ProjectsRvAdapter extends RecyclerView.Adapter<ProjectsRvAdapter.Pr
             @Override
             public void onClick(View v) {
                 listener.onProjectClicked(projectsModel);
+            }
+        });
+
+        holder.imgShare.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                try {
+                    String encodedId = Utility.base64EncodeForInt(projectsModel.getId());
+                    Bitmap bitmap = Utility.getBitmapFromView(holder.imageView);
+                    String text = "prepareurself.tk/project/"+encodedId;
+                    listener.onProjectShared(bitmap,text);
+                } catch (UnsupportedEncodingException e) {
+                    e.printStackTrace();
+                }
             }
         });
 
@@ -97,6 +113,7 @@ public class ProjectsRvAdapter extends RecyclerView.Adapter<ProjectsRvAdapter.Pr
 
     public interface ProjectsRvInteractor{
         void onProjectClicked(ProjectsModel projectsModel);
+        void onProjectShared(Bitmap bitmap, String text);
     }
 
 }

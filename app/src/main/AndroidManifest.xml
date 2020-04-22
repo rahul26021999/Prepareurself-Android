@@ -14,7 +14,20 @@
         android:supportsRtl="true"
         android:theme="@style/AppTheme"
         android:usesCleartextTraffic="true">
-        <activity android:name=".utils.youtubeplaylistapi.ui.VideoActivity"></activity>
+        <activity android:name=".utils.youtubeplaylistapi.ui.VideoActivity">
+
+            <intent-filter>
+                <action android:name="android.intent.action.VIEW" />
+
+                <category android:name="android.intent.category.BROWSABLE" />
+                <category android:name="android.intent.category.DEFAULT" />
+
+                <data
+                    android:host="app.prepareurself"
+                    android:scheme="video" />
+            </intent-filter>
+
+        </activity>
         <activity android:name=".courses.ui.activity.ProjectsActivity">
             <intent-filter>
                 <action android:name="android.intent.action.VIEW" />
@@ -45,16 +58,7 @@
         <activity
             android:name=".resources.youtubevideoplayer.YoutubePlayerActivity"
             android:theme="@style/AppTheme.NoActionBar">
-            <intent-filter>
-                <action android:name="android.intent.action.VIEW" />
 
-                <category android:name="android.intent.category.BROWSABLE" />
-                <category android:name="android.intent.category.DEFAULT" />
-
-                <data
-                    android:host="app.prepareurself"
-                    android:scheme="video" />
-            </intent-filter>
         </activity>
         <activity
             android:name=".resources.ui.activity.ResourcesActivity"

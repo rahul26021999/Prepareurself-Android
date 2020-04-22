@@ -4,6 +4,8 @@ import androidx.lifecycle.Observer;
 import androidx.lifecycle.ViewModelProviders;
 
 import android.content.Intent;
+import android.graphics.Bitmap;
+import android.net.Uri;
 import android.os.Bundle;
 
 import androidx.annotation.NonNull;
@@ -27,7 +29,9 @@ import com.prepare.prepareurself.R;
 import com.prepare.prepareurself.utils.Constants;
 import com.prepare.prepareurself.utils.DividerItemDecoration;
 import com.prepare.prepareurself.utils.PrefManager;
+import com.prepare.prepareurself.utils.Utility;
 
+import java.io.IOException;
 import java.util.List;
 
 public class ProjectsFragment extends Fragment implements ProjectsRvAdapter.ProjectsRvInteractor {
@@ -128,5 +132,15 @@ public class ProjectsFragment extends Fragment implements ProjectsRvAdapter.Proj
         Intent intent = new Intent(getActivity(), ProjectsActivity.class);
         intent.putExtra(Constants.PROJECTID,projectsModel.getId());
         startActivity(intent);
+    }
+
+    @Override
+    public void onProjectShared(Bitmap bitmap, String text) {
+        try {
+            Uri bitmapUri = Utility.getUriOfBitmap(bitmap, getActivity());
+            Utility.shareContent(getActivity(),bitmapUri,text);
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
     }
 }
