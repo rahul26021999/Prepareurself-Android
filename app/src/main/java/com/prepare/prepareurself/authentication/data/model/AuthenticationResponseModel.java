@@ -2,7 +2,7 @@ package com.prepare.prepareurself.authentication.data.model;
 
 public class AuthenticationResponseModel {
     private int error_code;
-    private String msg = null;
+    private String message = null;
     private boolean success;
     private String token  = null;
     private UserModel user = null;
@@ -43,12 +43,12 @@ public class AuthenticationResponseModel {
         this.error_code = error_code;
     }
 
-    public String getMsg() {
-        return msg;
+    public String getMessage() {
+        return message;
     }
 
-    public void setMsg(String msg) {
-        this.msg = msg;
+    public void setMessage(String message) {
+        this.message = message;
     }
 
     public UserModel getUser() {

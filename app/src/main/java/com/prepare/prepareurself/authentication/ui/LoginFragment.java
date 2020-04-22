@@ -93,7 +93,7 @@ public class LoginFragment extends Fragment implements View.OnClickListener{
                 @Override
                 public void onChanged(AuthenticationResponseModel authenticationResponseModel) {
                     if (authenticationResponseModel!=null){
-                        if (authenticationResponseModel.isSuccess()){
+                        if (authenticationResponseModel.getError_code()==0){
                             prefManager.saveBoolean(Constants.ISLOGGEDIN, true);
                             prefManager.saveString(Constants.JWTTOKEN,authenticationResponseModel.getToken());
 
@@ -102,7 +102,7 @@ public class LoginFragment extends Fragment implements View.OnClickListener{
                             startActivity(intent);
                             getActivity().finish();
                         }else{
-                            Utility.showToast(getActivity(),authenticationResponseModel.getMsg());
+                            Utility.showToast(getActivity(),authenticationResponseModel.getMessage());
                         }
                     }else{
                         Utility.showToast(getActivity(),Constants.SOMETHINGWENTWRONG);
