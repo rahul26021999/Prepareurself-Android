@@ -51,7 +51,7 @@ public class AuthRepository {
                         try {
                             AuthenticationResponseModel model = new AuthenticationResponseModel();
                             JSONObject jsonObject = new JSONObject(response.errorBody().string());
-                            model.setMsg(jsonObject.getString("message"));
+                            model.setMessage(jsonObject.getString("message"));
                             data.setValue(model);
                         } catch (JSONException | IOException e) {
                             e.printStackTrace();
