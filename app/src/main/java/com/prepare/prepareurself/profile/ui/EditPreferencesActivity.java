@@ -14,16 +14,19 @@ import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.EditText;
+import android.widget.ProgressBar;
 import android.widget.Toast;
 
 import com.google.android.material.chip.Chip;
 import com.google.android.material.chip.ChipGroup;
+import com.prepare.prepareurself.profile.data.model.UpdatePreferenceResponseModel;
 import com.prepare.prepareurself.profile.ui.adapter.PreferrenceRecyclerAdapter;
 import com.prepare.prepareurself.profile.data.model.PreferredTechStack;
 import com.prepare.prepareurself.profile.viewmodel.ProfileViewModel;
 import com.prepare.prepareurself.R;
 import com.prepare.prepareurself.utils.Constants;
 import com.prepare.prepareurself.utils.PrefManager;
+import com.prepare.prepareurself.utils.Utility;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -41,6 +44,7 @@ public class EditPreferencesActivity extends AppCompatActivity implements Recycl
 
     private ProfileViewModel profileViewModel;
     private PrefManager prefManager;
+    private ProgressBar progressBar;
 
 
 
@@ -56,6 +60,9 @@ public class EditPreferencesActivity extends AppCompatActivity implements Recycl
         recyclerView=findViewById(R.id.recyclerView);
         userInput=findViewById(R.id.edit_stackname);
         courseChipGroup=findViewById(R.id.chipGroup);
+        progressBar = findViewById(R.id.update_prefernce_progress);
+
+        progressBar.setVisibility(View.GONE);
 
 
         recyclerView.setLayoutManager(new LinearLayoutManager(this));
@@ -133,12 +140,27 @@ public class EditPreferencesActivity extends AppCompatActivity implements Recycl
         menuItem.setOnMenuItemClickListener(new MenuItem.OnMenuItemClickListener() {
             @Override
             public boolean onMenuItemClick(MenuItem item) {
+                progressBar.setVisibility(View.VISIBLE);
                 List<Integer> finalListIds = new ArrayList<>();
                 for (PreferredTechStack preferredTechStack: userPrefrence){
                     finalListIds.add(preferredTechStack.getId());
                 }
-                Toast.makeText(getApplicationContext(),"save clicked",Toast.LENGTH_SHORT).show();
-                profileViewModel.updatePrefernces(prefManager.getString(Constants.JWTTOKEN),finalListIds);
+                profileViewModel.updatePrefernces(prefManager.getString(Constants.JWTTOKEN),finalListIds)
+                        .observe(EditPreferencesActivity.this, new Observer<UpdatePreferenceResponseModel>() {
+                            @Override
+                            public void onChanged(UpdatePreferenceResponseModel updatePreferenceResponseModel) {
+                                if (updatePreferenceResponseModel!=null){
+                                    if (updatePreferenceResponseModel.getError_code()==0){
+                                        Utility.showToast(EditPreferencesActivity.this,"Preferences saved successfully");
+                                    }else{
+                                        Utility.showToast(EditPreferencesActivity.this, updatePreferenceResponseModel.getMsg());
+                                    }
+                                }else{
+                                    Utility.showToast(EditPreferencesActivity.this,"Unable to update at the moment");
+                                }
+                                progressBar.setVisibility(View.GONE);
+                            }
+                        });
                 return true;
             }
         });

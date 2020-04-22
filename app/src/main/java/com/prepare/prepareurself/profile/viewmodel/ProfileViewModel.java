@@ -9,6 +9,7 @@ import androidx.lifecycle.LiveData;
 import androidx.lifecycle.MutableLiveData;
 
 import com.prepare.prepareurself.profile.data.model.PreferredTechStack;
+import com.prepare.prepareurself.profile.data.model.UpdatePreferenceResponseModel;
 import com.prepare.prepareurself.profile.data.repository.ProfileRepository;
 import com.prepare.prepareurself.authentication.data.db.repository.UserDBRepository;
 import com.prepare.prepareurself.authentication.data.model.UserModel;
@@ -28,7 +29,7 @@ public class ProfileViewModel extends AndroidViewModel {
 
     public ProfileViewModel(@NonNull Application application) {
         super(application);
-        profileRepository = new ProfileRepository();
+        profileRepository = new ProfileRepository(application);
         userDBRepository = new UserDBRepository(application);
         userModelLiveData = userDBRepository.getUserInfo();
     }
@@ -41,8 +42,8 @@ public class ProfileViewModel extends AndroidViewModel {
         profileRepository.updateUser(token,firstName,lastName,dob,phoneNumber);
     }
 
-    public void updatePrefernces(String token, List<Integer> integers){
-        profileRepository.updatePreferences(token,integers);
+    public LiveData<UpdatePreferenceResponseModel> updatePrefernces(String token, List<Integer> integers){
+        return profileRepository.updatePreferences(token,integers);
     }
 
     public void addStacks(PreferredTechStack preferredTechStack){
