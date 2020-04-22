@@ -42,8 +42,8 @@ public class ProfileViewModel extends AndroidViewModel {
         return userModelLiveData;
     }
 
-    public void updateUser(String token, String firstName, String lastName, String dob, String phoneNumber){
-        profileRepository.updateUser(token,firstName,lastName,dob,phoneNumber);
+    public LiveData<UpdatePreferenceResponseModel> updateUser(String token, String firstName, String lastName, String dob, String phoneNumber){
+        return profileRepository.updateUser(token,firstName,lastName,dob,phoneNumber);
     }
 
     public LiveData<UpdatePreferenceResponseModel> updatePrefernces(String token, List<Integer> integers){
