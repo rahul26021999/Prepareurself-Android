@@ -8,6 +8,8 @@ import androidx.lifecycle.AndroidViewModel;
 import androidx.lifecycle.LiveData;
 import androidx.lifecycle.MutableLiveData;
 
+import com.prepare.prepareurself.profile.data.db.repository.PreferncesDbRespoitory;
+import com.prepare.prepareurself.profile.data.model.AllPreferencesResponseModel;
 import com.prepare.prepareurself.profile.data.model.PreferredTechStack;
 import com.prepare.prepareurself.profile.data.model.UpdatePreferenceResponseModel;
 import com.prepare.prepareurself.profile.data.repository.ProfileRepository;
@@ -23,6 +25,7 @@ public class ProfileViewModel extends AndroidViewModel {
     private LiveData<UserModel> userModelLiveData;
     private UserDBRepository userDBRepository;
     private ProfileRepository profileRepository;
+    private PreferncesDbRespoitory preferncesDbRespoitory;
 
     private MutableLiveData<HashMap<String,PreferredTechStack>> listLiveData = new MutableLiveData<>();
     public MutableLiveData<List<PreferredTechStack>> listLiveDataEditable = new MutableLiveData<>();
@@ -32,6 +35,7 @@ public class ProfileViewModel extends AndroidViewModel {
         profileRepository = new ProfileRepository(application);
         userDBRepository = new UserDBRepository(application);
         userModelLiveData = userDBRepository.getUserInfo();
+        preferncesDbRespoitory = new PreferncesDbRespoitory(application);
     }
 
     public LiveData<UserModel> getUserModelLiveData() {
@@ -50,7 +54,7 @@ public class ProfileViewModel extends AndroidViewModel {
 
         boolean isPresent = false;
         if (listLiveDataEditable.getValue()!=null){
-            Log.d("chip_debug","main list course "+listLiveDataEditable.getValue().get(0).getCourse_name());
+            Log.d("chip_debug","main list course "+listLiveDataEditable.getValue().get(0).getName());
             for (PreferredTechStack p : listLiveDataEditable.getValue()){
                 Log.d("chip_debug","is check " +p.getId() + " " + preferredTechStack.getId());
                 if (p.getId() == preferredTechStack.getId()){
@@ -74,11 +78,19 @@ public class ProfileViewModel extends AndroidViewModel {
 
     }
 
+    public void getAllPreferences(String token){
+        profileRepository.getAllPreferences(token);
+    }
+
+    public LiveData<List<PreferredTechStack>> getPreferencesFromDb(){
+        return preferncesDbRespoitory.getAllPreferences();
+    }
+
     public LiveData<List<PreferredTechStack>> getEditableStacks(){
         List<PreferredTechStack> preferredTechStacks = new ArrayList<>();
         PreferredTechStack p1 = new PreferredTechStack();
         p1.setId(1);
-        p1.setCourse_name("Android");
+        p1.setName("Android");
 
         preferredTechStacks.add(p1);
 
@@ -97,18 +109,18 @@ public class ProfileViewModel extends AndroidViewModel {
         PreferredTechStack p3 = new PreferredTechStack();
 
         p1.setId(1);
-        p1.setCourse_name("Android");
+        p1.setName("Android");
 
         p2.setId(2);
-        p2.setCourse_name("Php");
+        p2.setName("Php");
 
         p3.setId(3);
-        p3.setCourse_name("Node");
+        p3.setName("Node");
 
 
-        preferredTechStacks.put(p1.getCourse_name(),p1);
-        preferredTechStacks.put(p3.getCourse_name(),p3);
-        preferredTechStacks.put(p2.getCourse_name(),p2);
+        preferredTechStacks.put(p1.getName(),p1);
+        preferredTechStacks.put(p3.getName(),p3);
+        preferredTechStacks.put(p2.getName(),p2);
 
 
         listLiveData.setValue(preferredTechStacks);
@@ -116,4 +128,7 @@ public class ProfileViewModel extends AndroidViewModel {
         return listLiveData;
     }
 
+    public LiveData<UserModel> getUserPrefernces() {
+        return userDBRepository.getUserInfo();
+    }
 }

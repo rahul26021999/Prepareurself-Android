@@ -42,7 +42,7 @@ public class PreferrenceRecyclerAdapter extends RecyclerView.Adapter<Preferrence
 
     @Override
     public void onBindViewHolder(@NonNull final MyViewHolder holder, final int position) {
-        holder.course_name.setText(preferredTechStacksFiltered.get(position).getCourse_name());
+        holder.course_name.setText(preferredTechStacksFiltered.get(position).getName());
         holder.itemView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -88,7 +88,7 @@ public class PreferrenceRecyclerAdapter extends RecyclerView.Adapter<Preferrence
                 }else{
                     List<PreferredTechStack> filteredList = new ArrayList<>();
                     for (PreferredTechStack preferredTechStack : preferredTechStacks){
-                        if (preferredTechStack.getCourse_name().toLowerCase().contains(charString.toLowerCase())){
+                        if (preferredTechStack.getName().toLowerCase().contains(charString.toLowerCase())){
                             filteredList.add(preferredTechStack);
                         }
                     }

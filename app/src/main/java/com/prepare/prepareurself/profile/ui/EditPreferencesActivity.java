@@ -9,16 +9,17 @@ import androidx.recyclerview.widget.RecyclerView;
 import android.os.Bundle;
 import android.text.Editable;
 import android.text.TextWatcher;
+import android.util.Log;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.EditText;
 import android.widget.ProgressBar;
-import android.widget.Toast;
 
 import com.google.android.material.chip.Chip;
 import com.google.android.material.chip.ChipGroup;
+import com.prepare.prepareurself.authentication.data.model.UserModel;
 import com.prepare.prepareurself.profile.data.model.UpdatePreferenceResponseModel;
 import com.prepare.prepareurself.profile.ui.adapter.PreferrenceRecyclerAdapter;
 import com.prepare.prepareurself.profile.data.model.PreferredTechStack;
@@ -29,7 +30,6 @@ import com.prepare.prepareurself.utils.PrefManager;
 import com.prepare.prepareurself.utils.Utility;
 
 import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.List;
 
 public class EditPreferencesActivity extends AppCompatActivity implements RecyclerItemSelectedListener {
@@ -69,6 +69,8 @@ public class EditPreferencesActivity extends AppCompatActivity implements Recycl
         radapter=new PreferrenceRecyclerAdapter(this);
         recyclerView.setAdapter(radapter);
 
+        profileViewModel.getAllPreferences(prefManager.getString(Constants.JWTTOKEN));
+
         userInput.addTextChangedListener(new TextWatcher() {
             @Override
             public void beforeTextChanged(CharSequence s, int start, int count, int after) {
@@ -86,38 +88,87 @@ public class EditPreferencesActivity extends AppCompatActivity implements Recycl
             }
         });
 
-        setUserPrefrenced(userPrefrence);
+        //setUserPrefrenced(userPrefrence);
 
-        profileViewModel.getPreferredTechStacks().observe(this, new Observer<HashMap<String,PreferredTechStack>>() {
+//        profileViewModel.getPreferredTechStacks().observe(this, new Observer<HashMap<String,PreferredTechStack>>() {
+//            @Override
+//            public void onChanged(HashMap<String, PreferredTechStack> preferredTechStacks) {
+//                allStack =new ArrayList<>(preferredTechStacks.values());
+//                radapter.setList(allStack);
+//                radapter.notifyDataSetChanged();
+//
+//            }
+//        });
+
+        profileViewModel.getPreferencesFromDb().observe(this, new Observer<List<PreferredTechStack>>() {
             @Override
-            public void onChanged(HashMap<String, PreferredTechStack> preferredTechStacks) {
-                allStack =new ArrayList<>(preferredTechStacks.values());
+            public void onChanged(List<PreferredTechStack> preferredTechStacks) {
+                allStack = new ArrayList<>(preferredTechStacks);
                 radapter.setList(allStack);
                 radapter.notifyDataSetChanged();
+            }
+        });
+
+        profileViewModel.getUserPrefernces().observe(this, new Observer<UserModel>() {
+            @Override
+            public void onChanged(UserModel userModel) {
+                if (userModel.getPreferences()!=null){
+                    String[] prefernceIds = userModel.getPreferences().split(",");
+                    setUserPrefrenced(prefernceIds);
+                }
 
             }
         });
+
     }
 
-    private void setUserPrefrenced(List<PreferredTechStack> userPrefrence) {
+    private void setUserPrefrenced(String[] strings) {
         courseChipGroup.removeAllViews();
-        userPrefrence=userPrefrence;
-        for (int i=0;i<userPrefrence.size();i++) {
-            addChipToUserPreference(userPrefrence.get(i));
+       // userPrefrence=userPrefrence;
+        for (int i=0;i<strings.length;i++) {
+            PreferredTechStack preferredTechStack = getPreferedStack(Integer.parseInt(strings[i]));
+            if (preferredTechStack!=null){
+                addChipToUserPreference(preferredTechStack);
+                userPrefrence.add(preferredTechStack);
+                Log.d("preference_debug", preferredTechStack+"");
+            }
         }
+    }
+
+    private PreferredTechStack getPreferedStack(int parseInt) {
+        PreferredTechStack p = null;
+        for (PreferredTechStack preferredTechStack: allStack){
+            if (parseInt == preferredTechStack.getId()){
+                p=preferredTechStack;
+            }
+        }
+        return p;
     }
 
     @Override
     public void onItemSelected (int position) {
-        addChipToUserPreference(allStack.get(position));
-        userPrefrence.add(allStack.get(position));
-        allStack.remove(position);
-        radapter.notifyDataSetChanged();
+        PreferredTechStack preferredTechStack = allStack.get(position);
+        if (!checkContains(preferredTechStack, userPrefrence)){
+            addChipToUserPreference(preferredTechStack);
+            userPrefrence.add(preferredTechStack);
+            allStack.remove(position);
+            radapter.notifyDataSetChanged();
+        }
+    }
+
+    private boolean checkContains(PreferredTechStack preferredTechStack, List<PreferredTechStack> userPrefrence) {
+        for (PreferredTechStack p : userPrefrence){
+            if (p.getId() == preferredTechStack.getId()){
+                return true;
+            }
+        }
+
+        return false;
     }
 
     private void addChipToUserPreference(final PreferredTechStack preferredTechStack) {
         final Chip chip=new Chip(this);
-        chip.setText(preferredTechStack.getCourse_name());
+        chip.setText(preferredTechStack.getName());
         chip.setCloseIconVisible(true);
         chip.setOnCloseIconClickListener(new View.OnClickListener() {
             @Override

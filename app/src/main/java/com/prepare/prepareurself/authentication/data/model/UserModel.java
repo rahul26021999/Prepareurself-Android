@@ -78,6 +78,20 @@ public class UserModel {
     @SerializedName("last_login_at")
     private String last_login_at;
 
+    @Nullable
+    @ColumnInfo(name = "preferences")
+    @SerializedName("preferences")
+    private String preferences;
+
+    @Nullable
+    public String getPreferences() {
+        return preferences;
+    }
+
+    public void setPreferences(@Nullable String preferences) {
+        this.preferences = preferences;
+    }
+
     public int getId() {
         return id;
     }

@@ -4,6 +4,7 @@ import com.prepare.prepareurself.courses.data.model.GetProjectResponse;
 import com.prepare.prepareurself.courses.data.model.GetTopicResponseModel;
 import com.prepare.prepareurself.dashboard.data.model.GetCourseResponseModel;
 import com.prepare.prepareurself.profile.data.model.UpdatePreferenceResponseModel;
+import com.prepare.prepareurself.profile.data.model.AllPreferencesResponseModel;
 import com.prepare.prepareurself.resources.data.model.GetResourcesResponse;
 import com.prepare.prepareurself.resources.data.model.ResourceLikesResponse;
 import com.prepare.prepareurself.resources.data.model.ResourceViewsResponse;
@@ -68,6 +69,9 @@ public interface ApiInterface {
                                          @Query("course_id") int courseId,
                                          @Query("count") int count,
                                          @Query("page") int pageNumber);
+
+    @POST("get-all-preferences")
+    Call<AllPreferencesResponseModel> getAllPreferences(@Query("token") String token);
 
 
 }

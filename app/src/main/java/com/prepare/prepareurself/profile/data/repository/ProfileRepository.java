@@ -9,7 +9,10 @@ import androidx.lifecycle.MutableLiveData;
 import com.prepare.prepareurself.Apiservice.ApiClient;
 import com.prepare.prepareurself.Apiservice.ApiInterface;
 import com.prepare.prepareurself.authentication.data.db.repository.UserDBRepository;
+import com.prepare.prepareurself.profile.data.db.repository.PreferncesDbRespoitory;
+import com.prepare.prepareurself.profile.data.model.PreferredTechStack;
 import com.prepare.prepareurself.profile.data.model.UpdatePreferenceResponseModel;
+import com.prepare.prepareurself.profile.data.model.AllPreferencesResponseModel;
 
 import java.util.List;
 
@@ -21,10 +24,12 @@ public class ProfileRepository {
 
     private ApiInterface apiInterface;
     private UserDBRepository userDBRepository;
+    private PreferncesDbRespoitory preferncesDbRespoitory;
 
     public ProfileRepository(Application application){
         apiInterface= ApiClient.getApiClient().create(ApiInterface.class);
         userDBRepository = new UserDBRepository(application);
+        preferncesDbRespoitory = new PreferncesDbRespoitory(application);
     }
 
     public void updateUser(String token, String firstName, String lastName, String dob, String phoneNumber){
@@ -54,6 +59,7 @@ public class ProfileRepository {
                 UpdatePreferenceResponseModel responseModel = response.body();
                 if (responseModel!=null){
                     if (responseModel.getError_code()==0){
+                        userDBRepository.clearUser();
                         userDBRepository.insertUser(responseModel.getUser_data());
                     }
                     data.setValue(responseModel);
@@ -71,6 +77,38 @@ public class ProfileRepository {
 
         return data;
     }
+
+    public LiveData<AllPreferencesResponseModel> getAllPreferences(String token){
+
+        final MutableLiveData<AllPreferencesResponseModel> data = new MutableLiveData<>();
+
+        apiInterface.getAllPreferences(token).enqueue(new Callback<AllPreferencesResponseModel>() {
+            @Override
+            public void onResponse(Call<AllPreferencesResponseModel> call, Response<AllPreferencesResponseModel> response) {
+                AllPreferencesResponseModel responseModel = response.body();
+                if (responseModel!=null){
+                    if (responseModel.getError_code() == 0){
+                        for (PreferredTechStack preferredTechStack : responseModel.getPreferences()){
+                            preferncesDbRespoitory.insertPreference(preferredTechStack);
+                        }
+                        data.setValue(responseModel);
+                    }else{
+                        data.setValue(null);
+                    }
+                }else{
+                    data.setValue(null);
+                }
+            }
+
+            @Override
+            public void onFailure(Call<AllPreferencesResponseModel> call, Throwable t) {
+                data.setValue(null);
+            }
+        });
+
+        return data;
+    }
+
 }
 
 
