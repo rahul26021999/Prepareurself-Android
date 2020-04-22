@@ -1,5 +1,6 @@
 package com.prepare.prepareurself.Apiservice;
 
+import com.prepare.prepareurself.authentication.data.model.RegisterResponseModel;
 import com.prepare.prepareurself.courses.data.model.GetProjectResponse;
 import com.prepare.prepareurself.courses.data.model.GetTopicResponseModel;
 import com.prepare.prepareurself.dashboard.data.model.GetCourseResponseModel;
@@ -20,10 +21,11 @@ import retrofit2.http.Query;
 public interface ApiInterface {
 
     @POST("register")
-    Call<AuthenticationResponseModel> registerUser(@Query("first_name") String firstName,
-                                                   @Query("last_name") String lastName,
-                                                   @Query("password") String password,
-                                                   @Query("email") String email);
+    Call<RegisterResponseModel> registerUser(@Query("first_name") String firstName,
+                                             @Query("last_name") String lastName,
+                                             @Query("password") String password,
+                                             @Query("email") String email,
+                                             @Query("android_token") String androidToken);
 
     @POST("login")
     Call<AuthenticationResponseModel> loginUser(@Query("email")String email,
