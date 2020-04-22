@@ -400,36 +400,22 @@
 
                 </LinearLayout>
 
-                <Button
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Loading content"
+                    android:textColor="@color/colorPrimaryDark"
+                    android:fontFamily="@font/proximanovaregular"
+                    android:layout_gravity="center_horizontal"
+                    android:id="@+id/tvLoading_preferences"
+                    android:visibility="gone"/>
+
+                <androidx.recyclerview.widget.RecyclerView
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:text="Laravel"
-                    android:textSize="18sp"
-                    android:textColor="@color/colorWhite"
-                    android:background="@drawable/profile_preferences_button"
-                    android:padding="5dp"
                     android:layout_margin="10dp"
-                    />
-                <Button
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:text="Android"
-                    android:textSize="18sp"
-                    android:textColor="@color/colorWhite"
-                    android:background="@drawable/profile_preferences_button"
-                    android:padding="5dp"
-                    android:layout_margin="10dp"
-                    />
-                <Button
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:text="Node.js"
-                    android:textSize="18sp"
-                    android:textColor="@color/colorWhite"
-                    android:background="@drawable/profile_preferences_button"
-                    android:padding="5dp"
-                    android:layout_margin="10dp"
-                    />
+                    android:id="@+id/rv_user_preference"
+                    tools:listitem="@layout/user_preferences_adapter_layout"/>
 
             </LinearLayout>
 
