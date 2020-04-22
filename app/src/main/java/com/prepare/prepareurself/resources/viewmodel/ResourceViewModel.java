@@ -18,6 +18,7 @@ public class ResourceViewModel extends AndroidViewModel {
 
     private LiveData<List<ResourceModel>> listLiveData = new MutableLiveData<>();
     private LiveData<ResourcesResponse> responseLiveData = new MutableLiveData<>();
+    private LiveData<ResourceModel> resourceModelLiveData = new MutableLiveData<>();
 
     private ResourceRespository resourceRespository;
     private ResourcesDbRepository resourcesDbRepository;
@@ -52,4 +53,5 @@ public class ResourceViewModel extends AndroidViewModel {
 
         return listLiveData;
     }
+
 }

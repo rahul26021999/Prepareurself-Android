@@ -125,10 +125,10 @@ public class Utility {
 
     public static void shareContent(Context context,Uri bitmapUri, String text){
         final Intent intent = new Intent(Intent.ACTION_SEND);
-        intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
         intent.putExtra(Intent.EXTRA_TEXT, text);
         intent.putExtra(Intent.EXTRA_STREAM, bitmapUri);
         intent.setType("image/png");
+        intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
         context.startActivity(Intent.createChooser(intent,"Share Via"));
     }
 

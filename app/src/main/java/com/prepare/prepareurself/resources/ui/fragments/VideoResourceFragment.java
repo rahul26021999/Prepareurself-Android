@@ -29,6 +29,7 @@ import com.prepare.prepareurself.R;
 import com.prepare.prepareurself.utils.Constants;
 import com.prepare.prepareurself.utils.PrefManager;
 import com.prepare.prepareurself.utils.Utility;
+import com.prepare.prepareurself.utils.youtubeplaylistapi.ui.VideoActivity;
 
 import java.io.IOException;
 import java.util.List;
@@ -133,9 +134,12 @@ public class VideoResourceFragment extends Fragment implements VideoResoursesRvA
 
         mViewModel.resourceViewed(prefManager.getString(Constants.JWTTOKEN),videoResources.getId());
 
-        Intent intent = new Intent(getActivity(), YoutubePlayerActivity.class);
+        Intent intent = new Intent(getActivity(), VideoActivity.class);
         intent.putExtra(Constants.VIDEOCODE,videoCode);
         intent.putExtra(Constants.RESOURCEID,videoResources.getId());
+        intent.putExtra(Constants.RESOURCEVIDEO,true);
+        intent.putExtra(Constants.VIDEOTITLE, videoResources.getTitle());
+        intent.putExtra(Constants.VIDEODESCRIPTION, videoResources.getDescription());
 
         try {
             Uri bitmapUri = Utility.getUriOfBitmap(bitmap, getActivity());

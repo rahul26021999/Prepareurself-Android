@@ -26,6 +26,10 @@ public class ProjectsDbRepository {
         return listLiveData;
     }
 
+    public LiveData<List<ProjectsModel>> getProjectsByCourseId(int courseId){
+        return projectsRoomDao.getProjectsByCourseId(courseId);
+    }
+
     public LiveData<List<ProjectsModel>> getProjectsByLevel(String level){
         listLiveData = projectsRoomDao.getProjectsByLevel(level);
         return listLiveData;
