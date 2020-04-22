@@ -14,8 +14,8 @@
         android:supportsRtl="true"
         android:theme="@style/AppTheme"
         android:usesCleartextTraffic="true">
+        <activity android:name=".profile.ui.activity.UpdatePasswordActivity"></activity>
         <activity android:name=".utils.youtubeplaylistapi.ui.VideoActivity">
-
             <intent-filter>
                 <action android:name="android.intent.action.VIEW" />
 
@@ -26,7 +26,6 @@
                     android:host="app.prepareurself"
                     android:scheme="video" />
             </intent-filter>
-
         </activity>
         <activity android:name=".courses.ui.activity.ProjectsActivity">
             <intent-filter>
@@ -57,9 +56,7 @@
         </activity>
         <activity
             android:name=".resources.youtubevideoplayer.YoutubePlayerActivity"
-            android:theme="@style/AppTheme.NoActionBar">
-
-        </activity>
+            android:theme="@style/AppTheme.NoActionBar"></activity>
         <activity
             android:name=".resources.ui.activity.ResourcesActivity"
             android:label="@string/title_activity_courses"
@@ -81,7 +78,7 @@
         <activity
             android:name=".Home.ui.HomeActivity"
             android:label="@string/title_activity_home"
-            android:theme="@style/AppTheme.NoActionBar"></activity>
+            android:theme="@style/AppTheme.NoActionBar" />
         <activity android:name=".utils.QuizBaseActivity" />
         <activity
             android:name=".quiz.QuizActivity"
@@ -90,8 +87,8 @@
             android:name=".authentication.ui.AuthenticationActivity"
             android:theme="@style/AppTheme.NoActionBar">
             <intent-filter>
-
                 <action android:name="android.intent.action.VIEW" />
+
                 <category android:name="android.intent.category.BROWSABLE" />
                 <category android:name="android.intent.category.DEFAULT" />
 
@@ -99,13 +96,12 @@
                     android:host="app.prepareurself"
                     android:scheme="install" />
             </intent-filter>
-
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
                 <action android:name="android.intent.action.VIEW" />
+
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
-
         </activity>
 
         <meta-data
