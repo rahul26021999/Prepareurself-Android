@@ -53,7 +53,7 @@ public interface ApiInterface {
                                               @Query("resource_id") int resource_id,
                                               @Query("like")int like )  ;
     @POST("update-user")
-    Call<String> updateUser(@Query("token") String token,
+    Call<UpdatePreferenceResponseModel> updateUser(@Query("token") String token,
                             @Query("first_name") String firstName,
                             @Query("last_name") String lastName,
                             @Query("dob") String dob,

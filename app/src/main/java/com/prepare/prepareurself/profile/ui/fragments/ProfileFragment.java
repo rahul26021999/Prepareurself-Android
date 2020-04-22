@@ -25,6 +25,7 @@ import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import com.prepare.prepareurself.profile.data.model.PreferredTechStack;
+import com.prepare.prepareurself.profile.data.model.UpdatePreferenceResponseModel;
 import com.prepare.prepareurself.profile.ui.EditPreferencesActivity;
 import com.prepare.prepareurself.profile.ui.adapter.UserPrefernceAdapter;
 import com.prepare.prepareurself.profile.viewmodel.ProfileViewModel;
@@ -205,19 +206,13 @@ public class ProfileFragment extends Fragment {
         btn_save.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                tv_dob.setVisibility(View.VISIBLE);
-                tv_name.setVisibility(View.VISIBLE);
-                tv_call.setVisibility(View.VISIBLE);
-                et_dob.setVisibility(View.GONE);
-                et_name.setVisibility(View.GONE);
-                et_call.setVisibility(View.GONE);
-                String userdob=et_dob.getText().toString();
-                String username=et_name.getText().toString();
-                String userphnumber= et_call.getText().toString();
-                tv_dob.setText(userdob);
-                tv_name.setText(username);
-                tv_call.setText(userphnumber);
-                btn_save.setVisibility(View.GONE);
+
+                btn_save.setText("Updating");
+
+
+                final String userdob=et_dob.getText().toString();
+                final String username=et_name.getText().toString();
+                final String userphnumber= et_call.getText().toString();
 
                 String firstName = "", lastName = "";
                 // first convert name to first name and last name
@@ -234,7 +229,39 @@ public class ProfileFragment extends Fragment {
                     }
                 }
 
-                mViewModel.updateUser(prefManager.getString(Constants.JWTTOKEN),firstName,lastName,userdob,userphnumber);
+                mViewModel.updateUser(prefManager.getString(Constants.JWTTOKEN),firstName,lastName,userdob,userphnumber)
+                        .observe(getActivity(), new Observer<UpdatePreferenceResponseModel>() {
+                            @Override
+                            public void onChanged(UpdatePreferenceResponseModel updatePreferenceResponseModel) {
+                                if (updatePreferenceResponseModel!=null){
+                                    if (updatePreferenceResponseModel.getError_code() == 0){
+                                        btn_save.setText("Save");
+                                        Utility.showToast(getActivity(),"Profile updated successfully");
+                                        btn_save.setVisibility(View.GONE);
+
+                                        tv_dob.setVisibility(View.VISIBLE);
+                                        tv_name.setVisibility(View.VISIBLE);
+                                        tv_call.setVisibility(View.VISIBLE);
+                                        et_dob.setVisibility(View.GONE);
+                                        et_name.setVisibility(View.GONE);
+                                        et_call.setVisibility(View.GONE);
+
+                                        tv_dob.setText(userdob);
+                                        tv_name.setText(username);
+                                        tv_call.setText(userphnumber);
+
+
+                                    }else{
+                                        btn_save.setText("Save");
+                                        Utility.showToast(getActivity(),updatePreferenceResponseModel.getMsg());
+                                    }
+                                }else{
+                                    btn_save.setText("Save");
+                                    Utility.showToast(getActivity(),"Unable to update at the moment");
+                                }
+
+                            }
+                        });
 
             }
         });

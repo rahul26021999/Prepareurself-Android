@@ -32,20 +32,33 @@ public class ProfileRepository {
         preferncesDbRespoitory = new PreferncesDbRespoitory(application);
     }
 
-    public void updateUser(String token, String firstName, String lastName, String dob, String phoneNumber){
-        apiInterface.updateUser(token, firstName, lastName,dob , phoneNumber).enqueue(new Callback<String>() {
+    public LiveData<UpdatePreferenceResponseModel> updateUser(String token, String firstName, String lastName, String dob, String phoneNumber){
+
+        final MutableLiveData<UpdatePreferenceResponseModel> data = new MutableLiveData<>();
+
+        apiInterface.updateUser(token, firstName, lastName,dob , phoneNumber).enqueue(new Callback<UpdatePreferenceResponseModel>() {
             @Override
-            public void onResponse(Call<String> call, Response<String> response) {
-                if (response.body()!=null){
-                    Log.d("update_user_response", response.body()+"");
+            public void onResponse(Call<UpdatePreferenceResponseModel> call, Response<UpdatePreferenceResponseModel> response) {
+
+                UpdatePreferenceResponseModel responseModel = response.body();
+                if (responseModel!=null){
+                    if (responseModel.getError_code() == 0){
+                        userDBRepository.insertUser(responseModel.getUser_data());
+                    }
+                    data.setValue(responseModel);
+                }else{
+                    data.setValue(null);
                 }
             }
 
             @Override
-            public void onFailure(Call<String> call, Throwable t) {
+            public void onFailure(Call<UpdatePreferenceResponseModel> call, Throwable t) {
                 Log.d("update_user_response", "failure" +t.getLocalizedMessage()+"");
+                data.setValue(null);
             }
         });
+
+        return data;
     }
 
     public LiveData<UpdatePreferenceResponseModel> updatePreferences(String token, List<Integer> integers) {
