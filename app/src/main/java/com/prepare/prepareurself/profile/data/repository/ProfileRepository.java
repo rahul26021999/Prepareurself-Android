@@ -11,6 +11,7 @@ import com.prepare.prepareurself.Apiservice.ApiInterface;
 import com.prepare.prepareurself.authentication.data.db.repository.UserDBRepository;
 import com.prepare.prepareurself.profile.data.db.repository.PreferncesDbRespoitory;
 import com.prepare.prepareurself.profile.data.model.PreferredTechStack;
+import com.prepare.prepareurself.profile.data.model.UpdatePasswordResponseModel;
 import com.prepare.prepareurself.profile.data.model.UpdatePreferenceResponseModel;
 import com.prepare.prepareurself.profile.data.model.AllPreferencesResponseModel;
 
@@ -115,6 +116,30 @@ public class ProfileRepository {
 
             @Override
             public void onFailure(Call<AllPreferencesResponseModel> call, Throwable t) {
+                data.setValue(null);
+            }
+        });
+
+        return data;
+    }
+
+    public LiveData<UpdatePasswordResponseModel> updatePassword(String token, String oldPass, String newPass){
+
+        final MutableLiveData<UpdatePasswordResponseModel> data = new MutableLiveData<>();
+
+        apiInterface.updatePassword(token,oldPass,newPass).enqueue(new Callback<UpdatePasswordResponseModel>() {
+            @Override
+            public void onResponse(Call<UpdatePasswordResponseModel> call, Response<UpdatePasswordResponseModel> response) {
+                UpdatePasswordResponseModel responseModel = response.body();
+                if (responseModel!=null){
+                    data.setValue(responseModel);
+                }else{
+                    data.setValue(null);
+                }
+            }
+
+            @Override
+            public void onFailure(Call<UpdatePasswordResponseModel> call, Throwable t) {
                 data.setValue(null);
             }
         });

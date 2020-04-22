@@ -24,9 +24,11 @@ import android.widget.EditText;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
+import com.prepare.prepareurself.authentication.ui.AuthenticationActivity;
 import com.prepare.prepareurself.profile.data.model.PreferredTechStack;
 import com.prepare.prepareurself.profile.data.model.UpdatePreferenceResponseModel;
 import com.prepare.prepareurself.profile.ui.EditPreferencesActivity;
+import com.prepare.prepareurself.profile.ui.activity.UpdatePasswordActivity;
 import com.prepare.prepareurself.profile.ui.adapter.UserPrefernceAdapter;
 import com.prepare.prepareurself.profile.viewmodel.ProfileViewModel;
 import com.prepare.prepareurself.R;
@@ -58,6 +60,7 @@ public class ProfileFragment extends Fragment {
     private List<PreferredTechStack> allStack = new ArrayList<>();
     private UserPrefernceAdapter adapter;
     private TextView tvLoading;
+    private Button btnUpdatePassword, btnLogout;
 
     public static ProfileFragment newInstance() {
         return new ProfileFragment();
@@ -84,6 +87,8 @@ public class ProfileFragment extends Fragment {
         btn_save =view.findViewById(R.id.btn_aboutme);
         rvPreferences = view.findViewById(R.id.rv_user_preference);
         tvLoading = view.findViewById(R.id.tvLoading_preferences);
+        btnLogout = view.findViewById(R.id.btn_logout);
+        btnUpdatePassword = view.findViewById(R.id.btn_update_password);
 
         l_userinfo.setVisibility(View.VISIBLE);
         l_preferences.setVisibility(View.GONE);
@@ -152,6 +157,22 @@ public class ProfileFragment extends Fragment {
                     et_call.setHint("Enter your Contact Number");
                 }
 
+            }
+        });
+
+        btnLogout.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                prefManager.saveBoolean(Constants.ISLOGGEDIN, false);
+                startActivity(new Intent(getActivity(), AuthenticationActivity.class));
+                getActivity().finish();
+            }
+        });
+
+        btnUpdatePassword.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                startActivity(new Intent(getActivity(), UpdatePasswordActivity.class));
             }
         });
 

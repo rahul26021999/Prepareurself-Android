@@ -11,6 +11,7 @@ import androidx.lifecycle.MutableLiveData;
 import com.prepare.prepareurself.profile.data.db.repository.PreferncesDbRespoitory;
 import com.prepare.prepareurself.profile.data.model.AllPreferencesResponseModel;
 import com.prepare.prepareurself.profile.data.model.PreferredTechStack;
+import com.prepare.prepareurself.profile.data.model.UpdatePasswordResponseModel;
 import com.prepare.prepareurself.profile.data.model.UpdatePreferenceResponseModel;
 import com.prepare.prepareurself.profile.data.repository.ProfileRepository;
 import com.prepare.prepareurself.authentication.data.db.repository.UserDBRepository;
@@ -44,6 +45,10 @@ public class ProfileViewModel extends AndroidViewModel {
 
     public LiveData<UpdatePreferenceResponseModel> updateUser(String token, String firstName, String lastName, String dob, String phoneNumber){
         return profileRepository.updateUser(token,firstName,lastName,dob,phoneNumber);
+    }
+
+    public LiveData<UpdatePasswordResponseModel> updatePassword(String token, String oldPass, String newPass){
+        return profileRepository.updatePassword(token, oldPass, newPass);
     }
 
     public LiveData<UpdatePreferenceResponseModel> updatePrefernces(String token, List<Integer> integers){

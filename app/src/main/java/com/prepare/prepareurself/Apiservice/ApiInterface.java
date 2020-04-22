@@ -3,6 +3,7 @@ package com.prepare.prepareurself.Apiservice;
 import com.prepare.prepareurself.courses.data.model.GetProjectResponse;
 import com.prepare.prepareurself.courses.data.model.GetTopicResponseModel;
 import com.prepare.prepareurself.dashboard.data.model.GetCourseResponseModel;
+import com.prepare.prepareurself.profile.data.model.UpdatePasswordResponseModel;
 import com.prepare.prepareurself.profile.data.model.UpdatePreferenceResponseModel;
 import com.prepare.prepareurself.profile.data.model.AllPreferencesResponseModel;
 import com.prepare.prepareurself.resources.data.model.GetResourcesResponse;
@@ -72,6 +73,11 @@ public interface ApiInterface {
 
     @POST("get-all-preferences")
     Call<AllPreferencesResponseModel> getAllPreferences(@Query("token") String token);
+
+    @POST("update-password")
+    Call<UpdatePasswordResponseModel> updatePassword(@Query("token") String token,
+                                                     @Query("oldPassword") String oldPassword,
+                                                     @Query("newPassword") String newPassword);
 
 
 }
