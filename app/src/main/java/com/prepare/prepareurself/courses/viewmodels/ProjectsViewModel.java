@@ -54,6 +54,10 @@ public class ProjectsViewModel extends AndroidViewModel {
         return listLiveData;
     }
 
+    public LiveData<List<ProjectsModel>> getProjectByCourseId(int courseId){
+        return dbRepository.getProjectsByCourseId(courseId);
+    }
+
     public LiveData<ProjectsModel> getProjectById(int id){
         return dbRepository.getProjectsById(id);
     }

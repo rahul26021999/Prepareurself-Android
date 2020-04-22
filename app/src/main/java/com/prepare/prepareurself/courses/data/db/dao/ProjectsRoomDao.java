@@ -25,6 +25,9 @@ public interface ProjectsRoomDao {
     @Query("SELECT * FROM projects WHERE id=:id")
     public LiveData<ProjectsModel> getProjectById(int id);
 
+    @Query("SELECT * FROM projects WHERE course_id=:courseId")
+    LiveData<List<ProjectsModel>> getProjectsByCourseId(int courseId);
+
     @Query("DELETE FROM projects")
     public void deleteAllProjects();
 

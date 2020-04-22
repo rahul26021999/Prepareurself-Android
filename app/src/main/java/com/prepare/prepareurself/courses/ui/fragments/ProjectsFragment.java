@@ -116,7 +116,7 @@ public class ProjectsFragment extends Fragment implements ProjectsRvAdapter.Proj
             }
         });
 
-        mViewModel.getListLiveData().observe(getActivity(), new Observer<List<ProjectsModel>>() {
+        mViewModel.getProjectByCourseId(CoursesActivity.courseId).observe(getActivity(), new Observer<List<ProjectsModel>>() {
             @Override
             public void onChanged(List<ProjectsModel> projectsModels) {
                 adapter.setProjects(projectsModels);
