@@ -10,8 +10,11 @@ import android.os.Bundle;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
+import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
 
 import android.text.TextUtils;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -21,7 +24,9 @@ import android.widget.EditText;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
+import com.prepare.prepareurself.profile.data.model.PreferredTechStack;
 import com.prepare.prepareurself.profile.ui.EditPreferencesActivity;
+import com.prepare.prepareurself.profile.ui.adapter.UserPrefernceAdapter;
 import com.prepare.prepareurself.profile.viewmodel.ProfileViewModel;
 import com.prepare.prepareurself.R;
 import com.prepare.prepareurself.authentication.data.model.UserModel;
@@ -29,7 +34,10 @@ import com.prepare.prepareurself.utils.Constants;
 import com.prepare.prepareurself.utils.PrefManager;
 import com.prepare.prepareurself.utils.Utility;
 
+import java.util.ArrayList;
 import java.util.Calendar;
+import java.util.LinkedList;
+import java.util.List;
 
 public class ProfileFragment extends Fragment {
 
@@ -44,6 +52,11 @@ public class ProfileFragment extends Fragment {
     DatePickerDialog datePickerDialog;
     TextView tv_email_profile;
     private PrefManager prefManager;
+    private RecyclerView rvPreferences;
+    private List<PreferredTechStack> userPrefrence = new ArrayList<>();
+    private List<PreferredTechStack> allStack = new ArrayList<>();
+    private UserPrefernceAdapter adapter;
+    private TextView tvLoading;
 
     public static ProfileFragment newInstance() {
         return new ProfileFragment();
@@ -68,6 +81,8 @@ public class ProfileFragment extends Fragment {
         et_call=view.findViewById(R.id.et_call);
         tv_email_profile = view.findViewById(R.id.tv_email_profile);
         btn_save =view.findViewById(R.id.btn_aboutme);
+        rvPreferences = view.findViewById(R.id.rv_user_preference);
+        tvLoading = view.findViewById(R.id.tvLoading_preferences);
 
         l_userinfo.setVisibility(View.VISIBLE);
         l_preferences.setVisibility(View.GONE);
@@ -224,7 +239,82 @@ public class ProfileFragment extends Fragment {
             }
         });
 
+//        tvLoading.setVisibility(View.VISIBLE);
+//        rvPreferences.setVisibility(View.GONE);
+
+//        mViewModel.getPreferencesFromDb().observe(getActivity(), new Observer<List<PreferredTechStack>>() {
+//            @Override
+//            public void onChanged(List<PreferredTechStack> preferredTechStacks) {
+//                allStack = new ArrayList<>(preferredTechStacks);
+//
+//                mViewModel.getUserPrefernces().observe(getActivity(), new Observer<UserModel>() {
+//                    @Override
+//                    public void onChanged(UserModel userModel) {
+//                        if (userModel.getPreferences()!=null){
+//                            String[] prefernceIds = userModel.getPreferences().split(",");
+//                            setUserPrefrenced(prefernceIds);
+//                        }
+//                    }
+//                });
+//
+//            }
+//        });
+
+
 
     }
 
+    private void setUserPrefrenced(String[] prefernceIds) {
+        for (int i=0;i<prefernceIds.length;i++) {
+            PreferredTechStack preferredTechStack = getPreferedStack(Integer.parseInt(prefernceIds[i]));
+            if (preferredTechStack!=null){
+                userPrefrence.add(preferredTechStack);
+                Log.d("preference_debug", preferredTechStack+"");
+            }
+        }
+//        tvLoading.setVisibility(View.GONE);
+//        rvPreferences.setVisibility(View.VISIBLE);
+        adapter.clearList();
+        adapter.setPreferredTechStacks(userPrefrence);
+        adapter.notifyDataSetChanged();
+
+    }
+
+    private PreferredTechStack getPreferedStack(int parseInt) {
+        PreferredTechStack p = null;
+        for (PreferredTechStack preferredTechStack: allStack){
+            if (parseInt == preferredTechStack.getId()){
+                p=preferredTechStack;
+            }
+        }
+        return p;
+    }
+
+    @Override
+    public void onStart() {
+        super.onStart();
+
+        adapter = new UserPrefernceAdapter(getActivity());
+        LinearLayoutManager layoutManager = new LinearLayoutManager(getActivity());
+        rvPreferences.setLayoutManager(layoutManager);
+        rvPreferences.setAdapter(adapter);
+
+        mViewModel.getPreferencesFromDb().observe(getActivity(), new Observer<List<PreferredTechStack>>() {
+            @Override
+            public void onChanged(List<PreferredTechStack> preferredTechStacks) {
+                allStack = new ArrayList<>(preferredTechStacks);
+
+                mViewModel.getUserPrefernces().observe(getActivity(), new Observer<UserModel>() {
+                    @Override
+                    public void onChanged(UserModel userModel) {
+                        if (userModel.getPreferences()!=null){
+                            String[] prefernceIds = userModel.getPreferences().split(",");
+                            setUserPrefrenced(prefernceIds);
+                        }
+                    }
+                });
+
+            }
+        });
+    }
 }
