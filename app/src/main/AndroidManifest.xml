@@ -14,7 +14,8 @@
         android:supportsRtl="true"
         android:theme="@style/AppTheme"
         android:usesCleartextTraffic="true">
-        <activity android:name=".profile.ui.activity.UpdatePasswordActivity"></activity>
+        <activity android:name=".authentication.ui.VerifyEmailActivity"></activity>
+        <activity android:name=".profile.ui.activity.UpdatePasswordActivity" />
         <activity android:name=".utils.youtubeplaylistapi.ui.VideoActivity">
             <intent-filter>
                 <action android:name="android.intent.action.VIEW" />
@@ -56,7 +57,7 @@
         </activity>
         <activity
             android:name=".resources.youtubevideoplayer.YoutubePlayerActivity"
-            android:theme="@style/AppTheme.NoActionBar"></activity>
+            android:theme="@style/AppTheme.NoActionBar" />
         <activity
             android:name=".resources.ui.activity.ResourcesActivity"
             android:label="@string/title_activity_courses"

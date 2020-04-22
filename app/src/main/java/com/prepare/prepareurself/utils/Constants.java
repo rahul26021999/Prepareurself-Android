@@ -49,4 +49,5 @@ public class Constants {
     public static final String PLAYLIST = "playlist";
     public static final String SINGLEVIDEO = "single_video";
     public static final String RESOURCEVIDEO = "resource_video";
+    public static final String ANDROIDTOKEN = "android_token";
 }

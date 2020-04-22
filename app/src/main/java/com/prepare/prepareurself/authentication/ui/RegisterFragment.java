@@ -21,6 +21,7 @@ import com.prepare.prepareurself.Home.ui.HomeActivity;
 import com.prepare.prepareurself.R;
 import com.prepare.prepareurself.authentication.data.model.AuthenticationResponseModel;
 import com.prepare.prepareurself.authentication.data.model.Error;
+import com.prepare.prepareurself.authentication.data.model.RegisterResponseModel;
 import com.prepare.prepareurself.authentication.viewmodel.AuthViewModel;
 import com.prepare.prepareurself.utils.Constants;
 import com.prepare.prepareurself.utils.PrefManager;
@@ -77,7 +78,7 @@ public class RegisterFragment extends Fragment implements View.OnClickListener {
 
             String str_password= etPassword.getText().toString().trim();
             String str_retype_password= etRetypePassword.getText().toString().trim();
-            String str_email= etEmail.getText().toString().trim();
+            final String str_email= etEmail.getText().toString().trim();
 
             if(TextUtils.isEmpty(etFullname.getText().toString().trim())){
                 //Toast.makeText(this.getActivity(),"you did not enter value",Toast.LENGTH_SHORT).show();
@@ -131,21 +132,22 @@ public class RegisterFragment extends Fragment implements View.OnClickListener {
 
             Log.d("name_debug",firstName + " "+ lastName);
 
+            String androidToken = prefManager.getString(Constants.ANDROIDTOKEN);
+            if (!TextUtils.isEmpty(androidToken)){
+                viewModel.register(firstName, lastName, str_email, str_password, prefManager.getString(Constants.ANDROIDTOKEN));
+            }
 
-            viewModel.register(firstName, lastName, str_email, str_password);
 
             showLoader();
 
-            viewModel.getAuthenticationResponseModelMutableLiveData().observe(getActivity(), new Observer<AuthenticationResponseModel>() {
+            viewModel.getRegisterResponseModelLiveData().observe(getActivity(), new Observer<RegisterResponseModel>() {
                 @Override
-                public void onChanged(AuthenticationResponseModel authenticationResponseModel) {
+                public void onChanged(RegisterResponseModel authenticationResponseModel) {
                     if (authenticationResponseModel!=null){
                         if (authenticationResponseModel.isSuccess()){
-                            prefManager.saveBoolean(Constants.ISLOGGEDIN, true);
-                            prefManager.saveString(Constants.JWTTOKEN,authenticationResponseModel.getToken());
-
                             Utility.showToast(getActivity(),"Registration done!");
-                            Intent intent=new Intent(getActivity(), HomeActivity.class);
+                            Intent intent = new Intent(getActivity(), VerifyEmailActivity.class);
+                            intent.putExtra(Constants.USEREMAIL,str_email);
                             startActivity(intent);
                             getActivity().finish();
                         }else{
@@ -156,8 +158,10 @@ public class RegisterFragment extends Fragment implements View.OnClickListener {
                                 }
 
                                 if (error.getEmail()!=null){
+                                    etFullname.setError(null);
+                                    etPassword.setError(null);
+                                    etRetypePassword.setError(null);
                                     etEmail.setError(error.getEmail().get(0));
-//                                    Utility.showToast(getActivity(),error.getEmail().get(0));
                                 }
 
                                 if (error.getFirst_name()!=null){
