@@ -3,6 +3,7 @@ package com.prepare.prepareurself.dashboard.data.model;
 
 import androidx.lifecycle.LiveData;
 
+import com.prepare.prepareurself.courses.data.model.ProjectsModel;
 import com.prepare.prepareurself.courses.data.model.TopicsModel;
 
 import java.util.List;
@@ -21,6 +22,8 @@ public class DashboardRecyclerviewModel {
     //topic viewtype
     private LiveData<List<TopicsModel>> topicsModels;
 
+    private LiveData<List<ProjectsModel>> projectModels;
+
     //add view type
     private String addText;
 
@@ -36,6 +39,12 @@ public class DashboardRecyclerviewModel {
         this.topicsModels = topicsModels;
     }
 
+    public DashboardRecyclerviewModel(LiveData<List<ProjectsModel>> projectModels, int viewType, String categoryName){
+        this.projectModels = projectModels;
+        this.viewType = viewType;
+        this.categoryName = categoryName;
+    }
+
     public DashboardRecyclerviewModel(int viewType, String addText) {
         this.addText = addText;
         this.viewType = viewType;
@@ -47,6 +56,14 @@ public class DashboardRecyclerviewModel {
 
     public void setTopicsModels(LiveData<List<TopicsModel>> topicsModels) {
         this.topicsModels = topicsModels;
+    }
+
+    public LiveData<List<ProjectsModel>> getProjectModels() {
+        return projectModels;
+    }
+
+    public void setProjectModels(LiveData<List<ProjectsModel>> projectModels) {
+        this.projectModels = projectModels;
     }
 
     public String getCategoryName() {

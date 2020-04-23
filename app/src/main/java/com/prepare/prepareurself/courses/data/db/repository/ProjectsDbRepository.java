@@ -47,6 +47,10 @@ public class ProjectsDbRepository {
         new deleteAllAsyncTask(projectsRoomDao).execute();
     }
 
+    public LiveData<List<ProjectsModel>> getFiveProjectsByCourseId(int courseId) {
+        return projectsRoomDao.getFiveProjectsByCourseId(courseId);
+    }
+
     private static class insertAsyncTask extends AsyncTask<ProjectsModel,Void, Void> {
 
         private ProjectsRoomDao projectsRoomDao;
