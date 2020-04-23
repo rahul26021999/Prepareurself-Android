@@ -31,4 +31,6 @@ public interface ProjectsRoomDao {
     @Query("DELETE FROM projects")
     public void deleteAllProjects();
 
+    @Query("SELECT * FROM projects WHERE course_id=:courseId LIMIT 5")
+    LiveData<List<ProjectsModel>> getFiveProjectsByCourseId(int courseId);
 }

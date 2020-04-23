@@ -22,6 +22,7 @@ import android.view.animation.AccelerateInterpolator;
 import android.widget.LinearLayout;
 
 import com.prepare.prepareurself.authentication.data.model.UserModel;
+import com.prepare.prepareurself.courses.data.model.ProjectsModel;
 import com.prepare.prepareurself.courses.data.model.TopicsModel;
 import com.prepare.prepareurself.courses.data.model.TopicsResponseModel;
 import com.prepare.prepareurself.dashboard.data.model.CourseModel;
@@ -66,6 +67,7 @@ public class DashboardFragment extends Fragment implements DashboardRvAdapter.Da
     public interface HomeActivityInteractor{
         void onCourseClicked(CourseModel courseModel);
         void onTopicClicked(TopicsModel topicsModel);
+        void onProjectClicked(ProjectsModel projectsModel);
     }
 
     public static DashboardFragment newInstance() {
@@ -122,9 +124,15 @@ public class DashboardFragment extends Fragment implements DashboardRvAdapter.Da
                 }
 
                 mViewModel.getFiveTopicsByCourseIdFromRemote(prefManager.getString(Constants.JWTTOKEN),preferredCourseId);
+                mViewModel.getFiveProjectsByCourseIdFromRemote(prefManager.getString(Constants.JWTTOKEN),preferredCourseId);
 
                 DashboardRecyclerviewModel dashboardRecyclerviewModel = new DashboardRecyclerviewModel(Constants.TOPICVIEWTYPE,mViewModel.getFiveTopicsByCourseIdFromDb(preferredCourseId),Constants.TOPICSYOUMAYLIKE);
                 dashboardRecyclerviewModelList.add(dashboardRecyclerviewModel);
+                dashboardRvAdapter.setData(dashboardRecyclerviewModelList);
+                dashboardRvAdapter.notifyDataSetChanged();
+
+                DashboardRecyclerviewModel projectDashboardModel = new DashboardRecyclerviewModel(mViewModel.getFiveProjectByCourseId(preferredCourseId),Constants.PROJECTVIEWTYPE,Constants.PROJECTSYOUMAYLIKE);
+                dashboardRecyclerviewModelList.add(projectDashboardModel);
                 dashboardRvAdapter.setData(dashboardRecyclerviewModelList);
                 dashboardRvAdapter.notifyDataSetChanged();
             }
@@ -180,6 +188,11 @@ public class DashboardFragment extends Fragment implements DashboardRvAdapter.Da
     @Override
     public void onTopicClicked(TopicsModel topicsModel) {
         listener.onTopicClicked(topicsModel);
+    }
+
+    @Override
+    public void onProjectClicked(ProjectsModel projectsModel) {
+        listener.onProjectClicked(projectsModel);
     }
 
     @Override

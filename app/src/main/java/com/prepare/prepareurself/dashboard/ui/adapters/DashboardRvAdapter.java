@@ -1,7 +1,6 @@
 package com.prepare.prepareurself.dashboard.ui.adapters;
 
 import android.app.Activity;
-import android.content.Context;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -13,20 +12,21 @@ import androidx.lifecycle.Observer;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.prepare.prepareurself.courses.data.model.ProjectsModel;
 import com.prepare.prepareurself.courses.data.model.TopicsModel;
 import com.prepare.prepareurself.dashboard.data.model.CourseModel;
 import com.prepare.prepareurself.dashboard.data.model.DashboardRecyclerviewModel;
 import com.prepare.prepareurself.R;
-import com.prepare.prepareurself.resources.data.model.ResourceModel;
 
 import java.util.List;
 
 import static com.prepare.prepareurself.utils.Constants.ADDVIEWTYPE;
 import static com.prepare.prepareurself.utils.Constants.COURSEVIEWTYPE;
+import static com.prepare.prepareurself.utils.Constants.PROJECTVIEWTYPE;
 import static com.prepare.prepareurself.utils.Constants.TOPICVIEWTYPE;
 
 public class DashboardRvAdapter extends RecyclerView.Adapter implements CoursesHorizontalRvAdapter.DashboardRvInteractor,
-        TopicsHorizontalRvAdapter.TopicsHorizontalRvListener {
+        TopicsHorizontalRvAdapter.TopicsHorizontalRvListener, ProjectsHorizontalRvAdapter.ProjectsHorizontalRvListener {
 
     private List<DashboardRecyclerviewModel> modelList;
     private Activity context;
@@ -50,6 +50,8 @@ public class DashboardRvAdapter extends RecyclerView.Adapter implements CoursesH
                 return ADDVIEWTYPE;
             case TOPICVIEWTYPE:
                 return TOPICVIEWTYPE;
+            case PROJECTVIEWTYPE:
+                return PROJECTVIEWTYPE;
             default:
                 return -1;
         }
@@ -71,6 +73,10 @@ public class DashboardRvAdapter extends RecyclerView.Adapter implements CoursesH
                 View topicView = LayoutInflater.from(context).inflate(R.layout.course_header_rv_viewtype_layout,parent, false);
                 return new TopicViewHolder(topicView);
 
+            case PROJECTVIEWTYPE:
+                View projectView = LayoutInflater.from(context).inflate(R.layout.course_header_rv_viewtype_layout,parent, false);
+                return new ProjectViewHolder(projectView);
+
             default:
                 return null;
         }
@@ -91,6 +97,11 @@ public class DashboardRvAdapter extends RecyclerView.Adapter implements CoursesH
             case TOPICVIEWTYPE:
                 LiveData<List<TopicsModel>> topicsModels = modelList.get(position).getTopicsModels();
                 ((TopicViewHolder) holder).bindCoursesView(modelList.get(position).getCategoryName(),topicsModels, this);
+                break;
+            case PROJECTVIEWTYPE:
+                LiveData<List<ProjectsModel>> projectModel = modelList.get(position).getProjectModels();
+                ((ProjectViewHolder) holder).bindProjectsView(modelList.get(position).getCategoryName(),projectModel, this);
+                break;
             default:
                 return;
         }
@@ -163,6 +174,35 @@ public class DashboardRvAdapter extends RecyclerView.Adapter implements CoursesH
         }
     }
 
+    class ProjectViewHolder extends RecyclerView.ViewHolder{
+
+        TextView tvCourses;
+        RecyclerView rvCourses;
+
+        public ProjectViewHolder(@NonNull View itemView) {
+            super(itemView);
+            tvCourses = itemView.findViewById(R.id.tv_courses_header_viewtype);
+            rvCourses = itemView.findViewById(R.id.rv_courses_dashboard);
+        }
+
+        public void bindProjectsView(String categoryName, LiveData<List<ProjectsModel>> projectModels, ProjectsHorizontalRvAdapter.ProjectsHorizontalRvListener interactor){
+            tvCourses.setText(categoryName);
+            final ProjectsHorizontalRvAdapter adapter = new ProjectsHorizontalRvAdapter(context,interactor);
+            LinearLayoutManager layoutManager = new LinearLayoutManager(context,RecyclerView.HORIZONTAL,false);
+            rvCourses.setLayoutManager(layoutManager);
+            rvCourses.setAdapter(adapter);
+
+            projectModels.observeForever(new Observer<List<ProjectsModel>>() {
+                @Override
+                public void onChanged(List<ProjectsModel> projectsModels) {
+                    adapter.setData(projectsModels);
+                    adapter.notifyDataSetChanged();
+                }
+            });
+
+        }
+    }
+
     class AddViewHolder extends RecyclerView.ViewHolder{
 
         TextView tvAdText;
@@ -187,9 +227,15 @@ public class DashboardRvAdapter extends RecyclerView.Adapter implements CoursesH
         listener.onTopicClicked(topicsModel);
     }
 
+    @Override
+    public void onItemClicked(ProjectsModel projectsModel) {
+        listener.onProjectClicked(projectsModel);
+    }
+
     public interface DashBoardInteractor{
         void onCourseClicked(CourseModel courseModel);
         void onTopicClicked(TopicsModel topicsModel);
+        void onProjectClicked(ProjectsModel projectsModel);
     }
 
 

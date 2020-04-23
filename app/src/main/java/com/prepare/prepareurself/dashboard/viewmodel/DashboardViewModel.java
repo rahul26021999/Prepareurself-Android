@@ -9,9 +9,12 @@ import androidx.lifecycle.MutableLiveData;
 
 import com.prepare.prepareurself.authentication.data.db.repository.UserDBRepository;
 import com.prepare.prepareurself.authentication.data.model.UserModel;
+import com.prepare.prepareurself.courses.data.db.repository.ProjectsDbRepository;
 import com.prepare.prepareurself.courses.data.db.repository.TopicsDbRepository;
+import com.prepare.prepareurself.courses.data.model.ProjectsModel;
 import com.prepare.prepareurself.courses.data.model.TopicsModel;
 import com.prepare.prepareurself.courses.data.model.TopicsResponseModel;
+import com.prepare.prepareurself.courses.data.repository.ProjectsRespository;
 import com.prepare.prepareurself.courses.data.repository.TopicsRepository;
 import com.prepare.prepareurself.dashboard.data.db.repository.CourseDbRepository;
 import com.prepare.prepareurself.dashboard.data.model.CourseModel;
@@ -35,6 +38,8 @@ public class DashboardViewModel extends AndroidViewModel {
     UserDBRepository userDBRepository;
     TopicsDbRepository topicsDbRepository;
     TopicsRepository topicsRepository;
+    private ProjectsRespository projectsRespository;
+    private ProjectsDbRepository projectsDbRepository;
     public DashboardViewModel(@NonNull Application application) {
         super(application);
         courseRepository = new CourseRepository(application);
@@ -42,6 +47,8 @@ public class DashboardViewModel extends AndroidViewModel {
         userDBRepository = new UserDBRepository(application);
         topicsRepository = new TopicsRepository(application);
         topicsDbRepository = new TopicsDbRepository(application);
+        projectsRespository = new ProjectsRespository(application);
+        projectsDbRepository = new ProjectsDbRepository(application);
     }
 
     public void getCourses(String token){
@@ -69,6 +76,14 @@ public class DashboardViewModel extends AndroidViewModel {
 
     public LiveData<List<TopicsModel>> getFiveTopicsByCourseIdFromDb(int courseId){
         return topicsDbRepository.getFiveResourcesByID(courseId);
+    }
+
+    public void getFiveProjectsByCourseIdFromRemote(String token, int courseId){
+        projectsRespository.getProjects(token,courseId,"",5,1);
+    }
+
+    public LiveData<List<ProjectsModel>> getFiveProjectByCourseId(int courseId){
+        return projectsDbRepository.getFiveProjectsByCourseId(courseId);
     }
 
 }
