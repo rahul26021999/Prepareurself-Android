@@ -18,6 +18,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AbsListView;
+import android.widget.TextView;
 
 import com.prepare.prepareurself.resources.data.model.ResourceModel;
 import com.prepare.prepareurself.resources.data.model.ResourcesResponse;
@@ -42,6 +43,7 @@ public class VideoResourceFragment extends Fragment implements VideoResoursesRvA
     private PrefManager prefManager;
     private Boolean isScrolling = false;
     private int rvCurrentItems, rvTotalItems, rvScrolledOutItems, rvLastPage, rvCurrentPage=1;
+    private TextView tvComingSoon;
 
     public static VideoResourceFragment newInstance() {
         return new VideoResourceFragment();
@@ -53,6 +55,7 @@ public class VideoResourceFragment extends Fragment implements VideoResoursesRvA
         View view = inflater.inflate(R.layout.video_resource_fragment, container, false);
 
         rvVideoResources = view.findViewById(R.id.rv_video_resources);
+        tvComingSoon = view.findViewById(R.id.tv_coming_soon);
 
         return view;
     }
@@ -122,8 +125,18 @@ public class VideoResourceFragment extends Fragment implements VideoResoursesRvA
         mViewModel.getListLiveData(ResourcesActivity.topicID,Constants.VIDEO).observe(getActivity(), new Observer<List<ResourceModel>>() {
             @Override
             public void onChanged(final List<ResourceModel> resourceModels) {
-                adapter.setResourceModels(resourceModels);
-                adapter.notifyDataSetChanged();
+
+                if (resourceModels!=null && !resourceModels.isEmpty()){
+                    tvComingSoon.setVisibility(View.GONE);
+                    rvVideoResources.setVisibility(View.VISIBLE);
+                    adapter.setResourceModels(resourceModels);
+                    adapter.notifyDataSetChanged();
+                }else{
+                    tvComingSoon.setVisibility(View.VISIBLE);
+                    rvVideoResources.setVisibility(View.GONE);
+                }
+
+
             }
         });
 

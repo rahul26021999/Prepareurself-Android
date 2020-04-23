@@ -17,6 +17,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AbsListView;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import com.prepare.prepareurself.resources.data.model.ResourceModel;
@@ -43,6 +44,7 @@ public class TheoryResourceFragment extends Fragment implements TheoryResourcesR
     private int rvCurrentItems, rvTotalItems, rvScrolledOutItems, rvLastPage, rvCurrentPage=1;
 
     private TheoryResourceFragmentInteractor listener;
+    private TextView tvCmingSoon;
 
     public interface TheoryResourceFragmentInteractor{
         void shareContent(Bitmap bitmap, String text);
@@ -57,6 +59,7 @@ public class TheoryResourceFragment extends Fragment implements TheoryResourcesR
                              @Nullable Bundle savedInstanceState) {
     View view1=inflater.inflate(R.layout.theory_resource_fragment,container,false);
     rvTheoryResources=view1.findViewById(R.id.rv_theory_resources);
+    tvCmingSoon = view1.findViewById(R.id.tv_coming_soon);
         return view1;
 
 
@@ -127,8 +130,15 @@ public class TheoryResourceFragment extends Fragment implements TheoryResourcesR
        mViewModel.getListLiveData(ResourcesActivity.topicID,Constants.THEORY).observe(getActivity(), new Observer<List<ResourceModel>>() {
            @Override
            public void onChanged(List<ResourceModel> resourceModels) {
-               adapter1.setResourcesList(resourceModels);
-               adapter1.notifyDataSetChanged();
+              if (resourceModels!=null && !resourceModels.isEmpty()){
+                  tvCmingSoon.setVisibility(View.GONE);
+                  rvTheoryResources.setVisibility(View.VISIBLE);
+                  adapter1.setResourcesList(resourceModels);
+                  adapter1.notifyDataSetChanged();
+              }else{
+                  tvCmingSoon.setVisibility(View.VISIBLE);
+                  rvTheoryResources.setVisibility(View.GONE);
+              }
            }
        });
     }

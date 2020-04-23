@@ -17,6 +17,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AbsListView;
+import android.widget.TextView;
 
 import com.prepare.prepareurself.courses.data.model.TopicsModel;
 import com.prepare.prepareurself.courses.data.model.TopicsResponseModel;
@@ -38,6 +39,7 @@ public class ResourcesFragment extends Fragment implements ResourcesRvAdapter.Re
     private Boolean isScrolling = false;
     private int rvCurrentItems, rvTotalItems, rvScrolledOutItems, rvLastPage, rvCurrentPage=1;
     private PrefManager prefManager;
+    private TextView tvComingSoon;
 
     public static ResourcesFragment newInstance() {
         return new ResourcesFragment();
@@ -48,6 +50,7 @@ public class ResourcesFragment extends Fragment implements ResourcesRvAdapter.Re
                              @Nullable Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.resources_fragment, container, false);
         recyclerView = view.findViewById(R.id.rv_resources);
+        tvComingSoon = view.findViewById(R.id.tv_coming_soon);
 
         return view;
     }
@@ -115,8 +118,18 @@ public class ResourcesFragment extends Fragment implements ResourcesRvAdapter.Re
        mViewModel.getLiveData(CoursesActivity.courseId).observe(getActivity(), new Observer<List<TopicsModel>>() {
            @Override
            public void onChanged(List<TopicsModel> topicsModels) {
-               adapter.setTopics(topicsModels);
-               adapter.notifyDataSetChanged();
+
+               if (topicsModels!=null && !topicsModels.isEmpty()){
+                   tvComingSoon.setVisibility(View.GONE);
+                   recyclerView.setVisibility(View.VISIBLE);
+                   adapter.setTopics(topicsModels);
+                   adapter.notifyDataSetChanged();
+               }else{
+                   tvComingSoon.setVisibility(View.VISIBLE);
+                   recyclerView.setVisibility(View.GONE);
+               }
+
+
            }
        });
 
