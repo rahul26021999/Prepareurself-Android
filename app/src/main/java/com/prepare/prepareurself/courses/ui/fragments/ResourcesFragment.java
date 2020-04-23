@@ -100,6 +100,8 @@ public class ResourcesFragment extends Fragment implements ResourcesRvAdapter.Re
 
                             rvLastPage = topicsResponseModel.getLast_page();
 
+                            Log.d("paging_debug",rvCurrentPage+","+rvLastPage);
+
                             if (isScrolling && (rvCurrentItems + rvScrolledOutItems) == rvTotalItems && rvCurrentPage<=rvLastPage){
                                 isScrolling = false;
                                 mViewModel.getCourseById(prefManager.getString(Constants.JWTTOKEN),

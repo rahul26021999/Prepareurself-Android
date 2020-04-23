@@ -40,12 +40,12 @@ public interface ApiInterface {
     Call<GetTopicResponseModel> getTopics(@Query("token") String token,
                                           @Query("course_id") int courseId,
                                           @Query("count") int count,
-                                          @Query("page_number") int pageNumber);
+                                          @Query("page") int pageNumber);
 
     @POST("get-resources")
     Call<GetResourcesResponse> getResources(@Query("token") String token,
                                             @Query("topic_id") int topicId,
-                                            @Query("page_number") int pageNumber,
+                                            @Query("page") int pageNumber,
                                             @Query("count") int count,
                                             @Query("type") String type);
     @POST("view-resource")
