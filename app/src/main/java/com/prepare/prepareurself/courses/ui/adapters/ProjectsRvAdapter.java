@@ -99,7 +99,7 @@ public class ProjectsRvAdapter extends RecyclerView.Adapter<ProjectsRvAdapter.Pr
     public class ProjectsViewHolder extends RecyclerView.ViewHolder{
 
         ImageView imageView;
-        TextView tvTitle;
+        TextView tvTitle, tvNoOfLikes, tvNoOfViews;
         ImageView imgShare;
         LikeButton likeButton;
 
@@ -110,6 +110,8 @@ public class ProjectsRvAdapter extends RecyclerView.Adapter<ProjectsRvAdapter.Pr
             tvTitle = itemView.findViewById(R.id.tv_title_project);
             imgShare = itemView.findViewById(R.id.img_share_project);
             likeButton = itemView.findViewById(R.id.hitLike);
+            tvNoOfLikes = itemView.findViewById(R.id.tv_no_of_likes);
+            tvNoOfViews = itemView.findViewById(R.id.no_of_views);
 
         }
 
@@ -123,6 +125,8 @@ public class ProjectsRvAdapter extends RecyclerView.Adapter<ProjectsRvAdapter.Pr
                     .into(imageView);
 
             tvTitle.setText(projectsModel.getName());
+            tvNoOfViews.setText(projectsModel.getViews() + " views");
+
 
         }
     }
