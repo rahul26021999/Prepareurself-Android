@@ -1,25 +1,32 @@
 package com.prepare.prepareurself.dashboard.ui.adapters;
 
 import android.app.Activity;
+import android.content.Context;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
+import androidx.lifecycle.LiveData;
+import androidx.lifecycle.Observer;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.prepare.prepareurself.courses.data.model.TopicsModel;
 import com.prepare.prepareurself.dashboard.data.model.CourseModel;
 import com.prepare.prepareurself.dashboard.data.model.DashboardRecyclerviewModel;
 import com.prepare.prepareurself.R;
+import com.prepare.prepareurself.resources.data.model.ResourceModel;
 
 import java.util.List;
 
 import static com.prepare.prepareurself.utils.Constants.ADDVIEWTYPE;
 import static com.prepare.prepareurself.utils.Constants.COURSEVIEWTYPE;
+import static com.prepare.prepareurself.utils.Constants.TOPICVIEWTYPE;
 
-public class DashboardRvAdapter extends RecyclerView.Adapter implements CoursesHorizontalRvAdapter.DashboardRvInteractor {
+public class DashboardRvAdapter extends RecyclerView.Adapter implements CoursesHorizontalRvAdapter.DashboardRvInteractor,
+        TopicsHorizontalRvAdapter.TopicsHorizontalRvListener {
 
     private List<DashboardRecyclerviewModel> modelList;
     private Activity context;
@@ -41,6 +48,8 @@ public class DashboardRvAdapter extends RecyclerView.Adapter implements CoursesH
                 return COURSEVIEWTYPE;
             case ADDVIEWTYPE :
                 return ADDVIEWTYPE;
+            case TOPICVIEWTYPE:
+                return TOPICVIEWTYPE;
             default:
                 return -1;
         }
@@ -57,6 +66,11 @@ public class DashboardRvAdapter extends RecyclerView.Adapter implements CoursesH
             case ADDVIEWTYPE :
                 View addView = LayoutInflater.from(context).inflate(R.layout.add_viewtype_tv_layout,parent, false);
                 return new AddViewHolder(addView);
+
+            case TOPICVIEWTYPE:
+                View topicView = LayoutInflater.from(context).inflate(R.layout.course_header_rv_viewtype_layout,parent, false);
+                return new TopicViewHolder(topicView);
+
             default:
                 return null;
         }
@@ -67,13 +81,16 @@ public class DashboardRvAdapter extends RecyclerView.Adapter implements CoursesH
         switch (modelList.get(position).getViewType()){
             case COURSEVIEWTYPE :
                 String categoryName = modelList.get(position).getCategoryName();
-                List<CourseModel> courses = modelList.get(position).getCourses();
+                LiveData<List<CourseModel>> courses = modelList.get(position).getCourses();
                 ((CourseViewHolder) holder).bindCoursesView(categoryName,courses, this);
                 break;
             case ADDVIEWTYPE :
                 String adText = modelList.get(position).getAddText();
                 ((AddViewHolder) holder).bindAddView(adText);
                 break;
+            case TOPICVIEWTYPE:
+                LiveData<List<TopicsModel>> topicsModels = modelList.get(position).getTopicsModels();
+                ((TopicViewHolder) holder).bindCoursesView(modelList.get(position).getCategoryName(),topicsModels, this);
             default:
                 return;
         }
@@ -99,12 +116,50 @@ public class DashboardRvAdapter extends RecyclerView.Adapter implements CoursesH
             rvCourses = itemView.findViewById(R.id.rv_courses_dashboard);
         }
 
-        public void bindCoursesView(String categoryName, List<CourseModel> courses, CoursesHorizontalRvAdapter.DashboardRvInteractor interactor){
+        public void bindCoursesView(String categoryName, LiveData<List<CourseModel>> courses, CoursesHorizontalRvAdapter.DashboardRvInteractor interactor){
             tvCourses.setText(categoryName);
-            CoursesHorizontalRvAdapter adapter = new CoursesHorizontalRvAdapter(context,courses, interactor);
+            final CoursesHorizontalRvAdapter adapter = new CoursesHorizontalRvAdapter(context,interactor);
             LinearLayoutManager layoutManager = new LinearLayoutManager(context,RecyclerView.HORIZONTAL,false);
             rvCourses.setLayoutManager(layoutManager);
             rvCourses.setAdapter(adapter);
+
+            courses.observeForever(new Observer<List<CourseModel>>() {
+                @Override
+                public void onChanged(List<CourseModel> courseModels) {
+                    adapter.setCourses(courseModels);
+                    adapter.notifyDataSetChanged();
+                }
+            });
+
+        }
+    }
+
+    class TopicViewHolder extends RecyclerView.ViewHolder{
+
+        TextView tvCourses;
+        RecyclerView rvCourses;
+
+        public TopicViewHolder(@NonNull View itemView) {
+            super(itemView);
+            tvCourses = itemView.findViewById(R.id.tv_courses_header_viewtype);
+            rvCourses = itemView.findViewById(R.id.rv_courses_dashboard);
+        }
+
+        public void bindCoursesView(String categoryName, LiveData< List<TopicsModel>> topicsModels, TopicsHorizontalRvAdapter.TopicsHorizontalRvListener interactor){
+            tvCourses.setText(categoryName);
+            final TopicsHorizontalRvAdapter adapter = new TopicsHorizontalRvAdapter(context,interactor);
+            LinearLayoutManager layoutManager = new LinearLayoutManager(context,RecyclerView.HORIZONTAL,false);
+            rvCourses.setLayoutManager(layoutManager);
+            rvCourses.setAdapter(adapter);
+
+            topicsModels.observeForever(new Observer<List<TopicsModel>>() {
+                @Override
+                public void onChanged(List<TopicsModel> topicsModels) {
+                    adapter.setData(topicsModels);
+                    adapter.notifyDataSetChanged();
+                }
+            });
+
         }
     }
 
@@ -127,8 +182,16 @@ public class DashboardRvAdapter extends RecyclerView.Adapter implements CoursesH
         listener.onCourseClicked(courseModel);
     }
 
+    @Override
+    public void onItemClicked(TopicsModel topicsModel) {
+        listener.onTopicClicked(topicsModel);
+    }
+
     public interface DashBoardInteractor{
         void onCourseClicked(CourseModel courseModel);
+        void onTopicClicked(TopicsModel topicsModel);
     }
+
+
 
 }

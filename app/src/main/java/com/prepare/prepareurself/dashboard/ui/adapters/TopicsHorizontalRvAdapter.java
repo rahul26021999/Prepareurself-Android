@@ -1,6 +1,6 @@
 package com.prepare.prepareurself.dashboard.ui.adapters;
 
-import android.app.Activity;
+import android.content.Context;
 import android.graphics.drawable.Drawable;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -14,69 +14,74 @@ import androidx.recyclerview.widget.RecyclerView;
 import com.bumptech.glide.GenericTransitionOptions;
 import com.bumptech.glide.Glide;
 import com.bumptech.glide.load.engine.DiskCacheStrategy;
-import com.prepare.prepareurself.dashboard.data.model.CourseModel;
 import com.prepare.prepareurself.R;
+import com.prepare.prepareurself.courses.data.model.TopicsModel;
+import com.prepare.prepareurself.resources.data.model.ResourceModel;
 import com.prepare.prepareurself.utils.Constants;
 import com.prepare.prepareurself.utils.Utility;
 
 import java.util.List;
 
-public class CoursesHorizontalRvAdapter extends RecyclerView.Adapter<CoursesHorizontalRvAdapter.CoursesHorizontalViewHolder> {
+public class TopicsHorizontalRvAdapter extends RecyclerView.Adapter<TopicsHorizontalRvAdapter.TopicsViewolder> {
 
-    Activity context;
-    List<CourseModel> courses;
-    private DashboardRvInteractor listener;
+    private Context context;
+    private List<TopicsModel> topicsModels;
+    private TopicsHorizontalRvListener listener;
 
-    public CoursesHorizontalRvAdapter(Activity context, DashboardRvInteractor listener) {
+    public TopicsHorizontalRvAdapter(Context context, TopicsHorizontalRvListener listener) {
         this.context = context;
         this.listener = listener;
     }
 
     @NonNull
     @Override
-    public CoursesHorizontalViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
-        View view = LayoutInflater.from(context).inflate(R.layout.courses_viewtype_rv_layout,parent,false);
-        return new CoursesHorizontalViewHolder(view);
+    public TopicsViewolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
+        View view = LayoutInflater.from(context).inflate(R.layout.courses_viewtype_rv_layout,parent, false);
+
+        return new TopicsViewolder(view);
     }
 
     @Override
-    public void onBindViewHolder(@NonNull CoursesHorizontalViewHolder holder, final int position) {
-        holder.bindView(context,courses.get(position));
+    public void onBindViewHolder(@NonNull TopicsViewolder holder, final int position) {
+        holder.bindView(context, topicsModels.get(position));
         holder.itemView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                listener.onCourseClicked(courses.get(position));
+                listener.onItemClicked(topicsModels.get(position));
             }
         });
+
     }
 
     @Override
     public int getItemCount() {
-        if (courses!=null)
-            return courses.size();
+        if (topicsModels !=null)
+            return topicsModels.size();
         else
             return 0;
     }
 
-    public void setCourses(List<CourseModel> courseModels) {
-        this.courses = courseModels;
+    public void setData(List<TopicsModel> topicsModels) {
+        this.topicsModels = topicsModels;
     }
 
-    static class CoursesHorizontalViewHolder extends RecyclerView.ViewHolder{
+    class TopicsViewolder extends RecyclerView.ViewHolder {
 
         TextView tvCourseName;
         ImageView imageView;
 
-        public CoursesHorizontalViewHolder(@NonNull View itemView) {
+        public TopicsViewolder(@NonNull View itemView) {
             super(itemView);
+
             tvCourseName = itemView.findViewById(R.id.tv_course_name_viewtype);
             imageView = itemView.findViewById(R.id.image_course_viewtype);
+
         }
 
-        public void bindView(Activity context, CourseModel course){
+        public void bindView(Context context, TopicsModel topicsModel){
 
             Glide.with(context).load(
-                    Constants.COURSEIMAGEBASEUSRL+ course.getImage_url())
+                    Constants.TOPICSBASEURL+ topicsModel.getImage_url())
                     .placeholder(R.drawable.placeholder)
                     .override(200,200)
                     .diskCacheStrategy(DiskCacheStrategy.RESOURCE)
@@ -84,13 +89,12 @@ public class CoursesHorizontalRvAdapter extends RecyclerView.Adapter<CoursesHori
                     .error(R.drawable.ic_image_loading_error)
                     .into(imageView);
 
-            tvCourseName.setText(course.getName());
+            tvCourseName.setText(topicsModel.getName());
 
         }
     }
 
-    public interface DashboardRvInteractor{
-        void onCourseClicked(CourseModel courseModel);
+    public interface TopicsHorizontalRvListener{
+        void onItemClicked(TopicsModel topicsModel);
     }
-
 }

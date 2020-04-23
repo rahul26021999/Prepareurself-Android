@@ -7,12 +7,14 @@ import android.view.View;
 import android.view.Menu;
 import android.widget.TextView;
 
+import com.prepare.prepareurself.courses.data.model.TopicsModel;
 import com.prepare.prepareurself.courses.ui.activity.CoursesActivity;
 import com.prepare.prepareurself.dashboard.data.model.CourseModel;
 import com.prepare.prepareurself.dashboard.ui.fragment.DashboardFragment;
 import com.prepare.prepareurself.Home.viewmodel.HomeActivityViewModel;
 import com.prepare.prepareurself.R;
 import com.prepare.prepareurself.authentication.data.model.UserModel;
+import com.prepare.prepareurself.resources.ui.activity.ResourcesActivity;
 import com.prepare.prepareurself.utils.Constants;
 import com.google.android.material.navigation.NavigationView;
 
@@ -115,6 +117,13 @@ public class HomeActivity extends AppCompatActivity implements NavigationView.On
     public void onCourseClicked(CourseModel courseModel) {
         Intent intent = new Intent(HomeActivity.this,CoursesActivity.class);
         intent.putExtra(Constants.COURSEID,courseModel.getId());
+        startActivity(intent);
+    }
+
+    @Override
+    public void onTopicClicked(TopicsModel topicsModel) {
+        Intent intent = new Intent(HomeActivity.this, ResourcesActivity.class);
+        intent.putExtra(Constants.TOPICID,topicsModel.getId());
         startActivity(intent);
     }
 
