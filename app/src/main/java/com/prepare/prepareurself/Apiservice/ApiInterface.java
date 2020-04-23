@@ -1,5 +1,6 @@
 package com.prepare.prepareurself.Apiservice;
 
+import com.prepare.prepareurself.authentication.data.model.ForgotPasswordResponseModel;
 import com.prepare.prepareurself.authentication.data.model.RegisterResponseModel;
 import com.prepare.prepareurself.courses.data.model.GetProjectResponse;
 import com.prepare.prepareurself.courses.data.model.GetTopicResponseModel;
@@ -81,6 +82,9 @@ public interface ApiInterface {
     Call<UpdatePasswordResponseModel> updatePassword(@Query("token") String token,
                                                      @Query("oldPassword") String oldPassword,
                                                      @Query("newPassword") String newPassword);
+
+    @POST("forget-password")
+    Call<ForgotPasswordResponseModel> forgotPassword(@Query("email") String email);
 
 
 }

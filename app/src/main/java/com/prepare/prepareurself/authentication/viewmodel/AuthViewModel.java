@@ -7,6 +7,7 @@ import androidx.lifecycle.LiveData;
 import androidx.lifecycle.MutableLiveData;
 
 import com.prepare.prepareurself.authentication.data.model.AuthenticationResponseModel;
+import com.prepare.prepareurself.authentication.data.model.ForgotPasswordResponseModel;
 import com.prepare.prepareurself.authentication.data.model.RegisterResponseModel;
 import com.prepare.prepareurself.authentication.data.repository.AuthRepository;
 
@@ -36,5 +37,10 @@ public class AuthViewModel extends AndroidViewModel {
     public void register(String firstname, String lastname, String email, String password, String androidToken){
         registerResponseModelLiveData = repository.register(firstname, lastname, email, password, androidToken);
     }
+
+    public LiveData<ForgotPasswordResponseModel> forgotPassword(String email){
+        return repository.forgotPassword(email);
+    }
+
 
 }

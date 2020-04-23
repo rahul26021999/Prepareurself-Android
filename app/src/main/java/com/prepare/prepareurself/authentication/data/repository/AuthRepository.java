@@ -9,6 +9,7 @@ import com.prepare.prepareurself.Apiservice.ApiClient;
 import com.prepare.prepareurself.Apiservice.ApiInterface;
 import com.prepare.prepareurself.authentication.data.model.AuthenticationResponseModel;
 import com.prepare.prepareurself.authentication.data.db.repository.UserDBRepository;
+import com.prepare.prepareurself.authentication.data.model.ForgotPasswordResponseModel;
 import com.prepare.prepareurself.authentication.data.model.RegisterResponseModel;
 
 import org.json.JSONException;
@@ -94,6 +95,31 @@ public class AuthRepository {
         });
 
         return data;
+    }
+
+    public LiveData<ForgotPasswordResponseModel> forgotPassword(String email){
+
+        final MutableLiveData<ForgotPasswordResponseModel> data = new MutableLiveData<>();
+
+        apiInterface.forgotPassword(email).enqueue(new Callback<ForgotPasswordResponseModel>() {
+            @Override
+            public void onResponse(Call<ForgotPasswordResponseModel> call, Response<ForgotPasswordResponseModel> response) {
+                ForgotPasswordResponseModel responseModel = response.body();
+                if (responseModel!=null){
+                    data.setValue(responseModel);
+                }else{
+                    data.setValue(null);
+                }
+            }
+
+            @Override
+            public void onFailure(Call<ForgotPasswordResponseModel> call, Throwable t) {
+                data.setValue(null);
+            }
+        });
+
+        return data;
+
     }
 
 }
