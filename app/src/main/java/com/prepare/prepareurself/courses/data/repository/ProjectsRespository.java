@@ -13,6 +13,7 @@ import com.prepare.prepareurself.courses.data.db.repository.ProjectsDbRepository
 import com.prepare.prepareurself.courses.data.model.GetProjectResponse;
 import com.prepare.prepareurself.courses.data.model.ProjectResponse;
 import com.prepare.prepareurself.courses.data.model.ProjectsModel;
+import com.prepare.prepareurself.resources.data.model.ResourceLikesResponse;
 import com.prepare.prepareurself.utils.Constants;
 import com.prepare.prepareurself.utils.youtubeplaylistapi.db.PlaylistVideosDbRepository;
 import com.prepare.prepareurself.utils.youtubeplaylistapi.db.SingleVideoItemWrapperRespository;
@@ -140,5 +141,30 @@ public class ProjectsRespository {
                 });
 
         return data;
+    }
+
+    public LiveData<ResourceLikesResponse> likeProject(String token, int projectId, int like){
+
+        final MutableLiveData<ResourceLikesResponse> data = new MutableLiveData<>();
+
+        apiInterface.likeProject(token, projectId, like).enqueue(new Callback<ResourceLikesResponse>() {
+            @Override
+            public void onResponse(Call<ResourceLikesResponse> call, Response<ResourceLikesResponse> response) {
+                ResourceLikesResponse responseModel = response.body();
+                if (responseModel!=null){
+                    data.setValue(responseModel);
+                }else{
+                    data.setValue(null);
+                }
+            }
+
+            @Override
+            public void onFailure(Call<ResourceLikesResponse> call, Throwable t) {
+                data.setValue(null);
+            }
+        });
+
+        return data;
+
     }
 }

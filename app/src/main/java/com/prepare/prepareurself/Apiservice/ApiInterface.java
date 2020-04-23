@@ -86,5 +86,10 @@ public interface ApiInterface {
     @POST("forget-password")
     Call<ForgotPasswordResponseModel> forgotPassword(@Query("email") String email);
 
+    @POST("hit-like")
+    Call<ResourceLikesResponse> likeProject(@Query("token") String token,
+                                            @Query("project_id") int id,
+                                            @Query("like") int like);
+
 
 }
