@@ -23,6 +23,8 @@ public class Constants {
     //IntegerConstants
     public static final int COURSEVIEWTYPE = 1;
     public static final int ADDVIEWTYPE = 2;
+    public static final int TOPICVIEWTYPE = 3;
+    public static final int PROJECTVIEWTYPE = 4;
 
     public static final String UNABLETOLOADVIDEOSATTHEMOMENT = "Unable to load videos at the moment";
     public static final String VIDEOCODE = "video_code";
@@ -50,4 +52,5 @@ public class Constants {
     public static final String SINGLEVIDEO = "single_video";
     public static final String RESOURCEVIDEO = "resource_video";
     public static final String ANDROIDTOKEN = "android_token";
+    public static final String TOPICSYOUMAYLIKE = "Topics you may like";
 }

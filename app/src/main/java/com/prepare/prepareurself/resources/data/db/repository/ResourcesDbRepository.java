@@ -43,6 +43,10 @@ public class ResourcesDbRepository {
         return resourcesRoomDao.getResourceByResourceId(resourceId,type);
     }
 
+    public LiveData<List<ResourceModel>> getFiveResourcesByID(int topicId, String theory) {
+        return resourcesRoomDao.getFiveResourceByResourceId(topicId,theory);
+    }
+
 
     private class insertAsyncResource extends AsyncTask<ResourceModel, Void, Void> {
         private ResourcesRoomDao asyncResourcesRoomDao;

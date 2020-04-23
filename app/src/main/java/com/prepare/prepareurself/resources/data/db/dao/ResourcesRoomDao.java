@@ -28,4 +28,6 @@ public interface ResourcesRoomDao {
     @Query("DELETE FROM resources")
     void deleteAllResources();
 
+    @Query("SELECT * FROM resources WHERE course_topic_id=:topicId AND type =:type LIMIT 5")
+    LiveData<List<ResourceModel>> getFiveResourceByResourceId(int topicId, String type);
 }

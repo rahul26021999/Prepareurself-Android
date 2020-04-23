@@ -2,7 +2,6 @@ package com.prepare.prepareurself.dashboard.ui.fragment;
 
 import androidx.lifecycle.Observer;
 import androidx.lifecycle.ViewModelProvider;
-import androidx.lifecycle.ViewModelProviders;
 
 import android.content.Context;
 import android.os.Bundle;
@@ -22,13 +21,17 @@ import android.view.ViewGroup;
 import android.view.animation.AccelerateInterpolator;
 import android.widget.LinearLayout;
 
+import com.prepare.prepareurself.authentication.data.model.UserModel;
+import com.prepare.prepareurself.courses.data.model.TopicsModel;
+import com.prepare.prepareurself.courses.data.model.TopicsResponseModel;
 import com.prepare.prepareurself.dashboard.data.model.CourseModel;
-import com.prepare.prepareurself.dashboard.data.model.GetCourseResponseModel;
 import com.prepare.prepareurself.dashboard.viewmodel.DashboardViewModel;
 import com.prepare.prepareurself.dashboard.data.model.DashboardRecyclerviewModel;
 import com.prepare.prepareurself.dashboard.ui.adapters.CustomPagerAdapter;
 import com.prepare.prepareurself.dashboard.ui.adapters.DashboardRvAdapter;
 import com.prepare.prepareurself.R;
+import com.prepare.prepareurself.resources.data.model.ResourceModel;
+import com.prepare.prepareurself.resources.data.model.ResourcesResponse;
 import com.prepare.prepareurself.utils.Constants;
 import com.prepare.prepareurself.utils.FixedSpeedScroller;
 import com.prepare.prepareurself.utils.PrefManager;
@@ -56,10 +59,13 @@ public class DashboardFragment extends Fragment implements DashboardRvAdapter.Da
 
     private HomeActivityInteractor listener;
     private PrefManager prefManager;
+    private int preferredCourseId = 1;
+    List<DashboardRecyclerviewModel> dashboardRecyclerviewModelList;
 
 
     public interface HomeActivityInteractor{
         void onCourseClicked(CourseModel courseModel);
+        void onTopicClicked(TopicsModel topicsModel);
     }
 
     public static DashboardFragment newInstance() {
@@ -97,25 +103,33 @@ public class DashboardFragment extends Fragment implements DashboardRvAdapter.Da
         recyclerView.setLayoutManager(layoutManager);
         recyclerView.setAdapter(dashboardRvAdapter);
 
-        final List<DashboardRecyclerviewModel> dashboardRecyclerviewModelList = new ArrayList<>();
+        dashboardRecyclerviewModelList = new ArrayList<>();
 
-        mViewModel.getLiveCourses().observe(getActivity(), new Observer<List<CourseModel>>() {
+        DashboardRecyclerviewModel dashboardRecyclerviewModel = new DashboardRecyclerviewModel(Constants.COURSEVIEWTYPE,Constants.TECHSTACK,mViewModel.getLiveCourses());
+        dashboardRecyclerviewModelList.add(dashboardRecyclerviewModel);
+        dashboardRvAdapter.setData(dashboardRecyclerviewModelList);
+        dashboardRvAdapter.notifyDataSetChanged();
+
+        mViewModel.getUserInfo().observe(getActivity(), new Observer<UserModel>() {
             @Override
-            public void onChanged(List<CourseModel> courseModels) {
+            public void onChanged(UserModel userModel) {
 
-                Log.d("course_api_debug",courseModels+" onchange");
 
-                if (courseModels!=null){
-                    dashboardRecyclerviewModelList.clear();
-                    DashboardRecyclerviewModel dashboardRecyclerviewModel = new DashboardRecyclerviewModel(Constants.COURSEVIEWTYPE,Constants.TECHSTACK,courseModels);
-                    dashboardRecyclerviewModelList.add(dashboardRecyclerviewModel);
-                    dashboardRvAdapter.setData(dashboardRecyclerviewModelList);
-                    dashboardRvAdapter.notifyDataSetChanged();
+                if (userModel.getPreferences()!=null){
+                    preferredCourseId = Integer.parseInt(userModel.getPreferences().split(",")[0]);
                 }else{
-                    Utility.showToast(getActivity(), Constants.SOMETHINGWENTWRONG);
+                    preferredCourseId = 1;
                 }
+
+                mViewModel.getFiveTopicsByCourseIdFromRemote(prefManager.getString(Constants.JWTTOKEN),preferredCourseId);
+
+                DashboardRecyclerviewModel dashboardRecyclerviewModel = new DashboardRecyclerviewModel(Constants.TOPICVIEWTYPE,mViewModel.getFiveTopicsByCourseIdFromDb(preferredCourseId),Constants.TOPICSYOUMAYLIKE);
+                dashboardRecyclerviewModelList.add(dashboardRecyclerviewModel);
+                dashboardRvAdapter.setData(dashboardRecyclerviewModelList);
+                dashboardRvAdapter.notifyDataSetChanged();
             }
         });
+
 
 
     }
@@ -161,6 +175,11 @@ public class DashboardFragment extends Fragment implements DashboardRvAdapter.Da
     @Override
     public void onCourseClicked(CourseModel courseModel) {
         listener.onCourseClicked(courseModel);
+    }
+
+    @Override
+    public void onTopicClicked(TopicsModel topicsModel) {
+        listener.onTopicClicked(topicsModel);
     }
 
     @Override

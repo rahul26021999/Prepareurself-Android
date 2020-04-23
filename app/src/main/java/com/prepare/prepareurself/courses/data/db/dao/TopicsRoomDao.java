@@ -22,4 +22,6 @@ public interface TopicsRoomDao {
     @Query("DELETE FROM topics")
     void deleteAllTopics();
 
+    @Query("SELECT * FROM topics WHERE course_id=:courseId LIMIT 5")
+    LiveData<List<TopicsModel>> getFiveTopicsByCourseId(int courseId);
 }

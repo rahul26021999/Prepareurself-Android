@@ -44,6 +44,7 @@
 
     <string name="edit_profile">Edit Profile</string>
     <string name="display">Display Name</string>
+    <string name="default_notification_channel_id">default</string>
 
     <string-array name="array_techstacks">
         <item>Android</item>
