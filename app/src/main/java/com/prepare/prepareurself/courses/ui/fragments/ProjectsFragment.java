@@ -18,6 +18,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AbsListView;
+import android.widget.TextView;
 
 import com.prepare.prepareurself.courses.data.model.ProjectResponse;
 import com.prepare.prepareurself.courses.data.model.ProjectsModel;
@@ -42,6 +43,7 @@ public class ProjectsFragment extends Fragment implements ProjectsRvAdapter.Proj
     private PrefManager prefManager;
     private Boolean isScrolling = false;
     private int rvCurrentItems, rvTotalItems, rvScrolledOutItems, rvLastPage, rvCurrentPage=1;
+    private TextView tvComingSoon;
 
     public static ProjectsFragment newInstance() {
         return new ProjectsFragment();
@@ -52,6 +54,7 @@ public class ProjectsFragment extends Fragment implements ProjectsRvAdapter.Proj
                              @Nullable Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.projects_fragment, container, false);
         recyclerView = view.findViewById(R.id.rv_projects);
+        tvComingSoon = view.findViewById(R.id.tv_coming_soon);
 
         return view;
 
@@ -120,8 +123,16 @@ public class ProjectsFragment extends Fragment implements ProjectsRvAdapter.Proj
         mViewModel.getProjectByCourseId(CoursesActivity.courseId).observe(getActivity(), new Observer<List<ProjectsModel>>() {
             @Override
             public void onChanged(List<ProjectsModel> projectsModels) {
-                adapter.setProjects(projectsModels);
-                adapter.notifyDataSetChanged();
+                if (projectsModels!=null && !projectsModels.isEmpty()){
+                    tvComingSoon.setVisibility(View.GONE);
+                    recyclerView.setVisibility(View.VISIBLE);
+                    adapter.setProjects(projectsModels);
+                    adapter.notifyDataSetChanged();
+                }else{
+                    tvComingSoon.setVisibility(View.VISIBLE);
+                    recyclerView.setVisibility(View.GONE);
+                }
+
             }
         });
 
