@@ -30,11 +30,11 @@ public class AuthRepository {
         userDBRepository = new UserDBRepository(application);
     }
 
-    public LiveData<AuthenticationResponseModel> login(String email, String password){
+    public LiveData<AuthenticationResponseModel> login(String email, String password, String androidToken){
 
         final MutableLiveData<AuthenticationResponseModel> data = new MutableLiveData<>();
 
-        apiInterface.loginUser(email,password).enqueue(new Callback<AuthenticationResponseModel>() {
+        apiInterface.loginUser(email,password, androidToken).enqueue(new Callback<AuthenticationResponseModel>() {
             @Override
             public void onResponse(Call<AuthenticationResponseModel> call, Response<AuthenticationResponseModel> response) {
                 AuthenticationResponseModel responseModel = response.body();
