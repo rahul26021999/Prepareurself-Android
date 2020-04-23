@@ -26,6 +26,7 @@ import com.prepare.prepareurself.courses.ui.activity.ProjectsActivity;
 import com.prepare.prepareurself.courses.ui.adapters.ProjectsRvAdapter;
 import com.prepare.prepareurself.courses.viewmodels.ProjectsViewModel;
 import com.prepare.prepareurself.R;
+import com.prepare.prepareurself.resources.data.model.ResourceLikesResponse;
 import com.prepare.prepareurself.utils.Constants;
 import com.prepare.prepareurself.utils.DividerItemDecoration;
 import com.prepare.prepareurself.utils.PrefManager;
@@ -142,5 +143,20 @@ public class ProjectsFragment extends Fragment implements ProjectsRvAdapter.Proj
         } catch (IOException e) {
             e.printStackTrace();
         }
+    }
+
+    @Override
+    public void onProjectLiked(ProjectsModel projectsModel, int liked) {
+        mViewModel.likeProject(prefManager.getString(Constants.JWTTOKEN),projectsModel.getId(), liked)
+                .observe(getActivity(), new Observer<ResourceLikesResponse>() {
+                    @Override
+                    public void onChanged(ResourceLikesResponse resourceLikesResponse) {
+                        if (resourceLikesResponse!=null){
+                            if (!resourceLikesResponse.getSuccess()){
+                                Utility.showToast(getActivity(),"Unable to like at the moment");
+                            }
+                        }
+                    }
+                });
     }
 }

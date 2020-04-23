@@ -14,6 +14,8 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.bumptech.glide.GenericTransitionOptions;
 import com.bumptech.glide.Glide;
+import com.like.LikeButton;
+import com.like.OnLikeListener;
 import com.prepare.prepareurself.courses.data.model.ProjectsModel;
 import com.prepare.prepareurself.R;
 import com.prepare.prepareurself.utils.Constants;
@@ -71,6 +73,18 @@ public class ProjectsRvAdapter extends RecyclerView.Adapter<ProjectsRvAdapter.Pr
             }
         });
 
+        holder.likeButton.setOnLikeListener(new OnLikeListener() {
+            @Override
+            public void liked(LikeButton likeButton) {
+                listener.onProjectLiked(projectsModel,0);
+            }
+
+            @Override
+            public void unLiked(LikeButton likeButton) {
+                listener.onProjectLiked(projectsModel, 1);
+            }
+        });
+
     }
 
     @Override
@@ -87,6 +101,7 @@ public class ProjectsRvAdapter extends RecyclerView.Adapter<ProjectsRvAdapter.Pr
         ImageView imageView;
         TextView tvTitle;
         ImageView imgShare;
+        LikeButton likeButton;
 
         public ProjectsViewHolder(@NonNull View itemView) {
             super(itemView);
@@ -94,6 +109,7 @@ public class ProjectsRvAdapter extends RecyclerView.Adapter<ProjectsRvAdapter.Pr
             imageView = itemView.findViewById(R.id.project_image);
             tvTitle = itemView.findViewById(R.id.tv_title_project);
             imgShare = itemView.findViewById(R.id.img_share_project);
+            likeButton = itemView.findViewById(R.id.hitLike);
 
         }
 
@@ -114,6 +130,7 @@ public class ProjectsRvAdapter extends RecyclerView.Adapter<ProjectsRvAdapter.Pr
     public interface ProjectsRvInteractor{
         void onProjectClicked(ProjectsModel projectsModel);
         void onProjectShared(Bitmap bitmap, String text);
+        void onProjectLiked(ProjectsModel projectsModel, int liked);
     }
 
 }

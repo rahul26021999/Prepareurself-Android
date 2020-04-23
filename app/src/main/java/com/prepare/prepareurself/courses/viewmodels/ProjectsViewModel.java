@@ -11,6 +11,7 @@ import com.prepare.prepareurself.courses.data.db.repository.ProjectsDbRepository
 import com.prepare.prepareurself.courses.data.model.ProjectResponse;
 import com.prepare.prepareurself.courses.data.model.ProjectsModel;
 import com.prepare.prepareurself.courses.data.repository.ProjectsRespository;
+import com.prepare.prepareurself.resources.data.model.ResourceLikesResponse;
 import com.prepare.prepareurself.utils.youtubeplaylistapi.db.PlaylistVideosDbRepository;
 import com.prepare.prepareurself.utils.youtubeplaylistapi.db.SingleVideoItemWrapperRespository;
 import com.prepare.prepareurself.utils.youtubeplaylistapi.models.SingleVIdeoItemWrapper;
@@ -79,5 +80,9 @@ public class ProjectsViewModel extends AndroidViewModel {
        }
 
        return singleVIdeoItemWrapperLiveData;
+    }
+
+    public LiveData<ResourceLikesResponse> likeProject(String token, int id, int liked) {
+        return respository.likeProject(token,id,liked);
     }
 }
