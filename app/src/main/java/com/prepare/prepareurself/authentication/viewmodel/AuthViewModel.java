@@ -29,8 +29,8 @@ public class AuthViewModel extends AndroidViewModel {
         return registerResponseModelLiveData;
     }
 
-    public void login(String email, String password){
-        authenticationResponseModelMutableLiveData = repository.login(email,password);
+    public void login(String email, String password, String androidToken){
+        authenticationResponseModelMutableLiveData = repository.login(email,password, androidToken);
     }
 
     public void register(String firstname, String lastname, String email, String password, String androidToken){

@@ -29,7 +29,8 @@ public interface ApiInterface {
 
     @POST("login")
     Call<AuthenticationResponseModel> loginUser(@Query("email")String email,
-                                                @Query("password")String password);
+                                                @Query("password")String password,
+                                                @Query("android_token") String androidToken);
 
     @POST("get-courses")
     Call<GetCourseResponseModel> getCourses(@Query("token") String token);

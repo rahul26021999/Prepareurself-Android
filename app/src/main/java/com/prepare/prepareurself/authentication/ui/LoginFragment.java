@@ -85,7 +85,10 @@ public class LoginFragment extends Fragment implements View.OnClickListener{
                 return;
             }
 
-            viewModel.login(strEmail,strPassword);
+            String androidToken = prefManager.getString(Constants.ANDROIDTOKEN);
+
+            if (!TextUtils.isEmpty(androidToken))
+                viewModel.login(strEmail,strPassword, androidToken);
 
             showLoader();
 
