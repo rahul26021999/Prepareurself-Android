@@ -54,4 +54,6 @@ public class Constants {
     public static final String ANDROIDTOKEN = "android_token";
     public static final String TOPICSYOUMAYLIKE = "Topics you may like";
     public static final String PROJECTSYOUMAYLIKE = "Projects you may like";
+    public static final CharSequence NOTIFICATIONCHANNELTITLE = "Notification_Channel";
+
 }
