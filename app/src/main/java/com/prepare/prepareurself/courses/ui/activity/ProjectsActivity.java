@@ -146,36 +146,41 @@ public class ProjectsActivity extends AppCompatActivity implements PlaylistVideo
             recyclerView.setNestedScrollingEnabled(false);
 
 
-            getVideos(rvNextPageToken, playlist);
+            getVideos(rvNextPageToken, playlist, projectsModel);
 
 
         }else if (projectsModel.getLink()!=null){
 
-            tvReferenceHeader.setText("Video");
-
-            recyclerView.setVisibility(View.GONE);
-            tvViewPlaylist.setVisibility(View.GONE);
-            cardImageView.setVisibility(View.VISIBLE);
-            final String videoCode = Utility.getVideoCode(projectsModel.getLink());
-            loadCardImageViewWithVideo(videoCode);
-
-
-            cardImageView.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View v) {
-                    if (!TextUtils.isEmpty(videoTitle)){
-                        Intent intent = new Intent(ProjectsActivity.this,VideoActivity.class);
-                        intent.putExtra(Constants.VIDEOCODE,videoCode);
-                        intent.putExtra(Constants.VIDEOTITLE, videoTitle);
-                        intent.putExtra(Constants.VIDEODESCRIPTION, videoDescription);
-                        intent.putExtra(Constants.SINGLEVIDEO,true);
-                        startActivity(intent);
-                    }
-                    Log.d("click_debug","jksbvjkd");
-                }
-            });
+            loadSingleLink(projectsModel);
         }
 
+    }
+
+    private void loadSingleLink(ProjectsModel projectsModel) {
+
+        tvReferenceHeader.setText("Video");
+
+        recyclerView.setVisibility(View.GONE);
+        tvViewPlaylist.setVisibility(View.GONE);
+        cardImageView.setVisibility(View.VISIBLE);
+        final String videoCode = Utility.getVideoCode(projectsModel.getLink());
+        loadCardImageViewWithVideo(videoCode);
+
+
+        cardImageView.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                if (!TextUtils.isEmpty(videoTitle)){
+                    Intent intent = new Intent(ProjectsActivity.this,VideoActivity.class);
+                    intent.putExtra(Constants.VIDEOCODE,videoCode);
+                    intent.putExtra(Constants.VIDEOTITLE, videoTitle);
+                    intent.putExtra(Constants.VIDEODESCRIPTION, videoDescription);
+                    intent.putExtra(Constants.SINGLEVIDEO,true);
+                    startActivity(intent);
+                }
+                Log.d("click_debug","jksbvjkd");
+            }
+        });
     }
 
     private void loadCardImageViewWithVideo(final String videoCode) {
@@ -204,13 +209,13 @@ public class ProjectsActivity extends AppCompatActivity implements PlaylistVideo
 
     }
 
-    public void getVideos(String token, final String playlist){
+    public void getVideos(String token, final String playlist, final ProjectsModel projectsModel){
         viewModel.fetchVideosFromPlaylist(token,playlist).observe(this, new Observer<YoutubePlaylistResponseModel>() {
             @Override
             public void onChanged(YoutubePlaylistResponseModel youtubePlaylistResponseModel) {
                 if (youtubePlaylistResponseModel!=null){
                     if (youtubePlaylistResponseModel.getNextPageToken()!=null)
-                        getVideos(youtubePlaylistResponseModel.getNextPageToken(),playlist);
+                        getVideos(youtubePlaylistResponseModel.getNextPageToken(),playlist, projectsModel);
                     else{
                         viewModel.getVideoContentsLiveData(playlist).observe(ProjectsActivity.this, new Observer<List<VideoItemWrapper>>() {
                             @Override
@@ -223,6 +228,8 @@ public class ProjectsActivity extends AppCompatActivity implements PlaylistVideo
                             }
                         });
                     }
+                }else if (projectsModel.getLink()!=null){
+                    loadSingleLink(projectsModel);
                 }else{
                     cardImageView.setVisibility(View.GONE);
                     recyclerView.setVisibility(View.GONE);
