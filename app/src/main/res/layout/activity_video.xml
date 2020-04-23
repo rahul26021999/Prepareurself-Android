@@ -30,7 +30,7 @@
             android:id="@+id/tv_youtube_title"
             android:layout_marginEnd="5dp"
             android:textStyle="bold"
-            android:layout_toStartOf="@+id/like_button_youtube"
+            android:layout_toStartOf="@+id/img_share_youtube_video"
             android:layout_alignParentStart="true"/>
 
         <com.like.LikeButton
@@ -47,7 +47,7 @@
             android:layout_height="wrap_content"
             android:src="@drawable/ic_action_down_black"
             android:layout_marginEnd="20dp"
-            android:layout_toStartOf="@+id/img_share_youtube_video"
+            android:layout_alignParentEnd="true"
             android:id="@+id/img_down_video"/>
 
         <ImageView
@@ -55,7 +55,7 @@
             android:layout_height="wrap_content"
             android:src="@drawable/ic_image_share"
             android:id="@+id/img_share_youtube_video"
-            android:layout_alignParentEnd="true"
+            android:layout_toStartOf="@+id/img_down_video"
             android:layout_marginEnd="20dp"/>
 
     </RelativeLayout>

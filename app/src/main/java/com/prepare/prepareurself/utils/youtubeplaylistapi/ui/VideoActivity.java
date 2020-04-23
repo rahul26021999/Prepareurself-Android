@@ -83,8 +83,9 @@ public class VideoActivity extends YouTubeBaseActivity implements YouTubePlayer.
         Intent intent = getIntent();
 
         if (intent.getBooleanExtra(Constants.SINGLEVIDEO, false)){
-            imageViewShare.setVisibility(View.GONE);
-            likeButton.setVisibility(View.GONE);
+
+            hideShareAndLike();
+
             videoCode = intent.getStringExtra(Constants.VIDEOCODE);
             title = intent.getStringExtra(Constants.VIDEOTITLE);
             decription = intent.getStringExtra(Constants.VIDEODESCRIPTION);
@@ -95,8 +96,7 @@ public class VideoActivity extends YouTubeBaseActivity implements YouTubePlayer.
             playlistItemRecyclerView.setVisibility(View.GONE);
 
         }else if (intent.getBooleanExtra(Constants.PLAYLIST,false)){
-            imageViewShare.setVisibility(View.GONE);
-            likeButton.setVisibility(View.GONE);
+            hideShareAndLike();
             playlistId = intent.getStringExtra(Constants.VideoItemWrapperPlaylistId);
             title = intent.getStringExtra(Constants.VIDEOTITLE);
             decription = intent.getStringExtra(Constants.VIDEODESCRIPTION);
@@ -128,8 +128,7 @@ public class VideoActivity extends YouTubeBaseActivity implements YouTubePlayer.
             tvTitle.setText(title);
             tvDescription.setText(decription);
 
-            imageViewShare.setVisibility(View.GONE);
-            likeButton.setVisibility(View.GONE);
+            hideShareAndLike();
 
             playlistItemRecyclerView.setVisibility(View.VISIBLE);
 
@@ -150,8 +149,7 @@ public class VideoActivity extends YouTubeBaseActivity implements YouTubePlayer.
             });
 
         }else if (intent.getBooleanExtra(Constants.RESOURCEVIDEO,false)){
-            imageViewShare.setVisibility(View.VISIBLE);
-            likeButton.setVisibility(View.GONE);
+            showShareAndLike();
             videoCode = intent.getStringExtra(Constants.VIDEOCODE);
             title = intent.getStringExtra(Constants.VIDEOTITLE);
             decription = intent.getStringExtra(Constants.VIDEODESCRIPTION);
@@ -193,6 +191,24 @@ public class VideoActivity extends YouTubeBaseActivity implements YouTubePlayer.
             }
         });
 
+    }
+
+    private void hideShareAndLike() {
+
+        imageViewShare.setEnabled(false);
+        likeButton.setEnabled(false);
+
+        imageViewShare.setVisibility(View.INVISIBLE);
+        likeButton.setVisibility(View.GONE);
+
+    }
+
+    public void showShareAndLike(){
+        imageViewShare.setEnabled(true);
+        likeButton.setEnabled(false);
+
+        imageViewShare.setVisibility(View.VISIBLE);
+        likeButton.setVisibility(View.GONE);
     }
 
     private void share(Uri uri, String text) {
