@@ -65,7 +65,7 @@ public class HomeActivity extends AppCompatActivity implements NavigationView.On
         NavigationUI.setupActionBarWithNavController(this, navController, mAppBarConfiguration);
         NavigationUI.setupWithNavController(navigationView, navController);
 
-        navigationView.setNavigationItemSelectedListener(this);
+       // navigationView.setNavigationItemSelectedListener(this);
 
         viewModel.retrieveUserData();
 
@@ -96,20 +96,20 @@ public class HomeActivity extends AppCompatActivity implements NavigationView.On
     @Override
     public boolean onNavigationItemSelected(@NonNull MenuItem item) {
         item.setChecked(true);
-
-        drawer.closeDrawers();
-
-        int id = item.getItemId();
-
-        switch (id){
-            case R.id.nav_dashboard :
-                navController.navigate(R.id.nav_dashboard_fragment);
-                break;
-            case R.id.nav_profile :
-                navController.navigate(R.id.nav_profile_fragment);
-                break;
-
-        }
+//
+//        drawer.closeDrawers();
+//
+//        int id = item.getItemId();
+//
+//        switch (id){
+//            case R.id.nav_dashboard :
+//                navController.navigate(R.id.nav_dashboard_fragment);
+//                break;
+//            case R.id.nav_profile :
+//                navController.navigate(R.id.nav_profile_fragment);
+//                break;
+//
+//        }
 
         return true;
 
