@@ -19,7 +19,7 @@ import android.widget.ProgressBar;
 
 import com.google.android.material.chip.Chip;
 import com.google.android.material.chip.ChipGroup;
-import com.prepare.prepareurself.authentication.data.model.UserModel;
+import com.prepare.prepareurself.profile.data.model.MyPreferenceTechStack;
 import com.prepare.prepareurself.profile.data.model.UpdatePreferenceResponseModel;
 import com.prepare.prepareurself.profile.ui.adapter.PreferrenceRecyclerAdapter;
 import com.prepare.prepareurself.profile.data.model.PreferredTechStack;
@@ -100,37 +100,55 @@ public class EditPreferencesActivity extends AppCompatActivity implements Recycl
 //            }
 //        });
 
+        profileViewModel.getMyPreferredStack().observe(this, new Observer<List<MyPreferenceTechStack>>() {
+            @Override
+            public void onChanged(List<MyPreferenceTechStack> myPreferenceTechStacks) {
+                if (myPreferenceTechStacks!=null && !myPreferenceTechStacks.isEmpty()){
+                    userPrefrence.clear();
+                    setUserPrefrenced(myPreferenceTechStacks);
+                }
+            }
+        });
+
         profileViewModel.getPreferencesFromDb().observe(this, new Observer<List<PreferredTechStack>>() {
             @Override
             public void onChanged(List<PreferredTechStack> preferredTechStacks) {
                 allStack = new ArrayList<>(preferredTechStacks);
+//                for (PreferredTechStack p : allStack){
+//                    if (checkContains(p,userPrefrence)){
+//                        allStack.remove(p);
+//                    }
+//                }
                 radapter.setList(allStack);
                 radapter.notifyDataSetChanged();
             }
         });
 
-        profileViewModel.getUserPrefernces().observe(this, new Observer<UserModel>() {
-            @Override
-            public void onChanged(UserModel userModel) {
-                if (userModel.getPreferences()!=null){
-                    String[] prefernceIds = userModel.getPreferences().split(",");
-                    setUserPrefrenced(prefernceIds);
-                }
+//        profileViewModel.getUserPrefernces().observe(this, new Observer<UserModel>() {
+//            @Override
+//            public void onChanged(UserModel userModel) {
+//                if (userModel.getPreferences()!=null){
+//                    String[] prefernceIds = userModel.getPreferences().split(",");
+//                    setUserPrefrenced(prefernceIds);
+//                }
+//
+//            }
+//        });
 
-            }
-        });
+
 
     }
 
-    private void setUserPrefrenced(String[] strings) {
+    private void setUserPrefrenced(List<MyPreferenceTechStack> myPreferenceTechStacks) {
         courseChipGroup.removeAllViews();
        // userPrefrence=userPrefrence;
-        for (int i=0;i<strings.length;i++) {
-            PreferredTechStack preferredTechStack = getPreferedStack(Integer.parseInt(strings[i]));
-            if (preferredTechStack!=null){
+        for (int i=0;i<myPreferenceTechStacks.size();i++) {
+            PreferredTechStack preferredTechStack = new PreferredTechStack();
+            preferredTechStack.setId(myPreferenceTechStacks.get(i).getId());
+            preferredTechStack.setName(myPreferenceTechStacks.get(i).getName());
+            if (!checkContains(preferredTechStack,userPrefrence)){
                 addChipToUserPreference(preferredTechStack);
                 userPrefrence.add(preferredTechStack);
-                Log.d("preference_debug", preferredTechStack+"");
             }
         }
     }
@@ -174,12 +192,24 @@ public class EditPreferencesActivity extends AppCompatActivity implements Recycl
             @Override
             public void onClick(View v) {
                 courseChipGroup.removeView(v);
+             //   removeAllOccurences(preferredTechStack, userPrefrence);
                 userPrefrence.remove(preferredTechStack);
-                allStack.add(preferredTechStack);
-                radapter.notifyDataSetChanged();
+                if (!checkContains(preferredTechStack, allStack)){
+                    allStack.add(preferredTechStack);
+                    radapter.notifyDataSetChanged();
+                }
+
             }
         });
         courseChipGroup.addView(chip);
+    }
+
+    private void removeAllOccurences(PreferredTechStack preferredTechStack, List<PreferredTechStack> userPrefrence) {
+        for (PreferredTechStack p : userPrefrence){
+            if(p.getId() == preferredTechStack.getId()){
+                userPrefrence.remove(p);
+            }
+        }
     }
 
     @Override
@@ -193,8 +223,13 @@ public class EditPreferencesActivity extends AppCompatActivity implements Recycl
             public boolean onMenuItemClick(MenuItem item) {
                 progressBar.setVisibility(View.VISIBLE);
                 List<Integer> finalListIds = new ArrayList<>();
+                final List<MyPreferenceTechStack> myPreferenceTechStacks = new ArrayList<>();
                 for (PreferredTechStack preferredTechStack: userPrefrence){
                     finalListIds.add(preferredTechStack.getId());
+                    MyPreferenceTechStack myPreferenceTechStack = new MyPreferenceTechStack();
+                    myPreferenceTechStack.setId(preferredTechStack.getId());
+                    myPreferenceTechStack.setName(preferredTechStack.getName());
+                    myPreferenceTechStacks.add(myPreferenceTechStack);
                 }
                 profileViewModel.updatePrefernces(prefManager.getString(Constants.JWTTOKEN),finalListIds)
                         .observe(EditPreferencesActivity.this, new Observer<UpdatePreferenceResponseModel>() {
@@ -202,6 +237,7 @@ public class EditPreferencesActivity extends AppCompatActivity implements Recycl
                             public void onChanged(UpdatePreferenceResponseModel updatePreferenceResponseModel) {
                                 if (updatePreferenceResponseModel!=null){
                                     if (updatePreferenceResponseModel.getError_code()==0){
+                                        profileViewModel.saveMyPreferenceList(myPreferenceTechStacks);
                                         Utility.showToast(EditPreferencesActivity.this,"Preferences saved successfully");
                                     }else{
                                         Utility.showToast(EditPreferencesActivity.this, updatePreferenceResponseModel.getMsg());

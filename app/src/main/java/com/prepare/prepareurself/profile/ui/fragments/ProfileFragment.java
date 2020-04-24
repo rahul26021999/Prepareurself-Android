@@ -14,7 +14,6 @@ import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import android.text.TextUtils;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -25,6 +24,7 @@ import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import com.prepare.prepareurself.authentication.ui.AuthenticationActivity;
+import com.prepare.prepareurself.profile.data.model.MyPreferenceTechStack;
 import com.prepare.prepareurself.profile.data.model.PreferredTechStack;
 import com.prepare.prepareurself.profile.data.model.UpdatePreferenceResponseModel;
 import com.prepare.prepareurself.profile.ui.EditPreferencesActivity;
@@ -39,7 +39,7 @@ import com.prepare.prepareurself.utils.Utility;
 
 import java.util.ArrayList;
 import java.util.Calendar;
-import java.util.LinkedList;
+import java.util.HashMap;
 import java.util.List;
 
 public class ProfileFragment extends Fragment {
@@ -61,6 +61,7 @@ public class ProfileFragment extends Fragment {
     private UserPrefernceAdapter adapter;
     private TextView tvLoading;
     private Button btnUpdatePassword, btnLogout;
+    private HashMap<Integer, PreferredTechStack> allPreferredStacks = new HashMap<>();
 
     public static ProfileFragment newInstance() {
         return new ProfileFragment();
@@ -104,6 +105,11 @@ public class ProfileFragment extends Fragment {
 
             }
         });*/
+
+        adapter = new UserPrefernceAdapter(getActivity());
+        LinearLayoutManager layoutManager = new LinearLayoutManager(getActivity());
+        rvPreferences.setLayoutManager(layoutManager);
+        rvPreferences.setAdapter(adapter);
 
 
         return view;
@@ -250,6 +256,8 @@ public class ProfileFragment extends Fragment {
                     }
                 }
 
+
+
                 mViewModel.updateUser(prefManager.getString(Constants.JWTTOKEN),firstName,lastName,userdob,userphnumber)
                         .observe(getActivity(), new Observer<UpdatePreferenceResponseModel>() {
                             @Override
@@ -290,79 +298,85 @@ public class ProfileFragment extends Fragment {
 //        tvLoading.setVisibility(View.VISIBLE);
 //        rvPreferences.setVisibility(View.GONE);
 
-//        mViewModel.getPreferencesFromDb().observe(getActivity(), new Observer<List<PreferredTechStack>>() {
-//            @Override
-//            public void onChanged(List<PreferredTechStack> preferredTechStacks) {
-//                allStack = new ArrayList<>(preferredTechStacks);
-//
-//                mViewModel.getUserPrefernces().observe(getActivity(), new Observer<UserModel>() {
-//                    @Override
-//                    public void onChanged(UserModel userModel) {
-//                        if (userModel.getPreferences()!=null){
-//                            String[] prefernceIds = userModel.getPreferences().split(",");
-//                            setUserPrefrenced(prefernceIds);
-//                        }
-//                    }
-//                });
-//
-//            }
-//        });
 
+        mViewModel.getPreferencesFromDb().observe(getActivity(), new Observer<List<PreferredTechStack>>() {
+            @Override
+            public void onChanged(final List<PreferredTechStack> preferredTechStacks) {
+                allStack = new ArrayList<>(preferredTechStacks);
+//                for (PreferredTechStack preferredTechStack : allStack){
+//                    allPreferredStacks.put(preferredTechStack.getId(), preferredTechStack);
+//                }
+
+                mViewModel.getUserPrefernces().observeForever(new Observer<UserModel>() {
+                    @Override
+                    public void onChanged(UserModel userModel) {
+                        if (userModel.getPreferences()!=null){
+                            String[] prefernceIds = userModel.getPreferences().split(",");
+                          //  setUserPrefrenced(prefernceIds);
+
+                            for (String prefernceId : prefernceIds) {
+                                for (int j = 0; j < allStack.size(); j++) {
+                                    if (Integer.parseInt(prefernceId) == allStack.get(j).getId()) {
+                                        MyPreferenceTechStack myPreferenceTechStack = new MyPreferenceTechStack();
+                                        myPreferenceTechStack.setId(allStack.get(j).getId());
+                                        myPreferenceTechStack.setName(allStack.get(j).getName());
+                                        mViewModel.saveMyPreference(myPreferenceTechStack);
+                                    }
+                                }
+                            }
+
+                        }
+                    }
+                });
+
+                if (getActivity()!=null){
+                    mViewModel.getMyPreferredStack().observe(getActivity(), new Observer<List<MyPreferenceTechStack>>() {
+                        @Override
+                        public void onChanged(List<MyPreferenceTechStack> myPreferenceTechStacks) {
+                            if (myPreferenceTechStacks!=null && !myPreferenceTechStacks.isEmpty()){
+                                adapter.setPreferredTechStacks(myPreferenceTechStacks);
+                                adapter.notifyDataSetChanged();
+                            }
+                        }
+                    });
+                }
+
+            }
+        });
 
 
     }
 
     private void setUserPrefrenced(String[] prefernceIds) {
-        for (int i=0;i<prefernceIds.length;i++) {
-            PreferredTechStack preferredTechStack = getPreferedStack(Integer.parseInt(prefernceIds[i]));
-            if (preferredTechStack!=null){
-                userPrefrence.add(preferredTechStack);
-                Log.d("preference_debug", preferredTechStack+"");
-            }
-        }
-//        tvLoading.setVisibility(View.GONE);
-//        rvPreferences.setVisibility(View.VISIBLE);
-        adapter.clearList();
-        adapter.setPreferredTechStacks(userPrefrence);
-        adapter.notifyDataSetChanged();
+//        for (int i=0;i<prefernceIds.length;i++) {
+//            PreferredTechStack preferredTechStack = getPreferedStack(Integer.parseInt(prefernceIds[i]));
+//            if (preferredTechStack!=null){
+//                userPrefrence.add(preferredTechStack);
+//                Log.d("preference_debug", preferredTechStack+"");
+//            }
+//        }
+////        tvLoading.setVisibility(View.GONE);
+////        rvPreferences.setVisibility(View.VISIBLE);
+//        adapter.clearList();
+//        adapter.setPreferredTechStacks(userPrefrence);
+//        adapter.notifyDataSetChanged();
 
     }
 
-    private PreferredTechStack getPreferedStack(int parseInt) {
-        PreferredTechStack p = null;
-        for (PreferredTechStack preferredTechStack: allStack){
-            if (parseInt == preferredTechStack.getId()){
-                p=preferredTechStack;
-            }
-        }
-        return p;
-    }
+//    private PreferredTechStack getPreferedStack(int parseInt) {
+//        PreferredTechStack p = null;
+//        for (PreferredTechStack preferredTechStack: allStack){
+//            if (parseInt == preferredTechStack.getId()){
+//                p=preferredTechStack;
+//            }
+//        }
+//        return p;
+//    }
 
     @Override
     public void onStart() {
         super.onStart();
 
-        adapter = new UserPrefernceAdapter(getActivity());
-        LinearLayoutManager layoutManager = new LinearLayoutManager(getActivity());
-        rvPreferences.setLayoutManager(layoutManager);
-        rvPreferences.setAdapter(adapter);
 
-        mViewModel.getPreferencesFromDb().observe(getActivity(), new Observer<List<PreferredTechStack>>() {
-            @Override
-            public void onChanged(List<PreferredTechStack> preferredTechStacks) {
-                allStack = new ArrayList<>(preferredTechStacks);
-
-                mViewModel.getUserPrefernces().observe(getActivity(), new Observer<UserModel>() {
-                    @Override
-                    public void onChanged(UserModel userModel) {
-                        if (userModel.getPreferences()!=null){
-                            String[] prefernceIds = userModel.getPreferences().split(",");
-                            setUserPrefrenced(prefernceIds);
-                        }
-                    }
-                });
-
-            }
-        });
     }
 }

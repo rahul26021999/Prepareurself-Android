@@ -10,6 +10,7 @@ import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.prepare.prepareurself.R;
+import com.prepare.prepareurself.profile.data.model.MyPreferenceTechStack;
 import com.prepare.prepareurself.profile.data.model.PreferredTechStack;
 
 import java.util.List;
@@ -17,13 +18,13 @@ import java.util.List;
 public class UserPrefernceAdapter extends RecyclerView.Adapter<UserPrefernceAdapter.UserPreferenceViewHolder> {
 
     private Context context;
-    private List<PreferredTechStack> preferredTechStacks;
+    private List<MyPreferenceTechStack> preferredTechStacks;
 
     public UserPrefernceAdapter(Context context) {
         this.context = context;
     }
 
-    public void setPreferredTechStacks(List<PreferredTechStack> preferredTechStacks){
+    public void setPreferredTechStacks(List<MyPreferenceTechStack> preferredTechStacks){
         this.preferredTechStacks = preferredTechStacks;
     }
 
@@ -36,7 +37,7 @@ public class UserPrefernceAdapter extends RecyclerView.Adapter<UserPrefernceAdap
 
     @Override
     public void onBindViewHolder(@NonNull UserPreferenceViewHolder holder, int position) {
-        PreferredTechStack preferredTechStack = preferredTechStacks.get(position);
+        MyPreferenceTechStack preferredTechStack = preferredTechStacks.get(position);
         holder.bindView(preferredTechStack);
     }
 
@@ -62,7 +63,7 @@ public class UserPrefernceAdapter extends RecyclerView.Adapter<UserPrefernceAdap
             textView = itemView.findViewById(R.id.tv_preference_name);
         }
 
-        public void bindView(PreferredTechStack preferredTechStack){
+        public void bindView(MyPreferenceTechStack preferredTechStack){
             textView.setText(preferredTechStack.getName());
         }
     }

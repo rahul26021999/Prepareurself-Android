@@ -13,7 +13,9 @@ import com.prepare.prepareurself.courses.data.model.ProjectsModel;
 import com.prepare.prepareurself.courses.data.model.TopicsModel;
 import com.prepare.prepareurself.dashboard.data.db.dao.CourseRoomDao;
 import com.prepare.prepareurself.dashboard.data.model.CourseModel;
+import com.prepare.prepareurself.profile.data.db.dao.MyPreferenceDao;
 import com.prepare.prepareurself.profile.data.db.dao.UserPrefernceDao;
+import com.prepare.prepareurself.profile.data.model.MyPreferenceTechStack;
 import com.prepare.prepareurself.profile.data.model.PreferredTechStack;
 import com.prepare.prepareurself.resources.data.db.dao.ResourcesRoomDao;
 import com.prepare.prepareurself.resources.data.model.ResourceModel;
@@ -35,7 +37,8 @@ import com.prepare.prepareurself.utils.youtubeplaylistapi.models.VideoItemWrappe
         ProjectsModel.class,
         VideoItemWrapper.class,
         SingleVIdeoItemWrapper.class,
-        PreferredTechStack.class
+        PreferredTechStack.class,
+        MyPreferenceTechStack.class
 }, version = 1)
 @TypeConverters({VideoContentDetailsConverter.class,
         VideoSnippetConverter.class,
@@ -50,6 +53,7 @@ public abstract class AppDatabase extends RoomDatabase {
     public abstract PlaylistContentDeatilsDao playlistVideosDao();
     public abstract SingleVideoItemDao singleVideoItemDao();
     public abstract UserPrefernceDao userPrefernceDao();
+    public abstract MyPreferenceDao myPreferenceDao();
 
     private static AppDatabase INSTANCE;
 
