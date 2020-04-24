@@ -22,6 +22,7 @@ import com.google.android.youtube.player.YouTubeInitializationResult;
 import com.google.android.youtube.player.YouTubeThumbnailLoader;
 import com.google.android.youtube.player.YouTubeThumbnailView;
 
+import java.io.UnsupportedEncodingException;
 import java.util.List;
 
 
@@ -59,6 +60,21 @@ public class VideoResoursesRvAdapter extends RecyclerView.Adapter<VideoResourses
             public void onClick(View v) {
                 Bitmap bitmap = Utility.getBitmapFromView(holder.imageView);
                 listener.videoClicked(v1,videoCode, bitmap);
+            }
+        });
+
+        holder.imgShare.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+
+                try {
+                    String encodedId = Utility.base64EncodeForInt(v1.getId());
+                    Bitmap bitmap = Utility.getBitmapFromView(holder.imageView);
+                    String text = "prepareurself.tk/video/"+encodedId;
+                    listener.onResourceShared(bitmap,text);
+                } catch (UnsupportedEncodingException e) {
+                    e.printStackTrace();
+                }
             }
         });
 
@@ -175,6 +191,7 @@ public class VideoResoursesRvAdapter extends RecyclerView.Adapter<VideoResourses
     public interface VideoResourceInteractor{
         void videoClicked(ResourceModel videoResources, String videoCode, Bitmap bitmap);
         void onVideoResourceLiked(ResourceModel resourceModel, int liked);
+        void onResourceShared(Bitmap bitmap, String text);
     }
 
 }

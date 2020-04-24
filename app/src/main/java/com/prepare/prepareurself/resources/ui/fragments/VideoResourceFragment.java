@@ -172,4 +172,14 @@ public class VideoResourceFragment extends Fragment implements VideoResoursesRvA
     public void onVideoResourceLiked(ResourceModel resourceModel, int liked) {
         mViewModel.resourcesLiked(prefManager.getString(Constants.JWTTOKEN), resourceModel.getId(), liked);
     }
+
+    @Override
+    public void onResourceShared(Bitmap bitmap, String text) {
+        try {
+            Uri bitmapUri = Utility.getUriOfBitmap(bitmap, getActivity());
+            Utility.shareContent(getActivity(),bitmapUri,text);
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
 }
