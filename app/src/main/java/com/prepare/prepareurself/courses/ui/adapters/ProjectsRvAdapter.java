@@ -77,11 +77,13 @@ public class ProjectsRvAdapter extends RecyclerView.Adapter<ProjectsRvAdapter.Pr
             @Override
             public void liked(LikeButton likeButton) {
                 listener.onProjectLiked(projectsModel,0);
+                holder.tvNoOfLikes.setText(projectsModel.getTotal_likes()+1 + " likes");
             }
 
             @Override
             public void unLiked(LikeButton likeButton) {
                 listener.onProjectLiked(projectsModel, 1);
+                holder.tvNoOfLikes.setText(projectsModel.getTotal_likes() + " likes");
             }
         });
 
@@ -102,6 +104,7 @@ public class ProjectsRvAdapter extends RecyclerView.Adapter<ProjectsRvAdapter.Pr
         TextView tvTitle, tvNoOfLikes, tvNoOfViews;
         ImageView imgShare;
         LikeButton likeButton;
+        TextView tvLevel;
 
         public ProjectsViewHolder(@NonNull View itemView) {
             super(itemView);
@@ -112,6 +115,7 @@ public class ProjectsRvAdapter extends RecyclerView.Adapter<ProjectsRvAdapter.Pr
             likeButton = itemView.findViewById(R.id.hitLike);
             tvNoOfLikes = itemView.findViewById(R.id.tv_no_of_likes);
             tvNoOfViews = itemView.findViewById(R.id.no_of_views);
+            tvLevel = itemView.findViewById(R.id.tv_level_project);
 
         }
 
@@ -125,7 +129,17 @@ public class ProjectsRvAdapter extends RecyclerView.Adapter<ProjectsRvAdapter.Pr
                     .into(imageView);
 
             tvTitle.setText(projectsModel.getName());
-            tvNoOfViews.setText(projectsModel.getViews() + " views");
+            tvNoOfViews.setText(projectsModel.getTotal_views() + " views");
+            tvNoOfLikes.setText(projectsModel.getTotal_likes() + " likes");
+            tvLevel.setText("Level : "+projectsModel.getLevel());
+
+            if (projectsModel.getLike() == 1){
+                likeButton.setLiked(true);
+            }else{
+                likeButton.setLiked(false);
+            }
+
+
 
 
         }
