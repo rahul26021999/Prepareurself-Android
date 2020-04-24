@@ -26,6 +26,7 @@ import com.google.android.youtube.player.YouTubePlayer;
 import com.google.android.youtube.player.YouTubePlayerView;
 import com.like.LikeButton;
 import com.prepare.prepareurself.R;
+import com.prepare.prepareurself.resources.data.model.ResourceModel;
 import com.prepare.prepareurself.utils.Constants;
 import com.prepare.prepareurself.utils.DividerItemDecoration;
 import com.prepare.prepareurself.utils.Utility;
@@ -39,7 +40,10 @@ import java.util.List;
 
 import me.saket.bettermovementmethod.BetterLinkMovementMethod;
 
-public class VideoActivity extends YouTubeBaseActivity implements YouTubePlayer.OnInitializedListener, PlaylistItemAdapter.PlaylistItemListener, ViewModelStoreOwner {
+public class VideoActivity extends YouTubeBaseActivity implements YouTubePlayer.OnInitializedListener,
+        PlaylistItemAdapter.PlaylistItemListener,
+        ViewModelStoreOwner,
+        RelatedVideosRvAdapter.RelatedRvListener {
 
     private static final int RECOVERY_DIALOG_REQUEST = 1;
     YouTubePlayerView youTubePlayerView;
@@ -63,6 +67,9 @@ public class VideoActivity extends YouTubeBaseActivity implements YouTubePlayer.
     private YouTubePlayer mYoutubePlayer;
     private PlaylistItemAdapter playlistItemAdapter;
     private int resourceId =-1;
+    private int topicId = -1;
+    private RecyclerView rvOtherVideos;
+    private TextView tvRelatedVideosHeader;
 
     @Nullable
     private ViewModelStore viewModelStore = null;
@@ -82,6 +89,8 @@ public class VideoActivity extends YouTubeBaseActivity implements YouTubePlayer.
         imageDown = findViewById(R.id.img_down_video);
         expandableLayout = findViewById(R.id.expandable_layout);
         playlistItemRecyclerView = findViewById(R.id.rv_playlist_item_player);
+        rvOtherVideos = findViewById(R.id.rv_other_videos);
+        tvRelatedVideosHeader = findViewById(R.id.tv_related_header);
 
         Intent intent = getIntent();
 
@@ -97,9 +106,12 @@ public class VideoActivity extends YouTubeBaseActivity implements YouTubePlayer.
             tvDescription.setText(decription);
 
             playlistItemRecyclerView.setVisibility(View.GONE);
+            rvOtherVideos.setVisibility(View.GONE);
+            tvRelatedVideosHeader.setVisibility(View.GONE);
 
         }else if (intent.getBooleanExtra(Constants.PLAYLIST,false)){
             hideShareAndLike();
+            rvOtherVideos.setVisibility(View.GONE);
             playlistId = intent.getStringExtra(Constants.VideoItemWrapperPlaylistId);
             title = intent.getStringExtra(Constants.VIDEOTITLE);
             decription = intent.getStringExtra(Constants.VIDEODESCRIPTION);
@@ -107,6 +119,7 @@ public class VideoActivity extends YouTubeBaseActivity implements YouTubePlayer.
             tvDescription.setText(decription);
 
             playlistItemRecyclerView.setVisibility(View.VISIBLE);
+            tvRelatedVideosHeader.setVisibility(View.GONE);
 
             playlistItemAdapter = new PlaylistItemAdapter(getApplicationContext(),this);
             LinearLayoutManager layoutManager = new LinearLayoutManager(this);
@@ -134,6 +147,8 @@ public class VideoActivity extends YouTubeBaseActivity implements YouTubePlayer.
             hideShareAndLike();
 
             playlistItemRecyclerView.setVisibility(View.VISIBLE);
+            rvOtherVideos.setVisibility(View.GONE);
+            tvRelatedVideosHeader.setVisibility(View.GONE);
 
             playlistItemAdapter = new PlaylistItemAdapter(getApplicationContext(),this);
             LinearLayoutManager layoutManager = new LinearLayoutManager(this);
@@ -158,9 +173,28 @@ public class VideoActivity extends YouTubeBaseActivity implements YouTubePlayer.
             decription = intent.getStringExtra(Constants.VIDEODESCRIPTION);
             bitmapUri = intent.getStringExtra(Constants.BITMAPURI);
             resourceId = intent.getIntExtra(Constants.RESOURCEID, -1);
+            topicId = intent.getIntExtra(Constants.TOPICID,-1);
 
             tvTitle.setText(title);
             tvDescription.setText(decription);
+
+            playlistItemRecyclerView.setVisibility(View.GONE);
+            tvRelatedVideosHeader.setVisibility(View.VISIBLE);
+            rvOtherVideos.setVisibility(View.VISIBLE);
+
+            final RelatedVideosRvAdapter relatedVideosRvAdapter = new RelatedVideosRvAdapter(VideoActivity.this, this);
+            LinearLayoutManager layoutManager = new LinearLayoutManager(this, RecyclerView.HORIZONTAL, false);
+            rvOtherVideos.setLayoutManager(layoutManager);
+            rvOtherVideos.setAdapter(relatedVideosRvAdapter);
+
+            videoViewModel.getResourceExceptId(resourceId,Constants.VIDEO,topicId)
+                    .observeForever(new Observer<List<ResourceModel>>() {
+                        @Override
+                        public void onChanged(List<ResourceModel> resourceModels) {
+                            relatedVideosRvAdapter.setResources(resourceModels);
+                            relatedVideosRvAdapter.notifyDataSetChanged();
+                        }
+                    });
 
             imageViewShare.setOnClickListener(new View.OnClickListener() {
                 @Override
@@ -178,6 +212,8 @@ public class VideoActivity extends YouTubeBaseActivity implements YouTubePlayer.
 
         }else if (intent.getData()!=null){
             Log.d("deeplink_debug",intent.getData().toString());
+            resourceId = Integer.parseInt(intent.getData().toString().split("&resourceid=")[1]);
+            //topicId = Integer.parseInt(intent.getData().toString().split("&topicid=")[1]);
         }
         youTubePlayerView.initialize(Constants.YOUTUBE_PLAYER_API_KEY,this);
 
@@ -234,8 +270,10 @@ public class VideoActivity extends YouTubeBaseActivity implements YouTubePlayer.
     public void onInitializationSuccess(YouTubePlayer.Provider provider, YouTubePlayer youTubePlayer, boolean b) {
         if (!b){
             if (!TextUtils.isEmpty(videoCode)){
-                youTubePlayer.loadVideo(videoCode);
-                youTubePlayer.setPlayerStyle(YouTubePlayer.PlayerStyle.DEFAULT);
+                mYoutubePlayer = youTubePlayer;
+                mYoutubePlayer.loadVideo(videoCode);
+                mYoutubePlayer.setPlayerStyle(YouTubePlayer.PlayerStyle.DEFAULT);
+
             }else if (!TextUtils.isEmpty(playlistId)){
                 mYoutubePlayer = youTubePlayer;
                 if (videoIndex!=-1){
@@ -260,6 +298,8 @@ public class VideoActivity extends YouTubeBaseActivity implements YouTubePlayer.
 
                     }
                 });
+            }else if (resourceId!=-1 && topicId!=-1){
+
             } else{
                 Utility.showToast(this,Constants.SOMETHINGWENTWRONG);
             }
@@ -282,6 +322,17 @@ public class VideoActivity extends YouTubeBaseActivity implements YouTubePlayer.
     public void onItemClicked(VideoItemWrapper videoItemWrapper) {
         if (mYoutubePlayer!=null){
             mYoutubePlayer.loadPlaylist(playlistId,videoItemWrapper.getSnippet().getPosition(),0);
+        }
+    }
+
+    @Override
+    public void onRelatedItemClicked(ResourceModel resourceModel) {
+        if (mYoutubePlayer!=null){
+            String link = resourceModel.getLink();
+            String videoCode = Utility.getVideoCode(link);
+            mYoutubePlayer.loadVideo(videoCode);
+            tvTitle.setText(resourceModel.getTitle());
+            tvDescription.setText(resourceModel.getDescription());
         }
     }
 

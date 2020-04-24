@@ -102,6 +102,24 @@
         android:id="@+id/rv_playlist_item_player"
         android:layout_below="@+id/expandable_layout"/>
 
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Related Videos"
+        android:textColor="@color/colorPrimaryDark"
+        android:fontFamily="@font/proximanovaregular"
+        android:textStyle="bold"
+        android:layout_below="@id/expandable_layout"
+        android:layout_marginTop="10dp"
+        android:layout_marginStart="10dp"
+        android:id="@+id/tv_related_header"/>
+
+    <androidx.recyclerview.widget.RecyclerView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:id="@+id/rv_other_videos"
+        android:layout_below="@id/tv_related_header"/>
+
     <androidx.core.widget.NestedScrollView
         android:layout_width="match_parent"
         android:layout_height="match_parent"
