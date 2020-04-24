@@ -41,14 +41,6 @@ public class CoursesActivity extends AppCompatActivity {
 
         prefManager = new PrefManager(CoursesActivity.this);
 
-        Intent intent = getIntent();
-
-        if (intent.getData()!=null){
-            Log.d("deeplink_debug","course avtivity : "+getIntent().getData()+"");
-        }else{
-            courseId = intent.getIntExtra(Constants.COURSEID, -1);
-        }
-
 
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
         getSupportActionBar().setDisplayShowHomeEnabled(true);
@@ -61,6 +53,27 @@ public class CoursesActivity extends AppCompatActivity {
         sectionsPagerAdapter.addFragment(ResourcesFragment.newInstance(),"Resources");
         viewPager.setAdapter(sectionsPagerAdapter);
         tabs.setupWithViewPager(viewPager);
+
+        Intent intent = getIntent();
+
+        if (intent.getData()!=null){
+            Log.d("deeplink_debug","course avtivity : "+getIntent().getData()+"");
+        }else{
+            courseId = intent.getIntExtra(Constants.COURSEID, -1);
+            if (intent.getStringExtra(Constants.SHOWPAGE)!=null){
+                String showPage = intent.getStringExtra(Constants.SHOWPAGE);
+                Log.d("se_all_debug",showPage+"");
+                if (showPage!=null){
+                    if(showPage.equals(Constants.SHOWPROJECTS)){
+                        viewPager.setCurrentItem(0);
+                    }else if (showPage.equals(Constants.SHOWTOPICS)){
+                        viewPager.setCurrentItem(1);
+                    }
+                }
+
+            }
+
+        }
 
     }
 

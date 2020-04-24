@@ -4,6 +4,7 @@ import androidx.lifecycle.Observer;
 import androidx.lifecycle.ViewModelProvider;
 
 import android.content.Context;
+import android.content.Intent;
 import android.os.Bundle;
 
 import androidx.annotation.NonNull;
@@ -25,6 +26,7 @@ import com.prepare.prepareurself.authentication.data.model.UserModel;
 import com.prepare.prepareurself.courses.data.model.ProjectsModel;
 import com.prepare.prepareurself.courses.data.model.TopicsModel;
 import com.prepare.prepareurself.courses.data.model.TopicsResponseModel;
+import com.prepare.prepareurself.courses.ui.activity.CoursesActivity;
 import com.prepare.prepareurself.dashboard.data.model.CourseModel;
 import com.prepare.prepareurself.dashboard.viewmodel.DashboardViewModel;
 import com.prepare.prepareurself.dashboard.data.model.DashboardRecyclerviewModel;
@@ -193,6 +195,22 @@ public class DashboardFragment extends Fragment implements DashboardRvAdapter.Da
     @Override
     public void onProjectClicked(ProjectsModel projectsModel) {
         listener.onProjectClicked(projectsModel);
+    }
+
+    @Override
+    public void onTopicSeeAll(int courseId) {
+        Intent intent = new Intent(getActivity(), CoursesActivity.class);
+        intent.putExtra(Constants.COURSEID,courseId);
+        intent.putExtra(Constants.SHOWPAGE,Constants.SHOWTOPICS);
+        startActivity(intent);
+    }
+
+    @Override
+    public void onProjectSeeAll(int courseId) {
+        Intent intent = new Intent(getActivity(), CoursesActivity.class);
+        intent.putExtra(Constants.COURSEID,courseId);
+        intent.putExtra(Constants.SHOWPAGE,Constants.SHOWPROJECTS);
+        startActivity(intent);
     }
 
     @Override
