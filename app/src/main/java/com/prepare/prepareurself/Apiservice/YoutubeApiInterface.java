@@ -1,7 +1,7 @@
 package com.prepare.prepareurself.Apiservice;
 
-import com.prepare.prepareurself.utils.youtubeplaylistapi.models.YoutubePlaylistResponseModel;
-import com.prepare.prepareurself.utils.youtubeplaylistapi.models.YoutubeSingleVideoResponseModel;
+import com.prepare.prepareurself.youtubeplayer.youtubeplaylistapi.models.YoutubePlaylistResponseModel;
+import com.prepare.prepareurself.youtubeplayer.youtubeplaylistapi.models.YoutubeSingleVideoResponseModel;
 
 import retrofit2.Call;
 import retrofit2.http.GET;

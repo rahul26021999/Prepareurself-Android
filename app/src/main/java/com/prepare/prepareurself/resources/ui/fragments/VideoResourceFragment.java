@@ -25,13 +25,12 @@ import com.prepare.prepareurself.resources.data.model.ResourcesResponse;
 import com.prepare.prepareurself.resources.ui.activity.ResourcesActivity;
 import com.prepare.prepareurself.resources.ui.adapter.VideoResoursesRvAdapter;
 import com.prepare.prepareurself.resources.viewmodel.ResourceViewModel;
-import com.prepare.prepareurself.resources.youtubevideoplayer.YoutubePlayerActivity;
 import com.prepare.prepareurself.R;
 import com.prepare.prepareurself.utils.Constants;
 import com.prepare.prepareurself.utils.DividerItemDecoration;
 import com.prepare.prepareurself.utils.PrefManager;
 import com.prepare.prepareurself.utils.Utility;
-import com.prepare.prepareurself.utils.youtubeplaylistapi.ui.VideoActivity;
+import com.prepare.prepareurself.youtubeplayer.youtubeplaylistapi.ui.VideoActivity;
 
 import java.io.IOException;
 import java.util.List;

@@ -27,10 +27,10 @@ import com.prepare.prepareurself.R;
 import com.prepare.prepareurself.utils.Constants;
 import com.prepare.prepareurself.utils.PrefManager;
 import com.prepare.prepareurself.utils.Utility;
-import com.prepare.prepareurself.utils.youtubeplaylistapi.models.SingleVIdeoItemWrapper;
-import com.prepare.prepareurself.utils.youtubeplaylistapi.models.VideoItemWrapper;
-import com.prepare.prepareurself.utils.youtubeplaylistapi.models.YoutubePlaylistResponseModel;
-import com.prepare.prepareurself.utils.youtubeplaylistapi.ui.VideoActivity;
+import com.prepare.prepareurself.youtubeplayer.youtubeplaylistapi.models.SingleVIdeoItemWrapper;
+import com.prepare.prepareurself.youtubeplayer.youtubeplaylistapi.models.VideoItemWrapper;
+import com.prepare.prepareurself.youtubeplayer.youtubeplaylistapi.models.YoutubePlaylistResponseModel;
+import com.prepare.prepareurself.youtubeplayer.youtubeplaylistapi.ui.VideoActivity;
 
 import java.util.List;
 

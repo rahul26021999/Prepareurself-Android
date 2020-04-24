@@ -12,11 +12,11 @@ import com.prepare.prepareurself.courses.data.model.ProjectResponse;
 import com.prepare.prepareurself.courses.data.model.ProjectsModel;
 import com.prepare.prepareurself.courses.data.repository.ProjectsRespository;
 import com.prepare.prepareurself.resources.data.model.ResourceLikesResponse;
-import com.prepare.prepareurself.utils.youtubeplaylistapi.db.PlaylistVideosDbRepository;
-import com.prepare.prepareurself.utils.youtubeplaylistapi.db.SingleVideoItemWrapperRespository;
-import com.prepare.prepareurself.utils.youtubeplaylistapi.models.SingleVIdeoItemWrapper;
-import com.prepare.prepareurself.utils.youtubeplaylistapi.models.VideoItemWrapper;
-import com.prepare.prepareurself.utils.youtubeplaylistapi.models.YoutubePlaylistResponseModel;
+import com.prepare.prepareurself.youtubeplayer.youtubeplaylistapi.db.PlaylistVideosDbRepository;
+import com.prepare.prepareurself.youtubeplayer.youtubeplaylistapi.db.SingleVideoItemWrapperRespository;
+import com.prepare.prepareurself.youtubeplayer.youtubeplaylistapi.models.SingleVIdeoItemWrapper;
+import com.prepare.prepareurself.youtubeplayer.youtubeplaylistapi.models.VideoItemWrapper;
+import com.prepare.prepareurself.youtubeplayer.youtubeplaylistapi.models.YoutubePlaylistResponseModel;
 
 import java.util.List;
 

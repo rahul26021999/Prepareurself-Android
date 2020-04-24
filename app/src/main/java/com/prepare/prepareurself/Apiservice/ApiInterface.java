@@ -12,6 +12,7 @@ import com.prepare.prepareurself.resources.data.model.GetResourcesResponse;
 import com.prepare.prepareurself.resources.data.model.ResourceLikesResponse;
 import com.prepare.prepareurself.resources.data.model.ResourceViewsResponse;
 import com.prepare.prepareurself.authentication.data.model.AuthenticationResponseModel;
+import com.prepare.prepareurself.resources.data.model.VideoShareResponseModel;
 
 import java.util.List;
 
@@ -94,6 +95,10 @@ public interface ApiInterface {
     Call<ResourceLikesResponse> likeProject(@Query("token") String token,
                                             @Query("project_id") int id,
                                             @Query("like") int like);
+
+    @POST("resource")
+    Call<VideoShareResponseModel> getResouceById(@Query("token") String token,
+                                                 @Query("resource_id") int resourceId);
 
 
 }

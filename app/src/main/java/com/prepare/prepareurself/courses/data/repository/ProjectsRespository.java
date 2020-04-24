@@ -16,12 +16,12 @@ import com.prepare.prepareurself.courses.data.model.ProjectsModel;
 import com.prepare.prepareurself.resources.data.model.ResourceLikesResponse;
 import com.prepare.prepareurself.resources.data.model.ResourceViewsResponse;
 import com.prepare.prepareurself.utils.Constants;
-import com.prepare.prepareurself.utils.youtubeplaylistapi.db.PlaylistVideosDbRepository;
-import com.prepare.prepareurself.utils.youtubeplaylistapi.db.SingleVideoItemWrapperRespository;
-import com.prepare.prepareurself.utils.youtubeplaylistapi.models.SingleVIdeoItemWrapper;
-import com.prepare.prepareurself.utils.youtubeplaylistapi.models.VideoItemWrapper;
-import com.prepare.prepareurself.utils.youtubeplaylistapi.models.YoutubePlaylistResponseModel;
-import com.prepare.prepareurself.utils.youtubeplaylistapi.models.YoutubeSingleVideoResponseModel;
+import com.prepare.prepareurself.youtubeplayer.youtubeplaylistapi.db.PlaylistVideosDbRepository;
+import com.prepare.prepareurself.youtubeplayer.youtubeplaylistapi.db.SingleVideoItemWrapperRespository;
+import com.prepare.prepareurself.youtubeplayer.youtubeplaylistapi.models.SingleVIdeoItemWrapper;
+import com.prepare.prepareurself.youtubeplayer.youtubeplaylistapi.models.VideoItemWrapper;
+import com.prepare.prepareurself.youtubeplayer.youtubeplaylistapi.models.YoutubePlaylistResponseModel;
+import com.prepare.prepareurself.youtubeplayer.youtubeplaylistapi.models.YoutubeSingleVideoResponseModel;
 
 import retrofit2.Call;
 import retrofit2.Callback;

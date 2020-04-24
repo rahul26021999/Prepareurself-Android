@@ -21,13 +21,13 @@ import com.prepare.prepareurself.resources.data.db.dao.ResourcesRoomDao;
 import com.prepare.prepareurself.resources.data.model.ResourceModel;
 import com.prepare.prepareurself.authentication.data.db.dao.UserRoomDao;
 import com.prepare.prepareurself.authentication.data.model.UserModel;
-import com.prepare.prepareurself.utils.persitenceUtils.ThumbnaiTypeConverter;
-import com.prepare.prepareurself.utils.persitenceUtils.VideoContentDetailsConverter;
-import com.prepare.prepareurself.utils.persitenceUtils.VideoSnippetConverter;
-import com.prepare.prepareurself.utils.youtubeplaylistapi.db.PlaylistContentDeatilsDao;
-import com.prepare.prepareurself.utils.youtubeplaylistapi.db.SingleVideoItemDao;
-import com.prepare.prepareurself.utils.youtubeplaylistapi.models.SingleVIdeoItemWrapper;
-import com.prepare.prepareurself.utils.youtubeplaylistapi.models.VideoItemWrapper;
+import com.prepare.prepareurself.youtubeplayer.persitenceUtils.ThumbnaiTypeConverter;
+import com.prepare.prepareurself.youtubeplayer.persitenceUtils.VideoContentDetailsConverter;
+import com.prepare.prepareurself.youtubeplayer.persitenceUtils.VideoSnippetConverter;
+import com.prepare.prepareurself.youtubeplayer.youtubeplaylistapi.db.PlaylistContentDeatilsDao;
+import com.prepare.prepareurself.youtubeplayer.youtubeplaylistapi.db.SingleVideoItemDao;
+import com.prepare.prepareurself.youtubeplayer.youtubeplaylistapi.models.SingleVIdeoItemWrapper;
+import com.prepare.prepareurself.youtubeplayer.youtubeplaylistapi.models.VideoItemWrapper;
 
 @Database(entities = {
         UserModel.class,
