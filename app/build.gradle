@@ -93,5 +93,8 @@ dependencies {
     //expandable view
     implementation 'net.cachapa.expandablelayout:expandablelayout:2.9.2'
 
+    //linkify
+    implementation 'me.saket:better-link-movement-method:2.2.0'
+
 
 }

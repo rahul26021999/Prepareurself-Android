@@ -14,6 +14,7 @@ import android.graphics.Bitmap;
 import android.net.Uri;
 import android.os.Bundle;
 import android.text.TextUtils;
+import android.text.util.Linkify;
 import android.util.Log;
 import android.view.View;
 import android.widget.ImageView;
@@ -35,6 +36,8 @@ import net.cachapa.expandablelayout.ExpandableLayout;
 
 import java.io.UnsupportedEncodingException;
 import java.util.List;
+
+import me.saket.bettermovementmethod.BetterLinkMovementMethod;
 
 public class VideoActivity extends YouTubeBaseActivity implements YouTubePlayer.OnInitializedListener, PlaylistItemAdapter.PlaylistItemListener, ViewModelStoreOwner {
 
@@ -190,6 +193,18 @@ public class VideoActivity extends YouTubeBaseActivity implements YouTubePlayer.
                 }
             }
         });
+
+        tvDescription.setMovementMethod(BetterLinkMovementMethod.newInstance());
+        Linkify.addLinks(tvDescription, Linkify.WEB_URLS);
+
+        BetterLinkMovementMethod.linkify(Linkify.ALL, this)
+                .setOnLinkClickListener(new BetterLinkMovementMethod.OnLinkClickListener() {
+                    @Override
+                    public boolean onClick(TextView textView, String url) {
+                        Utility.redirectUsingCustomTab(VideoActivity.this,url);
+                        return true;
+                    }
+                });
 
     }
 
