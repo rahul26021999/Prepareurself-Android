@@ -95,12 +95,26 @@ public class DashboardRvAdapter extends RecyclerView.Adapter implements CoursesH
                 ((AddViewHolder) holder).bindAddView(adText);
                 break;
             case TOPICVIEWTYPE:
-                LiveData<List<TopicsModel>> topicsModels = modelList.get(position).getTopicsModels();
+                final LiveData<List<TopicsModel>> topicsModels = modelList.get(position).getTopicsModels();
                 ((TopicViewHolder) holder).bindCoursesView(modelList.get(position).getCategoryName(),topicsModels, this);
+                ((TopicViewHolder) holder).tvSeeAll.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+                        if (topicsModels.getValue()!=null)
+                            listener.onTopicSeeAll(topicsModels.getValue().get(0).getCourse_id());
+                    }
+                });
                 break;
             case PROJECTVIEWTYPE:
-                LiveData<List<ProjectsModel>> projectModel = modelList.get(position).getProjectModels();
+                final LiveData<List<ProjectsModel>> projectModel = modelList.get(position).getProjectModels();
                 ((ProjectViewHolder) holder).bindProjectsView(modelList.get(position).getCategoryName(),projectModel, this);
+                ((ProjectViewHolder) holder).tvSeeAll.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+                        if (projectModel.getValue()!=null)
+                            listener.onProjectSeeAll(projectModel.getValue().get(0).getCourse_id());
+                    }
+                });
                 break;
             default:
                 return;
@@ -118,13 +132,14 @@ public class DashboardRvAdapter extends RecyclerView.Adapter implements CoursesH
 
     class CourseViewHolder extends RecyclerView.ViewHolder{
 
-        TextView tvCourses;
+        TextView tvCourses, tvSeeAll;
         RecyclerView rvCourses;
 
         public CourseViewHolder(@NonNull View itemView) {
             super(itemView);
             tvCourses = itemView.findViewById(R.id.tv_courses_header_viewtype);
             rvCourses = itemView.findViewById(R.id.rv_courses_dashboard);
+            tvSeeAll  =itemView.findViewById(R.id.tv_see_all);
         }
 
         public void bindCoursesView(String categoryName, LiveData<List<CourseModel>> courses, CoursesHorizontalRvAdapter.DashboardRvInteractor interactor){
@@ -147,13 +162,14 @@ public class DashboardRvAdapter extends RecyclerView.Adapter implements CoursesH
 
     class TopicViewHolder extends RecyclerView.ViewHolder{
 
-        TextView tvCourses;
+        TextView tvCourses, tvSeeAll;
         RecyclerView rvCourses;
 
         public TopicViewHolder(@NonNull View itemView) {
             super(itemView);
             tvCourses = itemView.findViewById(R.id.tv_courses_header_viewtype);
             rvCourses = itemView.findViewById(R.id.rv_courses_dashboard);
+            tvSeeAll  =itemView.findViewById(R.id.tv_see_all);
         }
 
         public void bindCoursesView(String categoryName, LiveData< List<TopicsModel>> topicsModels, TopicsHorizontalRvAdapter.TopicsHorizontalRvListener interactor){
@@ -176,13 +192,14 @@ public class DashboardRvAdapter extends RecyclerView.Adapter implements CoursesH
 
     class ProjectViewHolder extends RecyclerView.ViewHolder{
 
-        TextView tvCourses;
+        TextView tvCourses, tvSeeAll;
         RecyclerView rvCourses;
 
         public ProjectViewHolder(@NonNull View itemView) {
             super(itemView);
             tvCourses = itemView.findViewById(R.id.tv_courses_header_viewtype);
             rvCourses = itemView.findViewById(R.id.rv_courses_dashboard);
+            tvSeeAll  =itemView.findViewById(R.id.tv_see_all);
         }
 
         public void bindProjectsView(String categoryName, LiveData<List<ProjectsModel>> projectModels, ProjectsHorizontalRvAdapter.ProjectsHorizontalRvListener interactor){
@@ -236,6 +253,8 @@ public class DashboardRvAdapter extends RecyclerView.Adapter implements CoursesH
         void onCourseClicked(CourseModel courseModel);
         void onTopicClicked(TopicsModel topicsModel);
         void onProjectClicked(ProjectsModel projectsModel);
+        void onTopicSeeAll(int courseId);
+        void onProjectSeeAll(int courseId);
     }
 
 

@@ -56,4 +56,8 @@ public class Constants {
     public static final String PROJECTSYOUMAYLIKE = "Projects you may like";
     public static final CharSequence NOTIFICATIONCHANNELTITLE = "Notification_Channel";
 
+    public static final String SHOWTOPICS = "showtopics";
+    public static final String SHOWPAGE = "show_page";
+
+    public static final String SHOWPROJECTS = "showprojects";
 }

@@ -18,6 +18,18 @@
         android:fontFamily="@font/poppins_semibold"
         android:id="@+id/tv_courses_header_viewtype"/>
 
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="See All"
+        android:textColor="@color/colorPrimaryDark"
+        android:textSize="16sp"
+        android:elevation="5dp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        android:fontFamily="@font/proximanovaregular"
+        android:id="@+id/tv_see_all"/>
+
     <androidx.recyclerview.widget.RecyclerView
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
