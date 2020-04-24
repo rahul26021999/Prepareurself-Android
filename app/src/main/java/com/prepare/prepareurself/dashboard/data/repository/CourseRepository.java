@@ -57,7 +57,7 @@ public class CourseRepository {
             @Override
             public void onFailure(Call<GetCourseResponseModel> call, Throwable t) {
                 data.setValue(null);
-                Log.d("course_api_debug",t.getLocalizedMessage());
+                Log.d("course_api_debug",t.getLocalizedMessage()+call+"");
 
             }
         });

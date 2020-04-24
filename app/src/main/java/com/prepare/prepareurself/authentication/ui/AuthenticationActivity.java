@@ -6,6 +6,7 @@ import androidx.viewpager.widget.ViewPager;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.text.TextUtils;
 import android.util.Log;
 import android.widget.Toast;
 
@@ -13,6 +14,7 @@ import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.iid.FirebaseInstanceId;
 import com.google.firebase.iid.InstanceIdResult;
+import com.onesignal.OneSignal;
 import com.prepare.prepareurself.Home.ui.HomeActivity;
 import com.prepare.prepareurself.R;
 import com.prepare.prepareurself.adapters.AuthenticationPagerAdapter;
@@ -49,7 +51,10 @@ public class AuthenticationActivity extends AppCompatActivity {
     @Override
     protected void onResume() {
         super.onResume();
-        getAndroidToken();
+//        getAndroidToken();
+        String UUID = OneSignal.getPermissionSubscriptionState().getSubscriptionStatus().getUserId();
+        if (!TextUtils.isEmpty(UUID))
+            prefManager.saveString(Constants.ANDROIDTOKEN,UUID);
     }
 
     private void getAndroidToken() {
