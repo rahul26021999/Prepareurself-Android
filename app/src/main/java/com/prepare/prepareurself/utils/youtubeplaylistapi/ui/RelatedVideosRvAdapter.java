@@ -1,9 +1,10 @@
-package com.prepare.prepareurself.resources.ui.adapter;
+package com.prepare.prepareurself.utils.youtubeplaylistapi.ui;
 
 import android.content.Context;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.TextView;
 
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
@@ -22,9 +23,11 @@ public class RelatedVideosRvAdapter extends RecyclerView.Adapter<RelatedVideosRv
 
     private Context context;
     private List<ResourceModel> resourceModels;
+    private RelatedRvListener listener;
 
-    public RelatedVideosRvAdapter(Context context) {
+    public RelatedVideosRvAdapter(Context context, RelatedRvListener listener) {
         this.context = context;
+        this.listener = listener;
     }
 
     public void setResources(List<ResourceModel> resources){
@@ -40,8 +43,14 @@ public class RelatedVideosRvAdapter extends RecyclerView.Adapter<RelatedVideosRv
 
     @Override
     public void onBindViewHolder(@NonNull RelatedVideosViewHolder holder, int position) {
-        ResourceModel resourceModel = resourceModels.get(position);
+        final ResourceModel resourceModel = resourceModels.get(position);
         holder.bindView(resourceModel);
+        holder.itemView.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                listener.onRelatedItemClicked(resourceModel);
+            }
+        });
     }
 
     @Override
@@ -56,15 +65,19 @@ public class RelatedVideosRvAdapter extends RecyclerView.Adapter<RelatedVideosRv
     public class RelatedVideosViewHolder extends RecyclerView.ViewHolder{
 
         YouTubeThumbnailView youTubeThumbnailView;
+        TextView textView;
 
         private boolean readyForLoadingYoutubeThumbnail = true;
 
         public RelatedVideosViewHolder(@NonNull View itemView) {
             super(itemView);
             youTubeThumbnailView = itemView.findViewById(R.id.related_video_youtubethumnail);
+            textView = itemView.findViewById(R.id.tv_rekated_title);
         }
 
         public void bindView(ResourceModel resourceModel) {
+
+            textView.setText(resourceModel.getTitle());
 
             final String videoCode = Utility.getVideoCode(resourceModel.getLink());
 
@@ -105,6 +118,10 @@ public class RelatedVideosRvAdapter extends RecyclerView.Adapter<RelatedVideosRv
             }
 
         }
+    }
+
+    public interface RelatedRvListener{
+        void onRelatedItemClicked(ResourceModel resourceModel);
     }
 
 }

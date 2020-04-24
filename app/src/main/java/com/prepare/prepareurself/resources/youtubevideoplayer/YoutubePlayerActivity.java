@@ -17,11 +17,9 @@ import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.content.ContextCompat;
 import androidx.lifecycle.Observer;
-import androidx.lifecycle.ViewModelProvider;
 import androidx.lifecycle.ViewModelProviders;
 import androidx.recyclerview.widget.RecyclerView;
 
-import com.google.android.youtube.player.YouTubeBaseActivity;
 import com.pierfrancescosoffritti.androidyoutubeplayer.core.player.YouTubePlayer;
 import com.pierfrancescosoffritti.androidyoutubeplayer.core.player.listeners.AbstractYouTubePlayerListener;
 import com.pierfrancescosoffritti.androidyoutubeplayer.core.player.listeners.YouTubePlayerFullScreenListener;
@@ -30,7 +28,7 @@ import com.pierfrancescosoffritti.androidyoutubeplayer.core.player.views.YouTube
 import com.pierfrancescosoffritti.androidyoutubeplayer.core.ui.menu.MenuItem;
 import com.prepare.prepareurself.resources.data.db.repository.ResourcesDbRepository;
 import com.prepare.prepareurself.resources.data.model.ResourceModel;
-import com.prepare.prepareurself.resources.ui.adapter.RelatedVideosRvAdapter;
+import com.prepare.prepareurself.utils.youtubeplaylistapi.ui.RelatedVideosRvAdapter;
 import com.prepare.prepareurself.R;
 import com.prepare.prepareurself.utils.Constants;
 import com.prepare.prepareurself.utils.Utility;
@@ -75,7 +73,7 @@ public class YoutubePlayerActivity extends AppCompatActivity {
         viewModel = ViewModelProviders.of(this).get(YoutubeViewModel.class);
 
         resourcesDbRepository = new ResourcesDbRepository(getApplication());
-        adapter = new RelatedVideosRvAdapter(this);
+//        adapter = new RelatedVideosRvAdapter(this);
 
         youTubePlayerView = findViewById(R.id.youtube_playerview);
         tvTitle = findViewById(R.id.tv_youtube_title);

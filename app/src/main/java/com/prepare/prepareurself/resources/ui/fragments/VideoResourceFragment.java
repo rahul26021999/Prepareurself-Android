@@ -157,6 +157,7 @@ public class VideoResourceFragment extends Fragment implements VideoResoursesRvA
         intent.putExtra(Constants.RESOURCEVIDEO,true);
         intent.putExtra(Constants.VIDEOTITLE, videoResources.getTitle());
         intent.putExtra(Constants.VIDEODESCRIPTION, videoResources.getDescription());
+        intent.putExtra(Constants.TOPICID, videoResources.getCourse_topic_id());
 
         try {
             Uri bitmapUri = Utility.getUriOfBitmap(bitmap, getActivity());
