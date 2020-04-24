@@ -148,7 +148,8 @@ public class VideoResourceFragment extends Fragment implements VideoResoursesRvA
     @Override
     public void videoClicked(ResourceModel videoResources, String videoCode, Bitmap bitmap) {
 
-        mViewModel.resourceViewed(prefManager.getString(Constants.JWTTOKEN),videoResources.getId());
+        if (videoResources.getView() == 0)
+            mViewModel.resourceViewed(prefManager.getString(Constants.JWTTOKEN),videoResources.getId());
 
         Intent intent = new Intent(getActivity(), VideoActivity.class);
         intent.putExtra(Constants.VIDEOCODE,videoCode);
@@ -165,5 +166,10 @@ public class VideoResourceFragment extends Fragment implements VideoResoursesRvA
         }
 
         startActivity(intent);
+    }
+
+    @Override
+    public void onVideoResourceLiked(ResourceModel resourceModel, int liked) {
+        mViewModel.resourcesLiked(prefManager.getString(Constants.JWTTOKEN), resourceModel.getId(), liked);
     }
 }
