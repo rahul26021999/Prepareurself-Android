@@ -6,11 +6,13 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ImageView;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.like.LikeButton;
 import com.prepare.prepareurself.resources.data.model.ResourceModel;
 import com.prepare.prepareurself.R;
 import com.prepare.prepareurself.utils.Constants;
@@ -72,19 +74,35 @@ public class VideoResoursesRvAdapter extends RecyclerView.Adapter<VideoResourses
 
     class VideoResourcesViewHolder extends RecyclerView.ViewHolder{
 
-        YouTubeThumbnailView imageView;
-        TextView tvTitle;
-        View bottomView;
-        TextView tvDescription;
+//        YouTubeThumbnailView imageView;
+//        TextView tvTitle;
+//        View bottomView;
+//        TextView tvDescription;
+
+
+        private LikeButton hitLike;
+        private YouTubeThumbnailView imageView;
+        private TextView tvTitle;
+        private TextView tvDescription;
+        private ImageView imgShare;
+        private TextView tvViews, tvLikes;
 
         private boolean readyForLoadingYoutubeThumbnail = true;
 
         public VideoResourcesViewHolder(@NonNull View itemView) {
             super(itemView);
 
-            imageView = itemView.findViewById(R.id.img_video_resources_adapter);
-            tvTitle = itemView.findViewById(R.id.tv_video_resources_title);
-            tvDescription = itemView.findViewById(R.id.tv_video_resources_decription);
+//            imageView = itemView.findViewById(R.id.img_video_resources_adapter);
+//            tvTitle = itemView.findViewById(R.id.tv_video_resources_title);
+//            tvDescription = itemView.findViewById(R.id.tv_video_resources_decription);
+
+            imageView = itemView.findViewById(R.id.topic_image);
+            tvTitle = itemView.findViewById(R.id.tv_title_topic);
+            tvDescription = itemView.findViewById(R.id.tv_decription_topic);
+            hitLike=itemView.findViewById(R.id.hitLike);
+            imgShare = itemView.findViewById(R.id.img_share_theory_resource);
+            tvViews = itemView.findViewById(R.id.no_of_views);
+            tvLikes = itemView.findViewById(R.id.tv_no_of_likes);
         }
 
         public void bindView(final ResourceModel v1, final String videoCode) {

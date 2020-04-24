@@ -28,6 +28,7 @@ import com.prepare.prepareurself.resources.viewmodel.ResourceViewModel;
 import com.prepare.prepareurself.resources.youtubevideoplayer.YoutubePlayerActivity;
 import com.prepare.prepareurself.R;
 import com.prepare.prepareurself.utils.Constants;
+import com.prepare.prepareurself.utils.DividerItemDecoration;
 import com.prepare.prepareurself.utils.PrefManager;
 import com.prepare.prepareurself.utils.Utility;
 import com.prepare.prepareurself.utils.youtubeplaylistapi.ui.VideoActivity;
@@ -71,6 +72,8 @@ public class VideoResourceFragment extends Fragment implements VideoResoursesRvA
         final LinearLayoutManager layoutManager = new LinearLayoutManager(getActivity(),RecyclerView.VERTICAL,false);
         rvVideoResources.setLayoutManager(layoutManager);
       //  rvVideoResources.addItemDecoration(new DividerItemDecoration(getActivity()));
+        DividerItemDecoration decoration = new DividerItemDecoration(requireContext(),R.drawable.theory_resource_divider);
+        rvVideoResources.addItemDecoration(decoration);
         rvVideoResources.setAdapter(adapter);
 
         if (ResourcesActivity.topicID!=-1){
