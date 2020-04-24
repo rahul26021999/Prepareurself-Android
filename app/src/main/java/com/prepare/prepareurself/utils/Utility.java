@@ -8,6 +8,7 @@ import android.graphics.Canvas;
 import android.graphics.Color;
 import android.graphics.drawable.Drawable;
 import android.net.Uri;
+import android.text.TextUtils;
 import android.util.Base64;
 import android.util.Log;
 import android.util.Patterns;
@@ -18,6 +19,7 @@ import androidx.browser.customtabs.CustomTabsIntent;
 import androidx.core.content.ContextCompat;
 
 import com.bumptech.glide.request.transition.ViewPropertyTransition;
+import com.onesignal.OneSignal;
 import com.prepare.prepareurself.R;
 
 import java.io.File;
@@ -158,5 +160,9 @@ public class Utility {
     public static Date stringToDate(String date) throws ParseException {
 
         return new SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss.SSSZ").parse(date);
+    }
+
+    public static String getOneSignalId(){
+        return OneSignal.getPermissionSubscriptionState().getSubscriptionStatus().getUserId();
     }
 }

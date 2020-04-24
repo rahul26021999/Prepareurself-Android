@@ -146,8 +146,10 @@ public class TheoryResourceFragment extends Fragment implements TheoryResourcesR
     @Override
     public void onResourceClicked(ResourceModel resource) {
         Utility.redirectUsingCustomTab(getActivity(),resource.getLink());
+        if (resource.getView()==0){
+            mViewModel.resourceViewed(prefManager.getString(Constants.JWTTOKEN),resource.getId());
+        }
 
-        mViewModel.resourceViewed(prefManager.getString(Constants.JWTTOKEN),resource.getId());
     }
 
     @Override
