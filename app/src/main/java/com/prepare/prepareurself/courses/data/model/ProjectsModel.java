@@ -45,10 +45,6 @@ public class ProjectsModel {
     @SerializedName("playlist")
     private  String playlist;
 
-    @ColumnInfo(name = "views")
-    @SerializedName("views")
-    private int views;
-
     @ColumnInfo(name = "course_id")
     @SerializedName("course_id")
     private int course_id;
@@ -64,6 +60,54 @@ public class ProjectsModel {
     @ColumnInfo(name = "updated_at")
     @SerializedName("updated_at")
     private String updated_at;
+
+    @ColumnInfo(name = "like")
+    @SerializedName("like")
+    private int like;
+
+    @ColumnInfo(name = "total_likes")
+    @SerializedName("total_likes")
+    private int total_likes;
+
+    @ColumnInfo(name = "view")
+    @SerializedName("view")
+    private int view;
+
+    @ColumnInfo(name = "total_views")
+    @SerializedName("total_views")
+    private int total_views;
+
+    public int getLike() {
+        return like;
+    }
+
+    public void setLike(int like) {
+        this.like = like;
+    }
+
+    public int getTotal_likes() {
+        return total_likes;
+    }
+
+    public void setTotal_likes(int total_likes) {
+        this.total_likes = total_likes;
+    }
+
+    public int getView() {
+        return view;
+    }
+
+    public void setView(int view) {
+        this.view = view;
+    }
+
+    public int getTotal_views() {
+        return total_views;
+    }
+
+    public void setTotal_views(int total_views) {
+        this.total_views = total_views;
+    }
 
     public int getId() {
         return id;
@@ -127,14 +171,6 @@ public class ProjectsModel {
 
     public void setPlaylist(String playlist) {
         this.playlist = playlist;
-    }
-
-    public int getViews() {
-        return views;
-    }
-
-    public void setViews(int views) {
-        this.views = views;
     }
 
     public int getCourse_id() {
