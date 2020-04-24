@@ -62,7 +62,7 @@ public class ResourcesActivity extends AppCompatActivity implements View.OnClick
 
         if (intent.getData()!=null){
             Log.d("deeplink_debug","resource activity "+intent.getData()+"");
-            topicID = Integer.parseInt(intent.getData().toString().split("&id=")[1]);
+           // topicID = Integer.parseInt(intent.getData().toString().split("&id=")[1]);
           //  Utility.redirectUsingCustomTab(this,resource.getLink());
             viewPager.setCurrentItem(1);
 //            try {
@@ -73,6 +73,9 @@ public class ResourcesActivity extends AppCompatActivity implements View.OnClick
 //            } catch (UnsupportedEncodingException e) {
 //                e.printStackTrace();
 //            }
+
+            String url = intent.getData().toString().split("&link=")[1];
+            Utility.redirectUsingCustomTab(this,url);
 
         }else{
             topicID = intent.getIntExtra(Constants.TOPICID,-1);
