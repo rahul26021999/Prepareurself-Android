@@ -1,7 +1,6 @@
 package com.prepare.prepareurself.authentication.ui;
 
 import android.app.ProgressDialog;
-import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
 
@@ -19,7 +18,6 @@ import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import com.prepare.prepareurself.Home.ui.HomeActivity;
 import com.prepare.prepareurself.R;
@@ -29,6 +27,7 @@ import com.prepare.prepareurself.authentication.viewmodel.AuthViewModel;
 import com.prepare.prepareurself.utils.Constants;
 import com.prepare.prepareurself.utils.PrefManager;
 import com.prepare.prepareurself.utils.Utility;
+import com.prepare.prepareurself.youtubeplayer.youtubeplaylistapi.ui.VideoActivity;
 
 
 /**
@@ -170,11 +169,19 @@ public class LoginFragment extends Fragment implements View.OnClickListener{
                         if (authenticationResponseModel.getError_code()==0){
                             prefManager.saveBoolean(Constants.ISLOGGEDIN, true);
                             prefManager.saveString(Constants.JWTTOKEN,authenticationResponseModel.getToken());
-
                             Utility.showToast(getActivity(),"Login done!");
-                            Intent intent=new Intent(getActivity(), HomeActivity.class);
-                            startActivity(intent);
-                            getActivity().finish();
+
+                            if (AuthenticationActivity.resourceId!=-1){
+                                Intent intent=new Intent(getActivity(), VideoActivity.class);
+                                intent.putExtra(Constants.DEEPSHAREVIDEOAFTERLOGIN,true);
+                                intent.putExtra(Constants.RESOURCEID, AuthenticationActivity.resourceId);
+                                startActivity(intent);
+                                getActivity().finish();
+                            }else{
+                                Intent intent=new Intent(getActivity(), HomeActivity.class);
+                                startActivity(intent);
+                                getActivity().finish();
+                            }
                         }else{
                             Utility.showToast(getActivity(),authenticationResponseModel.getMessage());
                         }

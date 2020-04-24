@@ -15,7 +15,7 @@ import com.bumptech.glide.GenericTransitionOptions;
 import com.bumptech.glide.Glide;
 import com.prepare.prepareurself.R;
 import com.prepare.prepareurself.utils.Utility;
-import com.prepare.prepareurself.utils.youtubeplaylistapi.models.VideoItemWrapper;
+import com.prepare.prepareurself.youtubeplayer.youtubeplaylistapi.models.VideoItemWrapper;
 
 import java.util.List;
 

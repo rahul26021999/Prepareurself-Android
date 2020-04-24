@@ -28,13 +28,13 @@ import com.pierfrancescosoffritti.androidyoutubeplayer.core.player.views.YouTube
 import com.pierfrancescosoffritti.androidyoutubeplayer.core.ui.menu.MenuItem;
 import com.prepare.prepareurself.resources.data.db.repository.ResourcesDbRepository;
 import com.prepare.prepareurself.resources.data.model.ResourceModel;
-import com.prepare.prepareurself.utils.youtubeplaylistapi.ui.RelatedVideosRvAdapter;
+import com.prepare.prepareurself.youtubeplayer.youtubeplaylistapi.ui.RelatedVideosRvAdapter;
 import com.prepare.prepareurself.R;
 import com.prepare.prepareurself.utils.Constants;
 import com.prepare.prepareurself.utils.Utility;
-import com.prepare.prepareurself.utils.youtubeplaylistapi.models.VideoItemWrapper;
-import com.prepare.prepareurself.utils.youtubeplaylistapi.utils.FullScreenHelper;
-import com.prepare.prepareurself.utils.youtubeplaylistapi.viewmodel.YoutubeViewModel;
+import com.prepare.prepareurself.youtubeplayer.youtubeplaylistapi.models.VideoItemWrapper;
+import com.prepare.prepareurself.youtubeplayer.youtubeplaylistapi.utils.FullScreenHelper;
+import com.prepare.prepareurself.youtubeplayer.youtubeplaylistapi.viewmodel.YoutubeViewModel;
 
 import java.io.UnsupportedEncodingException;
 

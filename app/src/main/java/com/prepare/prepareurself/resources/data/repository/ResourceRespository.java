@@ -14,6 +14,7 @@ import com.prepare.prepareurself.resources.data.model.ResourceLikesResponse;
 import com.prepare.prepareurself.resources.data.model.ResourceModel;
 import com.prepare.prepareurself.resources.data.model.ResourceViewsResponse;
 import com.prepare.prepareurself.resources.data.model.ResourcesResponse;
+import com.prepare.prepareurself.resources.data.model.VideoShareResponseModel;
 
 import retrofit2.Call;
 import retrofit2.Callback;
@@ -100,4 +101,27 @@ public class ResourceRespository {
         });
     }
 
+    public LiveData<VideoShareResponseModel> getResourceByIdForShare(String token, int resourceId) {
+        final MutableLiveData<VideoShareResponseModel> data = new MutableLiveData<>();
+
+        apiInterface.getResouceById(token, resourceId).enqueue(new Callback<VideoShareResponseModel>() {
+            @Override
+            public void onResponse(Call<VideoShareResponseModel> call, Response<VideoShareResponseModel> response) {
+                VideoShareResponseModel responseModel = response.body();
+                if (responseModel!=null){
+                    data.setValue(responseModel);
+                }else{
+                    data.setValue(null);
+                }
+            }
+
+            @Override
+            public void onFailure(Call<VideoShareResponseModel> call, Throwable t) {
+                data.setValue(null);
+            }
+        });
+
+        return data;
+
+    }
 }
