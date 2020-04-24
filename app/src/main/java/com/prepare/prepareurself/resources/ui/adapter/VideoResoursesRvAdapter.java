@@ -13,6 +13,7 @@ import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.like.LikeButton;
+import com.like.OnLikeListener;
 import com.prepare.prepareurself.resources.data.model.ResourceModel;
 import com.prepare.prepareurself.R;
 import com.prepare.prepareurself.utils.Constants;
@@ -58,6 +59,20 @@ public class VideoResoursesRvAdapter extends RecyclerView.Adapter<VideoResourses
             public void onClick(View v) {
                 Bitmap bitmap = Utility.getBitmapFromView(holder.imageView);
                 listener.videoClicked(v1,videoCode, bitmap);
+            }
+        });
+
+        holder.hitLike.setOnLikeListener(new OnLikeListener() {
+            @Override
+            public void liked(LikeButton likeButton) {
+                holder.tvLikes.setText(v1.getTotal_likes() + 1 +" likes");
+                listener.onVideoResourceLiked(v1, 0);
+            }
+
+            @Override
+            public void unLiked(LikeButton likeButton) {
+                holder.tvLikes.setText(v1.getTotal_likes() + " likes");
+                listener.onVideoResourceLiked(v1, 1);
             }
         });
 
@@ -109,6 +124,14 @@ public class VideoResoursesRvAdapter extends RecyclerView.Adapter<VideoResourses
 
             tvTitle.setText(v1.getTitle());
             tvDescription.setText(v1.getDescription());
+            tvLikes.setText(v1.getTotal_likes() + " likes");
+            tvViews.setText(v1.getTotal_views() + " views");
+
+            if (v1.getLike() == 1){
+                hitLike.setLiked(true);
+            }else{
+                hitLike.setLiked(false);
+            }
 
             if (readyForLoadingYoutubeThumbnail){
                 readyForLoadingYoutubeThumbnail = false;
@@ -151,6 +174,7 @@ public class VideoResoursesRvAdapter extends RecyclerView.Adapter<VideoResourses
 
     public interface VideoResourceInteractor{
         void videoClicked(ResourceModel videoResources, String videoCode, Bitmap bitmap);
+        void onVideoResourceLiked(ResourceModel resourceModel, int liked);
     }
 
 }
