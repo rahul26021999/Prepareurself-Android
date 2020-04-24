@@ -2,10 +2,19 @@ package com.prepare.prepareurself.resources.data.model;
 
 public class ResourceViewsResponse {
     int error_code;
-    String msg;
+    String message;
+    boolean success;
 
     public ResourceViewsResponse(){
 
+    }
+
+    public boolean isSuccess() {
+        return success;
+    }
+
+    public void setSuccess(boolean success) {
+        this.success = success;
     }
 
     public int getError_code() {
@@ -16,11 +25,11 @@ public class ResourceViewsResponse {
         this.error_code = error_code;
     }
 
-    public String getMsg() {
-        return msg;
+    public String getMessage() {
+        return message;
     }
 
-    public void setMsg(String msg) {
-        this.msg = msg;
+    public void setMessage(String message) {
+        this.message = message;
     }
 }

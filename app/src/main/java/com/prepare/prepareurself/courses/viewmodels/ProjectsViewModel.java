@@ -85,4 +85,8 @@ public class ProjectsViewModel extends AndroidViewModel {
     public LiveData<ResourceLikesResponse> likeProject(String token, int id, int liked) {
         return respository.likeProject(token,id,liked);
     }
+
+    public void viewProject(String token,int id) {
+        respository.viewProject(token,id);
+    }
 }

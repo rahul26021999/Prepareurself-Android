@@ -48,9 +48,13 @@ public interface ApiInterface {
                                             @Query("page") int pageNumber,
                                             @Query("count") int count,
                                             @Query("type") String type);
-    @POST("view-resource")
+    @POST("view-resource-project")
     Call<ResourceViewsResponse> resourceViewed(@Query("token") String token,
                                                @Query("resource_id") int resourceId);
+
+    @POST("view-resource-project")
+    Call<ResourceViewsResponse> projectViewed(@Query("token") String token,
+                                               @Query("project_id") int projectId);
 
     //likes-api
     @POST("hit-like")

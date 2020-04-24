@@ -25,6 +25,7 @@ import com.prepare.prepareurself.courses.ui.adapters.PlaylistVideosRvAdapter;
 import com.prepare.prepareurself.courses.viewmodels.ProjectsViewModel;
 import com.prepare.prepareurself.R;
 import com.prepare.prepareurself.utils.Constants;
+import com.prepare.prepareurself.utils.PrefManager;
 import com.prepare.prepareurself.utils.Utility;
 import com.prepare.prepareurself.utils.youtubeplaylistapi.models.SingleVIdeoItemWrapper;
 import com.prepare.prepareurself.utils.youtubeplaylistapi.models.VideoItemWrapper;
@@ -50,6 +51,7 @@ public class ProjectsActivity extends AppCompatActivity implements PlaylistVideo
     private String videoTitle = "", videoDescription="", videoCode ="";
     private String projectTitle = "";
     private String projectDescription = "";
+    private PrefManager prefManager;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -74,6 +76,8 @@ public class ProjectsActivity extends AppCompatActivity implements PlaylistVideo
         tvViewPlaylist.setVisibility(View.GONE);
         tvLoading.setVisibility(View.VISIBLE);
 
+        prefManager = new PrefManager(this);
+
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
         getSupportActionBar().setDisplayShowHomeEnabled(true);
 
@@ -90,7 +94,12 @@ public class ProjectsActivity extends AppCompatActivity implements PlaylistVideo
             viewModel.getProjectById(projectId).observe(this, new Observer<ProjectsModel>() {
                 @Override
                 public void onChanged(ProjectsModel projectsModel) {
-                    updateUIWithProject(projectsModel);
+                    if (projectsModel!=null){
+                        if (projectsModel.getView()==0){
+                            viewModel.viewProject(prefManager.getString(Constants.JWTTOKEN),projectsModel.getId());
+                        }
+                        updateUIWithProject(projectsModel);
+                    }
                 }
             });
         }
