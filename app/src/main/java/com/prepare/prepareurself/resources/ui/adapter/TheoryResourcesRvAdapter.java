@@ -132,7 +132,7 @@ public class TheoryResourcesRvAdapter extends RecyclerView.Adapter<TheoryResourc
 
             tvTitle.setText(resourceModel.getTitle());
             tvDescription.setText(resourceModel.getDescription());
-            tvViews.setText(resourceModel.getViews()+" views");
+            tvViews.setText(resourceModel.getTotal_views()+" views");
             tvLikes.setText(resourceModel.getTotal_likes() + " likes");
 
             if (resourceModel.getLike() == 1){

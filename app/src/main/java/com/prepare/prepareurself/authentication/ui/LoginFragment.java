@@ -150,13 +150,17 @@ public class LoginFragment extends Fragment implements View.OnClickListener{
                 return;
             }
 
-            String androidToken = prefManager.getString(Constants.ANDROIDTOKEN);
+//            String androidToken = prefManager.getString(Constants.ANDROIDTOKEN);
 
-            if (!TextUtils.isEmpty(androidToken)){
-                viewModel.login(strEmail,strPassword, androidToken);
+            String androidToken = Utility.getOneSignalId();
 
-                showLoader();
+            if (TextUtils.isEmpty(androidToken)){
+                return;
             }
+
+            viewModel.login(strEmail,strPassword, androidToken);
+
+            showLoader();
 
 
             viewModel.getAuthenticationResponseModelMutableLiveData().observe(getActivity(), new Observer<AuthenticationResponseModel>() {

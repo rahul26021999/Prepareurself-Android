@@ -50,10 +50,6 @@ public class ResourceModel {
     @SerializedName("updated_at")
     private String updated_at;
 
-    @ColumnInfo(name = "views")
-    @SerializedName("views")
-    private int views;
-
     @ColumnInfo(name = "like")
     @SerializedName("like")
     private int like;
@@ -62,12 +58,28 @@ public class ResourceModel {
     @SerializedName("total_likes")
     private int total_likes;
 
-    public int getViews() {
-        return views;
+    @ColumnInfo(name = "view")
+    @SerializedName("view")
+    private int view;
+
+    @ColumnInfo(name = "total_views")
+    @SerializedName("total_views")
+    private int total_views;
+
+    public int getView() {
+        return view;
     }
 
-    public void setViews(int views) {
-        this.views = views;
+    public void setView(int view) {
+        this.view = view;
+    }
+
+    public int getTotal_views() {
+        return total_views;
+    }
+
+    public void setTotal_views(int total_views) {
+        this.total_views = total_views;
     }
 
     public int getLike() {

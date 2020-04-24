@@ -52,9 +52,7 @@ public class AuthenticationActivity extends AppCompatActivity {
     protected void onResume() {
         super.onResume();
 //        getAndroidToken();
-        String UUID = OneSignal.getPermissionSubscriptionState().getSubscriptionStatus().getUserId();
-        if (!TextUtils.isEmpty(UUID))
-            prefManager.saveString(Constants.ANDROIDTOKEN,UUID);
+
     }
 
     private void getAndroidToken() {
