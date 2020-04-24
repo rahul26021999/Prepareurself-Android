@@ -14,6 +14,7 @@ import com.prepare.prepareurself.courses.data.model.GetProjectResponse;
 import com.prepare.prepareurself.courses.data.model.ProjectResponse;
 import com.prepare.prepareurself.courses.data.model.ProjectsModel;
 import com.prepare.prepareurself.resources.data.model.ResourceLikesResponse;
+import com.prepare.prepareurself.resources.data.model.ResourceViewsResponse;
 import com.prepare.prepareurself.utils.Constants;
 import com.prepare.prepareurself.utils.youtubeplaylistapi.db.PlaylistVideosDbRepository;
 import com.prepare.prepareurself.utils.youtubeplaylistapi.db.SingleVideoItemWrapperRespository;
@@ -166,5 +167,22 @@ public class ProjectsRespository {
 
         return data;
 
+    }
+
+    public void viewProject(String token,int id) {
+        apiInterface.projectViewed(token, id).enqueue(new Callback<ResourceViewsResponse>() {
+            @Override
+            public void onResponse(Call<ResourceViewsResponse> call, Response<ResourceViewsResponse> response) {
+                ResourceViewsResponse resourceViewsResponse = response.body();
+                if (resourceViewsResponse!=null){
+                    Log.d("project_viewed",resourceViewsResponse.getMessage());
+                }
+            }
+
+            @Override
+            public void onFailure(Call<ResourceViewsResponse> call, Throwable t) {
+                Log.d("project_viewed",t.getLocalizedMessage()+"");
+            }
+        });
     }
 }

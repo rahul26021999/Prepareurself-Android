@@ -67,7 +67,7 @@ public class ResourceRespository {
             public void onResponse(Call<ResourceViewsResponse> call, Response<ResourceViewsResponse> response) {
                 ResourceViewsResponse resourceViewsResponse = response.body();
                 if (resourceViewsResponse!=null){
-                    Log.d("resource_viewed",resourceViewsResponse.getMsg());
+                    Log.d("resource_viewed",resourceViewsResponse.getMessage());
                 }else{
                     Log.d("resource_viewed","null response");
                 }
