@@ -6,6 +6,7 @@ import androidx.viewpager.widget.ViewPager;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.text.TextUtils;
 import android.util.Log;
 import android.view.MenuItem;
 import android.view.View;
@@ -33,6 +34,7 @@ public class CoursesActivity extends AppCompatActivity implements View.OnClickLi
     private TopicViewModel topicViewModel;
 
     private PrefManager prefManager;
+    private String courseName;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -49,7 +51,6 @@ public class CoursesActivity extends AppCompatActivity implements View.OnClickLi
 
         prefManager = new PrefManager(CoursesActivity.this);
 
-        title.setText("");//Course Name Here
 
         SectionsPagerAdapter sectionsPagerAdapter = new SectionsPagerAdapter(getSupportFragmentManager());
         sectionsPagerAdapter.addFragment(ProjectsFragment.newInstance(),"Projects");
@@ -63,6 +64,12 @@ public class CoursesActivity extends AppCompatActivity implements View.OnClickLi
             Log.d("deeplink_debug","course avtivity : "+getIntent().getData()+"");
         }else{
             courseId = intent.getIntExtra(Constants.COURSEID, -1);
+            courseName = intent.getStringExtra(Constants.COURSENAME);
+            if (!TextUtils.isEmpty(courseName)){
+                title.setText(courseName);//Course Name Here
+            }else{
+                title.setText("Tech Stack");
+            }
             if (intent.getStringExtra(Constants.SHOWPAGE)!=null){
                 String showPage = intent.getStringExtra(Constants.SHOWPAGE);
                 Log.d("se_all_debug",showPage+"");

@@ -175,6 +175,7 @@ public class HomeActivity extends AppCompatActivity implements NavigationView.On
     public void onCourseClicked(CourseModel courseModel) {
         Intent intent = new Intent(HomeActivity.this,CoursesActivity.class);
         intent.putExtra(Constants.COURSEID,courseModel.getId());
+        intent.putExtra(Constants.COURSENAME,courseModel.getName());
         startActivity(intent);
     }
 
