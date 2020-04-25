@@ -5,6 +5,7 @@ import androidx.lifecycle.ViewModelProvider;
 
 import android.content.Context;
 import android.content.Intent;
+import android.graphics.Color;
 import android.os.Bundle;
 
 import androidx.annotation.NonNull;
@@ -29,6 +30,7 @@ import com.prepare.prepareurself.courses.data.model.TopicsResponseModel;
 import com.prepare.prepareurself.courses.ui.activity.AllCoursesActivity;
 import com.prepare.prepareurself.courses.ui.activity.CoursesActivity;
 import com.prepare.prepareurself.dashboard.data.model.CourseModel;
+import com.prepare.prepareurself.dashboard.ui.adapters.SliderAdapter;
 import com.prepare.prepareurself.dashboard.viewmodel.DashboardViewModel;
 import com.prepare.prepareurself.dashboard.data.model.DashboardRecyclerviewModel;
 import com.prepare.prepareurself.dashboard.ui.adapters.CustomPagerAdapter;
@@ -41,6 +43,9 @@ import com.prepare.prepareurself.utils.FixedSpeedScroller;
 import com.prepare.prepareurself.utils.PrefManager;
 import com.prepare.prepareurself.utils.Utility;
 import com.prepare.prepareurself.utils.ZoomPageOutTransaformer;
+import com.smarteist.autoimageslider.IndicatorAnimations;
+import com.smarteist.autoimageslider.SliderAnimations;
+import com.smarteist.autoimageslider.SliderView;
 
 import java.lang.reflect.Field;
 import java.util.ArrayList;
@@ -65,6 +70,7 @@ public class DashboardFragment extends Fragment implements DashboardRvAdapter.Da
     private PrefManager prefManager;
     private int preferredCourseId = 1;
     List<DashboardRecyclerviewModel> dashboardRecyclerviewModelList;
+    private SliderView sliderView;
 
 
     public interface HomeActivityInteractor{
@@ -86,6 +92,7 @@ public class DashboardFragment extends Fragment implements DashboardRvAdapter.Da
         viewPager = view.findViewById(R.id.viewpager_dashboard);
         dotsContainer = view.findViewById(R.id.dotsContainer);
         recyclerView = view.findViewById(R.id.rv_main_dashboard);
+        sliderView =view.findViewById(R.id.imageSlider);
 
         prefManager = new PrefManager(getActivity());
 
@@ -109,6 +116,16 @@ public class DashboardFragment extends Fragment implements DashboardRvAdapter.Da
         recyclerView.setAdapter(dashboardRvAdapter);
 
         dashboardRecyclerviewModelList = new ArrayList<>();
+
+        final SliderAdapter sliderAdapter = new SliderAdapter(getActivity());
+        sliderView.setSliderAdapter(sliderAdapter);
+        sliderView.setIndicatorAnimation(IndicatorAnimations.WORM); //set indicator animation by using SliderLayout.IndicatorAnimations. :WORM or THIN_WORM or COLOR or DROP or FILL or NONE or SCALE or SCALE_DOWN or SLIDE and SWAP!!
+        sliderView.setSliderTransformAnimation(SliderAnimations.SIMPLETRANSFORMATION);
+        sliderView.setAutoCycleDirection(SliderView.AUTO_CYCLE_DIRECTION_BACK_AND_FORTH);
+        sliderView.setIndicatorSelectedColor(Color.WHITE);
+        sliderView.setIndicatorUnselectedColor(Color.GRAY);
+        sliderView.setScrollTimeInSec(4); //set scroll delay in seconds :
+        sliderView.startAutoCycle();
 
         DashboardRecyclerviewModel dashboardRecyclerviewModel = new DashboardRecyclerviewModel(Constants.COURSEVIEWTYPE,Constants.TECHSTACK,mViewModel.getLiveCourses());
         dashboardRecyclerviewModelList.add(dashboardRecyclerviewModel);
@@ -137,6 +154,14 @@ public class DashboardFragment extends Fragment implements DashboardRvAdapter.Da
                 dashboardRecyclerviewModelList.add(projectDashboardModel);
                 dashboardRvAdapter.setData(dashboardRecyclerviewModelList);
                 dashboardRvAdapter.notifyDataSetChanged();
+            }
+        });
+
+        mViewModel.getLiveCourses().observe(getActivity(), new Observer<List<CourseModel>>() {
+            @Override
+            public void onChanged(List<CourseModel> courseModels) {
+                sliderAdapter.setmSliderItems(courseModels);
+                sliderAdapter.notifyDataSetChanged();
             }
         });
 
