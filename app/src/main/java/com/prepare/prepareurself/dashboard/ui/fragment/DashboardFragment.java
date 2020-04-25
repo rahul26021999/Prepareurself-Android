@@ -118,7 +118,6 @@ public class DashboardFragment extends Fragment implements DashboardRvAdapter.Da
             @Override
             public void onChanged(UserModel userModel) {
 
-
                 if (userModel.getPreferences()!=null){
                     preferredCourseId = Integer.parseInt(userModel.getPreferences().split(",")[0]);
                 }else{
