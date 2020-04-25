@@ -24,6 +24,7 @@ import com.prepare.prepareurself.R;
 import com.prepare.prepareurself.authentication.data.model.AuthenticationResponseModel;
 import com.prepare.prepareurself.authentication.data.model.ForgotPasswordResponseModel;
 import com.prepare.prepareurself.authentication.viewmodel.AuthViewModel;
+import com.prepare.prepareurself.courses.ui.activity.ProjectsActivity;
 import com.prepare.prepareurself.utils.Constants;
 import com.prepare.prepareurself.utils.PrefManager;
 import com.prepare.prepareurself.utils.Utility;
@@ -177,7 +178,13 @@ public class LoginFragment extends Fragment implements View.OnClickListener{
                                 intent.putExtra(Constants.RESOURCEID, AuthenticationActivity.resourceId);
                                 startActivity(intent);
                                 getActivity().finish();
-                            }else{
+                            }else if (AuthenticationActivity.projectId!=-1){
+                                Intent intent=new Intent(getActivity(), ProjectsActivity.class);
+                                intent.putExtra(Constants.DEEPSHAREPROECTAFTERLOGIN,true);
+                                intent.putExtra(Constants.PROJECTID, AuthenticationActivity.projectId);
+                                startActivity(intent);
+                                getActivity().finish();
+                            } else{
                                 Intent intent=new Intent(getActivity(), HomeActivity.class);
                                 startActivity(intent);
                                 getActivity().finish();

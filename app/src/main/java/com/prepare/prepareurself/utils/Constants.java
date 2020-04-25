@@ -61,4 +61,5 @@ public class Constants {
 
     public static final String SHOWPROJECTS = "showprojects";
     public static final String DEEPSHAREVIDEOAFTERLOGIN = "Deep_share_video_after_login";
+    public static final String DEEPSHAREPROECTAFTERLOGIN = "Deep_share_project_after_login";
 }
