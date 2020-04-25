@@ -1,6 +1,8 @@
 package com.prepare.prepareurself.Home.ui;
 
+import android.content.ActivityNotFoundException;
 import android.content.Intent;
+import android.net.Uri;
 import android.os.Bundle;
 import android.view.MenuItem;
 import android.view.View;
@@ -68,7 +70,7 @@ public class HomeActivity extends AppCompatActivity implements NavigationView.On
         NavigationUI.setupActionBarWithNavController(this, navController, mAppBarConfiguration);
         NavigationUI.setupWithNavController(navigationView, navController);
 
-//        navigationView.setNavigationItemSelectedListener(this);
+        navigationView.setNavigationItemSelectedListener(this);
 
         viewModel.retrieveUserData();
 
@@ -106,11 +108,17 @@ public class HomeActivity extends AppCompatActivity implements NavigationView.On
 
         switch (id){
             case R.id.nav_contact_us :
-                Utility.showToast(this,"contact us");
+                sendEmailToDeveloper();
                 break;
-//            case R.id.nav_profile :
-//                navController.navigate(R.id.nav_profile_fragment);
-//                break;
+            case R.id.nav_profile :
+                navController.navigate(R.id.nav_profile);
+                break;
+            case R.id.nav_dashboard :
+                navController.navigate(R.id.nav_dashboard);
+                break;
+            case R.id.nav_star:
+                redirectToPlayStore();
+                break;
 
         }
 
@@ -118,6 +126,23 @@ public class HomeActivity extends AppCompatActivity implements NavigationView.On
 
         return true;
 
+    }
+
+    private void redirectToPlayStore() {
+        Utility.redirectUsingCustomTab(this,"https://play.google.com/store/apps/details?id=com.prepare.prepareurself");
+    }
+
+    private void sendEmailToDeveloper() {
+        String mailto = "mailto:prepareurself123@gmail.com"+
+                "?subject=" + Uri.encode("Important Message");
+        Intent emailIntent = new Intent(Intent.ACTION_SENDTO);
+        emailIntent.setData(Uri.parse(mailto));
+
+        try {
+            startActivity(emailIntent);
+        }catch (ActivityNotFoundException e){
+            Utility.showToast(this,"No App found for sending e-mail");
+        }
     }
 
     @Override
