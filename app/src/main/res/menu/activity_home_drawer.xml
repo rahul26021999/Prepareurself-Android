@@ -13,5 +13,30 @@
             android:id="@+id/nav_profile"
             android:icon="@drawable/ic_stat_person"
             android:title="@string/menu_profile" />
+
+        <item
+            android:id="@+id/nav_contact_us"
+            android:icon="@drawable/ic_image_contact_us"
+            android:title="@string/menu_contact_us" />
+
+        <item
+            android:id="@+id/nav_feedback"
+            android:icon="@drawable/ic_image_feedback"
+            android:title="@string/menu_feedback" />
+
+        <item
+            android:id="@+id/nav_about_us"
+            android:icon="@drawable/ic_image_about_us"
+            android:title="@string/menu_about_us" />
+
+        <item
+            android:id="@+id/nav_share"
+            android:icon="@drawable/ic_image_share_white"
+            android:title="@string/menu_share" />
+
+        <item
+            android:id="@+id/nav_star"
+            android:icon="@drawable/ic_image_star"
+            android:title="@string/menu_star" />
     </group>
 </menu>

@@ -19,6 +19,7 @@ import com.prepare.prepareurself.authentication.data.model.UserModel;
 import com.prepare.prepareurself.resources.ui.activity.ResourcesActivity;
 import com.prepare.prepareurself.utils.Constants;
 import com.google.android.material.navigation.NavigationView;
+import com.prepare.prepareurself.utils.Utility;
 
 import androidx.annotation.NonNull;
 import androidx.core.view.GravityCompat;
@@ -32,7 +33,9 @@ import androidx.drawerlayout.widget.DrawerLayout;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
 
-public class HomeActivity extends AppCompatActivity implements NavigationView.OnNavigationItemSelectedListener, DashboardFragment.HomeActivityInteractor {
+public class HomeActivity extends AppCompatActivity implements NavigationView.OnNavigationItemSelectedListener,
+        DashboardFragment.HomeActivityInteractor,
+        View.OnClickListener {
 
     private AppBarConfiguration mAppBarConfiguration;
     private TextView tvNameNavHeader;
@@ -58,14 +61,14 @@ public class HomeActivity extends AppCompatActivity implements NavigationView.On
 
 
         mAppBarConfiguration = new AppBarConfiguration.Builder(
-                R.id.nav_dashboard, R.id.nav_profile)
+                R.id.nav_dashboard, R.id.nav_profile, R.id.nav_contact_us)
                 .setDrawerLayout(drawer)
                 .build();
         navController = Navigation.findNavController(this, R.id.nav_host_fragment);
         NavigationUI.setupActionBarWithNavController(this, navController, mAppBarConfiguration);
         NavigationUI.setupWithNavController(navigationView, navController);
 
-       // navigationView.setNavigationItemSelectedListener(this);
+        navigationView.setNavigationItemSelectedListener(this);
 
         viewModel.retrieveUserData();
 
@@ -97,21 +100,28 @@ public class HomeActivity extends AppCompatActivity implements NavigationView.On
     public boolean onNavigationItemSelected(@NonNull MenuItem item) {
         item.setChecked(true);
 //
-//        drawer.closeDrawers();
-//
-//        int id = item.getItemId();
-//
-//        switch (id){
-//            case R.id.nav_dashboard :
-//                navController.navigate(R.id.nav_dashboard_fragment);
-//                break;
+        drawer.closeDrawers();
+
+        int id = item.getItemId();
+
+        switch (id){
+            case R.id.nav_contact_us :
+                Utility.showToast(this,"contact us");
+                break;
 //            case R.id.nav_profile :
 //                navController.navigate(R.id.nav_profile_fragment);
 //                break;
-//
-//        }
+
+        }
+
+
 
         return true;
+
+    }
+
+    @Override
+    public void onClick(View v) {
 
     }
 
