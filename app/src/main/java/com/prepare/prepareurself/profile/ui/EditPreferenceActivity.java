@@ -26,7 +26,10 @@ import com.prepare.prepareurself.utils.Utility;
 
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.HashMap;
+import java.util.HashSet;
 import java.util.List;
+import java.util.Map;
 
 public class EditPreferenceActivity extends AppCompatActivity {
 
@@ -34,9 +37,11 @@ public class EditPreferenceActivity extends AppCompatActivity {
     private PrefManager prefManager;
     private ChipGroup chip_gp;
     private List<String> preferences=new ArrayList<>();
-    private List<String> allStack=new ArrayList<>();
+    private List<String> allStackID=new ArrayList<>();
     private MaterialButton save;
     private UserModel mUserModel;
+    private List<String> allStackName=new ArrayList<>();
+    private HashMap<String,String> allStack=new HashMap<>();
 
 
     @Override
@@ -66,13 +71,14 @@ public class EditPreferenceActivity extends AppCompatActivity {
                         Log.i("Size",""+size);
                         chip_gp.removeAllViews();
                         for (int i=0;i<size;i++){
-                            allStack.add(""+preferredTechStacks.get(i).getId());
+                            allStackID.add(""+preferredTechStacks.get(i).getId());
+                            allStackName.add(preferredTechStacks.get(i).getName());
                             final Chip chip = new Chip(EditPreferenceActivity.this);
                             chip.setText(preferredTechStacks.get(i).getName());
                             chip.setTextAppearanceResource(R.style.EditPrefrenceChip);
                             chip.setChipBackgroundColorResource(R.color.colorPrimaryDark);
                             chip.setCheckable(true);
-                            if(preferences.contains(allStack.get(i))) {
+                            if(preferences.contains(allStackID.get(i))) {
                                 chip.setChecked(true);
                             }
                             chip.setCloseIconVisible(false);
@@ -81,11 +87,11 @@ public class EditPreferenceActivity extends AppCompatActivity {
                                 public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
                                     if(isChecked)
                                     {
-                                        preferences.add(chip.getText().toString());
+                                        preferences.add(allStackID.get(allStackName.indexOf(chip.getText().toString())));
                                         Log.i("helloChip",buttonView.getText().toString());
                                     }
                                     else{
-                                        preferences.remove(chip.getText().toString());
+                                        preferences.remove(allStackID.get(allStackName.indexOf(chip.getText().toString())));
                                         Log.i("helloChip",buttonView.getText().toString() +" removed");
                                     }
                                 }
@@ -102,6 +108,7 @@ public class EditPreferenceActivity extends AppCompatActivity {
         save.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+
                 List<Integer> list = new ArrayList<>();
                 for (String pref : preferences){
                     list.add(Integer.parseInt(pref));

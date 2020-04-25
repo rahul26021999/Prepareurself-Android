@@ -61,27 +61,27 @@ public class AuthenticationActivity extends AppCompatActivity {
 
     }
 
-    private void getAndroidToken() {
-        FirebaseInstanceId.getInstance().getInstanceId()
-                .addOnCompleteListener(new OnCompleteListener<InstanceIdResult>() {
-                    @Override
-                    public void onComplete(@NonNull Task<InstanceIdResult> task) {
-                        if (!task.isSuccessful()) {
-                            Log.w("FCM_debug", "getInstanceId failed", task.getException());
-                            return;
-                        }
-
-                        // Get new Instance ID token
-                        String token =  task.getResult().getToken();
-                        prefManager.saveString(Constants.ANDROIDTOKEN,token);
-
-                        // Log and toast
-//                        String msg = getString(R.string.msg_token_fmt, token);
-                        Log.d("FCM Token", token);
-//                        Toast.makeText(AuthenticationActivity.this, msg, Toast.LENGTH_SHORT).show();
-                    }
-                });
-
-    }
+//    private void getAndroidToken() {
+//        FirebaseInstanceId.getInstance().getInstanceId()
+//                .addOnCompleteListener(new OnCompleteListener<InstanceIdResult>() {
+//                    @Override
+//                    public void onComplete(@NonNull Task<InstanceIdResult> task) {
+//                        if (!task.isSuccessful()) {
+//                            Log.w("FCM_debug", "getInstanceId failed", task.getException());
+//                            return;
+//                        }
+//
+//                        // Get new Instance ID token
+//                        String token =  task.getResult().getToken();
+//                        prefManager.saveString(Constants.ANDROIDTOKEN,token);
+//
+//                        // Log and toast
+////                        String msg = getString(R.string.msg_token_fmt, token);
+//                        Log.d("FCM Token", token);
+////                        Toast.makeText(AuthenticationActivity.this, msg, Toast.LENGTH_SHORT).show();
+//                    }
+//                });
+//
+//    }
 
 }

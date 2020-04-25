@@ -6,46 +6,37 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="@color/grey"
-    tools:context=".profile.ui.fragments.ProfileFragment"
-    android:orientation="vertical">
+    tools:context=".profile.ui.fragments.ProfileFragment">
     <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="240dp"
-        android:background="@color/colorPrimaryDark" />
-    <LinearLayout
+        android:layout_height="200dp"
+        android:background="@color/colorPrimaryDark"/>
+    <RelativeLayout
         android:id="@+id/topbar"
         android:layout_width="match_parent"
+        android:background="@color/colorPrimaryDark"
         android:layout_height="wrap_content"
-        android:layout_alignParentTop="true"
-        android:gravity="center_vertical"
         android:padding="16dp">
 
         <ImageView
             android:layout_width="40dp"
             android:layout_height="40dp"
             android:padding="10dp"
-            android:visibility="invisible"
             android:src="@drawable/ic_arrow_back_24dp" />
-        <Space
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_weight="1" />
+
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="Profile"
+            android:layout_centerInParent="true"
             android:textColor="@color/white"
             android:textSize="20sp"
-            android:visibility="invisible"
             android:textStyle="bold" />
-        <Space
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_weight="1" />
+
         <RelativeLayout
             android:layout_width="50dp"
-            android:layout_height="50dp"
-            android:visibility="invisible">
+            android:layout_alignParentEnd="true"
+            android:layout_height="50dp">
 
             <ImageView
                 android:layout_width="40dp"
@@ -63,17 +54,15 @@
                 android:padding="4dp"
                 android:src="@drawable/circleyellowfil" />
         </RelativeLayout>
-    </LinearLayout>
+    </RelativeLayout>
 
     <ScrollView
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:scrollbars="none"
-        android:layout_below="@+id/topbar"
-        >
+        android:layout_below="@+id/topbar">
         <LinearLayout
             android:layout_width="match_parent"
-            android:layout_height="match_parent"
+            android:layout_height="wrap_content"
             android:orientation="vertical"
             android:paddingLeft="20dp"
             android:paddingTop="10dp"
@@ -84,7 +73,6 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:background="@drawable/circularbordersolid"
-                android:gravity="center"
                 android:orientation="vertical"
                 android:paddingStart="16dp"
                 android:paddingTop="16dp"
@@ -93,8 +81,9 @@
 
                 <androidx.cardview.widget.CardView
                     android:layout_width="150dp"
-                    android:layout_height="130dp"
+                    android:layout_height="140dp"
                     app:cardCornerRadius="6dp"
+                    android:layout_gravity="center"
                     app:cardElevation="0dp">
 
                     <ImageView
@@ -103,13 +92,8 @@
                         android:scaleType="centerCrop"
                         android:src="@drawable/person_placeholder" />
 
-
                 </androidx.cardview.widget.CardView>
 
-                <LinearLayout
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:orientation="vertical">
 
                     <TextView
                         android:layout_width="wrap_content"
@@ -118,11 +102,10 @@
                         android:fontFamily="@font/proximanovaregular"
                         android:textColor="#424242"
                         android:textSize="15sp"
+                        android:layout_gravity="center"
+                        tools:text="Rahul26021999@gmail.com"
                         android:textStyle="bold"
                         android:id="@+id/tv_email_profile"/>
-
-                </LinearLayout>
-
 
 
 
@@ -135,32 +118,33 @@
                 android:layout_marginTop="10dp"
                 android:layout_marginBottom="10dp"
                 android:background="@drawable/circularbordersolid"
-                android:gravity="center"
                 android:orientation="horizontal">
 
                 <TextView
                     android:id="@+id/userinfobtn"
-                    android:layout_width="wrap_content"
+                    android:layout_width="0dp"
                     android:layout_height="wrap_content"
                     android:layout_weight="1"
                     android:fontFamily="@font/proximanovaregular"
                     android:gravity="center"
                     android:padding="13dp"
+                    android:background="?attr/selectableItemBackground"
                     android:text="User Info"
                     android:textAllCaps="true"
                     android:textColor="@color/blue"
                     android:textSize="14sp"
                     android:textStyle="bold" />
 
-                <LinearLayout
+                <View
                     android:layout_width="1dp"
                     android:layout_height="match_parent"
                     android:background="@color/lightgrey" />
                 <TextView
                     android:id="@+id/preferencesbtn"
-                    android:layout_width="wrap_content"
+                    android:layout_width="0dp"
                     android:layout_height="wrap_content"
                     android:layout_weight="1"
+                    android:background="?attr/selectableItemBackground"
                     android:fontFamily="@font/proximanovaregular"
                     android:gravity="center"
                     android:padding="13dp"
@@ -173,7 +157,6 @@
             </LinearLayout>
 
             <!--Bootom Cards with sections-->
-
 
                     <!--bottom card 1-->
             <LinearLayout
@@ -467,10 +450,7 @@
                     tools:listitem="@layout/user_preferences_adapter_layout"/>
 
             </LinearLayout>
-
-
         </LinearLayout>
-
-        </LinearLayout>
+        </ScrollView>
     </ScrollView>
 </RelativeLayout>
