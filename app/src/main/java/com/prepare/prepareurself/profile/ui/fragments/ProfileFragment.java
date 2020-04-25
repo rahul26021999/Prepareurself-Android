@@ -12,6 +12,7 @@ import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
+import androidx.viewpager.widget.ViewPager;
 
 import android.text.TextUtils;
 import android.util.Log;
@@ -34,6 +35,9 @@ import com.prepare.prepareurself.profile.ui.adapter.UserPrefernceAdapter;
 import com.prepare.prepareurself.profile.viewmodel.ProfileViewModel;
 import com.prepare.prepareurself.R;
 import com.prepare.prepareurself.authentication.data.model.UserModel;
+import com.prepare.prepareurself.resources.ui.adapter.SectionsPagerAdapter;
+import com.prepare.prepareurself.resources.ui.fragments.TheoryResourceFragment;
+import com.prepare.prepareurself.resources.ui.fragments.VideoResourceFragment;
 import com.prepare.prepareurself.utils.Constants;
 import com.prepare.prepareurself.utils.PrefManager;
 import com.prepare.prepareurself.utils.Utility;
@@ -44,7 +48,7 @@ import java.util.Calendar;
 import java.util.HashMap;
 import java.util.List;
 
-public class ProfileFragment extends Fragment {
+public class ProfileFragment extends Fragment implements View.OnClickListener {
 
     private ProfileViewModel mViewModel;
     /*private TextView tvName, tvEmail;
@@ -67,6 +71,11 @@ public class ProfileFragment extends Fragment {
 
     private List<String> preferences=new ArrayList<>();
     private List<String> allStack=new ArrayList<>();
+
+
+
+    private ViewPager viewPager;
+    private TextView tvTopVideo, tvTopTheory;
 
     public static ProfileFragment newInstance() {
         return new ProfileFragment();
@@ -96,8 +105,14 @@ public class ProfileFragment extends Fragment {
         btnLogout = view.findViewById(R.id.btn_logout);
         btnUpdatePassword = view.findViewById(R.id.btn_update_password);
 
-        l_userinfo.setVisibility(View.VISIBLE);
-        l_preferences.setVisibility(View.GONE);
+
+
+        viewPager = view.findViewById(R.id.view_pager_resources);
+        tvTopVideo = view.findViewById(R.id.tv_resouce_heading_video);
+        tvTopTheory = view.findViewById(R.id.tv_resouce_heading_theory);
+
+//        l_userinfo.setVisibility(View.VISIBLE);
+//        l_preferences.setVisibility(View.GONE);
 
         /*tvName = view.findViewById(R.id.tv_name_profile);
         tvEmail = view.findViewById(R.id.tv_email_profile);
@@ -111,10 +126,10 @@ public class ProfileFragment extends Fragment {
             }
         });*/
 
-        adapter = new UserPrefernceAdapter(getActivity());
-        LinearLayoutManager layoutManager = new LinearLayoutManager(getActivity());
-        rvPreferences.setLayoutManager(layoutManager);
-        rvPreferences.setAdapter(adapter);
+//        adapter = new UserPrefernceAdapter(getActivity());
+//        LinearLayoutManager layoutManager = new LinearLayoutManager(getActivity());
+//        rvPreferences.setLayoutManager(layoutManager);
+//        rvPreferences.setAdapter(adapter);
 
 
         return view;
@@ -142,6 +157,57 @@ public class ProfileFragment extends Fragment {
 
         prefManager = new PrefManager(getActivity());
 
+
+        final SectionsPagerAdapter sectionsPagerAdapter = new SectionsPagerAdapter(getActivity().getSupportFragmentManager());
+        sectionsPagerAdapter.addFragment(UserInfoFragment.newInstance(),"User Info");
+        sectionsPagerAdapter.addFragment(PreferenceFragment.newInstance(),"Preferences");
+        viewPager.setAdapter(sectionsPagerAdapter);
+
+
+        viewPager.addOnPageChangeListener(new ViewPager.OnPageChangeListener() {
+            @Override
+            public void onPageScrolled(int position, float positionOffset, int positionOffsetPixels) {
+                if (position==0){
+                    tvTopVideo.setTextColor(getResources().getColor(R.color.colorPrimaryDark));
+                    tvTopTheory.setTextColor(getResources().getColor(R.color.lightgrey));
+                }else if (position == 1){
+                    tvTopVideo.setTextColor(getResources().getColor(R.color.lightgrey));
+                    tvTopTheory.setTextColor(getResources().getColor(R.color.colorPrimaryDark));
+                }
+            }
+
+            @Override
+            public void onPageSelected(int position) {
+                if (position==0){
+                    tvTopVideo.setTextColor(getResources().getColor(R.color.colorPrimaryDark));
+                    tvTopTheory.setTextColor(getResources().getColor(R.color.lightgrey));
+                }else if (position == 1){
+                    tvTopVideo.setTextColor(getResources().getColor(R.color.lightgrey));
+                    tvTopTheory.setTextColor(getResources().getColor(R.color.colorPrimaryDark));
+                }
+            }
+
+            @Override
+            public void onPageScrollStateChanged(int state) {
+
+            }
+        });
+
+        tvTopVideo.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                viewPager.setCurrentItem(0, true);
+            }
+        });
+
+
+        tvTopTheory.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                viewPager.setCurrentItem(1, true);
+            }
+        });
+
         mViewModel.getUserModelLiveData().observe(getActivity(), new Observer<UserModel>() {
             @Override
             public void onChanged(UserModel userModel) {
@@ -150,188 +216,201 @@ public class ProfileFragment extends Fragment {
                 tvEmail.setText(userModel.getEmail());*/
                 tv_email_profile.setText(userModel.getEmail());
 
-                tv_dob.setText(userModel.getDob());
-                tv_name.setText(userModel.getFirst_name() + " " + userModel.getLast_name());
-                tv_call.setText(userModel.getPhone_number());
-
-                et_dob.setText(userModel.getDob());
-                et_name.setText(userModel.getFirst_name() + " " + userModel.getLast_name());
-                et_call.setText(userModel.getPhone_number());
-
-                if (TextUtils.isEmpty(userModel.getDob())){
-                    tv_dob.setText("Click Edit to update your birthday");
-                    et_dob.setHint("Tap to update your birthday");
-                }
-
-                if (TextUtils.isEmpty(userModel.getPhone_number())){
-                    tv_call.setText("Click Edit to update your Contact");
-                    et_call.setHint("Enter your Contact Number");
-                }
-
-            }
-        });
-
-        btnLogout.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                prefManager.saveBoolean(Constants.ISLOGGEDIN, false);
-                startActivity(new Intent(getActivity(), AuthenticationActivity.class));
-                getActivity().finish();
-            }
-        });
-
-        btnUpdatePassword.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                startActivity(new Intent(getActivity(), UpdatePasswordActivity.class));
-            }
-        });
-
-
-
-        t_userinfo.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                l_userinfo.setVisibility(View.VISIBLE);
-                l_preferences.setVisibility(View.GONE);
-                t_userinfo.setTextColor(getResources().getColor(R.color.blue));
-                t_preferences.setTextColor(getResources().getColor(R.color.grey));
-            }
-        });
-
-        t_preferences.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                l_userinfo.setVisibility(View.GONE);
-                l_preferences.setVisibility(View.VISIBLE);
-                t_userinfo.setTextColor(getResources().getColor(R.color.grey));
-                t_preferences.setTextColor(getResources().getColor(R.color.blue));
-            }
-        });
-        tv_aboutme_edit.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                tv_dob.setVisibility(View.GONE);
-                tv_name.setVisibility(View.GONE);
-                tv_call.setVisibility(View.GONE);
-                et_dob.setVisibility(View.VISIBLE);
-                et_name.setVisibility(View.VISIBLE);
-                et_call.setVisibility(View.VISIBLE);
-                btn_save.setVisibility(View.VISIBLE);
-            }
-        });
-
-        et_dob.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                setdatepicker();
-            }
-        });
-        tv_preference_edit.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                Intent intent=new Intent(getActivity(), EditPreferenceActivity.class);
-                startActivity(intent);
-
-            }
-        });
-        btn_save.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-
-                btn_save.setText("Updating");
-
-
-                final String userdob=et_dob.getText().toString();
-                final String username=et_name.getText().toString();
-                final String userphnumber= et_call.getText().toString();
-
-                String firstName = "", lastName = "";
-                // first convert name to first name and last name
-                String[] name = Utility.splitName(getActivity(),username);
-                if (name.length>0){
-                    if (name.length == 1){
-                        firstName = name[0];
-                    }else if (name.length == 2){
-                        firstName = name[0];
-                        lastName = name[1];
-                    }else{
-                        firstName = name[0];
-                        lastName = name[name.length-1];
-                    }
-                }
-
-
-
-                mViewModel.updateUser(prefManager.getString(Constants.JWTTOKEN),firstName,lastName,userdob,userphnumber)
-                        .observe(getActivity(), new Observer<UpdatePreferenceResponseModel>() {
-                            @Override
-                            public void onChanged(UpdatePreferenceResponseModel updatePreferenceResponseModel) {
-                                if (updatePreferenceResponseModel!=null){
-                                    if (updatePreferenceResponseModel.getError_code() == 0){
-                                        btn_save.setText("Save");
-                                        Utility.showToast(getActivity(),"Profile updated successfully");
-                                        btn_save.setVisibility(View.GONE);
-
-                                        tv_dob.setVisibility(View.VISIBLE);
-                                        tv_name.setVisibility(View.VISIBLE);
-                                        tv_call.setVisibility(View.VISIBLE);
-                                        et_dob.setVisibility(View.GONE);
-                                        et_name.setVisibility(View.GONE);
-                                        et_call.setVisibility(View.GONE);
-
-                                        tv_dob.setText(userdob);
-                                        tv_name.setText(username);
-                                        tv_call.setText(userphnumber);
-
-
-                                    }else{
-                                        btn_save.setText("Save");
-                                        Utility.showToast(getActivity(),updatePreferenceResponseModel.getMsg());
-                                    }
-                                }else{
-                                    btn_save.setText("Save");
-                                    Utility.showToast(getActivity(),"Unable to update at the moment");
-                                }
-
-                            }
-                        });
+//                tv_dob.setText(userModel.getDob());
+//                tv_name.setText(userModel.getFirst_name() + " " + userModel.getLast_name());
+//                tv_call.setText(userModel.getPhone_number());
+//
+//                et_dob.setText(userModel.getDob());
+//                et_name.setText(userModel.getFirst_name() + " " + userModel.getLast_name());
+//                et_call.setText(userModel.getPhone_number());
+//
+//                if (TextUtils.isEmpty(userModel.getDob())){
+//                    tv_dob.setText("Click Edit to update your birthday");
+//                    et_dob.setHint("Tap to update your birthday");
+//                }
+//
+//                if (TextUtils.isEmpty(userModel.getPhone_number())){
+//                    tv_call.setText("Click Edit to update your Contact");
+//                    et_call.setHint("Enter your Contact Number");
+//                }
 
             }
         });
 
-        mViewModel.getUserModelLiveData().observe(getActivity(), new Observer<UserModel>() {
-            @Override
-            public void onChanged(UserModel userModel) {
-                if(userModel.getPreferences()!=null) {
-                    preferences.addAll(Arrays.asList(userModel.getPreferences().split(",")));
-                }
-                mViewModel.getPreferencesFromDb().observe(getActivity(), new Observer<List<PreferredTechStack>>() {
-                    @Override
-                    public void onChanged(final List<PreferredTechStack> preferredTechStacks) {
-                        if (preferredTechStacks!=null && preferences!=null){
-                            int size = preferredTechStacks.size();
-                            Log.i("Size",""+size);
-                            for (int i = 0; i<preferences.size(); i++){
-                                for (PreferredTechStack p : preferredTechStacks){
-                                    if (p.getId() == Integer.parseInt(preferences.get(i))){
-                                        userPrefrence.add(p);
-                                    }
-                                }
-                            }
-
-                            adapter.setPreferredTechStacks(userPrefrence);
-                            adapter.notifyDataSetChanged();
-
-                        }
-                     }
-                });
-
-            }
-        });
+//        btnLogout.setOnClickListener(new View.OnClickListener() {
+//            @Override
+//            public void onClick(View v) {
+//                prefManager.saveBoolean(Constants.ISLOGGEDIN, false);
+//                startActivity(new Intent(getActivity(), AuthenticationActivity.class));
+//                getActivity().finish();
+//            }
+//        });
+//
+//        btnUpdatePassword.setOnClickListener(new View.OnClickListener() {
+//            @Override
+//            public void onClick(View v) {
+//                startActivity(new Intent(getActivity(), UpdatePasswordActivity.class));
+//            }
+//        });
 
 
 
+//        t_userinfo.setOnClickListener(new View.OnClickListener() {
+//            @Override
+//            public void onClick(View v) {
+//                l_userinfo.setVisibility(View.VISIBLE);
+//                l_preferences.setVisibility(View.GONE);
+//                t_userinfo.setTextColor(getResources().getColor(R.color.blue));
+//                t_preferences.setTextColor(getResources().getColor(R.color.grey));
+//            }
+//        });
+
+//        t_preferences.setOnClickListener(new View.OnClickListener() {
+//            @Override
+//            public void onClick(View v) {
+//                l_userinfo.setVisibility(View.GONE);
+//                l_preferences.setVisibility(View.VISIBLE);
+//                t_userinfo.setTextColor(getResources().getColor(R.color.grey));
+//                t_preferences.setTextColor(getResources().getColor(R.color.blue));
+//            }
+//        });
+//        tv_aboutme_edit.setOnClickListener(new View.OnClickListener() {
+//            @Override
+//            public void onClick(View v) {
+//                tv_dob.setVisibility(View.GONE);
+//                tv_name.setVisibility(View.GONE);
+//                tv_call.setVisibility(View.GONE);
+//                et_dob.setVisibility(View.VISIBLE);
+//                et_name.setVisibility(View.VISIBLE);
+//                et_call.setVisibility(View.VISIBLE);
+//                btn_save.setVisibility(View.VISIBLE);
+//            }
+//        });
+//
+//        et_dob.setOnClickListener(new View.OnClickListener() {
+//            @Override
+//            public void onClick(View v) {
+//                setdatepicker();
+//            }
+//        });
+//        tv_preference_edit.setOnClickListener(new View.OnClickListener() {
+//            @Override
+//            public void onClick(View v) {
+//                Intent intent=new Intent(getActivity(), EditPreferenceActivity.class);
+//                startActivity(intent);
+//
+//            }
+//        });
+//        btn_save.setOnClickListener(new View.OnClickListener() {
+//            @Override
+//            public void onClick(View v) {
+//
+//                btn_save.setText("Updating");
+//
+//
+//                final String userdob=et_dob.getText().toString();
+//                final String username=et_name.getText().toString();
+//                final String userphnumber= et_call.getText().toString();
+//
+//                String firstName = "", lastName = "";
+//                // first convert name to first name and last name
+//                String[] name = Utility.splitName(getActivity(),username);
+//                if (name.length>0){
+//                    if (name.length == 1){
+//                        firstName = name[0];
+//                    }else if (name.length == 2){
+//                        firstName = name[0];
+//                        lastName = name[1];
+//                    }else{
+//                        firstName = name[0];
+//                        lastName = name[name.length-1];
+//                    }
+//                }
+//
+//
+//
+//                mViewModel.updateUser(prefManager.getString(Constants.JWTTOKEN),firstName,lastName,userdob,userphnumber)
+//                        .observe(getActivity(), new Observer<UpdatePreferenceResponseModel>() {
+//                            @Override
+//                            public void onChanged(UpdatePreferenceResponseModel updatePreferenceResponseModel) {
+//                                if (updatePreferenceResponseModel!=null){
+//                                    if (updatePreferenceResponseModel.getError_code() == 0){
+//                                        btn_save.setText("Save");
+//                                        Utility.showToast(getActivity(),"Profile updated successfully");
+//                                        btn_save.setVisibility(View.GONE);
+//
+//                                        tv_dob.setVisibility(View.VISIBLE);
+//                                        tv_name.setVisibility(View.VISIBLE);
+//                                        tv_call.setVisibility(View.VISIBLE);
+//                                        et_dob.setVisibility(View.GONE);
+//                                        et_name.setVisibility(View.GONE);
+//                                        et_call.setVisibility(View.GONE);
+//
+//                                        tv_dob.setText(userdob);
+//                                        tv_name.setText(username);
+//                                        tv_call.setText(userphnumber);
+//
+//
+//                                    }else{
+//                                        btn_save.setText("Save");
+//                                        Utility.showToast(getActivity(),updatePreferenceResponseModel.getMsg());
+//                                    }
+//                                }else{
+//                                    btn_save.setText("Save");
+//                                    Utility.showToast(getActivity(),"Unable to update at the moment");
+//                                }
+//
+//                            }
+//                        });
+//
+//            }
+//        });
+//
+//        mViewModel.getUserModelLiveData().observe(getActivity(), new Observer<UserModel>() {
+//            @Override
+//            public void onChanged(UserModel userModel) {
+//                if(userModel.getPreferences()!=null) {
+//                    preferences.addAll(Arrays.asList(userModel.getPreferences().split(",")));
+//                }
+//                mViewModel.getPreferencesFromDb().observe(getActivity(), new Observer<List<PreferredTechStack>>() {
+//                    @Override
+//                    public void onChanged(final List<PreferredTechStack> preferredTechStacks) {
+//                        if (preferredTechStacks!=null && preferences!=null){
+//                            int size = preferredTechStacks.size();
+//                            Log.i("Size",""+size);
+//                            for (int i = 0; i<preferences.size(); i++){
+//                                for (PreferredTechStack p : preferredTechStacks){
+//                                    if (p.getId() == Integer.parseInt(preferences.get(i))){
+//                                        userPrefrence.add(p);
+//                                    }
+//                                }
+//                            }
+//
+//                            adapter.setPreferredTechStacks(userPrefrence);
+//                            adapter.notifyDataSetChanged();
+//
+//                        }
+//                     }
+//                });
+//
+//            }
+//        });
+
+
+
+    }
+
+    @Override
+    public void onClick(View v) {
+        switch (v.getId())
+        {
+            case R.id.tv_resouce_heading_theory:
+                viewPager.setCurrentItem(1, true);
+                break;
+            case R.id.tv_resouce_heading_video:
+                viewPager.setCurrentItem(0, true);
+                break;
+        }
     }
 
 }
