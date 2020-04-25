@@ -51,8 +51,8 @@ import java.util.List;
 public class ProfileFragment extends Fragment implements View.OnClickListener {
 
     private ProfileViewModel mViewModel;
-    /*private TextView tvName, tvEmail;
-    private Button editbtn;*/
+//    private TextView tvName, tvEmail;
+//    private Button editbtn;
     LinearLayout l_userinfo, l_preferences;
     TextView  t_userinfo, t_preferences, tv_preference_edit, tv_aboutme_edit;
     TextView tv_dob, tv_name,tv_call;

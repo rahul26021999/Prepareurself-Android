@@ -17,8 +17,7 @@
         android:id="@+id/rv_video_resources"
         tools:listitem="@layout/video_resources_rv_adapter_layout"
         app:layout_constrainedHeight="true"
-        android:layout_marginTop="10dp"
-        android:background="@android:color/transparent"/>
+        android:layout_marginTop="10dp"/>
 
     <TextView
         android:layout_width="wrap_content"

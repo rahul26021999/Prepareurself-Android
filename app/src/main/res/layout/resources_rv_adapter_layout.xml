@@ -2,7 +2,9 @@
 <RelativeLayout
     xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
+    android:background="?attr/selectableItemBackground"
     android:layout_height="wrap_content"
+    android:layout_marginBottom="10dp"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools">
 
@@ -21,9 +23,9 @@
 
             <ImageView
                 android:layout_width="match_parent"
-                android:layout_height="130dp"
+                android:layout_height="150dp"
+                android:background="@color/white"
                 android:src="@drawable/placeholder"
-                android:scaleType="centerCrop"
                 android:id="@+id/topic_image"/>
 
             <TextView

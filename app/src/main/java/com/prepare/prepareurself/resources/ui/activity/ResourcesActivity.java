@@ -90,9 +90,9 @@ public class ResourcesActivity extends AppCompatActivity implements View.OnClick
             public void onPageScrolled(int position, float positionOffset, int positionOffsetPixels) {
                 if (position==0){
                     tvTopVideo.setTextColor(getResources().getColor(R.color.colorPrimaryDark));
-                    tvTopTheory.setTextColor(getResources().getColor(R.color.lightgrey));
+                    tvTopTheory.setTextColor(getResources().getColor(R.color.dark_grey));
                 }else if (position == 1){
-                    tvTopVideo.setTextColor(getResources().getColor(R.color.lightgrey));
+                    tvTopVideo.setTextColor(getResources().getColor(R.color.dark_grey));
                     tvTopTheory.setTextColor(getResources().getColor(R.color.colorPrimaryDark));
                 }
             }

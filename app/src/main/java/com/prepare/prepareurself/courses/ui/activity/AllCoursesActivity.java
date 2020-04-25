@@ -69,6 +69,12 @@ public class AllCoursesActivity extends AppCompatActivity implements AllCoursesR
 
     @Override
     public void onClick(View v) {
+        switch(v.getId())
+        {
+            case R.id.backBtn:
+                onBackPressed();
+                break;
 
+        }
     }
 }

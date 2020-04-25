@@ -4,8 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@color/colorPrimaryLight"
-    tools:context=".courses.ui.activity.AllCoursesActivity">
+    tools:context=".courses.ui.activity.CoursesActivity">
 
     <RelativeLayout
         android:id="@+id/topbar"
@@ -26,21 +25,34 @@
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="Tech Stack"
-            android:textColor="@color/white"
+            tools:text="Android"
+            android:id="@+id/title"
             android:textStyle="bold"
+            android:textColor="@color/white"
             android:textSize="20sp"
             android:layout_centerHorizontal="true"
             android:layout_centerVertical="true" />
 
     </RelativeLayout>
-    <androidx.recyclerview.widget.RecyclerView
+
+    <androidx.viewpager.widget.ViewPager
+        android:id="@+id/view_pager_courses"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:paddingTop="10dp"
-        android:overScrollMode="never"
-        android:paddingBottom="10dp"
         android:layout_below="@+id/topbar"
-        android:id="@+id/rv_allcourses"/>
+        android:layout_above="@id/tabs_courses"
+        app:layout_behavior="@string/appbar_scrolling_view_behavior" />
+
+    <com.google.android.material.tabs.TabLayout
+        android:id="@+id/tabs_courses"
+        android:layout_width="match_parent"
+        android:background="@color/colorPrimaryDark"
+        app:tabTextColor="@color/colorPrimaryLight"
+        app:tabIndicatorColor="@color/white"
+        app:tabIndicatorHeight="5dp"
+        app:tabSelectedTextColor="@color/white"
+        android:layout_height="wrap_content"
+        android:layout_alignParentBottom="true"/>
+
 
 </RelativeLayout>

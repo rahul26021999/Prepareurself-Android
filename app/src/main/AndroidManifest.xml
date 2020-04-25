@@ -67,12 +67,10 @@
             </intent-filter>
         </activity>
         <activity
-            android:name=".resources.youtubevideoplayer.YoutubePlayerActivity"
-            android:theme="@style/AppTheme.NoActionBar" />
+            android:name=".resources.youtubevideoplayer.YoutubePlayerActivity" />
         <activity
             android:name=".resources.ui.activity.ResourcesActivity"
-            android:label="@string/title_activity_courses"
-            android:theme="@style/AppTheme.NoActionBar">
+            android:label="@string/title_activity_courses">
             <intent-filter>
                 <action android:name="android.intent.action.VIEW" />
 
@@ -89,15 +87,12 @@
             android:label="@string/title_activity_login" />
         <activity
             android:name=".Home.ui.HomeActivity"
-            android:label="@string/title_activity_home"
-            android:theme="@style/AppTheme.NoActionBar" />
+            android:label="@string/title_activity_home" />
         <activity android:name=".utils.QuizBaseActivity" />
         <activity
-            android:name=".quiz.QuizActivity"
-            android:theme="@style/AppTheme.NoActionBar" />
+            android:name=".quiz.QuizActivity" />
         <activity
-            android:name=".authentication.ui.AuthenticationActivity"
-            android:theme="@style/AppTheme.NoActionBar">
+            android:name=".authentication.ui.AuthenticationActivity">
             <intent-filter>
                 <action android:name="android.intent.action.VIEW" />
 

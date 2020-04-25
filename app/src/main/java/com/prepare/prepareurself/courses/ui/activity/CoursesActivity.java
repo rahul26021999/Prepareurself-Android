@@ -8,6 +8,9 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.MenuItem;
+import android.view.View;
+import android.widget.ImageView;
+import android.widget.TextView;
 
 import com.prepare.prepareurself.courses.ui.fragments.ProjectsFragment;
 import com.prepare.prepareurself.courses.ui.fragments.ResourcesFragment;
@@ -18,10 +21,12 @@ import com.prepare.prepareurself.utils.Constants;
 import com.prepare.prepareurself.utils.PrefManager;
 import com.google.android.material.tabs.TabLayout;
 
-public class CoursesActivity extends AppCompatActivity {
+public class CoursesActivity extends AppCompatActivity implements View.OnClickListener {
 
     private ViewPager viewPager;
     private TabLayout tabs;
+    private ImageView backBtn;
+    private TextView title;
 
     public static int courseId;
 
@@ -32,21 +37,19 @@ public class CoursesActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_topics);
+        setContentView(R.layout.activity_course);
 
         topicViewModel = ViewModelProviders.of(this).get(TopicViewModel.class);
 
         viewPager = findViewById(R.id.view_pager_courses);
         tabs = findViewById(R.id.tabs_courses);
+        title=findViewById(R.id.title);
+        backBtn=findViewById(R.id.backBtn);
+        backBtn.setOnClickListener(this);
 
         prefManager = new PrefManager(CoursesActivity.this);
 
-
-        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
-        getSupportActionBar().setDisplayShowHomeEnabled(true);
-
-        getSupportActionBar().setTitle("Tech Stack");
-
+        title.setText("");//Course Name Here
 
         SectionsPagerAdapter sectionsPagerAdapter = new SectionsPagerAdapter(getSupportFragmentManager());
         sectionsPagerAdapter.addFragment(ProjectsFragment.newInstance(),"Projects");
@@ -89,4 +92,12 @@ public class CoursesActivity extends AppCompatActivity {
         return super.onOptionsItemSelected(item);
     }
 
+    @Override
+    public void onClick(View v) {
+        switch (v.getId()){
+            case R.id.backBtn:
+                onBackPressed();
+                break;
+        }
+    }
 }

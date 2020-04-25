@@ -52,7 +52,7 @@ public class TheoryResourcesRvAdapter extends RecyclerView.Adapter<TheoryResourc
         final ResourceModel theoryResources1= resourcesList.get(position);
         holder.bindview(theoryResources1);
 
-        holder.tvTitle.setOnClickListener(new View.OnClickListener() {
+        holder.itemView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 listener.onResourceClicked(theoryResources1);
@@ -125,7 +125,7 @@ public class TheoryResourcesRvAdapter extends RecyclerView.Adapter<TheoryResourc
             Glide.with(context).load(
                     Constants.THEORYRESOURCEBASEURL + resourceModel.getImage_url())
                     .placeholder(R.drawable.placeholder)
-                    .override(300,280)
+                    .override(400,400)
                     .transition(GenericTransitionOptions.<Drawable>with(Utility.getAnimationObject()))
                     .error(R.drawable.ic_image_loading_error)
                     .into(imageView);

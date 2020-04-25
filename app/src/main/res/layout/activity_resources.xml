@@ -4,7 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@color/colorPrimaryLight"
+    android:background="@color/white"
     tools:context=".resources.ui.activity.ResourcesActivity">
 
     <RelativeLayout
@@ -83,7 +83,7 @@
                 android:layout_weight="1"
                 android:textAllCaps="true"
                 android:fontFamily="@font/proximanovaregular"
-                android:textColor="@color/lightGrey"
+                android:textColor="@color/dark_grey"
                 android:textStyle="bold"
                 android:textSize="13sp"
                 android:gravity="center"
