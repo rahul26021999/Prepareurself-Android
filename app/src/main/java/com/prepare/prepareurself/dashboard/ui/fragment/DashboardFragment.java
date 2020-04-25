@@ -72,7 +72,7 @@ public class DashboardFragment extends Fragment implements DashboardRvAdapter.Da
     public void onClick(View v) {
         switch (v.getId()){
             case R.id.menu:
-                    Utility.showToast(getContext(),"opne menu here please");
+                listener.onBarClicked();
                 break;
         }
     }
@@ -82,6 +82,7 @@ public class DashboardFragment extends Fragment implements DashboardRvAdapter.Da
         void onCourseClicked(CourseModel courseModel);
         void onTopicClicked(TopicsModel topicsModel);
         void onProjectClicked(ProjectsModel projectsModel);
+        void onBarClicked();
     }
 
     public static DashboardFragment newInstance() {
