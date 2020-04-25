@@ -27,7 +27,7 @@ import com.prepare.prepareurself.authentication.ui.AuthenticationActivity;
 import com.prepare.prepareurself.profile.data.model.MyPreferenceTechStack;
 import com.prepare.prepareurself.profile.data.model.PreferredTechStack;
 import com.prepare.prepareurself.profile.data.model.UpdatePreferenceResponseModel;
-import com.prepare.prepareurself.profile.ui.EditPreferencesActivity;
+import com.prepare.prepareurself.profile.ui.EditPreferenceActivity;
 import com.prepare.prepareurself.profile.ui.activity.UpdatePasswordActivity;
 import com.prepare.prepareurself.profile.ui.adapter.UserPrefernceAdapter;
 import com.prepare.prepareurself.profile.viewmodel.ProfileViewModel;
@@ -225,7 +225,7 @@ public class ProfileFragment extends Fragment {
         tv_preference_edit.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent intent=new Intent(getActivity(), EditPreferencesActivity.class);
+                Intent intent=new Intent(getActivity(), EditPreferenceActivity.class);
                 startActivity(intent);
 
             }
