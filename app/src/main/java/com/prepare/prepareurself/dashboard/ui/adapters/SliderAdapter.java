@@ -44,6 +44,7 @@ public class SliderAdapter extends SliderViewAdapter<SliderAdapter.SliderAdapter
         Glide.with(context)
                 .load(Constants.COURSEIMAGEBASEUSRL + courseModel.getImage_url())
                 .into(viewHolder.imageView);
+        viewHolder.textView.setText(courseModel.getName());
     }
 
     @Override

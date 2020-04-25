@@ -1,40 +1,41 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
+    android:orientation="vertical"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    android:layout_margin="10dp"
-    android:background="@android:color/transparent">
-
+    xmlns:tools="http://schemas.android.com/tools">
+    <RelativeLayout
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content">
     <TextView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="Courses"
+        tools:text="Courses"
         android:textColor="#000"
-        android:textSize="20sp"
-        android:elevation="5dp"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
+        android:padding="10dp"
+        android:textSize="16sp"
         android:fontFamily="@font/poppins_semibold"
         android:id="@+id/tv_courses_header_viewtype"/>
 
     <TextView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="See All"
+        android:text="See all"
+        android:layout_alignParentEnd="true"
+        android:layout_centerVertical="true"
         android:textColor="@color/colorPrimaryDark"
-        android:textSize="16sp"
-        android:elevation="5dp"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
+        android:textSize="14sp"
+        android:padding="10dp"
+        android:background="?attr/selectableItemBackground"
         android:fontFamily="@font/proximanovaregular"
         android:id="@+id/tv_see_all"/>
+</RelativeLayout>
 
-    <androidx.recyclerview.widget.RecyclerView
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        app:layout_constraintTop_toBottomOf="@+id/tv_courses_header_viewtype"
-        android:layout_marginTop="5dp"
-        android:id="@+id/rv_courses_dashboard"/>
+<androidx.recyclerview.widget.RecyclerView
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:layout_marginBottom="20dp"
+    android:id="@+id/rv_courses_dashboard"/>
 
-</androidx.constraintlayout.widget.ConstraintLayout>
+</LinearLayout>
