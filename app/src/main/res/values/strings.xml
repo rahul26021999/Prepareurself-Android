@@ -31,6 +31,11 @@
     <string name="invalid_password">Password must be >5 characters</string>
     <string name="login_failed">"Login failed"</string>
     <string name="menu_profile">Profile</string>
+    <string name="menu_contact_us">Contact us</string>
+    <string name="menu_feedback">Feedback</string>
+    <string name="menu_about_us">About us</string>
+    <string name="menu_share">Share</string>
+    <string name="menu_star">Rate us on play store</string>
 
 
     <string name="error_player">There was an error initializing the YouTubePlayer (%1$s)</string>
