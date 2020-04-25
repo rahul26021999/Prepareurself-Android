@@ -109,8 +109,8 @@ public class ProfileViewModel extends AndroidViewModel {
 
     }
 
-    public void saveMyPreference(MyPreferenceTechStack myPreferenceTechStacks){
-            myPreferenceDbRepository.insertPreference(myPreferenceTechStacks);
+    public void saveMyPreference(UserModel userModel){
+            userDBRepository.insertUser(userModel);
     }
 
     public LiveData<List<MyPreferenceTechStack>> getMyPreferredStack(){

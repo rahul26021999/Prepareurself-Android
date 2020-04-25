@@ -5,6 +5,7 @@ import androidx.lifecycle.Observer;
 import androidx.lifecycle.ViewModelProviders;
 
 import android.os.Bundle;
+import android.text.TextUtils;
 import android.util.Log;
 import android.view.View;
 import android.widget.CompoundButton;
@@ -17,6 +18,7 @@ import com.prepare.prepareurself.R;
 import com.prepare.prepareurself.authentication.data.model.UserModel;
 import com.prepare.prepareurself.profile.data.model.MyPreferenceTechStack;
 import com.prepare.prepareurself.profile.data.model.PreferredTechStack;
+import com.prepare.prepareurself.profile.data.model.UpdatePreferenceResponseModel;
 import com.prepare.prepareurself.profile.viewmodel.ProfileViewModel;
 import com.prepare.prepareurself.utils.Constants;
 import com.prepare.prepareurself.utils.PrefManager;
@@ -34,6 +36,7 @@ public class EditPreferenceActivity extends AppCompatActivity {
     private List<String> preferences=new ArrayList<>();
     private List<String> allStack=new ArrayList<>();
     private MaterialButton save;
+    private UserModel mUserModel;
 
 
     @Override
@@ -52,6 +55,7 @@ public class EditPreferenceActivity extends AppCompatActivity {
             @Override
             public void onChanged(UserModel userModel) {
                 if(userModel.getPreferences()!=null) {
+                    mUserModel = userModel;
                     Log.i("helloChip",userModel.getPreferences());
                     preferences.addAll(Arrays.asList(userModel.getPreferences().split(",")));
                 }
@@ -98,7 +102,31 @@ public class EditPreferenceActivity extends AppCompatActivity {
         save.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-//                preferences
+                List<Integer> list = new ArrayList<>();
+                for (String pref : preferences){
+                    list.add(Integer.parseInt(pref));
+                }
+
+                profileViewModel.updatePrefernces(prefManager.getString(Constants.JWTTOKEN),list)
+                        .observe(EditPreferenceActivity.this, new Observer<UpdatePreferenceResponseModel>() {
+                            @Override
+                            public void onChanged(UpdatePreferenceResponseModel updatePreferenceResponseModel) {
+                                if (updatePreferenceResponseModel!=null){
+                                    if (updatePreferenceResponseModel.getError_code() == 0){
+                                        if (mUserModel!=null){
+                                            String p = TextUtils.join(",",preferences);
+                                            mUserModel.setPreferences(p);
+                                            profileViewModel.saveMyPreference(mUserModel);
+                                            Utility.showToast(EditPreferenceActivity.this, "Updation successful");
+                                        }
+                                    }else{
+                                        Utility.showToast(EditPreferenceActivity.this,updatePreferenceResponseModel.getMsg());
+                                    }
+                                }else{
+                                    Utility.showToast(EditPreferenceActivity.this,Constants.SOMETHINGWENTWRONG);
+                                }
+                            }
+                        });
                 Utility.showToast(EditPreferenceActivity.this,""+preferences.size());
             }
         });
