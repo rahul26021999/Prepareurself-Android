@@ -21,6 +21,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.view.animation.AccelerateInterpolator;
+import android.widget.ImageView;
 import android.widget.LinearLayout;
 
 import com.prepare.prepareurself.authentication.data.model.UserModel;
@@ -53,16 +54,10 @@ import java.util.List;
 import java.util.Timer;
 import java.util.TimerTask;
 
-public class DashboardFragment extends Fragment implements DashboardRvAdapter.DashBoardInteractor {
+public class DashboardFragment extends Fragment implements DashboardRvAdapter.DashBoardInteractor, View.OnClickListener {
 
     private DashboardViewModel mViewModel;
-    private ViewPager viewPager;
-    private CustomPagerAdapter customPagerAdapter;
-    private Timer timer;
-    private int currentPosition = 0;
-    String[] data = {"Slide view 1","Slide view 2","Slide view 3","Slide view 4","Slide view 5"};
-    private LinearLayout dotsContainer;
-    private int dotsPosition = 0;
+    private ImageView menu;
     private RecyclerView recyclerView;
     private DashboardRvAdapter dashboardRvAdapter;
 
@@ -71,6 +66,16 @@ public class DashboardFragment extends Fragment implements DashboardRvAdapter.Da
     private int preferredCourseId = 1;
     List<DashboardRecyclerviewModel> dashboardRecyclerviewModelList;
     private SliderView sliderView;
+    SliderAdapter sliderAdapter;
+
+    @Override
+    public void onClick(View v) {
+        switch (v.getId()){
+            case R.id.menu:
+                    Utility.showToast(getContext(),"opne menu here please");
+                break;
+        }
+    }
 
 
     public interface HomeActivityInteractor{
@@ -86,17 +91,12 @@ public class DashboardFragment extends Fragment implements DashboardRvAdapter.Da
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container,
                              @Nullable Bundle savedInstanceState) {
-
-
         View view = inflater.inflate(R.layout.dashboard_fragment, container, false);
-        viewPager = view.findViewById(R.id.viewpager_dashboard);
-        dotsContainer = view.findViewById(R.id.dotsContainer);
+
         recyclerView = view.findViewById(R.id.rv_main_dashboard);
         sliderView =view.findViewById(R.id.imageSlider);
-
+        menu=view.findViewById(R.id.menu);
         prefManager = new PrefManager(getActivity());
-
-//        setUpViewPager();
 
         return view;
     }
@@ -111,13 +111,51 @@ public class DashboardFragment extends Fragment implements DashboardRvAdapter.Da
         mViewModel.getCourses(prefManager.getString(Constants.JWTTOKEN));
 
         dashboardRvAdapter = new DashboardRvAdapter(getActivity(), this);
-        LinearLayoutManager layoutManager = new LinearLayoutManager(getActivity(),RecyclerView.VERTICAL,false);
+        LinearLayoutManager layoutManager = new LinearLayoutManager(getActivity(), RecyclerView.VERTICAL, false);
         recyclerView.setLayoutManager(layoutManager);
         recyclerView.setAdapter(dashboardRvAdapter);
 
         dashboardRecyclerviewModelList = new ArrayList<>();
 
-        final SliderAdapter sliderAdapter = new SliderAdapter(getActivity());
+        setUpSlider();
+
+        DashboardRecyclerviewModel dashboardRecyclerviewModel = new DashboardRecyclerviewModel(Constants.COURSEVIEWTYPE, Constants.TECHSTACK, mViewModel.getLiveCourses());
+        dashboardRecyclerviewModelList.add(dashboardRecyclerviewModel);
+        dashboardRvAdapter.setData(dashboardRecyclerviewModelList);
+        dashboardRvAdapter.notifyDataSetChanged();
+
+        mViewModel.getUserInfo().observe(getActivity(), new Observer<UserModel>() {
+            @Override
+            public void onChanged(UserModel userModel) {
+
+                if (userModel.getPreferences() != null) {
+                    preferredCourseId = Integer.parseInt(userModel.getPreferences().split(",")[0]);
+                } else {
+                    preferredCourseId = 1;
+                }
+
+                mViewModel.getFiveTopicsByCourseIdFromRemote(prefManager.getString(Constants.JWTTOKEN), preferredCourseId);
+                mViewModel.getFiveProjectsByCourseIdFromRemote(prefManager.getString(Constants.JWTTOKEN), preferredCourseId);
+
+                DashboardRecyclerviewModel dashboardRecyclerviewModel = new DashboardRecyclerviewModel(Constants.TOPICVIEWTYPE, mViewModel.getFiveTopicsByCourseIdFromDb(preferredCourseId), Constants.TOPICSYOUMAYLIKE);
+                dashboardRecyclerviewModelList.add(dashboardRecyclerviewModel);
+                dashboardRvAdapter.setData(dashboardRecyclerviewModelList);
+                dashboardRvAdapter.notifyDataSetChanged();
+
+                DashboardRecyclerviewModel projectDashboardModel = new DashboardRecyclerviewModel(mViewModel.getFiveProjectByCourseId(preferredCourseId), Constants.PROJECTVIEWTYPE, Constants.PROJECTSYOUMAYLIKE);
+                dashboardRecyclerviewModelList.add(projectDashboardModel);
+                dashboardRvAdapter.setData(dashboardRecyclerviewModelList);
+                dashboardRvAdapter.notifyDataSetChanged();
+            }
+        });
+
+
+
+
+    }
+
+    private void setUpSlider() {
+        sliderAdapter = new SliderAdapter(getActivity());
         sliderView.setSliderAdapter(sliderAdapter);
         sliderView.setIndicatorAnimation(IndicatorAnimations.WORM); //set indicator animation by using SliderLayout.IndicatorAnimations. :WORM or THIN_WORM or COLOR or DROP or FILL or NONE or SCALE or SCALE_DOWN or SLIDE and SWAP!!
         sliderView.setSliderTransformAnimation(SliderAnimations.SIMPLETRANSFORMATION);
@@ -127,36 +165,6 @@ public class DashboardFragment extends Fragment implements DashboardRvAdapter.Da
         sliderView.setScrollTimeInSec(4); //set scroll delay in seconds :
         sliderView.startAutoCycle();
 
-        DashboardRecyclerviewModel dashboardRecyclerviewModel = new DashboardRecyclerviewModel(Constants.COURSEVIEWTYPE,Constants.TECHSTACK,mViewModel.getLiveCourses());
-        dashboardRecyclerviewModelList.add(dashboardRecyclerviewModel);
-        dashboardRvAdapter.setData(dashboardRecyclerviewModelList);
-        dashboardRvAdapter.notifyDataSetChanged();
-
-        mViewModel.getUserInfo().observe(getActivity(), new Observer<UserModel>() {
-            @Override
-            public void onChanged(UserModel userModel) {
-
-                if (userModel.getPreferences()!=null){
-                    preferredCourseId = Integer.parseInt(userModel.getPreferences().split(",")[0]);
-                }else{
-                    preferredCourseId = 1;
-                }
-
-                mViewModel.getFiveTopicsByCourseIdFromRemote(prefManager.getString(Constants.JWTTOKEN),preferredCourseId);
-                mViewModel.getFiveProjectsByCourseIdFromRemote(prefManager.getString(Constants.JWTTOKEN),preferredCourseId);
-
-                DashboardRecyclerviewModel dashboardRecyclerviewModel = new DashboardRecyclerviewModel(Constants.TOPICVIEWTYPE,mViewModel.getFiveTopicsByCourseIdFromDb(preferredCourseId),Constants.TOPICSYOUMAYLIKE);
-                dashboardRecyclerviewModelList.add(dashboardRecyclerviewModel);
-                dashboardRvAdapter.setData(dashboardRecyclerviewModelList);
-                dashboardRvAdapter.notifyDataSetChanged();
-
-                DashboardRecyclerviewModel projectDashboardModel = new DashboardRecyclerviewModel(mViewModel.getFiveProjectByCourseId(preferredCourseId),Constants.PROJECTVIEWTYPE,Constants.PROJECTSYOUMAYLIKE);
-                dashboardRecyclerviewModelList.add(projectDashboardModel);
-                dashboardRvAdapter.setData(dashboardRecyclerviewModelList);
-                dashboardRvAdapter.notifyDataSetChanged();
-            }
-        });
-
         mViewModel.getLiveCourses().observe(getActivity(), new Observer<List<CourseModel>>() {
             @Override
             public void onChanged(List<CourseModel> courseModels) {
@@ -164,46 +172,6 @@ public class DashboardFragment extends Fragment implements DashboardRvAdapter.Da
                 sliderAdapter.notifyDataSetChanged();
             }
         });
-
-
-
-    }
-
-    private void setUpViewPager() {
-        customPagerAdapter = new CustomPagerAdapter(this.getActivity(),data);
-        viewPager.setAdapter(customPagerAdapter);
-
-        try {
-            Field mScroller;
-            mScroller = ViewPager.class.getDeclaredField("mScroller");
-            mScroller.setAccessible(true);
-            FixedSpeedScroller scroller = new FixedSpeedScroller(viewPager.getContext(), new AccelerateInterpolator());
-            // scroller.setFixedDuration(5000);
-            mScroller.set(viewPager, scroller);
-        } catch (NoSuchFieldException | IllegalArgumentException | IllegalAccessException e) {
-        }
-
-        viewPager.setPageTransformer(true, new ZoomPageOutTransaformer());
-
-        final Handler handler = new Handler();
-        final Runnable update = new Runnable() {
-            @Override
-            public void run() {
-                if (viewPager.getCurrentItem()+1 == Integer.MAX_VALUE){
-                    currentPosition = 0;
-                }
-                Log.d("viewpager_position", currentPosition+"");
-                viewPager.setCurrentItem(currentPosition++,true);
-            }
-        };
-
-        Timer swipeTimer = new Timer();
-        swipeTimer.schedule(new TimerTask() {
-            @Override
-            public void run() {
-                handler.post(update);
-            }
-        },5000,5000);
     }
 
 

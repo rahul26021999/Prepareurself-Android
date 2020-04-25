@@ -451,6 +451,6 @@
 
             </LinearLayout>
         </LinearLayout>
-        </ScrollView>
+        </LinearLayout>
     </ScrollView>
 </RelativeLayout>
