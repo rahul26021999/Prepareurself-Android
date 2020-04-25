@@ -27,6 +27,7 @@ import com.prepare.prepareurself.courses.viewmodels.TopicViewModel;
 import com.prepare.prepareurself.resources.ui.activity.ResourcesActivity;
 import com.prepare.prepareurself.R;
 import com.prepare.prepareurself.utils.Constants;
+import com.prepare.prepareurself.utils.GridSpaceItemDecoration;
 import com.prepare.prepareurself.utils.PrefManager;
 
 import java.util.List;
@@ -66,6 +67,7 @@ public class ResourcesFragment extends Fragment implements ResourcesRvAdapter.Re
         //final LinearLayoutManager layoutManager = new LinearLayoutManager(getActivity());
         final GridLayoutManager layoutManager = new GridLayoutManager(getActivity(),2,RecyclerView.VERTICAL,false);
         recyclerView.setLayoutManager(layoutManager);
+        recyclerView.addItemDecoration(new GridSpaceItemDecoration(30));
         recyclerView.setAdapter(adapter);
 
         Log.d("course_id",CoursesActivity.courseId+"");

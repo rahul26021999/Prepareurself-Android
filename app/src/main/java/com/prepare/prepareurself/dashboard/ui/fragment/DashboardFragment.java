@@ -26,6 +26,7 @@ import com.prepare.prepareurself.authentication.data.model.UserModel;
 import com.prepare.prepareurself.courses.data.model.ProjectsModel;
 import com.prepare.prepareurself.courses.data.model.TopicsModel;
 import com.prepare.prepareurself.courses.data.model.TopicsResponseModel;
+import com.prepare.prepareurself.courses.ui.activity.AllCoursesActivity;
 import com.prepare.prepareurself.courses.ui.activity.CoursesActivity;
 import com.prepare.prepareurself.dashboard.data.model.CourseModel;
 import com.prepare.prepareurself.dashboard.viewmodel.DashboardViewModel;
@@ -210,6 +211,11 @@ public class DashboardFragment extends Fragment implements DashboardRvAdapter.Da
         intent.putExtra(Constants.COURSEID,courseId);
         intent.putExtra(Constants.SHOWPAGE,Constants.SHOWPROJECTS);
         startActivity(intent);
+    }
+
+    @Override
+    public void onCourseSeeAll() {
+        startActivity(new Intent(getActivity(), AllCoursesActivity.class));
     }
 
     @Override

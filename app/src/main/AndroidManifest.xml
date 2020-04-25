@@ -14,9 +14,10 @@
         android:supportsRtl="true"
         android:theme="@style/AppTheme"
         android:usesCleartextTraffic="true">
-        <activity android:name=".profile.ui.EditPreferenceActivity"
-            android:theme="@style/ProfileTheme"></activity>
-        <!-- Default Notification Icon -->
+        <activity android:name=".courses.ui.activity.AllCoursesActivity"></activity>
+        <activity
+            android:name=".profile.ui.EditPreferenceActivity"
+            android:theme="@style/ProfileTheme" /> <!-- Default Notification Icon -->
         <meta-data
             android:name="com.google.firebase.messaging.default_notification_icon"
             android:resource="@mipmap/ic_launcher" /> <!-- Default notification color -->
