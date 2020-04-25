@@ -25,6 +25,7 @@ public class AuthenticationActivity extends AppCompatActivity {
 
     private PrefManager prefManager;
     public static int resourceId = -1;
+    public static int projectId = -1;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -42,6 +43,8 @@ public class AuthenticationActivity extends AppCompatActivity {
             Log.d("deeplink_debug","authentication avtivity : "+getIntent().getData()+"");
 
         resourceId = getIntent().getIntExtra(Constants.RESOURCEID, -1);
+
+        projectId = getIntent().getIntExtra(Constants.PROJECTID, -1);
 
         ViewPager viewPager=findViewById(R.id.viewPager);
         AuthenticationPagerAdapter pagerAdapter =new AuthenticationPagerAdapter(getSupportFragmentManager());
