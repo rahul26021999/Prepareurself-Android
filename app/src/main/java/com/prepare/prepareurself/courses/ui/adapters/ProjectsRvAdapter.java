@@ -122,10 +122,9 @@ public class ProjectsRvAdapter extends RecyclerView.Adapter<ProjectsRvAdapter.Pr
         public void bindView(ProjectsModel projectsModel) {
             Glide.with(context)
                     .load(Constants.PROJECTSIMAGEBASEURL + projectsModel.getImage_url())
-                    .override(150,130)
                     .transition(GenericTransitionOptions.<Drawable>with(Utility.getAnimationObject()))
                     .placeholder(R.drawable.placeholder)
-                    .error(R.drawable.ic_image_loading_error)
+                    .error(R.drawable.placeholder)
                     .into(imageView);
 
             tvTitle.setText(projectsModel.getName());

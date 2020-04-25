@@ -35,7 +35,7 @@ public class CoursesHorizontalRvAdapter extends RecyclerView.Adapter<CoursesHori
     @NonNull
     @Override
     public CoursesHorizontalViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
-        View view = LayoutInflater.from(context).inflate(R.layout.courses_viewtype_rv_layout,parent,false);
+        View view = LayoutInflater.from(context).inflate(R.layout.course_viewtype_rv_layout,parent,false);
         return new CoursesHorizontalViewHolder(view);
     }
 
