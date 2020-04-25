@@ -8,6 +8,8 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.view.View;
+import android.widget.ImageView;
 
 import com.prepare.prepareurself.R;
 import com.prepare.prepareurself.courses.ui.adapters.AllCoursesRvAdapter;
@@ -20,11 +22,12 @@ import com.prepare.prepareurself.utils.PrefManager;
 
 import java.util.List;
 
-public class AllCoursesActivity extends AppCompatActivity implements AllCoursesRvAdapter.CourseRvListener {
+public class AllCoursesActivity extends AppCompatActivity implements AllCoursesRvAdapter.CourseRvListener, View.OnClickListener {
 
     RecyclerView recyclerView;
     private DashboardViewModel mViewModel;
     private PrefManager prefManager;
+    private ImageView backBtn;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -34,6 +37,9 @@ public class AllCoursesActivity extends AppCompatActivity implements AllCoursesR
         mViewModel = new ViewModelProvider(this).get(DashboardViewModel.class);
 
         recyclerView = findViewById(R.id.rv_allcourses);
+        backBtn = findViewById(R.id.backBtn);
+
+        backBtn.setOnClickListener(this);
 
         prefManager = new PrefManager(this);
 
@@ -59,5 +65,10 @@ public class AllCoursesActivity extends AppCompatActivity implements AllCoursesR
         Intent intent = new Intent(AllCoursesActivity.this, CoursesActivity.class);
         intent.putExtra(Constants.COURSEID, courseModel.getId());
         startActivity(intent);
+    }
+
+    @Override
+    public void onClick(View v) {
+
     }
 }

@@ -83,10 +83,10 @@ public class ProjectsHorizontalRvAdapter extends RecyclerView.Adapter<ProjectsHo
             Glide.with(context).load(
                     Constants.PROJECTSIMAGEBASEURL+ projectsModel.getImage_url())
                     .placeholder(R.drawable.placeholder)
-                    .override(200,200)
+                    .override(500,500)
                     .diskCacheStrategy(DiskCacheStrategy.RESOURCE)
                     .transition(GenericTransitionOptions.<Drawable>with(Utility.getAnimationObject()))
-                    .error(R.drawable.ic_image_loading_error)
+                    .error(R.drawable.placeholder)
                     .into(imageView);
 
             tvCourseName.setText(projectsModel.getName());

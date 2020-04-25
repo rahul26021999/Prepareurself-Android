@@ -97,6 +97,7 @@ public class DashboardFragment extends Fragment implements DashboardRvAdapter.Da
         sliderView =view.findViewById(R.id.imageSlider);
         menu=view.findViewById(R.id.menu);
         prefManager = new PrefManager(getActivity());
+        menu.setOnClickListener(this);
 
         return view;
     }
