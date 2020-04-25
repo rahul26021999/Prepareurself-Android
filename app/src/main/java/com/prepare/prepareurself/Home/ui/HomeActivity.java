@@ -2,6 +2,8 @@ package com.prepare.prepareurself.Home.ui;
 
 import android.content.ActivityNotFoundException;
 import android.content.Intent;
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
 import android.net.Uri;
 import android.os.Bundle;
 import android.view.MenuItem;
@@ -34,6 +36,9 @@ import androidx.navigation.ui.NavigationUI;
 import androidx.drawerlayout.widget.DrawerLayout;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
+
+import java.io.IOException;
+import java.io.UnsupportedEncodingException;
 
 public class HomeActivity extends AppCompatActivity implements NavigationView.OnNavigationItemSelectedListener,
         DashboardFragment.HomeActivityInteractor,
@@ -119,6 +124,9 @@ public class HomeActivity extends AppCompatActivity implements NavigationView.On
             case R.id.nav_star:
                 redirectToPlayStore();
                 break;
+            case R.id.nav_share:
+                shareApp();
+                break;
 
         }
 
@@ -128,8 +136,21 @@ public class HomeActivity extends AppCompatActivity implements NavigationView.On
 
     }
 
+    private void shareApp() {
+        Bitmap icon = BitmapFactory.decodeResource(getResources(),
+                R.drawable.icon_1);
+        try {
+            Uri uri = Utility.getUriOfBitmap(icon, this);
+            String text = "prepareurself.tk/install";
+            Utility.shareContent(this,uri, text);
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+
+    }
+
     private void redirectToPlayStore() {
-        Utility.redirectUsingCustomTab(this,"https://play.google.com/store/apps/details?id=com.prepare.prepareurself");
+        Utility.redirectUsingCustomTab(this,Constants.GOOGLEPLAYLINK);
     }
 
     private void sendEmailToDeveloper() {
