@@ -21,4 +21,7 @@ public interface CourseRoomDao {
 
     @Query("DELETE FROM course")
     void deleteAllCourses();
+
+    @Query("SELECT * FROM course LIMIT 5")
+    LiveData<List<CourseModel>> getFiveCourses();
 }
