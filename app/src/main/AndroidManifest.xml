@@ -77,9 +77,9 @@
                     android:scheme="theory" />
             </intent-filter>
         </activity>
-        <activity
+        <!--<activity
             android:name=".ui.login.LoginActivity"
-            android:label="@string/title_activity_login" />
+            android:label="@string/title_activity_login" />-->
         <activity
             android:name=".Home.ui.HomeActivity"
             android:label="@string/title_activity_home" />
