@@ -32,6 +32,7 @@ public class AboutusFragment extends Fragment {
         ImageView imageView = view.findViewById(R.id.imagevw);
         Glide.with(getActivity())
                 .load(R.drawable.aboutuspicture)
+                .centerCrop()
                 .into(imageView);
         return  view;
     }
