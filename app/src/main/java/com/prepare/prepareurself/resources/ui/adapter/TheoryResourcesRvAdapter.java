@@ -24,8 +24,6 @@ import com.prepare.prepareurself.resources.data.model.ResourceModel;
 import com.prepare.prepareurself.R;
 import com.prepare.prepareurself.utils.Constants;
 import com.prepare.prepareurself.utils.Utility;
-import com.varunest.sparkbutton.SparkButton;
-import com.varunest.sparkbutton.SparkEventListener;
 
 import java.io.UnsupportedEncodingException;
 import java.util.List;
@@ -69,7 +67,6 @@ public class TheoryResourcesRvAdapter extends RecyclerView.Adapter<TheoryResourc
         holder.imgShare.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-
                 try {
                     String encodedId = Utility.base64EncodeForInt(theoryResources1.getId());
                     Bitmap bitmap = Utility.getBitmapFromView(holder.imageView);
