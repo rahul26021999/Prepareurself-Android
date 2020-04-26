@@ -103,21 +103,24 @@
         android:padding="5dp"
         android:id="@+id/tvPlaylst"/>-->
 
-
-    <androidx.recyclerview.widget.RecyclerView
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:id="@+id/rv_playlist_item_player"
-        android:layout_below="@+id/expandable_layout"/>
     <TextView
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:layout_below="@id/expandable_layout"
-        android:text="Playlst"
-        android:textSize="20sp"
+        android:text="Playlist"
+        android:textColor="@color/colorPrimaryDark"
+        android:fontFamily="@font/proximanovaregular"
+        android:textSize="16sp"
+        android:textStyle="bold"
         android:padding="5dp"
         android:id="@+id/tvPlaylst"
         android:visibility="gone"/>
+    <androidx.recyclerview.widget.RecyclerView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:id="@+id/rv_playlist_item_player"
+        android:layout_below="@+id/tvPlaylst"/>
+
 
     <TextView
         android:layout_width="wrap_content"
