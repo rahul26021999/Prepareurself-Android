@@ -8,10 +8,11 @@
 
     <androidx.recyclerview.widget.RecyclerView
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
+        android:layout_height="wrap_content"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        android:overScrollMode="ifContentScrolls"
+        android:layout_marginBottom="10dp"
+        android:overScrollMode="never"
         app:layout_constraintEnd_toEndOf="parent"
         android:id="@+id/rv_video_resources"
         tools:listitem="@layout/video_resources_rv_adapter_layout"

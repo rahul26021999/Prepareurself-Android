@@ -1,7 +1,6 @@
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:background="?attr/selectableItemBackgroundBorderless"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools">
 
@@ -36,6 +35,7 @@
                 android:text="This is the title of the topicsknkljdnfkjdn"
                 android:textSize="14sp"
                 android:singleLine="false"
+                android:background="?attr/selectableItemBackgroundBorderless"
                 android:minLines="1"
                 android:layout_toRightOf="@id/image"
                 android:textColor="#000"
