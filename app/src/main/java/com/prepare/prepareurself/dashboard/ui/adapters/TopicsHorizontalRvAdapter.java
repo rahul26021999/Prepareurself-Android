@@ -83,7 +83,6 @@ public class TopicsHorizontalRvAdapter extends RecyclerView.Adapter<TopicsHorizo
             Glide.with(context).load(
                     Constants.TOPICSBASEURL+ topicsModel.getImage_url())
                     .placeholder(R.drawable.placeholder)
-                    .override(500,500)
                     .diskCacheStrategy(DiskCacheStrategy.RESOURCE)
                     .transition(GenericTransitionOptions.<Drawable>with(Utility.getAnimationObject()))
                     .error(R.drawable.placeholder)

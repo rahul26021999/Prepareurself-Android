@@ -35,17 +35,17 @@ import com.prepare.prepareurself.youtubeplayer.youtubeplaylistapi.ui.VideoActivi
 
 import java.util.List;
 
-public class ProjectsActivity extends AppCompatActivity implements PlaylistVideosRvAdapter.PlaylistVideoRvInteractor {
+public class ProjectsActivity extends AppCompatActivity implements PlaylistVideosRvAdapter.PlaylistVideoRvInteractor , View.OnClickListener {
 
     int projectId = -1;
     private ProjectsViewModel viewModel;
     private TextView tvProjectTitle, tvProjectDescription;
-    private ImageView imageProject;
+    private ImageView imageProject,backBtn;
     private RecyclerView recyclerView;
     private PlaylistVideosRvAdapter adapter;
     private String rvNextPageToken = "";
     String playlist="";
-    private TextView tvLoading;
+    private TextView tvLoading,title;
     private CardView cardImageView;
     private ImageView videoImageView;
     private TextView tvCardVideoTitle, tvReferenceHeader, tvViewPlaylist;
@@ -64,6 +64,7 @@ public class ProjectsActivity extends AppCompatActivity implements PlaylistVideo
         tvProjectTitle = findViewById(R.id.tv_project_title);
         tvProjectDescription = findViewById(R.id.tv_project_decription);
         imageProject = findViewById(R.id.image_project);
+        backBtn = findViewById(R.id.backBtn);
         recyclerView = findViewById(R.id.rv_prjects_videos);
         tvLoading = findViewById(R.id.tv_loading_project);
         cardImageView = findViewById(R.id.card_project_image);
@@ -72,15 +73,15 @@ public class ProjectsActivity extends AppCompatActivity implements PlaylistVideo
         tvReferenceHeader = findViewById(R.id.tv_reference_heading);
         tvViewPlaylist = findViewById(R.id.tv_viewfullplaylist);
 
+        title=findViewById(R.id.title);
+
         recyclerView.setVisibility(View.GONE);
         cardImageView.setVisibility(View.GONE);
         tvViewPlaylist.setVisibility(View.GONE);
         tvLoading.setVisibility(View.VISIBLE);
 
+        backBtn.setOnClickListener(this);
         prefManager = new PrefManager(this);
-
-        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
-        getSupportActionBar().setDisplayShowHomeEnabled(true);
 
         Intent intent = getIntent();
 
@@ -139,11 +140,8 @@ public class ProjectsActivity extends AppCompatActivity implements PlaylistVideo
 
     private void updateUIWithProject(ProjectsModel projectsModel) {
 
-        getSupportActionBar().setTitle("Project Level : " + projectsModel.getLevel().toUpperCase());
-
         Glide.with(this)
                 .load(Constants.PROJECTSIMAGEBASEURL + projectsModel.getImage_url())
-                .override(150,150)
                 .transition(GenericTransitionOptions.<Drawable>with(Utility.getAnimationObject()))
                 .placeholder(R.drawable.placeholder)
                 .error(R.drawable.ic_image_loading_error)
@@ -151,6 +149,8 @@ public class ProjectsActivity extends AppCompatActivity implements PlaylistVideo
 
         projectTitle = projectsModel.getName();
         tvProjectTitle.setText(projectTitle);
+        title.setText(projectTitle);
+
         if (projectsModel.getDescription()!=null){
             tvProjectDescription.setText(Html.fromHtml(projectsModel.getDescription()));
             projectDescription = Html.fromHtml(projectsModel.getDescription()).toString();
@@ -287,6 +287,15 @@ public class ProjectsActivity extends AppCompatActivity implements PlaylistVideo
         return super.onOptionsItemSelected(item);
     }
 
+    @Override
+    public void onClick(View v) {
+        switch (v.getId())
+        {
+            case R.id.backBtn:
+                onBackPressed();
+                break;
+        }
+    }
 }
 
 

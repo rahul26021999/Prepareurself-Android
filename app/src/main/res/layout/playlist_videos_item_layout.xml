@@ -1,36 +1,44 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.cardview.widget.CardView xmlns:android="http://schemas.android.com/apk/res/android"
-    android:layout_width="match_parent"
+<androidx.cardview.widget.CardView android:layout_width="match_parent"
     android:layout_height="150dp"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    android:layout_marginEnd="10dp"
     android:layout_marginStart="10dp"
-    android:layout_marginTop="20dp"
-    app:cardCornerRadius="10dp">
+    android:layout_marginEnd="10dp"
+    android:layout_marginTop="10dp"
+    app:cardCornerRadius="20dp"
+    app:cardElevation="0dp"
+    android:id="@+id/card_project_image"
+    android:background="?attr/selectableItemBackgroundBorderless"
+    android:layout_below="@+id/tv_reference_heading"
+    xmlns:android="http://schemas.android.com/apk/res/android">
 
     <RelativeLayout
         android:layout_width="match_parent"
-        android:layout_height="match_parent">
+        android:layout_height="match_parent"
+        android:background="@color/white">
 
         <ImageView
             android:layout_width="150dp"
             android:layout_height="match_parent"
+            android:src="@drawable/placeholder"
             android:id="@+id/playlist_videos_thumnail"
-            android:layout_alignParentStart="true"
-            android:background="@color/lightGrey"
-            android:scaleType="fitXY"/>
+            android:scaleType="centerCrop"/>
 
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:id="@+id/tv_playlist_video_title"
             android:layout_toEndOf="@+id/playlist_videos_thumnail"
-            android:layout_marginTop="5dp"
-            android:layout_marginStart="10dp"
-            android:paddingEnd="10dp"
-            android:textColor="@color/colorPrimaryDark"
+            android:textSize="16sp"
+            android:layout_centerVertical="true"
+            android:fontFamily="@font/proximanovaregular"
             android:textStyle="bold"
-            android:fontFamily="@font/proximanovaregular"/>
+            android:maxLines="6"
+            android:ellipsize="end"
+            android:textColor="@color/resource_active_color"
+            android:padding="20dp"
+            android:text="kdjfbvjdfvnfiovno hofv opjop pojpo 'poj pio'pjp 'pojp  ;lm;lvlkn ilknkofn m lknjio  ifvoifhv oijiov oijdiofv oij"
+            android:layout_marginStart="10dp"/>
 
     </RelativeLayout>
 
