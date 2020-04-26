@@ -2,6 +2,7 @@ package com.prepare.prepareurself.aboutus.ui;
 
 import androidx.lifecycle.ViewModelProviders;
 
+import android.graphics.drawable.Drawable;
 import android.os.Bundle;
 
 import androidx.annotation.NonNull;
@@ -11,7 +12,9 @@ import androidx.fragment.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ImageView;
 
+import com.bumptech.glide.Glide;
 import com.prepare.prepareurself.R;
 
 public class AboutusFragment extends Fragment {
@@ -25,7 +28,13 @@ public class AboutusFragment extends Fragment {
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container,
                              @Nullable Bundle savedInstanceState) {
-        return inflater.inflate(R.layout.aboutus_fragment, container, false);
+        View view=inflater.inflate(R.layout.aboutus_fragment, container, false);
+        ImageView imageView = view.findViewById(R.id.imagevw);
+        Glide.with(getActivity())
+                .load(R.drawable.aboutuspicture)
+                .centerCrop()
+                .into(imageView);
+        return  view;
     }
 
     @Override

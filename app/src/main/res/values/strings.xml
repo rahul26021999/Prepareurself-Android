@@ -51,6 +51,9 @@
     <string name="display">Display Name</string>
     <string name="default_notification_channel_id">default</string>
 
+    <!--aboutus strngs-->
+    <string name="aboutustext1">Learning resources from some of the best blogs, websites, articles, etc from all over the internet.</string>
+    <string name="aboutustext2">LEARN ANYTHING, ANYWHERE with Prepareurself </string>
     <string-array name="array_techstacks">
         <item>Android</item>
         <item>Node.js</item>
