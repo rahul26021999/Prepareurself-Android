@@ -57,13 +57,7 @@ public class TheoryResourcesRvAdapter extends RecyclerView.Adapter<TheoryResourc
         final ResourceModel theoryResources1= resourcesList.get(position);
         holder.bindview(theoryResources1);
 
-        holder.tvTitle.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                listener.onResourceClicked(theoryResources1);
-            }
-        });
-        holder.imageView.setOnClickListener(new View.OnClickListener() {
+        holder.itemView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 listener.onResourceClicked(theoryResources1);

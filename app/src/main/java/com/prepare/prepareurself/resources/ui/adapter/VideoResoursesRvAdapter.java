@@ -57,14 +57,7 @@ public class VideoResoursesRvAdapter extends RecyclerView.Adapter<VideoResourses
         final String videoCode = Utility.getVideoCode(v1.getLink());
         holder.bindView(v1, videoCode);
         Log.d("video_debug",videoCode+"");
-        holder.imageView.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                Bitmap bitmap = Utility.getBitmapFromView(holder.imageView);
-                listener.videoClicked(v1,videoCode, bitmap);
-            }
-        });
-        holder.tvTitle.setOnClickListener(new View.OnClickListener() {
+        holder.itemView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 Bitmap bitmap = Utility.getBitmapFromView(holder.imageView);
