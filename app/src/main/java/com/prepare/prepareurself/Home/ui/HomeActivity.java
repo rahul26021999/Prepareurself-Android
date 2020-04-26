@@ -1,12 +1,20 @@
 package com.prepare.prepareurself.Home.ui;
 
+import android.content.ActivityNotFoundException;
 import android.content.Intent;
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
+import android.graphics.drawable.Drawable;
+import android.net.Uri;
 import android.os.Bundle;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.Menu;
+import android.widget.ImageView;
 import android.widget.TextView;
 
+import com.bumptech.glide.GenericTransitionOptions;
+import com.bumptech.glide.Glide;
 import com.prepare.prepareurself.courses.data.model.ProjectsModel;
 import com.prepare.prepareurself.courses.data.model.TopicsModel;
 import com.prepare.prepareurself.courses.ui.activity.CoursesActivity;
@@ -19,6 +27,7 @@ import com.prepare.prepareurself.authentication.data.model.UserModel;
 import com.prepare.prepareurself.resources.ui.activity.ResourcesActivity;
 import com.prepare.prepareurself.utils.Constants;
 import com.google.android.material.navigation.NavigationView;
+import com.prepare.prepareurself.utils.Utility;
 
 import androidx.annotation.NonNull;
 import androidx.core.view.GravityCompat;
@@ -32,7 +41,12 @@ import androidx.drawerlayout.widget.DrawerLayout;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
 
-public class HomeActivity extends AppCompatActivity implements NavigationView.OnNavigationItemSelectedListener, DashboardFragment.HomeActivityInteractor {
+import java.io.IOException;
+import java.io.UnsupportedEncodingException;
+
+public class HomeActivity extends AppCompatActivity implements NavigationView.OnNavigationItemSelectedListener,
+        DashboardFragment.HomeActivityInteractor,
+        View.OnClickListener {
 
     private AppBarConfiguration mAppBarConfiguration;
     private TextView tvNameNavHeader;
@@ -40,6 +54,7 @@ public class HomeActivity extends AppCompatActivity implements NavigationView.On
     private NavController navController;
     private NavigationView navigationView;
     private DrawerLayout drawer;
+    private ImageView profileImageView;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -55,17 +70,18 @@ public class HomeActivity extends AppCompatActivity implements NavigationView.On
 
         View navHeaderView = navigationView.getHeaderView(0);
         tvNameNavHeader = navHeaderView.findViewById(R.id.tv_user_name_nav_header);
+        profileImageView = navHeaderView.findViewById(R.id.profile_image);
 
 
         mAppBarConfiguration = new AppBarConfiguration.Builder(
-                R.id.nav_dashboard, R.id.nav_profile)
+                R.id.nav_dashboard, R.id.nav_profile, R.id.nav_contact_us)
                 .setDrawerLayout(drawer)
                 .build();
         navController = Navigation.findNavController(this, R.id.nav_host_fragment);
         NavigationUI.setupActionBarWithNavController(this, navController, mAppBarConfiguration);
         NavigationUI.setupWithNavController(navigationView, navController);
 
-       // navigationView.setNavigationItemSelectedListener(this);
+        navigationView.setNavigationItemSelectedListener(this);
 
         viewModel.retrieveUserData();
 
@@ -74,6 +90,11 @@ public class HomeActivity extends AppCompatActivity implements NavigationView.On
             public void onChanged(UserModel userModel) {
                 String name = userModel.getFirst_name() + " " + userModel.getLast_name();
                 tvNameNavHeader.setText(name);
+                Glide.with(HomeActivity.this)
+                        .load(Constants.USERIMAGEBASEURL + userModel.getProfile_image())
+                        .placeholder(R.drawable.person_placeholder)
+                        .transition(GenericTransitionOptions.<Drawable>with(Utility.getAnimationObject()))
+                        .into(profileImageView);
             }
         });
 
@@ -97,21 +118,73 @@ public class HomeActivity extends AppCompatActivity implements NavigationView.On
     public boolean onNavigationItemSelected(@NonNull MenuItem item) {
         item.setChecked(true);
 //
-//        drawer.closeDrawers();
-//
-//        int id = item.getItemId();
-//
-//        switch (id){
-//            case R.id.nav_dashboard :
-//                navController.navigate(R.id.nav_dashboard_fragment);
-//                break;
-//            case R.id.nav_profile :
-//                navController.navigate(R.id.nav_profile_fragment);
-//                break;
-//
-//        }
+        drawer.closeDrawers();
+
+        int id = item.getItemId();
+
+        switch (id){
+            case R.id.nav_contact_us :
+                sendEmailToDeveloper();
+                break;
+            case R.id.nav_profile :
+                navController.navigate(R.id.nav_profile);
+                break;
+            case R.id.nav_dashboard :
+                navController.navigate(R.id.nav_dashboard);
+                break;
+            case R.id.nav_star:
+                redirectToPlayStore();
+                break;
+            case R.id.nav_share:
+                shareApp();
+                break;
+            case R.id.nav_about_us :
+                navController.navigate(R.id.nav_about_us);
+                break;
+            case R.id.nav_feedback :
+                navController.navigate(R.id.nav_feedback);
+                break;
+
+        }
+
+
 
         return true;
+
+    }
+
+    private void shareApp() {
+        Bitmap icon = BitmapFactory.decodeResource(getResources(),
+                R.drawable.icon_1);
+        try {
+            Uri uri = Utility.getUriOfBitmap(icon, this);
+            String text = "prepareurself.tk/install";
+            Utility.shareContent(this,uri, text);
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+
+    }
+
+    private void redirectToPlayStore() {
+        Utility.redirectUsingCustomTab(this,Constants.GOOGLEPLAYLINK);
+    }
+
+    private void sendEmailToDeveloper() {
+        String mailto = "mailto:prepareurself123@gmail.com"+
+                "?subject=" + Uri.encode("Important Message");
+        Intent emailIntent = new Intent(Intent.ACTION_SENDTO);
+        emailIntent.setData(Uri.parse(mailto));
+
+        try {
+            startActivity(emailIntent);
+        }catch (ActivityNotFoundException e){
+            Utility.showToast(this,"No App found for sending e-mail");
+        }
+    }
+
+    @Override
+    public void onClick(View v) {
 
     }
 
@@ -119,6 +192,7 @@ public class HomeActivity extends AppCompatActivity implements NavigationView.On
     public void onCourseClicked(CourseModel courseModel) {
         Intent intent = new Intent(HomeActivity.this,CoursesActivity.class);
         intent.putExtra(Constants.COURSEID,courseModel.getId());
+        intent.putExtra(Constants.COURSENAME,courseModel.getName());
         startActivity(intent);
     }
 
@@ -134,6 +208,15 @@ public class HomeActivity extends AppCompatActivity implements NavigationView.On
         Intent intent = new Intent(HomeActivity.this, ProjectsActivity.class);
         intent.putExtra(Constants.PROJECTID,projectsModel.getId());
         startActivity(intent);
+    }
+
+    @Override
+    public void onBarClicked() {
+        if (drawer.isDrawerOpen(GravityCompat.START)){
+            drawer.closeDrawer(GravityCompat.START);
+        }else{
+            drawer.openDrawer(GravityCompat.START);
+        }
     }
 
     @Override

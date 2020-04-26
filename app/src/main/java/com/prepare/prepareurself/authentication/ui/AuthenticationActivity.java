@@ -2,6 +2,7 @@ package com.prepare.prepareurself.authentication.ui;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.fragment.app.FragmentManager;
 import androidx.viewpager.widget.ViewPager;
 
 import android.content.Intent;
@@ -25,6 +26,7 @@ public class AuthenticationActivity extends AppCompatActivity {
 
     private PrefManager prefManager;
     public static int resourceId = -1;
+    public static int projectId = -1;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -43,11 +45,21 @@ public class AuthenticationActivity extends AppCompatActivity {
 
         resourceId = getIntent().getIntExtra(Constants.RESOURCEID, -1);
 
+        projectId = getIntent().getIntExtra(Constants.PROJECTID, -1);
+
         ViewPager viewPager=findViewById(R.id.viewPager);
         AuthenticationPagerAdapter pagerAdapter =new AuthenticationPagerAdapter(getSupportFragmentManager());
-        pagerAdapter.addFragment(new LoginFragment());
+        LoginFragment loginFragment= new LoginFragment();
+        pagerAdapter.addFragment(loginFragment);
         pagerAdapter.addFragment(new RegisterFragment());
         viewPager.setAdapter(pagerAdapter);
+        //coded here
+
+        //fragement_forgetpassword forgetpassword=new fragement_forgetpassword();
+        //FragmentManager fm=getSupportFragmentManager();
+        //fm.beginTransaction().add(R.id.mainlayout,loginFragment).commit();
+
+
 
     }
 
@@ -58,27 +70,27 @@ public class AuthenticationActivity extends AppCompatActivity {
 
     }
 
-    private void getAndroidToken() {
-        FirebaseInstanceId.getInstance().getInstanceId()
-                .addOnCompleteListener(new OnCompleteListener<InstanceIdResult>() {
-                    @Override
-                    public void onComplete(@NonNull Task<InstanceIdResult> task) {
-                        if (!task.isSuccessful()) {
-                            Log.w("FCM_debug", "getInstanceId failed", task.getException());
-                            return;
-                        }
-
-                        // Get new Instance ID token
-                        String token =  task.getResult().getToken();
-                        prefManager.saveString(Constants.ANDROIDTOKEN,token);
-
-                        // Log and toast
-//                        String msg = getString(R.string.msg_token_fmt, token);
-                        Log.d("FCM Token", token);
-//                        Toast.makeText(AuthenticationActivity.this, msg, Toast.LENGTH_SHORT).show();
-                    }
-                });
-
-    }
+//    private void getAndroidToken() {
+//        FirebaseInstanceId.getInstance().getInstanceId()
+//                .addOnCompleteListener(new OnCompleteListener<InstanceIdResult>() {
+//                    @Override
+//                    public void onComplete(@NonNull Task<InstanceIdResult> task) {
+//                        if (!task.isSuccessful()) {
+//                            Log.w("FCM_debug", "getInstanceId failed", task.getException());
+//                            return;
+//                        }
+//
+//                        // Get new Instance ID token
+//                        String token =  task.getResult().getToken();
+//                        prefManager.saveString(Constants.ANDROIDTOKEN,token);
+//
+//                        // Log and toast
+////                        String msg = getString(R.string.msg_token_fmt, token);
+//                        Log.d("FCM Token", token);
+////                        Toast.makeText(AuthenticationActivity.this, msg, Toast.LENGTH_SHORT).show();
+//                    }
+//                });
+//
+//    }
 
 }

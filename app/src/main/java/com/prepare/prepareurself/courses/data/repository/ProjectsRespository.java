@@ -12,6 +12,7 @@ import com.prepare.prepareurself.Apiservice.YoutubeApiInterface;
 import com.prepare.prepareurself.courses.data.db.repository.ProjectsDbRepository;
 import com.prepare.prepareurself.courses.data.model.GetProjectResponse;
 import com.prepare.prepareurself.courses.data.model.ProjectResponse;
+import com.prepare.prepareurself.courses.data.model.ProjectResponseModel;
 import com.prepare.prepareurself.courses.data.model.ProjectsModel;
 import com.prepare.prepareurself.resources.data.model.ResourceLikesResponse;
 import com.prepare.prepareurself.resources.data.model.ResourceViewsResponse;
@@ -184,5 +185,27 @@ public class ProjectsRespository {
                 Log.d("project_viewed",t.getLocalizedMessage()+"");
             }
         });
+    }
+
+    public LiveData<ProjectResponseModel> getProjectById(String token, int projectId) {
+        final MutableLiveData<ProjectResponseModel> data = new MutableLiveData<>();
+        apiInterface.getProjectById(token,projectId).enqueue(new Callback<ProjectResponseModel>() {
+            @Override
+            public void onResponse(Call<ProjectResponseModel> call, Response<ProjectResponseModel> response) {
+                ProjectResponseModel projectResponseModel = response.body();
+                if (projectResponseModel!=null){
+                    data.setValue(projectResponseModel);
+                }else{
+                    data.setValue(null);
+                }
+            }
+
+            @Override
+            public void onFailure(Call<ProjectResponseModel> call, Throwable t) {
+                data.setValue(null);
+            }
+        });
+
+        return data;
     }
 }

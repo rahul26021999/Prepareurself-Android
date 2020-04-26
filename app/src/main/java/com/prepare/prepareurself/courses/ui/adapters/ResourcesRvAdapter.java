@@ -112,10 +112,9 @@ public class ResourcesRvAdapter extends RecyclerView.Adapter<ResourcesRvAdapter.
 
             Glide.with(context)
                     .load(Constants.TOPICSBASEURL + topicsModel.getImage_url())
-                    .override(200,200)
                     .transition(GenericTransitionOptions.<Drawable>with(Utility.getAnimationObject()))
                     .placeholder(R.drawable.placeholder)
-                    .error(R.drawable.ic_image_loading_error)
+                    .error(R.drawable.placeholder)
                     .into(imageView);
             tvTitle.setText(topicsModel.getName());
 

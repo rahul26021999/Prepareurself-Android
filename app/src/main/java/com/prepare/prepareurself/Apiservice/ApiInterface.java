@@ -4,10 +4,13 @@ import com.prepare.prepareurself.authentication.data.model.ForgotPasswordRespons
 import com.prepare.prepareurself.authentication.data.model.RegisterResponseModel;
 import com.prepare.prepareurself.courses.data.model.GetProjectResponse;
 import com.prepare.prepareurself.courses.data.model.GetTopicResponseModel;
+import com.prepare.prepareurself.courses.data.model.ProjectResponseModel;
+import com.prepare.prepareurself.dashboard.data.model.BannerImageResponseModel;
 import com.prepare.prepareurself.dashboard.data.model.GetCourseResponseModel;
 import com.prepare.prepareurself.profile.data.model.UpdatePasswordResponseModel;
 import com.prepare.prepareurself.profile.data.model.UpdatePreferenceResponseModel;
 import com.prepare.prepareurself.profile.data.model.AllPreferencesResponseModel;
+import com.prepare.prepareurself.profile.data.model.UploadImageResponse;
 import com.prepare.prepareurself.resources.data.model.GetResourcesResponse;
 import com.prepare.prepareurself.resources.data.model.ResourceLikesResponse;
 import com.prepare.prepareurself.resources.data.model.ResourceViewsResponse;
@@ -16,8 +19,12 @@ import com.prepare.prepareurself.resources.data.model.VideoShareResponseModel;
 
 import java.util.List;
 
+import okhttp3.MultipartBody;
+import okhttp3.RequestBody;
 import retrofit2.Call;
+import retrofit2.http.Multipart;
 import retrofit2.http.POST;
+import retrofit2.http.Part;
 import retrofit2.http.Query;
 
 public interface ApiInterface {
@@ -100,5 +107,16 @@ public interface ApiInterface {
     Call<VideoShareResponseModel> getResouceById(@Query("token") String token,
                                                  @Query("resource_id") int resourceId);
 
+    @Multipart
+    @POST("update-user")
+    Call<UpdatePreferenceResponseModel> uploadImage(@Query("token") String token,
+                                                    @Part MultipartBody.Part image);
+
+    @POST("project")
+    Call<ProjectResponseModel> getProjectById(@Query("token") String token,
+                                              @Query("project_id") int projectId);
+
+    @POST("get-banner")
+    Call<BannerImageResponseModel> getBanners(@Query("token") String token);
 
 }

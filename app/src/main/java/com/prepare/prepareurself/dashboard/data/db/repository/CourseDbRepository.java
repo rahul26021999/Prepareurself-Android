@@ -33,6 +33,10 @@ public class CourseDbRepository {
         new deleteAllAsyncTask(courseRoomDao).execute();
     }
 
+    public LiveData<List<CourseModel>> getFiveCourses() {
+        return courseRoomDao.getFiveCourses();
+    }
+
     private static class insertAsyncTask extends AsyncTask<CourseModel,Void, Void> {
 
         private CourseRoomDao asynCourseDao;

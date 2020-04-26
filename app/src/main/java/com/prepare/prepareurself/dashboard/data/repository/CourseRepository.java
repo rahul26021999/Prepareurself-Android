@@ -8,7 +8,10 @@ import androidx.lifecycle.MutableLiveData;
 
 import com.prepare.prepareurself.Apiservice.ApiClient;
 import com.prepare.prepareurself.Apiservice.ApiInterface;
+import com.prepare.prepareurself.dashboard.data.db.repository.BannerDbRepository;
 import com.prepare.prepareurself.dashboard.data.db.repository.CourseDbRepository;
+import com.prepare.prepareurself.dashboard.data.model.BannerImageResponseModel;
+import com.prepare.prepareurself.dashboard.data.model.BannerModel;
 import com.prepare.prepareurself.dashboard.data.model.CourseModel;
 import com.prepare.prepareurself.dashboard.data.model.GetCourseResponseModel;
 import com.prepare.prepareurself.utils.Utility;
@@ -23,10 +26,12 @@ public class CourseRepository {
 
     private ApiInterface apiInterface;
     private CourseDbRepository courseDbRepository;
+    private BannerDbRepository bannerDbRepository;
 
     public CourseRepository(Application application){
         apiInterface = ApiClient.getApiClient().create(ApiInterface.class);
         courseDbRepository = new CourseDbRepository(application);
+        bannerDbRepository = new BannerDbRepository(application);
     }
 
     public LiveData<List<CourseModel>> getCourses(String token){
@@ -63,6 +68,25 @@ public class CourseRepository {
         });
 
         return data;
+    }
+
+    public void fetchBanners(String token){
+        apiInterface.getBanners(token).enqueue(new Callback<BannerImageResponseModel>() {
+            @Override
+            public void onResponse(Call<BannerImageResponseModel> call, Response<BannerImageResponseModel> response) {
+                BannerImageResponseModel responseModel = response.body();
+                if (responseModel!=null && responseModel.getError_code() == 0){
+                    for(BannerModel bannerModel : responseModel.getBanner()){
+                        bannerDbRepository.insertBanner(bannerModel);
+                    }
+                }
+            }
+
+            @Override
+            public void onFailure(Call<BannerImageResponseModel> call, Throwable t) {
+                Log.d("banner_failure", t.getLocalizedMessage()+"");
+            }
+        });
     }
 
 }

@@ -35,7 +35,7 @@ public class CoursesHorizontalRvAdapter extends RecyclerView.Adapter<CoursesHori
     @NonNull
     @Override
     public CoursesHorizontalViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
-        View view = LayoutInflater.from(context).inflate(R.layout.courses_viewtype_rv_layout,parent,false);
+        View view = LayoutInflater.from(context).inflate(R.layout.course_viewtype_rv_layout,parent,false);
         return new CoursesHorizontalViewHolder(view);
     }
 
@@ -78,10 +78,10 @@ public class CoursesHorizontalRvAdapter extends RecyclerView.Adapter<CoursesHori
             Glide.with(context).load(
                     Constants.COURSEIMAGEBASEUSRL+ course.getImage_url())
                     .placeholder(R.drawable.placeholder)
-                    .override(200,200)
+                    .override(500,500)
                     .diskCacheStrategy(DiskCacheStrategy.RESOURCE)
                     .transition(GenericTransitionOptions.<Drawable>with(Utility.getAnimationObject()))
-                    .error(R.drawable.ic_image_loading_error)
+                    .error(R.drawable.placeholder)
                     .into(imageView);
 
             tvCourseName.setText(course.getName());

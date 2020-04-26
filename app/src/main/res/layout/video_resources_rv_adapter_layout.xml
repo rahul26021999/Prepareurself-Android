@@ -1,6 +1,7 @@
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
+    android:background="?attr/selectableItemBackground"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools">
 
@@ -32,7 +33,6 @@
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:background="?attr/selectableItemBackgroundBorderless"
                 android:text="This is the title of the topicsknkljdnfkjdn"
                 android:textSize="14sp"
                 android:singleLine="false"
@@ -97,14 +97,14 @@
                 android:fontFamily="@font/poppins_medium"
                 android:id="@+id/tv_no_of_likes"/>
 
-            <com.like.LikeButton
-                app:icon_type="thumb"
-                app:icon_size="18dp"
+            <ImageView
+                android:id="@+id/spark_button"
+                android:layout_width="40dp"
+                android:layout_height="40dp"
                 android:layout_alignParentEnd="true"
-                android:id="@+id/hitLike"
-                android:layout_alignParentBottom="true"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"/>
+                android:layout_marginEnd="5dp"
+                android:layout_alignBottom="@id/image"
+                android:src="@drawable/ic_thumb_up_blue_24dp"/>
         </RelativeLayout>
 
     </androidx.cardview.widget.CardView>

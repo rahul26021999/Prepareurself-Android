@@ -3,6 +3,7 @@
     <color name="colorPrimary">#27254b</color>
     <color name="colorPrimaryDark">#293859</color>
     <color name="colorPrimaryLight">#E9EAEE</color>
+
     <color name="colorAccent">#293859</color>
     <color name="colorWhite">#FFFFFF</color>
     <color name="colorBlack">#000000</color>
@@ -28,6 +29,9 @@
 
     <color name="lightGrey">#f3f3f3</color>
 
+    <color name="like_grey">#A1A3A5</color>
+    <color name="like_blue">#2664FF</color>
+
     <color name="colorPrimary1">#008577</color>
     <color name="colorPrimaryDar1">#293859</color>
     <color name="colorAccent1">#D81B60</color>
@@ -38,6 +42,7 @@
     <color name="blue">#293859</color>
     <color name="lightgrey">#EEEEEE</color>
     <color name="green">#20CA0D</color>
+    <color name="cureentitem">#FF5722</color>
 
 
 </resources>

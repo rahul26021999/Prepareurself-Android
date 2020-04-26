@@ -6,46 +6,40 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="@color/grey"
-    tools:context=".profile.ui.fragments.ProfileFragment"
-    android:orientation="vertical">
+    tools:context=".profile.ui.fragments.ProfileFragment">
     <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="240dp"
-        android:background="@color/colorPrimaryDark" />
-    <LinearLayout
+        android:layout_height="200dp"
+        android:background="@color/colorPrimaryDark"/>
+    <RelativeLayout
         android:id="@+id/topbar"
         android:layout_width="match_parent"
+        android:background="@color/colorPrimaryDark"
         android:layout_height="wrap_content"
-        android:layout_alignParentTop="true"
-        android:gravity="center_vertical"
         android:padding="16dp">
 
         <ImageView
             android:layout_width="40dp"
             android:layout_height="40dp"
+            android:id="@+id/backBtn"
+            android:layout_centerVertical="true"
             android:padding="10dp"
-            android:visibility="invisible"
+            android:background="?attr/selectableItemBackgroundBorderless"
             android:src="@drawable/ic_arrow_back_24dp" />
-        <Space
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_weight="1" />
+
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="Profile"
+            android:layout_centerInParent="true"
             android:textColor="@color/white"
             android:textSize="20sp"
-            android:visibility="invisible"
             android:textStyle="bold" />
-        <Space
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_weight="1" />
+
         <RelativeLayout
             android:layout_width="50dp"
-            android:layout_height="50dp"
-            android:visibility="invisible">
+            android:layout_alignParentEnd="true"
+            android:layout_height="50dp">
 
             <ImageView
                 android:layout_width="40dp"
@@ -63,53 +57,52 @@
                 android:padding="4dp"
                 android:src="@drawable/circleyellowfil" />
         </RelativeLayout>
-    </LinearLayout>
+    </RelativeLayout>
 
-    <ScrollView
+    <androidx.core.widget.NestedScrollView
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:scrollbars="none"
+        android:overScrollMode="never"
         android:layout_below="@+id/topbar"
-        >
+        android:fillViewport="true">
+
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:orientation="vertical"
-            android:paddingLeft="20dp"
-            android:paddingTop="10dp"
-            android:paddingRight="20dp">
+            android:orientation="vertical">
 
-            <!--Top Profile Section -->
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:background="@drawable/circularbordersolid"
-                android:gravity="center"
                 android:orientation="vertical"
-                android:paddingStart="16dp"
-                android:paddingTop="16dp"
-                android:paddingEnd="16dp"
-                android:paddingBottom="16dp">
+                android:paddingLeft="20dp"
+                android:paddingTop="10dp"
+                android:paddingRight="20dp">
 
-                <androidx.cardview.widget.CardView
-                    android:layout_width="150dp"
-                    android:layout_height="130dp"
-                    app:cardCornerRadius="6dp"
-                    app:cardElevation="0dp">
+                <!--Top Profile Section -->
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:background="@drawable/circularbordersolid"
+                    android:orientation="vertical"
+                    android:paddingStart="16dp"
+                    android:paddingTop="16dp"
+                    android:paddingEnd="16dp"
+                    android:paddingBottom="16dp"
+                    android:visibility="visible">
 
-                    <ImageView
+                    <de.hdodenhof.circleimageview.CircleImageView
                         android:layout_width="150dp"
                         android:layout_height="140dp"
                         android:scaleType="centerCrop"
-                        android:src="@drawable/person_placeholder" />
+                        android:src="@drawable/person_placeholder"
+                        app:cardCornerRadius="6dp"
+                        android:layout_gravity="center"
+                        app:cardElevation="0dp"
+                        android:id="@+id/user_image">
 
+                    </de.hdodenhof.circleimageview.CircleImageView>
 
-                </androidx.cardview.widget.CardView>
-
-                <LinearLayout
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:orientation="vertical">
 
                     <TextView
                         android:layout_width="wrap_content"
@@ -118,359 +111,76 @@
                         android:fontFamily="@font/proximanovaregular"
                         android:textColor="#424242"
                         android:textSize="15sp"
+                        android:layout_gravity="center"
+                        tools:text="Rahul26021999@gmail.com"
                         android:textStyle="bold"
                         android:id="@+id/tv_email_profile"/>
-
                 </LinearLayout>
-
 
 
 
             </LinearLayout>
 
-            <!--Option Bar-->
-            <LinearLayout
+            <androidx.cardview.widget.CardView
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="10dp"
-                android:layout_marginBottom="10dp"
-                android:background="@drawable/circularbordersolid"
-                android:gravity="center"
-                android:orientation="horizontal">
-
-                <TextView
-                    android:id="@+id/userinfobtn"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_weight="1"
-                    android:fontFamily="@font/proximanovaregular"
-                    android:gravity="center"
-                    android:padding="13dp"
-                    android:text="User Info"
-                    android:textAllCaps="true"
-                    android:textColor="@color/blue"
-                    android:textSize="14sp"
-                    android:textStyle="bold" />
-
-                <LinearLayout
-                    android:layout_width="1dp"
-                    android:layout_height="match_parent"
-                    android:background="@color/lightgrey" />
-                <TextView
-                    android:id="@+id/preferencesbtn"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_weight="1"
-                    android:fontFamily="@font/proximanovaregular"
-                    android:gravity="center"
-                    android:padding="13dp"
-                    android:text="Preferences"
-                    android:textAllCaps="true"
-                    android:textColor="@color/lightgrey"
-                    android:textSize="14sp"
-                    android:textStyle="bold" />
-
-            </LinearLayout>
-
-            <!--Bootom Cards with sections-->
-
-
-                    <!--bottom card 1-->
-            <LinearLayout
-                android:id="@+id/userinfolayout"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:orientation="vertical">
-                <!--User Details-->
-                <LinearLayout
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_marginTop="10dp"
-                    android:background="@drawable/circularbordersolid"
-                    android:orientation="vertical"
-                    android:padding="16dp">
-
-                    <LinearLayout
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content">
-
-                        <TextView
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:text="About Me"
-                            android:textSize="17sp"
-                            android:fontFamily="@font/proximanovaregular"
-                            android:textStyle="bold" />
-
-                        <Space
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:layout_weight="1" />
-
-                        <TextView
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:text="Edit"
-                            android:id="@+id/tv_aboutme_edit"
-                            android:textColor="#FFCF66"
-                            android:layout_marginEnd="10dp"
-                            android:textSize="14sp" />
-
-                    </LinearLayout>
-
-                    <LinearLayout
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:layout_marginTop="10dp"
-                        android:orientation="vertical">
-
-                        <LinearLayout
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:gravity="center_vertical"
-                            android:paddingRight="8dp">
-
-                            <ImageView
-                                android:layout_width="40dp"
-                                android:layout_height="40dp"
-                                android:background="@drawable/circular_grey_bordersolid"
-                                android:padding="10dp"
-                                android:src="@drawable/ic_cake_black_24dp" />
-
-                            <LinearLayout
-                                android:layout_width="wrap_content"
-                                android:layout_height="wrap_content"
-                                android:layout_gravity="center_vertical"
-                                android:orientation="vertical">
-                                <TextView
-                                    android:layout_width="wrap_content"
-                                    android:layout_height="wrap_content"
-                                    android:id="@+id/tv_dob"
-                                    android:layout_marginLeft="20dp"
-                                    android:textSize="15sp"
-                                    android:textColor="@color/goodgrey"
-                                    android:fontFamily="@font/proximanovaregular"/>
-                                <EditText
-                                    android:layout_width="match_parent"
-                                    android:layout_height="wrap_content"
-                                    android:id="@+id/et_dob"
-                                    android:layout_marginLeft="20dp"
-                                    android:textSize="15sp"
-                                    android:textColor="@color/goodgrey"
-                                    android:fontFamily="@font/proximanovaregular"
-                                    android:visibility="gone"/>
-
-                            </LinearLayout>
-                        </LinearLayout>
-
-                        <LinearLayout
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:layout_marginTop="10dp"
-                            android:gravity="center_vertical"
-                            android:paddingRight="8dp">
-
-                            <ImageView
-                                android:layout_width="40dp"
-                                android:layout_height="40dp"
-                                android:background="@drawable/circular_grey_bordersolid"
-                                android:padding="10dp"
-                                android:src="@drawable/ic_person_black_24dp" />
-
-                            <LinearLayout
-                                android:layout_width="wrap_content"
-                                android:layout_height="wrap_content"
-                                android:layout_gravity="center_vertical"
-                                android:orientation="vertical">
-                                <TextView
-                                    android:layout_width="wrap_content"
-                                    android:layout_height="wrap_content"
-                                    android:id="@+id/tv_name"
-                                    android:layout_marginLeft="20dp"
-                                    android:textColor="@color/goodgrey"
-                                    android:textSize="15sp"
-                                    android:fontFamily="@font/proximanovaregular" />
-                                <EditText
-                                    android:layout_width="wrap_content"
-                                    android:layout_height="wrap_content"
-                                    android:id="@+id/et_name"
-                                    android:layout_marginLeft="20dp"
-                                    android:textColor="@color/goodgrey"
-                                    android:textSize="15sp"
-                                    android:fontFamily="@font/proximanovaregular"
-                                    android:visibility="gone"/>
-                            </LinearLayout>
-
-                        </LinearLayout>
-
-                        <LinearLayout
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:layout_marginTop="10dp"
-                            android:gravity="center_vertical"
-                            android:paddingRight="8dp">
-
-                            <ImageView
-                                android:layout_width="40dp"
-                                android:layout_height="40dp"
-                                android:background="@drawable/circular_grey_bordersolid"
-                                android:padding="10dp"
-                                android:src="@drawable/ic_call_24dp" />
-
-                            <LinearLayout
-                                android:layout_width="wrap_content"
-                                android:layout_height="wrap_content"
-                                android:layout_gravity="center_vertical"
-                                android:orientation="vertical">
-                                <TextView
-                                    android:layout_width="wrap_content"
-                                    android:layout_height="wrap_content"
-                                    android:id="@+id/tv_call"
-                                    android:layout_marginLeft="20dp"
-                                    android:textSize="15sp"
-                                    android:textColor="@color/goodgrey"
-                                    android:fontFamily="@font/proximanovaregular" />
-                                <EditText
-                                    android:layout_width="wrap_content"
-                                    android:layout_height="wrap_content"
-                                    android:id="@+id/et_call"
-                                    android:layout_marginLeft="20dp"
-                                    android:textSize="15sp"
-                                    android:textColor="@color/goodgrey"
-                                    android:fontFamily="@font/proximanovaregular"
-                                    android:visibility="gone"/>
-                            </LinearLayout>
-                        </LinearLayout>
-
-                    </LinearLayout>
-                    <Button
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:id="@+id/btn_aboutme"
-                        android:text="save"
-                        android:layout_marginTop="5dp"
-                        android:textSize="15sp"
-                        android:textColor="@color/white"
-                        android:layout_gravity="center"
-                        android:background="@drawable/profile_preferences_button"
-                        android:visibility="gone"
-                        />
-                </LinearLayout>
-
-            <!--security-->
+                app:cardElevation="0dp"
+                android:layout_marginStart="20dp"
+                app:cardCornerRadius="18dp"
+                android:layout_marginEnd="20dp"
+                android:id="@+id/card_resource_heading">
 
                 <LinearLayout
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_marginTop="10dp"
-                    android:background="@drawable/circularbordersolid"
-                    android:orientation="vertical"
-                    android:padding="16dp">
+                    android:weightSum="2"
+                    android:orientation="horizontal">
 
                     <TextView
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:text="Security"
-                        android:textSize="17sp"
+                        android:text="User info"
+                        android:padding="10dp"
+                        android:layout_weight="1"
+                        android:background="?attr/selectableItemBackground"
+                        android:textAllCaps="true"
+                        android:textColor="@color/colorPrimaryDark"
+                        android:textStyle="bold"
                         android:fontFamily="@font/proximanovaregular"
-                        android:textStyle="bold" />
+                        android:textSize="13sp"
+                        android:gravity="center"
+                        android:id="@+id/tv_resouce_heading_video"/>
 
-                    <Button
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:text="Update Password"
-                        android:textSize="18sp"
-                        android:textColor="@color/colorWhite"
-                        android:background="@drawable/profile_preferences_button"
-                        android:padding="5dp"
-                        android:layout_margin="10dp"
-                        android:id="@+id/btn_update_password"/>
-
-                    <Button
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:text="Sign out"
-                        android:textSize="18sp"
-                        android:textColor="@color/colorWhite"
-                        android:background="@drawable/profile_preferences_button"
-                        android:padding="5dp"
-                        android:layout_margin="10dp"
-                        android:id="@+id/btn_logout"/>
-
-
-                </LinearLayout>
-
-                <!--about me ended-->
-            </LinearLayout>
-
-
-
-
-
-            <!-- bottom card 2 -: start preferences-->
-        <LinearLayout
-            android:id="@+id/preferenceslayout"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:orientation="vertical">
-            <LinearLayout
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:background="@drawable/circularbordersolid"
-                android:orientation="vertical"
-                android:padding="20dp"
-                >
-                <LinearLayout
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_marginBottom="10dp">
-
+                    <View
+                        android:layout_width="1dp"
+                        android:layout_height="match_parent"
+                        android:background="@color/lightGrey"/>
                     <TextView
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:text="Choices"
-                        android:textSize="17sp"
+                        android:text="Preferences"
+                        android:padding="10dp"
+                        android:background="?attr/selectableItemBackground"
+                        android:layout_weight="1"
+                        android:textAllCaps="true"
                         android:fontFamily="@font/proximanovaregular"
-                        android:textStyle="bold" />
-
-                    <Space
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_weight="1" />
-
-                    <TextView
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:text="Edit"
-                        android:id="@+id/tv_preference_edit"
-                        android:textColor="#FFCF66"
-                        android:layout_marginEnd="10dp"
-                        android:textSize="14sp" />
+                        android:textColor="@color/lightGrey"
+                        android:textStyle="bold"
+                        android:textSize="13sp"
+                        android:gravity="center"
+                        android:id="@+id/tv_resouce_heading_theory"/>
 
                 </LinearLayout>
 
-                <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="Loading content"
-                    android:textColor="@color/colorPrimaryDark"
-                    android:fontFamily="@font/proximanovaregular"
-                    android:layout_gravity="center_horizontal"
-                    android:id="@+id/tvLoading_preferences"
-                    android:visibility="gone"/>
-
-                <androidx.recyclerview.widget.RecyclerView
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_margin="10dp"
-                    android:id="@+id/rv_user_preference"
-                    tools:listitem="@layout/user_preferences_adapter_layout"/>
-
-            </LinearLayout>
-
-
+            </androidx.cardview.widget.CardView>
+            <androidx.viewpager.widget.ViewPager
+                android:id="@+id/view_pager_resources"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_marginTop="10dp"
+                app:layout_behavior="@string/appbar_scrolling_view_behavior" />
         </LinearLayout>
 
-        </LinearLayout>
-    </ScrollView>
+        </androidx.core.widget.NestedScrollView>
 </RelativeLayout>

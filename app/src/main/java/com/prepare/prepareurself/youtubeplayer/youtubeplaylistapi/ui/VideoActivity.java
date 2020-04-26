@@ -65,7 +65,7 @@ public class VideoActivity extends YouTubeBaseActivity implements YouTubePlayer.
 
     private VideoViewModel videoViewModel;
 
-    private TextView tvTitle, tvDescription;
+    private TextView tvTitle, tvDescription, tvPlaylst;
     private YouTubePlayer mYoutubePlayer;
     private PlaylistItemAdapter playlistItemAdapter;
     private int resourceId =-1;
@@ -94,6 +94,9 @@ public class VideoActivity extends YouTubeBaseActivity implements YouTubePlayer.
         playlistItemRecyclerView = findViewById(R.id.rv_playlist_item_player);
         rvOtherVideos = findViewById(R.id.rv_other_videos);
         tvRelatedVideosHeader = findViewById(R.id.tv_related_header);
+        //fnd
+        tvPlaylst= findViewById(R.id.tvPlaylst);
+
 
         prefManager = new PrefManager(this);
 
@@ -113,6 +116,7 @@ public class VideoActivity extends YouTubeBaseActivity implements YouTubePlayer.
             playlistItemRecyclerView.setVisibility(View.GONE);
             rvOtherVideos.setVisibility(View.GONE);
             tvRelatedVideosHeader.setVisibility(View.GONE);
+            //
 
         }else if (intent.getBooleanExtra(Constants.PLAYLIST,false)){
             hideShareAndLike();
@@ -125,6 +129,8 @@ public class VideoActivity extends YouTubeBaseActivity implements YouTubePlayer.
 
             playlistItemRecyclerView.setVisibility(View.VISIBLE);
             tvRelatedVideosHeader.setVisibility(View.GONE);
+            tvPlaylst.setVisibility(View.VISIBLE);
+            //
 
             playlistItemAdapter = new PlaylistItemAdapter(getApplicationContext(),this);
             LinearLayoutManager layoutManager = new LinearLayoutManager(this);
@@ -154,6 +160,8 @@ public class VideoActivity extends YouTubeBaseActivity implements YouTubePlayer.
             playlistItemRecyclerView.setVisibility(View.VISIBLE);
             rvOtherVideos.setVisibility(View.GONE);
             tvRelatedVideosHeader.setVisibility(View.GONE);
+            //
+            tvPlaylst.setVisibility(View.VISIBLE);
 
             playlistItemAdapter = new PlaylistItemAdapter(getApplicationContext(),this);
             LinearLayoutManager layoutManager = new LinearLayoutManager(this);

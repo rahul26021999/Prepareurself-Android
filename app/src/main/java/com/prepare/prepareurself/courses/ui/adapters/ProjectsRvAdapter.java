@@ -1,5 +1,7 @@
 package com.prepare.prepareurself.courses.ui.adapters;
 
+import android.animation.ArgbEvaluator;
+import android.animation.ValueAnimator;
 import android.content.Context;
 import android.graphics.Bitmap;
 import android.graphics.drawable.Drawable;
@@ -73,17 +75,41 @@ public class ProjectsRvAdapter extends RecyclerView.Adapter<ProjectsRvAdapter.Pr
             }
         });
 
-        holder.likeButton.setOnLikeListener(new OnLikeListener() {
-            @Override
-            public void liked(LikeButton likeButton) {
-                listener.onProjectLiked(projectsModel,0);
-                holder.tvNoOfLikes.setText(projectsModel.getTotal_likes()+1 + " likes");
-            }
+        holder.likeButton.setOnClickListener(new View.OnClickListener() {
+
+            ValueAnimator buttonColorAnim = null;
+
 
             @Override
-            public void unLiked(LikeButton likeButton) {
-                listener.onProjectLiked(projectsModel, 1);
-                holder.tvNoOfLikes.setText(projectsModel.getTotal_likes() + " likes");
+            public void onClick(View v) {
+
+                if (buttonColorAnim == null && projectsModel.getLike() ==1){
+                    holder.likeButton.setImageDrawable(context.getResources().getDrawable(R.drawable.ic_thumb_up_grey_24dp));
+                    listener.onProjectLiked(projectsModel,1);
+                    holder.tvNoOfLikes.setText(projectsModel.getTotal_likes()-1 + " likes");
+                    projectsModel.setTotal_likes(projectsModel.getTotal_likes()-1);
+                    projectsModel.setLike(0);
+                }else{
+                    if(buttonColorAnim != null){
+                        buttonColorAnim.reverse();
+                        buttonColorAnim = null;
+                        listener.onProjectLiked(projectsModel,1);
+                        holder.tvNoOfLikes.setText(projectsModel.getTotal_likes() + " likes");
+                    }
+                    else {
+                        final ImageView button = (ImageView) v;
+                        buttonColorAnim = ValueAnimator.ofObject(new ArgbEvaluator(), context.getResources().getColor(R.color.like_grey), context.getResources().getColor(R.color.like_blue));
+                        buttonColorAnim.addUpdateListener(new ValueAnimator.AnimatorUpdateListener() {
+                            @Override
+                            public void onAnimationUpdate(ValueAnimator animator) {
+                                button.setColorFilter((Integer) animator.getAnimatedValue());
+                            }
+                        });
+                        buttonColorAnim.start();
+                        listener.onProjectLiked(projectsModel,0);
+                        holder.tvNoOfLikes.setText(projectsModel.getTotal_likes()+1 + " likes");
+                    }
+                }
             }
         });
 
@@ -103,7 +129,7 @@ public class ProjectsRvAdapter extends RecyclerView.Adapter<ProjectsRvAdapter.Pr
         ImageView imageView;
         TextView tvTitle, tvNoOfLikes, tvNoOfViews;
         ImageView imgShare;
-        LikeButton likeButton;
+        ImageView likeButton;
         TextView tvLevel;
 
         public ProjectsViewHolder(@NonNull View itemView) {
@@ -112,7 +138,7 @@ public class ProjectsRvAdapter extends RecyclerView.Adapter<ProjectsRvAdapter.Pr
             imageView = itemView.findViewById(R.id.project_image);
             tvTitle = itemView.findViewById(R.id.tv_title_project);
             imgShare = itemView.findViewById(R.id.img_share_project);
-            likeButton = itemView.findViewById(R.id.hitLike);
+            likeButton = itemView.findViewById(R.id.spark_button);
             tvNoOfLikes = itemView.findViewById(R.id.tv_no_of_likes);
             tvNoOfViews = itemView.findViewById(R.id.no_of_views);
             tvLevel = itemView.findViewById(R.id.tv_level_project);
@@ -122,10 +148,9 @@ public class ProjectsRvAdapter extends RecyclerView.Adapter<ProjectsRvAdapter.Pr
         public void bindView(ProjectsModel projectsModel) {
             Glide.with(context)
                     .load(Constants.PROJECTSIMAGEBASEURL + projectsModel.getImage_url())
-                    .override(150,130)
                     .transition(GenericTransitionOptions.<Drawable>with(Utility.getAnimationObject()))
                     .placeholder(R.drawable.placeholder)
-                    .error(R.drawable.ic_image_loading_error)
+                    .error(R.drawable.placeholder)
                     .into(imageView);
 
             tvTitle.setText(projectsModel.getName());
@@ -134,12 +159,10 @@ public class ProjectsRvAdapter extends RecyclerView.Adapter<ProjectsRvAdapter.Pr
             tvLevel.setText("Level : "+projectsModel.getLevel());
 
             if (projectsModel.getLike() == 1){
-                likeButton.setLiked(true);
+                likeButton.setImageDrawable(context.getResources().getDrawable(R.drawable.ic_thumb_up_blue_24dp));
             }else{
-                likeButton.setLiked(false);
+                likeButton.setImageDrawable(context.getResources().getDrawable(R.drawable.ic_thumb_up_grey_24dp));
             }
-
-
 
 
         }
