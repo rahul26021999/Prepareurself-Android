@@ -7,6 +7,7 @@ import androidx.room.OnConflictStrategy;
 import androidx.room.Query;
 
 import com.prepare.prepareurself.profile.data.model.MyPreferenceTechStack;
+import com.prepare.prepareurself.profile.data.model.PreferredTechStack;
 
 import java.util.List;
 

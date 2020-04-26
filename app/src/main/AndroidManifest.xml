@@ -14,21 +14,12 @@
         android:supportsRtl="true"
         android:theme="@style/AppTheme"
         android:usesCleartextTraffic="true">
+        <activity android:name=".courses.ui.activity.AllCoursesActivity"></activity>
+        <activity
+            android:name=".profile.ui.EditPreferenceActivity"
+            android:theme="@style/ProfileTheme" />
 
-        <!-- Default Notification Icon -->
-        <meta-data
-            android:name="com.google.firebase.messaging.default_notification_icon"
-            android:resource="@mipmap/ic_launcher" />
-        <!-- Default notification color -->
-        <meta-data
-            android:name="com.google.firebase.messaging.default_notification_color"
-            android:resource="@color/colorAccent" />
-        <!-- Default notification channel (required for Android 8.0 and above) -->
-        <meta-data
-            android:name="com.google.firebase.messaging.default_notification_channel_id"
-            android:value="@string/default_notification_channel_id" />
-
-        <activity android:name=".authentication.ui.VerifyEmailActivity"></activity>
+        <activity android:name=".authentication.ui.VerifyEmailActivity" />
         <activity android:name=".profile.ui.activity.UpdatePasswordActivity" />
         <activity android:name=".youtubeplayer.youtubeplaylistapi.ui.VideoActivity">
             <intent-filter>
@@ -54,9 +45,6 @@
                     android:scheme="project" />
             </intent-filter>
         </activity>
-        <activity
-            android:name=".profile.ui.EditPreferencesActivity"
-            android:theme="@style/ProfileTheme" />
         <activity android:name=".courses.ui.activity.CoursesActivity">
             <intent-filter>
                 <action android:name="android.intent.action.VIEW" />
@@ -70,12 +58,10 @@
             </intent-filter>
         </activity>
         <activity
-            android:name=".resources.youtubevideoplayer.YoutubePlayerActivity"
-            android:theme="@style/AppTheme.NoActionBar" />
+            android:name=".resources.youtubevideoplayer.YoutubePlayerActivity" />
         <activity
             android:name=".resources.ui.activity.ResourcesActivity"
-            android:label="@string/title_activity_courses"
-            android:theme="@style/AppTheme.NoActionBar">
+            android:label="@string/title_activity_courses">
             <intent-filter>
                 <action android:name="android.intent.action.VIEW" />
 
@@ -92,15 +78,12 @@
             android:label="@string/title_activity_login" />
         <activity
             android:name=".Home.ui.HomeActivity"
-            android:label="@string/title_activity_home"
-            android:theme="@style/AppTheme.NoActionBar" />
+            android:label="@string/title_activity_home" />
         <activity android:name=".utils.QuizBaseActivity" />
         <activity
-            android:name=".quiz.QuizActivity"
-            android:theme="@style/AppTheme.NoActionBar" />
+            android:name=".quiz.QuizActivity" />
         <activity
-            android:name=".authentication.ui.AuthenticationActivity"
-            android:theme="@style/AppTheme.NoActionBar">
+            android:name=".authentication.ui.AuthenticationActivity">
             <intent-filter>
                 <action android:name="android.intent.action.VIEW" />
 
@@ -122,14 +105,6 @@
         <meta-data
             android:name="preloaded_fonts"
             android:resource="@array/preloaded_fonts" />
-
-        <service
-            android:name=".firebase.MyFirebaseMessagingService"
-            android:exported="false">
-            <intent-filter>
-                <action android:name="com.google.firebase.MESSAGING_EVENT" />
-            </intent-filter>
-        </service>
 
     </application>
 

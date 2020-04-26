@@ -9,6 +9,7 @@ import androidx.lifecycle.MutableLiveData;
 
 import com.prepare.prepareurself.courses.data.db.repository.ProjectsDbRepository;
 import com.prepare.prepareurself.courses.data.model.ProjectResponse;
+import com.prepare.prepareurself.courses.data.model.ProjectResponseModel;
 import com.prepare.prepareurself.courses.data.model.ProjectsModel;
 import com.prepare.prepareurself.courses.data.repository.ProjectsRespository;
 import com.prepare.prepareurself.resources.data.model.ResourceLikesResponse;
@@ -88,5 +89,9 @@ public class ProjectsViewModel extends AndroidViewModel {
 
     public void viewProject(String token,int id) {
         respository.viewProject(token,id);
+    }
+
+    public LiveData<ProjectResponseModel> getProjectByIdFromRemote(String token,int projectId) {
+        return respository.getProjectById(token, projectId);
     }
 }

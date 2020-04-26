@@ -12,13 +12,11 @@
         android:overScrollMode="ifContentScrolls"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        android:background="@color/lightGrey"
         android:layout_marginTop="10dp"
         app:layout_constraintEnd_toEndOf="parent"
         tools:listitem="@layout/theory_rv_adapter_layout"
         android:id="@+id/rv_theory_resources"
-        app:layout_constrainedHeight="true"
-        android:layout_marginBottom="?actionBarSize"/>
+        app:layout_constrainedHeight="true"/>
 
     <TextView
         android:layout_width="wrap_content"

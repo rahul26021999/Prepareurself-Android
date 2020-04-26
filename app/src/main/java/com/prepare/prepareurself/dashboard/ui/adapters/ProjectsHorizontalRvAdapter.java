@@ -36,7 +36,7 @@ public class ProjectsHorizontalRvAdapter extends RecyclerView.Adapter<ProjectsHo
     @NonNull
     @Override
     public ProjectsViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
-        View view = LayoutInflater.from(context).inflate(R.layout.courses_viewtype_rv_layout,parent, false);
+        View view = LayoutInflater.from(context).inflate(R.layout.project_viewtype_rv_layout,parent, false);
 
         return new ProjectsViewHolder(view);
     }
@@ -83,10 +83,9 @@ public class ProjectsHorizontalRvAdapter extends RecyclerView.Adapter<ProjectsHo
             Glide.with(context).load(
                     Constants.PROJECTSIMAGEBASEURL+ projectsModel.getImage_url())
                     .placeholder(R.drawable.placeholder)
-                    .override(200,200)
                     .diskCacheStrategy(DiskCacheStrategy.RESOURCE)
                     .transition(GenericTransitionOptions.<Drawable>with(Utility.getAnimationObject()))
-                    .error(R.drawable.ic_image_loading_error)
+                    .error(R.drawable.placeholder)
                     .into(imageView);
 
             tvCourseName.setText(projectsModel.getName());

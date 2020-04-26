@@ -87,8 +87,14 @@ public class DashboardRvAdapter extends RecyclerView.Adapter implements CoursesH
         switch (modelList.get(position).getViewType()){
             case COURSEVIEWTYPE :
                 String categoryName = modelList.get(position).getCategoryName();
-                LiveData<List<CourseModel>> courses = modelList.get(position).getCourses();
+                final LiveData<List<CourseModel>> courses = modelList.get(position).getCourses();
                 ((CourseViewHolder) holder).bindCoursesView(categoryName,courses, this);
+                ((CourseViewHolder) holder).tvSeeAll.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+                        listener.onCourseSeeAll();
+                    }
+                });
                 break;
             case ADDVIEWTYPE :
                 String adText = modelList.get(position).getAddText();
@@ -255,6 +261,7 @@ public class DashboardRvAdapter extends RecyclerView.Adapter implements CoursesH
         void onProjectClicked(ProjectsModel projectsModel);
         void onTopicSeeAll(int courseId);
         void onProjectSeeAll(int courseId);
+        void onCourseSeeAll();
     }
 
 

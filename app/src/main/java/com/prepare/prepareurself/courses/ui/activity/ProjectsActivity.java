@@ -20,6 +20,8 @@ import android.widget.TextView;
 
 import com.bumptech.glide.GenericTransitionOptions;
 import com.bumptech.glide.Glide;
+import com.prepare.prepareurself.authentication.ui.AuthenticationActivity;
+import com.prepare.prepareurself.courses.data.model.ProjectResponseModel;
 import com.prepare.prepareurself.courses.data.model.ProjectsModel;
 import com.prepare.prepareurself.courses.ui.adapters.PlaylistVideosRvAdapter;
 import com.prepare.prepareurself.courses.viewmodels.ProjectsViewModel;
@@ -34,17 +36,17 @@ import com.prepare.prepareurself.youtubeplayer.youtubeplaylistapi.ui.VideoActivi
 
 import java.util.List;
 
-public class ProjectsActivity extends AppCompatActivity implements PlaylistVideosRvAdapter.PlaylistVideoRvInteractor {
+public class ProjectsActivity extends AppCompatActivity implements PlaylistVideosRvAdapter.PlaylistVideoRvInteractor , View.OnClickListener {
 
     int projectId = -1;
     private ProjectsViewModel viewModel;
     private TextView tvProjectTitle, tvProjectDescription;
-    private ImageView imageProject;
+    private ImageView imageProject,backBtn;
     private RecyclerView recyclerView;
     private PlaylistVideosRvAdapter adapter;
     private String rvNextPageToken = "";
     String playlist="";
-    private TextView tvLoading;
+    private TextView tvLoading,title;
     private CardView cardImageView;
     private ImageView videoImageView;
     private TextView tvCardVideoTitle, tvReferenceHeader, tvViewPlaylist;
@@ -63,6 +65,7 @@ public class ProjectsActivity extends AppCompatActivity implements PlaylistVideo
         tvProjectTitle = findViewById(R.id.tv_project_title);
         tvProjectDescription = findViewById(R.id.tv_project_decription);
         imageProject = findViewById(R.id.image_project);
+        backBtn = findViewById(R.id.backBtn);
         recyclerView = findViewById(R.id.rv_prjects_videos);
         tvLoading = findViewById(R.id.tv_loading_project);
         cardImageView = findViewById(R.id.card_project_image);
@@ -71,38 +74,53 @@ public class ProjectsActivity extends AppCompatActivity implements PlaylistVideo
         tvReferenceHeader = findViewById(R.id.tv_reference_heading);
         tvViewPlaylist = findViewById(R.id.tv_viewfullplaylist);
 
+        title=findViewById(R.id.title);
+
         recyclerView.setVisibility(View.GONE);
         cardImageView.setVisibility(View.GONE);
         tvViewPlaylist.setVisibility(View.GONE);
         tvLoading.setVisibility(View.VISIBLE);
 
+        backBtn.setOnClickListener(this);
         prefManager = new PrefManager(this);
-
-        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
-        getSupportActionBar().setDisplayShowHomeEnabled(true);
 
         Intent intent = getIntent();
 
         if (intent.getData()!=null){
-            projectId = Integer.parseInt(intent.getData().toString().split("&id=")[1]);
+           int id = Integer.parseInt(intent.getData().toString().split("&id=")[1]);
+
+            if (!prefManager.getBoolean(Constants.ISLOGGEDIN)){
+                Intent loginIntent = new Intent(ProjectsActivity.this, AuthenticationActivity.class);
+                loginIntent.putExtra(Constants.PROJECTID, id);
+                startActivity(loginIntent);
+                finish();
+            }else {
+                projectId = id;
+                callProjectFromRemote(projectId);
+            }
+
+        }else if (intent.getBooleanExtra(Constants.DEEPSHAREPROECTAFTERLOGIN, false)){
+            projectId = intent.getIntExtra(Constants.PROJECTID,-1);
+            callProjectFromRemote(projectId);
         }else{
             projectId = intent.getIntExtra(Constants.PROJECTID,-1);
-        }
 
-
-        if (projectId != -1){
-            viewModel.getProjectById(projectId).observe(this, new Observer<ProjectsModel>() {
-                @Override
-                public void onChanged(ProjectsModel projectsModel) {
-                    if (projectsModel!=null){
-                        if (projectsModel.getView()==0){
-                            viewModel.viewProject(prefManager.getString(Constants.JWTTOKEN),projectsModel.getId());
+            if (projectId != -1){
+                viewModel.getProjectById(projectId).observe(this, new Observer<ProjectsModel>() {
+                    @Override
+                    public void onChanged(ProjectsModel projectsModel) {
+                        if (projectsModel!=null){
+                            if (projectsModel.getView()==0){
+                                viewModel.viewProject(prefManager.getString(Constants.JWTTOKEN),projectsModel.getId());
+                            }
+                            updateUIWithProject(projectsModel);
                         }
-                        updateUIWithProject(projectsModel);
                     }
-                }
-            });
+                });
+            }
+
         }
+
 
         tvViewPlaylist.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -123,13 +141,31 @@ public class ProjectsActivity extends AppCompatActivity implements PlaylistVideo
 
     }
 
-    private void updateUIWithProject(ProjectsModel projectsModel) {
+    private void callProjectFromRemote(int projectId) {
+        viewModel.getProjectByIdFromRemote(prefManager.getString(Constants.JWTTOKEN),projectId)
+                .observe(this, new Observer<ProjectResponseModel>() {
+                    @Override
+                    public void onChanged(ProjectResponseModel projectResponseModel) {
+                        if (projectResponseModel!=null){
+                            if (projectResponseModel.getError_code() == 0 && projectResponseModel.getProject()!=null){
+                                if (projectResponseModel.getProject().getView()==0){
+                                    viewModel.viewProject(prefManager.getString(Constants.JWTTOKEN),projectResponseModel.getProject().getId());
+                                }
+                                updateUIWithProject(projectResponseModel.getProject());
+                            }else{
+                                Utility.showToast(ProjectsActivity.this, "Project not found");
+                            }
+                        }else{
+                            Utility.showToast(ProjectsActivity.this,Constants.SOMETHINGWENTWRONG);
+                        }
+                    }
+                });
+    }
 
-        getSupportActionBar().setTitle("Project Level : " + projectsModel.getLevel().toUpperCase());
+    private void updateUIWithProject(ProjectsModel projectsModel) {
 
         Glide.with(this)
                 .load(Constants.PROJECTSIMAGEBASEURL + projectsModel.getImage_url())
-                .override(150,150)
                 .transition(GenericTransitionOptions.<Drawable>with(Utility.getAnimationObject()))
                 .placeholder(R.drawable.placeholder)
                 .error(R.drawable.ic_image_loading_error)
@@ -137,6 +173,8 @@ public class ProjectsActivity extends AppCompatActivity implements PlaylistVideo
 
         projectTitle = projectsModel.getName();
         tvProjectTitle.setText(projectTitle);
+        title.setText(projectTitle);
+
         if (projectsModel.getDescription()!=null){
             tvProjectDescription.setText(Html.fromHtml(projectsModel.getDescription()));
             projectDescription = Html.fromHtml(projectsModel.getDescription()).toString();
@@ -273,6 +311,15 @@ public class ProjectsActivity extends AppCompatActivity implements PlaylistVideo
         return super.onOptionsItemSelected(item);
     }
 
+    @Override
+    public void onClick(View v) {
+        switch (v.getId())
+        {
+            case R.id.backBtn:
+                onBackPressed();
+                break;
+        }
+    }
 }
 
 
