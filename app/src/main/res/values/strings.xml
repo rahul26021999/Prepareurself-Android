@@ -6,7 +6,7 @@
     <string name="login">Login</string>
     <string name="password">Password</string>
     <string name="e_mail">Email</string>
-    <string name="tag">Let\'s get prepare for quizzes</string>
+    <string name="tag">Let\'s get prepare for career</string>
     <string name="swipe_right_for_login">Swipe Right for Login</string>
     <string name="register">Register</string>
     <string name="re_type_password">Re-type Password</string>
@@ -35,7 +35,7 @@
     <string name="menu_feedback">Feedback</string>
     <string name="menu_about_us">About us</string>
     <string name="menu_share">Share</string>
-    <string name="menu_star">Rate us on play store</string>
+    <string name="menu_star">Rate us</string>
 
 
     <string name="error_player">There was an error initializing the YouTubePlayer (%1$s)</string>

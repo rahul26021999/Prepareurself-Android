@@ -3,7 +3,8 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".authentication.ui.LoginFragment">
+    tools:context=".authentication.ui.LoginFragment"
+    android:id="@+id/mainlayout">
 
     <TextView
         android:id="@+id/tv_title"
@@ -39,7 +40,8 @@
         android:fontFamily="@font/roboto_regular"
         android:layout_above="@id/et_password"
         android:background="@drawable/et_custom"
-        android:textSize="15sp" />
+        android:textSize="15sp"
+        />
 
     <EditText
         android:id="@+id/et_password"
@@ -74,13 +76,16 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_below="@+id/btn_login"
-        android:text="Forgot Password"
+        android:text="Forgot Password ?"
         android:textSize="16sp"
         android:id="@+id/tv_forgot_password"
-        android:textColor="#26a69a"
+        android:textColor="@color/colorPrimaryDark"
         android:fontFamily="@font/roboto_regular"
-        android:layout_marginStart="20dp"
-        android:layout_marginTop="20dp"/>
+        android:layout_marginTop="20dp"
+        android:layout_alignParentRight="true"
+        android:layout_marginRight="20dp"
+
+         />
 
     <ImageView
         android:layout_width="30dp"

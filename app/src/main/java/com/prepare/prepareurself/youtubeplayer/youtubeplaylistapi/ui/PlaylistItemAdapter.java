@@ -66,7 +66,7 @@ public class PlaylistItemAdapter extends RecyclerView.Adapter<PlaylistItemAdapte
         });
 
         if (position == selectedPosition){
-            holder.textView.setTextColor(context.getResources().getColor(R.color.green));
+            holder.textView.setTextColor(context.getResources().getColor(R.color.cureentitem));
         }else{
             holder.textView.setTextColor(context.getResources().getColor(R.color.colorPrimaryDark));
         }

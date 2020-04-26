@@ -14,10 +14,14 @@
         android:supportsRtl="true"
         android:theme="@style/AppTheme"
         android:usesCleartextTraffic="true">
+
         <activity android:name=".courses.ui.activity.AllCoursesActivity"></activity>
         <activity
             android:name=".profile.ui.EditPreferenceActivity"
             android:theme="@style/ProfileTheme" />
+
+        <activity android:name=".authentication.ui.forgetPassword"></activity>
+
 
         <activity android:name=".authentication.ui.VerifyEmailActivity" />
         <activity android:name=".profile.ui.activity.UpdatePasswordActivity" />
@@ -73,9 +77,9 @@
                     android:scheme="theory" />
             </intent-filter>
         </activity>
-        <activity
+        <!--<activity
             android:name=".ui.login.LoginActivity"
-            android:label="@string/title_activity_login" />
+            android:label="@string/title_activity_login" />-->
         <activity
             android:name=".Home.ui.HomeActivity"
             android:label="@string/title_activity_home" />

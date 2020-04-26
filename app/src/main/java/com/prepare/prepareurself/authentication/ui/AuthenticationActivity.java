@@ -2,6 +2,7 @@ package com.prepare.prepareurself.authentication.ui;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.fragment.app.FragmentManager;
 import androidx.viewpager.widget.ViewPager;
 
 import android.content.Intent;
@@ -48,9 +49,17 @@ public class AuthenticationActivity extends AppCompatActivity {
 
         ViewPager viewPager=findViewById(R.id.viewPager);
         AuthenticationPagerAdapter pagerAdapter =new AuthenticationPagerAdapter(getSupportFragmentManager());
-        pagerAdapter.addFragment(new LoginFragment());
+        LoginFragment loginFragment= new LoginFragment();
+        pagerAdapter.addFragment(loginFragment);
         pagerAdapter.addFragment(new RegisterFragment());
         viewPager.setAdapter(pagerAdapter);
+        //coded here
+
+        //fragement_forgetpassword forgetpassword=new fragement_forgetpassword();
+        //FragmentManager fm=getSupportFragmentManager();
+        //fm.beginTransaction().add(R.id.mainlayout,loginFragment).commit();
+
+
 
     }
 

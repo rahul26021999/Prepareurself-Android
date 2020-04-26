@@ -66,37 +66,16 @@ import okhttp3.RequestBody;
 public class ProfileFragment extends Fragment implements View.OnClickListener {
 
     private ProfileViewModel mViewModel;
-//    private TextView tvName, tvEmail;
-//    private Button editbtn;
-    LinearLayout l_userinfo, l_preferences;
-    TextView  t_userinfo, t_preferences, tv_preference_edit, tv_aboutme_edit;
-    TextView tv_dob, tv_name,tv_call;
-    EditText et_dob,et_name, et_call;
-    Button btn_save;
-    DatePickerDialog datePickerDialog;
+
     TextView tv_email_profile;
     private PrefManager prefManager;
-    private RecyclerView rvPreferences;
-    private List<PreferredTechStack> userPrefrence = new ArrayList<>();
- //   private List<PreferredTechStack> allStack = new ArrayList<>();
-    private UserPrefernceAdapter adapter;
-    private TextView tvLoading;
-    private Button btnUpdatePassword, btnLogout;
-    private HashMap<Integer, PreferredTechStack> allPreferredStacks = new HashMap<>();
-
-    private List<String> preferences=new ArrayList<>();
-    private List<String> allStack=new ArrayList<>();
-
 
 
     private ViewPager viewPager;
     private TextView tvTopVideo, tvTopTheory;
 
-    private CardView profileImageCard;
-
     private static final int INTENT_REQUEST_CODE = 100;
 
-    private ProgressBar progressBar;
     private ImageView userImageView;
     private UserModel mUserModel;
 
@@ -109,25 +88,8 @@ public class ProfileFragment extends Fragment implements View.OnClickListener {
                              @Nullable Bundle savedInstanceState) {
 
         View view = inflater.inflate(R.layout.profile_fragment, container, false);
-        l_userinfo=view.findViewById(R.id.userinfolayout);
-        l_preferences=view.findViewById(R.id.preferenceslayout);
-        t_userinfo=view.findViewById(R.id.userinfobtn);
-        t_preferences=view.findViewById(R.id.preferencesbtn);
-        tv_preference_edit=view.findViewById(R.id.tv_preference_edit);
-        tv_aboutme_edit=view.findViewById(R.id.tv_aboutme_edit);
-        tv_dob=view.findViewById(R.id.tv_dob);
-        tv_name=view.findViewById(R.id.tv_name);
-        tv_call=view.findViewById(R.id.tv_call);
-        et_dob=view.findViewById(R.id.et_dob);
-        et_name=view.findViewById(R.id.et_name);
-        et_call=view.findViewById(R.id.et_call);
+
         tv_email_profile = view.findViewById(R.id.tv_email_profile);
-        btn_save =view.findViewById(R.id.btn_aboutme);
-        rvPreferences = view.findViewById(R.id.rv_user_preference);
-        tvLoading = view.findViewById(R.id.tvLoading_preferences);
-        btnLogout = view.findViewById(R.id.btn_logout);
-        btnUpdatePassword = view.findViewById(R.id.btn_update_password);
-        progressBar = view.findViewById(R.id.loadImage);
         userImageView = view.findViewById(R.id.user_image);
 
 
@@ -135,46 +97,24 @@ public class ProfileFragment extends Fragment implements View.OnClickListener {
         viewPager = view.findViewById(R.id.view_pager_resources);
         tvTopVideo = view.findViewById(R.id.tv_resouce_heading_video);
         tvTopTheory = view.findViewById(R.id.tv_resouce_heading_theory);
-        profileImageCard = view.findViewById(R.id.image_cardView_profile);
-
-//        l_userinfo.setVisibility(View.VISIBLE);
-//        l_preferences.setVisibility(View.GONE);
-
-        /*tvName = view.findViewById(R.id.tv_name_profile);
-        tvEmail = view.findViewById(R.id.tv_email_profile);
-        editbtn=view.findViewById(R.id.btn_editbtn);
-        editbtn.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                Intent intent=new Intent(getActivity(), edit_profile.class);
-                startActivity(intent);
-
-            }
-        });*/
-
-//        adapter = new UserPrefernceAdapter(getActivity());
-//        LinearLayoutManager layoutManager = new LinearLayoutManager(getActivity());
-//        rvPreferences.setLayoutManager(layoutManager);
-//        rvPreferences.setAdapter(adapter);
-
 
         return view;
     }
 
-    private void setdatepicker() {
-        final Calendar calendar = Calendar.getInstance();
-        int day = calendar.get(Calendar.DAY_OF_MONTH);
-        int month = calendar.get(Calendar.MONTH);
-        int year = calendar.get(Calendar.YEAR);
-        //date picker dialog
-        datePickerDialog = new DatePickerDialog(getActivity(), new DatePickerDialog.OnDateSetListener() {
-            @Override
-            public void onDateSet(DatePicker view, int year, int month, int dayOfMonth) {
-                et_dob.setText(dayOfMonth + "/" + (month + 1) + "/" + year);
-            }
-        }, year, month, day);
-        datePickerDialog.show();
-    }
+//    private void setdatepicker() {
+//        final Calendar calendar = Calendar.getInstance();
+//        int day = calendar.get(Calendar.DAY_OF_MONTH);
+//        int month = calendar.get(Calendar.MONTH);
+//        int year = calendar.get(Calendar.YEAR);
+//        //date picker dialog
+//        datePickerDialog = new DatePickerDialog(getActivity(), new DatePickerDialog.OnDateSetListener() {
+//            @Override
+//            public void onDateSet(DatePicker view, int year, int month, int dayOfMonth) {
+//                et_dob.setText(dayOfMonth + "/" + (month + 1) + "/" + year);
+//            }
+//        }, year, month, day);
+//        datePickerDialog.show();
+//    }
 
     @Override
     public void onActivityCreated(@Nullable Bundle savedInstanceState) {
@@ -183,15 +123,13 @@ public class ProfileFragment extends Fragment implements View.OnClickListener {
 
         prefManager = new PrefManager(getActivity());
 
-        progressBar.setVisibility(View.GONE);
-
 
         final SectionsPagerAdapter sectionsPagerAdapter = new SectionsPagerAdapter(getActivity().getSupportFragmentManager());
         sectionsPagerAdapter.addFragment(UserInfoFragment.newInstance(),"User Info");
         sectionsPagerAdapter.addFragment(PreferenceFragment.newInstance(),"Preferences");
         viewPager.setAdapter(sectionsPagerAdapter);
 
-        profileImageCard.setOnClickListener(new View.OnClickListener() {
+        userImageView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 uploadImage();
@@ -258,190 +196,8 @@ public class ProfileFragment extends Fragment implements View.OnClickListener {
                         .transition(GenericTransitionOptions.<Drawable>with(Utility.getAnimationObject()))
                         .into(userImageView);
 
-
-
-//                tv_dob.setText(userModel.getDob());
-//                tv_name.setText(userModel.getFirst_name() + " " + userModel.getLast_name());
-//                tv_call.setText(userModel.getPhone_number());
-//
-//                et_dob.setText(userModel.getDob());
-//                et_name.setText(userModel.getFirst_name() + " " + userModel.getLast_name());
-//                et_call.setText(userModel.getPhone_number());
-//
-//                if (TextUtils.isEmpty(userModel.getDob())){
-//                    tv_dob.setText("Click Edit to update your birthday");
-//                    et_dob.setHint("Tap to update your birthday");
-//                }
-//
-//                if (TextUtils.isEmpty(userModel.getPhone_number())){
-//                    tv_call.setText("Click Edit to update your Contact");
-//                    et_call.setHint("Enter your Contact Number");
-//                }
-
             }
         });
-
-//        btnLogout.setOnClickListener(new View.OnClickListener() {
-//            @Override
-//            public void onClick(View v) {
-//                prefManager.saveBoolean(Constants.ISLOGGEDIN, false);
-//                startActivity(new Intent(getActivity(), AuthenticationActivity.class));
-//                getActivity().finish();
-//            }
-//        });
-//
-//        btnUpdatePassword.setOnClickListener(new View.OnClickListener() {
-//            @Override
-//            public void onClick(View v) {
-//                startActivity(new Intent(getActivity(), UpdatePasswordActivity.class));
-//            }
-//        });
-
-
-
-//        t_userinfo.setOnClickListener(new View.OnClickListener() {
-//            @Override
-//            public void onClick(View v) {
-//                l_userinfo.setVisibility(View.VISIBLE);
-//                l_preferences.setVisibility(View.GONE);
-//                t_userinfo.setTextColor(getResources().getColor(R.color.blue));
-//                t_preferences.setTextColor(getResources().getColor(R.color.grey));
-//            }
-//        });
-
-//        t_preferences.setOnClickListener(new View.OnClickListener() {
-//            @Override
-//            public void onClick(View v) {
-//                l_userinfo.setVisibility(View.GONE);
-//                l_preferences.setVisibility(View.VISIBLE);
-//                t_userinfo.setTextColor(getResources().getColor(R.color.grey));
-//                t_preferences.setTextColor(getResources().getColor(R.color.blue));
-//            }
-//        });
-//        tv_aboutme_edit.setOnClickListener(new View.OnClickListener() {
-//            @Override
-//            public void onClick(View v) {
-//                tv_dob.setVisibility(View.GONE);
-//                tv_name.setVisibility(View.GONE);
-//                tv_call.setVisibility(View.GONE);
-//                et_dob.setVisibility(View.VISIBLE);
-//                et_name.setVisibility(View.VISIBLE);
-//                et_call.setVisibility(View.VISIBLE);
-//                btn_save.setVisibility(View.VISIBLE);
-//            }
-//        });
-//
-//        et_dob.setOnClickListener(new View.OnClickListener() {
-//            @Override
-//            public void onClick(View v) {
-//                setdatepicker();
-//            }
-//        });
-//        tv_preference_edit.setOnClickListener(new View.OnClickListener() {
-//            @Override
-//            public void onClick(View v) {
-//                Intent intent=new Intent(getActivity(), EditPreferenceActivity.class);
-//                startActivity(intent);
-//
-//            }
-//        });
-//        btn_save.setOnClickListener(new View.OnClickListener() {
-//            @Override
-//            public void onClick(View v) {
-//
-//                btn_save.setText("Updating");
-//
-//
-//                final String userdob=et_dob.getText().toString();
-//                final String username=et_name.getText().toString();
-//                final String userphnumber= et_call.getText().toString();
-//
-//                String firstName = "", lastName = "";
-//                // first convert name to first name and last name
-//                String[] name = Utility.splitName(getActivity(),username);
-//                if (name.length>0){
-//                    if (name.length == 1){
-//                        firstName = name[0];
-//                    }else if (name.length == 2){
-//                        firstName = name[0];
-//                        lastName = name[1];
-//                    }else{
-//                        firstName = name[0];
-//                        lastName = name[name.length-1];
-//                    }
-//                }
-//
-//
-//
-//                mViewModel.updateUser(prefManager.getString(Constants.JWTTOKEN),firstName,lastName,userdob,userphnumber)
-//                        .observe(getActivity(), new Observer<UpdatePreferenceResponseModel>() {
-//                            @Override
-//                            public void onChanged(UpdatePreferenceResponseModel updatePreferenceResponseModel) {
-//                                if (updatePreferenceResponseModel!=null){
-//                                    if (updatePreferenceResponseModel.getError_code() == 0){
-//                                        btn_save.setText("Save");
-//                                        Utility.showToast(getActivity(),"Profile updated successfully");
-//                                        btn_save.setVisibility(View.GONE);
-//
-//                                        tv_dob.setVisibility(View.VISIBLE);
-//                                        tv_name.setVisibility(View.VISIBLE);
-//                                        tv_call.setVisibility(View.VISIBLE);
-//                                        et_dob.setVisibility(View.GONE);
-//                                        et_name.setVisibility(View.GONE);
-//                                        et_call.setVisibility(View.GONE);
-//
-//                                        tv_dob.setText(userdob);
-//                                        tv_name.setText(username);
-//                                        tv_call.setText(userphnumber);
-//
-//
-//                                    }else{
-//                                        btn_save.setText("Save");
-//                                        Utility.showToast(getActivity(),updatePreferenceResponseModel.getMsg());
-//                                    }
-//                                }else{
-//                                    btn_save.setText("Save");
-//                                    Utility.showToast(getActivity(),"Unable to update at the moment");
-//                                }
-//
-//                            }
-//                        });
-//
-//            }
-//        });
-//
-//        mViewModel.getUserModelLiveData().observe(getActivity(), new Observer<UserModel>() {
-//            @Override
-//            public void onChanged(UserModel userModel) {
-//                if(userModel.getPreferences()!=null) {
-//                    preferences.addAll(Arrays.asList(userModel.getPreferences().split(",")));
-//                }
-//                mViewModel.getPreferencesFromDb().observe(getActivity(), new Observer<List<PreferredTechStack>>() {
-//                    @Override
-//                    public void onChanged(final List<PreferredTechStack> preferredTechStacks) {
-//                        if (preferredTechStacks!=null && preferences!=null){
-//                            int size = preferredTechStacks.size();
-//                            Log.i("Size",""+size);
-//                            for (int i = 0; i<preferences.size(); i++){
-//                                for (PreferredTechStack p : preferredTechStacks){
-//                                    if (p.getId() == Integer.parseInt(preferences.get(i))){
-//                                        userPrefrence.add(p);
-//                                    }
-//                                }
-//                            }
-//
-//                            adapter.setPreferredTechStacks(userPrefrence);
-//                            adapter.notifyDataSetChanged();
-//
-//                        }
-//                     }
-//                });
-//
-//            }
-//        });
-
-
-
     }
 
     private void uploadImage() {
@@ -464,7 +220,7 @@ public class ProfileFragment extends Fragment implements View.OnClickListener {
 
         if (requestCode == INTENT_REQUEST_CODE){
             if (resultCode == Activity.RESULT_OK){
-                progressBar.setVisibility(View.VISIBLE);
+//                progressBar.setVisibility(View.VISIBLE);
                 try {
                     if (getActivity()!=null && data!=null && data.getData()!=null) {
                         InputStream is = getActivity().getContentResolver().openInputStream(data.getData());
@@ -525,7 +281,7 @@ public class ProfileFragment extends Fragment implements View.OnClickListener {
                             Utility.showToast(getActivity(), Constants.SOMETHINGWENTWRONG);
                         }
 
-                        progressBar.setVisibility(View.GONE);
+//                        progressBar.setVisibility(View.GONE);
                     }
                 });
     }
