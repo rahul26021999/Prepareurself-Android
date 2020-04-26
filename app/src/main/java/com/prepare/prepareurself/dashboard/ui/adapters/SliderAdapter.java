@@ -11,6 +11,7 @@ import android.widget.TextView;
 import com.bumptech.glide.GenericTransitionOptions;
 import com.bumptech.glide.Glide;
 import com.prepare.prepareurself.R;
+import com.prepare.prepareurself.dashboard.data.model.BannerModel;
 import com.prepare.prepareurself.dashboard.data.model.CourseModel;
 import com.prepare.prepareurself.utils.Constants;
 import com.prepare.prepareurself.utils.Utility;
@@ -22,13 +23,13 @@ import java.util.List;
 public class SliderAdapter extends SliderViewAdapter<SliderAdapter.SliderAdapterVH> {
 
     private Context context;
-    private List<CourseModel> mSliderItems = new ArrayList<>();
+    private List<BannerModel> mSliderItems = new ArrayList<>();
 
     public SliderAdapter(Context context) {
         this.context = context;
     }
 
-    public void setmSliderItems(List<CourseModel> mSliderItems) {
+    public void setmSliderItems(List<BannerModel> mSliderItems) {
         this.mSliderItems = mSliderItems;
     }
 
@@ -40,11 +41,11 @@ public class SliderAdapter extends SliderViewAdapter<SliderAdapter.SliderAdapter
 
     @Override
     public void onBindViewHolder(SliderAdapterVH viewHolder, int position) {
-        CourseModel courseModel = mSliderItems.get(position);
+        BannerModel courseModel = mSliderItems.get(position);
         Glide.with(context)
-                .load(Constants.COURSEIMAGEBASEUSRL + courseModel.getImage_url())
+                .load(courseModel.getImage_url())
                 .into(viewHolder.imageView);
-        viewHolder.textView.setText(courseModel.getName());
+        viewHolder.textView.setText(courseModel.getTitle());
     }
 
     @Override

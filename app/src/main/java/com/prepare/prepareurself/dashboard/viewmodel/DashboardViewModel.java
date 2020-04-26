@@ -16,7 +16,9 @@ import com.prepare.prepareurself.courses.data.model.TopicsModel;
 import com.prepare.prepareurself.courses.data.model.TopicsResponseModel;
 import com.prepare.prepareurself.courses.data.repository.ProjectsRespository;
 import com.prepare.prepareurself.courses.data.repository.TopicsRepository;
+import com.prepare.prepareurself.dashboard.data.db.repository.BannerDbRepository;
 import com.prepare.prepareurself.dashboard.data.db.repository.CourseDbRepository;
+import com.prepare.prepareurself.dashboard.data.model.BannerModel;
 import com.prepare.prepareurself.dashboard.data.model.CourseModel;
 import com.prepare.prepareurself.dashboard.data.model.GetCourseResponseModel;
 import com.prepare.prepareurself.dashboard.data.repository.CourseRepository;
@@ -40,6 +42,7 @@ public class DashboardViewModel extends AndroidViewModel {
     TopicsRepository topicsRepository;
     private ProjectsRespository projectsRespository;
     private ProjectsDbRepository projectsDbRepository;
+    private BannerDbRepository bannerDbRepository;
     public DashboardViewModel(@NonNull Application application) {
         super(application);
         courseRepository = new CourseRepository(application);
@@ -49,6 +52,7 @@ public class DashboardViewModel extends AndroidViewModel {
         topicsDbRepository = new TopicsDbRepository(application);
         projectsRespository = new ProjectsRespository(application);
         projectsDbRepository = new ProjectsDbRepository(application);
+        bannerDbRepository = new BannerDbRepository(application);
     }
 
     public void getCourses(String token){
@@ -84,6 +88,14 @@ public class DashboardViewModel extends AndroidViewModel {
 
     public LiveData<List<ProjectsModel>> getFiveProjectByCourseId(int courseId){
         return projectsDbRepository.getFiveProjectsByCourseId(courseId);
+    }
+
+    public void fetchBanners(String token){
+        courseRepository.fetchBanners(token);
+    }
+
+    public LiveData<List<BannerModel>> getBanners(){
+        return bannerDbRepository.getAllBanners();
     }
 
 }
