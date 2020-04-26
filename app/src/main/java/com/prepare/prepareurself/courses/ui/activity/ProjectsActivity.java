@@ -21,6 +21,7 @@ import android.widget.TextView;
 import com.bumptech.glide.GenericTransitionOptions;
 import com.bumptech.glide.Glide;
 import com.prepare.prepareurself.authentication.ui.AuthenticationActivity;
+import com.prepare.prepareurself.courses.data.model.ProjectResponseModel;
 import com.prepare.prepareurself.courses.data.model.ProjectsModel;
 import com.prepare.prepareurself.courses.ui.adapters.PlaylistVideosRvAdapter;
 import com.prepare.prepareurself.courses.viewmodels.ProjectsViewModel;
@@ -95,29 +96,31 @@ public class ProjectsActivity extends AppCompatActivity implements PlaylistVideo
                 finish();
             }else {
                 projectId = id;
+                callProjectFromRemote(projectId);
             }
 
         }else if (intent.getBooleanExtra(Constants.DEEPSHAREPROECTAFTERLOGIN, false)){
             projectId = intent.getIntExtra(Constants.PROJECTID,-1);
-            Log.d("project_share",projectId+"");
+            callProjectFromRemote(projectId);
         }else{
             projectId = intent.getIntExtra(Constants.PROJECTID,-1);
-        }
 
-
-        if (projectId != -1){
-            viewModel.getProjectById(projectId).observe(this, new Observer<ProjectsModel>() {
-                @Override
-                public void onChanged(ProjectsModel projectsModel) {
-                    if (projectsModel!=null){
-                        if (projectsModel.getView()==0){
-                            viewModel.viewProject(prefManager.getString(Constants.JWTTOKEN),projectsModel.getId());
+            if (projectId != -1){
+                viewModel.getProjectById(projectId).observe(this, new Observer<ProjectsModel>() {
+                    @Override
+                    public void onChanged(ProjectsModel projectsModel) {
+                        if (projectsModel!=null){
+                            if (projectsModel.getView()==0){
+                                viewModel.viewProject(prefManager.getString(Constants.JWTTOKEN),projectsModel.getId());
+                            }
+                            updateUIWithProject(projectsModel);
                         }
-                        updateUIWithProject(projectsModel);
                     }
-                }
-            });
+                });
+            }
+
         }
+
 
         tvViewPlaylist.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -136,6 +139,27 @@ public class ProjectsActivity extends AppCompatActivity implements PlaylistVideo
         });
 
 
+    }
+
+    private void callProjectFromRemote(int projectId) {
+        viewModel.getProjectByIdFromRemote(prefManager.getString(Constants.JWTTOKEN),projectId)
+                .observe(this, new Observer<ProjectResponseModel>() {
+                    @Override
+                    public void onChanged(ProjectResponseModel projectResponseModel) {
+                        if (projectResponseModel!=null){
+                            if (projectResponseModel.getError_code() == 0 && projectResponseModel.getProject()!=null){
+                                if (projectResponseModel.getProject().getView()==0){
+                                    viewModel.viewProject(prefManager.getString(Constants.JWTTOKEN),projectResponseModel.getProject().getId());
+                                }
+                                updateUIWithProject(projectResponseModel.getProject());
+                            }else{
+                                Utility.showToast(ProjectsActivity.this, "Project not found");
+                            }
+                        }else{
+                            Utility.showToast(ProjectsActivity.this,Constants.SOMETHINGWENTWRONG);
+                        }
+                    }
+                });
     }
 
     private void updateUIWithProject(ProjectsModel projectsModel) {
