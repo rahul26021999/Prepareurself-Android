@@ -124,7 +124,7 @@ public class DashboardFragment extends Fragment implements DashboardRvAdapter.Da
 
         setUpSlider();
 
-        DashboardRecyclerviewModel dashboardRecyclerviewModel = new DashboardRecyclerviewModel(Constants.COURSEVIEWTYPE, Constants.TECHSTACK, mViewModel.getLiveCourses());
+        DashboardRecyclerviewModel dashboardRecyclerviewModel = new DashboardRecyclerviewModel(Constants.COURSEVIEWTYPE, Constants.TECHSTACK, mViewModel.getFiveCourses());
         dashboardRecyclerviewModelList.add(dashboardRecyclerviewModel);
         dashboardRvAdapter.setData(dashboardRecyclerviewModelList);
         dashboardRvAdapter.notifyDataSetChanged();
@@ -173,8 +173,11 @@ public class DashboardFragment extends Fragment implements DashboardRvAdapter.Da
         mViewModel.getBanners().observe(getActivity(), new Observer<List<BannerModel>>() {
             @Override
             public void onChanged(List<BannerModel> bannerModels) {
-                sliderAdapter.setmSliderItems(bannerModels);
-                sliderAdapter.notifyDataSetChanged();
+
+                if (bannerModels!=null){
+                    sliderAdapter.setmSliderItems(bannerModels);
+                    sliderAdapter.notifyDataSetChanged();
+                }
             }
         });
     }

@@ -76,6 +76,7 @@ public class CourseRepository {
             public void onResponse(Call<BannerImageResponseModel> call, Response<BannerImageResponseModel> response) {
                 BannerImageResponseModel responseModel = response.body();
                 if (responseModel!=null && responseModel.getError_code() == 0){
+                    bannerDbRepository.deleteAllBanners();
                     for(BannerModel bannerModel : responseModel.getBanner()){
                         bannerDbRepository.insertBanner(bannerModel);
                     }
