@@ -1,5 +1,7 @@
 package com.prepare.prepareurself.resources.ui.adapter;
 
+import android.animation.ArgbEvaluator;
+import android.animation.ValueAnimator;
 import android.content.Context;
 import android.graphics.Bitmap;
 import android.util.Log;
@@ -78,17 +80,41 @@ public class VideoResoursesRvAdapter extends RecyclerView.Adapter<VideoResourses
             }
         });
 
-        holder.hitLike.setOnLikeListener(new OnLikeListener() {
-            @Override
-            public void liked(LikeButton likeButton) {
-                holder.tvLikes.setText(v1.getTotal_likes() + 1 +" likes");
-                listener.onVideoResourceLiked(v1, 0);
-            }
+        holder.hitLike.setOnClickListener(new View.OnClickListener() {
+
+            ValueAnimator buttonColorAnim = null;
+
 
             @Override
-            public void unLiked(LikeButton likeButton) {
-                holder.tvLikes.setText(v1.getTotal_likes() + " likes");
-                listener.onVideoResourceLiked(v1, 1);
+            public void onClick(View v) {
+
+                if (buttonColorAnim == null && v1.getLike() ==1){
+                    holder.hitLike.setImageDrawable(context.getResources().getDrawable(R.drawable.ic_thumb_up_grey_24dp));
+                    listener.onVideoResourceLiked(v1,1);
+                    holder.tvLikes.setText(v1.getTotal_likes()-1 + " likes");
+                    v1.setTotal_likes(v1.getTotal_likes()-1);
+                    v1.setLike(0);
+                }else{
+                    if(buttonColorAnim != null){
+                        buttonColorAnim.reverse();
+                        buttonColorAnim = null;
+                        listener.onVideoResourceLiked(v1,1);
+                        holder.tvLikes.setText(v1.getTotal_likes() + " likes");
+                      }
+                    else {
+                        final ImageView button = (ImageView) v;
+                        buttonColorAnim = ValueAnimator.ofObject(new ArgbEvaluator(), context.getResources().getColor(R.color.like_grey), context.getResources().getColor(R.color.like_blue));
+                        buttonColorAnim.addUpdateListener(new ValueAnimator.AnimatorUpdateListener() {
+                            @Override
+                            public void onAnimationUpdate(ValueAnimator animator) {
+                                button.setColorFilter((Integer) animator.getAnimatedValue());
+                            }
+                        });
+                        buttonColorAnim.start();
+                        listener.onVideoResourceLiked(v1,0);
+                        holder.tvLikes.setText(v1.getTotal_likes()+1 + " likes");
+                    }
+                }
             }
         });
 
@@ -111,7 +137,7 @@ public class VideoResoursesRvAdapter extends RecyclerView.Adapter<VideoResourses
 //        TextView tvDescription;
 
 
-        private LikeButton hitLike;
+        private ImageView hitLike;
         private YouTubeThumbnailView imageView;
         private TextView tvTitle;
         private TextView tvDescription;
@@ -130,7 +156,7 @@ public class VideoResoursesRvAdapter extends RecyclerView.Adapter<VideoResourses
             imageView = itemView.findViewById(R.id.topic_image);
             tvTitle = itemView.findViewById(R.id.tv_title_topic);
             tvDescription = itemView.findViewById(R.id.tv_decription_topic);
-            hitLike=itemView.findViewById(R.id.hitLike);
+            hitLike=itemView.findViewById(R.id.spark_button);
             imgShare = itemView.findViewById(R.id.img_share_theory_resource);
             tvViews = itemView.findViewById(R.id.no_of_views);
             tvLikes = itemView.findViewById(R.id.tv_no_of_likes);
@@ -144,9 +170,9 @@ public class VideoResoursesRvAdapter extends RecyclerView.Adapter<VideoResourses
             tvViews.setText(v1.getTotal_views() + " views");
 
             if (v1.getLike() == 1){
-                hitLike.setLiked(true);
+                hitLike.setImageDrawable(context.getResources().getDrawable(R.drawable.ic_thumb_up_blue_24dp));
             }else{
-                hitLike.setLiked(false);
+                hitLike.setImageDrawable(context.getResources().getDrawable(R.drawable.ic_thumb_up_grey_24dp));
             }
 
             if (readyForLoadingYoutubeThumbnail){
