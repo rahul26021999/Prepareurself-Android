@@ -30,6 +30,7 @@ import com.prepare.prepareurself.courses.data.model.TopicsModel;
 import com.prepare.prepareurself.courses.data.model.TopicsResponseModel;
 import com.prepare.prepareurself.courses.ui.activity.AllCoursesActivity;
 import com.prepare.prepareurself.courses.ui.activity.CoursesActivity;
+import com.prepare.prepareurself.dashboard.data.model.BannerModel;
 import com.prepare.prepareurself.dashboard.data.model.CourseModel;
 import com.prepare.prepareurself.dashboard.ui.adapters.SliderAdapter;
 import com.prepare.prepareurself.dashboard.viewmodel.DashboardViewModel;
@@ -110,7 +111,9 @@ public class DashboardFragment extends Fragment implements DashboardRvAdapter.Da
         mViewModel = new ViewModelProvider(this).get(DashboardViewModel.class);
 
 
+        mViewModel.fetchBanners(prefManager.getString(Constants.JWTTOKEN));
         mViewModel.getCourses(prefManager.getString(Constants.JWTTOKEN));
+
 
         dashboardRvAdapter = new DashboardRvAdapter(getActivity(), this);
         LinearLayoutManager layoutManager = new LinearLayoutManager(getActivity(), RecyclerView.VERTICAL, false);
@@ -167,10 +170,10 @@ public class DashboardFragment extends Fragment implements DashboardRvAdapter.Da
         sliderView.setScrollTimeInSec(4); //set scroll delay in seconds :
         sliderView.startAutoCycle();
 
-        mViewModel.getLiveCourses().observe(getActivity(), new Observer<List<CourseModel>>() {
+        mViewModel.getBanners().observe(getActivity(), new Observer<List<BannerModel>>() {
             @Override
-            public void onChanged(List<CourseModel> courseModels) {
-                sliderAdapter.setmSliderItems(courseModels);
+            public void onChanged(List<BannerModel> bannerModels) {
+                sliderAdapter.setmSliderItems(bannerModels);
                 sliderAdapter.notifyDataSetChanged();
             }
         });

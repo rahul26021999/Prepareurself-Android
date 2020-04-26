@@ -85,38 +85,40 @@ public class ProjectsFragment extends Fragment implements ProjectsRvAdapter.Proj
         mViewModel.getProjectResponseMutableLiveData().observe(getActivity(), new Observer<ProjectResponse>() {
             @Override
             public void onChanged(final ProjectResponse projectResponse) {
-                recyclerView.addOnScrollListener(new RecyclerView.OnScrollListener() {
-                    @Override
-                    public void onScrollStateChanged(@NonNull RecyclerView recyclerView, int newState) {
-                        super.onScrollStateChanged(recyclerView, newState);
-                        if (newState == AbsListView.OnScrollListener.SCROLL_STATE_TOUCH_SCROLL){
-                            isScrolling = true;
-                        }
-                    }
-
-                    @Override
-                    public void onScrolled(@NonNull RecyclerView recyclerView, int dx, int dy) {
-                        super.onScrolled(recyclerView, dx, dy);
-
-                        rvCurrentItems = layoutManager.getChildCount();
-                        rvTotalItems = layoutManager.getItemCount();
-                        rvScrolledOutItems = layoutManager.findFirstVisibleItemPosition();
-
-                        rvLastPage = projectResponse.getLast_page();
-
-                        if (isScrolling && (rvCurrentItems + rvScrolledOutItems) == rvTotalItems && rvCurrentPage <= rvLastPage){
-                            isScrolling = false;
-                            mViewModel.fetchProjects(prefManager.getString(Constants.JWTTOKEN),
-                                    CoursesActivity.courseId,
-                                    "",
-                                    10,
-                                    rvCurrentPage);
-                            rvCurrentPage+=1;
-
+                if (projectResponse!=null){
+                    recyclerView.addOnScrollListener(new RecyclerView.OnScrollListener() {
+                        @Override
+                        public void onScrollStateChanged(@NonNull RecyclerView recyclerView, int newState) {
+                            super.onScrollStateChanged(recyclerView, newState);
+                            if (newState == AbsListView.OnScrollListener.SCROLL_STATE_TOUCH_SCROLL){
+                                isScrolling = true;
+                            }
                         }
 
-                    }
-                });
+                        @Override
+                        public void onScrolled(@NonNull RecyclerView recyclerView, int dx, int dy) {
+                            super.onScrolled(recyclerView, dx, dy);
+
+                            rvCurrentItems = layoutManager.getChildCount();
+                            rvTotalItems = layoutManager.getItemCount();
+                            rvScrolledOutItems = layoutManager.findFirstVisibleItemPosition();
+
+                            rvLastPage = projectResponse.getLast_page();
+
+                            if (isScrolling && (rvCurrentItems + rvScrolledOutItems) == rvTotalItems && rvCurrentPage <= rvLastPage){
+                                isScrolling = false;
+                                mViewModel.fetchProjects(prefManager.getString(Constants.JWTTOKEN),
+                                        CoursesActivity.courseId,
+                                        "",
+                                        10,
+                                        rvCurrentPage);
+                                rvCurrentPage+=1;
+
+                            }
+
+                        }
+                    });
+                }
             }
         });
 

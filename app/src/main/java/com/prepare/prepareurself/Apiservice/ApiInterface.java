@@ -5,6 +5,7 @@ import com.prepare.prepareurself.authentication.data.model.RegisterResponseModel
 import com.prepare.prepareurself.courses.data.model.GetProjectResponse;
 import com.prepare.prepareurself.courses.data.model.GetTopicResponseModel;
 import com.prepare.prepareurself.courses.data.model.ProjectResponseModel;
+import com.prepare.prepareurself.dashboard.data.model.BannerImageResponseModel;
 import com.prepare.prepareurself.dashboard.data.model.GetCourseResponseModel;
 import com.prepare.prepareurself.profile.data.model.UpdatePasswordResponseModel;
 import com.prepare.prepareurself.profile.data.model.UpdatePreferenceResponseModel;
@@ -114,5 +115,8 @@ public interface ApiInterface {
     @POST("project")
     Call<ProjectResponseModel> getProjectById(@Query("token") String token,
                                               @Query("project_id") int projectId);
+
+    @POST("get-banner")
+    Call<BannerImageResponseModel> getBanners(@Query("token") String token);
 
 }
