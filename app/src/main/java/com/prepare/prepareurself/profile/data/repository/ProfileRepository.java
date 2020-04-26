@@ -14,9 +14,12 @@ import com.prepare.prepareurself.profile.data.model.PreferredTechStack;
 import com.prepare.prepareurself.profile.data.model.UpdatePasswordResponseModel;
 import com.prepare.prepareurself.profile.data.model.UpdatePreferenceResponseModel;
 import com.prepare.prepareurself.profile.data.model.AllPreferencesResponseModel;
+import com.prepare.prepareurself.profile.data.model.UploadImageResponse;
 
 import java.util.List;
 
+import okhttp3.MultipartBody;
+import okhttp3.RequestBody;
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
@@ -147,6 +150,29 @@ public class ProfileRepository {
         return data;
     }
 
+    public LiveData<UpdatePreferenceResponseModel> uploadImage(String token, MultipartBody.Part body) {
+
+        final MutableLiveData<UpdatePreferenceResponseModel> data = new MutableLiveData<>();
+
+        apiInterface.uploadImage(token, body).enqueue(new Callback<UpdatePreferenceResponseModel>() {
+            @Override
+            public void onResponse(Call<UpdatePreferenceResponseModel> call, Response<UpdatePreferenceResponseModel> response) {
+                UpdatePreferenceResponseModel responseModel  = response.body();
+                if (responseModel!=null){
+                    data.setValue(responseModel);
+                }else{
+                    data.setValue(null);
+                }
+            }
+
+            @Override
+            public void onFailure(Call<UpdatePreferenceResponseModel> call, Throwable t) {
+                data.setValue(null);
+            }
+        });
+
+        return data;
+    }
 }
 
 

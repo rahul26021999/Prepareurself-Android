@@ -23,6 +23,9 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 
+import okhttp3.MultipartBody;
+import okhttp3.RequestBody;
+
 public class ProfileViewModel extends AndroidViewModel {
 
     private LiveData<UserModel> userModelLiveData;
@@ -153,5 +156,9 @@ public class ProfileViewModel extends AndroidViewModel {
         for (MyPreferenceTechStack myPreferenceTechStack : myPreferenceTechStacks){
             myPreferenceDbRepository.insertPreference(myPreferenceTechStack);
         }
+    }
+
+    public LiveData<UpdatePreferenceResponseModel> uploadImage(String  token, MultipartBody.Part body) {
+        return profileRepository.uploadImage(token,body);
     }
 }
