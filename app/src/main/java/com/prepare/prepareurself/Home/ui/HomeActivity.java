@@ -4,13 +4,17 @@ import android.content.ActivityNotFoundException;
 import android.content.Intent;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
+import android.graphics.drawable.Drawable;
 import android.net.Uri;
 import android.os.Bundle;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.Menu;
+import android.widget.ImageView;
 import android.widget.TextView;
 
+import com.bumptech.glide.GenericTransitionOptions;
+import com.bumptech.glide.Glide;
 import com.prepare.prepareurself.courses.data.model.ProjectsModel;
 import com.prepare.prepareurself.courses.data.model.TopicsModel;
 import com.prepare.prepareurself.courses.ui.activity.CoursesActivity;
@@ -50,6 +54,7 @@ public class HomeActivity extends AppCompatActivity implements NavigationView.On
     private NavController navController;
     private NavigationView navigationView;
     private DrawerLayout drawer;
+    private ImageView profileImageView;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -65,6 +70,7 @@ public class HomeActivity extends AppCompatActivity implements NavigationView.On
 
         View navHeaderView = navigationView.getHeaderView(0);
         tvNameNavHeader = navHeaderView.findViewById(R.id.tv_user_name_nav_header);
+        profileImageView = navHeaderView.findViewById(R.id.profile_image);
 
 
         mAppBarConfiguration = new AppBarConfiguration.Builder(
@@ -84,6 +90,11 @@ public class HomeActivity extends AppCompatActivity implements NavigationView.On
             public void onChanged(UserModel userModel) {
                 String name = userModel.getFirst_name() + " " + userModel.getLast_name();
                 tvNameNavHeader.setText(name);
+                Glide.with(HomeActivity.this)
+                        .load(Constants.USERIMAGEBASEURL + userModel.getProfile_image())
+                        .placeholder(R.drawable.person_placeholder)
+                        .transition(GenericTransitionOptions.<Drawable>with(Utility.getAnimationObject()))
+                        .into(profileImageView);
             }
         });
 
