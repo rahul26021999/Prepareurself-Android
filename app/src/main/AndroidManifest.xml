@@ -8,9 +8,9 @@
     <application
         android:name=".utils.BaseApplication"
         android:allowBackup="true"
-        android:icon="@mipmap/ic_icon_1"
+        android:icon="@mipmap/ic_new_logo_1"
         android:label="@string/app_name"
-        android:roundIcon="@mipmap/ic_icon_1_round"
+        android:roundIcon="@mipmap/ic_new_logo_1_round"
         android:supportsRtl="true"
         android:theme="@style/AppTheme"
         android:usesCleartextTraffic="true">
@@ -21,7 +21,6 @@
             android:theme="@style/ProfileTheme" />
 
         <activity android:name=".authentication.ui.forgetPassword"></activity>
-
 
         <activity android:name=".authentication.ui.VerifyEmailActivity" />
         <activity android:name=".profile.ui.activity.UpdatePasswordActivity" />
