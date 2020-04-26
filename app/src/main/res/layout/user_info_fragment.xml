@@ -3,7 +3,6 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical"
-    android:fillViewport="true"
     android:overScrollMode="never"
     xmlns:android="http://schemas.android.com/apk/res/android"
     android:padding="10dp">
@@ -12,7 +11,6 @@
         android:layout_width="match_parent"
         android:orientation="vertical"
         android:layout_height="wrap_content">
-
 
     <!--User Details-->
     <LinearLayout

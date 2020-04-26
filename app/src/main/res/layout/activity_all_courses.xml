@@ -7,33 +7,12 @@
     android:background="@color/colorPrimaryLight"
     tools:context=".courses.ui.activity.AllCoursesActivity">
 
-    <RelativeLayout
+    <include
         android:id="@+id/topbar"
         android:layout_width="match_parent"
-        android:padding="16dp"
-        android:background="@color/colorPrimaryDark"
-        android:layout_height="wrap_content">
+        layout="@layout/layout_topbar"
+        android:layout_height="wrap_content"/>
 
-
-        <ImageView
-            android:layout_width="40dp"
-            android:layout_height="40dp"
-            android:id="@+id/backBtn"
-            android:padding="8dp"
-            android:background="?attr/selectableItemBackgroundBorderless"
-            android:src="@drawable/ic_arrow_back_24dp" />
-
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="Tech Stack"
-            android:textColor="@color/white"
-            android:textStyle="bold"
-            android:textSize="20sp"
-            android:layout_centerHorizontal="true"
-            android:layout_centerVertical="true" />
-
-    </RelativeLayout>
     <androidx.recyclerview.widget.RecyclerView
         android:layout_width="match_parent"
         android:layout_height="wrap_content"

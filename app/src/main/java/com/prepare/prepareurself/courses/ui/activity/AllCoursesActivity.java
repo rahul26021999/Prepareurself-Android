@@ -10,6 +10,7 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.ImageView;
+import android.widget.TextView;
 
 import com.prepare.prepareurself.R;
 import com.prepare.prepareurself.courses.ui.adapters.AllCoursesRvAdapter;
@@ -28,6 +29,7 @@ public class AllCoursesActivity extends AppCompatActivity implements AllCoursesR
     private DashboardViewModel mViewModel;
     private PrefManager prefManager;
     private ImageView backBtn;
+    private TextView title;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -38,7 +40,9 @@ public class AllCoursesActivity extends AppCompatActivity implements AllCoursesR
 
         recyclerView = findViewById(R.id.rv_allcourses);
         backBtn = findViewById(R.id.backBtn);
+        title=findViewById(R.id.title);
 
+        title.setText("Tech Stack");
         backBtn.setOnClickListener(this);
 
         prefManager = new PrefManager(this);

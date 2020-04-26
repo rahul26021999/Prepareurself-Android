@@ -78,7 +78,8 @@ public class ProfileFragment extends Fragment implements View.OnClickListener {
 
     private ImageView userImageView;
     private UserModel mUserModel;
-
+    private TextView title;
+    private ImageView backBtn;
     public static ProfileFragment newInstance() {
         return new ProfileFragment();
     }
@@ -91,9 +92,11 @@ public class ProfileFragment extends Fragment implements View.OnClickListener {
 
         tv_email_profile = view.findViewById(R.id.tv_email_profile);
         userImageView = view.findViewById(R.id.user_image);
+        title=view.findViewById(R.id.title);
+        backBtn=view.findViewById(R.id.backBtn);
+        title.setText("Profile");
 
-
-
+        backBtn.setOnClickListener(this);
         viewPager = view.findViewById(R.id.view_pager_resources);
         tvTopVideo = view.findViewById(R.id.tv_resouce_heading_video);
         tvTopTheory = view.findViewById(R.id.tv_resouce_heading_theory);
@@ -275,6 +278,9 @@ public class ProfileFragment extends Fragment implements View.OnClickListener {
     public void onClick(View v) {
         switch (v.getId())
         {
+            case R.id.backBtn:
+
+                break;
             case R.id.tv_resouce_heading_theory:
                 viewPager.setCurrentItem(1, true);
                 break;

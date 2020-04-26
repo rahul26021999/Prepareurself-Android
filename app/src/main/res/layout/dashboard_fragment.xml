@@ -13,10 +13,7 @@
         <RelativeLayout
             android:id="@+id/topbar"
             android:layout_width="match_parent"
-            android:paddingStart="16dp"
-            android:paddingEnd="16dp"
-            android:paddingTop="10dp"
-            android:paddingBottom="10dp"
+            android:padding="16dp"
             android:background="@color/colorPrimaryDark"
             android:layout_height="wrap_content">
 
@@ -37,29 +34,6 @@
                 android:textColor="@color/white"
                 android:textSize="32sp" />
 
-            <RelativeLayout
-                android:layout_width="50dp"
-                android:layout_alignParentEnd="true"
-                android:background="?attr/selectableItemBackgroundBorderless"
-                android:layout_centerVertical="true"
-                android:layout_height="50dp">
-
-                <ImageView
-                    android:layout_width="40dp"
-                    android:layout_height="40dp"
-                    android:layout_centerInParent="true"
-                    android:padding="6dp"
-                    android:src="@drawable/ic_notifications_white_24dp" />
-
-                <ImageView
-                    android:layout_width="20dp"
-                    android:layout_height="20dp"
-                    android:layout_alignParentTop="true"
-                    android:layout_alignParentEnd="true"
-                    android:layout_margin="8dp"
-                    android:padding="4dp"
-                    android:src="@drawable/circleyellowfil" />
-            </RelativeLayout>
         </RelativeLayout>
 
     <androidx.core.widget.NestedScrollView
