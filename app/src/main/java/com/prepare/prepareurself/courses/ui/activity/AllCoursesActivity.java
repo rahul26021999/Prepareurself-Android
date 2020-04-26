@@ -54,8 +54,10 @@ public class AllCoursesActivity extends AppCompatActivity implements AllCoursesR
         mViewModel.getLiveCourses().observe(this, new Observer<List<CourseModel>>() {
             @Override
             public void onChanged(List<CourseModel> courseModels) {
-                adapter.setCourseModels(courseModels);
-                adapter.notifyDataSetChanged();
+               if (courseModels!=null){
+                   adapter.setCourseModels(courseModels);
+                   adapter.notifyDataSetChanged();
+               }
             }
         });
     }

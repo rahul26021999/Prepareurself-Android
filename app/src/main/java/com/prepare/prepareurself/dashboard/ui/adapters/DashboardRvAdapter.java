@@ -158,8 +158,10 @@ public class DashboardRvAdapter extends RecyclerView.Adapter implements CoursesH
             courses.observeForever(new Observer<List<CourseModel>>() {
                 @Override
                 public void onChanged(List<CourseModel> courseModels) {
-                    adapter.setCourses(courseModels);
-                    adapter.notifyDataSetChanged();
+                    if (courseModels!=null){
+                        adapter.setCourses(courseModels);
+                        adapter.notifyDataSetChanged();
+                    }
                 }
             });
 
@@ -188,9 +190,10 @@ public class DashboardRvAdapter extends RecyclerView.Adapter implements CoursesH
             topicsModels.observeForever(new Observer<List<TopicsModel>>() {
                 @Override
                 public void onChanged(List<TopicsModel> topicsModels) {
-                    adapter.setData(topicsModels);
-                    adapter.notifyDataSetChanged();
-                }
+                    if (topicsModels!=null){
+                        adapter.setData(topicsModels);
+                        adapter.notifyDataSetChanged();
+                    }                }
             });
 
         }
@@ -208,7 +211,7 @@ public class DashboardRvAdapter extends RecyclerView.Adapter implements CoursesH
             tvSeeAll  =itemView.findViewById(R.id.tv_see_all);
         }
 
-        public void bindProjectsView(String categoryName, LiveData<List<ProjectsModel>> projectModels, ProjectsHorizontalRvAdapter.ProjectsHorizontalRvListener interactor){
+        public void bindProjectsView(String categoryName, final LiveData<List<ProjectsModel>> projectModels, ProjectsHorizontalRvAdapter.ProjectsHorizontalRvListener interactor){
             tvCourses.setText(categoryName);
             final ProjectsHorizontalRvAdapter adapter = new ProjectsHorizontalRvAdapter(context,interactor);
             LinearLayoutManager layoutManager = new LinearLayoutManager(context,RecyclerView.HORIZONTAL,false);
@@ -217,9 +220,11 @@ public class DashboardRvAdapter extends RecyclerView.Adapter implements CoursesH
 
             projectModels.observeForever(new Observer<List<ProjectsModel>>() {
                 @Override
-                public void onChanged(List<ProjectsModel> projectsModels) {
-                    adapter.setData(projectsModels);
-                    adapter.notifyDataSetChanged();
+                public void onChanged(List<ProjectsModel> p) {
+                    if (p!=null){
+                        adapter.setData(p);
+                        adapter.notifyDataSetChanged();
+                    }
                 }
             });
 

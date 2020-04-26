@@ -65,7 +65,7 @@ public class DashboardViewModel extends AndroidViewModel {
 
     public LiveData<List<CourseModel>> getLiveCourses(){
         if (liveCourses.getValue()==null){
-            liveCourses = courseDbRepository.getFiveCourses();
+            liveCourses = courseDbRepository.getAllCourses();
         }
         return liveCourses;
     }
@@ -98,4 +98,7 @@ public class DashboardViewModel extends AndroidViewModel {
         return bannerDbRepository.getAllBanners();
     }
 
+    public LiveData<List<CourseModel>> getFiveCourses() {
+        return courseDbRepository.getFiveCourses();
+    }
 }
