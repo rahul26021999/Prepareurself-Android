@@ -94,6 +94,14 @@
             android:layout_toStartOf="@+id/img_share_youtube_video"/>
 
     </net.cachapa.expandablelayout.ExpandableLayout>
+    <!--<TextView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_below="@id/expandable_layout"
+        android:text="Playlst"
+        android:textSize="20sp"
+        android:padding="5dp"
+        android:id="@+id/tvPlaylst"/>-->
 
 
     <androidx.recyclerview.widget.RecyclerView
@@ -101,6 +109,15 @@
         android:layout_height="wrap_content"
         android:id="@+id/rv_playlist_item_player"
         android:layout_below="@+id/expandable_layout"/>
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_below="@id/expandable_layout"
+        android:text="Playlst"
+        android:textSize="20sp"
+        android:padding="5dp"
+        android:id="@+id/tvPlaylst"
+        android:visibility="gone"/>
 
     <TextView
         android:layout_width="wrap_content"
@@ -112,7 +129,9 @@
         android:layout_below="@id/expandable_layout"
         android:layout_marginTop="10dp"
         android:layout_marginStart="10dp"
-        android:id="@+id/tv_related_header"/>
+        android:id="@+id/tv_related_header"
+        android:visibility="gone"
+        />
 
     <androidx.recyclerview.widget.RecyclerView
         android:layout_width="match_parent"

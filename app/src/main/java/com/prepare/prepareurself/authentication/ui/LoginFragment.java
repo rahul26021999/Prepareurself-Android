@@ -7,10 +7,13 @@ import android.os.Bundle;
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AlertDialog;
 import androidx.fragment.app.Fragment;
+//import android.support.v4.app.FragmentManager;
+import androidx.fragment.app.FragmentTransaction;
 import androidx.lifecycle.Observer;
 import androidx.lifecycle.ViewModelProviders;
 
 import android.text.TextUtils;
+import android.util.Log;
 import android.util.Patterns;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -79,7 +82,10 @@ public class LoginFragment extends Fragment implements View.OnClickListener{
     public void onClick(View v) {
 
         if (v.getId() == R.id.tv_forgot_password){
-            AlertDialog.Builder alertDialog = new AlertDialog.Builder(getActivity());
+            Intent i = new Intent(getActivity(), forgetPassword.class);
+            startActivity(i);
+            //changeFragment();
+            /*AlertDialog.Builder alertDialog = new AlertDialog.Builder(getActivity());
             alertDialog.setTitle("Reset your Password");
             final View customLayout = getLayoutInflater().inflate(R.layout.forgot_password_dialog_layout, null);
             alertDialog.setView(customLayout);
@@ -107,6 +113,7 @@ public class LoginFragment extends Fragment implements View.OnClickListener{
                     button.setText("Submitting");
 
                     editText.setError(null);
+                    //
                     viewModel.forgotPassword(email).observe(getActivity(), new Observer<ForgotPasswordResponseModel>() {
                         @Override
                         public void onChanged(ForgotPasswordResponseModel forgotPasswordResponseModel) {
@@ -131,7 +138,7 @@ public class LoginFragment extends Fragment implements View.OnClickListener{
 
             AlertDialog alert = alertDialog.create();
             alert.setCanceledOnTouchOutside(true);
-            alert.show();
+            alert.show();*/
         }
 
         if (v.getId()==R.id.btn_login){
@@ -218,4 +225,12 @@ public class LoginFragment extends Fragment implements View.OnClickListener{
             progressDialog.hide();
         }
     }
+   /* private void changeFragment(){
+        fragement_forgetpassword newfragment = new fragement_forgetpassword();
+        FragmentTransaction fragmentTransaction=getActivity().getSupportFragmentManager().beginTransaction();
+        fragmentTransaction.replace(R.id.mainlayout,newfragment);
+        fragmentTransaction.addToBackStack(null);
+        fragmentTransaction.commit();
+        Log.d("fraggg","show");
+    }*/
 }
