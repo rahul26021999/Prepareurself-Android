@@ -2,6 +2,7 @@ package com.prepare.prepareurself.profile.ui.fragments;
 
 import androidx.lifecycle.ViewModelProviders;
 
+import android.app.DatePickerDialog;
 import android.os.Bundle;
 
 import androidx.annotation.NonNull;
@@ -11,12 +12,16 @@ import androidx.fragment.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.DatePicker;
 
 import com.prepare.prepareurself.R;
+
+import java.util.Calendar;
 
 public class UserInfoFragment extends Fragment {
 
     private UserInfoViewModel mViewModel;
+    private DatePickerDialog datePickerDialog;
 
     public static UserInfoFragment newInstance() {
         return new UserInfoFragment();
@@ -32,7 +37,23 @@ public class UserInfoFragment extends Fragment {
     public void onActivityCreated(@Nullable Bundle savedInstanceState) {
         super.onActivityCreated(savedInstanceState);
         mViewModel = ViewModelProviders.of(this).get(UserInfoViewModel.class);
-        // TODO: Use the ViewModel
+
+
+    }
+
+    private void setdatepicker() {
+        final Calendar calendar = Calendar.getInstance();
+        int day = calendar.get(Calendar.DAY_OF_MONTH);
+        int month = calendar.get(Calendar.MONTH);
+        int year = calendar.get(Calendar.YEAR);
+        //date picker dialog
+        datePickerDialog = new DatePickerDialog(getActivity(), new DatePickerDialog.OnDateSetListener() {
+            @Override
+            public void onDateSet(DatePicker view, int year, int month, int dayOfMonth) {
+//                et_dob.setText(dayOfMonth + "/" + (month + 1) + "/" + year);
+            }
+        }, year, month, day);
+        datePickerDialog.show();
     }
 
 }

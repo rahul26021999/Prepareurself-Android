@@ -101,21 +101,6 @@ public class ProfileFragment extends Fragment implements View.OnClickListener {
         return view;
     }
 
-//    private void setdatepicker() {
-//        final Calendar calendar = Calendar.getInstance();
-//        int day = calendar.get(Calendar.DAY_OF_MONTH);
-//        int month = calendar.get(Calendar.MONTH);
-//        int year = calendar.get(Calendar.YEAR);
-//        //date picker dialog
-//        datePickerDialog = new DatePickerDialog(getActivity(), new DatePickerDialog.OnDateSetListener() {
-//            @Override
-//            public void onDateSet(DatePicker view, int year, int month, int dayOfMonth) {
-//                et_dob.setText(dayOfMonth + "/" + (month + 1) + "/" + year);
-//            }
-//        }, year, month, day);
-//        datePickerDialog.show();
-//    }
-
     @Override
     public void onActivityCreated(@Nullable Bundle savedInstanceState) {
         super.onActivityCreated(savedInstanceState);

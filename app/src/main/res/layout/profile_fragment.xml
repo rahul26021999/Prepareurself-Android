@@ -59,9 +59,10 @@
         </RelativeLayout>
     </RelativeLayout>
 
-    <ScrollView
+    <androidx.core.widget.NestedScrollView
         android:layout_width="match_parent"
         android:layout_height="match_parent"
+        android:overScrollMode="never"
         android:layout_below="@+id/topbar"
         android:fillViewport="true">
 
@@ -179,8 +180,7 @@
                 android:layout_height="match_parent"
                 android:layout_marginTop="10dp"
                 app:layout_behavior="@string/appbar_scrolling_view_behavior" />
-
         </LinearLayout>
 
-        </ScrollView>
+        </androidx.core.widget.NestedScrollView>
 </RelativeLayout>

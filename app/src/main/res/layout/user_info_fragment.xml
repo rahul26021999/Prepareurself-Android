@@ -1,10 +1,19 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout android:id="@+id/userinfolayout"
+<ScrollView android:id="@+id/userinfolayout"
     android:layout_width="match_parent"
-    android:layout_height="wrap_content"
+    android:layout_height="match_parent"
     android:orientation="vertical"
+    android:fillViewport="true"
+    android:overScrollMode="never"
     xmlns:android="http://schemas.android.com/apk/res/android"
     android:padding="10dp">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:orientation="vertical"
+        android:layout_height="wrap_content">
+
+
     <!--User Details-->
     <LinearLayout
         android:layout_width="match_parent"
@@ -14,7 +23,7 @@
         android:orientation="vertical"
         android:padding="16dp">
 
-        <LinearLayout
+        <RelativeLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content">
 
@@ -26,21 +35,17 @@
                 android:fontFamily="@font/proximanovaregular"
                 android:textStyle="bold" />
 
-            <Space
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_weight="1" />
-
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="Edit"
                 android:id="@+id/tv_aboutme_edit"
+                android:layout_alignParentEnd="true"
                 android:textColor="#FFCF66"
                 android:layout_marginEnd="10dp"
                 android:textSize="14sp" />
 
-        </LinearLayout>
+        </RelativeLayout>
 
         <LinearLayout
             android:layout_width="match_parent"
@@ -49,10 +54,44 @@
             android:orientation="vertical">
 
             <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal"
+                android:gravity="center_vertical"
+                android:paddingEnd="8dp">
+
+                <ImageView
+                    android:layout_width="40dp"
+                    android:layout_height="40dp"
+                    android:background="@drawable/circular_grey_bordersolid"
+                    android:padding="10dp"
+                    android:src="@drawable/ic_person_black_24dp" />
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:id="@+id/tv_name"
+                        android:layout_marginStart="20dp"
+                        android:textColor="@color/goodgrey"
+                        android:textSize="15sp"
+                        android:fontFamily="@font/proximanovaregular" />
+
+                    <EditText
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:id="@+id/et_name"
+                        android:layout_marginStart="20dp"
+                        android:textColor="@color/goodgrey"
+                        android:textSize="15sp"
+                        android:fontFamily="@font/proximanovaregular"
+                        android:visibility="gone"/>
+            </LinearLayout>
+            <LinearLayout
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
+                android:orientation="horizontal"
                 android:gravity="center_vertical"
-                android:paddingRight="8dp">
+                android:layout_marginTop="10dp"
+                android:paddingEnd="8dp">
 
                 <ImageView
                     android:layout_width="40dp"
@@ -61,11 +100,6 @@
                     android:padding="10dp"
                     android:src="@drawable/ic_cake_black_24dp" />
 
-                <LinearLayout
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_gravity="center_vertical"
-                    android:orientation="vertical">
                     <TextView
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
@@ -84,54 +118,15 @@
                         android:fontFamily="@font/proximanovaregular"
                         android:visibility="gone"/>
 
-                </LinearLayout>
             </LinearLayout>
+
 
             <LinearLayout
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="10dp"
                 android:gravity="center_vertical"
-                android:paddingRight="8dp">
-
-                <ImageView
-                    android:layout_width="40dp"
-                    android:layout_height="40dp"
-                    android:background="@drawable/circular_grey_bordersolid"
-                    android:padding="10dp"
-                    android:src="@drawable/ic_person_black_24dp" />
-
-                <LinearLayout
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_gravity="center_vertical"
-                    android:orientation="vertical">
-                    <TextView
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:id="@+id/tv_name"
-                        android:layout_marginLeft="20dp"
-                        android:textColor="@color/goodgrey"
-                        android:textSize="15sp"
-                        android:fontFamily="@font/proximanovaregular" />
-                    <EditText
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:id="@+id/et_name"
-                        android:layout_marginLeft="20dp"
-                        android:textColor="@color/goodgrey"
-                        android:textSize="15sp"
-                        android:fontFamily="@font/proximanovaregular"
-                        android:visibility="gone"/>
-                </LinearLayout>
-
-            </LinearLayout>
-
-            <LinearLayout
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="10dp"
-                android:gravity="center_vertical"
+                android:orientation="horizontal"
                 android:paddingRight="8dp">
 
                 <ImageView
@@ -141,11 +136,6 @@
                     android:padding="10dp"
                     android:src="@drawable/ic_call_24dp" />
 
-                <LinearLayout
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_gravity="center_vertical"
-                    android:orientation="vertical">
                     <TextView
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
@@ -163,7 +153,6 @@
                         android:textColor="@color/goodgrey"
                         android:fontFamily="@font/proximanovaregular"
                         android:visibility="gone"/>
-                </LinearLayout>
             </LinearLayout>
 
         </LinearLayout>
@@ -221,8 +210,8 @@
             android:layout_margin="10dp"
             android:id="@+id/btn_logout"/>
 
-
+    </LinearLayout>
     </LinearLayout>
 
     <!--about me ended-->
-</LinearLayout>
+</ScrollView>
