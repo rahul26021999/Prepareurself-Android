@@ -4,6 +4,7 @@ import com.prepare.prepareurself.authentication.data.model.ForgotPasswordRespons
 import com.prepare.prepareurself.authentication.data.model.RegisterResponseModel;
 import com.prepare.prepareurself.courses.data.model.GetProjectResponse;
 import com.prepare.prepareurself.courses.data.model.GetTopicResponseModel;
+import com.prepare.prepareurself.courses.data.model.ProjectResponseModel;
 import com.prepare.prepareurself.dashboard.data.model.GetCourseResponseModel;
 import com.prepare.prepareurself.profile.data.model.UpdatePasswordResponseModel;
 import com.prepare.prepareurself.profile.data.model.UpdatePreferenceResponseModel;
@@ -109,5 +110,9 @@ public interface ApiInterface {
     @POST("update-user")
     Call<UpdatePreferenceResponseModel> uploadImage(@Query("token") String token,
                                                     @Part MultipartBody.Part image);
+
+    @POST("project")
+    Call<ProjectResponseModel> getProjectById(@Query("token") String token,
+                                              @Query("project_id") int projectId);
 
 }
