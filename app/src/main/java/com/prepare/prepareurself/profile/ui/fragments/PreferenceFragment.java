@@ -32,7 +32,7 @@ public class PreferenceFragment extends Fragment {
     public void onActivityCreated(@Nullable Bundle savedInstanceState) {
         super.onActivityCreated(savedInstanceState);
         mViewModel = ViewModelProviders.of(this).get(PreferenceViewModel.class);
-        // TODO: Use the ViewModel
+
     }
 
 }

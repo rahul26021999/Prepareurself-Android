@@ -90,36 +90,17 @@
                     android:paddingBottom="16dp"
                     android:visibility="visible">
 
-                    <androidx.cardview.widget.CardView
+                    <de.hdodenhof.circleimageview.CircleImageView
                         android:layout_width="150dp"
                         android:layout_height="140dp"
+                        android:scaleType="centerCrop"
+                        android:src="@drawable/person_placeholder"
                         app:cardCornerRadius="6dp"
                         android:layout_gravity="center"
                         app:cardElevation="0dp"
-                        android:id="@+id/image_cardView_profile">
+                        android:id="@+id/user_image">
 
-                        <RelativeLayout
-                            android:layout_width="match_parent"
-                            android:layout_height="match_parent">
-
-                            <ImageView
-                                android:layout_width="150dp"
-                                android:layout_height="140dp"
-                                android:scaleType="centerCrop"
-                                android:id="@+id/user_image"
-                                android:src="@drawable/person_placeholder" />
-
-                            <ProgressBar
-                                android:layout_width="wrap_content"
-                                android:layout_height="wrap_content"
-                                android:layout_centerInParent="true"
-                                android:indeterminate="true"
-                                android:id="@+id/loadImage"
-                                android:visibility="gone"/>
-
-                        </RelativeLayout>
-
-                    </androidx.cardview.widget.CardView>
+                    </de.hdodenhof.circleimageview.CircleImageView>
 
 
                     <TextView
@@ -139,58 +120,11 @@
 
             </LinearLayout>
 
-<!--            &lt;!&ndash;Option Bar&ndash;&gt;-->
-<!--            <LinearLayout-->
-<!--                android:layout_width="match_parent"-->
-<!--                android:layout_height="wrap_content"-->
-<!--                android:layout_marginTop="10dp"-->
-<!--                android:layout_marginBottom="10dp"-->
-<!--                android:background="@drawable/circularbordersolid"-->
-<!--                android:orientation="horizontal"-->
-<!--                android:visibility="gone">-->
-
-<!--                <TextView-->
-<!--                    android:id="@+id/userinfobtn"-->
-<!--                    android:layout_width="0dp"-->
-<!--                    android:layout_height="wrap_content"-->
-<!--                    android:layout_weight="1"-->
-<!--                    android:fontFamily="@font/proximanovaregular"-->
-<!--                    android:gravity="center"-->
-<!--                    android:padding="13dp"-->
-<!--                    android:background="?attr/selectableItemBackground"-->
-<!--                    android:text="User Info"-->
-<!--                    android:textAllCaps="true"-->
-<!--                    android:textColor="@color/blue"-->
-<!--                    android:textSize="14sp"-->
-<!--                    android:textStyle="bold" />-->
-
-<!--                <View-->
-<!--                    android:layout_width="1dp"-->
-<!--                    android:layout_height="match_parent"-->
-<!--                    android:background="@color/lightgrey" />-->
-<!--                <TextView-->
-<!--                    android:id="@+id/preferencesbtn"-->
-<!--                    android:layout_width="0dp"-->
-<!--                    android:layout_height="wrap_content"-->
-<!--                    android:layout_weight="1"-->
-<!--                    android:background="?attr/selectableItemBackground"-->
-<!--                    android:fontFamily="@font/proximanovaregular"-->
-<!--                    android:gravity="center"-->
-<!--                    android:padding="13dp"-->
-<!--                    android:text="Preferences"-->
-<!--                    android:textAllCaps="true"-->
-<!--                    android:textColor="@color/lightgrey"-->
-<!--                    android:textSize="14sp"-->
-<!--                    android:textStyle="bold" />-->
-
-<!--            </LinearLayout>-->
-
-            <!--Bootom Cards with sections-->
-
             <androidx.cardview.widget.CardView
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="10dp"
+                app:cardElevation="0dp"
                 android:layout_marginStart="20dp"
                 app:cardCornerRadius="18dp"
                 android:layout_marginEnd="20dp"
@@ -247,13 +181,6 @@
                 app:layout_behavior="@string/appbar_scrolling_view_behavior" />
 
         </LinearLayout>
-
-
-                    <!--bottom card 1-->
-
-
-
-            <!-- bottom card 2 -: start preferences-->
 
         </ScrollView>
 </RelativeLayout>
