@@ -29,6 +29,9 @@
 
     <color name="lightGrey">#f3f3f3</color>
 
+    <color name="like_grey">#A1A3A5</color>
+    <color name="like_blue">#2664FF</color>
+
     <color name="colorPrimary1">#008577</color>
     <color name="colorPrimaryDar1">#293859</color>
     <color name="colorAccent1">#D81B60</color>
