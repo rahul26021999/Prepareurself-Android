@@ -8,7 +8,6 @@
     app:cardCornerRadius="20dp"
     app:cardElevation="0dp"
     android:id="@+id/card_project_image"
-    android:background="?attr/selectableItemBackgroundBorderless"
     android:layout_below="@+id/tv_reference_heading"
     xmlns:android="http://schemas.android.com/apk/res/android">
 
@@ -34,11 +33,11 @@
             android:fontFamily="@font/proximanovaregular"
             android:textStyle="bold"
             android:maxLines="6"
+            android:background="?attr/selectableItemBackground"
             android:ellipsize="end"
             android:textColor="@color/resource_active_color"
             android:padding="20dp"
-            android:text="kdjfbvjdfvnfiovno hofv opjop pojpo 'poj pio'pjp 'pojp  ;lm;lvlkn ilknkofn m lknjio  ifvoifhv oijiov oijdiofv oij"
-            android:layout_marginStart="10dp"/>
+            android:text="kdjfbvjdfvnfiovno hofv opjop pojpo 'poj pio'pjp 'pojp  ;lm;lvlkn ilknkofn m lknjio  ifvoifhv oijiov oijdiofv oij" />
 
     </RelativeLayout>
 
