@@ -24,12 +24,12 @@
             android:scaleType="centerCrop"/>
 
         <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
             android:id="@+id/tv_playlist_video_title"
             android:layout_toEndOf="@+id/playlist_videos_thumnail"
             android:textSize="16sp"
-            android:layout_centerVertical="true"
+            android:gravity="center_vertical"
             android:fontFamily="@font/proximanovaregular"
             android:textStyle="bold"
             android:maxLines="6"
