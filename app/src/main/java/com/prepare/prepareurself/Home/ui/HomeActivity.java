@@ -94,6 +94,7 @@ public class HomeActivity extends AppCompatActivity implements NavigationView.On
                 tvNameNavHeader.setText(name);
                 Glide.with(HomeActivity.this)
                         .load(Constants.USERIMAGEBASEURL + userModel.getProfile_image())
+                        .override(300,300)
                         .placeholder(R.drawable.person_placeholder)
                         .transition(GenericTransitionOptions.<Drawable>with(Utility.getAnimationObject()))
                         .into(profileImageView);

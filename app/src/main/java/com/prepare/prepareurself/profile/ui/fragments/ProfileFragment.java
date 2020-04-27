@@ -54,6 +54,7 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Locale;
 import java.util.Map;
+import java.util.Objects;
 
 import okhttp3.MediaType;
 import okhttp3.MultipartBody;
@@ -195,6 +196,7 @@ public class ProfileFragment extends Fragment implements View.OnClickListener {
                     tv_email_profile.setText(userModel.getEmail());
                     Glide.with(getActivity())
                             .load(Constants.USERIMAGEBASEURL + userModel.getProfile_image())
+                            .override(500,500)
                             .placeholder(R.drawable.person_placeholder)
                             .transition(GenericTransitionOptions.<Drawable>with(Utility.getAnimationObject()))
                             .into(userImageView);
@@ -363,13 +365,17 @@ public class ProfileFragment extends Fragment implements View.OnClickListener {
         switch (v.getId())
         {
             case R.id.backBtn:
-
+                    Objects.requireNonNull(getActivity()).onBackPressed();
                 break;
             case R.id.tabPreference:
+                tabPreference.setTextColor(getResources().getColor(R.color.colorPrimaryDark));
+                tabUserInfo.setTextColor(getResources().getColor(R.color.dark_grey));
                 userInfo.setVisibility(View.GONE);
                 prefrences.setVisibility(View.VISIBLE);
                 break;
             case R.id.tabUserInfo:
+                tabPreference.setTextColor(getResources().getColor(R.color.dark_grey));
+                tabUserInfo.setTextColor(getResources().getColor(R.color.colorPrimaryDark));
                 userInfo.setVisibility(View.VISIBLE);
                 prefrences.setVisibility(View.GONE);
 

@@ -122,7 +122,7 @@
                         android:layout_weight="1"
                         android:textAllCaps="true"
                         android:fontFamily="@font/proximanovaregular"
-                        android:textColor="@color/lightGrey"
+                        android:textColor="@color/dark_grey"
                         android:textStyle="bold"
                         android:textSize="13sp"
                         android:gravity="center"
@@ -323,8 +323,10 @@
                         android:textSize="18sp"
                         android:textColor="@color/colorWhite"
                         android:background="@drawable/profile_preferences_button"
-                        android:padding="5dp"
-                        android:layout_margin="10dp"
+                        android:layout_marginStart="20dp"
+                        android:layout_marginEnd="20dp"
+                        android:layout_marginTop="20dp"
+                        android:layout_marginBottom="10dp"
                         android:id="@+id/btn_update_password"/>
 
                     <Button
@@ -334,8 +336,9 @@
                         android:textSize="18sp"
                         android:textColor="@color/colorWhite"
                         android:background="@drawable/profile_preferences_button"
-                        android:padding="5dp"
-                        android:layout_margin="10dp"
+                        android:layout_marginStart="20dp"
+                        android:layout_marginEnd="20dp"
+                        android:layout_marginBottom="20dp"
                         android:id="@+id/btn_logout"/>
 
                 </LinearLayout>
