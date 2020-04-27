@@ -109,13 +109,10 @@ public class PreferenceFragment extends Fragment {
                     for(int i = 0; i< preferences.size(); i++){
                         tempList.add(allStack.get(preferences.get(i)));
                     }
-
                     adapter.setPreferredTechStacks(tempList);
                     adapter.notifyDataSetChanged();
 
                 }
-
-
             }
         });
     }

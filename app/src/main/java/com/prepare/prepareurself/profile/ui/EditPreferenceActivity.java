@@ -67,6 +67,7 @@ public class EditPreferenceActivity extends AppCompatActivity {
                 if(userModel.getPreferences()!=null) {
                     mUserModel = userModel;
                     Log.i("helloChip",userModel.getPreferences());
+                    preferences.clear();
                     preferences.addAll(Arrays.asList(userModel.getPreferences().split(",")));
                 }
                 profileViewModel.getPreferencesFromDb().observe(EditPreferenceActivity.this, new Observer<List<PreferredTechStack>>() {
@@ -117,16 +118,14 @@ public class EditPreferenceActivity extends AppCompatActivity {
         save.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-
                 if (dialog!=null && !dialog.isShowing()){
                     dialog.setMessage("Updating preferences");
                     dialog.show();
                 }
-
-                List<Integer> list = new ArrayList<>(preferredTechStackHashMap.keySet());
-
-                final List<PreferredTechStack> preferredTechStacks = new ArrayList<>(preferredTechStackHashMap.values());
-;
+                List<Integer> list = new ArrayList<>();
+                for (String pref : preferences){
+                    list.add(Integer.parseInt(pref));
+                }
                 profileViewModel.updatePrefernces(prefManager.getString(Constants.JWTTOKEN),list)
                         .observe(EditPreferenceActivity.this, new Observer<UpdatePreferenceResponseModel>() {
                             @Override
@@ -137,7 +136,6 @@ public class EditPreferenceActivity extends AppCompatActivity {
                                             String p = TextUtils.join(",",preferences);
                                             mUserModel.setPreferences(p);
                                             profileViewModel.saveMyPreference(mUserModel);
-                                            profileViewModel.updatePrefferedStack(preferredTechStacks);
                                             Utility.showToast(EditPreferenceActivity.this, "Updation successful");
                                         }
                                     }else{

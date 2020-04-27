@@ -30,7 +30,7 @@ public class BaseApplication extends Application {
         MobileAds.initialize(this, new OnInitializationCompleteListener() {
             @Override
             public void onInitializationComplete(InitializationStatus initializationStatus) {
-                Toast.makeText(getApplicationContext(),"Add Initia;ised",Toast.LENGTH_SHORT).show();
+
             }
         });
 
