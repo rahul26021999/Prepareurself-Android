@@ -20,6 +20,8 @@ import com.prepare.prepareurself.courses.data.model.TopicsModel;
 import com.prepare.prepareurself.courses.ui.activity.CoursesActivity;
 import com.prepare.prepareurself.courses.ui.activity.ProjectsActivity;
 import com.prepare.prepareurself.dashboard.data.model.CourseModel;
+import com.prepare.prepareurself.dashboard.data.model.SuggestedProjectModel;
+import com.prepare.prepareurself.dashboard.data.model.SuggestedTopicsModel;
 import com.prepare.prepareurself.dashboard.ui.fragment.DashboardFragment;
 import com.prepare.prepareurself.Home.viewmodel.HomeActivityViewModel;
 import com.prepare.prepareurself.R;
@@ -197,14 +199,14 @@ public class HomeActivity extends AppCompatActivity implements NavigationView.On
     }
 
     @Override
-    public void onTopicClicked(TopicsModel topicsModel) {
+    public void onTopicClicked(SuggestedTopicsModel topicsModel) {
         Intent intent = new Intent(HomeActivity.this, ResourcesActivity.class);
         intent.putExtra(Constants.TOPICID,topicsModel.getId());
         startActivity(intent);
     }
 
     @Override
-    public void onProjectClicked(ProjectsModel projectsModel) {
+    public void onProjectClicked(SuggestedProjectModel projectsModel) {
         Intent intent = new Intent(HomeActivity.this, ProjectsActivity.class);
         intent.putExtra(Constants.PROJECTID,projectsModel.getId());
         startActivity(intent);

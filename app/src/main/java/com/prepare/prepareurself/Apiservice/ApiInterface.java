@@ -7,6 +7,8 @@ import com.prepare.prepareurself.courses.data.model.GetTopicResponseModel;
 import com.prepare.prepareurself.courses.data.model.ProjectResponseModel;
 import com.prepare.prepareurself.dashboard.data.model.BannerImageResponseModel;
 import com.prepare.prepareurself.dashboard.data.model.GetCourseResponseModel;
+import com.prepare.prepareurself.dashboard.data.model.GetSuggestedProjectsModel;
+import com.prepare.prepareurself.dashboard.data.model.GetSuggestedTopicsModel;
 import com.prepare.prepareurself.profile.data.model.UpdatePasswordResponseModel;
 import com.prepare.prepareurself.profile.data.model.UpdatePreferenceResponseModel;
 import com.prepare.prepareurself.profile.data.model.AllPreferencesResponseModel;
@@ -118,5 +120,11 @@ public interface ApiInterface {
 
     @POST("get-banner")
     Call<BannerImageResponseModel> getBanners(@Query("token") String token);
+
+    @POST("get-suggested-projects")
+    Call<GetSuggestedProjectsModel> getSuggestedProjects(@Query("token") String token);
+
+    @POST("get-suggested-topics")
+    Call<GetSuggestedTopicsModel> getSuggestedTopics(@Query("token") String token);
 
 }

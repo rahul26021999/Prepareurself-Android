@@ -17,6 +17,7 @@ import com.bumptech.glide.load.engine.DiskCacheStrategy;
 import com.prepare.prepareurself.R;
 import com.prepare.prepareurself.courses.data.model.ProjectsModel;
 import com.prepare.prepareurself.courses.data.model.TopicsModel;
+import com.prepare.prepareurself.dashboard.data.model.SuggestedProjectModel;
 import com.prepare.prepareurself.utils.Constants;
 import com.prepare.prepareurself.utils.Utility;
 
@@ -25,7 +26,7 @@ import java.util.List;
 public class ProjectsHorizontalRvAdapter extends RecyclerView.Adapter<ProjectsHorizontalRvAdapter.ProjectsViewHolder> {
 
     private Context context;
-    private List<ProjectsModel> projectsModels;
+    private List<SuggestedProjectModel> projectsModels;
     private ProjectsHorizontalRvListener listener;
 
     public ProjectsHorizontalRvAdapter(Context context, ProjectsHorizontalRvListener listener) {
@@ -61,7 +62,7 @@ public class ProjectsHorizontalRvAdapter extends RecyclerView.Adapter<ProjectsHo
             return 0;
     }
 
-    public void setData(List<ProjectsModel> projectsModels) {
+    public void setData(List<SuggestedProjectModel> projectsModels) {
         this.projectsModels = projectsModels;
     }
 
@@ -78,7 +79,7 @@ public class ProjectsHorizontalRvAdapter extends RecyclerView.Adapter<ProjectsHo
 
         }
 
-        public void bindView(Context context, ProjectsModel projectsModel){
+        public void bindView(Context context, SuggestedProjectModel projectsModel){
 
             Glide.with(context).load(
                     Constants.PROJECTSIMAGEBASEURL+ projectsModel.getImage_url())
@@ -94,6 +95,6 @@ public class ProjectsHorizontalRvAdapter extends RecyclerView.Adapter<ProjectsHo
     }
 
     public interface ProjectsHorizontalRvListener {
-        void onItemClicked(ProjectsModel projectsModel);
+        void onItemClicked(SuggestedProjectModel projectsModel);
     }
 }

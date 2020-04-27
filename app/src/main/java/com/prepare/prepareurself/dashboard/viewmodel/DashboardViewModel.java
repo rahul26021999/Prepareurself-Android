@@ -18,10 +18,15 @@ import com.prepare.prepareurself.courses.data.repository.ProjectsRespository;
 import com.prepare.prepareurself.courses.data.repository.TopicsRepository;
 import com.prepare.prepareurself.dashboard.data.db.repository.BannerDbRepository;
 import com.prepare.prepareurself.dashboard.data.db.repository.CourseDbRepository;
+import com.prepare.prepareurself.dashboard.data.db.repository.SuggestedProjectsDbRespository;
+import com.prepare.prepareurself.dashboard.data.db.repository.SuggestedTopicsDbRepository;
 import com.prepare.prepareurself.dashboard.data.model.BannerModel;
 import com.prepare.prepareurself.dashboard.data.model.CourseModel;
 import com.prepare.prepareurself.dashboard.data.model.GetCourseResponseModel;
+import com.prepare.prepareurself.dashboard.data.model.SuggestedProjectModel;
+import com.prepare.prepareurself.dashboard.data.model.SuggestedTopicsModel;
 import com.prepare.prepareurself.dashboard.data.repository.CourseRepository;
+import com.prepare.prepareurself.dashboard.data.repository.DashboardRespoisitory;
 import com.prepare.prepareurself.resources.data.db.repository.ResourcesDbRepository;
 import com.prepare.prepareurself.resources.data.model.ResourceModel;
 import com.prepare.prepareurself.resources.data.model.ResourcesResponse;
@@ -43,6 +48,9 @@ public class DashboardViewModel extends AndroidViewModel {
     private ProjectsRespository projectsRespository;
     private ProjectsDbRepository projectsDbRepository;
     private BannerDbRepository bannerDbRepository;
+    private DashboardRespoisitory dashboardRespoisitory;
+    private SuggestedTopicsDbRepository suggestedTopicsDbRepository;
+    private SuggestedProjectsDbRespository suggestedProjectsDbRespository;
     public DashboardViewModel(@NonNull Application application) {
         super(application);
         courseRepository = new CourseRepository(application);
@@ -53,6 +61,9 @@ public class DashboardViewModel extends AndroidViewModel {
         projectsRespository = new ProjectsRespository(application);
         projectsDbRepository = new ProjectsDbRepository(application);
         bannerDbRepository = new BannerDbRepository(application);
+        dashboardRespoisitory = new DashboardRespoisitory(application);
+        suggestedProjectsDbRespository = new SuggestedProjectsDbRespository(application);
+        suggestedTopicsDbRepository = new SuggestedTopicsDbRepository(application);
     }
 
     public void getCourses(String token){
@@ -100,5 +111,23 @@ public class DashboardViewModel extends AndroidViewModel {
 
     public LiveData<List<CourseModel>> getFiveCourses() {
         return courseDbRepository.getFiveCourses();
+    }
+
+    public LiveData<List<SuggestedTopicsModel>> getSuggestedTopics(String token){
+        LiveData<List<SuggestedTopicsModel>> response = dashboardRespoisitory.fetSuggestedTopics(token);
+        if (response==null){
+            response = suggestedTopicsDbRepository.getAllTopics();
+        }
+
+        return response;
+    }
+
+    public LiveData<List<SuggestedProjectModel>> getSuggestedProjects(String token){
+        LiveData<List<SuggestedProjectModel>> response = dashboardRespoisitory.fetchSuggestedProjects(token);
+        if (response==null){
+            response = suggestedProjectsDbRespository.getAllProjects();
+        }
+
+        return response;
     }
 }

@@ -17,6 +17,8 @@ import com.prepare.prepareurself.courses.data.model.TopicsModel;
 import com.prepare.prepareurself.dashboard.data.model.CourseModel;
 import com.prepare.prepareurself.dashboard.data.model.DashboardRecyclerviewModel;
 import com.prepare.prepareurself.R;
+import com.prepare.prepareurself.dashboard.data.model.SuggestedProjectModel;
+import com.prepare.prepareurself.dashboard.data.model.SuggestedTopicsModel;
 
 import java.util.List;
 
@@ -101,7 +103,7 @@ public class DashboardRvAdapter extends RecyclerView.Adapter implements CoursesH
                 ((AddViewHolder) holder).bindAddView(adText);
                 break;
             case TOPICVIEWTYPE:
-                final LiveData<List<TopicsModel>> topicsModels = modelList.get(position).getTopicsModels();
+                final LiveData<List<SuggestedTopicsModel>> topicsModels = modelList.get(position).getTopicsModels();
                 ((TopicViewHolder) holder).bindCoursesView(modelList.get(position).getCategoryName(),topicsModels, this);
                 ((TopicViewHolder) holder).tvSeeAll.setOnClickListener(new View.OnClickListener() {
                     @Override
@@ -112,7 +114,7 @@ public class DashboardRvAdapter extends RecyclerView.Adapter implements CoursesH
                 });
                 break;
             case PROJECTVIEWTYPE:
-                final LiveData<List<ProjectsModel>> projectModel = modelList.get(position).getProjectModels();
+                final LiveData<List<SuggestedProjectModel>> projectModel = modelList.get(position).getProjectModels();
                 ((ProjectViewHolder) holder).bindProjectsView(modelList.get(position).getCategoryName(),projectModel, this);
                 ((ProjectViewHolder) holder).tvSeeAll.setOnClickListener(new View.OnClickListener() {
                     @Override
@@ -180,20 +182,21 @@ public class DashboardRvAdapter extends RecyclerView.Adapter implements CoursesH
             tvSeeAll  =itemView.findViewById(R.id.tv_see_all);
         }
 
-        public void bindCoursesView(String categoryName, LiveData< List<TopicsModel>> topicsModels, TopicsHorizontalRvAdapter.TopicsHorizontalRvListener interactor){
+        public void bindCoursesView(String categoryName, LiveData< List<SuggestedTopicsModel>> topicsModels, TopicsHorizontalRvAdapter.TopicsHorizontalRvListener interactor){
             tvCourses.setText(categoryName);
             final TopicsHorizontalRvAdapter adapter = new TopicsHorizontalRvAdapter(context,interactor);
             LinearLayoutManager layoutManager = new LinearLayoutManager(context,RecyclerView.HORIZONTAL,false);
             rvCourses.setLayoutManager(layoutManager);
             rvCourses.setAdapter(adapter);
 
-            topicsModels.observeForever(new Observer<List<TopicsModel>>() {
+            topicsModels.observeForever(new Observer<List<SuggestedTopicsModel>>() {
                 @Override
-                public void onChanged(List<TopicsModel> topicsModels) {
+                public void onChanged(List<SuggestedTopicsModel> topicsModels) {
                     if (topicsModels!=null){
                         adapter.setData(topicsModels);
                         adapter.notifyDataSetChanged();
-                    }                }
+                    }
+                }
             });
 
         }
@@ -211,16 +214,16 @@ public class DashboardRvAdapter extends RecyclerView.Adapter implements CoursesH
             tvSeeAll  =itemView.findViewById(R.id.tv_see_all);
         }
 
-        public void bindProjectsView(String categoryName, final LiveData<List<ProjectsModel>> projectModels, ProjectsHorizontalRvAdapter.ProjectsHorizontalRvListener interactor){
+        public void bindProjectsView(String categoryName, final LiveData<List<SuggestedProjectModel>> projectModels, ProjectsHorizontalRvAdapter.ProjectsHorizontalRvListener interactor){
             tvCourses.setText(categoryName);
             final ProjectsHorizontalRvAdapter adapter = new ProjectsHorizontalRvAdapter(context,interactor);
             LinearLayoutManager layoutManager = new LinearLayoutManager(context,RecyclerView.HORIZONTAL,false);
             rvCourses.setLayoutManager(layoutManager);
             rvCourses.setAdapter(adapter);
 
-            projectModels.observeForever(new Observer<List<ProjectsModel>>() {
+            projectModels.observeForever(new Observer<List<SuggestedProjectModel>>() {
                 @Override
-                public void onChanged(List<ProjectsModel> p) {
+                public void onChanged(List<SuggestedProjectModel> p) {
                     if (p!=null){
                         adapter.setData(p);
                         adapter.notifyDataSetChanged();
@@ -251,19 +254,19 @@ public class DashboardRvAdapter extends RecyclerView.Adapter implements CoursesH
     }
 
     @Override
-    public void onItemClicked(TopicsModel topicsModel) {
+    public void onItemClicked(SuggestedTopicsModel topicsModel) {
         listener.onTopicClicked(topicsModel);
     }
 
     @Override
-    public void onItemClicked(ProjectsModel projectsModel) {
+    public void onItemClicked(SuggestedProjectModel projectsModel) {
         listener.onProjectClicked(projectsModel);
     }
 
     public interface DashBoardInteractor{
         void onCourseClicked(CourseModel courseModel);
-        void onTopicClicked(TopicsModel topicsModel);
-        void onProjectClicked(ProjectsModel projectsModel);
+        void onTopicClicked(SuggestedTopicsModel topicsModel);
+        void onProjectClicked(SuggestedProjectModel projectsModel);
         void onTopicSeeAll(int courseId);
         void onProjectSeeAll(int courseId);
         void onCourseSeeAll();

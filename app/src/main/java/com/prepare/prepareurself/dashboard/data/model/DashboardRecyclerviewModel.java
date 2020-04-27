@@ -20,9 +20,9 @@ public class DashboardRecyclerviewModel {
     private LiveData<List<CourseModel>> courses;
 
     //topic viewtype
-    private LiveData<List<TopicsModel>> topicsModels;
+    private LiveData<List<SuggestedTopicsModel>> topicsModels;
 
-    private LiveData<List<ProjectsModel>> projectModels;
+    private LiveData<List<SuggestedProjectModel>> projectModels;
 
     //add view type
     private String addText;
@@ -33,13 +33,13 @@ public class DashboardRecyclerviewModel {
         this.viewType = viewType;
     }
 
-    public DashboardRecyclerviewModel(int viewType, LiveData< List<TopicsModel>> topicsModels, String categoryName) {
+    public DashboardRecyclerviewModel(int viewType, LiveData< List<SuggestedTopicsModel>> topicsModels, String categoryName) {
         this.viewType = viewType;
         this.categoryName = categoryName;
         this.topicsModels = topicsModels;
     }
 
-    public DashboardRecyclerviewModel(LiveData<List<ProjectsModel>> projectModels, int viewType, String categoryName){
+    public DashboardRecyclerviewModel(LiveData<List<SuggestedProjectModel>> projectModels, int viewType, String categoryName){
         this.projectModels = projectModels;
         this.viewType = viewType;
         this.categoryName = categoryName;
@@ -50,19 +50,19 @@ public class DashboardRecyclerviewModel {
         this.viewType = viewType;
     }
 
-    public LiveData<List<TopicsModel>> getTopicsModels() {
+    public LiveData<List<SuggestedTopicsModel>> getTopicsModels() {
         return topicsModels;
     }
 
-    public void setTopicsModels(LiveData<List<TopicsModel>> topicsModels) {
+    public void setTopicsModels(LiveData<List<SuggestedTopicsModel>> topicsModels) {
         this.topicsModels = topicsModels;
     }
 
-    public LiveData<List<ProjectsModel>> getProjectModels() {
+    public LiveData<List<SuggestedProjectModel>> getProjectModels() {
         return projectModels;
     }
 
-    public void setProjectModels(LiveData<List<ProjectsModel>> projectModels) {
+    public void setProjectModels(LiveData<List<SuggestedProjectModel>> projectModels) {
         this.projectModels = projectModels;
     }
 
