@@ -161,4 +161,10 @@ public class ProfileViewModel extends AndroidViewModel {
     public LiveData<UpdatePreferenceResponseModel> uploadImage(String  token, MultipartBody.Part body) {
         return profileRepository.uploadImage(token,body);
     }
+
+    public void updatePrefferedStack(List<PreferredTechStack> preferredTechStackList) {
+        for (PreferredTechStack preferredTechStack : preferredTechStackList){
+            preferncesDbRespoitory.insertPreference(preferredTechStack);
+        }
+    }
 }

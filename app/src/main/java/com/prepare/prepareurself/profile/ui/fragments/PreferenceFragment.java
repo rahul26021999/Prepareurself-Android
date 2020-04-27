@@ -41,6 +41,7 @@ public class PreferenceFragment extends Fragment {
     private List<String> allStackName=new ArrayList<>();
     private List<PreferredTechStack> preferredTechStackList = new ArrayList<>();
     private TextView tvEdit;
+    UserPrefernceAdapter adapter;
 
     public static PreferenceFragment newInstance() {
         return new PreferenceFragment();
@@ -62,11 +63,24 @@ public class PreferenceFragment extends Fragment {
         super.onActivityCreated(savedInstanceState);
         profileViewModel = ViewModelProviders.of(this).get(ProfileViewModel.class);
 
-        final UserPrefernceAdapter adapter = new UserPrefernceAdapter(getActivity());
+        adapter = new UserPrefernceAdapter(getActivity());
         LinearLayoutManager layoutManager = new LinearLayoutManager(getActivity());
         recyclerView.setLayoutManager(layoutManager);
         recyclerView.setAdapter(adapter);
 
+
+        tvEdit.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                startActivity(new Intent(getActivity(), EditPreferenceActivity.class));
+            }
+        });
+
+    }
+
+    @Override
+    public void onResume() {
+        super.onResume();
         profileViewModel.getUserModelLiveData().observe(getActivity(), new Observer<UserModel>() {
             @Override
             public void onChanged(UserModel userModel) {
@@ -80,9 +94,9 @@ public class PreferenceFragment extends Fragment {
                     public void onChanged(final List<PreferredTechStack> preferredTechStacks) {
                         int size = preferredTechStacks.size();
                         Log.i("Size",""+size);
+                        preferredTechStackList.clear();
                         for (int i=0;i<size;i++){
                             allStackID.add(""+preferredTechStacks.get(i).getId());
-                            allStackName.add(preferredTechStacks.get(i).getName());
                             if(preferences.contains(allStackID.get(i))) {
                                 PreferredTechStack p = new PreferredTechStack();
                                 p.setId(preferredTechStacks.get(i).getId());
@@ -99,14 +113,5 @@ public class PreferenceFragment extends Fragment {
 
             }
         });
-
-        tvEdit.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                startActivity(new Intent(getActivity(), EditPreferenceActivity.class));
-            }
-        });
-
     }
-
 }

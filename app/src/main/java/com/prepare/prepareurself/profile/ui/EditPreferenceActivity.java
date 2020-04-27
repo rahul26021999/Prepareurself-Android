@@ -4,6 +4,7 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.lifecycle.Observer;
 import androidx.lifecycle.ViewModelProviders;
 
+import android.app.ProgressDialog;
 import android.os.Bundle;
 import android.text.TextUtils;
 import android.util.Log;
@@ -42,6 +43,8 @@ public class EditPreferenceActivity extends AppCompatActivity {
     private UserModel mUserModel;
     private List<String> allStackName=new ArrayList<>();
     private HashMap<String,String> allStack=new HashMap<>();
+    private ProgressDialog dialog;
+    private HashMap<Integer, PreferredTechStack> preferredTechStackHashMap = new HashMap<>();
 
 
     @Override
@@ -55,6 +58,8 @@ public class EditPreferenceActivity extends AppCompatActivity {
 
         chip_gp=findViewById(R.id.chip_gp);
         save=findViewById(R.id.save);
+
+        dialog = new ProgressDialog(this);
 
         profileViewModel.getUserModelLiveData().observe(this, new Observer<UserModel>() {
             @Override
@@ -80,8 +85,10 @@ public class EditPreferenceActivity extends AppCompatActivity {
                             chip.setCheckable(true);
                             if(preferences.contains(allStackID.get(i))) {
                                 chip.setChecked(true);
+                               preferredTechStackHashMap.put(preferredTechStacks.get(i).getId(),preferredTechStacks.get(i));
                             }
                             chip.setCloseIconVisible(false);
+                            final int finalI = i;
                             chip.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
                                 @Override
                                 public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
@@ -89,10 +96,12 @@ public class EditPreferenceActivity extends AppCompatActivity {
                                     {
                                         preferences.add(allStackID.get(allStackName.indexOf(chip.getText().toString())));
                                         Log.i("helloChip",buttonView.getText().toString());
+                                        preferredTechStackHashMap.put(preferredTechStacks.get(finalI).getId(),preferredTechStacks.get(finalI));
                                     }
                                     else{
                                         preferences.remove(allStackID.get(allStackName.indexOf(chip.getText().toString())));
                                         Log.i("helloChip",buttonView.getText().toString() +" removed");
+                                        preferredTechStackHashMap.remove(preferredTechStacks.get(finalI).getId());
                                     }
                                 }
                             });
@@ -109,11 +118,15 @@ public class EditPreferenceActivity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
 
-                List<Integer> list = new ArrayList<>();
-                for (String pref : preferences){
-                    list.add(Integer.parseInt(pref));
+                if (dialog!=null && !dialog.isShowing()){
+                    dialog.setMessage("Updating preferences");
+                    dialog.show();
                 }
 
+                List<Integer> list = new ArrayList<>(preferredTechStackHashMap.keySet());
+
+                final List<PreferredTechStack> preferredTechStacks = new ArrayList<>(preferredTechStackHashMap.values());
+;
                 profileViewModel.updatePrefernces(prefManager.getString(Constants.JWTTOKEN),list)
                         .observe(EditPreferenceActivity.this, new Observer<UpdatePreferenceResponseModel>() {
                             @Override
@@ -124,6 +137,7 @@ public class EditPreferenceActivity extends AppCompatActivity {
                                             String p = TextUtils.join(",",preferences);
                                             mUserModel.setPreferences(p);
                                             profileViewModel.saveMyPreference(mUserModel);
+                                            profileViewModel.updatePrefferedStack(preferredTechStacks);
                                             Utility.showToast(EditPreferenceActivity.this, "Updation successful");
                                         }
                                     }else{
@@ -132,9 +146,11 @@ public class EditPreferenceActivity extends AppCompatActivity {
                                 }else{
                                     Utility.showToast(EditPreferenceActivity.this,Constants.SOMETHINGWENTWRONG);
                                 }
+                                if (dialog!=null && dialog.isShowing()){
+                                    dialog.hide();
+                                }
                             }
                         });
-                Utility.showToast(EditPreferenceActivity.this,""+preferences.size());
             }
         });
     }
