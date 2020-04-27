@@ -1,23 +1,46 @@
 package com.prepare.prepareurself.profile.ui.fragments;
 
+import androidx.lifecycle.Observer;
 import androidx.lifecycle.ViewModelProviders;
 
+import android.content.Intent;
 import android.os.Bundle;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
+import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
 
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.CompoundButton;
+import android.widget.TextView;
 
+import com.google.android.material.chip.Chip;
 import com.prepare.prepareurself.R;
+import com.prepare.prepareurself.authentication.data.model.UserModel;
+import com.prepare.prepareurself.profile.data.model.PreferredTechStack;
+import com.prepare.prepareurself.profile.ui.EditPreferenceActivity;
+import com.prepare.prepareurself.profile.ui.adapter.UserPrefernceAdapter;
 import com.prepare.prepareurself.profile.viewmodel.ProfileViewModel;
+
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.List;
 
 public class PreferenceFragment extends Fragment {
 
-    private ProfileViewModel mViewModel;
+    private ProfileViewModel profileViewModel;
+    private RecyclerView recyclerView;
+    private UserModel mUserModel;
+    private List<String> preferences=new ArrayList<>();
+    private List<String> allStackID=new ArrayList<>();
+    private List<String> allStackName=new ArrayList<>();
+    private List<PreferredTechStack> preferredTechStackList = new ArrayList<>();
+    private TextView tvEdit;
 
     public static PreferenceFragment newInstance() {
         return new PreferenceFragment();
@@ -26,13 +49,63 @@ public class PreferenceFragment extends Fragment {
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container,
                              @Nullable Bundle savedInstanceState) {
-        return inflater.inflate(R.layout.preference_fragment, container, false);
+        View view =  inflater.inflate(R.layout.preference_fragment, container, false);
+
+        recyclerView = view.findViewById(R.id.rv_user_preference);
+        tvEdit = view.findViewById(R.id.tv_preference_edit);
+
+        return view;
     }
 
     @Override
     public void onActivityCreated(@Nullable Bundle savedInstanceState) {
         super.onActivityCreated(savedInstanceState);
-        mViewModel = ViewModelProviders.of(this).get(ProfileViewModel.class);
+        profileViewModel = ViewModelProviders.of(this).get(ProfileViewModel.class);
+
+        final UserPrefernceAdapter adapter = new UserPrefernceAdapter(getActivity());
+        LinearLayoutManager layoutManager = new LinearLayoutManager(getActivity());
+        recyclerView.setLayoutManager(layoutManager);
+        recyclerView.setAdapter(adapter);
+
+        profileViewModel.getUserModelLiveData().observe(getActivity(), new Observer<UserModel>() {
+            @Override
+            public void onChanged(UserModel userModel) {
+                if(userModel.getPreferences()!=null) {
+                    mUserModel = userModel;
+                    Log.i("helloChip",userModel.getPreferences());
+                    preferences.addAll(Arrays.asList(userModel.getPreferences().split(",")));
+                }
+                profileViewModel.getPreferencesFromDb().observe(getActivity(), new Observer<List<PreferredTechStack>>() {
+                    @Override
+                    public void onChanged(final List<PreferredTechStack> preferredTechStacks) {
+                        int size = preferredTechStacks.size();
+                        Log.i("Size",""+size);
+                        for (int i=0;i<size;i++){
+                            allStackID.add(""+preferredTechStacks.get(i).getId());
+                            allStackName.add(preferredTechStacks.get(i).getName());
+                            if(preferences.contains(allStackID.get(i))) {
+                                PreferredTechStack p = new PreferredTechStack();
+                                p.setId(preferredTechStacks.get(i).getId());
+                                p.setName(preferredTechStacks.get(i).getName());
+                                preferredTechStackList.add(p);
+                            }
+                        }
+
+                        adapter.setPreferredTechStacks(preferredTechStackList);
+                        adapter.notifyDataSetChanged();
+
+                    }
+                });
+
+            }
+        });
+
+        tvEdit.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                startActivity(new Intent(getActivity(), EditPreferenceActivity.class));
+            }
+        });
 
     }
 
