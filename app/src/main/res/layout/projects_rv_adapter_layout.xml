@@ -13,6 +13,7 @@
 
         <RelativeLayout
             android:layout_width="match_parent"
+            android:background="?attr/selectableItemBackground"
             android:layout_height="wrap_content"
             android:padding="20dp">
 
@@ -33,7 +34,6 @@
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:background="?attr/selectableItemBackgroundBorderless"
                 android:text="This is the title of the topicsknkljdnfkjdn"
                 android:textSize="14sp"
                 android:singleLine="false"
@@ -46,29 +46,31 @@
                 android:fontFamily="@font/poppins_medium"
                 android:id="@+id/tv_title_project"/>
 
-            <TextView
+            <com.google.android.material.chip.Chip
+                style="@style/Widget.MaterialComponents.Chip.Entry"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:background="?attr/selectableItemBackgroundBorderless"
-                android:text="Level : Hard"
-                android:textSize="14sp"
-                android:singleLine="false"
-                android:minLines="1"
-                android:layout_toEndOf="@id/image"
-                android:textColor="@color/colorPrimaryDark"
-                android:layout_below="@+id/tv_title_project"
+                android:id="@+id/tv_level_project"
+                app:closeIconVisible="false"
+                android:textSize="8sp"
+                android:textColor="@color/white"
                 android:layout_marginStart="15dp"
+                android:layout_marginTop="5dp"
+                android:checkable="false"
+                app:checkedIconVisible="false"
                 android:layout_marginEnd="5dp"
-                android:layout_marginTop="10dp"
-                android:fontFamily="@font/proximanovaregular"
-                android:id="@+id/tv_level_project"/>
+                android:layout_toEndOf="@id/image"
+                android:layout_below="@+id/tv_title_project"
+                android:text="hard"/>
+
 
 
             <ImageView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
+                android:layout_width="40dp"
+                android:layout_height="40dp"
+                android:padding="8dp"
                 android:src="@drawable/ic_image_share"
-                android:layout_marginEnd="5dp"
+                android:background="?attr/selectableItemBackgroundBorderless"
                 android:layout_alignParentEnd="true"
                 android:id="@+id/img_share_project"
                 android:layout_marginBottom="10dp"/>
@@ -126,8 +128,9 @@
                 android:id="@+id/spark_button"
                 android:layout_width="40dp"
                 android:layout_height="40dp"
+                android:padding="8dp"
+                android:background="?attr/selectableItemBackgroundBorderless"
                 android:layout_alignParentEnd="true"
-                android:layout_marginEnd="5dp"
                 android:layout_alignBottom="@id/image"
                 android:src="@drawable/ic_thumb_up_blue_24dp"/>
         </RelativeLayout>

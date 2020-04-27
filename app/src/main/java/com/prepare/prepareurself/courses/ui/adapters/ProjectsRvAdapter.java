@@ -5,6 +5,7 @@ import android.animation.ValueAnimator;
 import android.content.Context;
 import android.graphics.Bitmap;
 import android.graphics.drawable.Drawable;
+import android.transition.ChangeImageTransform;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -16,6 +17,7 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.bumptech.glide.GenericTransitionOptions;
 import com.bumptech.glide.Glide;
+import com.google.android.material.chip.Chip;
 import com.like.LikeButton;
 import com.like.OnLikeListener;
 import com.prepare.prepareurself.courses.data.model.ProjectsModel;
@@ -130,7 +132,7 @@ public class ProjectsRvAdapter extends RecyclerView.Adapter<ProjectsRvAdapter.Pr
         TextView tvTitle, tvNoOfLikes, tvNoOfViews;
         ImageView imgShare;
         ImageView likeButton;
-        TextView tvLevel;
+        Chip tvLevel;
 
         public ProjectsViewHolder(@NonNull View itemView) {
             super(itemView);
@@ -156,7 +158,15 @@ public class ProjectsRvAdapter extends RecyclerView.Adapter<ProjectsRvAdapter.Pr
             tvTitle.setText(projectsModel.getName());
             tvNoOfViews.setText(projectsModel.getTotal_views() + " views");
             tvNoOfLikes.setText(projectsModel.getTotal_likes() + " likes");
-            tvLevel.setText("Level : "+projectsModel.getLevel());
+
+            if(projectsModel.getLevel().equals("hard"))
+                tvLevel.setChipBackgroundColorResource(R.color.lightred);
+            else if(projectsModel.getLevel().equals("easy"))
+                tvLevel.setChipBackgroundColorResource(R.color.green);
+            else
+                tvLevel.setChipBackgroundColorResource(R.color.yellow);
+
+            tvLevel.setText(projectsModel.getLevel());
 
             if (projectsModel.getLike() == 1){
                 likeButton.setImageDrawable(context.getResources().getDrawable(R.drawable.ic_thumb_up_blue_24dp));

@@ -35,7 +35,7 @@ public class ResourcesActivity extends AppCompatActivity implements View.OnClick
     private PrefManager prefManager;
 
     private RelativeLayout relVideo, relTheory;
-    private TextView tvTopVideo, tvTopTheory;
+    private TextView tvTopVideo, tvTopTheory,title;
     private ImageView BackBtn;
     public static int topicID;
 
@@ -49,10 +49,10 @@ public class ResourcesActivity extends AppCompatActivity implements View.OnClick
         viewPager = findViewById(R.id.view_pager_resources);
         tvTopVideo = findViewById(R.id.tv_resouce_heading_video);
         tvTopTheory = findViewById(R.id.tv_resouce_heading_theory);
+        title=findViewById(R.id.title);
         BackBtn=findViewById(R.id.backBtn);
         Intent intent = getIntent();
-
-
+        title.setText("Resources");
         prefManager = new PrefManager(ResourcesActivity.this);
 
         final SectionsPagerAdapter sectionsPagerAdapter = new SectionsPagerAdapter(getSupportFragmentManager());

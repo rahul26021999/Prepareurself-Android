@@ -1,7 +1,6 @@
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:background="?attr/selectableItemBackground"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools">
 
@@ -14,6 +13,7 @@
         <RelativeLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:background="?attr/selectableItemBackground"
             android:padding="20dp">
 
             <androidx.cardview.widget.CardView
@@ -36,6 +36,8 @@
                 android:text="This is the title of the topicsknkljdnfkjdn"
                 android:textSize="14sp"
                 android:singleLine="false"
+                android:maxLines="3"
+                android:ellipsize="end"
                 android:minLines="1"
                 android:layout_toRightOf="@id/image"
                 android:textColor="#000"
@@ -47,11 +49,12 @@
 
 
             <ImageView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
+                android:layout_width="40dp"
+                android:layout_height="40dp"
+                android:padding="8dp"
+                android:background="?attr/selectableItemBackgroundBorderless"
                 android:src="@drawable/ic_image_share"
                 android:layout_alignParentEnd="true"
-                android:layout_marginEnd="5dp"
                 android:id="@+id/img_share_theory_resource"/>
 
 
@@ -73,7 +76,6 @@
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_below="@+id/tv_decription_topic"
                 android:layout_marginTop="10dp"
                 android:textColor="@color/colorAccent"
                 android:textSize="10sp"
@@ -81,17 +83,18 @@
                 android:text="10 views"
                 android:singleLine="true"
                 android:layout_marginStart="15dp"
+                android:layout_alignBottom="@id/image"
                 android:fontFamily="@font/poppins_medium"
                 android:id="@+id/no_of_views"/>
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_toRightOf="@id/no_of_views"
-                android:layout_below="@+id/tv_decription_topic"
                 android:layout_marginTop="10dp"
                 android:textColor="@color/colorAccent"
                 android:textSize="10sp"
                 android:text="10 likes"
+                android:layout_alignBottom="@id/image"
                 android:singleLine="true"
                 android:layout_marginStart="10dp"
                 android:fontFamily="@font/poppins_medium"
@@ -101,8 +104,9 @@
                 android:id="@+id/spark_button"
                 android:layout_width="40dp"
                 android:layout_height="40dp"
+                android:padding="8dp"
                 android:layout_alignParentEnd="true"
-                android:layout_marginEnd="5dp"
+                android:background="?attr/selectableItemBackgroundBorderless"
                 android:layout_alignBottom="@id/image"
                 android:src="@drawable/ic_thumb_up_blue_24dp"/>
         </RelativeLayout>
