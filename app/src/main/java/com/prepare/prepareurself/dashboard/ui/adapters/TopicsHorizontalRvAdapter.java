@@ -16,6 +16,7 @@ import com.bumptech.glide.Glide;
 import com.bumptech.glide.load.engine.DiskCacheStrategy;
 import com.prepare.prepareurself.R;
 import com.prepare.prepareurself.courses.data.model.TopicsModel;
+import com.prepare.prepareurself.dashboard.data.model.SuggestedTopicsModel;
 import com.prepare.prepareurself.resources.data.model.ResourceModel;
 import com.prepare.prepareurself.utils.Constants;
 import com.prepare.prepareurself.utils.Utility;
@@ -25,7 +26,7 @@ import java.util.List;
 public class TopicsHorizontalRvAdapter extends RecyclerView.Adapter<TopicsHorizontalRvAdapter.TopicsViewolder> {
 
     private Context context;
-    private List<TopicsModel> topicsModels;
+    private List<SuggestedTopicsModel> topicsModels;
     private TopicsHorizontalRvListener listener;
 
     public TopicsHorizontalRvAdapter(Context context, TopicsHorizontalRvListener listener) {
@@ -61,7 +62,7 @@ public class TopicsHorizontalRvAdapter extends RecyclerView.Adapter<TopicsHorizo
             return 0;
     }
 
-    public void setData(List<TopicsModel> topicsModels) {
+    public void setData(List<SuggestedTopicsModel> topicsModels) {
         this.topicsModels = topicsModels;
     }
 
@@ -78,7 +79,7 @@ public class TopicsHorizontalRvAdapter extends RecyclerView.Adapter<TopicsHorizo
 
         }
 
-        public void bindView(Context context, TopicsModel topicsModel){
+        public void bindView(Context context, SuggestedTopicsModel topicsModel){
 
             Glide.with(context).load(
                     Constants.TOPICSBASEURL+ topicsModel.getImage_url())
@@ -94,6 +95,6 @@ public class TopicsHorizontalRvAdapter extends RecyclerView.Adapter<TopicsHorizo
     }
 
     public interface TopicsHorizontalRvListener{
-        void onItemClicked(TopicsModel topicsModel);
+        void onItemClicked(SuggestedTopicsModel topicsModel);
     }
 }

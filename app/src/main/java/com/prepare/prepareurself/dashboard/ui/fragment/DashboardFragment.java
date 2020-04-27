@@ -40,6 +40,8 @@ import com.prepare.prepareurself.courses.ui.activity.AllCoursesActivity;
 import com.prepare.prepareurself.courses.ui.activity.CoursesActivity;
 import com.prepare.prepareurself.dashboard.data.model.BannerModel;
 import com.prepare.prepareurself.dashboard.data.model.CourseModel;
+import com.prepare.prepareurself.dashboard.data.model.SuggestedProjectModel;
+import com.prepare.prepareurself.dashboard.data.model.SuggestedTopicsModel;
 import com.prepare.prepareurself.dashboard.ui.adapters.SliderAdapter;
 import com.prepare.prepareurself.dashboard.viewmodel.DashboardViewModel;
 import com.prepare.prepareurself.dashboard.data.model.DashboardRecyclerviewModel;
@@ -90,8 +92,8 @@ public class DashboardFragment extends Fragment implements DashboardRvAdapter.Da
 
     public interface HomeActivityInteractor{
         void onCourseClicked(CourseModel courseModel);
-        void onTopicClicked(TopicsModel topicsModel);
-        void onProjectClicked(ProjectsModel projectsModel);
+        void onTopicClicked(SuggestedTopicsModel topicsModel);
+        void onProjectClicked(SuggestedProjectModel projectsModel);
         void onBarClicked();
     }
 
@@ -207,30 +209,32 @@ public class DashboardFragment extends Fragment implements DashboardRvAdapter.Da
         dashboardRvAdapter.setData(dashboardRecyclerviewModelList);
         dashboardRvAdapter.notifyDataSetChanged();
 
-        mViewModel.getUserInfo().observe(getActivity(), new Observer<UserModel>() {
-            @Override
-            public void onChanged(UserModel userModel) {
+        DashboardRecyclerviewModel topisDashboardModel = new DashboardRecyclerviewModel(Constants.TOPICVIEWTYPE, mViewModel.getSuggestedTopics(prefManager.getString(Constants.JWTTOKEN)), Constants.TOPICSYOUMAYLIKE);
+        dashboardRecyclerviewModelList.add(topisDashboardModel);
+        dashboardRvAdapter.setData(dashboardRecyclerviewModelList);
+        dashboardRvAdapter.notifyDataSetChanged();
 
-                if (userModel.getPreferences() != null) {
-                    preferredCourseId = Integer.parseInt(userModel.getPreferences().split(",")[0]);
-                } else {
-                    preferredCourseId = 1;
-                }
+        DashboardRecyclerviewModel projectDashboardModel = new DashboardRecyclerviewModel(mViewModel.getSuggestedProjects(prefManager.getString(Constants.JWTTOKEN)), Constants.PROJECTVIEWTYPE, Constants.PROJECTSYOUMAYLIKE);
+        dashboardRecyclerviewModelList.add(projectDashboardModel);
+        dashboardRvAdapter.setData(dashboardRecyclerviewModelList);
+        dashboardRvAdapter.notifyDataSetChanged();
 
-                mViewModel.getFiveTopicsByCourseIdFromRemote(prefManager.getString(Constants.JWTTOKEN), preferredCourseId);
-                mViewModel.getFiveProjectsByCourseIdFromRemote(prefManager.getString(Constants.JWTTOKEN), preferredCourseId);
-
-                DashboardRecyclerviewModel dashboardRecyclerviewModel = new DashboardRecyclerviewModel(Constants.TOPICVIEWTYPE, mViewModel.getFiveTopicsByCourseIdFromDb(preferredCourseId), Constants.TOPICSYOUMAYLIKE);
-                dashboardRecyclerviewModelList.add(dashboardRecyclerviewModel);
-                dashboardRvAdapter.setData(dashboardRecyclerviewModelList);
-                dashboardRvAdapter.notifyDataSetChanged();
-
-                DashboardRecyclerviewModel projectDashboardModel = new DashboardRecyclerviewModel(mViewModel.getFiveProjectByCourseId(preferredCourseId), Constants.PROJECTVIEWTYPE, Constants.PROJECTSYOUMAYLIKE);
-                dashboardRecyclerviewModelList.add(projectDashboardModel);
-                dashboardRvAdapter.setData(dashboardRecyclerviewModelList);
-                dashboardRvAdapter.notifyDataSetChanged();
-            }
-        });
+//        mViewModel.getUserInfo().observe(getActivity(), new Observer<UserModel>() {
+//            @Override
+//            public void onChanged(UserModel userModel) {
+//
+//                if (userModel.getPreferences() != null) {
+//                    preferredCourseId = Integer.parseInt(userModel.getPreferences().split(",")[0]);
+//                } else {
+//                    preferredCourseId = 1;
+//                }
+//
+//                mViewModel.getFiveTopicsByCourseIdFromRemote(prefManager.getString(Constants.JWTTOKEN), preferredCourseId);
+//                mViewModel.getFiveProjectsByCourseIdFromRemote(prefManager.getString(Constants.JWTTOKEN), preferredCourseId);
+//
+//
+//            }
+//        });
 
 
 
@@ -267,12 +271,12 @@ public class DashboardFragment extends Fragment implements DashboardRvAdapter.Da
     }
 
     @Override
-    public void onTopicClicked(TopicsModel topicsModel) {
+    public void onTopicClicked(SuggestedTopicsModel topicsModel) {
         listener.onTopicClicked(topicsModel);
     }
 
     @Override
-    public void onProjectClicked(ProjectsModel projectsModel) {
+    public void onProjectClicked(SuggestedProjectModel projectsModel) {
         listener.onProjectClicked(projectsModel);
     }
 
