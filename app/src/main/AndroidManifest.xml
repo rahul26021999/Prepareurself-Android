@@ -2,7 +2,9 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     package="com.prepare.prepareurself">
 
+    <!-- Include required permissions for Google Mobile Ads to run. -->
     <uses-permission android:name="android.permission.INTERNET" />
+    <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
     <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE" />
 
     <application
@@ -15,13 +17,24 @@
         android:theme="@style/AppTheme"
         android:usesCleartextTraffic="true">
 
-        <activity android:name=".courses.ui.activity.AllCoursesActivity"/>
+        <meta-data
+            android:name="com.google.android.gms.ads.APPLICATION_ID"
+            android:value="@string/admob_app_id"/>
+
+
+        <activity
+            android:name=".AdsActivity"
+            android:label="@string/title_activity_ads" />
+        <!-- Include the AdActivity configChanges and theme. -->
+        <activity
+            android:name="com.google.android.gms.ads.AdActivity"
+            android:configChanges="keyboard|keyboardHidden|orientation|screenLayout|uiMode|screenSize|smallestScreenSize"
+            android:theme="@android:style/Theme.Translucent" />
+        <activity android:name=".courses.ui.activity.AllCoursesActivity" />
         <activity
             android:name=".profile.ui.EditPreferenceActivity"
             android:theme="@style/ProfileTheme" />
-
-        <activity android:name=".authentication.ui.forgetPassword"/>
-
+        <activity android:name=".authentication.ui.forgetPassword" />
         <activity android:name=".authentication.ui.VerifyEmailActivity" />
         <activity android:name=".profile.ui.activity.UpdatePasswordActivity" />
         <activity android:name=".youtubeplayer.youtubeplaylistapi.ui.VideoActivity">
@@ -48,7 +61,8 @@
                     android:scheme="project" />
             </intent-filter>
         </activity>
-        <activity android:name=".courses.ui.activity.CoursesActivity"
+        <activity
+            android:name=".courses.ui.activity.CoursesActivity"
             android:theme="@style/ProfileTheme">
             <intent-filter>
                 <action android:name="android.intent.action.VIEW" />
@@ -61,8 +75,7 @@
                     android:scheme="course" />
             </intent-filter>
         </activity>
-        <activity
-            android:name=".resources.youtubevideoplayer.YoutubePlayerActivity" />
+        <activity android:name=".resources.youtubevideoplayer.YoutubePlayerActivity" />
         <activity
             android:name=".resources.ui.activity.ResourcesActivity"
             android:label="@string/title_activity_courses">
@@ -77,17 +90,17 @@
                     android:scheme="theory" />
             </intent-filter>
         </activity>
-        <!--<activity
+        <!--
+<activity
             android:name=".ui.login.LoginActivity"
-            android:label="@string/title_activity_login" />-->
+            android:label="@string/title_activity_login" />
+        -->
         <activity
             android:name=".Home.ui.HomeActivity"
             android:label="@string/title_activity_home" />
         <activity android:name=".utils.QuizBaseActivity" />
-        <activity
-            android:name=".quiz.QuizActivity" />
-        <activity
-            android:name=".authentication.ui.AuthenticationActivity">
+        <activity android:name=".quiz.QuizActivity" />
+        <activity android:name=".authentication.ui.AuthenticationActivity">
             <intent-filter>
                 <action android:name="android.intent.action.VIEW" />
 

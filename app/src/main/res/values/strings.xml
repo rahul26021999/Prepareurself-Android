@@ -72,4 +72,27 @@
     </string-array>
 
 
+
+    <string name="nativetestAds">ca-app-pub-3940256099942544/2247696110</string>
+    <string name="bannertestAds">ca-app-pub-3940256099942544/6300978111</string>
+
+
+    <!-- TODO - add your ad unit Ids -->
+    <!-- AdMob ad unit IDs -->
+    <string name="admob_app_id">ca-app-pub-7841426065660181~4749952270</string>
+    <string name="nativeAds">ca-app-pub-7841426065660181/2245216046</string>
+    <string name="bannerAds">ca-app-pub-7841426065660181/4498670833</string>
+    <string name="interstitial_ad_unit_id">ca-app-pub-3940256099942544/1033173712</string>
+
+
+    <string name="title_activity_ads">AdsActivity</string>
+    <string name="interstitial_ad_sample">Interstitial Ad Sample</string>
+    <string name="start_level">Level 1</string>
+    <string name="next_level">Next Level</string>
+    <!-- -
+        This is an ad unit ID for an interstitial test ad. Replace with your own interstitial ad unit id.
+        For more information, see https://support.google.com/admob/answer/3052638
+
+    <!- -->
+
 </resources>
