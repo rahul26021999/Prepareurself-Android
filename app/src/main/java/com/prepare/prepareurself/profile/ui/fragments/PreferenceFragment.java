@@ -29,7 +29,9 @@ import com.prepare.prepareurself.profile.viewmodel.ProfileViewModel;
 
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 public class PreferenceFragment extends Fragment {
 
@@ -93,21 +95,13 @@ public class PreferenceFragment extends Fragment {
                     @Override
                     public void onChanged(final List<PreferredTechStack> preferredTechStacks) {
                         int size = preferredTechStacks.size();
-                        Log.i("Size",""+size);
-                        preferredTechStackList.clear();
+                        Map<String,String> allStack=new HashMap<>();
                         for (int i=0;i<size;i++){
-                            allStackID.add(""+preferredTechStacks.get(i).getId());
-                            if(preferences.contains(allStackID.get(i))) {
-                                PreferredTechStack p = new PreferredTechStack();
-                                p.setId(preferredTechStacks.get(i).getId());
-                                p.setName(preferredTechStacks.get(i).getName());
-                                preferredTechStackList.add(p);
-                            }
+                            allStack.put(""+preferredTechStacks.get(i).getId(),preferredTechStacks.get(i).getName());
                         }
 
-                        adapter.setPreferredTechStacks(preferredTechStackList);
+                        adapter.setPreferredTechStacks(preferences);
                         adapter.notifyDataSetChanged();
-
                     }
                 });
 
