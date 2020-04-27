@@ -43,10 +43,10 @@ public class UpdatePasswordActivity extends AppCompatActivity {
         etConfirmPassword = findViewById(R.id.et_confrm_password);
         btnUpdate = findViewById(R.id.btn_update);
 
-        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
-        getSupportActionBar().setDisplayShowHomeEnabled(true);
-
-        getSupportActionBar().setTitle("Update Password");
+//        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+//        getSupportActionBar().setDisplayShowHomeEnabled(true);
+//
+//        getSupportActionBar().setTitle("Update Password");
 
         btnUpdate.setOnClickListener(new View.OnClickListener() {
             @Override

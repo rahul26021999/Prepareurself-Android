@@ -116,6 +116,7 @@ public class VideoActivity extends YouTubeBaseActivity implements YouTubePlayer.
             playlistItemRecyclerView.setVisibility(View.GONE);
             rvOtherVideos.setVisibility(View.GONE);
             tvRelatedVideosHeader.setVisibility(View.GONE);
+            tvPlaylst.setVisibility(View.GONE);
             //
 
         }else if (intent.getBooleanExtra(Constants.PLAYLIST,false)){
@@ -194,6 +195,7 @@ public class VideoActivity extends YouTubeBaseActivity implements YouTubePlayer.
             playlistItemRecyclerView.setVisibility(View.GONE);
             tvRelatedVideosHeader.setVisibility(View.VISIBLE);
             rvOtherVideos.setVisibility(View.VISIBLE);
+            tvPlaylst.setVisibility(View.GONE);
 
             final RelatedVideosRvAdapter relatedVideosRvAdapter = new RelatedVideosRvAdapter(VideoActivity.this, this);
             LinearLayoutManager layoutManager = new LinearLayoutManager(this, RecyclerView.HORIZONTAL, false);

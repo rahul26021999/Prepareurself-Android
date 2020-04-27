@@ -130,7 +130,18 @@
                 android:textColor="@color/colorPrimaryDark"
                 android:fontFamily="@font/proximanovaregular"
                 android:layout_below="@+id/tv_reference_heading"
-                android:visibility="gone"/>
+                android:visibility="gone"
+                android:layout_centerHorizontal="true"/>
+
+            <ProgressBar
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textSize="16sp"
+                android:id="@+id/loading_project"
+                android:layout_below="@+id/tv_reference_heading"
+                android:visibility="visible"
+                android:indeterminate="true"
+                android:layout_centerHorizontal="true"/>
 
             <androidx.cardview.widget.CardView
                 android:layout_width="match_parent"
@@ -142,7 +153,8 @@
                 app:cardElevation="0dp"
                 android:layout_marginBottom="20dp"
                 android:id="@+id/card_project_image"
-                android:layout_below="@+id/tv_reference_heading">
+                android:layout_below="@+id/tv_reference_heading"
+                android:visibility="gone">
 
                 <RelativeLayout
                     android:layout_width="match_parent"
