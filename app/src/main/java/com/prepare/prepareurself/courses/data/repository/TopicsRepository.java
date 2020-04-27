@@ -27,7 +27,7 @@ public class TopicsRepository {
         topicsDbRepository = new TopicsDbRepository(application);
     }
 
-    public LiveData<TopicsResponseModel> getTopicsByIId(String token, int courseId, int count, int pageNumber){
+    public LiveData<TopicsResponseModel> getTopicsByIId(String token, int courseId, int count, final int pageNumber){
         final MutableLiveData<TopicsResponseModel> topicResponse = new MutableLiveData<>();
 
         Log.d("url_debug",apiInterface.getTopics(token,courseId,count,pageNumber).request().url().toString());
@@ -38,6 +38,9 @@ public class TopicsRepository {
                 if (responseModel!=null){
                     if (responseModel.getError_code() == 0){
                        // topicsDbRepository.deleteAllTopics();
+                        if (pageNumber == 1){
+                            topicsDbRepository.deleteAllTopics();
+                        }
                         for (TopicsModel topicsModel : responseModel.getTopics().getData()) {
                             topicsDbRepository.insertTopic(topicsModel);
                         }

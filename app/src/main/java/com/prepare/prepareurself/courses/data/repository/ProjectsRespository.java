@@ -78,7 +78,7 @@ public class ProjectsRespository {
         return data;
     }
 
-    public LiveData<ProjectResponse> getProjects(String token, int courseId, String level, int count, int page){
+    public LiveData<ProjectResponse> getProjects(String token, int courseId, String level, int count, final int page){
 
         final MutableLiveData<ProjectResponse> data = new MutableLiveData<>();
 
@@ -94,6 +94,11 @@ public class ProjectsRespository {
 
                 if (getProjectResponse!=null){
                     if (getProjectResponse.getError_code() == 0){
+
+                        if (page == 1){
+                            projectsDbRepository.deleteAllProjects();
+                        }
+
                         for (ProjectsModel projectsModel : getProjectResponse.getProject().getData()){
                             projectsDbRepository.insertProject(projectsModel);
                         }

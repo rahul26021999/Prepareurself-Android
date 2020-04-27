@@ -30,7 +30,7 @@ public class ResourceRespository {
         resourcesDbRepository = new ResourcesDbRepository(application);
     }
 
-    public LiveData<ResourcesResponse> getResourcesByID(String token, int topicId, int pageNumber, int count, String resourceType){
+    public LiveData<ResourcesResponse> getResourcesByID(String token, int topicId, final int pageNumber, int count, String resourceType){
 
         final MutableLiveData<ResourcesResponse> data = new MutableLiveData<>();
 
@@ -40,6 +40,7 @@ public class ResourceRespository {
                 GetResourcesResponse resourcesResponse = response.body();
                 if (resourcesResponse!=null){
                     if (resourcesResponse.getError_code()==0){
+
                         for (ResourceModel resourceModel : resourcesResponse.getResources().getData()) {
                             resourcesDbRepository.insertResource(resourceModel);
                         }
