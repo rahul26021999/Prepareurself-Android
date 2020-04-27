@@ -54,6 +54,11 @@
     <!--aboutus strngs-->
     <string name="aboutustext1">Learning resources from some of the best blogs, websites, articles, etc from all over the internet.</string>
     <string name="aboutustext2">LEARN ANYTHING, ANYWHERE with Prepareurself </string>
+    <string name="aboutustext3">Prepareurself prepares you to get your very first internship or job or project for your curiosity to build or for your resume.</string>
+    <string name="aboutustext4">Prepareurself provides variety of technology(subject) in tech stack where each tech stack contains topics from very basics to latest.
+    You can explore the latest projects from best instructors/youtubers to build projects and get ready for take off for your interships.
+    We have gathered the best resources for all the topics in one place.You can learn from android development to amazing web technologies like laravel, node.js, etc.
+    Indulge yourself in the wonderful learning experience.</string>
     <string-array name="array_techstacks">
         <item>Android</item>
         <item>Node.js</item>
