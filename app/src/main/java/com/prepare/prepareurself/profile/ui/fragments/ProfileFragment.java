@@ -17,6 +17,7 @@ import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import android.text.TextUtils;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -139,17 +140,6 @@ public class ProfileFragment extends Fragment implements View.OnClickListener {
         recyclerView.setLayoutManager(layoutManager);
         recyclerView.setAdapter(adapter);
 
-        mViewModel.getPreferencesFromDb().observe(getActivity(), new Observer<List<PreferredTechStack>>() {
-            @Override
-            public void onChanged(final List<PreferredTechStack> preferredTechStacks) {
-                int size = preferredTechStacks.size();
-                allStack.clear();
-                for (int i=0;i<size;i++){
-                    allStack.put(""+preferredTechStacks.get(i).getId(),preferredTechStacks.get(i).getName());
-                }
-            }
-        });
-
         tvPreferenceEdit.setOnClickListener(this);
 
         hideAboutEditTexts();
@@ -201,7 +191,6 @@ public class ProfileFragment extends Fragment implements View.OnClickListener {
                     }else{
                         tvContact.setText(userContact);
                     }
-                    String name = userModel.getFirst_name() + " " + userModel.getLast_name();
                     mUserModel = userModel;
                     tv_email_profile.setText(userModel.getEmail());
                     Glide.with(getActivity())
@@ -211,15 +200,25 @@ public class ProfileFragment extends Fragment implements View.OnClickListener {
                             .into(userImageView);
 
                     if(userModel.getPreferences()!=null) {
-                        mUserModel = userModel;
-                        preferences.clear();
-                        preferences.addAll(Arrays.asList(userModel.getPreferences().split(",")));
-                        List<String> tempList = new ArrayList<>();
-                        for(int i = 0; i< preferences.size(); i++){
-                            tempList.add(allStack.get(preferences.get(i)));
-                        }
-                        adapter.setPreferredTechStacks(tempList);
-                        adapter.notifyDataSetChanged();
+
+                        mViewModel.getPreferencesFromDb().observe(getActivity(), new Observer<List<PreferredTechStack>>() {
+                            @Override
+                            public void onChanged(final List<PreferredTechStack> preferredTechStacks) {
+                                int size = preferredTechStacks.size();
+                                allStack.clear();
+                                for (int i=0;i<size;i++){
+                                    allStack.put(""+preferredTechStacks.get(i).getId(),preferredTechStacks.get(i).getName());
+                                }
+                                preferences.clear();
+                                preferences.addAll(Arrays.asList(mUserModel.getPreferences().split(",")));
+                                List<String> tempList = new ArrayList<>();
+                                for(int i = 0; i< preferences.size(); i++){
+                                    tempList.add(allStack.get(preferences.get(i)));
+                                }
+                                adapter.setPreferredTechStacks(tempList);
+                                adapter.notifyDataSetChanged();
+                            }
+                        });
                     }
                 }
             }
