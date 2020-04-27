@@ -217,7 +217,7 @@ public class VideoActivity extends YouTubeBaseActivity implements YouTubePlayer.
                     Uri uri = Uri.parse(bitmapUri);
                     try {
                         String encodedId = Utility.base64EncodeForInt(resourceId);
-                        String text = "prepareurself.tk/video/"+encodedId;
+                        String text = "prepareurself.in/resource/"+encodedId;
                         share(uri,text);
                     } catch (UnsupportedEncodingException e) {
                         e.printStackTrace();

@@ -160,7 +160,7 @@ public class HomeActivity extends AppCompatActivity implements NavigationView.On
                 R.drawable.icon_1);
         try {
             Uri uri = Utility.getUriOfBitmap(icon, this);
-            String text = "prepareurself.tk/install";
+            String text = "prepareurself.in/install";
             Utility.shareContent(this,uri, text);
         } catch (IOException e) {
             e.printStackTrace();
@@ -173,7 +173,7 @@ public class HomeActivity extends AppCompatActivity implements NavigationView.On
     }
 
     private void sendEmailToDeveloper() {
-        String mailto = "mailto:prepareurself123@gmail.com"+
+        String mailto = "mailto:contact@prepareurself.in"+
                 "?subject=" + Uri.encode("Important Message");
         Intent emailIntent = new Intent(Intent.ACTION_SENDTO);
         emailIntent.setData(Uri.parse(mailto));
