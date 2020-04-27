@@ -2,7 +2,6 @@ package com.prepare.prepareurself.profile.ui.fragments;
 
 import androidx.lifecycle.Observer;
 import androidx.lifecycle.ViewModelProvider;
-import androidx.lifecycle.ViewModelProviders;
 
 import android.app.DatePickerDialog;
 import android.content.Intent;
@@ -30,8 +29,6 @@ import com.prepare.prepareurself.profile.viewmodel.ProfileViewModel;
 import com.prepare.prepareurself.utils.Constants;
 import com.prepare.prepareurself.utils.PrefManager;
 import com.prepare.prepareurself.utils.Utility;
-
-import org.w3c.dom.Text;
 
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
@@ -67,7 +64,7 @@ public class UserInfoFragment extends Fragment {
         etDob = view.findViewById(R.id.et_dob);
         etContact = view.findViewById(R.id.et_call);
         tvEditAboutMe = view.findViewById(R.id.tv_aboutme_edit);
-        btnSave = view.findViewById(R.id.btn_aboutme);
+        btnSave = view.findViewById(R.id.btn_aboutme_save);
         btnUpdatePass = view.findViewById(R.id.btn_update_password);
         btnLogout = view.findViewById(R.id.btn_logout);
 

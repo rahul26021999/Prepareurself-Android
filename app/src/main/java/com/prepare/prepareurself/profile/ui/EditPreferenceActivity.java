@@ -133,8 +133,13 @@ public class EditPreferenceActivity extends AppCompatActivity {
                                 if (updatePreferenceResponseModel!=null){
                                     if (updatePreferenceResponseModel.getError_code() == 0){
                                         if (mUserModel!=null){
-                                            String p = TextUtils.join(",",preferences);
-                                            mUserModel.setPreferences(p);
+                                            if(preferences.size()>0){
+                                                String p = TextUtils.join(",",preferences);
+                                                mUserModel.setPreferences(p);
+                                            }
+                                            else{
+                                                mUserModel.setPreferences(null);
+                                            }
                                             profileViewModel.saveMyPreference(mUserModel);
                                             Utility.showToast(EditPreferenceActivity.this, "Updation successful");
                                         }

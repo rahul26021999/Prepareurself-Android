@@ -18,6 +18,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.CompoundButton;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.google.android.material.chip.Chip;
 import com.prepare.prepareurself.R;
@@ -26,6 +27,7 @@ import com.prepare.prepareurself.profile.data.model.PreferredTechStack;
 import com.prepare.prepareurself.profile.ui.EditPreferenceActivity;
 import com.prepare.prepareurself.profile.ui.adapter.UserPrefernceAdapter;
 import com.prepare.prepareurself.profile.viewmodel.ProfileViewModel;
+import com.prepare.prepareurself.utils.Utility;
 
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -39,9 +41,6 @@ public class PreferenceFragment extends Fragment {
     private RecyclerView recyclerView;
     private UserModel mUserModel;
     private List<String> preferences=new ArrayList<>();
-    private List<String> allStackID=new ArrayList<>();
-    private List<String> allStackName=new ArrayList<>();
-    private List<PreferredTechStack> preferredTechStackList = new ArrayList<>();
     private TextView tvEdit;
     UserPrefernceAdapter adapter;
     Map<String,String> allStack=new HashMap<>();
@@ -76,13 +75,12 @@ public class PreferenceFragment extends Fragment {
             @Override
             public void onChanged(final List<PreferredTechStack> preferredTechStacks) {
                 int size = preferredTechStacks.size();
-
+                allStack.clear();
                 for (int i=0;i<size;i++){
                     allStack.put(""+preferredTechStacks.get(i).getId(),preferredTechStacks.get(i).getName());
                 }
             }
         });
-
 
         tvEdit.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -101,12 +99,11 @@ public class PreferenceFragment extends Fragment {
             public void onChanged(UserModel userModel) {
                 if(userModel.getPreferences()!=null) {
                     mUserModel = userModel;
-                    Log.i("helloChip",userModel.getPreferences());
+                    preferences.clear();
                     preferences.addAll(Arrays.asList(userModel.getPreferences().split(",")));
-
                     List<String> tempList = new ArrayList<>();
-
                     for(int i = 0; i< preferences.size(); i++){
+                        Utility.showToast(getContext(),preferences.get(i));
                         tempList.add(allStack.get(preferences.get(i)));
                     }
                     adapter.setPreferredTechStacks(tempList);

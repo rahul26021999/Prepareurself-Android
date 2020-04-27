@@ -49,7 +49,7 @@
                 android:fontFamily="@font/proximanovaregular"
                 android:textSize="13sp"
                 android:gravity="center"
-                android:id="@+id/tv_resouce_heading_video"/>
+                android:id="@+id/tabUserInfo"/>
 
             <View
                 android:layout_width="1dp"
