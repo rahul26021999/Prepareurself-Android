@@ -13,10 +13,11 @@ import android.view.View;
 import android.view.ViewGroup;
 
 import com.prepare.prepareurself.R;
+import com.prepare.prepareurself.profile.viewmodel.ProfileViewModel;
 
 public class PreferenceFragment extends Fragment {
 
-    private PreferenceViewModel mViewModel;
+    private ProfileViewModel mViewModel;
 
     public static PreferenceFragment newInstance() {
         return new PreferenceFragment();
@@ -31,7 +32,7 @@ public class PreferenceFragment extends Fragment {
     @Override
     public void onActivityCreated(@Nullable Bundle savedInstanceState) {
         super.onActivityCreated(savedInstanceState);
-        mViewModel = ViewModelProviders.of(this).get(PreferenceViewModel.class);
+        mViewModel = ViewModelProviders.of(this).get(ProfileViewModel.class);
 
     }
 

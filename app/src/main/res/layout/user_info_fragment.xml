@@ -148,6 +148,7 @@
                         android:id="@+id/et_call"
                         android:layout_marginLeft="20dp"
                         android:textSize="15sp"
+                        android:inputType="number"
                         android:textColor="@color/goodgrey"
                         android:fontFamily="@font/proximanovaregular"
                         android:visibility="gone"/>
