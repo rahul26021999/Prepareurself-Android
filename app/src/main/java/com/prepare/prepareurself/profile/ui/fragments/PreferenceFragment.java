@@ -44,6 +44,8 @@ public class PreferenceFragment extends Fragment {
     private List<PreferredTechStack> preferredTechStackList = new ArrayList<>();
     private TextView tvEdit;
     UserPrefernceAdapter adapter;
+    Map<String,String> allStack=new HashMap<>();
+
 
     public static PreferenceFragment newInstance() {
         return new PreferenceFragment();
@@ -70,6 +72,17 @@ public class PreferenceFragment extends Fragment {
         recyclerView.setLayoutManager(layoutManager);
         recyclerView.setAdapter(adapter);
 
+        profileViewModel.getPreferencesFromDb().observe(getActivity(), new Observer<List<PreferredTechStack>>() {
+            @Override
+            public void onChanged(final List<PreferredTechStack> preferredTechStacks) {
+                int size = preferredTechStacks.size();
+
+                for (int i=0;i<size;i++){
+                    allStack.put(""+preferredTechStacks.get(i).getId(),preferredTechStacks.get(i).getName());
+                }
+            }
+        });
+
 
         tvEdit.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -90,20 +103,18 @@ public class PreferenceFragment extends Fragment {
                     mUserModel = userModel;
                     Log.i("helloChip",userModel.getPreferences());
                     preferences.addAll(Arrays.asList(userModel.getPreferences().split(",")));
-                }
-                profileViewModel.getPreferencesFromDb().observe(getActivity(), new Observer<List<PreferredTechStack>>() {
-                    @Override
-                    public void onChanged(final List<PreferredTechStack> preferredTechStacks) {
-                        int size = preferredTechStacks.size();
-                        Map<String,String> allStack=new HashMap<>();
-                        for (int i=0;i<size;i++){
-                            allStack.put(""+preferredTechStacks.get(i).getId(),preferredTechStacks.get(i).getName());
-                        }
 
-                        adapter.setPreferredTechStacks(preferences);
-                        adapter.notifyDataSetChanged();
+                    List<String> tempList = new ArrayList<>();
+
+                    for(int i = 0; i< preferences.size(); i++){
+                        tempList.add(allStack.get(preferences.get(i)));
                     }
-                });
+
+                    adapter.setPreferredTechStacks(tempList);
+                    adapter.notifyDataSetChanged();
+
+                }
+
 
             }
         });
