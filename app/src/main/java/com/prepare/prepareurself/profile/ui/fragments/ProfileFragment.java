@@ -160,7 +160,6 @@ public class ProfileFragment extends Fragment implements View.OnClickListener {
         dateFormatter = new SimpleDateFormat("dd/MM/yyyy", Locale.US);
 
 
-
         btnUpdatePass.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -210,6 +209,18 @@ public class ProfileFragment extends Fragment implements View.OnClickListener {
                             .placeholder(R.drawable.person_placeholder)
                             .transition(GenericTransitionOptions.<Drawable>with(Utility.getAnimationObject()))
                             .into(userImageView);
+
+                    if(userModel.getPreferences()!=null) {
+                        mUserModel = userModel;
+                        preferences.clear();
+                        preferences.addAll(Arrays.asList(userModel.getPreferences().split(",")));
+                        List<String> tempList = new ArrayList<>();
+                        for(int i = 0; i< preferences.size(); i++){
+                            tempList.add(allStack.get(preferences.get(i)));
+                        }
+                        adapter.setPreferredTechStacks(tempList);
+                        adapter.notifyDataSetChanged();
+                    }
                 }
             }
         });
@@ -232,8 +243,6 @@ public class ProfileFragment extends Fragment implements View.OnClickListener {
 
             e.printStackTrace();
         }
-
-
     }
 
     @Override
@@ -358,12 +367,13 @@ public class ProfileFragment extends Fragment implements View.OnClickListener {
 
                 break;
             case R.id.tabPreference:
-                userInfo.setVisibility(View.VISIBLE);
-                prefrences.setVisibility(View.GONE);
-                break;
-            case R.id.tabUserInfo:
                 userInfo.setVisibility(View.GONE);
                 prefrences.setVisibility(View.VISIBLE);
+                break;
+            case R.id.tabUserInfo:
+                userInfo.setVisibility(View.VISIBLE);
+                prefrences.setVisibility(View.GONE);
+
                 break;
             case R.id.et_dob:
                     setdatepicker();
@@ -434,28 +444,6 @@ public class ProfileFragment extends Fragment implements View.OnClickListener {
                 break;
 
         }
-    }
-    @Override
-    public void onResume() {
-        super.onResume();
-        mViewModel.getUserModelLiveData().observe(getActivity(), new Observer<UserModel>() {
-            @Override
-            public void onChanged(UserModel userModel) {
-                if(userModel.getPreferences()!=null) {
-                    mUserModel = userModel;
-                    preferences.clear();
-                    preferences.addAll(Arrays.asList(userModel.getPreferences().split(",")));
-                    List<String> tempList = new ArrayList<>();
-                    for(int i = 0; i< preferences.size(); i++){
-                        Utility.showToast(getContext(),preferences.get(i));
-                        tempList.add(allStack.get(preferences.get(i)));
-                    }
-                    adapter.setPreferredTechStacks(tempList);
-                    adapter.notifyDataSetChanged();
-
-                }
-            }
-        });
     }
 
 }
