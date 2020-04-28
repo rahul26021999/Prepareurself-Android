@@ -9,6 +9,7 @@ import com.prepare.prepareurself.dashboard.data.model.BannerImageResponseModel;
 import com.prepare.prepareurself.dashboard.data.model.GetCourseResponseModel;
 import com.prepare.prepareurself.dashboard.data.model.GetSuggestedProjectsModel;
 import com.prepare.prepareurself.dashboard.data.model.GetSuggestedTopicsModel;
+import com.prepare.prepareurself.feedback.data.model.FeedbacksubmitModel;
 import com.prepare.prepareurself.profile.data.model.UpdatePasswordResponseModel;
 import com.prepare.prepareurself.profile.data.model.UpdatePreferenceResponseModel;
 import com.prepare.prepareurself.profile.data.model.AllPreferencesResponseModel;
@@ -126,5 +127,10 @@ public interface ApiInterface {
 
     @POST("get-suggested-topics")
     Call<GetSuggestedTopicsModel> getSuggestedTopics(@Query("token") String token);
+
+
+    @POST("store-feedback")
+    Call<FeedbacksubmitModel> saveFeedback(@Query("token") String token,
+                                           @Query("answers[]") List<String> answers);
 
 }
