@@ -168,6 +168,7 @@ public class EditPreferenceActivity extends AppCompatActivity {
                                 if (dialog!=null && dialog.isShowing()){
                                     dialog.hide();
                                 }
+                                onBackPressed();
                             }
                         });
             }
