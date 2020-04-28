@@ -13,14 +13,16 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
+import android.widget.TextView;
 
 import com.bumptech.glide.Glide;
 import com.prepare.prepareurself.R;
 
-public class AboutusFragment extends Fragment {
+public class AboutusFragment extends Fragment implements View.OnClickListener {
 
     private AboutusViewModel mViewModel;
-
+    private TextView title;
+    private ImageView backBtn;
     public static AboutusFragment newInstance() {
         return new AboutusFragment();
     }
@@ -29,11 +31,11 @@ public class AboutusFragment extends Fragment {
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container,
                              @Nullable Bundle savedInstanceState) {
         View view=inflater.inflate(R.layout.aboutus_fragment, container, false);
-        ImageView imageView = view.findViewById(R.id.imagevw);
-        Glide.with(getActivity())
-                .load(R.drawable.aboutuspicture)
-                .centerCrop()
-                .into(imageView);
+        title = view.findViewById(R.id.title);
+        backBtn = view.findViewById(R.id.backBtn);
+
+        backBtn.setOnClickListener(this);
+        title.setText("About us");
         return  view;
     }
 
@@ -44,4 +46,13 @@ public class AboutusFragment extends Fragment {
         // TODO: Use the ViewModel
     }
 
+    @Override
+    public void onClick(View v) {
+        switch (v.getId())
+        {
+            case R.id.backBtn:
+                getActivity().onBackPressed();
+                break;
+        }
+    }
 }
