@@ -35,7 +35,7 @@ public class AboutusFragment extends Fragment implements View.OnClickListener {
         backBtn = view.findViewById(R.id.backBtn);
 
         backBtn.setOnClickListener(this);
-        title.setText("About us");
+        title.setText("About");
         return  view;
     }
 
