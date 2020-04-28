@@ -402,6 +402,8 @@ public class ProfileFragment extends Fragment implements View.OnClickListener {
             case R.id.tv_aboutme_edit:
                 hideAboutTextViews();
                 showAboutEditTexts();
+                //change
+
                 etName.setText(userName);
                 if (TextUtils.isEmpty(userDob)){
                     etDob.setHint("Tap to update dob");
