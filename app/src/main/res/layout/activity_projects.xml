@@ -141,6 +141,7 @@
                 android:layout_below="@+id/tv_reference_heading"
                 android:visibility="visible"
                 android:indeterminate="true"
+                android:layout_margin="10dp"
                 android:layout_centerHorizontal="true"/>
 
             <androidx.cardview.widget.CardView

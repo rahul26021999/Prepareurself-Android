@@ -81,16 +81,18 @@ public class TopicsHorizontalRvAdapter extends RecyclerView.Adapter<TopicsHorizo
 
         public void bindView(Context context, SuggestedTopicsModel topicsModel){
 
-            Glide.with(context).load(
-                    Constants.TOPICSBASEURL+ topicsModel.getImage_url())
-                    .placeholder(R.drawable.placeholder)
-                    .diskCacheStrategy(DiskCacheStrategy.RESOURCE)
-                    .transition(GenericTransitionOptions.<Drawable>with(Utility.getAnimationObject()))
-                    .error(R.drawable.placeholder)
-                    .into(imageView);
-
+            if (topicsModel.getImage_url().endsWith(".svg")){
+                Utility.loadSVGImage(context,Constants.TOPICSBASEURL+  topicsModel.getImage_url(), imageView);
+            }else{
+                Glide.with(context).load(
+                        Constants.TOPICSBASEURL + topicsModel.getImage_url())
+                        .placeholder(R.drawable.placeholder)
+                        .diskCacheStrategy(DiskCacheStrategy.RESOURCE)
+                        .transition(GenericTransitionOptions.<Drawable>with(Utility.getAnimationObject()))
+                        .error(R.drawable.placeholder)
+                        .into(imageView);
+            }
             tvCourseName.setText(topicsModel.getName());
-
         }
     }
 

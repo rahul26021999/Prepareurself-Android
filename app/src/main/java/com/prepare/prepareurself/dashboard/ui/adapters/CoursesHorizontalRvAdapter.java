@@ -75,14 +75,18 @@ public class CoursesHorizontalRvAdapter extends RecyclerView.Adapter<CoursesHori
 
         public void bindView(Activity context, CourseModel course){
 
-            Glide.with(context).load(
-                    Constants.COURSEIMAGEBASEUSRL+ course.getImage_url())
-                    .placeholder(R.drawable.placeholder)
-                    .override(500,500)
-                    .diskCacheStrategy(DiskCacheStrategy.RESOURCE)
-                    .transition(GenericTransitionOptions.<Drawable>with(Utility.getAnimationObject()))
-                    .error(R.drawable.placeholder)
-                    .into(imageView);
+            if (course.getImage_url().endsWith(".svg")){
+                Utility.loadImage(context,Constants.COURSEIMAGEBASEUSRL+ course.getImage_url(),imageView);
+            }else{
+                Glide.with(context).load(
+                        Constants.COURSEIMAGEBASEUSRL+ course.getImage_url())
+                        .placeholder(R.drawable.placeholder)
+                        .override(500,500)
+                        .diskCacheStrategy(DiskCacheStrategy.RESOURCE)
+                        .transition(GenericTransitionOptions.<Drawable>with(Utility.getAnimationObject()))
+                        .error(R.drawable.placeholder)
+                        .into(imageView);
+            }
 
             tvCourseName.setText(course.getName());
 

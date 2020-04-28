@@ -42,9 +42,14 @@ public class SliderAdapter extends SliderViewAdapter<SliderAdapter.SliderAdapter
     @Override
     public void onBindViewHolder(SliderAdapterVH viewHolder, int position) {
         BannerModel courseModel = mSliderItems.get(position);
-        Glide.with(context)
-                .load(courseModel.getImage_url())
-                .into(viewHolder.imageView);
+
+        if (courseModel.getImage_url().endsWith(".svg")){
+            Utility.loadSVGImage(context, courseModel.getImage_url(), viewHolder.imageView);
+        }else{
+            Glide.with(context)
+                    .load(courseModel.getImage_url())
+                    .into(viewHolder.imageView);
+        }
         viewHolder.textView.setText(courseModel.getTitle());
     }
 
