@@ -168,6 +168,7 @@ public class Utility {
         return new SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss.SSSZ").parse(date);
     }
 
+
     public static String getOneSignalId(){
         return OneSignal.getPermissionSubscriptionState().getSubscriptionStatus().getUserId();
     }
