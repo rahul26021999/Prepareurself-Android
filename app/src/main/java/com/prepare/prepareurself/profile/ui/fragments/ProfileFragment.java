@@ -203,9 +203,15 @@ public class ProfileFragment extends Fragment implements View.OnClickListener {
                     }else{
                         tvContact.setText(userContact);
                     }
+                    if(userModel.getProfile_image()==null){
+                        editimg.setImageDrawable(getResources().getDrawable(R.drawable.ic_add_a_photo_black_24dp));
+                    }
+                    else{
+                        editimg.setImageDrawable(getResources().getDrawable(R.drawable.ic_iconfinder_circle_edit_pen_pencil_glyph_763463));
+                    }
                     mUserModel = userModel;
                     tv_email_profile.setText(userModel.getEmail());
-                    Glide.with(getActivity())
+                    Glide.with(Objects.requireNonNull(getActivity()))
                             .load(Constants.USERIMAGEBASEURL + userModel.getProfile_image())
                             .override(500,500)
                             .placeholder(R.drawable.person_placeholder)

@@ -19,7 +19,7 @@
             android:layout_width="match_parent"
             android:scrollIndicators="none"
             app:chipSpacingHorizontal="20dp"
-            app:chipSpacingVertical="20dp"
+            app:chipSpacingVertical="10dp"
             android:layout_margin="20dp"
             android:layout_height="wrap_content"
             android:layout_below="@+id/toolbar"

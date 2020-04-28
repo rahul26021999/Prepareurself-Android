@@ -161,6 +161,8 @@ public class LoginFragment extends Fragment implements View.OnClickListener{
 
             String androidToken = Utility.getOneSignalId();
 
+            prefManager.saveString(Constants.ANDROIDTOKEN, androidToken);
+
             if (TextUtils.isEmpty(androidToken)){
                 return;
             }
