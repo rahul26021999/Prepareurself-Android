@@ -151,13 +151,18 @@ public class TheoryResourcesRvAdapter extends RecyclerView.Adapter<TheoryResourc
         }
 
         public  void bindview(final ResourceModel resourceModel){
-            Glide.with(context).load(
-                    Constants.THEORYRESOURCEBASEURL + resourceModel.getImage_url())
-                    .placeholder(R.drawable.placeholder)
-                    .override(400,400)
-                    .transition(GenericTransitionOptions.<Drawable>with(Utility.getAnimationObject()))
-                    .error(R.drawable.ic_image_loading_error)
-                    .into(imageView);
+
+            if (resourceModel.getImage_url().endsWith(".svg")){
+                Utility.loadSVGImage(context,Constants.THEORYRESOURCEBASEURL + resourceModel.getImage_url(), imageView);
+            }else{
+                Glide.with(context).load(
+                        Constants.THEORYRESOURCEBASEURL + resourceModel.getImage_url())
+                        .placeholder(R.drawable.placeholder)
+                        .override(400,400)
+                        .transition(GenericTransitionOptions.<Drawable>with(Utility.getAnimationObject()))
+                        .error(R.drawable.ic_image_loading_error)
+                        .into(imageView);
+            }
 
             tvTitle.setText(resourceModel.getTitle());
             tvDescription.setText(resourceModel.getDescription());

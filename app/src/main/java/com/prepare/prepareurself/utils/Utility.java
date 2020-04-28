@@ -13,12 +13,18 @@ import android.util.Base64;
 import android.util.Log;
 import android.util.Patterns;
 import android.view.View;
+import android.widget.ImageView;
 import android.widget.Toast;
 
 import androidx.browser.customtabs.CustomTabsIntent;
 import androidx.core.content.ContextCompat;
 
+import com.bumptech.glide.GenericTransitionOptions;
+import com.bumptech.glide.Glide;
+import com.bumptech.glide.load.engine.DiskCacheStrategy;
 import com.bumptech.glide.request.transition.ViewPropertyTransition;
+import com.github.twocoffeesoneteam.glidetovectoryou.GlideToVectorYou;
+import com.github.twocoffeesoneteam.glidetovectoryou.GlideToVectorYouListener;
 import com.onesignal.OneSignal;
 import com.prepare.prepareurself.R;
 
@@ -165,4 +171,42 @@ public class Utility {
     public static String getOneSignalId(){
         return OneSignal.getPermissionSubscriptionState().getSubscriptionStatus().getUserId();
     }
+
+    public static void loadImage(final Context context, String ImageUrl, ImageView imageView){
+        if (ImageUrl.endsWith(".svg")){
+            loadSVGImage(context, ImageUrl, imageView);
+        }else{
+            loadNormalImageUsingGlide(context, ImageUrl,imageView);
+        }
+    }
+
+    public static void loadNormalImageUsingGlide(final Context context, String ImageUrl, ImageView imageView){
+        Glide.with(context).load(
+                ImageUrl)
+                .placeholder(R.drawable.placeholder)
+                .diskCacheStrategy(DiskCacheStrategy.RESOURCE)
+                .transition(GenericTransitionOptions.<Drawable>with(Utility.getAnimationObject()))
+                .error(R.drawable.placeholder)
+                .into(imageView);
+    }
+
+    public static void loadSVGImage(final Context context, String ImageUrl, ImageView imageView){
+        GlideToVectorYou
+                .init()
+                .with(context)
+                .withListener(new GlideToVectorYouListener() {
+                    @Override
+                    public void onLoadFailed() {
+                       // Toast.makeText(context, "Load failed", Toast.LENGTH_SHORT).show()
+                    }
+
+                    @Override
+                    public void onResourceReady() {
+                       // Toast.makeText(context, "Image ready", Toast.LENGTH_SHORT).show()
+                    }
+                })
+                .setPlaceHolder(R.drawable.placeholder,R.drawable.placeholder)
+                .load(Uri.parse(ImageUrl), imageView);
+    }
+
 }

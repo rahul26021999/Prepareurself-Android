@@ -81,14 +81,17 @@ public class ProjectsHorizontalRvAdapter extends RecyclerView.Adapter<ProjectsHo
 
         public void bindView(Context context, SuggestedProjectModel projectsModel){
 
-            Glide.with(context).load(
-                    Constants.PROJECTSIMAGEBASEURL+ projectsModel.getImage_url())
-                    .placeholder(R.drawable.placeholder)
-                    .diskCacheStrategy(DiskCacheStrategy.RESOURCE)
-                    .transition(GenericTransitionOptions.<Drawable>with(Utility.getAnimationObject()))
-                    .error(R.drawable.placeholder)
-                    .into(imageView);
-
+            if (projectsModel.getImage_url().endsWith(".svg")){
+                Utility.loadSVGImage(context, Constants.PROJECTSIMAGEBASEURL+ projectsModel.getImage_url(), imageView);
+            }else{
+                Glide.with(context).load(
+                        Constants.PROJECTSIMAGEBASEURL+ projectsModel.getImage_url())
+                        .placeholder(R.drawable.placeholder)
+                        .diskCacheStrategy(DiskCacheStrategy.RESOURCE)
+                        .transition(GenericTransitionOptions.<Drawable>with(Utility.getAnimationObject()))
+                        .error(R.drawable.placeholder)
+                        .into(imageView);
+            }
             tvCourseName.setText(projectsModel.getName());
 
         }

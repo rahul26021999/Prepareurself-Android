@@ -110,12 +110,17 @@ public class ResourcesRvAdapter extends RecyclerView.Adapter<ResourcesRvAdapter.
 //            tvResourceDescription.setText(topicsModel.getDescription());
 //            tvResourceTitle.setText(topicsModel.getTitle());
 
-            Glide.with(context)
-                    .load(Constants.TOPICSBASEURL + topicsModel.getImage_url())
-                    .transition(GenericTransitionOptions.<Drawable>with(Utility.getAnimationObject()))
-                    .placeholder(R.drawable.placeholder)
-                    .error(R.drawable.placeholder)
-                    .into(imageView);
+            if (topicsModel.getImage_url().endsWith(".svg")){
+                Utility.loadSVGImage(context,Constants.TOPICSBASEURL + topicsModel.getImage_url(), imageView );
+            }else{
+                Glide.with(context)
+                        .load(Constants.TOPICSBASEURL + topicsModel.getImage_url())
+                        .transition(GenericTransitionOptions.<Drawable>with(Utility.getAnimationObject()))
+                        .placeholder(R.drawable.placeholder)
+                        .error(R.drawable.placeholder)
+                        .into(imageView);
+            }
+
             tvTitle.setText(topicsModel.getName());
 
         }

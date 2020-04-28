@@ -183,12 +183,16 @@ public class ProjectsActivity extends AppCompatActivity implements PlaylistVideo
 
     private void updateUIWithProject(ProjectsModel projectsModel) {
 
-        Glide.with(this)
-                .load(Constants.PROJECTSIMAGEBASEURL + projectsModel.getImage_url())
-                .transition(GenericTransitionOptions.<Drawable>with(Utility.getAnimationObject()))
-                .placeholder(R.drawable.placeholder)
-                .error(R.drawable.ic_image_loading_error)
-                .into(imageProject);
+        if (projectsModel.getImage_url().endsWith(".svg")){
+            Utility.loadSVGImage(ProjectsActivity.this, Constants.PROJECTSIMAGEBASEURL + projectsModel.getImage_url(), imageProject);
+        }else{
+            Glide.with(this)
+                    .load(Constants.PROJECTSIMAGEBASEURL + projectsModel.getImage_url())
+                    .transition(GenericTransitionOptions.<Drawable>with(Utility.getAnimationObject()))
+                    .placeholder(R.drawable.placeholder)
+                    .error(R.drawable.ic_image_loading_error)
+                    .into(imageProject);
+        }
 
         projectTitle = projectsModel.getName();
         tvProjectTitle.setText(projectTitle);

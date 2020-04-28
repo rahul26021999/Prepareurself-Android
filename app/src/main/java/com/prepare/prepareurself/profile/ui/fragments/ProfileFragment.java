@@ -8,6 +8,7 @@ import android.app.DatePickerDialog;
 import android.content.ActivityNotFoundException;
 import android.content.Intent;
 import android.graphics.drawable.Drawable;
+import android.net.Uri;
 import android.os.Bundle;
 
 import androidx.annotation.NonNull;
@@ -42,8 +43,11 @@ import com.prepare.prepareurself.authentication.data.model.UserModel;
 import com.prepare.prepareurself.utils.Constants;
 import com.prepare.prepareurself.utils.PrefManager;
 import com.prepare.prepareurself.utils.Utility;
+import com.theartofdev.edmodo.cropper.CropImage;
+import com.theartofdev.edmodo.cropper.CropImageView;
 
 import java.io.ByteArrayOutputStream;
+import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.io.InputStream;
 import java.text.SimpleDateFormat;
@@ -249,19 +253,31 @@ public class ProfileFragment extends Fragment implements View.OnClickListener {
     @Override
     public void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
 
-        if (requestCode == INTENT_REQUEST_CODE){
-            if (resultCode == Activity.RESULT_OK){
-//                progressBar.setVisibility(View.VISIBLE);
+        if (requestCode == CropImage.CROP_IMAGE_ACTIVITY_REQUEST_CODE) {
+            CropImage.ActivityResult result = CropImage.getActivityResult(data);
+            if (resultCode ==Activity.RESULT_OK) {
+                Uri resultUri = result.getUri();
                 try {
-                    if (getActivity()!=null && data!=null && data.getData()!=null) {
-                        InputStream is = getActivity().getContentResolver().openInputStream(data.getData());
-                        if (is!=null)
-                            uploadImageToServer(getBytes(is));
-                    }
-
-                }catch (IOException e){
+                    InputStream is = null;
+                    is = getActivity().getContentResolver().openInputStream(resultUri);
+                    if (is!=null)
+                        uploadImageToServer(getBytes(is));
+                } catch (IOException e) {
                     e.printStackTrace();
                 }
+
+            } else if (resultCode == CropImage.CROP_IMAGE_ACTIVITY_RESULT_ERROR_CODE) {
+                Exception error = result.getError();
+            }
+
+        }
+        if (requestCode == INTENT_REQUEST_CODE){
+            if (resultCode == Activity.RESULT_OK){
+                Uri uri= data.getData();
+                CropImage.activity(uri)
+                        .setAspectRatio(1,1)
+                        .setGuidelines(CropImageView.Guidelines.ON)
+                        .start(getContext(), this);
             }
         }
 

@@ -226,8 +226,9 @@ public class VideoActivity extends YouTubeBaseActivity implements YouTubePlayer.
             });
 
         }else if (intent.getData()!=null){
+            showShareAndLike();
             Log.d("deeplink_debug",intent.getData().toString());
-            resourceId = Integer.parseInt(intent.getData().toString().split("&resourceid=")[1]);
+            resourceId = Integer.parseInt(intent.getData().toString().split("&id=")[1]);
             if (!prefManager.getBoolean(Constants.ISLOGGEDIN)){
                 Intent loginIntent = new Intent(VideoActivity.this, AuthenticationActivity.class);
                 loginIntent.putExtra(Constants.RESOURCEID,resourceId);
@@ -255,6 +256,7 @@ public class VideoActivity extends YouTubeBaseActivity implements YouTubePlayer.
 
             //topicId = Integer.parseInt(intent.getData().toString().split("&topicid=")[1]);
         }else if (intent.getBooleanExtra(Constants.DEEPSHAREVIDEOAFTERLOGIN, false)){
+            showShareAndLike();
             resourceId = intent.getIntExtra(Constants.RESOURCEID, -1);
             videoViewModel.getResourceFromRemote(prefManager.getString(Constants.JWTTOKEN),resourceId)
                     .observeForever(new Observer<VideoShareResponseModel>() {

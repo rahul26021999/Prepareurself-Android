@@ -80,12 +80,16 @@ public class PlaylistVideosRvAdapter extends RecyclerView.Adapter<PlaylistVideos
 
         public void bindView(final VideoItemWrapper contentDetails){
 
-            Glide.with(context)
-                    .load(contentDetails.getSnippet().getThumbnails().getHigh().getUrl())
-                    .transition(GenericTransitionOptions.<Drawable>with(Utility.getAnimationObject()))
-                    .placeholder(R.drawable.placeholder)
-                    .error(R.drawable.ic_image_loading_error)
-                    .into(youTubeThumbnailView);
+            if (contentDetails.getSnippet().getThumbnails().getHigh().getUrl().endsWith(".svg")){
+                Utility.loadSVGImage(context,contentDetails.getSnippet().getThumbnails().getHigh().getUrl(), youTubeThumbnailView);
+            }else{
+                Glide.with(context)
+                        .load(contentDetails.getSnippet().getThumbnails().getHigh().getUrl())
+                        .transition(GenericTransitionOptions.<Drawable>with(Utility.getAnimationObject()))
+                        .placeholder(R.drawable.placeholder)
+                        .error(R.drawable.ic_image_loading_error)
+                        .into(youTubeThumbnailView);
+            }
 
             tvTitle.setText(contentDetails.getSnippet().getTitle());
         }
