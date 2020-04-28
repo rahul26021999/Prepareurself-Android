@@ -1,20 +1,37 @@
 package com.prepare.prepareurself.feedback.ui;
 
+import androidx.lifecycle.LiveData;
 import androidx.lifecycle.ViewModel;
 
+import com.prepare.prepareurself.feedback.data.FeedbackRespository;
 import com.prepare.prepareurself.feedback.data.model.FeedbackFourOptionsModel;
 import com.prepare.prepareurself.feedback.data.model.FeedbackInoutModel;
 import com.prepare.prepareurself.feedback.data.model.FeedbackParentModel;
 import com.prepare.prepareurself.feedback.data.model.FeedbackTwoOptionsModel;
+import com.prepare.prepareurself.feedback.data.model.FeedbacksubmitModel;
 
 import java.util.ArrayList;
 import java.util.List;
 
 public class FeedbackViewModel extends ViewModel {
 
+    private FeedbackRespository feedbackRespository;
+
+    public FeedbackViewModel() {
+        feedbackRespository = new FeedbackRespository();
+    }
+
+    public LiveData<FeedbacksubmitModel> saveFeedback(String token, List<String> answers){
+
+        return feedbackRespository.storeFeedback(token,answers);
+
+    }
+
     public List<FeedbackParentModel> getFeedbackParent(){
 
         List<FeedbackParentModel> feedbackParentModels = new ArrayList<>();
+
+        // wait abhi.. api theek kr rha h gupta.....
 
         FeedbackFourOptionsModel f1 = new FeedbackFourOptionsModel();
         f1.setId(1);
