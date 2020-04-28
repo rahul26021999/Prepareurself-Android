@@ -133,9 +133,8 @@ public class RegisterFragment extends Fragment implements View.OnClickListener {
             Log.d("name_debug",firstName + " "+ lastName);
 
             String androidToken = prefManager.getString(Constants.ANDROIDTOKEN);
-            if (!TextUtils.isEmpty(androidToken)){
-                viewModel.register(firstName, lastName, str_email, str_password, prefManager.getString(Constants.ANDROIDTOKEN));
-            }
+
+            viewModel.register(firstName, lastName, str_email, str_password, prefManager.getString(Constants.ANDROIDTOKEN));
 
 
             showLoader();
