@@ -1,6 +1,7 @@
 package com.prepare.prepareurself.feedback.ui;
 
 import androidx.cardview.widget.CardView;
+import androidx.lifecycle.Observer;
 import androidx.lifecycle.ViewModelProviders;
 
 import android.os.Bundle;
@@ -28,6 +29,9 @@ import com.prepare.prepareurself.feedback.data.model.FeedbackFourOptionsModel;
 import com.prepare.prepareurself.feedback.data.model.FeedbackInoutModel;
 import com.prepare.prepareurself.feedback.data.model.FeedbackParentModel;
 import com.prepare.prepareurself.feedback.data.model.FeedbackTwoOptionsModel;
+import com.prepare.prepareurself.feedback.data.model.FeedbacksubmitModel;
+import com.prepare.prepareurself.utils.Constants;
+import com.prepare.prepareurself.utils.PrefManager;
 import com.prepare.prepareurself.utils.Utility;
 
 import java.util.ArrayList;
@@ -58,6 +62,7 @@ public class FeedbackFragment extends Fragment {
     List<String> answers = new ArrayList<>();
 
     private FeedbackParentModel feedbackParentModel;
+    private PrefManager prefManager;
 
     public static FeedbackFragment newInstance() {
         return new FeedbackFragment();
@@ -90,6 +95,8 @@ public class FeedbackFragment extends Fragment {
         mViewModel = ViewModelProviders.of(this).get(FeedbackViewModel.class);
 
         final List<FeedbackParentModel> feedbackParentModels = mViewModel.getFeedbackParent();
+
+        prefManager = new PrefManager(getActivity());
 
 
 //        customPagerAdapter = new CustomPagerAdapter(getActivity(), feedbackParentModels, this);
@@ -186,12 +193,25 @@ public class FeedbackFragment extends Fragment {
                     if (!TextUtils.isEmpty(tempAnswer)){
                         answers.add(tempAnswer);
                         Log.d("feedback_debug", answers+"");
-                        Utility.showToast(getActivity(), "Thank you for your time!");
-                        tempAnswer="";
+                        mViewModel.saveFeedback(prefManager.getString(Constants.JWTTOKEN), answers)
+                                .observe(getActivity(), new Observer<FeedbacksubmitModel>() {
+                                    @Override
+                                    public void onChanged(FeedbacksubmitModel feedbacksubmitModel) {
+                                        if (feedbacksubmitModel!=null){
+                                            if (feedbacksubmitModel.getError_code() == 0){
+                                                Utility.showToast(getActivity(), "Thank you for your time!");
+                                                tempAnswer="";
+                                                getActivity().onBackPressed();
+                                            }else{
+                                                Utility.showToast(getActivity(), "Unable to save feedback at the moment");
+                                                tempAnswer="";
+                                            }
+                                        }
+                                    }
+                                });
                     }else{
                         Utility.showToast(getActivity(), "Please answer before moving ahead");
                     }
-
                 }
             }
         });
