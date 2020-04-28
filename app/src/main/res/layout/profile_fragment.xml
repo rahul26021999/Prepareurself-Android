@@ -7,6 +7,7 @@
     android:layout_height="match_parent"
     android:background="@color/grey"
     tools:context=".profile.ui.fragments.ProfileFragment">
+
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="200dp"
@@ -48,23 +49,40 @@
                     android:paddingBottom="16dp"
                     android:visibility="visible">
 
-                    <de.hdodenhof.circleimageview.CircleImageView
-                        android:layout_width="150dp"
-                        android:layout_height="140dp"
-                        android:scaleType="centerCrop"
-                        android:src="@drawable/person_placeholder"
-                        app:cardCornerRadius="6dp"
-                        android:layout_gravity="center"
-                        app:cardElevation="0dp"
-                        android:id="@+id/user_image">
+                    <FrameLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        >
 
-                    </de.hdodenhof.circleimageview.CircleImageView>
+                        <de.hdodenhof.circleimageview.CircleImageView
+                            android:layout_width="150dp"
+                            android:layout_height="140dp"
+                            android:scaleType="centerCrop"
+                            android:src="@drawable/person_placeholder"
+                            app:cardCornerRadius="6dp"
+                            android:layout_gravity="center"
+                            app:cardElevation="0dp"
+                            android:padding="0dp"
+                            android:id="@+id/user_image"
+                            android:layout_marginBottom="0dp">
 
+                        </de.hdodenhof.circleimageview.CircleImageView>
+                        <ImageView
+                            android:layout_width="30dp"
+                            android:layout_height="30dp"
+                            android:id="@+id/edit_image_vector"
+                            android:layout_marginTop="120dp"
+                            android:src="@drawable/ic_add_a_photo_black_24dp"
+                            android:layout_gravity="center_horizontal"
+
+                            android:layout_marginStart="50dp"
+                            />
+                    </FrameLayout>
 
                     <TextView
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:layout_marginTop="20dp"
+                        android:layout_marginTop="1dp"
                         android:fontFamily="@font/proximanovaregular"
                         android:textColor="#424242"
                         android:textSize="15sp"
@@ -170,6 +188,16 @@
                             android:textColor="#FFCF66"
                             android:layout_marginEnd="10dp"
                             android:textSize="14sp" />
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="Cancel"
+                            android:id="@+id/tv_aboutme_cancel"
+                            android:layout_alignParentEnd="true"
+                            android:textColor="#FFCF66"
+                            android:layout_marginEnd="10dp"
+                            android:textSize="14sp"
+                            android:visibility="gone"/>
 
                     </RelativeLayout>
 
