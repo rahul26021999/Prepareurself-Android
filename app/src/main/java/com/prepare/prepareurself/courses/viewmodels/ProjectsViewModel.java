@@ -12,6 +12,8 @@ import com.prepare.prepareurself.courses.data.model.ProjectResponse;
 import com.prepare.prepareurself.courses.data.model.ProjectResponseModel;
 import com.prepare.prepareurself.courses.data.model.ProjectsModel;
 import com.prepare.prepareurself.courses.data.repository.ProjectsRespository;
+import com.prepare.prepareurself.dashboard.data.db.repository.CourseDbRepository;
+import com.prepare.prepareurself.dashboard.data.model.CourseModel;
 import com.prepare.prepareurself.resources.data.model.ResourceLikesResponse;
 import com.prepare.prepareurself.youtubeplayer.youtubeplaylistapi.db.PlaylistVideosDbRepository;
 import com.prepare.prepareurself.youtubeplayer.youtubeplaylistapi.db.SingleVideoItemWrapperRespository;
@@ -27,6 +29,7 @@ public class ProjectsViewModel extends AndroidViewModel {
     private ProjectsDbRepository dbRepository;
     private PlaylistVideosDbRepository playlistVideosDbRepository;
     private SingleVideoItemWrapperRespository singleVideoItemWrapperRespository;
+    private CourseDbRepository courseDbRepository;
 
     private LiveData<SingleVIdeoItemWrapper> singleVIdeoItemWrapperLiveData = new MutableLiveData<>();
     private LiveData<ProjectResponse> projectResponseMutableLiveData = new MutableLiveData<>();
@@ -40,6 +43,11 @@ public class ProjectsViewModel extends AndroidViewModel {
         dbRepository = new ProjectsDbRepository(application);
         playlistVideosDbRepository = new PlaylistVideosDbRepository(application);
         singleVideoItemWrapperRespository = new SingleVideoItemWrapperRespository(application);
+        courseDbRepository = new CourseDbRepository(application);
+    }
+
+    public LiveData<CourseModel> getCourseById(int id){
+        return courseDbRepository.getCourseById(id);
     }
 
     public void fetchProjects(String token, int courseId, String level, int count, int page){

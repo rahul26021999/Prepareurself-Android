@@ -37,6 +37,10 @@ public class CourseDbRepository {
         return courseRoomDao.getFiveCourses();
     }
 
+    public LiveData<CourseModel> getCourseById(int id) {
+        return courseRoomDao.getCourseById(id);
+    }
+
     private static class insertAsyncTask extends AsyncTask<CourseModel,Void, Void> {
 
         private CourseRoomDao asynCourseDao;

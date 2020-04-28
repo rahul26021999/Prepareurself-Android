@@ -29,6 +29,7 @@ import com.prepare.prepareurself.courses.data.model.ProjectsModel;
 import com.prepare.prepareurself.courses.ui.adapters.PlaylistVideosRvAdapter;
 import com.prepare.prepareurself.courses.viewmodels.ProjectsViewModel;
 import com.prepare.prepareurself.R;
+import com.prepare.prepareurself.dashboard.data.model.CourseModel;
 import com.prepare.prepareurself.utils.Constants;
 import com.prepare.prepareurself.utils.PrefManager;
 import com.prepare.prepareurself.utils.Utility;
@@ -60,6 +61,7 @@ public class ProjectsActivity extends AppCompatActivity implements PlaylistVideo
     private String projectDescription = "";
     private PrefManager prefManager;
     private ProgressBar progressBar;
+    private String courseName;
 
     private TextView level;
 
@@ -98,7 +100,16 @@ public class ProjectsActivity extends AppCompatActivity implements PlaylistVideo
         Intent intent = getIntent();
 
         if (intent.getData()!=null){
-           int id = Integer.parseInt(intent.getData().toString().split("&id=")[1]);
+           //int id = Integer.parseInt(intent.getData().toString().split("&id=")[1]);
+
+            Log.d("project_share", intent.getData().toString());
+            String[] tempData = intent.getData().toString().split("&");
+            int id = Integer.parseInt(tempData[1].split("id=")[1]);
+           // courseName = tempData[2].split("courseName=")[1];
+
+
+
+           //int id = 1;
 
             if (!prefManager.getBoolean(Constants.ISLOGGEDIN)){
                 Intent loginIntent = new Intent(ProjectsActivity.this, AuthenticationActivity.class);
@@ -131,7 +142,6 @@ public class ProjectsActivity extends AppCompatActivity implements PlaylistVideo
             }
 
         }
-
 
         tvViewPlaylist.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -208,7 +218,17 @@ public class ProjectsActivity extends AppCompatActivity implements PlaylistVideo
         level.setText(projectsModel.getLevel());
         projectTitle = projectsModel.getName();
         tvProjectTitle.setText(projectTitle);
-        title.setText(projectTitle);
+        viewModel.getCourseById(projectsModel.getId())
+                .observe(ProjectsActivity.this, new Observer<CourseModel>() {
+                    @Override
+                    public void onChanged(CourseModel courseModel) {
+                        if (courseModel!=null){
+                            title.setText(courseModel.getName());
+                        }else{
+                            title.setText(courseName);
+                        }
+                    }
+                });
 
         if (projectsModel.getDescription()!=null){
             tvProjectDescription.setText(Html.fromHtml(projectsModel.getDescription()));

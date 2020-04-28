@@ -134,6 +134,7 @@ public class VideoResourceFragment extends Fragment implements VideoResoursesRvA
                     adapter.setResourceModels(resourceModels);
                     adapter.notifyDataSetChanged();
                 }else{
+                    tvComingSoon.setText("Coming Soon...");
                     tvComingSoon.setVisibility(View.VISIBLE);
                     rvVideoResources.setVisibility(View.GONE);
                 }

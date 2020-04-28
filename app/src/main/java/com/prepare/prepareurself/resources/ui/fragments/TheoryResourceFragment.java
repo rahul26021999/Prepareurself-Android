@@ -136,6 +136,7 @@ public class TheoryResourceFragment extends Fragment implements TheoryResourcesR
                   adapter1.setResourcesList(resourceModels);
                   adapter1.notifyDataSetChanged();
               }else{
+                  tvCmingSoon.setText("Coming Soon...");
                   tvCmingSoon.setVisibility(View.VISIBLE);
                   rvTheoryResources.setVisibility(View.GONE);
               }

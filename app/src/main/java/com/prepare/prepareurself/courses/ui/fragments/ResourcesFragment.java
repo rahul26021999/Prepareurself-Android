@@ -129,6 +129,7 @@ public class ResourcesFragment extends Fragment implements ResourcesRvAdapter.Re
                    adapter.setTopics(topicsModels);
                    adapter.notifyDataSetChanged();
                }else{
+                   tvComingSoon.setText("Coming Soon...");
                    tvComingSoon.setVisibility(View.VISIBLE);
                    recyclerView.setVisibility(View.GONE);
                }

@@ -188,12 +188,13 @@ public class ProfileFragment extends Fragment implements View.OnClickListener {
                 if (userModel!=null){
                     userName = userModel.getFirst_name() + " " + userModel.getLast_name();
                     userDob = userModel.getDob();
+                    Log.d("DOb", userDob);
                     userContact = userModel.getPhone_number();
                     tvName.setText(userName);
                     if (TextUtils.isEmpty(userDob)){
                         tvDob.setText("Click Edit to update dob");
                     }else{
-                        tvDob.setText(userDob);
+                        tvDob.setText(userDob); //chng
                     }
                     if (TextUtils.isEmpty(userContact)){
                         tvContact.setHint("Click Edit to update contact");
@@ -419,7 +420,10 @@ public class ProfileFragment extends Fragment implements View.OnClickListener {
 
                 if (TextUtils.isEmpty(userContact)){
                     etContact.setHint("Start typing..");
-                }else{
+
+                }
+
+                else{
                     etContact.setText(userContact);
                 }
                 break;
@@ -444,7 +448,13 @@ public class ProfileFragment extends Fragment implements View.OnClickListener {
                 String dob = etDob.getText().toString();
                 String fullName =  etName.getText().toString();
                 String contact = etContact.getText().toString().trim();
-
+                Log.d("DOB0",userDob);
+                //int phnumber= Integer.parseInt(etContact.getText().toString());
+                //valdatn
+                if ((contact.length()>11 || contact.length()<10)){
+                    etContact.setError("enter valid phone number");
+                    return;
+                }
                 String firstName = "", lastName = "";
                 // first convert name to first name and last name
                 String[] name = Utility.splitName(getActivity(),fullName);
