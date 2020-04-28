@@ -189,7 +189,7 @@ public class ProfileFragment extends Fragment implements View.OnClickListener {
                     if (TextUtils.isEmpty(userDob)){
                         tvDob.setText("Click Edit to update dob");
                     }else{
-                        tvDob.setText(userName);
+                        tvDob.setText(userDob);
                     }
                     if (TextUtils.isEmpty(userContact)){
                         tvContact.setHint("Click Edit to update contact");
