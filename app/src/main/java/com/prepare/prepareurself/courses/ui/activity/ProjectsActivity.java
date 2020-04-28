@@ -22,6 +22,7 @@ import android.widget.TextView;
 
 import com.bumptech.glide.GenericTransitionOptions;
 import com.bumptech.glide.Glide;
+import com.google.android.material.chip.Chip;
 import com.prepare.prepareurself.authentication.ui.AuthenticationActivity;
 import com.prepare.prepareurself.courses.data.model.ProjectResponseModel;
 import com.prepare.prepareurself.courses.data.model.ProjectsModel;
@@ -60,6 +61,8 @@ public class ProjectsActivity extends AppCompatActivity implements PlaylistVideo
     private PrefManager prefManager;
     private ProgressBar progressBar;
 
+    private TextView level;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -79,6 +82,7 @@ public class ProjectsActivity extends AppCompatActivity implements PlaylistVideo
         tvReferenceHeader = findViewById(R.id.tv_reference_heading);
         tvViewPlaylist = findViewById(R.id.tv_viewfullplaylist);
         progressBar = findViewById(R.id.loading_project);
+        level=findViewById(R.id.level);
 
         title=findViewById(R.id.title);
 
@@ -194,6 +198,14 @@ public class ProjectsActivity extends AppCompatActivity implements PlaylistVideo
                     .into(imageProject);
         }
 
+        if(projectsModel.getLevel().equals("hard"))
+            level.setTextColor(getResources().getColorStateList(R.color.lightred));
+        else if(projectsModel.getLevel().equals("easy"))
+            level.setTextColor(getResources().getColorStateList(R.color.lightgreen));
+        else
+            level.setTextColor(getResources().getColorStateList(R.color.yellow));
+
+        level.setText(projectsModel.getLevel());
         projectTitle = projectsModel.getName();
         tvProjectTitle.setText(projectTitle);
         title.setText(projectTitle);

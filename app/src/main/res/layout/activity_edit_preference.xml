@@ -1,38 +1,43 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     tools:context=".profile.ui.EditPreferenceActivity">
 
-    <LinearLayout
+    <include layout="@layout/layout_topbar"
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:orientation="vertical">
+        android:id="@+id/toolbar"
+        android:layout_height="wrap_content"
+        />
 
-        <TextView
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="19dp"
-            android:text="Edit Preference"
-            android:textAlignment="center"
-            android:textColor="#8184a1"
-            android:textSize="22sp" />
+
 
         <com.google.android.material.chip.ChipGroup
             android:id="@+id/chip_gp"
             android:layout_width="match_parent"
+            android:scrollIndicators="none"
+            app:chipSpacingHorizontal="20dp"
+            app:chipSpacingVertical="20dp"
+            android:layout_margin="20dp"
             android:layout_height="wrap_content"
-            android:layout_marginTop="20dp"
+            android:layout_below="@+id/toolbar"
             app:singleLine="false" />
         <com.google.android.material.button.MaterialButton
-            android:layout_width="wrap_content"
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:textSize="18dp"
+            android:backgroundTint="@color/colorPrimaryDark"
+            android:layout_marginStart="50dp"
+            android:layout_marginEnd="50dp"
+            android:padding="12dp"
+            android:layout_marginBottom="50dp"
+            android:layout_centerHorizontal="true"
+            app:cornerRadius="20dp"
+            android:layout_alignParentBottom="true"
             android:id="@+id/save"
             android:layout_gravity="center"
             android:text="save"/>
-    </LinearLayout>
 
-</LinearLayout>
+</RelativeLayout>

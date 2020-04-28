@@ -10,8 +10,8 @@
         android:textSize="16sp"
         android:textColor="@color/colorWhite"
         android:background="@drawable/profile_preferences_button"
-        android:layout_marginEnd="50dp"
-        android:layout_marginStart="50dp"
+        android:layout_marginEnd="30dp"
+        android:layout_marginStart="30dp"
         android:layout_marginTop="10dp"
         android:layout_marginBottom="10dp"
         android:id="@+id/tv_preference_name"/>

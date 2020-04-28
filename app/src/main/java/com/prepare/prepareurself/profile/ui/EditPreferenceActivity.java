@@ -10,6 +10,8 @@ import android.text.TextUtils;
 import android.util.Log;
 import android.view.View;
 import android.widget.CompoundButton;
+import android.widget.ImageView;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import com.google.android.material.button.MaterialButton;
@@ -46,6 +48,9 @@ public class EditPreferenceActivity extends AppCompatActivity {
     private ProgressDialog dialog;
     private HashMap<Integer, PreferredTechStack> preferredTechStackHashMap = new HashMap<>();
 
+    private ImageView backBtn;
+    private TextView title;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -58,6 +63,16 @@ public class EditPreferenceActivity extends AppCompatActivity {
 
         chip_gp=findViewById(R.id.chip_gp);
         save=findViewById(R.id.save);
+        title=findViewById(R.id.title);
+        backBtn=findViewById(R.id.backBtn);
+
+        title.setText("Edit Preferences");
+        backBtn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                onBackPressed();
+            }
+        });
 
         dialog = new ProgressDialog(this);
 
@@ -82,6 +97,7 @@ public class EditPreferenceActivity extends AppCompatActivity {
                             final Chip chip = new Chip(EditPreferenceActivity.this);
                             chip.setText(preferredTechStacks.get(i).getName());
                             chip.setTextAppearanceResource(R.style.EditPrefrenceChip);
+                            chip.setCheckedIconResource(R.drawable.white_check_icon);
                             chip.setChipBackgroundColorResource(R.color.colorPrimaryDark);
                             chip.setCheckable(true);
                             if(preferences.contains(allStackID.get(i))) {

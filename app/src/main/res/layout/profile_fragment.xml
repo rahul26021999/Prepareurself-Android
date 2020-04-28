@@ -18,7 +18,7 @@
         layout="@layout/layout_topbar"
         android:id="@+id/topbar"/>
 
-    <ScrollView
+    <androidx.core.widget.NestedScrollView
         android:layout_width="match_parent"
         android:fillViewport="true"
         android:overScrollMode="never"
@@ -322,8 +322,10 @@
                         android:layout_height="wrap_content"
                         android:id="@+id/btn_aboutme_save"
                         android:text="save"
-                        android:layout_marginTop="5dp"
+                        android:layout_marginTop="15dp"
                         android:textSize="15sp"
+                        android:paddingStart="30dp"
+                        android:paddingEnd="30dp"
                         android:textColor="@color/white"
                         android:layout_gravity="center"
                         android:background="@drawable/profile_preferences_button"
@@ -357,8 +359,8 @@
                         android:textSize="18sp"
                         android:textColor="@color/colorWhite"
                         android:background="@drawable/profile_preferences_button"
-                        android:layout_marginStart="50dp"
-                        android:layout_marginEnd="50dp"
+                        android:layout_marginStart="30dp"
+                        android:layout_marginEnd="30dp"
                         android:layout_marginTop="20dp"
                         android:layout_marginBottom="10dp"
                         android:id="@+id/btn_update_password"/>
@@ -370,8 +372,8 @@
                         android:textSize="18sp"
                         android:textColor="@color/colorWhite"
                         android:background="@drawable/profile_preferences_button"
-                        android:layout_marginStart="50dp"
-                        android:layout_marginEnd="50dp"
+                        android:layout_marginStart="30dp"
+                        android:layout_marginEnd="30dp"
                         android:layout_marginBottom="20dp"
                         android:id="@+id/btn_logout"/>
 
@@ -433,6 +435,6 @@
 
             </LinearLayout>
         </LinearLayout>
-    </ScrollView>
+    </androidx.core.widget.NestedScrollView>
 
 </RelativeLayout>

@@ -81,6 +81,19 @@
                     android:layout_marginTop="10dp"
                     tools:text="sakdfhkjsa sadbjbfkbaskb askdfkbask jaskdfk  baskfbk  ksabfk ma fkbaks fk askfkas kf k"
                     android:textColor="@color/resource_active_color"/>
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    tools:text="Level"
+                    android:layout_marginEnd="20dp"
+                    android:textSize="14sp"
+                    android:textAllCaps="true"
+                    android:layout_alignParentEnd="true"
+                    android:fontFamily="@font/proximanovaregular"
+                    android:textColor="@color/colorPrimaryDark"
+                    android:textStyle="bold"
+                    android:id="@+id/level"/>
+
             </RelativeLayout>
 
             <TextView
@@ -137,11 +150,11 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:textSize="16sp"
+                android:layout_marginTop="40dp"
                 android:id="@+id/loading_project"
                 android:layout_below="@+id/tv_reference_heading"
                 android:visibility="visible"
                 android:indeterminate="true"
-                android:layout_margin="10dp"
                 android:layout_centerHorizontal="true"/>
 
             <androidx.cardview.widget.CardView

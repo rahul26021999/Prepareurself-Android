@@ -414,7 +414,7 @@ public class ProfileFragment extends Fragment implements View.OnClickListener {
                 if (TextUtils.isEmpty(userDob)){
                     etDob.setHint("Tap to update dob");
                 }else{
-                    etDob.setText(userName);
+                    etDob.setText(userDob);
                 }
 
                 if (TextUtils.isEmpty(userContact)){
@@ -437,6 +437,10 @@ public class ProfileFragment extends Fragment implements View.OnClickListener {
                 uploadImage();
                 break;
             case R.id.btn_aboutme_save:
+
+                tvCancelAboutMe.setVisibility(View.GONE);
+                tvEditAboutMe.setVisibility(View.VISIBLE);
+
                 String dob = etDob.getText().toString();
                 String fullName =  etName.getText().toString();
                 String contact = etContact.getText().toString().trim();
