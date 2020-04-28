@@ -24,4 +24,7 @@ public interface CourseRoomDao {
 
     @Query("SELECT * FROM course LIMIT 5")
     LiveData<List<CourseModel>> getFiveCourses();
+
+    @Query("SELECT * FROM course WHERE id=:id")
+    LiveData<CourseModel> getCourseById(int id);
 }
