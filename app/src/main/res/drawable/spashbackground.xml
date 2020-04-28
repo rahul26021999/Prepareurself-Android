@@ -4,9 +4,9 @@
         <color android:color="@color/colorPrimaryDark"></color>
     </item>
     <item
-        android:width="200dp"
+        android:width="160dp"
         android:height="250dp"
-        android:top="-30dp"
+        android:top="-50dp"
         android:drawable="@drawable/logo_with_name"
         android:gravity="center" />
 </layer-list>
