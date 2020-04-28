@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <androidx.cardview.widget.CardView xmlns:android="http://schemas.android.com/apk/res/android"
-    android:layout_width="150dp"
+    android:layout_width="200dp"
     android:layout_height="wrap_content"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_margin="10dp"
@@ -27,10 +27,11 @@
             android:fontFamily="@font/proximanovaregular"
             android:layout_below="@+id/related_video_youtubethumnail"
             android:id="@+id/tv_rekated_title"
-            android:textSize="16sp"
+            android:textSize="14sp"
             android:layout_marginTop="5dp"
             android:layout_centerHorizontal="true"
-            android:maxLines="2"
+            android:maxLines="1"
+            android:ellipsize="end"
             android:padding="10dp"
             android:marqueeRepeatLimit="marquee_forever"/>
 

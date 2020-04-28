@@ -89,9 +89,7 @@ public class PlaylistItemAdapter extends RecyclerView.Adapter<PlaylistItemAdapte
 
         public PlaylistItemViewHolder(@NonNull View itemView) {
             super(itemView);
-            imageView = itemView.findViewById(R.id.playlist_item_imageview);
             textView = itemView.findViewById(R.id.tv_playlist_item_title);
-           // imageView.setVisibility(View.GONE);
         }
 
         public void bindView(VideoItemWrapper videoItemWrapper){
