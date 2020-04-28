@@ -20,8 +20,9 @@ import com.prepare.prepareurself.utils.Utility;
 public class forgetPassword extends AppCompatActivity {
     EditText registeredEmail  ;
     Button resetBtn;
-    TextView textView;
+    TextView textView, tv_backtologin;
     private AuthViewModel viewModel;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -29,7 +30,14 @@ public class forgetPassword extends AppCompatActivity {
         viewModel = ViewModelProviders.of(this).get(AuthViewModel.class);
         registeredEmail=findViewById(R.id.et_email);
         textView=findViewById(R.id.textview);
+        tv_backtologin=findViewById(R.id.btn_backToLogin);
         resetBtn=findViewById(R.id.btn_reset);
+        tv_backtologin.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                finish();
+            }
+        });
         resetBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
