@@ -50,10 +50,12 @@ import java.io.ByteArrayOutputStream;
 import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.io.InputStream;
+import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Calendar;
+import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Locale;
@@ -154,7 +156,7 @@ public class ProfileFragment extends Fragment implements View.OnClickListener {
 
         prefManager = new PrefManager(getActivity());
 
-        dateFormatter = new SimpleDateFormat("dd/MM/yyyy", Locale.US);
+        dateFormatter = new SimpleDateFormat("MM/dd/yyyy", Locale.US);
 
 
         btnUpdatePass.setOnClickListener(new View.OnClickListener() {
@@ -188,13 +190,13 @@ public class ProfileFragment extends Fragment implements View.OnClickListener {
                 if (userModel!=null){
                     userName = userModel.getFirst_name() + " " + userModel.getLast_name();
                     userDob = userModel.getDob();
-                    Log.d("DOb", userDob);
+                    Log.d("DOb", userDob+"");
                     userContact = userModel.getPhone_number();
                     tvName.setText(userName);
                     if (TextUtils.isEmpty(userDob)){
                         tvDob.setText("Click Edit to update dob");
                     }else{
-                        tvDob.setText(userDob); //chng
+                        tvDob.setText(userDob.split("T")[0]);
                     }
                     if (TextUtils.isEmpty(userContact)){
                         tvContact.setHint("Click Edit to update contact");
@@ -238,7 +240,7 @@ public class ProfileFragment extends Fragment implements View.OnClickListener {
 
     private void setDataOnTextViews(UserModel userModel) {
         tvName.setText(userModel.getFirst_name() + " " + userModel.getLast_name());
-        tvDob.setText(userModel.getDob());
+        tvDob.setText(userModel.getDob().split("T")[0]);
         tvContact.setText(userModel.getPhone_number());
     }
 
@@ -415,7 +417,7 @@ public class ProfileFragment extends Fragment implements View.OnClickListener {
                 if (TextUtils.isEmpty(userDob)){
                     etDob.setHint("Tap to update dob");
                 }else{
-                    etDob.setText(userDob);
+                    etDob.setText(userDob.split("T")[0]);
                 }
 
                 if (TextUtils.isEmpty(userContact)){
@@ -444,7 +446,7 @@ public class ProfileFragment extends Fragment implements View.OnClickListener {
                 String dob = etDob.getText().toString();
                 String fullName =  etName.getText().toString();
                 String contact = etContact.getText().toString().trim();
-                Log.d("DOB0",userDob);
+                Log.d("DOB0",userDob+"");
                 //int phnumber= Integer.parseInt(etContact.getText().toString());
                 //valdatn
                 if ((contact.length()>11 || contact.length()<10)){
