@@ -275,6 +275,7 @@ public class ProfileFragment extends Fragment implements View.OnClickListener {
             if (resultCode == Activity.RESULT_OK){
                 Uri uri= data.getData();
                 CropImage.activity(uri)
+                        .setAspectRatio(1,1)
                         .setGuidelines(CropImageView.Guidelines.ON)
                         .start(getContext(), this);
             }
