@@ -90,14 +90,27 @@ public class HomeActivity extends AppCompatActivity implements NavigationView.On
         viewModel.getUserModelLiveData().observe(this, new Observer<UserModel>() {
             @Override
             public void onChanged(UserModel userModel) {
-                String name = userModel.getFirst_name() + " " + userModel.getLast_name();
-                tvNameNavHeader.setText(name);
-                Glide.with(HomeActivity.this)
-                        .load(Constants.USERIMAGEBASEURL + userModel.getProfile_image())
-                        .override(300,300)
-                        .placeholder(R.drawable.person_placeholder)
-                        .transition(GenericTransitionOptions.<Drawable>with(Utility.getAnimationObject()))
-                        .into(profileImageView);
+
+
+                if (userModel!=null){
+                    String name = userModel.getFirst_name() + " " + userModel.getLast_name();
+                    tvNameNavHeader.setText(name);
+
+                    if (userModel.getProfile_image()!=null){
+                        if (userModel.getProfile_image().endsWith(".svg")){
+                            Utility.loadSVGImage(HomeActivity.this,Constants.USERIMAGEBASEURL + userModel.getProfile_image(), profileImageView);
+                        }else{
+                            Glide.with(HomeActivity.this)
+                                    .load(Constants.USERIMAGEBASEURL + userModel.getProfile_image())
+                                    .override(300,300)
+                                    .placeholder(R.drawable.person_placeholder)
+                                    .transition(GenericTransitionOptions.<Drawable>with(Utility.getAnimationObject()))
+                                    .into(profileImageView);
+                        }
+                    }
+
+                }
+
             }
         });
 
