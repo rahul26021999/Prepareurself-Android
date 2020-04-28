@@ -117,5 +117,6 @@ dependencies {
     implementation 'pl.droidsonroids.gif:android-gif-drawable:1.2.3'
 
     implementation 'com.google.android.gms:play-services-ads:19.1.0'
+    implementation 'com.theartofdev.edmodo:android-image-cropper:2.8.+'
 
 }
