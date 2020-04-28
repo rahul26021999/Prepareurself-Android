@@ -211,7 +211,7 @@ public class ProfileFragment extends Fragment implements View.OnClickListener {
                     }
                     mUserModel = userModel;
                     tv_email_profile.setText(userModel.getEmail());
-                    Glide.with(getActivity())
+                    Glide.with(Objects.requireNonNull(getActivity()))
                             .load(Constants.USERIMAGEBASEURL + userModel.getProfile_image())
                             .override(500,500)
                             .placeholder(R.drawable.person_placeholder)
