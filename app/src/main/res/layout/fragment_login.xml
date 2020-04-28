@@ -4,6 +4,8 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="@color/white"
+    android:focusableInTouchMode="true"
+    android:focusable="true"
     tools:context=".authentication.ui.LoginFragment"
     android:id="@+id/mainlayout">
 
@@ -79,16 +81,14 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_below="@+id/btn_login"
-        android:text="Forgot Password ?"
+        android:text="Forgot Password"
         android:textSize="16sp"
         android:id="@+id/tv_forgot_password"
         android:textColor="@color/colorPrimaryDark"
         android:fontFamily="@font/roboto_regular"
         android:layout_marginTop="20dp"
-        android:layout_alignParentRight="true"
-        android:layout_marginRight="20dp"
-
-         />
+        android:layout_alignParentEnd="true"
+        android:layout_marginEnd="40dp"/>
 
     <ImageView
         android:layout_width="30dp"
