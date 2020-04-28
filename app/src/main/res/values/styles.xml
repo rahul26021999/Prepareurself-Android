@@ -35,7 +35,7 @@
         <item name="colorPrimary">@color/colorPrimary</item>
         <item name="colorPrimaryDark">@color/colorPrimaryDark</item>
         <item name="colorAccent">@color/colorAccent</item>
-        <item name="android:background">@drawable/spashbackground</item>
+        <item name="android:windowBackground">@drawable/spashbackground</item>
     </style>
 
 

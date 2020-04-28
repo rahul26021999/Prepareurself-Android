@@ -104,7 +104,8 @@
             android:label="@string/title_activity_home" />
         <activity android:name=".utils.QuizBaseActivity" />
         <activity android:name=".quiz.QuizActivity" />
-        <activity android:name=".authentication.ui.AuthenticationActivity">
+        <activity android:name=".authentication.ui.AuthenticationActivity"
+            android:theme="@style/SplashTheme">
             <intent-filter>
                 <action android:name="android.intent.action.VIEW" />
 
@@ -118,7 +119,6 @@
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
                 <action android:name="android.intent.action.VIEW" />
-
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
