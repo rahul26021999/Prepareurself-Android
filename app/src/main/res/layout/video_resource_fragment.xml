@@ -22,7 +22,7 @@
     <TextView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="Coming Soon.."
+        android:text="Loading Content.."
         android:id="@+id/tv_coming_soon"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
@@ -31,7 +31,7 @@
         app:layout_constraintTop_toTopOf="parent"
         android:fontFamily="@font/proximanovaregular"
         android:textColor="@color/colorPrimaryDark"
-        android:visibility="gone"/>
+        android:visibility="visible"/>
 
 
 
