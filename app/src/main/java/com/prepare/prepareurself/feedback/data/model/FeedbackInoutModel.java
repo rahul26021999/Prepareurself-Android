@@ -1,12 +1,12 @@
 package com.prepare.prepareurself.feedback.data.model;
 
-public class FeedbackModel {
+public class FeedbackInoutModel {
 
     private int id;
     private String question;
-    private int response;
+    private String answer;
 
-    public FeedbackModel(){
+    public FeedbackInoutModel(){
 
     }
 
@@ -26,11 +26,11 @@ public class FeedbackModel {
         this.question = question;
     }
 
-    public int getResponse() {
-        return response;
+    public String getAnswer() {
+        return answer;
     }
 
-    public void setResponse(int response) {
-        this.response = response;
+    public void setAnswer(String answer) {
+        this.answer = answer;
     }
 }
