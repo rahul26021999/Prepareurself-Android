@@ -11,7 +11,7 @@ import retrofit2.converter.gson.GsonConverterFactory;
 
 public class ApiClient {
 
-    public static final String BASEURL =  "http://prepareurself.tk/api/";
+    public static final String BASEURL =  "http://prepareurself.in/api/";
     public static final String YOUTUBEAPIBASEURL = "https://www.googleapis.com/youtube/v3/";
 
     public static Retrofit retrofit = null, youtubeRetrofit = null;

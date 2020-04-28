@@ -30,19 +30,19 @@ public class Constants {
     public static final String VIDEOCODE = "video_code";
     public static final String JWTTOKEN = "jwt_token";
     public static final String TECHSTACK = "Tech-Stack";
-    public static final String COURSEIMAGEBASEUSRL = "http://prepareurself.tk/uploads/courses/";
+    public static final String COURSEIMAGEBASEUSRL = "http://prepareurself.in/uploads/courses/";
     public static final String COURSEID = "course_id";
-    public static final String TOPICSBASEURL = "http://prepareurself.tk/uploads/topics/";
+    public static final String TOPICSBASEURL = "http://prepareurself.in/uploads/topics/";
     public static final String TOPICID = "topic_id";
     public static final String THEORY = "theory";
     public static final String VIDEO = "video";
-    public static final String THEORYRESOURCEBASEURL = "http://prepareurself.tk/uploads/resources/";
+    public static final String THEORYRESOURCEBASEURL = "http://prepareurself.in/uploads/resources/";
     public static final String VIDEOID = "video_id";
     public static final String VIDEODESCRIPTION = "video_decription";
     public static final String VIDEOTITLE = "video_title";
     public static final String RESOURCEID = "resource_id";
     public static final String BITMAPURI = "bitmap_uri";
-    public static final String PROJECTSIMAGEBASEURL = "http://prepareurself.tk/uploads/projects/";
+    public static final String PROJECTSIMAGEBASEURL = "http://prepareurself.in/uploads/projects/";
     public static final String PROJECTID = "project_id";
     public static final String VideoItemWrapperPlaylistId = "video_item_wrapper_playlist";
     public static final String VideoItemWrapperId = "video_item_player_id";
@@ -64,6 +64,6 @@ public class Constants {
     public static final String DEEPSHAREPROECTAFTERLOGIN = "Deep_share_project_after_login";
     public static final String GOOGLEPLAYLINK = "https://play.google.com/store/apps/details?id=com.prepare.prepareurself";
     public static final String COURSENAME = "course_name";
-    public static final Object USERIMAGEBASEURL = "http://prepareurself.tk/uploads/users/";
+    public static final Object USERIMAGEBASEURL = "http://prepareurself.in/uploads/users/";
     
 }
