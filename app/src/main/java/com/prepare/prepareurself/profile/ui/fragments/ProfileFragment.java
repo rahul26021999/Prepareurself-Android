@@ -78,14 +78,14 @@ public class ProfileFragment extends Fragment implements View.OnClickListener {
     private ImageView userImageView;
     private UserModel mUserModel;
     private TextView title;
-    private ImageView backBtn;
+    private ImageView backBtn , editimg;
     private LinearLayout prefrences,userInfo;
 
     private DatePickerDialog datePickerDialog;
     private TextView tvName;
     private TextView tvDob, tvContact;
     private EditText etName, etDob, etContact;
-    private TextView tvEditAboutMe;
+    private TextView tvEditAboutMe, tvCancelAboutMe;
     private Button btnAboutMeSave, btnUpdatePass, btnLogout;
 
     private RecyclerView recyclerView;
@@ -112,6 +112,7 @@ public class ProfileFragment extends Fragment implements View.OnClickListener {
         userImageView = view.findViewById(R.id.user_image);
         title=view.findViewById(R.id.title);
         backBtn=view.findViewById(R.id.backBtn);
+        editimg=view.findViewById(R.id.edit_image_vector);
         prefrences=view.findViewById(R.id.prefrences);
         userInfo=view.findViewById(R.id.userInfo);
         tvName = view.findViewById(R.id.tv_name);
@@ -121,6 +122,7 @@ public class ProfileFragment extends Fragment implements View.OnClickListener {
         etDob = view.findViewById(R.id.et_dob);
         etContact = view.findViewById(R.id.et_call);
         tvEditAboutMe = view.findViewById(R.id.tv_aboutme_edit);
+        tvCancelAboutMe= view.findViewById(R.id.tv_aboutme_cancel);
         btnAboutMeSave = view.findViewById(R.id.btn_aboutme_save);
         btnUpdatePass = view.findViewById(R.id.btn_update_password);
         btnLogout = view.findViewById(R.id.btn_logout);
@@ -172,7 +174,9 @@ public class ProfileFragment extends Fragment implements View.OnClickListener {
         });
 
         tvEditAboutMe.setOnClickListener(this);
+        tvCancelAboutMe.setOnClickListener(this);
         btnAboutMeSave.setOnClickListener(this);
+        editimg.setOnClickListener(this);
         userImageView.setOnClickListener(this);
         etDob.setOnClickListener(this);
         tabPreference.setOnClickListener(this);
@@ -403,6 +407,8 @@ public class ProfileFragment extends Fragment implements View.OnClickListener {
                 hideAboutTextViews();
                 showAboutEditTexts();
                 //change
+                tvCancelAboutMe.setVisibility(View.VISIBLE);
+                tvEditAboutMe.setVisibility(View.GONE);
 
                 etName.setText(userName);
                 if (TextUtils.isEmpty(userDob)){
@@ -417,10 +423,17 @@ public class ProfileFragment extends Fragment implements View.OnClickListener {
                     etContact.setText(userContact);
                 }
                 break;
+            case R.id.tv_aboutme_cancel:
+                showAboutTextViews();
+                hideAboutEditTexts();
+                btnAboutMeSave.setVisibility(View.GONE);
+                tvEditAboutMe.setVisibility(View.VISIBLE);
+                tvCancelAboutMe.setVisibility(View.GONE);
+                break;
             case R.id.tv_preference_edit:
                 startActivity(new Intent(getActivity(), EditPreferenceActivity.class));
                 break;
-            case R.id.user_image:
+            case R.id.edit_image_vector:
                 uploadImage();
                 break;
             case R.id.btn_aboutme_save:
