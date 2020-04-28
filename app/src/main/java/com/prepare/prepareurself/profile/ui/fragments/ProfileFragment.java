@@ -193,7 +193,7 @@ public class ProfileFragment extends Fragment implements View.OnClickListener {
                     if (TextUtils.isEmpty(userDob)){
                         tvDob.setText("Click Edit to update dob");
                     }else{
-                        tvDob.setText(userName);
+                        tvDob.setText(userDob);
                     }
                     if (TextUtils.isEmpty(userContact)){
                         tvContact.setHint("Click Edit to update contact");
@@ -419,7 +419,10 @@ public class ProfileFragment extends Fragment implements View.OnClickListener {
 
                 if (TextUtils.isEmpty(userContact)){
                     etContact.setHint("Start typing..");
-                }else{
+
+                }
+
+                else{
                     etContact.setText(userContact);
                 }
                 break;
@@ -440,7 +443,12 @@ public class ProfileFragment extends Fragment implements View.OnClickListener {
                 String dob = etDob.getText().toString();
                 String fullName =  etName.getText().toString();
                 String contact = etContact.getText().toString().trim();
-
+                //int phnumber= Integer.parseInt(etContact.getText().toString());
+                //valdatn
+                if ((contact.length()>11 || contact.length()<10)){
+                    etContact.setError("enter valid phone number");
+                    return;
+                }
                 String firstName = "", lastName = "";
                 // first convert name to first name and last name
                 String[] name = Utility.splitName(getActivity(),fullName);
