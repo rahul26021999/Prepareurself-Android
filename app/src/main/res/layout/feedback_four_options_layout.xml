@@ -2,24 +2,25 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
-    android:layout_height="wrap_content"
+    android:layout_height="match_parent"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     tools:context=".feedback.ui.FeedbackFragment"
     android:background="@color/colorPrimaryDark"
     android:orientation="vertical"
     android:id="@+id/feedback_four_options_lin"
-    android:weightSum="3">
+    android:weightSum="2">
 
     <RelativeLayout
         android:layout_width="match_parent"
-        android:layout_height="300dp"
-        android:layout_margin="30dp"
-        android:layout_weight="0.5"
-        >
+        android:layout_height="0dp"
+        android:layout_weight="1">
         <TextView
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="Do you like our app servces n the prepareurself?"
+            android:paddingEnd="20dp"
+            android:paddingStart="20dp"
+            android:lineSpacingExtra="7dp"
+            tools:text="Do you like our app servces n the prepareurself?"
             android:layout_centerInParent="true"
             android:layout_margin="10dp"
             android:textSize="20sp"
@@ -29,22 +30,21 @@
     </RelativeLayout>
     <RelativeLayout
         android:layout_width="match_parent"
-        android:layout_height="500dp"
-        android:background="@drawable/feedbacklayoutbg"
-        android:layout_weight="2.5">
+        android:layout_height="0dp"
+        android:layout_weight="1"
+        android:padding="10dp"
+        android:background="@drawable/feedbacklayoutbg">
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:orientation="horizontal"
             android:weightSum="2"
-            android:id="@+id/l1"
-            >
+            android:id="@+id/l1">
             <androidx.cardview.widget.CardView
                 android:id="@+id/cd1"
                 android:layout_width="100dp"
                 android:layout_height="100dp"
-                app:cardBackgroundColor="@color/grey"
-                android:layout_margin="20dp"
+                android:layout_margin="10dp"
                 android:layout_weight="1"
                 app:cardCornerRadius="10dp">
 
@@ -55,16 +55,15 @@
                         android:layout_width="15dp"
                         android:layout_height="15dp"
                         android:id="@+id/imagetick1"
-                        android:background="@mipmap/ic_tick"
+                        android:background="@drawable/check_icon"
                         android:layout_alignParentEnd="true"
-                        android:layout_margin="5dp"
-                        android:visibility="visible"
+                        android:layout_margin="10dp"
+                        android:visibility="gone"
                         />
                     <ImageView
                         android:layout_width="50dp"
                         android:layout_height="50dp"
                         android:id="@+id/imageview1"
-                        android:layout_below="@+id/imagetick1"
                         android:layout_centerInParent="true"
                         />
                     <TextView
@@ -84,8 +83,8 @@
                 android:id="@+id/cd2"
                 android:layout_width="100dp"
                 android:layout_height="100dp"
-                app:cardBackgroundColor="@color/grey"
-                android:layout_margin="20dp"
+                android:layout_margin="10dp"
+                app:cardCornerRadius="10dp"
                 android:layout_weight="1">
 
                 <RelativeLayout
@@ -95,16 +94,14 @@
                         android:layout_width="15dp"
                         android:layout_height="15dp"
                         android:id="@+id/imagetick2"
-                        android:background="@mipmap/ic_tick"
-                        android:layout_alignParentEnd="true"
-                        android:layout_margin="5dp"
                         android:visibility="gone"
-                        />
+                        android:background="@drawable/check_icon"
+                        android:layout_alignParentEnd="true"
+                        android:layout_margin="10dp" />
                     <ImageView
                         android:layout_width="50dp"
                         android:layout_height="50dp"
                         android:id="@+id/imageview2"
-                        android:layout_below="@+id/imagetick2"
                         android:layout_centerInParent="true"
                         />
                     <TextView
@@ -131,9 +128,8 @@
                 android:id="@+id/cd3"
                 android:layout_width="100dp"
                 android:layout_height="100dp"
-                app:cardBackgroundColor="@color/grey"
-                android:layout_margin="20dp"
                 android:layout_weight="1"
+                android:layout_margin="10dp"
                 app:cardCornerRadius="10dp">
 
                 <RelativeLayout
@@ -143,17 +139,16 @@
                         android:layout_width="15dp"
                         android:layout_height="15dp"
                         android:id="@+id/imagetick3"
-                        android:background="@mipmap/ic_tick"
+                        android:background="@drawable/check_icon"
                         android:layout_alignParentEnd="true"
                         android:layout_margin="5dp"
-                        android:visibility="visible"
+                        android:visibility="gone"
                         />
 
                     <ImageView
                         android:layout_width="50dp"
                         android:layout_height="50dp"
                         android:id="@+id/imageview3"
-                        android:layout_below="@+id/imagetick3"
                         android:layout_centerInParent="true"/>
 
                     <TextView
@@ -172,9 +167,9 @@
             <androidx.cardview.widget.CardView
                 android:id="@+id/cd4"
                 android:layout_width="100dp"
+                android:layout_margin="10dp"
                 android:layout_height="100dp"
-                app:cardBackgroundColor="@color/grey"
-                android:layout_margin="20dp"
+                app:cardCornerRadius="10dp"
                 android:layout_weight="1">
 
                 <RelativeLayout
@@ -184,17 +179,16 @@
                         android:layout_width="15dp"
                         android:layout_height="15dp"
                         android:id="@+id/imagetick4"
-                        android:background="@mipmap/ic_tick"
-                        android:layout_alignParentEnd="true"
-                        android:layout_margin="5dp"
                         android:visibility="gone"
+                        android:background="@drawable/check_icon"
+                        android:layout_alignParentEnd="true"
+                        android:layout_margin="10dp"
                         />
 
                     <ImageView
                         android:layout_width="50dp"
                         android:layout_height="50dp"
                         android:id="@+id/imageview4"
-                        android:layout_below="@+id/imagetick4"
                         android:layout_centerInParent="true"/>
                     <TextView
                         android:id="@+id/tv_bad"

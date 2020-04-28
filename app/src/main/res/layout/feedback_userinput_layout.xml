@@ -2,24 +2,22 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
-    android:layout_height="wrap_content"
+    android:layout_height="match_parent"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     tools:context=".feedback.ui.FeedbackFragment"
     android:background="@color/colorPrimaryDark"
     android:orientation="vertical"
     android:id="@+id/feedback_userinput_lin"
-    android:weightSum="3">
-
+    android:weightSum="2">
     <RelativeLayout
         android:layout_width="match_parent"
-        android:layout_height="300dp"
+        android:layout_height="0dp"
         android:layout_margin="30dp"
-        android:layout_weight="0.5"
-        >
+        android:layout_weight="1">
         <TextView
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="Do you like our app servces n the prepareurself?"
+            tools:text="Do you like our app servces n the prepareurself?"
             android:layout_centerInParent="true"
             android:layout_margin="10dp"
             android:textSize="20sp"
@@ -29,13 +27,14 @@
     </RelativeLayout>
     <RelativeLayout
         android:layout_width="match_parent"
-        android:layout_height="500dp"
+        android:layout_height="0dp"
         android:background="@drawable/feedbacklayoutbg"
-        android:layout_weight="2.5">
+        android:layout_weight="1">
 
         <androidx.cardview.widget.CardView
             android:layout_width="match_parent"
-            android:layout_height="100dp"
+            android:layout_height="150dp"
+            app:cardCornerRadius="20dp"
             android:layout_margin="30dp">
 
             <RelativeLayout
@@ -44,12 +43,15 @@
 
                 <EditText
                     android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
+                    android:layout_height="match_parent"
                     android:layout_centerInParent="true"
+                    android:inputType="textLongMessage"
+                    android:gravity="top|start"
+                    android:backgroundTint="@color/white"
+                    android:hint="Please Type your Feedback here..."
+                    android:padding="20dp"
                     android:focusable="true"
-                    android:layout_marginEnd="10dp"
-                    android:id="@+id/user_feedback_input_et"
-                    android:layout_marginStart="10dp"/>
+                    android:id="@+id/user_feedback_input_et" />
 
             </RelativeLayout>
 

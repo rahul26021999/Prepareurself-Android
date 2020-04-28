@@ -340,8 +340,5 @@ public class FeedbackFragment extends Fragment {
                 .into(imageView4);
 
 
-
-
-
     }
 }

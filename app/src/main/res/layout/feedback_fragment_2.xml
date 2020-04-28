@@ -5,29 +5,38 @@
     android:layout_height="match_parent"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     tools:context=".feedback.ui.FeedbackFragment"
-    android:orientation="vertical"
-    android:weightSum="3">
+    android:orientation="vertical">
 
-    <include layout="@layout/feedback_four_options_layout"
-        android:visibility="gone"/>
-    <include layout="@layout/feedback_two_options_layout"
-        android:visibility="gone"/>
-    <include layout="@layout/feedback_userinput_layout"
-        android:visibility="gone"/>
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
 
+        <include layout="@layout/feedback_four_options_layout"
+            android:visibility="gone"/>
+tc        <include layout="@layout/feedback_two_options_layout"
+            android:visibility="gone"/>
+        <include layout="@layout/feedback_userinput_layout"
+            android:visibility="gone"/>
+
+    </LinearLayout>
+
+    <include layout="@layout/layout_topbar"
+        android:layout_width="match_parent"
+        android:id="@+id/toolbar"
+        android:layout_alignParentTop="true"
+        android:layout_height="wrap_content"/>
 
     <Button
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:id="@+id/btn_next"
         android:textSize="20sp"
-        android:layout_marginBottom="50dp"
+        android:layout_marginBottom="30dp"
         android:layout_marginStart="30dp"
         android:layout_marginEnd="30dp"
         android:layout_alignParentBottom="true"
         android:text="NEXT"
         android:background="@drawable/button_custom"
-        android:textColor="@color/white"
-        android:padding="5dp"/>
+        android:textColor="@color/white" />
 
 </RelativeLayout>
