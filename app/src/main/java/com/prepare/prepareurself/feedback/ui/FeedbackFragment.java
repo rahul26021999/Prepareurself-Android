@@ -46,6 +46,7 @@ public class FeedbackFragment extends Fragment {
     private CardView verygood_cd , good_cd, fair_cd, bad_cd;
     private TextView tvOption1, tvOption2, tvOption3, tvOption4, tvQuestion;
 
+    private ImageView backBtn;
     private TextView tvQuestion_3;
     private EditText editText;
 
@@ -68,10 +69,17 @@ public class FeedbackFragment extends Fragment {
         View v=inflater.inflate(R.layout.feedback_fragment_2, container, false);
        // viewPager = v.findViewById(R.id.feedback_pager);
         nextButton = v.findViewById(R.id.btn_next);
-
+        backBtn=v.findViewById(R.id.backBtn);
         bindFourOptionsLayout(v);
         binTwoOptionsLayout(v);
         bindUserInputOptionsLayout(v);
+
+        backBtn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                getActivity().onBackPressed();
+            }
+        });
 
         return  v;
     }

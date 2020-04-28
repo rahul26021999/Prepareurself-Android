@@ -53,8 +53,8 @@
                     android:layout_width="match_parent"
                     android:layout_height="match_parent">
                     <ImageView
-                        android:layout_width="15dp"
-                        android:layout_height="15dp"
+                        android:layout_width="20dp"
+                        android:layout_height="20dp"
                         android:id="@+id/imagetick1_2"
                         android:visibility="gone"
                         android:background="@drawable/check_icon"
@@ -85,8 +85,8 @@
                     android:layout_width="match_parent"
                     android:layout_height="match_parent">
                     <ImageView
-                        android:layout_width="15dp"
-                        android:layout_height="15dp"
+                        android:layout_width="20dp"
+                        android:layout_height="20dp"
                         android:visibility="gone"
                         android:id="@+id/imagetick2_2"
                         android:background="@drawable/check_icon"
