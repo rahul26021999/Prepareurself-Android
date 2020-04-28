@@ -20,89 +20,109 @@
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:paddingStart="20dp"
+            android:paddingEnd="20dp"
             android:orientation="vertical">
 
-
-        <TextView
+        <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:id="@+id/textbox1"
-            android:layout_margin="10dp"
-            android:text="@string/aboutustext2"
-            android:textStyle="italic"
-            android:textColor="@color/colorPrimaryDark"
-            android:fontFamily="@font/poppins_semibold"
-            android:textAlignment="center"
-            android:textSize="17dp"
-            />
-        <TextView
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:id="@+id/subhead1"
-            android:layout_margin="10dp"
-            android:layout_below="@+id/textbox1"
-            android:text="@string/aboutustext1"
-            android:fontFamily="@font/roboto_regular"
-            android:textAlignment="center"
-            android:textSize="15dp"
-            />
-        <TextView
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:id="@+id/subhead2"
+            android:background="@drawable/circularbordersolid"
+            android:orientation="vertical"
             android:layout_marginTop="20dp"
-            android:layout_marginEnd="80dp"
-            android:layout_marginStart="80dp"
-            android:layout_below="@+id/subhead1"
-            android:text="Our Vision"
-            android:textStyle="italic"
-            android:textColor="@color/white"
-            android:fontFamily="@font/poppins_semibold"
-            android:textAlignment="center"
-            android:background="@drawable/updatepasswordbg"
-            android:textSize="20dp"
-            />
+            android:padding="20dp">
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="match_parent"
+                android:textStyle="bold"
+                android:textSize="18sp"
+                android:layout_marginTop="5dp"
+                android:textColor="@color/colorPrimaryDark"
+                android:layout_gravity="center_horizontal"
+                android:text="About App"/>
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="15dp"
+                android:lineSpacingExtra="7dp"
+                android:text="@string/aboutus"
+                android:fontFamily="@font/roboto_regular"
+                android:textAlignment="center"
+                android:textSize="15dp" />
 
-        <TextView
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:id="@+id/textbox2"
-            android:text="@string/aboutustext3"
-            android:layout_below="@id/subhead2"
-            android:layout_margin="10dp"
-            android:fontFamily="@font/roboto_regular"
-            android:textAlignment="center"
-            android:textSize="15dp"
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="20dp"
+                android:padding="20dp"
+                android:text="@string/tagline"
+                android:textAllCaps="true"
+                android:textStyle="italic|bold"
+                android:textColor="@color/colorPrimaryDark"
+                android:fontFamily="@font/proximanovaregular"
+                android:textAlignment="center"
+                android:textSize="14dp"
+                />
+        </LinearLayout>
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:background="@drawable/circularbordersolid"
+                android:orientation="vertical"
+                android:layout_marginTop="20dp"
+                android:padding="20dp">
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="match_parent"
+                    android:textStyle="bold"
+                    android:layout_marginTop="5dp"
+                    android:textSize="18sp"
+                    android:textColor="@color/colorPrimaryDark"
+                    android:layout_gravity="center_horizontal"
+                    android:text="Vision"/>
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="15dp"
+                    android:lineSpacingExtra="7dp"
+                    android:text="@string/vision"
+                    android:fontFamily="@font/roboto_regular"
+                    android:textAlignment="center"
+                    android:textSize="15dp" />
 
-            />
-        <TextView
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:id="@+id/subhead3"
-            android:layout_marginTop="20dp"
-            android:layout_marginEnd="80dp"
-            android:layout_marginStart="80dp"
-            android:layout_below="@+id/textbox2"
-            android:text="About App"
-            android:textStyle="italic"
-            android:textColor="@color/white"
-            android:fontFamily="@font/poppins_semibold"
-            android:textAlignment="center"
-            android:background="@drawable/updatepasswordbg"
-            android:textSize="20dp"
-            />
-        <TextView
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:id="@+id/textbox3"
-            android:text="@string/aboutustext4"
-            android:layout_below="@id/subhead3"
-            android:layout_margin="10dp"
-            android:fontFamily="@font/roboto_regular"
-            android:textAlignment="center"
-            android:textSize="15dp"
+            </LinearLayout>
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:background="@drawable/circularbordersolid"
+                android:orientation="vertical"
+                android:layout_marginBottom="10dp"
+                android:layout_marginTop="20dp"
+                android:padding="20dp">
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="match_parent"
+                    android:textStyle="bold"
+                    android:layout_marginTop="5dp"
+                    android:textSize="18sp"
+                    android:textColor="@color/colorPrimaryDark"
+                    android:layout_gravity="center_horizontal"
+                    android:text="Sources"/>
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="15dp"
+                    android:lineSpacingExtra="7dp"
+                    android:text="@string/sources"
+                    android:fontFamily="@font/roboto_regular"
+                    android:textAlignment="center"
+                    android:textSize="15dp" />
 
-            />
+            </LinearLayout>
+
+
+
+
 
         </LinearLayout>
     </ScrollView>
