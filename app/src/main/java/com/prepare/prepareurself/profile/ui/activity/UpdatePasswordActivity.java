@@ -106,6 +106,7 @@ public class UpdatePasswordActivity extends AppCompatActivity {
                                     if (updatePasswordResponseModel.getError_code() == 0){
                                         prefManager.saveString(Constants.JWTTOKEN,updatePasswordResponseModel.getToken());
                                         Utility.showToast(UpdatePasswordActivity.this,"Password updates successfully");
+                                        finish();
                                     }else{
                                         Utility.showToast(UpdatePasswordActivity.this,updatePasswordResponseModel.getMessage());
                                     }
