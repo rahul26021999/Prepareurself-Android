@@ -22,6 +22,9 @@ import android.widget.TextView;
 
 import com.bumptech.glide.GenericTransitionOptions;
 import com.bumptech.glide.Glide;
+import com.google.android.gms.ads.AdListener;
+import com.google.android.gms.ads.AdRequest;
+import com.google.android.gms.ads.AdView;
 import com.prepare.prepareurself.R;
 import com.prepare.prepareurself.authentication.ui.AuthenticationActivity;
 import com.prepare.prepareurself.courses.data.model.ProjectResponseModel;
@@ -65,6 +68,7 @@ public class ProjectsActivity extends BaseActivity implements PlaylistVideosRvAd
     private String courseName;
 
     private TextView level;
+    private AdView mAdView;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -86,7 +90,7 @@ public class ProjectsActivity extends BaseActivity implements PlaylistVideosRvAd
         tvViewPlaylist = findViewById(R.id.tv_viewfullplaylist);
         progressBar = findViewById(R.id.loading_project);
         level=findViewById(R.id.level);
-
+        mAdView=findViewById(R.id.adView);
         title=findViewById(R.id.title);
 
         recyclerView.setVisibility(View.GONE);
@@ -97,6 +101,8 @@ public class ProjectsActivity extends BaseActivity implements PlaylistVideosRvAd
 
         backBtn.setOnClickListener(this);
         prefManager = new PrefManager(this);
+
+        setGoogleAdd();
 
         Intent intent = getIntent();
 
@@ -191,6 +197,46 @@ public class ProjectsActivity extends BaseActivity implements PlaylistVideosRvAd
 
     }
 
+    private void setGoogleAdd() {
+        AdRequest adRequest = new AdRequest.Builder().build();
+        mAdView.loadAd(adRequest);
+
+        mAdView.setAdListener(new AdListener() {
+            @Override
+            public void onAdLoaded() {
+                // Code to be executed when an ad finishes loading.
+            }
+
+            @Override
+            public void onAdFailedToLoad(int errorCode) {
+                // Code to be executed when an ad request fails.
+            }
+
+            @Override
+            public void onAdOpened() {
+                // Code to be executed when an ad opens an overlay that
+                // covers the screen.
+            }
+
+            @Override
+            public void onAdClicked() {
+                // Code to be executed when the user clicks on an ad.
+            }
+
+            @Override
+            public void onAdLeftApplication() {
+                // Code to be executed when the user has left the app.
+            }
+
+            @Override
+            public void onAdClosed() {
+                // Code to be executed when the user is about to return
+                // to the app after tapping on an ad.
+            }
+        });
+
+    }
+    
     private void callProjectFromRemote(int projectId) {
         viewModel.getProjectByIdFromRemote(prefManager.getString(Constants.JWTTOKEN),projectId)
                 .observe(this, new Observer<ProjectResponseModel>() {

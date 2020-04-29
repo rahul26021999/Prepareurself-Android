@@ -19,6 +19,9 @@ import android.view.View;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+import com.google.android.gms.ads.AdListener;
+import com.google.android.gms.ads.AdRequest;
+import com.google.android.gms.ads.AdView;
 import com.google.android.youtube.player.YouTubeBaseActivity;
 import com.google.android.youtube.player.YouTubeInitializationResult;
 import com.google.android.youtube.player.YouTubePlayer;
@@ -71,6 +74,7 @@ public class VideoActivity extends YouTubeBaseActivity implements YouTubePlayer.
     private RecyclerView rvOtherVideos;
     private TextView tvRelatedVideosHeader;
     private PrefManager prefManager;
+    private AdView mAdView;
 
     @Nullable
     private ViewModelStore viewModelStore = null;
@@ -93,11 +97,14 @@ public class VideoActivity extends YouTubeBaseActivity implements YouTubePlayer.
         tvRelatedVideosHeader = findViewById(R.id.tv_related_header);
         //fnd
         tvPlaylst= findViewById(R.id.tvPlaylst);
+        mAdView=findViewById(R.id.adView);
 
 
         prefManager = new PrefManager(this);
 
         Intent intent = getIntent();
+
+        setGoogleAdd();
 
         if (intent.getBooleanExtra(Constants.SINGLEVIDEO, false)){
 
@@ -192,6 +199,8 @@ public class VideoActivity extends YouTubeBaseActivity implements YouTubePlayer.
             tvRelatedVideosHeader.setVisibility(View.VISIBLE);
             rvOtherVideos.setVisibility(View.VISIBLE);
             tvPlaylst.setVisibility(View.GONE);
+
+            mAdView.setVisibility(View.VISIBLE);
 
             final RelatedVideosRvAdapter relatedVideosRvAdapter = new RelatedVideosRvAdapter(VideoActivity.this, this);
             LinearLayoutManager layoutManager = new LinearLayoutManager(this, RecyclerView.HORIZONTAL, false);
@@ -304,6 +313,47 @@ public class VideoActivity extends YouTubeBaseActivity implements YouTubePlayer.
                 });
 
     }
+
+    private void setGoogleAdd() {
+        AdRequest adRequest = new AdRequest.Builder().build();
+        mAdView.loadAd(adRequest);
+
+        mAdView.setAdListener(new AdListener() {
+            @Override
+            public void onAdLoaded() {
+                // Code to be executed when an ad finishes loading.
+            }
+
+            @Override
+            public void onAdFailedToLoad(int errorCode) {
+                // Code to be executed when an ad request fails.
+            }
+
+            @Override
+            public void onAdOpened() {
+                // Code to be executed when an ad opens an overlay that
+                // covers the screen.
+            }
+
+            @Override
+            public void onAdClicked() {
+                // Code to be executed when the user clicks on an ad.
+            }
+
+            @Override
+            public void onAdLeftApplication() {
+                // Code to be executed when the user has left the app.
+            }
+
+            @Override
+            public void onAdClosed() {
+                // Code to be executed when the user is about to return
+                // to the app after tapping on an ad.
+            }
+        });
+
+    }
+
 
     private void hideShareAndLike() {
 
