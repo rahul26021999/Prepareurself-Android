@@ -105,7 +105,7 @@ public class ProjectsActivity extends AppCompatActivity implements PlaylistVideo
             Log.d("project_share", intent.getData().toString());
             String[] tempData = intent.getData().toString().split("&");
             int id = Integer.parseInt(tempData[1].split("id=")[1]);
-           // courseName = tempData[2].split("courseName=")[1];
+            courseName = tempData[2].split("courseName=")[1];
 
 
 
@@ -114,6 +114,7 @@ public class ProjectsActivity extends AppCompatActivity implements PlaylistVideo
             if (!prefManager.getBoolean(Constants.ISLOGGEDIN)){
                 Intent loginIntent = new Intent(ProjectsActivity.this, AuthenticationActivity.class);
                 loginIntent.putExtra(Constants.PROJECTID, id);
+                loginIntent.putExtra(Constants.COURSENAME, courseName);
                 startActivity(loginIntent);
                 finish();
             }else {
@@ -123,6 +124,7 @@ public class ProjectsActivity extends AppCompatActivity implements PlaylistVideo
 
         }else if (intent.getBooleanExtra(Constants.DEEPSHAREPROECTAFTERLOGIN, false)){
             projectId = intent.getIntExtra(Constants.PROJECTID,-1);
+            courseName = intent.getStringExtra(Constants.COURSENAME);
             callProjectFromRemote(projectId);
         }else{
             projectId = intent.getIntExtra(Constants.PROJECTID,-1);

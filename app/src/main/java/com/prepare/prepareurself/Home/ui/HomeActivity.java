@@ -174,7 +174,9 @@ public class HomeActivity extends AppCompatActivity implements NavigationView.On
                 R.drawable.icon_1);
         try {
             Uri uri = Utility.getUriOfBitmap(icon, this);
-            String text = "prepareurself.in/install";
+            String text = "Prepareurself is preparing me for my internships. I found some best and amazing Project works, a wide range of latest Tech-Stacks and some best Resources from internet at one place.\n" +
+                    "Checkout our prepareurself app.\n"+
+                    "prepareurself.in/install";
             Utility.shareContent(this,uri, text);
         } catch (IOException e) {
             e.printStackTrace();
