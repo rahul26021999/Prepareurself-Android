@@ -205,9 +205,9 @@ public class ProfileFragment extends Fragment implements View.OnClickListener {
                             tvContact.setText(userContact);
                         }
                         if(userModel.getProfile_image()==null)
-                            editimg.setImageDrawable(getActivity().getResources().getDrawable(R.drawable.ic_add_a_photo_black_24dp));
+                            editimg.setImageResource(R.drawable.ic_add_a_photo_black_24dp);
                         else
-                            editimg.setImageDrawable(getActivity().getResources().getDrawable(R.drawable.ic_iconfinder_circle_edit_pen_pencil_glyph_763463));
+                            editimg.setImageResource(R.drawable.ic_iconfinder_circle_edit_pen_pencil_glyph_763463);
 
 
                         mUserModel = userModel;
