@@ -16,6 +16,7 @@
         android:supportsRtl="true"
         android:theme="@style/AppTheme"
         android:usesCleartextTraffic="true">
+
         <activity android:name=".SplashActivity"
             android:theme="@style/SplashTheme">
             <intent-filter>
@@ -123,8 +124,7 @@
         <activity android:name=".utils.QuizBaseActivity" />
         <activity android:name=".quiz.QuizActivity" />
         <activity
-            android:name=".authentication.ui.AuthenticationActivity"
-            >
+            android:name=".authentication.ui.AuthenticationActivity">
             <intent-filter>
                 <action android:name="android.intent.action.VIEW" />
 

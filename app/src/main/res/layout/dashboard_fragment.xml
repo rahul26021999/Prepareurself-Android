@@ -90,7 +90,9 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="20dp"
-                ads:adSize="BANNER"
+                ads:adSize="LARGE_BANNER"
+                android:backgroundTint="@color/white"
+                android:background="@color/white"
                 android:layout_gravity="center_horizontal"
                 ads:adUnitId="@string/bannertestAds">
             </com.google.android.gms.ads.AdView>
