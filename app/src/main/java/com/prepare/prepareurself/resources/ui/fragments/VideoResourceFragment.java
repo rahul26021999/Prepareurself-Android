@@ -21,6 +21,7 @@ import android.widget.AbsListView;
 import android.widget.TextView;
 
 import com.prepare.prepareurself.resources.data.model.ResourceModel;
+import com.prepare.prepareurself.resources.data.model.ResourceViewsResponse;
 import com.prepare.prepareurself.resources.data.model.ResourcesResponse;
 import com.prepare.prepareurself.resources.ui.activity.ResourcesActivity;
 import com.prepare.prepareurself.resources.ui.adapter.VideoResoursesRvAdapter;
@@ -146,10 +147,24 @@ public class VideoResourceFragment extends Fragment implements VideoResoursesRvA
     }
 
     @Override
-    public void videoClicked(ResourceModel videoResources, String videoCode, Bitmap bitmap) {
+    public void videoClicked(final ResourceModel videoResources, String videoCode, Bitmap bitmap) {
 
-        if (videoResources.getView() == 0)
-            mViewModel.resourceViewed(prefManager.getString(Constants.JWTTOKEN),videoResources.getId());
+        if (videoResources.getView() == 0){
+            if (getActivity()!=null){
+                mViewModel.resourceViewed(prefManager.getString(Constants.JWTTOKEN),videoResources.getId())
+                        .observe(getActivity(), new Observer<ResourceViewsResponse>() {
+                            @Override
+                            public void onChanged(ResourceViewsResponse resourceViewsResponse) {
+                                if (resourceViewsResponse!=null){
+                                    if (resourceViewsResponse.getError_code() == 0){
+                                        videoResources.setView(1);
+                                        mViewModel.saveResource(videoResources);
+                                    }
+                                }
+                            }
+                        });
+            }
+        }
 
         Intent intent = new Intent(getActivity(), VideoActivity.class);
         intent.putExtra(Constants.VIDEOCODE,videoCode);

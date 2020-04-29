@@ -29,6 +29,7 @@ import com.prepare.prepareurself.courses.data.model.ProjectsModel;
 import com.prepare.prepareurself.courses.ui.adapters.PlaylistVideosRvAdapter;
 import com.prepare.prepareurself.courses.viewmodels.ProjectsViewModel;
 import com.prepare.prepareurself.dashboard.data.model.CourseModel;
+import com.prepare.prepareurself.resources.data.model.ResourceViewsResponse;
 import com.prepare.prepareurself.utils.Constants;
 import com.prepare.prepareurself.utils.PrefManager;
 import com.prepare.prepareurself.utils.Utility;
@@ -131,10 +132,22 @@ public class ProjectsActivity extends AppCompatActivity implements PlaylistVideo
             if (projectId != -1){
                 viewModel.getProjectById(projectId).observe(this, new Observer<ProjectsModel>() {
                     @Override
-                    public void onChanged(ProjectsModel projectsModel) {
+                    public void onChanged(final ProjectsModel projectsModel) {
                         if (projectsModel!=null){
                             if (projectsModel.getView()==0){
-                                viewModel.viewProject(prefManager.getString(Constants.JWTTOKEN),projectsModel.getId());
+                                viewModel.viewProject(prefManager.getString(Constants.JWTTOKEN),projectsModel.getId())
+                                        .observe(ProjectsActivity.this, new Observer<ResourceViewsResponse>() {
+                                            @Override
+                                            public void onChanged(ResourceViewsResponse resourceViewsResponse) {
+                                                if (resourceViewsResponse!=null){
+                                                    if (resourceViewsResponse.getError_code() == 0){
+                                                        Log.d("project_viewed", "project viewd");
+                                                        projectsModel.setView(1);
+                                                        viewModel.saveProject(projectsModel);
+                                                    }
+                                                }
+                                            }
+                                        });
                             }
                             updateUIWithProject(projectsModel);
                         }else{
@@ -181,11 +194,23 @@ public class ProjectsActivity extends AppCompatActivity implements PlaylistVideo
         viewModel.getProjectByIdFromRemote(prefManager.getString(Constants.JWTTOKEN),projectId)
                 .observe(this, new Observer<ProjectResponseModel>() {
                     @Override
-                    public void onChanged(ProjectResponseModel projectResponseModel) {
+                    public void onChanged(final ProjectResponseModel projectResponseModel) {
                         if (projectResponseModel!=null){
                             if (projectResponseModel.getError_code() == 0 && projectResponseModel.getProject()!=null){
                                 if (projectResponseModel.getProject().getView()==0){
-                                    viewModel.viewProject(prefManager.getString(Constants.JWTTOKEN),projectResponseModel.getProject().getId());
+                                    viewModel.viewProject(prefManager.getString(Constants.JWTTOKEN),projectResponseModel.getProject().getId())
+                                            .observe(ProjectsActivity.this, new Observer<ResourceViewsResponse>() {
+                                                @Override
+                                                public void onChanged(ResourceViewsResponse resourceViewsResponse) {
+                                                    if (resourceViewsResponse!=null){
+                                                        if (resourceViewsResponse.getError_code() == 0){
+                                                            Log.d("project_viewed", "project viewd");
+                                                            projectResponseModel.getProject().setView(1);
+                                                            viewModel.saveProject(projectResponseModel.getProject());
+                                                        }
+                                                    }
+                                                }
+                                            });
                                 }
                                 updateUIWithProject(projectResponseModel.getProject());
                             }else{

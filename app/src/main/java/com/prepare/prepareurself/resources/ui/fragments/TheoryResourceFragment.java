@@ -21,6 +21,7 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.prepare.prepareurself.resources.data.model.ResourceModel;
+import com.prepare.prepareurself.resources.data.model.ResourceViewsResponse;
 import com.prepare.prepareurself.resources.data.model.ResourcesResponse;
 import com.prepare.prepareurself.resources.ui.activity.ResourcesActivity;
 import com.prepare.prepareurself.resources.ui.adapter.TheoryResourcesRvAdapter;
@@ -145,10 +146,19 @@ public class TheoryResourceFragment extends Fragment implements TheoryResourcesR
     }
 
     @Override
-    public void onResourceClicked(ResourceModel resource) {
+    public void onResourceClicked(final ResourceModel resource) {
         Utility.redirectUsingCustomTab(getActivity(),resource.getLink());
-        if (resource.getView()==0){
-            mViewModel.resourceViewed(prefManager.getString(Constants.JWTTOKEN),resource.getId());
+        if (resource.getView()==0 && getActivity()!=null){
+            mViewModel.resourceViewed(prefManager.getString(Constants.JWTTOKEN),resource.getId())
+                    .observe(getActivity(), new Observer<ResourceViewsResponse>() {
+                        @Override
+                        public void onChanged(ResourceViewsResponse resourceViewsResponse) {
+                            if (resourceViewsResponse!=null && resourceViewsResponse.getError_code() == 0){
+                                resource.setView(1);
+                                mViewModel.saveResource(resource);
+                            }
+                        }
+                    });
         }
 
     }

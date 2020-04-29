@@ -9,6 +9,7 @@ import androidx.lifecycle.MutableLiveData;
 
 import com.prepare.prepareurself.resources.data.db.repository.ResourcesDbRepository;
 import com.prepare.prepareurself.resources.data.model.ResourceModel;
+import com.prepare.prepareurself.resources.data.model.ResourceViewsResponse;
 import com.prepare.prepareurself.resources.data.model.ResourcesResponse;
 import com.prepare.prepareurself.resources.data.repository.ResourceRespository;
 
@@ -29,8 +30,8 @@ public class ResourceViewModel extends AndroidViewModel {
         resourcesDbRepository = new ResourcesDbRepository(application);
     }
 
-    public void resourceViewed(String token, int resourceId){
-        resourceRespository.resourceViewed(token,resourceId);
+    public LiveData<ResourceViewsResponse> resourceViewed(String token, int resourceId){
+        return resourceRespository.resourceViewed(token,resourceId);
     }
     // create like method
     public  void  resourcesLiked(String token, int resourceId, int like){
@@ -54,4 +55,7 @@ public class ResourceViewModel extends AndroidViewModel {
         return listLiveData;
     }
 
+    public void saveResource(ResourceModel videoResources) {
+        resourcesDbRepository.insertResource(videoResources);
+    }
 }
