@@ -272,9 +272,9 @@ public class ProjectsActivity extends AppCompatActivity implements PlaylistVideo
         cardImageView.setOnClickListener(this);
     }
 
-    private void loadCardImageViewWithVideo(final String videoCode) {
+    private void loadCardImageViewWithVideo(final String v) {
 
-        viewModel.fetchVideoDetails(videoCode).observe(this, new Observer<SingleVIdeoItemWrapper>() {
+        viewModel.fetchVideoDetails(v).observe(this, new Observer<SingleVIdeoItemWrapper>() {
             @Override
             public void onChanged(final SingleVIdeoItemWrapper singleVIdeoItemWrapper) {
 
@@ -283,6 +283,7 @@ public class ProjectsActivity extends AppCompatActivity implements PlaylistVideo
                     progressBar.setVisibility(View.GONE);
                     recyclerView.setVisibility(View.GONE);
                     tvViewPlaylist.setVisibility(View.GONE);
+                    videoCode = v;
                     tvCardVideoTitle.setText(singleVIdeoItemWrapper.getSnippet().getTitle());
                     videoTitle = singleVIdeoItemWrapper.getSnippet().getTitle();
                     videoDescription = singleVIdeoItemWrapper.getSnippet().getDescription();
