@@ -159,7 +159,6 @@ public class ProjectsRvAdapter extends RecyclerView.Adapter<ProjectsRvAdapter.Pr
                         .load(Constants.PROJECTSIMAGEBASEURL + projectsModel.getImage_url())
                         .transition(GenericTransitionOptions.<Drawable>with(Utility.getAnimationObject()))
                         .placeholder(R.drawable.placeholder)
-                        .error(R.drawable.placeholder)
                         .into(imageView);
             }
 

@@ -163,7 +163,6 @@ public class TheoryResourcesRvAdapter extends RecyclerView.Adapter<TheoryResourc
                         .placeholder(R.drawable.placeholder)
                         .override(400,400)
                         .transition(GenericTransitionOptions.<Drawable>with(Utility.getAnimationObject()))
-                        .error(R.drawable.ic_image_loading_error)
                         .into(imageView);
             }
 

@@ -117,7 +117,6 @@ public class ResourcesRvAdapter extends RecyclerView.Adapter<ResourcesRvAdapter.
                         .load(Constants.TOPICSBASEURL + topicsModel.getImage_url())
                         .transition(GenericTransitionOptions.<Drawable>with(Utility.getAnimationObject()))
                         .placeholder(R.drawable.placeholder)
-                        .error(R.drawable.placeholder)
                         .into(imageView);
             }
 

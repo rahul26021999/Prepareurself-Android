@@ -89,7 +89,6 @@ public class PlaylistVideosRvAdapter extends RecyclerView.Adapter<PlaylistVideos
                         .load(contentDetails.getSnippet().getThumbnails().getHigh().getUrl())
                         .transition(GenericTransitionOptions.<Drawable>with(Utility.getAnimationObject()))
                         .placeholder(R.drawable.placeholder)
-                        .error(R.drawable.ic_image_loading_error)
                         .into(youTubeThumbnailView);
             }
 

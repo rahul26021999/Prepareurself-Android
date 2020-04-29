@@ -90,7 +90,6 @@ public class ProjectsHorizontalRvAdapter extends RecyclerView.Adapter<ProjectsHo
                         .diskCacheStrategy(DiskCacheStrategy.RESOURCE)
                         .override(500,500)
                         .transition(GenericTransitionOptions.<Drawable>with(Utility.getAnimationObject()))
-                        .error(R.drawable.placeholder)
                         .into(imageView);
             }
             tvCourseName.setText(projectsModel.getName());
