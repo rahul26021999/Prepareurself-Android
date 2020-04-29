@@ -22,6 +22,8 @@ import com.prepare.prepareurself.utils.Utility;
 public class UpdatePasswordActivity extends AppCompatActivity {
 
     private EditText etOldPassword, etNewPassword, etConfirmPassword;
+
+    TextView btn_backtoLogin;
     private Button btnUpdate;
     private ProfileViewModel viewModel;
 
@@ -42,12 +44,18 @@ public class UpdatePasswordActivity extends AppCompatActivity {
         etNewPassword = findViewById(R.id.et_new_password);
         etConfirmPassword = findViewById(R.id.et_confrm_password);
         btnUpdate = findViewById(R.id.btn_update);
+        btn_backtoLogin = findViewById(R.id.btn_back);
 
 //        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
 //        getSupportActionBar().setDisplayShowHomeEnabled(true);
 //
 //        getSupportActionBar().setTitle("Update Password");
-
+        btn_backtoLogin.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                finish();
+            }
+        });
         btnUpdate.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
