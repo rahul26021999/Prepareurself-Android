@@ -144,6 +144,7 @@ public class ResourcesFragment extends Fragment implements ResourcesRvAdapter.Re
     public void onResourceClicked(TopicsModel topicsModel) {
         Intent intent = new Intent(getActivity(), ResourcesActivity.class);
         intent.putExtra(Constants.TOPICID,topicsModel.getId());
+        intent.putExtra(Constants.COURSEID, topicsModel.getCourse_id());
         startActivity(intent);
     }
 }

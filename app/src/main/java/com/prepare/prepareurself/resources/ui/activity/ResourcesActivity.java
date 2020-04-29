@@ -11,6 +11,7 @@ import android.widget.ImageView;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 
+import com.prepare.prepareurself.dashboard.data.model.CourseModel;
 import com.prepare.prepareurself.resources.ui.fragments.TheoryResourceFragment;
 import com.prepare.prepareurself.resources.ui.fragments.VideoResourceFragment;
 import com.prepare.prepareurself.resources.ui.adapter.SectionsPagerAdapter;
@@ -20,6 +21,7 @@ import com.prepare.prepareurself.utils.Constants;
 import com.prepare.prepareurself.utils.PrefManager;
 import com.prepare.prepareurself.utils.Utility;
 
+import androidx.lifecycle.Observer;
 import androidx.lifecycle.ViewModelProviders;
 import androidx.viewpager.widget.ViewPager;
 import androidx.appcompat.app.AppCompatActivity;
@@ -38,6 +40,7 @@ public class ResourcesActivity extends AppCompatActivity implements View.OnClick
     private TextView tvTopVideo, tvTopTheory,title;
     private ImageView BackBtn;
     public static int topicID;
+    public int courseId;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -79,11 +82,29 @@ public class ResourcesActivity extends AppCompatActivity implements View.OnClick
 
         }else{
             topicID = intent.getIntExtra(Constants.TOPICID,-1);
+            courseId = intent.getIntExtra(Constants.COURSEID, -1);
         }
 
         BackBtn.setOnClickListener(this);
         tvTopVideo.setOnClickListener(this);
         tvTopTheory.setOnClickListener(this);
+
+        if (courseId!=-1){
+            viewModel.getCourseById(courseId)
+                    .observe(ResourcesActivity.this, new Observer<CourseModel>() {
+                        @Override
+                        public void onChanged(CourseModel courseModel) {
+                            if (courseModel!=null){
+                                title.setText(courseModel.getName());
+                            }else{
+                                title.setText("Resource");
+                            }
+                        }
+                    });
+        }else{
+            title.setText("Resource");
+        }
+
 
         viewPager.addOnPageChangeListener(new ViewPager.OnPageChangeListener() {
             @Override
