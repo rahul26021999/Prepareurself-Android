@@ -445,6 +445,7 @@ public class ProfileFragment extends Fragment implements View.OnClickListener {
                 break;
             case R.id.tv_preference_edit:
                 startActivity(new Intent(getActivity(), EditPreferenceActivity.class));
+                getActivity().finish();
                 break;
             case R.id.edit_image_vector:
                 uploadImage();
