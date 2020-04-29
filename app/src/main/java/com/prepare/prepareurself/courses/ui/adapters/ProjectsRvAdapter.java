@@ -152,7 +152,7 @@ public class ProjectsRvAdapter extends RecyclerView.Adapter<ProjectsRvAdapter.Pr
 
         public void bindView(ProjectsModel projectsModel) {
 
-            if(projectsModel.getImage_url().endsWith(".svg")){
+            if(projectsModel.getImage_url()!=null && projectsModel.getImage_url().endsWith(".svg")){
                 Utility.loadSVGImage(context,Constants.PROJECTSIMAGEBASEURL + projectsModel.getImage_url(), imageView);
             }else{
                 Glide.with(context)

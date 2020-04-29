@@ -155,7 +155,7 @@ public class TheoryResourcesRvAdapter extends RecyclerView.Adapter<TheoryResourc
 
         public  void bindview(final ResourceModel resourceModel){
 
-            if (resourceModel.getImage_url().endsWith(".svg")){
+            if (resourceModel.getImage_url()!=null && resourceModel.getImage_url().endsWith(".svg")){
                 Utility.loadSVGImage(context,Constants.THEORYRESOURCEBASEURL + resourceModel.getImage_url(), imageView);
             }else{
                 Glide.with(context).load(

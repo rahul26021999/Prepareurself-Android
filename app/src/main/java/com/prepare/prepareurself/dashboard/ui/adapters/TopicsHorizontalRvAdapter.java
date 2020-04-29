@@ -81,7 +81,7 @@ public class TopicsHorizontalRvAdapter extends RecyclerView.Adapter<TopicsHorizo
 
         public void bindView(Context context, SuggestedTopicsModel topicsModel){
 
-            if (topicsModel.getImage_url().endsWith(".svg")){
+            if (topicsModel.getImage_url()!=null && topicsModel.getImage_url().endsWith(".svg")){
                 Utility.loadSVGImage(context,Constants.TOPICSBASEURL+  topicsModel.getImage_url(), imageView);
             }else{
                 Glide.with(context).load(

@@ -43,7 +43,7 @@ public class SliderAdapter extends SliderViewAdapter<SliderAdapter.SliderAdapter
     public void onBindViewHolder(SliderAdapterVH viewHolder, int position) {
         BannerModel courseModel = mSliderItems.get(position);
 
-        if (courseModel.getImage_url().endsWith(".svg")){
+        if (courseModel.getImage_url()!=null && courseModel.getImage_url().endsWith(".svg")){
             Utility.loadSVGImage(context, courseModel.getImage_url(), viewHolder.imageView);
         }else{
             Glide.with(context)

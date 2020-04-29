@@ -110,7 +110,7 @@ public class ResourcesRvAdapter extends RecyclerView.Adapter<ResourcesRvAdapter.
 //            tvResourceDescription.setText(topicsModel.getDescription());
 //            tvResourceTitle.setText(topicsModel.getTitle());
 
-            if (topicsModel.getImage_url().endsWith(".svg")){
+            if (topicsModel.getImage_url()!=null && topicsModel.getImage_url().endsWith(".svg")){
                 Utility.loadSVGImage(context,Constants.TOPICSBASEURL + topicsModel.getImage_url(), imageView );
             }else{
                 Glide.with(context)

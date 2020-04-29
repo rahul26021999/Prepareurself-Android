@@ -80,7 +80,9 @@ public class PlaylistVideosRvAdapter extends RecyclerView.Adapter<PlaylistVideos
 
         public void bindView(final VideoItemWrapper contentDetails){
 
-            if (contentDetails.getSnippet().getThumbnails().getHigh().getUrl().endsWith(".svg")){
+            String imageUrl = contentDetails.getSnippet().getThumbnails().getHigh().getUrl();
+
+            if (imageUrl!=null && imageUrl.endsWith(".svg")){
                 Utility.loadSVGImage(context,contentDetails.getSnippet().getThumbnails().getHigh().getUrl(), youTubeThumbnailView);
             }else{
                 Glide.with(context)

@@ -200,7 +200,7 @@ public class ProjectsActivity extends AppCompatActivity implements PlaylistVideo
 
     private void updateUIWithProject(ProjectsModel projectsModel) {
 
-        if (projectsModel.getImage_url().endsWith(".svg")){
+        if (projectsModel.getImage_url()!=null && projectsModel.getImage_url().endsWith(".svg")){
             Utility.loadSVGImage(ProjectsActivity.this, Constants.PROJECTSIMAGEBASEURL + projectsModel.getImage_url(), imageProject);
         }else{
             Glide.with(this)
