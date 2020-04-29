@@ -190,28 +190,24 @@ public class FeedbackFragment extends Fragment {
                     }
                 }else if (currentPosition + 1 == feedbackParentModels.size()){
                     tempAnswer = editText.getText().toString();
-                    if (!TextUtils.isEmpty(tempAnswer)){
-                        answers.add(tempAnswer);
-                        Log.d("feedback_debug", answers+"");
-                        mViewModel.saveFeedback(prefManager.getString(Constants.JWTTOKEN), answers)
-                                .observe(getActivity(), new Observer<FeedbacksubmitModel>() {
-                                    @Override
-                                    public void onChanged(FeedbacksubmitModel feedbacksubmitModel) {
-                                        if (feedbacksubmitModel!=null){
-                                            if (feedbacksubmitModel.getError_code() == 0){
-                                                Utility.showToast(getActivity(), "Thank you for your time!");
-                                                tempAnswer="";
-                                                getActivity().onBackPressed();
-                                            }else{
-                                                Utility.showToast(getActivity(), "Unable to save feedback at the moment");
-                                                tempAnswer="";
-                                            }
+                    answers.add(tempAnswer);
+                    Log.d("feedback_debug", answers+"");
+                    mViewModel.saveFeedback(prefManager.getString(Constants.JWTTOKEN), answers)
+                            .observe(getActivity(), new Observer<FeedbacksubmitModel>() {
+                                @Override
+                                public void onChanged(FeedbacksubmitModel feedbacksubmitModel) {
+                                    if (feedbacksubmitModel!=null){
+                                        if (feedbacksubmitModel.getError_code() == 0){
+                                            Utility.showToast(getActivity(), "Thank you for your time!");
+                                            tempAnswer="";
+                                            getActivity().onBackPressed();
+                                        }else{
+                                            Utility.showToast(getActivity(), "Unable to save feedback at the moment");
+                                            tempAnswer="";
                                         }
                                     }
-                                });
-                    }else{
-                        Utility.showToast(getActivity(), "Please answer before moving ahead");
-                    }
+                                }
+                            });
                 }
             }
         });
