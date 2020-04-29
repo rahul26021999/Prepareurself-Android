@@ -263,29 +263,13 @@ public class ProjectsActivity extends AppCompatActivity implements PlaylistVideo
     private void loadSingleLink(ProjectsModel projectsModel) {
 
         tvReferenceHeader.setText("Video");
-
         recyclerView.setVisibility(View.GONE);
         tvViewPlaylist.setVisibility(View.GONE);
         progressBar.setVisibility(View.GONE);
         cardImageView.setVisibility(View.VISIBLE);
         final String videoCode = Utility.getVideoCode(projectsModel.getLink());
         loadCardImageViewWithVideo(videoCode);
-
-
-        cardImageView.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                if (!TextUtils.isEmpty(videoTitle)){
-                    Intent intent = new Intent(ProjectsActivity.this,VideoActivity.class);
-                    intent.putExtra(Constants.VIDEOCODE,videoCode);
-                    intent.putExtra(Constants.VIDEOTITLE, videoTitle);
-                    intent.putExtra(Constants.VIDEODESCRIPTION, videoDescription);
-                    intent.putExtra(Constants.SINGLEVIDEO,true);
-                    startActivity(intent);
-                }
-                Log.d("click_debug","jksbvjkd");
-            }
-        });
+        cardImageView.setOnClickListener(this);
     }
 
     private void loadCardImageViewWithVideo(final String videoCode) {
@@ -376,6 +360,17 @@ public class ProjectsActivity extends AppCompatActivity implements PlaylistVideo
     public void onClick(View v) {
         switch (v.getId())
         {
+            case R.id.card_project_image:
+                if (!TextUtils.isEmpty(videoTitle)){
+                    Intent intent = new Intent(ProjectsActivity.this,VideoActivity.class);
+                    intent.putExtra(Constants.VIDEOCODE,videoCode);
+                    intent.putExtra(Constants.VIDEOTITLE, videoTitle);
+                    intent.putExtra(Constants.VIDEODESCRIPTION, videoDescription);
+                    intent.putExtra(Constants.SINGLEVIDEO,true);
+                    startActivity(intent);
+                }
+                Log.d("click_debug","jksbvjkd");
+                break;
             case R.id.backBtn:
                 onBackPressed();
                 break;

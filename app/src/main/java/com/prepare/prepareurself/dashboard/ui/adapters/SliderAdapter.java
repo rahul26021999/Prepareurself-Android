@@ -48,7 +48,6 @@ public class SliderAdapter extends SliderViewAdapter<SliderAdapter.SliderAdapter
         }else{
             Glide.with(context)
                     .load(courseModel.getImage_url())
-                    .override(500,500)
                     .into(viewHolder.imageView);
         }
         viewHolder.textView.setText(courseModel.getTitle());

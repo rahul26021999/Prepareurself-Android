@@ -183,7 +183,7 @@ public class ProfileFragment extends Fragment implements View.OnClickListener {
         tabPreference.setOnClickListener(this);
         tabUserInfo.setOnClickListener(this);
 
-        if(getActivity()!=null && !mViewModel.getUserModelLiveData().hasActiveObservers())
+        if(getActivity()!=null)
         {
             mViewModel.getUserModelLiveData().observe(getActivity(), new Observer<UserModel>() {
                 @Override
