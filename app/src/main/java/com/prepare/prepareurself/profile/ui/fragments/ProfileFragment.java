@@ -85,10 +85,10 @@ public class ProfileFragment extends Fragment implements View.OnClickListener {
 
     private DatePickerDialog datePickerDialog;
     private TextView tvName;
-    private TextView tvDob, tvContact;
+    private TextView tvDob, tvContact,btnLogout,btnUpdatePass;
     private EditText etName, etDob, etContact;
     private TextView tvEditAboutMe, tvCancelAboutMe;
-    private Button btnAboutMeSave, btnUpdatePass, btnLogout;
+    private Button btnAboutMeSave;
 
     private RecyclerView recyclerView;
     private List<String> preferences=new ArrayList<>();

@@ -166,7 +166,7 @@
                     android:layout_height="wrap_content"
                     android:background="@drawable/circularbordersolid"
                     android:orientation="vertical"
-                    android:padding="16dp">
+                    android:padding="25dp">
 
                     <RelativeLayout
                         android:layout_width="match_parent"
@@ -176,7 +176,7 @@
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:text="About Me"
-                            android:textSize="17sp"
+                            android:textSize="15sp"
                             android:fontFamily="@font/proximanovaregular"
                             android:textStyle="bold" />
 
@@ -184,19 +184,23 @@
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:text="Edit"
+                            android:background="?attr/selectableItemBackground"
                             android:id="@+id/tv_aboutme_edit"
                             android:layout_alignParentEnd="true"
                             android:textColor="#FFCF66"
-                            android:layout_marginEnd="10dp"
+                            android:paddingEnd="10dp"
+                            android:paddingStart="10dp"
                             android:textSize="14sp" />
                         <TextView
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:text="Cancel"
+                            android:background="?attr/selectableItemBackground"
+                            android:paddingEnd="10dp"
+                            android:paddingStart="10dp"
                             android:id="@+id/tv_aboutme_cancel"
                             android:layout_alignParentEnd="true"
                             android:textColor="#FFCF66"
-                            android:layout_marginEnd="10dp"
                             android:textSize="14sp"
                             android:visibility="gone"/>
 
@@ -213,6 +217,7 @@
                             android:layout_height="wrap_content"
                             android:orientation="horizontal"
                             android:gravity="center_vertical"
+                            android:layout_marginTop="10dp"
                             android:layout_marginEnd="20dp"
                             android:paddingEnd="8dp">
 
@@ -246,7 +251,7 @@
                             android:layout_height="wrap_content"
                             android:orientation="horizontal"
                             android:gravity="center_vertical"
-                            android:layout_marginTop="10dp"
+                            android:layout_marginTop="15dp"
                             android:layout_marginEnd="20dp"
                             android:paddingEnd="8dp">
 
@@ -284,7 +289,7 @@
                         <LinearLayout
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
-                            android:layout_marginTop="10dp"
+                            android:layout_marginTop="15dp"
                             android:layout_marginEnd="20dp"
                             android:gravity="center_vertical"
                             android:orientation="horizontal"
@@ -319,18 +324,20 @@
 
                     </LinearLayout>
                     <Button
-                        android:layout_width="wrap_content"
+                        android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:id="@+id/btn_aboutme_save"
                         android:text="save"
-                        android:layout_marginTop="15dp"
+                        android:layout_marginTop="25dp"
                         android:textSize="15sp"
+                        android:layout_marginEnd="20dp"
+                        android:layout_marginStart="20dp"
                         android:paddingStart="30dp"
+                        android:visibility="gone"
                         android:paddingEnd="30dp"
                         android:textColor="@color/white"
                         android:layout_gravity="center"
                         android:background="@drawable/profile_preferences_button"
-                        android:visibility="gone"
                         />
                 </LinearLayout>
 
@@ -343,54 +350,90 @@
                     android:layout_marginBottom="10dp"
                     android:background="@drawable/circularbordersolid"
                     android:orientation="vertical"
-                    android:padding="16dp">
-
+                    android:padding="25dp">
                     <TextView
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:text="Security"
-                        android:textSize="17sp"
+                        android:textSize="15sp"
                         android:fontFamily="@font/proximanovaregular"
                         android:textStyle="bold" />
 
-                    <Button
+                    <LinearLayout
                         android:layout_width="match_parent"
+                        android:layout_marginTop="20dp"
+                        android:layout_height="wrap_content">
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="Password "
+                            android:textStyle="bold"
+                            android:textColor="@color/goodgrey"
+                            android:textSize="15sp"
+                            android:fontFamily="@font/proximanovaregular" />
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="*****************"
+                            android:letterSpacing="0.1"
+                            android:gravity="center_vertical"
+                            android:layout_marginStart="20dp"
+                            android:textColor="@color/goodgrey"
+                            android:textSize="15sp"
+                            android:fontFamily="@font/proximanovaregular" />
+
+                    </LinearLayout>
+
+                    <TextView
+                        android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:text="Update Password"
-                        android:textSize="18sp"
-                        android:textColor="@color/colorWhite"
-                        android:background="@drawable/profile_preferences_button"
+                        android:layout_gravity="center_horizontal"
+                        android:textSize="14sp"
+                        android:background="?attr/selectableItemBackground"
+                        android:textStyle="bold"
+                        android:textColor="#FFCF66"
                         android:layout_marginStart="30dp"
                         android:layout_marginEnd="30dp"
-                        android:layout_marginTop="20dp"
-                        android:layout_marginBottom="10dp"
+                        android:paddingStart="20dp"
+                        android:paddingEnd="20dp"
+                        android:paddingTop="10dp"
+                        android:paddingBottom="10dp"
+                        android:layout_marginTop="30dp"
                         android:id="@+id/btn_update_password"/>
 
-                    <Button
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:text="Sign out"
-                        android:textSize="18sp"
-                        android:textColor="@color/colorWhite"
-                        android:background="@drawable/profile_preferences_button"
-                        android:layout_marginStart="30dp"
-                        android:layout_marginEnd="30dp"
-                        android:layout_marginBottom="20dp"
-                        android:id="@+id/btn_logout"/>
-
                 </LinearLayout>
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Sign out"
+                    android:layout_gravity="center_horizontal"
+                    android:textSize="14sp"
+                    android:background="?attr/selectableItemBackground"
+                    android:textStyle="bold"
+                    android:textColor="@color/colorPrimaryDark"
+                    android:layout_marginStart="30dp"
+                    android:layout_marginEnd="30dp"
+                    android:paddingStart="20dp"
+                    android:paddingEnd="20dp"
+                    android:paddingTop="20dp"
+                    android:paddingBottom="20dp"
+                    android:layout_marginTop="20dp"
+                    android:textAllCaps="true"
+                    android:layout_marginBottom="20dp"
+                    android:id="@+id/btn_logout"/>
             </LinearLayout>
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_margin="10dp"
                 android:layout_marginEnd="20dp"
-                android:visibility="gone"
                 android:layout_marginStart="20dp"
+                android:visibility="gone"
                 android:id="@+id/prefrences"
                 android:background="@drawable/circularbordersolid"
                 android:orientation="vertical"
-                android:padding="20dp">
+                android:padding="25dp">
                 <RelativeLayout
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
@@ -411,7 +454,9 @@
                         android:layout_alignParentEnd="true"
                         android:id="@+id/tv_preference_edit"
                         android:textColor="#FFCF66"
-                        android:layout_marginEnd="10dp"
+                        android:paddingEnd="10dp"
+                        android:paddingStart="10dp"
+                        android:background="?attr/selectableItemBackground"
                         android:textSize="14sp" />
 
                 </RelativeLayout>
@@ -432,6 +477,7 @@
                     android:layout_margin="10dp"
                     android:overScrollMode="never"
                     android:id="@+id/rv_user_preference"
+                    tools:itemCount="3"
                     tools:listitem="@layout/user_preferences_adapter_layout"/>
 
             </LinearLayout>
