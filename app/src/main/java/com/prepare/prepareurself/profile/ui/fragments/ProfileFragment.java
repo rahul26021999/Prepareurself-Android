@@ -197,7 +197,7 @@ public class ProfileFragment extends Fragment implements View.OnClickListener {
                         if (TextUtils.isEmpty(userDob)){
                             tvDob.setText("Click Edit to update dob");
                         }else{
-                            tvDob.setText(userDob.split(" ")[0]);
+                            tvDob.setText(userDob.split("T")[0].split(" ")[0]);
                         }
                         if (TextUtils.isEmpty(userContact)){
                             tvContact.setHint("Click Edit to update contact");
@@ -212,12 +212,15 @@ public class ProfileFragment extends Fragment implements View.OnClickListener {
 
                         mUserModel = userModel;
                         tv_email_profile.setText(userModel.getEmail());
-                        Glide.with(Objects.requireNonNull(getActivity()))
-                                .load(Constants.USERIMAGEBASEURL + userModel.getProfile_image())
-                                .override(500,500)
-                                .placeholder(R.drawable.person_placeholder)
-                                .transition(GenericTransitionOptions.<Drawable>with(Utility.getAnimationObject()))
-                                .into(userImageView);
+
+                        if (getActivity()!=null){
+                            Glide.with(getActivity())
+                                    .load(Constants.USERIMAGEBASEURL + userModel.getProfile_image())
+                                    .override(500,500)
+                                    .placeholder(R.drawable.person_placeholder)
+                                    .transition(GenericTransitionOptions.<Drawable>with(Utility.getAnimationObject()))
+                                    .into(userImageView);
+                        }
 
                         if(userModel.getPreferences()!=null) {
                             preferences.clear();
@@ -234,7 +237,7 @@ public class ProfileFragment extends Fragment implements View.OnClickListener {
 
     private void setDataOnTextViews(UserModel userModel) {
         tvName.setText(userModel.getFirst_name() + " " + userModel.getLast_name());
-        tvDob.setText(userModel.getDob().split("T")[0]);
+        tvDob.setText(userDob.split("T")[0].split(" ")[0]);
         tvContact.setText(userModel.getPhone_number());
     }
 
@@ -411,7 +414,7 @@ public class ProfileFragment extends Fragment implements View.OnClickListener {
                 if (TextUtils.isEmpty(userDob)){
                     etDob.setHint("Tap to update dob");
                 }else{
-                    etDob.setText(userDob.split(" ")[0]);
+                    etDob.setText(userDob.split("T")[0].split(" ")[0]);
                 }
 
                 if (TextUtils.isEmpty(userContact)){
