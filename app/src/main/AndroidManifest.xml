@@ -98,7 +98,20 @@
         -->
         <activity
             android:name=".Home.ui.HomeActivity"
-            android:label="@string/title_activity_home" />
+            android:label="@string/title_activity_home" >
+
+            <intent-filter>
+                <action android:name="android.intent.action.VIEW" />
+
+                <category android:name="android.intent.category.BROWSABLE" />
+                <category android:name="android.intent.category.DEFAULT" />
+
+                <data
+                    android:host="app.prepareurself"
+                    android:scheme="feedback" />
+            </intent-filter>
+
+        </activity>
         <activity android:name=".utils.QuizBaseActivity" />
         <activity android:name=".quiz.QuizActivity" />
         <activity
