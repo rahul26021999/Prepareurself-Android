@@ -17,12 +17,17 @@ import android.widget.TextView;
 
 import com.bumptech.glide.Glide;
 import com.prepare.prepareurself.R;
+import com.prepare.prepareurself.utils.Utility;
 
 public class AboutusFragment extends Fragment implements View.OnClickListener {
 
     private AboutusViewModel mViewModel;
     private TextView title;
     private ImageView backBtn;
+    private TextView tvTerms;
+
+    private String TermsUrl = "http://prepareurself.in/terms-and-conditions";
+
     public static AboutusFragment newInstance() {
         return new AboutusFragment();
     }
@@ -33,8 +38,10 @@ public class AboutusFragment extends Fragment implements View.OnClickListener {
         View view=inflater.inflate(R.layout.aboutus_fragment, container, false);
         title = view.findViewById(R.id.title);
         backBtn = view.findViewById(R.id.backBtn);
+        tvTerms = view.findViewById(R.id.tv_terms);
 
         backBtn.setOnClickListener(this);
+        tvTerms.setOnClickListener(this);
         title.setText("About us");
         return  view;
     }
@@ -52,6 +59,10 @@ public class AboutusFragment extends Fragment implements View.OnClickListener {
         {
             case R.id.backBtn:
                 getActivity().onBackPressed();
+                break;
+
+            case R.id.tv_terms:
+                Utility.redirectUsingCustomTab(getActivity(),TermsUrl);
                 break;
         }
     }
