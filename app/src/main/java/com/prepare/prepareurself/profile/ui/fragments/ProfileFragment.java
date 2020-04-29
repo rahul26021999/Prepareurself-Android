@@ -237,8 +237,17 @@ public class ProfileFragment extends Fragment implements View.OnClickListener {
 
     private void setDataOnTextViews(UserModel userModel) {
         tvName.setText(userModel.getFirst_name() + " " + userModel.getLast_name());
-        tvDob.setText(userDob.split("T")[0].split(" ")[0]);
-        tvContact.setText(userModel.getPhone_number());
+        if (!TextUtils.isEmpty(userModel.getDob())){
+            tvDob.setText(userDob.split("T")[0].split(" ")[0]);
+        }else {
+            tvDob.setText("Click Edit to update dob");
+        }
+
+        if (userModel.getPhone_number()!=null){
+            tvContact.setText(userModel.getPhone_number());
+        }else{
+            tvContact.setText("Click Edit to update contact");
+        }
     }
 
     private void uploadImage() {
