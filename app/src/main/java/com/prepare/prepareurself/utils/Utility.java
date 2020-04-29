@@ -131,6 +131,30 @@ public class Utility {
         return Uri.fromFile(file);
     }
 
+    public static Uri getUriOfBitmapJPG(Bitmap bitmap, Context context) throws IOException {
+
+        File file = new File(context.getExternalCacheDir(),"share.png");
+        FileOutputStream fout = new FileOutputStream(file);
+        bitmap.compress(Bitmap.CompressFormat.JPEG, 100, fout);
+        fout.flush();
+        fout.close();
+        file.setReadable(true, false);
+
+        return Uri.fromFile(file);
+    }
+
+    public static Uri getUriOfBitmapCompress(Bitmap bitmap, Context context, int compress) throws IOException {
+
+        File file = new File(context.getExternalCacheDir(),"share.png");
+        FileOutputStream fout = new FileOutputStream(file);
+        bitmap.compress(Bitmap.CompressFormat.PNG, compress, fout);
+        fout.flush();
+        fout.close();
+        file.setReadable(true, false);
+
+        return Uri.fromFile(file);
+    }
+
     public static void shareContent(Context context,Uri bitmapUri, String text){
         final Intent intent = new Intent(Intent.ACTION_SEND);
         intent.putExtra(Intent.EXTRA_TEXT, text);
