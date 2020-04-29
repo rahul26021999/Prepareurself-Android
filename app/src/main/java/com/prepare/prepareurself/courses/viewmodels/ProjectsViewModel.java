@@ -15,6 +15,7 @@ import com.prepare.prepareurself.courses.data.repository.ProjectsRespository;
 import com.prepare.prepareurself.dashboard.data.db.repository.CourseDbRepository;
 import com.prepare.prepareurself.dashboard.data.model.CourseModel;
 import com.prepare.prepareurself.resources.data.model.ResourceLikesResponse;
+import com.prepare.prepareurself.resources.data.model.ResourceViewsResponse;
 import com.prepare.prepareurself.youtubeplayer.youtubeplaylistapi.db.PlaylistVideosDbRepository;
 import com.prepare.prepareurself.youtubeplayer.youtubeplaylistapi.db.SingleVideoItemWrapperRespository;
 import com.prepare.prepareurself.youtubeplayer.youtubeplaylistapi.models.SingleVIdeoItemWrapper;
@@ -95,11 +96,15 @@ public class ProjectsViewModel extends AndroidViewModel {
         return respository.likeProject(token,id,liked);
     }
 
-    public void viewProject(String token,int id) {
-        respository.viewProject(token,id);
+    public LiveData<ResourceViewsResponse> viewProject(String token, int id) {
+        return respository.viewProject(token,id);
     }
 
     public LiveData<ProjectResponseModel> getProjectByIdFromRemote(String token,int projectId) {
         return respository.getProjectById(token, projectId);
+    }
+
+    public void saveProject(ProjectsModel project) {
+        dbRepository.insertProject(project);
     }
 }

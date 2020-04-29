@@ -175,21 +175,30 @@ public class ProjectsRespository {
 
     }
 
-    public void viewProject(String token,int id) {
+    public LiveData<ResourceViewsResponse> viewProject(String token,int id) {
+
+        final MutableLiveData<ResourceViewsResponse> data = new MutableLiveData<>();
+
         apiInterface.projectViewed(token, id).enqueue(new Callback<ResourceViewsResponse>() {
             @Override
             public void onResponse(Call<ResourceViewsResponse> call, Response<ResourceViewsResponse> response) {
                 ResourceViewsResponse resourceViewsResponse = response.body();
                 if (resourceViewsResponse!=null){
                     Log.d("project_viewed",resourceViewsResponse.getMessage());
+                    data.setValue(resourceViewsResponse);
+                }else{
+                    data.setValue(null);
                 }
             }
 
             @Override
             public void onFailure(Call<ResourceViewsResponse> call, Throwable t) {
                 Log.d("project_viewed",t.getLocalizedMessage()+"");
+                data.setValue(null);
             }
         });
+
+        return data;
     }
 
     public LiveData<ProjectResponseModel> getProjectById(String token, int projectId) {

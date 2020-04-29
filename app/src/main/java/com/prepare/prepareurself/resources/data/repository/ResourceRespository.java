@@ -63,14 +63,19 @@ public class ResourceRespository {
 
     }
 
-    public void resourceViewed(String token, int resourceId){
+    public LiveData<ResourceViewsResponse> resourceViewed(String token, int resourceId){
+
+        final MutableLiveData<ResourceViewsResponse> data = new MutableLiveData<>();
+
         apiInterface.resourceViewed(token, resourceId).enqueue(new Callback<ResourceViewsResponse>() {
             @Override
             public void onResponse(Call<ResourceViewsResponse> call, Response<ResourceViewsResponse> response) {
                 ResourceViewsResponse resourceViewsResponse = response.body();
                 if (resourceViewsResponse!=null){
+                    data.setValue(resourceViewsResponse);
                     Log.d("resource_viewed",resourceViewsResponse.getMessage());
                 }else{
+                    data.setValue(null);
                     Log.d("resource_viewed","null response");
                 }
             }
@@ -78,8 +83,11 @@ public class ResourceRespository {
             @Override
             public void onFailure(Call<ResourceViewsResponse> call, Throwable t) {
                 Log.d("resource_viewed","failure "+ t.getLocalizedMessage());
+                data.setValue(null);
             }
         });
+
+        return data;
     }
 
     //wrte here for likes
