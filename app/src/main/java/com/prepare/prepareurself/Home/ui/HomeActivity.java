@@ -1,6 +1,7 @@
 package com.prepare.prepareurself.Home.ui;
 
 import android.content.ActivityNotFoundException;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
@@ -29,6 +30,7 @@ import com.prepare.prepareurself.dashboard.ui.fragment.DashboardFragment;
 import com.prepare.prepareurself.Home.viewmodel.HomeActivityViewModel;
 import com.prepare.prepareurself.R;
 import com.prepare.prepareurself.authentication.data.model.UserModel;
+import com.prepare.prepareurself.firebase.UpdateHelper;
 import com.prepare.prepareurself.resources.ui.activity.ResourcesActivity;
 import com.prepare.prepareurself.utils.Constants;
 import com.google.android.material.navigation.NavigationView;
@@ -36,6 +38,7 @@ import com.prepare.prepareurself.utils.PrefManager;
 import com.prepare.prepareurself.utils.Utility;
 
 import androidx.annotation.NonNull;
+import androidx.appcompat.app.AlertDialog;
 import androidx.core.view.GravityCompat;
 import androidx.lifecycle.Observer;
 import androidx.lifecycle.ViewModelProviders;
@@ -52,7 +55,8 @@ import java.io.UnsupportedEncodingException;
 
 public class HomeActivity extends AppCompatActivity implements NavigationView.OnNavigationItemSelectedListener,
         DashboardFragment.HomeActivityInteractor,
-        View.OnClickListener {
+        View.OnClickListener,
+        UpdateHelper.OnUpdateCheckListener {
 
     private AppBarConfiguration mAppBarConfiguration;
     private TextView tvNameNavHeader;
@@ -72,6 +76,12 @@ public class HomeActivity extends AppCompatActivity implements NavigationView.On
 
         drawer = findViewById(R.id.drawer_layout);
         navigationView = findViewById(R.id.nav_view);
+
+        UpdateHelper.with(this)
+                .onUpdateCheck(this)
+                .check();
+
+
 
         viewModel = ViewModelProviders.of(this).get(HomeActivityViewModel.class);
 
@@ -137,6 +147,23 @@ public class HomeActivity extends AppCompatActivity implements NavigationView.On
             navController.navigate(R.id.nav_feedback);
         }
 
+    }
+
+    @Override
+    public void onUpdateCheckListener(final String urlApp) {
+        AlertDialog.Builder builder = new AlertDialog.Builder(HomeActivity.this);
+        builder.setTitle("Update Available")
+                .setMessage("Please update to new version to continue use")
+                .setCancelable(false)
+                .setPositiveButton("Update", new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialog, int which) {
+                        Utility.redirectUsingCustomTab(HomeActivity.this, urlApp);
+                    }
+                });
+
+        AlertDialog alertDialog = builder.create();
+        alertDialog.show();
     }
 
     @Override
