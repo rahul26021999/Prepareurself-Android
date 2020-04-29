@@ -65,7 +65,7 @@ public class ProfileRepository {
         return data;
     }
 
-    public LiveData<UpdatePreferenceResponseModel> updatePreferences(String token, List<Integer> integers) {
+    public LiveData<UpdatePreferenceResponseModel> updatePreferences(String token, List<String> integers) {
 
         final MutableLiveData<UpdatePreferenceResponseModel> data = new MutableLiveData<>();
 

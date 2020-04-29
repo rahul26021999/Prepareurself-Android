@@ -94,7 +94,6 @@ public class ProfileFragment extends Fragment implements View.OnClickListener {
     private List<String> preferences=new ArrayList<>();
     private TextView tvPreferenceEdit;
     UserPrefernceAdapter adapter;
-    Map<String,String> allStack=new HashMap<>();
 
 
     String userDob = "", userName = "", userContact = "";
@@ -184,64 +183,53 @@ public class ProfileFragment extends Fragment implements View.OnClickListener {
         tabPreference.setOnClickListener(this);
         tabUserInfo.setOnClickListener(this);
 
-        mViewModel.getUserModelLiveData().observe(getActivity(), new Observer<UserModel>() {
-            @Override
-            public void onChanged(UserModel userModel) {
-                if (userModel!=null){
-                    userName = userModel.getFirst_name() + " " + userModel.getLast_name();
-                    userDob = userModel.getDob();
-                    Log.d("DOb", userDob+"");
-                    userContact = userModel.getPhone_number();
-                    tvName.setText(userName);
-                    if (TextUtils.isEmpty(userDob)){
-                        tvDob.setText("Click Edit to update dob");
-                    }else{
-                        tvDob.setText(userDob.split("T")[0]);
-                    }
-                    if (TextUtils.isEmpty(userContact)){
-                        tvContact.setHint("Click Edit to update contact");
-                    }else{
-                        tvContact.setText(userContact);
-                    }
-                    if(userModel.getProfile_image()==null){
-                        editimg.setImageDrawable(getResources().getDrawable(R.drawable.ic_add_a_photo_black_24dp));
-                    }
-                    else{
-                        editimg.setImageDrawable(getResources().getDrawable(R.drawable.ic_iconfinder_circle_edit_pen_pencil_glyph_763463));
-                    }
-                    mUserModel = userModel;
-                    tv_email_profile.setText(userModel.getEmail());
-                    Glide.with(Objects.requireNonNull(getActivity()))
-                            .load(Constants.USERIMAGEBASEURL + userModel.getProfile_image())
-                            .override(500,500)
-                            .placeholder(R.drawable.person_placeholder)
-                            .transition(GenericTransitionOptions.<Drawable>with(Utility.getAnimationObject()))
-                            .into(userImageView);
+        if(getActivity()!=null && !mViewModel.getUserModelLiveData().hasActiveObservers())
+        {
+            mViewModel.getUserModelLiveData().observe(getActivity(), new Observer<UserModel>() {
+                @Override
+                public void onChanged(UserModel userModel) {
+                    if (userModel!=null){
+                        userName = userModel.getFirst_name() + " " + userModel.getLast_name();
+                        userDob = userModel.getDob();
+                        Log.d("DOb", userDob+"");
+                        userContact = userModel.getPhone_number();
+                        tvName.setText(userName);
+                        if (TextUtils.isEmpty(userDob)){
+                            tvDob.setText("Click Edit to update dob");
+                        }else{
+                            tvDob.setText(userDob.split("T")[0]);
+                        }
+                        if (TextUtils.isEmpty(userContact)){
+                            tvContact.setHint("Click Edit to update contact");
+                        }else{
+                            tvContact.setText(userContact);
+                        }
+                        if(userModel.getProfile_image()==null)
+                            editimg.setImageDrawable(Objects.requireNonNull(getActivity()).getResources().getDrawable(R.drawable.ic_add_a_photo_black_24dp));
+                        else
+                            editimg.setImageDrawable(Objects.requireNonNull(getActivity()).getResources().getDrawable(R.drawable.ic_iconfinder_circle_edit_pen_pencil_glyph_763463));
 
-                    if(userModel.getPreferences()!=null) {
 
-                        mViewModel.getPreferencesFromDb().observe(getActivity(), new Observer<List<PreferredTechStack>>() {
-                            @Override
-                            public void onChanged(final List<PreferredTechStack> preferredTechStacks) {
-                                int size = preferredTechStacks.size();
-                                allStack.clear();
-                                for (int i=0;i<size;i++){
-                                    allStack.put(""+preferredTechStacks.get(i).getId(),preferredTechStacks.get(i).getName());
-                                }
-                                preferences.clear();
-                                preferences.addAll(Arrays.asList(mUserModel.getPreferences().split(",")));
-                                List<String> tempList = new ArrayList<>();
-                                for(int i = 0; i< preferences.size(); i++){
-                                    tempList.add(allStack.get(preferences.get(i)));
-                                }
-                                adapter.setPreferredTechStacks(tempList);
-                                adapter.notifyDataSetChanged();
-                            }
-                        });
+                        mUserModel = userModel;
+                        tv_email_profile.setText(userModel.getEmail());
+                        Glide.with(Objects.requireNonNull(getActivity()))
+                                .load(Constants.USERIMAGEBASEURL + userModel.getProfile_image())
+                                .override(500,500)
+                                .placeholder(R.drawable.person_placeholder)
+                                .transition(GenericTransitionOptions.<Drawable>with(Utility.getAnimationObject()))
+                                .into(userImageView);
+
+                        if(userModel.getPreferences()!=null) {
+                            preferences.clear();
+                            preferences.addAll(Arrays.asList(mUserModel.getPreferences().split(",")));
+                            adapter.setPreferredTechStacks(preferences);
+                            adapter.notifyDataSetChanged();
+                        }
                     }
                 }
-            }
-        });
+            });
+        }
+
     }
 
     private void setDataOnTextViews(UserModel userModel) {
@@ -311,7 +299,7 @@ public class ProfileFragment extends Fragment implements View.OnClickListener {
     }
 
 
-    public void uploadImageToServer(byte[] imageBytes){
+    private void uploadImageToServer(byte[] imageBytes){
         RequestBody requestFile = RequestBody.create(MediaType.parse("image/jpeg"), imageBytes);
         MultipartBody.Part body = MultipartBody.Part.createFormData("profile_image", "image.jpg", requestFile);
        // RequestBody name =  RequestBody.create(MediaType.parse("text/html"), "image.jpg");

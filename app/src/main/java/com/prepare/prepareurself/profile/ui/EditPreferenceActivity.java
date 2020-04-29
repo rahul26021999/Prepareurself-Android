@@ -40,13 +40,10 @@ public class EditPreferenceActivity extends AppCompatActivity {
     private PrefManager prefManager;
     private ChipGroup chip_gp;
     private List<String> preferences=new ArrayList<>();
-    private List<String> allStackID=new ArrayList<>();
     private MaterialButton save;
     private UserModel mUserModel;
     private List<String> allStackName=new ArrayList<>();
-    private HashMap<String,String> allStack=new HashMap<>();
     private ProgressDialog dialog;
-    private HashMap<Integer, PreferredTechStack> preferredTechStackHashMap = new HashMap<>();
 
     private ImageView backBtn;
     private TextView title;
@@ -92,7 +89,6 @@ public class EditPreferenceActivity extends AppCompatActivity {
                         Log.i("Size",""+size);
                         chip_gp.removeAllViews();
                         for (int i=0;i<size;i++){
-                            allStackID.add(""+preferredTechStacks.get(i).getId());
                             allStackName.add(preferredTechStacks.get(i).getName());
                             final Chip chip = new Chip(EditPreferenceActivity.this);
                             chip.setText(preferredTechStacks.get(i).getName());
@@ -100,9 +96,8 @@ public class EditPreferenceActivity extends AppCompatActivity {
                             chip.setCheckedIconResource(R.drawable.white_check_icon);
                             chip.setChipBackgroundColorResource(R.color.colorPrimaryDark);
                             chip.setCheckable(true);
-                            if(preferences.contains(allStackID.get(i))) {
+                            if(preferences.contains(allStackName.get(i))) {
                                 chip.setChecked(true);
-                               preferredTechStackHashMap.put(preferredTechStacks.get(i).getId(),preferredTechStacks.get(i));
                             }
                             chip.setCloseIconVisible(false);
                             final int finalI = i;
@@ -111,14 +106,12 @@ public class EditPreferenceActivity extends AppCompatActivity {
                                 public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
                                     if(isChecked)
                                     {
-                                        preferences.add(allStackID.get(allStackName.indexOf(chip.getText().toString())));
+                                        preferences.add(chip.getText().toString());
                                         Log.i("helloChip",buttonView.getText().toString());
-                                        preferredTechStackHashMap.put(preferredTechStacks.get(finalI).getId(),preferredTechStacks.get(finalI));
                                     }
                                     else{
-                                        preferences.remove(allStackID.get(allStackName.indexOf(chip.getText().toString())));
+                                        preferences.remove(chip.getText().toString());
                                         Log.i("helloChip",buttonView.getText().toString() +" removed");
-                                        preferredTechStackHashMap.remove(preferredTechStacks.get(finalI).getId());
                                     }
                                 }
                             });
@@ -138,10 +131,11 @@ public class EditPreferenceActivity extends AppCompatActivity {
                     dialog.setMessage("Updating preferences");
                     dialog.show();
                 }
-                List<Integer> list = new ArrayList<>();
-                for (String pref : preferences){
-                    list.add(Integer.parseInt(pref));
-                }
+                List<String> list=new ArrayList<>();
+
+                if(preferences.size()>0)
+                    list=preferences;
+
                 profileViewModel.updatePrefernces(prefManager.getString(Constants.JWTTOKEN),list)
                         .observe(EditPreferenceActivity.this, new Observer<UpdatePreferenceResponseModel>() {
                             @Override

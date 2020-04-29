@@ -82,7 +82,7 @@ public interface ApiInterface {
 
     @POST("update-user")
     Call<UpdatePreferenceResponseModel> updatePreference(@Query("token") String token,
-                                                         @Query("preferences[]") List<Integer> integers);
+                                                         @Query("preferences[]") List<String> integers);
 
     @POST("get-projects")
     Call<GetProjectResponse> getProjects(@Query("token") String token,

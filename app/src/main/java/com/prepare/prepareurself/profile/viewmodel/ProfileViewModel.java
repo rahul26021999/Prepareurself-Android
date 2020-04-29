@@ -58,8 +58,8 @@ public class ProfileViewModel extends AndroidViewModel {
         return profileRepository.updatePassword(token, oldPass, newPass);
     }
 
-    public LiveData<UpdatePreferenceResponseModel> updatePrefernces(String token, List<Integer> integers){
-        return profileRepository.updatePreferences(token,integers);
+    public LiveData<UpdatePreferenceResponseModel> updatePrefernces(String token, List<String> Strings){
+        return profileRepository.updatePreferences(token,Strings);
     }
 
     public void addStacks(PreferredTechStack preferredTechStack){
