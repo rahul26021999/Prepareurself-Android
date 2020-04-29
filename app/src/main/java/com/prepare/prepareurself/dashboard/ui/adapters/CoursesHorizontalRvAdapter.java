@@ -75,8 +75,8 @@ public class CoursesHorizontalRvAdapter extends RecyclerView.Adapter<CoursesHori
 
         public void bindView(Activity context, CourseModel course){
 
-            if (course.getImage_url().endsWith(".svg")){
-                Utility.loadImage(context,Constants.COURSEIMAGEBASEUSRL+ course.getImage_url(),imageView);
+            if (course.getImage_url()!=null && course.getImage_url().endsWith(".svg")){
+                Utility.loadSVGImage(context,Constants.COURSEIMAGEBASEUSRL+ course.getImage_url(),imageView);
             }else{
                 Glide.with(context).load(
                         Constants.COURSEIMAGEBASEUSRL+ course.getImage_url())
