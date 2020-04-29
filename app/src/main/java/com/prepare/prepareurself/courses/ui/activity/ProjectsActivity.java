@@ -137,6 +137,8 @@ public class ProjectsActivity extends AppCompatActivity implements PlaylistVideo
                                 viewModel.viewProject(prefManager.getString(Constants.JWTTOKEN),projectsModel.getId());
                             }
                             updateUIWithProject(projectsModel);
+                        }else{
+                            callProjectFromRemote(projectId);
                         }
                     }
                 });

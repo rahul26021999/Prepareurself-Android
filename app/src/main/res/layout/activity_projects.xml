@@ -195,8 +195,7 @@
                         android:maxLines="6"
                         android:ellipsize="end"
                         android:textColor="@color/resource_active_color"
-                        android:padding="20dp"
-                        android:text="kdjfbvjdfvnfiovno hofv opjop pojpo 'poj pio'pjp 'pojp  ;lm;lvlkn ilknkofn m lknjio  ifvoifhv oijiov oijdiofv oij" />
+                        android:padding="20dp" />
 
                  </RelativeLayout>
 
