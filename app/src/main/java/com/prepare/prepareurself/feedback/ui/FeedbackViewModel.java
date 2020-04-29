@@ -79,11 +79,11 @@ public class FeedbackViewModel extends ViewModel {
 
         FeedbackTwoOptionsModel f5 = new FeedbackTwoOptionsModel();
         f5.setId(5);
-        f5.setQuestion("Was it easy to find what you were looking for?");
+        f5.setQuestion("Do you prefer theory resources or video resources?");
         f5.setAnswer("");
         List<String> options5 = new ArrayList<>();
-        options5.add("YES");
-        options5.add("No");
+        options5.add("Theory");
+        options5.add("Video");
         f5.setOptions(options5);
         FeedbackParentModel feedbackParentModel5 = new FeedbackParentModel(2,f5);
 
