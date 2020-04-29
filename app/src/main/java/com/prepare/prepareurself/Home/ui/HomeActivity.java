@@ -7,6 +7,8 @@ import android.graphics.BitmapFactory;
 import android.graphics.drawable.Drawable;
 import android.net.Uri;
 import android.os.Bundle;
+import android.text.TextUtils;
+import android.util.Log;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.Menu;
@@ -29,6 +31,7 @@ import com.prepare.prepareurself.authentication.data.model.UserModel;
 import com.prepare.prepareurself.resources.ui.activity.ResourcesActivity;
 import com.prepare.prepareurself.utils.Constants;
 import com.google.android.material.navigation.NavigationView;
+import com.prepare.prepareurself.utils.PrefManager;
 import com.prepare.prepareurself.utils.Utility;
 
 import androidx.annotation.NonNull;
@@ -57,6 +60,7 @@ public class HomeActivity extends AppCompatActivity implements NavigationView.On
     private NavigationView navigationView;
     private DrawerLayout drawer;
     private ImageView profileImageView;
+    private PrefManager prefManager;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -113,6 +117,14 @@ public class HomeActivity extends AppCompatActivity implements NavigationView.On
 
             }
         });
+
+        Intent intent = getIntent();
+        if (intent.getData()!=null){
+            String feedback = intent.getData().toString().split("")[1];
+            if (!TextUtils.isEmpty(feedback)){
+                //if ()
+            }
+        }
 
     }
 
@@ -171,9 +183,9 @@ public class HomeActivity extends AppCompatActivity implements NavigationView.On
 
     private void shareApp() {
         Bitmap icon = BitmapFactory.decodeResource(getResources(),
-                R.drawable.ic_logo_share);
+                R.drawable.namelogo);
         try {
-            Uri uri = Utility.getUriOfBitmap(icon, this);
+            Uri uri = Utility.getUriOfBitmapJPG(icon, this);
             String text = "Prepareurself is preparing me for my internships. I found some best and amazing Project works, a wide range of latest Tech-Stacks and some best Resources from internet at one place.\n" +
                     "Checkout our prepareurself app.\n\n"+
                     "Click link to install\n"+
