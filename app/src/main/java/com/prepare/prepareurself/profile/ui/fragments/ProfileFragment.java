@@ -191,13 +191,13 @@ public class ProfileFragment extends Fragment implements View.OnClickListener {
                     if (userModel!=null){
                         userName = userModel.getFirst_name() + " " + userModel.getLast_name();
                         userDob = userModel.getDob();
-                        Log.d("DOb", userDob+"");
+
                         userContact = userModel.getPhone_number();
                         tvName.setText(userName);
                         if (TextUtils.isEmpty(userDob)){
                             tvDob.setText("Click Edit to update dob");
                         }else{
-                            tvDob.setText(userDob.split("T")[0]);
+                            tvDob.setText(userDob.split(" ")[0]);
                         }
                         if (TextUtils.isEmpty(userContact)){
                             tvContact.setHint("Click Edit to update contact");
@@ -205,9 +205,9 @@ public class ProfileFragment extends Fragment implements View.OnClickListener {
                             tvContact.setText(userContact);
                         }
                         if(userModel.getProfile_image()==null)
-                            editimg.setImageDrawable(Objects.requireNonNull(getActivity()).getResources().getDrawable(R.drawable.ic_add_a_photo_black_24dp));
+                            editimg.setImageDrawable(getActivity().getResources().getDrawable(R.drawable.ic_add_a_photo_black_24dp));
                         else
-                            editimg.setImageDrawable(Objects.requireNonNull(getActivity()).getResources().getDrawable(R.drawable.ic_iconfinder_circle_edit_pen_pencil_glyph_763463));
+                            editimg.setImageDrawable(getActivity().getResources().getDrawable(R.drawable.ic_iconfinder_circle_edit_pen_pencil_glyph_763463));
 
 
                         mUserModel = userModel;
@@ -411,7 +411,7 @@ public class ProfileFragment extends Fragment implements View.OnClickListener {
                 if (TextUtils.isEmpty(userDob)){
                     etDob.setHint("Tap to update dob");
                 }else{
-                    etDob.setText(userDob.split("T")[0]);
+                    etDob.setText(userDob.split(" ")[0]);
                 }
 
                 if (TextUtils.isEmpty(userContact)){
