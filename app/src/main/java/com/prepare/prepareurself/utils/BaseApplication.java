@@ -25,6 +25,7 @@ import java.util.Map;
 public class BaseApplication extends Application {
 
     private PrefManager prefManager;
+    private static BaseApplication mInstance;
 
     @Override
     public void onCreate() {
@@ -66,4 +67,5 @@ public class BaseApplication extends Application {
         StrictMode.VmPolicy.Builder builder = new StrictMode.VmPolicy.Builder();
         StrictMode.setVmPolicy(builder.build());
     }
+
 }

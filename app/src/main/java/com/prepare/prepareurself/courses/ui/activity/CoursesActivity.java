@@ -18,11 +18,12 @@ import com.prepare.prepareurself.courses.ui.fragments.ResourcesFragment;
 import com.prepare.prepareurself.courses.viewmodels.TopicViewModel;
 import com.prepare.prepareurself.resources.ui.adapter.SectionsPagerAdapter;
 import com.prepare.prepareurself.R;
+import com.prepare.prepareurself.utils.BaseActivity;
 import com.prepare.prepareurself.utils.Constants;
 import com.prepare.prepareurself.utils.PrefManager;
 import com.google.android.material.tabs.TabLayout;
 
-public class CoursesActivity extends AppCompatActivity implements View.OnClickListener {
+public class CoursesActivity extends BaseActivity implements View.OnClickListener {
 
     private ViewPager viewPager;
     private TabLayout tabs;

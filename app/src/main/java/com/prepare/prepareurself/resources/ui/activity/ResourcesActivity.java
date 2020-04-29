@@ -17,6 +17,7 @@ import com.prepare.prepareurself.resources.ui.fragments.VideoResourceFragment;
 import com.prepare.prepareurself.resources.ui.adapter.SectionsPagerAdapter;
 import com.prepare.prepareurself.resources.viewmodel.ResourceViewModel;
 import com.prepare.prepareurself.R;
+import com.prepare.prepareurself.utils.BaseActivity;
 import com.prepare.prepareurself.utils.Constants;
 import com.prepare.prepareurself.utils.PrefManager;
 import com.prepare.prepareurself.utils.Utility;
@@ -29,7 +30,7 @@ import androidx.appcompat.app.AppCompatActivity;
 import java.io.IOException;
 import java.io.UnsupportedEncodingException;
 
-public class ResourcesActivity extends AppCompatActivity implements View.OnClickListener, TheoryResourceFragment.TheoryResourceFragmentInteractor {
+public class ResourcesActivity extends BaseActivity implements View.OnClickListener, TheoryResourceFragment.TheoryResourceFragmentInteractor {
 
     private ViewPager viewPager;
     private ResourceViewModel viewModel;

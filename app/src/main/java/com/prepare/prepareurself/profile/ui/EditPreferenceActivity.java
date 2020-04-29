@@ -25,6 +25,7 @@ import com.prepare.prepareurself.profile.data.model.MyPreferenceTechStack;
 import com.prepare.prepareurself.profile.data.model.PreferredTechStack;
 import com.prepare.prepareurself.profile.data.model.UpdatePreferenceResponseModel;
 import com.prepare.prepareurself.profile.viewmodel.ProfileViewModel;
+import com.prepare.prepareurself.utils.BaseActivity;
 import com.prepare.prepareurself.utils.Constants;
 import com.prepare.prepareurself.utils.PrefManager;
 import com.prepare.prepareurself.utils.Utility;
@@ -36,7 +37,7 @@ import java.util.HashSet;
 import java.util.List;
 import java.util.Map;
 
-public class EditPreferenceActivity extends AppCompatActivity {
+public class EditPreferenceActivity extends BaseActivity {
 
     private ProfileViewModel profileViewModel;
     private PrefManager prefManager;

@@ -14,10 +14,11 @@ import android.widget.TextView;
 import com.prepare.prepareurself.R;
 import com.prepare.prepareurself.authentication.data.model.ForgotPasswordResponseModel;
 import com.prepare.prepareurself.authentication.viewmodel.AuthViewModel;
+import com.prepare.prepareurself.utils.BaseActivity;
 import com.prepare.prepareurself.utils.Constants;
 import com.prepare.prepareurself.utils.Utility;
 
-public class forgetPassword extends AppCompatActivity {
+public class forgetPassword extends BaseActivity {
     EditText registeredEmail  ;
     Button resetBtn;
     TextView textView, tv_backtologin;

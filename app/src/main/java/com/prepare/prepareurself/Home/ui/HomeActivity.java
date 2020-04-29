@@ -32,6 +32,7 @@ import com.prepare.prepareurself.R;
 import com.prepare.prepareurself.authentication.data.model.UserModel;
 import com.prepare.prepareurself.firebase.UpdateHelper;
 import com.prepare.prepareurself.resources.ui.activity.ResourcesActivity;
+import com.prepare.prepareurself.utils.BaseActivity;
 import com.prepare.prepareurself.utils.Constants;
 import com.google.android.material.navigation.NavigationView;
 import com.prepare.prepareurself.utils.PrefManager;
@@ -53,7 +54,7 @@ import androidx.appcompat.widget.Toolbar;
 import java.io.IOException;
 import java.io.UnsupportedEncodingException;
 
-public class HomeActivity extends AppCompatActivity implements NavigationView.OnNavigationItemSelectedListener,
+public class HomeActivity extends BaseActivity implements NavigationView.OnNavigationItemSelectedListener,
         DashboardFragment.HomeActivityInteractor,
         View.OnClickListener,
         UpdateHelper.OnUpdateCheckListener {

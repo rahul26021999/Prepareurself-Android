@@ -16,6 +16,7 @@ import com.prepare.prepareurself.R;
 import com.prepare.prepareurself.courses.ui.adapters.AllCoursesRvAdapter;
 import com.prepare.prepareurself.dashboard.data.model.CourseModel;
 import com.prepare.prepareurself.dashboard.viewmodel.DashboardViewModel;
+import com.prepare.prepareurself.utils.BaseActivity;
 import com.prepare.prepareurself.utils.Constants;
 import com.prepare.prepareurself.utils.DividerItemDecoration;
 import com.prepare.prepareurself.utils.GridSpaceItemDecoration;
@@ -23,7 +24,7 @@ import com.prepare.prepareurself.utils.PrefManager;
 
 import java.util.List;
 
-public class AllCoursesActivity extends AppCompatActivity implements AllCoursesRvAdapter.CourseRvListener, View.OnClickListener {
+public class AllCoursesActivity extends BaseActivity implements AllCoursesRvAdapter.CourseRvListener, View.OnClickListener {
 
     RecyclerView recyclerView;
     private DashboardViewModel mViewModel;

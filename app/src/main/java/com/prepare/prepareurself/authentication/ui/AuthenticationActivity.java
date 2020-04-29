@@ -19,10 +19,11 @@ import com.onesignal.OneSignal;
 import com.prepare.prepareurself.Home.ui.HomeActivity;
 import com.prepare.prepareurself.R;
 import com.prepare.prepareurself.adapters.AuthenticationPagerAdapter;
+import com.prepare.prepareurself.utils.BaseActivity;
 import com.prepare.prepareurself.utils.Constants;
 import com.prepare.prepareurself.utils.PrefManager;
 
-public class AuthenticationActivity extends AppCompatActivity {
+public class AuthenticationActivity extends BaseActivity {
 
     private PrefManager prefManager;
     public static int resourceId = -1;

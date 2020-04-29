@@ -15,11 +15,12 @@ import android.widget.TextView;
 import com.prepare.prepareurself.R;
 import com.prepare.prepareurself.profile.data.model.UpdatePasswordResponseModel;
 import com.prepare.prepareurself.profile.viewmodel.ProfileViewModel;
+import com.prepare.prepareurself.utils.BaseActivity;
 import com.prepare.prepareurself.utils.Constants;
 import com.prepare.prepareurself.utils.PrefManager;
 import com.prepare.prepareurself.utils.Utility;
 
-public class UpdatePasswordActivity extends AppCompatActivity {
+public class UpdatePasswordActivity extends BaseActivity {
 
     private EditText etOldPassword, etNewPassword, etConfirmPassword;
 

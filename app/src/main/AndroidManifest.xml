@@ -16,7 +16,9 @@
         android:supportsRtl="true"
         android:theme="@style/AppTheme"
         android:usesCleartextTraffic="true">
-        <activity android:name=".SplashActivity"
+        <activity android:name=".utils.BaseActivity"></activity>
+        <activity
+            android:name=".SplashActivity"
             android:theme="@style/SplashTheme">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
@@ -46,8 +48,9 @@
             android:theme="@style/ProfileTheme" />
         <activity android:name=".authentication.ui.forgetPassword" />
         <activity android:name=".authentication.ui.VerifyEmailActivity" />
-        <activity android:name=".profile.ui.activity.UpdatePasswordActivity"
-            android:windowSoftInputMode="stateVisible|adjustResize"/>
+        <activity
+            android:name=".profile.ui.activity.UpdatePasswordActivity"
+            android:windowSoftInputMode="stateVisible|adjustResize" />
         <activity android:name=".youtubeplayer.youtubeplaylistapi.ui.VideoActivity">
             <intent-filter>
                 <action android:name="android.intent.action.VIEW" />
@@ -122,9 +125,7 @@
         </activity>
         <activity android:name=".utils.QuizBaseActivity" />
         <activity android:name=".quiz.QuizActivity" />
-        <activity
-            android:name=".authentication.ui.AuthenticationActivity"
-            >
+        <activity android:name=".authentication.ui.AuthenticationActivity">
             <intent-filter>
                 <action android:name="android.intent.action.VIEW" />
 

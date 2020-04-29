@@ -30,6 +30,7 @@ import com.prepare.prepareurself.courses.ui.adapters.PlaylistVideosRvAdapter;
 import com.prepare.prepareurself.courses.viewmodels.ProjectsViewModel;
 import com.prepare.prepareurself.dashboard.data.model.CourseModel;
 import com.prepare.prepareurself.resources.data.model.ResourceViewsResponse;
+import com.prepare.prepareurself.utils.BaseActivity;
 import com.prepare.prepareurself.utils.Constants;
 import com.prepare.prepareurself.utils.PrefManager;
 import com.prepare.prepareurself.utils.Utility;
@@ -42,7 +43,7 @@ import java.util.List;
 
 import me.saket.bettermovementmethod.BetterLinkMovementMethod;
 
-public class ProjectsActivity extends AppCompatActivity implements PlaylistVideosRvAdapter.PlaylistVideoRvInteractor , View.OnClickListener {
+public class ProjectsActivity extends BaseActivity implements PlaylistVideosRvAdapter.PlaylistVideoRvInteractor , View.OnClickListener {
 
     int projectId = -1;
     private ProjectsViewModel viewModel;

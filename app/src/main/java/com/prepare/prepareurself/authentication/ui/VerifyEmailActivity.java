@@ -10,9 +10,10 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.prepare.prepareurself.R;
+import com.prepare.prepareurself.utils.BaseActivity;
 import com.prepare.prepareurself.utils.Constants;
 
-public class VerifyEmailActivity extends AppCompatActivity {
+public class VerifyEmailActivity extends BaseActivity {
 
     private TextView textView;
     private TextView title;
