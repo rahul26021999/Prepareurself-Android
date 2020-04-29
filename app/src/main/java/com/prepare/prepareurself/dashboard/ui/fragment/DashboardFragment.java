@@ -130,13 +130,11 @@ public class DashboardFragment extends Fragment implements DashboardRvAdapter.Da
 
             @Override
             public void onAdFailedToLoad(int errorCode) {
-                Utility.showToast(getContext(),"hello failed");
                 // Code to be executed when an ad request fails.
             }
 
             @Override
             public void onAdOpened() {
-                Utility.showToast(getContext(),"hello open");
                 // Code to be executed when an ad opens an overlay that
                 // covers the screen.
             }
