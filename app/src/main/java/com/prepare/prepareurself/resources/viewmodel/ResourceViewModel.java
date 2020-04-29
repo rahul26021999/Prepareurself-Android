@@ -7,6 +7,8 @@ import androidx.lifecycle.AndroidViewModel;
 import androidx.lifecycle.LiveData;
 import androidx.lifecycle.MutableLiveData;
 
+import com.prepare.prepareurself.dashboard.data.db.repository.CourseDbRepository;
+import com.prepare.prepareurself.dashboard.data.model.CourseModel;
 import com.prepare.prepareurself.resources.data.db.repository.ResourcesDbRepository;
 import com.prepare.prepareurself.resources.data.model.ResourceModel;
 import com.prepare.prepareurself.resources.data.model.ResourceViewsResponse;
@@ -23,11 +25,13 @@ public class ResourceViewModel extends AndroidViewModel {
 
     private ResourceRespository resourceRespository;
     private ResourcesDbRepository resourcesDbRepository;
+    private CourseDbRepository courseDbRepository;
 
     public ResourceViewModel(@NonNull Application application) {
         super(application);
         resourceRespository = new ResourceRespository(application);
         resourcesDbRepository = new ResourcesDbRepository(application);
+        courseDbRepository = new CourseDbRepository(application);
     }
 
     public LiveData<ResourceViewsResponse> resourceViewed(String token, int resourceId){
@@ -57,5 +61,9 @@ public class ResourceViewModel extends AndroidViewModel {
 
     public void saveResource(ResourceModel videoResources) {
         resourcesDbRepository.insertResource(videoResources);
+    }
+
+    public LiveData<CourseModel> getCourseById(int courseId) {
+        return courseDbRepository.getCourseById(courseId);
     }
 }

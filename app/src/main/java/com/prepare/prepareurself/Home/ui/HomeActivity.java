@@ -269,6 +269,7 @@ public class HomeActivity extends AppCompatActivity implements NavigationView.On
     public void onTopicClicked(SuggestedTopicsModel topicsModel) {
         Intent intent = new Intent(HomeActivity.this, ResourcesActivity.class);
         intent.putExtra(Constants.TOPICID,topicsModel.getId());
+        intent.putExtra(Constants.COURSEID, topicsModel.getCourse_id());
         startActivity(intent);
     }
 
