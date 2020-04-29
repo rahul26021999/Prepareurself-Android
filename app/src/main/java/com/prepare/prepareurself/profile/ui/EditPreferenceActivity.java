@@ -5,6 +5,7 @@ import androidx.lifecycle.Observer;
 import androidx.lifecycle.ViewModelProviders;
 
 import android.app.ProgressDialog;
+import android.content.Intent;
 import android.os.Bundle;
 import android.text.TextUtils;
 import android.util.Log;
@@ -17,6 +18,7 @@ import android.widget.Toast;
 import com.google.android.material.button.MaterialButton;
 import com.google.android.material.chip.Chip;
 import com.google.android.material.chip.ChipGroup;
+import com.prepare.prepareurself.Home.ui.HomeActivity;
 import com.prepare.prepareurself.R;
 import com.prepare.prepareurself.authentication.data.model.UserModel;
 import com.prepare.prepareurself.profile.data.model.MyPreferenceTechStack;
@@ -67,7 +69,8 @@ public class EditPreferenceActivity extends AppCompatActivity {
         backBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                onBackPressed();
+                startActivity(new Intent(EditPreferenceActivity.this, HomeActivity.class));
+                finish();
             }
         });
 
@@ -167,5 +170,14 @@ public class EditPreferenceActivity extends AppCompatActivity {
                         });
             }
         });
+
+    }
+
+
+    @Override
+    public void onBackPressed() {
+        //super.onBackPressed();
+        startActivity(new Intent(EditPreferenceActivity.this, HomeActivity.class));
+        finish();
     }
 }
