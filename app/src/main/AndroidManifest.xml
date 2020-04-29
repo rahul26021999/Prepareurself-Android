@@ -46,7 +46,8 @@
             android:theme="@style/ProfileTheme" />
         <activity android:name=".authentication.ui.forgetPassword" />
         <activity android:name=".authentication.ui.VerifyEmailActivity" />
-        <activity android:name=".profile.ui.activity.UpdatePasswordActivity" />
+        <activity android:name=".profile.ui.activity.UpdatePasswordActivity"
+            android:windowSoftInputMode="stateVisible|adjustResize"/>
         <activity android:name=".youtubeplayer.youtubeplaylistapi.ui.VideoActivity">
             <intent-filter>
                 <action android:name="android.intent.action.VIEW" />
