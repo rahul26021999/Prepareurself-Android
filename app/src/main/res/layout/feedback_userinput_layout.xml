@@ -45,7 +45,7 @@
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
                     android:layout_centerInParent="true"
-                    android:inputType="textLongMessage"
+                    android:inputType="textMultiLine"
                     android:gravity="top|start"
                     android:backgroundTint="@color/white"
                     android:hint="Please Type your Feedback here..."
