@@ -131,7 +131,7 @@ public class ProjectsFragment extends Fragment implements ProjectsRvAdapter.Proj
                     adapter.setProjects(projectsModels);
                     adapter.notifyDataSetChanged();
                 }else{
-                    tvComingSoon.setText("Coming soon");
+                    tvComingSoon.setText("Coming soon...");
                     //null aya matlb data no..so comng soon
                     //data load hora h so
                     tvComingSoon.setVisibility(View.VISIBLE);
