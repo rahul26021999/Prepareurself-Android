@@ -72,7 +72,10 @@ public class VideoResoursesRvAdapter extends RecyclerView.Adapter<VideoResourses
                 try {
                     String encodedId = Utility.base64EncodeForInt(v1.getId());
                     Bitmap bitmap = Utility.getBitmapFromView(holder.imageView);
-                    String text = "prepareurself.in/video/"+encodedId;
+                    String text = "Checkout our prepareurself app. " +
+                            "I found some best resources  from internet at one place and learning is so much fun now.\n" +
+                            "You can learn them too here :\n"+
+                            "prepareurself.in/video/"+encodedId;
                     listener.onResourceShared(bitmap,text);
                 } catch (UnsupportedEncodingException e) {
                     e.printStackTrace();

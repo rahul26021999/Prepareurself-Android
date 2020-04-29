@@ -70,7 +70,10 @@ public class TheoryResourcesRvAdapter extends RecyclerView.Adapter<TheoryResourc
                 try {
                     String encodedId = Utility.base64EncodeForInt(theoryResources1.getId());
                     Bitmap bitmap = Utility.getBitmapFromView(holder.imageView);
-                    String text = "prepareurself.in/resource/"+encodedId;
+                    String text = "Checkout our prepareurself app. " +
+                            "I found some best resources  from internet at one place and learning is so much fun now.\n" +
+                            "You can learn them too here :\n"+
+                            "prepareurself.in/resource/"+encodedId;
                     listener.onResourceShared(bitmap,text);
                 } catch (UnsupportedEncodingException e) {
                     e.printStackTrace();
