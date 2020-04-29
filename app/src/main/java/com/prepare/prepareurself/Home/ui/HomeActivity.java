@@ -171,11 +171,12 @@ public class HomeActivity extends AppCompatActivity implements NavigationView.On
 
     private void shareApp() {
         Bitmap icon = BitmapFactory.decodeResource(getResources(),
-                R.drawable.icon_1);
+                R.drawable.ic_logo_share);
         try {
             Uri uri = Utility.getUriOfBitmap(icon, this);
             String text = "Prepareurself is preparing me for my internships. I found some best and amazing Project works, a wide range of latest Tech-Stacks and some best Resources from internet at one place.\n" +
-                    "Checkout our prepareurself app.\n"+
+                    "Checkout our prepareurself app.\n\n"+
+                    "Click link to install\n"+
                     "prepareurself.in/install";
             Utility.shareContent(this,uri, text);
         } catch (IOException e) {
