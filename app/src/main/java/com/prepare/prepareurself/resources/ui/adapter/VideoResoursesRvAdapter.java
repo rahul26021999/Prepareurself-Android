@@ -75,7 +75,7 @@ public class VideoResoursesRvAdapter extends RecyclerView.Adapter<VideoResourses
                     String text = "Checkout our prepareurself app. " +
                             "I found some best resources  from internet at one place and learning is so much fun now.\n" +
                             "You can learn them too here :\n"+
-                            "prepareurself.in/video/"+encodedId;
+                            "prepareurself.in/resource/"+encodedId;
                     listener.onResourceShared(bitmap,text);
                 } catch (UnsupportedEncodingException e) {
                     e.printStackTrace();

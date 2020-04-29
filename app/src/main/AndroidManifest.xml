@@ -122,7 +122,8 @@
         <activity android:name=".utils.QuizBaseActivity" />
         <activity android:name=".quiz.QuizActivity" />
         <activity
-            android:name=".authentication.ui.AuthenticationActivity">
+            android:name=".authentication.ui.AuthenticationActivity"
+            >
             <intent-filter>
                 <action android:name="android.intent.action.VIEW" />
 
