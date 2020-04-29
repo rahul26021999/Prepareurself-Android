@@ -428,7 +428,7 @@ public class ProfileFragment extends Fragment implements View.OnClickListener {
                 }
 
                 if (TextUtils.isEmpty(userContact)){
-                    etContact.setHint("Start typing..");
+                    etContact.setHint("Phone Number");
 
                 }
 
