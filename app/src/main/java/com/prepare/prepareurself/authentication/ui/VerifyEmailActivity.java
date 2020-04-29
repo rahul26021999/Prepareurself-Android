@@ -3,7 +3,10 @@ package com.prepare.prepareurself.authentication.ui;
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.content.Intent;
+import android.media.Image;
 import android.os.Bundle;
+import android.view.View;
+import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.prepare.prepareurself.R;
@@ -12,6 +15,8 @@ import com.prepare.prepareurself.utils.Constants;
 public class VerifyEmailActivity extends AppCompatActivity {
 
     private TextView textView;
+    private TextView title;
+    private ImageView back;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -19,6 +24,16 @@ public class VerifyEmailActivity extends AppCompatActivity {
         setContentView(R.layout.activity_verify_email);
 
         textView = findViewById(R.id.tv_verify);
+        title = findViewById(R.id.title);
+        back = findViewById(R.id.backBtn);
+
+        title.setText("Verify Email");
+        back.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                finish();
+            }
+        });
 
         String email = "";
 

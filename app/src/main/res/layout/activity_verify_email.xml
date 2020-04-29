@@ -1,21 +1,33 @@
 <?xml version="1.0" encoding="utf-8"?>
-<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".authentication.ui.VerifyEmailActivity">
+    tools:context=".authentication.ui.VerifyEmailActivity"
+    android:orientation="vertical">
 
-    <TextView
-        android:layout_width="wrap_content"
+    <include android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text=""
-        android:textSize="16sp"
-        android:textColor="@color/colorPrimaryDark"
-        android:fontFamily="@font/proximanovaregular"
-        android:padding="10dp"
-        android:textAlignment="center"
-        android:id="@+id/tv_verify"
-        android:layout_centerInParent="true"/>
+        layout="@layout/layout_topbar"
+        android:id="@+id/topbar"/>
 
-</RelativeLayout>
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text=""
+            android:textSize="16sp"
+            android:textColor="@color/colorPrimaryDark"
+            android:fontFamily="@font/proximanovaregular"
+            android:padding="10dp"
+            android:textAlignment="center"
+            android:id="@+id/tv_verify"
+            android:layout_centerInParent="true"/>
+
+    </RelativeLayout>
+
+</LinearLayout>
