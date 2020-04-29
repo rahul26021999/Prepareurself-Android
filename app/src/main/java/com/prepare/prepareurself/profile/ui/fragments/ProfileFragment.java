@@ -376,6 +376,7 @@ public class ProfileFragment extends Fragment implements View.OnClickListener {
                 etDob.setText(dateFormatter.format(calendar.getTime()));
             }
         }, year, month, day);
+        datePickerDialog.getDatePicker().setMaxDate(System.currentTimeMillis()-1000);
         datePickerDialog.show();
     }
 
