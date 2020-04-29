@@ -4,6 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:background="@color/white"
     tools:context=".youtubeplayer.youtubeplaylistapi.ui.VideoActivity">
 
     <com.google.android.youtube.player.YouTubePlayerView
@@ -15,16 +16,14 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_below="@+id/youtube_playerview"
-        android:layout_marginTop="20dp"
-        android:layout_marginBottom="10dp"
-        android:paddingStart="10dp"
-        android:paddingEnd="10dp"
         android:id="@+id/rel_title_youtube">
 
         <TextView
             android:layout_width="wrap_content"
+            android:paddingStart="10dp"
+            android:paddingEnd="10dp"
+            android:paddingTop="10dp"
             android:layout_height="wrap_content"
-            app:layout_constraintEnd_toStartOf="@+id/like_button_youtube"
             android:textSize="16sp"
             android:textColor="@color/colorPrimaryDark"
             android:fontFamily="@font/proximanovaregular"
@@ -34,19 +33,10 @@
             android:layout_toStartOf="@+id/img_share_youtube_video"
             android:layout_alignParentStart="true"/>
 
-        <com.like.LikeButton
-            android:layout_width="25dp"
-            android:layout_height="25dp"
-            android:id="@+id/like_button_youtube"
-            app:icon_type="thumb"
-            android:background="?attr/selectableItemBackgroundBorderless"
-            android:layout_marginEnd="20dp"
-            app:icon_size="25dp"
-            android:layout_alignParentEnd="true"/>
-
         <ImageView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
+            android:layout_width="40dp"
+            android:layout_height="40dp"
+            android:padding="5dp"
             android:background="?attr/selectableItemBackgroundBorderless"
             android:src="@drawable/ic_action_down_black"
             android:layout_marginEnd="20dp"
@@ -54,8 +44,9 @@
             android:id="@+id/img_down_video"/>
 
         <ImageView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
+            android:layout_width="40dp"
+            android:layout_height="40dp"
+            android:padding="7dp"
             android:background="?attr/selectableItemBackgroundBorderless"
             android:src="@drawable/ic_image_share"
             android:id="@+id/img_share_youtube_video"
@@ -63,137 +54,90 @@
             android:layout_marginEnd="20dp"/>
 
     </RelativeLayout>
-
-
-
     <View
         android:layout_width="match_parent"
         android:layout_height="1dp"
-        android:background="@android:color/darker_gray"
-        android:layout_marginTop="10dp"
-        android:layout_marginStart="10dp"
-        android:layout_marginEnd="5dp"
-        android:id="@+id/view_divider_youtube"
-        android:layout_below="@+id/rel_title_youtube"/>
-
-    <net.cachapa.expandablelayout.ExpandableLayout
-        android:id="@+id/expandable_layout"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        app:el_duration="1000"
-        app:el_expanded="false"
-        app:el_parallax="0.5"
-        android:layout_below="@id/view_divider_youtube">
-
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:textSize="16sp"
-            android:paddingEnd="5dp"
-            android:paddingStart="10dp"
-            android:lineSpacingExtra="4dp"
-            android:fontFamily="@font/proximanovaregular"
-            android:id="@+id/tv_youtube_description"
-            android:layout_marginTop="5dp"
-            android:layout_alignParentStart="true"
-            android:layout_toStartOf="@+id/img_share_youtube_video"/>
-
-    </net.cachapa.expandablelayout.ExpandableLayout>
-<!--    <TextView-->
-<!--        android:layout_width="match_parent"-->
-<!--        android:layout_height="match_parent"-->
-<!--        android:layout_below="@id/expandable_layout"-->
-<!--        android:text="Playlst"-->
-<!--        android:textSize="20sp"-->
-<!--        android:padding="5dp"-->
-<!--        android:id="@+id/tvPlaylst"/>-->
-
-    <TextView
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_below="@id/expandable_layout"
-        android:text="Playlist"
-        android:textColor="@color/colorPrimaryDark"
-        android:fontFamily="@font/proximanovaregular"
-        android:textSize="16sp"
-        android:textStyle="bold"
-        android:padding="5dp"
-        android:id="@+id/tvPlaylst"
-        android:visibility="gone"/>
-
-    <androidx.recyclerview.widget.RecyclerView
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:id="@+id/rv_playlist_item_player"
-        android:visibility="gone"
-        android:layout_below="@+id/tvPlaylst"/>
-
-
-    <TextView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="Related Videos"
-        android:textColor="@color/colorPrimaryDark"
-        android:fontFamily="@font/proximanovaregular"
-        android:textStyle="bold"
-        android:layout_marginBottom="10dp"
-        android:layout_below="@id/expandable_layout"
-        android:layout_marginTop="10dp"
-        android:layout_marginStart="10dp"
-        android:id="@+id/tv_related_header"
-        android:visibility="gone"
-        />
-
-    <androidx.recyclerview.widget.RecyclerView
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:id="@+id/rv_other_videos"
-        android:visibility="gone"
-        android:layout_below="@id/tv_related_header"/>
+        android:layout_below="@+id/rel_title_youtube"
+        android:background="@color/dark_grey"/>
 
     <androidx.core.widget.NestedScrollView
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
         android:fillViewport="true"
-        android:visibility="gone"
-        android:layout_below="@+id/view_divider_youtube">
+        android:overScrollMode="never"
+        android:layout_below="@+id/rel_title_youtube"
+        android:layout_height="match_parent">
 
         <RelativeLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content">
-
-            <RelativeLayout
+            <net.cachapa.expandablelayout.ExpandableLayout
+                android:id="@+id/expandable_layout"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:id="@+id/rel_video_description">
+                app:el_duration="1000"
+                app:el_expanded="false"
+                app:el_parallax="0.5">
 
-            </RelativeLayout>
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:textSize="16sp"
+                    android:paddingEnd="5dp"
+                    android:paddingStart="10dp"
+                    android:lineSpacingExtra="4dp"
+                    android:fontFamily="@font/proximanovaregular"
+                    android:id="@+id/tv_youtube_description"
+                    android:layout_marginTop="5dp"
+                    android:layout_alignParentStart="true"
+                    android:layout_toStartOf="@+id/img_share_youtube_video"/>
 
+            </net.cachapa.expandablelayout.ExpandableLayout>
             <TextView
-                android:layout_width="wrap_content"
+                android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_below="@+id/rel_video_description"
+                android:layout_below="@id/expandable_layout"
+                android:text="Playlist"
+                android:layout_marginBottom="10dp"
                 android:layout_marginTop="20dp"
-                android:text="Related Videos"
+                android:layout_marginStart="20dp"
                 android:textColor="@color/colorPrimaryDark"
-                android:textStyle="bold"
-                android:paddingStart="10dp"
                 android:fontFamily="@font/proximanovaregular"
                 android:textSize="16sp"
-                android:visibility="gone"
-                android:id="@+id/tv_relatedVideos_youtube"/>
+                android:textStyle="bold"
+                android:padding="5dp"
+                android:id="@+id/tvPlaylst"
+                android:visibility="gone"/>
 
             <androidx.recyclerview.widget.RecyclerView
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
+                android:id="@+id/rv_playlist_item_player"
+                android:visibility="gone"
+                android:layout_below="@+id/tvPlaylst"/>
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Related Videos"
+                android:textColor="@color/colorPrimaryDark"
+                android:fontFamily="@font/proximanovaregular"
+                android:textStyle="bold"
+                android:layout_marginBottom="10dp"
+                android:layout_below="@id/expandable_layout"
                 android:layout_marginTop="10dp"
                 android:layout_marginStart="10dp"
-                android:layout_marginEnd="10dp"
+                android:id="@+id/tv_related_header"
                 android:visibility="gone"
-                android:layout_below="@+id/tv_relatedVideos_youtube"
-                android:id="@+id/rv_relatedvideos_youtube"/>
+                />
 
+            <androidx.recyclerview.widget.RecyclerView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:id="@+id/rv_other_videos"
+                android:visibility="gone"
+                android:layout_below="@id/tv_related_header"/>
         </RelativeLayout>
+
 
     </androidx.core.widget.NestedScrollView>
 

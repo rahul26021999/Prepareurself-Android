@@ -23,7 +23,6 @@ import com.google.android.youtube.player.YouTubeBaseActivity;
 import com.google.android.youtube.player.YouTubeInitializationResult;
 import com.google.android.youtube.player.YouTubePlayer;
 import com.google.android.youtube.player.YouTubePlayerView;
-import com.like.LikeButton;
 import com.prepare.prepareurself.R;
 import com.prepare.prepareurself.authentication.ui.AuthenticationActivity;
 import com.prepare.prepareurself.resources.data.model.ResourceModel;
@@ -55,7 +54,6 @@ public class VideoActivity extends YouTubeBaseActivity implements YouTubePlayer.
     String decription = "";
     int projectId = -1;
     String playlistId = "";
-    LikeButton likeButton;
     ImageView imageViewShare;
     ExpandableLayout expandableLayout;
     ImageView imageDown;
@@ -88,7 +86,6 @@ public class VideoActivity extends YouTubeBaseActivity implements YouTubePlayer.
         tvTitle = findViewById(R.id.tv_youtube_title);
         tvDescription = findViewById(R.id.tv_youtube_description);
         imageViewShare = findViewById(R.id.img_share_youtube_video);
-        likeButton = findViewById(R.id.like_button_youtube);
         imageDown = findViewById(R.id.img_down_video);
         expandableLayout = findViewById(R.id.expandable_layout);
         playlistItemRecyclerView = findViewById(R.id.rv_playlist_item_player);
@@ -136,7 +133,7 @@ public class VideoActivity extends YouTubeBaseActivity implements YouTubePlayer.
             playlistItemAdapter = new PlaylistItemAdapter(getApplicationContext(),this);
             LinearLayoutManager layoutManager = new LinearLayoutManager(this);
             playlistItemRecyclerView.setLayoutManager(layoutManager);
-            DividerItemDecoration decoration = new DividerItemDecoration(this,R.drawable.theory_resource_divider);
+            DividerItemDecoration decoration = new DividerItemDecoration(this,R.drawable.playlist_resource_divider);
             playlistItemRecyclerView.addItemDecoration(decoration);
             playlistItemRecyclerView.setAdapter(playlistItemAdapter);
 
@@ -161,13 +158,12 @@ public class VideoActivity extends YouTubeBaseActivity implements YouTubePlayer.
             playlistItemRecyclerView.setVisibility(View.VISIBLE);
             rvOtherVideos.setVisibility(View.GONE);
             tvRelatedVideosHeader.setVisibility(View.GONE);
-            //
             tvPlaylst.setVisibility(View.VISIBLE);
 
             playlistItemAdapter = new PlaylistItemAdapter(getApplicationContext(),this);
             LinearLayoutManager layoutManager = new LinearLayoutManager(this);
             playlistItemRecyclerView.setLayoutManager(layoutManager);
-            DividerItemDecoration decoration = new DividerItemDecoration(this,R.drawable.theory_resource_divider);
+            DividerItemDecoration decoration = new DividerItemDecoration(this,R.drawable.playlist_resource_divider);
             playlistItemRecyclerView.addItemDecoration(decoration);
             playlistItemRecyclerView.setAdapter(playlistItemAdapter);
 
@@ -309,19 +305,14 @@ public class VideoActivity extends YouTubeBaseActivity implements YouTubePlayer.
     private void hideShareAndLike() {
 
         imageViewShare.setEnabled(false);
-        likeButton.setEnabled(false);
 
         imageViewShare.setVisibility(View.INVISIBLE);
-        likeButton.setVisibility(View.GONE);
 
     }
 
     public void showShareAndLike(){
         imageViewShare.setEnabled(true);
-        likeButton.setEnabled(false);
-
         imageViewShare.setVisibility(View.VISIBLE);
-        likeButton.setVisibility(View.GONE);
     }
 
     private void share(Uri uri, String text) {
