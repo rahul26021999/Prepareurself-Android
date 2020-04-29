@@ -123,6 +123,18 @@
                     android:textSize="15sp" />
 
             </LinearLayout>
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="match_parent"
+                android:textStyle="bold"
+                android:textSize="18sp"
+                android:id="@+id/tv_terms"
+                android:textColor="@color/white"
+                android:layout_gravity="center_horizontal"
+                android:layout_marginBottom="10dp"
+                android:text="Click to see our Terms and Conditions"/>
+
         </LinearLayout>
     </ScrollView>
 
