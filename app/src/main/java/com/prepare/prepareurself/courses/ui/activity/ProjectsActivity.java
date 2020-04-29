@@ -219,7 +219,7 @@ public class ProjectsActivity extends AppCompatActivity implements PlaylistVideo
         level.setText(projectsModel.getLevel());
         projectTitle = projectsModel.getName();
         tvProjectTitle.setText(projectTitle);
-        viewModel.getCourseById(projectsModel.getId())
+        viewModel.getCourseById(projectsModel.getCourse_id())
                 .observe(ProjectsActivity.this, new Observer<CourseModel>() {
                     @Override
                     public void onChanged(CourseModel courseModel) {
