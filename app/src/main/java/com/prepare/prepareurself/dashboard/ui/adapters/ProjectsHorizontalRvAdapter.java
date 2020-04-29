@@ -88,6 +88,7 @@ public class ProjectsHorizontalRvAdapter extends RecyclerView.Adapter<ProjectsHo
                         Constants.PROJECTSIMAGEBASEURL+ projectsModel.getImage_url())
                         .placeholder(R.drawable.placeholder)
                         .diskCacheStrategy(DiskCacheStrategy.RESOURCE)
+                        .override(500,500)
                         .transition(GenericTransitionOptions.<Drawable>with(Utility.getAnimationObject()))
                         .error(R.drawable.placeholder)
                         .into(imageView);

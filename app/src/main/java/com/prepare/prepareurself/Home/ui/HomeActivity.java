@@ -123,7 +123,7 @@ public class HomeActivity extends AppCompatActivity implements NavigationView.On
 
         Intent intent = getIntent();
         if (intent.getData()!=null){
-            String feedback = intent.getData().toString().split("")[1];
+            String feedback = intent.getData().toString();
             if (!TextUtils.isEmpty(feedback)){
                 if (prefManager.getBoolean(Constants.ISLOGGEDIN)){
                     navController.navigate(R.id.nav_feedback);
