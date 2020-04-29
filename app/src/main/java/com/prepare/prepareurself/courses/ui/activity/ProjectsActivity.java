@@ -22,13 +22,12 @@ import android.widget.TextView;
 
 import com.bumptech.glide.GenericTransitionOptions;
 import com.bumptech.glide.Glide;
-import com.google.android.material.chip.Chip;
+import com.prepare.prepareurself.R;
 import com.prepare.prepareurself.authentication.ui.AuthenticationActivity;
 import com.prepare.prepareurself.courses.data.model.ProjectResponseModel;
 import com.prepare.prepareurself.courses.data.model.ProjectsModel;
 import com.prepare.prepareurself.courses.ui.adapters.PlaylistVideosRvAdapter;
 import com.prepare.prepareurself.courses.viewmodels.ProjectsViewModel;
-import com.prepare.prepareurself.R;
 import com.prepare.prepareurself.dashboard.data.model.CourseModel;
 import com.prepare.prepareurself.utils.Constants;
 import com.prepare.prepareurself.utils.PrefManager;
@@ -78,7 +77,7 @@ public class ProjectsActivity extends AppCompatActivity implements PlaylistVideo
         backBtn = findViewById(R.id.backBtn);
         recyclerView = findViewById(R.id.rv_prjects_videos);
         tvLoading = findViewById(R.id.tv_loading_project);
-        cardImageView = findViewById(R.id.card_project_image);
+        cardImageView = findViewById(R.id.card_single);
         videoImageView = findViewById(R.id.project_video_image_view);
         tvCardVideoTitle = findViewById(R.id.tv_card_video_project);
         tvReferenceHeader = findViewById(R.id.tv_reference_heading);
@@ -360,7 +359,7 @@ public class ProjectsActivity extends AppCompatActivity implements PlaylistVideo
     public void onClick(View v) {
         switch (v.getId())
         {
-            case R.id.card_project_image:
+            case R.id.card_single:
                 if (!TextUtils.isEmpty(videoTitle)){
                     Intent intent = new Intent(ProjectsActivity.this,VideoActivity.class);
                     intent.putExtra(Constants.VIDEOCODE,videoCode);

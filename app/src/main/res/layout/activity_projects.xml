@@ -166,14 +166,14 @@
                 app:cardCornerRadius="20dp"
                 app:cardElevation="0dp"
                 android:layout_marginBottom="20dp"
-                android:id="@+id/card_project_image"
+                android:id="@+id/card_single"
                 android:layout_below="@+id/tv_reference_heading"
                 android:visibility="gone">
 
                 <RelativeLayout
                     android:layout_width="match_parent"
-                    android:layout_height="match_parent"
-                    android:background="?attr/selectableItemBackground">
+                    android:id="@+id/singleContainerCard"
+                    android:layout_height="match_parent">
 
                     <ImageView
                         android:layout_width="150dp"
@@ -184,6 +184,7 @@
 
                     <TextView
                         android:layout_width="match_parent"
+                        android:background="?attr/selectableItemBackground"
                         android:layout_height="match_parent"
                         android:id="@+id/tv_card_video_project"
                         android:layout_toEndOf="@+id/project_video_image_view"
