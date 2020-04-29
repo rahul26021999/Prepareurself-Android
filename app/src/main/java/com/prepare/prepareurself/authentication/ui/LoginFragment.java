@@ -193,6 +193,13 @@ public class LoginFragment extends Fragment implements View.OnClickListener{
                                 intent.putExtra(Constants.PROJECTID, AuthenticationActivity.projectId);
                                 startActivity(intent);
                                 getActivity().finish();
+                            } else if (AuthenticationActivity.FEEDBACKSHARE){
+
+                                Intent intent = new Intent(getActivity(), HomeActivity.class);
+                                intent.putExtra(Constants.FEEDBACKSHAREINTENT, true);
+                                startActivity(intent);
+                                getActivity().finish();
+
                             } else{
                                 Intent intent=new Intent(getActivity(), HomeActivity.class);
                                 startActivity(intent);

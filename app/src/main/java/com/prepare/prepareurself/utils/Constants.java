@@ -65,5 +65,7 @@ public class Constants {
     public static final String GOOGLEPLAYLINK = "https://play.google.com/store/apps/details?id=com.prepare.prepareurself";
     public static final String COURSENAME = "course_name";
     public static final Object USERIMAGEBASEURL = "http://prepareurself.in/uploads/users/";
-    
+
+    public static final String FEEDBACKSHARE = "feedback_share";
+    public static final String FEEDBACKSHAREINTENT = "feedback_share_intent";
 }

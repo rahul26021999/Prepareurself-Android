@@ -17,6 +17,7 @@ import android.widget.TextView;
 
 import com.bumptech.glide.GenericTransitionOptions;
 import com.bumptech.glide.Glide;
+import com.prepare.prepareurself.authentication.ui.AuthenticationActivity;
 import com.prepare.prepareurself.courses.data.model.ProjectsModel;
 import com.prepare.prepareurself.courses.data.model.TopicsModel;
 import com.prepare.prepareurself.courses.ui.activity.CoursesActivity;
@@ -118,12 +119,22 @@ public class HomeActivity extends AppCompatActivity implements NavigationView.On
             }
         });
 
+        prefManager = new PrefManager(this);
+
         Intent intent = getIntent();
         if (intent.getData()!=null){
             String feedback = intent.getData().toString().split("")[1];
             if (!TextUtils.isEmpty(feedback)){
-                //if ()
+                if (prefManager.getBoolean(Constants.ISLOGGEDIN)){
+                    navController.navigate(R.id.nav_feedback);
+                }else{
+                    Intent loginIntent = new Intent(HomeActivity.this, AuthenticationActivity.class);
+                    loginIntent.putExtra(Constants.FEEDBACKSHARE, true);
+                    startActivity(loginIntent);
+                }
             }
+        }else if (intent.getBooleanExtra(Constants.FEEDBACKSHAREINTENT, false)){
+            navController.navigate(R.id.nav_feedback);
         }
 
     }
