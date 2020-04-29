@@ -107,7 +107,7 @@
                 android:background="@color/white"
                 android:layout_centerHorizontal="true"
                 ads:adSize="BANNER"
-                ads:adUnitId="@string/bannertestAds" />
+                ads:adUnitId="@string/bannerAds" />
 
             <TextView
                 android:layout_width="wrap_content"

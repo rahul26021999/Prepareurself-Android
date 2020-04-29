@@ -94,7 +94,7 @@
                 android:backgroundTint="@color/white"
                 android:background="@color/white"
                 android:layout_gravity="center_horizontal"
-                ads:adUnitId="@string/bannertestAds">
+                ads:adUnitId="@string/bannerAds">
             </com.google.android.gms.ads.AdView>
 
         </LinearLayout>
