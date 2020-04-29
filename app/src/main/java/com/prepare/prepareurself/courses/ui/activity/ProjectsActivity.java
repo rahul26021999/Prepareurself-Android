@@ -207,7 +207,6 @@ public class ProjectsActivity extends AppCompatActivity implements PlaylistVideo
                     .load(Constants.PROJECTSIMAGEBASEURL + projectsModel.getImage_url())
                     .transition(GenericTransitionOptions.<Drawable>with(Utility.getAnimationObject()))
                     .placeholder(R.drawable.placeholder)
-                    .error(R.drawable.ic_image_loading_error)
                     .into(imageProject);
         }
 
