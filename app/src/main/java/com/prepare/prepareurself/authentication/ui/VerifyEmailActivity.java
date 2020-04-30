@@ -48,4 +48,10 @@ public class VerifyEmailActivity extends BaseActivity {
 
 
     }
+
+    @Override
+    public void onBackPressed() {
+        super.onBackPressed();
+        finish();
+    }
 }

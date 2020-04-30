@@ -197,7 +197,11 @@ public class ProfileFragment extends Fragment implements View.OnClickListener {
                         if (TextUtils.isEmpty(userDob)){
                             tvDob.setText("Click Edit to update dob");
                         }else{
-                            tvDob.setText(userDob.split("T")[0].split(" ")[0]);
+                            if (userDob.contains("T")){
+                                tvDob.setText(userDob.split("T")[0]);
+                            } else{
+                                tvDob.setText(userDob.split(" ")[0]);
+                            }
                         }
                         if (TextUtils.isEmpty(userContact)){
                             tvContact.setHint("Click Edit to update contact");
@@ -238,7 +242,12 @@ public class ProfileFragment extends Fragment implements View.OnClickListener {
     private void setDataOnTextViews(UserModel userModel) {
         tvName.setText(userModel.getFirst_name() + " " + userModel.getLast_name());
         if (!TextUtils.isEmpty(userModel.getDob())){
-            tvDob.setText(userDob.split("T")[0].split(" ")[0]);
+            if (userModel.getDob().contains("T")){
+                tvDob.setText(userModel.getDob().split("T")[0]);
+            }else{
+                tvDob.setText(userModel.getDob().split(" ")[0]);
+            }
+
         }else {
             tvDob.setText("Click Edit to update dob");
         }
@@ -424,7 +433,12 @@ public class ProfileFragment extends Fragment implements View.OnClickListener {
                 if (TextUtils.isEmpty(userDob)){
                     etDob.setHint("Tap to update dob");
                 }else{
-                    etDob.setText(userDob.split("T")[0].split(" ")[0]);
+                    if (userDob.contains("T")){
+                        etDob.setText(userDob.split("T")[0]);
+                    }else{
+                        etDob.setText(userDob.split(" ")[0]);
+                    }
+
                 }
 
                 if (TextUtils.isEmpty(userContact)){
