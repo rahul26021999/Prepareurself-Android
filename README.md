@@ -5,5 +5,5 @@
 ## Import Project (Do not open while setup) in Android Studio
 ## Make a build
 
-# Steps to contribute
-## Refer this link for a quickstart https://akrabat.com/the-beginners-guide-to-contributing-to-a-github-project/
+## Google Play Link
+https://play.google.com/store/apps/details?id=com.prepare.prepareurself
