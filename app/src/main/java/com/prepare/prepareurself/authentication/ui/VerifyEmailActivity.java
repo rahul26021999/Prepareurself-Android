@@ -43,7 +43,7 @@ public class VerifyEmailActivity extends BaseActivity {
             email = intent.getStringExtra(Constants.USEREMAIL);
         }
 
-        textView.setText("A verification link has been sent to "+email+"\n Please go and verify first");
+        textView.setText("A verification link has been sent to "+email+"\n Please go and verify first\n Please check spam folder as well");
 
 
 
