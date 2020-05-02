@@ -16,7 +16,7 @@ public interface TopicsRoomDao {
     @Insert(onConflict = OnConflictStrategy.REPLACE)
     void insertTopic(TopicsModel topicsModel);
 
-    @Query("SELECT * FROM topics WHERE course_id=:courseId")
+    @Query("SELECT * FROM topics WHERE course_id=:courseId ORDER BY sequence ASC")
     LiveData<List<TopicsModel>> getTopics(int courseId);
 
     @Query("DELETE FROM topics")
