@@ -359,12 +359,43 @@ public class ProjectsActivity extends BaseActivity implements PlaylistVideosRvAd
                     tvCardVideoTitle.setText(singleVIdeoItemWrapper.getSnippet().getTitle());
                     videoTitle = singleVIdeoItemWrapper.getSnippet().getTitle();
                     videoDescription = singleVIdeoItemWrapper.getSnippet().getDescription();
-                    Glide.with(ProjectsActivity.this)
-                            .load(singleVIdeoItemWrapper.getSnippet().getThumbnails().getMaxres().getUrl())
-                            .transition(GenericTransitionOptions.<Drawable>with(Utility.getAnimationObject()))
-                            .placeholder(R.drawable.placeholder)
-                            .error(R.drawable.ic_image_loading_error)
-                            .into(videoImageView);
+
+                    if(singleVIdeoItemWrapper.getSnippet().getThumbnails().getMaxres()!=null){
+                        Glide.with(ProjectsActivity.this)
+                                .load(singleVIdeoItemWrapper.getSnippet().getThumbnails().getMaxres().getUrl())
+                                .transition(GenericTransitionOptions.<Drawable>with(Utility.getAnimationObject()))
+                                .placeholder(R.drawable.placeholder)
+                                .error(R.drawable.ic_image_loading_error)
+                                .into(videoImageView);
+                    }else if(singleVIdeoItemWrapper.getSnippet().getThumbnails().getHigh()!=null){
+                        Glide.with(ProjectsActivity.this)
+                                .load(singleVIdeoItemWrapper.getSnippet().getThumbnails().getHigh().getUrl())
+                                .transition(GenericTransitionOptions.<Drawable>with(Utility.getAnimationObject()))
+                                .placeholder(R.drawable.placeholder)
+                                .error(R.drawable.ic_image_loading_error)
+                                .into(videoImageView);
+                    }else if (singleVIdeoItemWrapper.getSnippet().getThumbnails().getMedium()!=null){
+                        Glide.with(ProjectsActivity.this)
+                                .load(singleVIdeoItemWrapper.getSnippet().getThumbnails().getMedium().getUrl())
+                                .transition(GenericTransitionOptions.<Drawable>with(Utility.getAnimationObject()))
+                                .placeholder(R.drawable.placeholder)
+                                .error(R.drawable.ic_image_loading_error)
+                                .into(videoImageView);
+                    }else if (singleVIdeoItemWrapper.getSnippet().getThumbnails().getDefaultThumbnail()!=null){
+                        Glide.with(ProjectsActivity.this)
+                                .load(singleVIdeoItemWrapper.getSnippet().getThumbnails().getDefaultThumbnail().getUrl())
+                                .transition(GenericTransitionOptions.<Drawable>with(Utility.getAnimationObject()))
+                                .placeholder(R.drawable.placeholder)
+                                .error(R.drawable.ic_image_loading_error)
+                                .into(videoImageView);
+                    }else if (singleVIdeoItemWrapper.getSnippet().getThumbnails().getStandard()!=null){
+                        Glide.with(ProjectsActivity.this)
+                                .load(singleVIdeoItemWrapper.getSnippet().getThumbnails().getStandard().getUrl())
+                                .transition(GenericTransitionOptions.<Drawable>with(Utility.getAnimationObject()))
+                                .placeholder(R.drawable.placeholder)
+                                .error(R.drawable.ic_image_loading_error)
+                                .into(videoImageView);
+                    }
 
                 }
             }
