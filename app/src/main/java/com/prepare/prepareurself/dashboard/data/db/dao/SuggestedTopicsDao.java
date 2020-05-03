@@ -16,15 +16,15 @@ public interface SuggestedTopicsDao {
     @Insert(onConflict = OnConflictStrategy.REPLACE)
     void insertTopic(SuggestedTopicsModel topicsModel);
 
-    @Query("SELECT * FROM suggested_topics WHERE course_id=:courseId")
+    @Query("SELECT * FROM suggested_topics WHERE course_id=:courseId ORDER BY sequence ASC")
     LiveData<List<SuggestedTopicsModel>> getTopics(int courseId);
 
     @Query("DELETE FROM suggested_topics")
     void deleteAllTopics();
 
-    @Query("SELECT * FROM suggested_topics WHERE course_id=:courseId LIMIT 5")
+    @Query("SELECT * FROM suggested_topics WHERE course_id=:courseId ORDER BY sequence LIMIT 5")
     LiveData<List<SuggestedTopicsModel>> getFiveTopicsByCourseId(int courseId);
 
-    @Query("SELECT * FROM suggested_projects")
+    @Query("SELECT * FROM suggested_topics ORDER BY sequence ASC")
     LiveData<List<SuggestedTopicsModel>> getAllTopics();
 }
