@@ -109,7 +109,7 @@ public class DashboardRvAdapter extends RecyclerView.Adapter implements CoursesH
                     @Override
                     public void onClick(View v) {
                         if (topicsModels.getValue()!=null)
-                            listener.onTopicSeeAll(topicsModels.getValue().get(0).getCourse_id());
+                            listener.onTopicSeeAll(topicsModels.getValue().get(0).getCourse_id(), topicsModels.getValue().get(0).getName());
                     }
                 });
                 break;
@@ -120,7 +120,7 @@ public class DashboardRvAdapter extends RecyclerView.Adapter implements CoursesH
                     @Override
                     public void onClick(View v) {
                         if (projectModel.getValue()!=null)
-                            listener.onProjectSeeAll(projectModel.getValue().get(0).getCourse_id());
+                            listener.onProjectSeeAll(projectModel.getValue().get(0).getCourse_id(), projectModel.getValue().get(0).getName());
                     }
                 });
                 break;
@@ -267,8 +267,8 @@ public class DashboardRvAdapter extends RecyclerView.Adapter implements CoursesH
         void onCourseClicked(CourseModel courseModel);
         void onTopicClicked(SuggestedTopicsModel topicsModel);
         void onProjectClicked(SuggestedProjectModel projectsModel);
-        void onTopicSeeAll(int courseId);
-        void onProjectSeeAll(int courseId);
+        void onTopicSeeAll(int courseId, String name);
+        void onProjectSeeAll(int courseId, String name);
         void onCourseSeeAll();
     }
 

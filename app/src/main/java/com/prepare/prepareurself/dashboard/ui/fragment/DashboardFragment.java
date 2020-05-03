@@ -263,17 +263,19 @@ public class DashboardFragment extends Fragment implements DashboardRvAdapter.Da
     }
 
     @Override
-    public void onTopicSeeAll(int courseId) {
+    public void onTopicSeeAll(int courseId, String courseName) {
         Intent intent = new Intent(getActivity(), CoursesActivity.class);
         intent.putExtra(Constants.COURSEID,courseId);
+        intent.putExtra(Constants.COURSENAME, courseName);
         intent.putExtra(Constants.SHOWPAGE,Constants.SHOWTOPICS);
         startActivity(intent);
     }
 
     @Override
-    public void onProjectSeeAll(int courseId) {
+    public void onProjectSeeAll(int courseId, String courseName) {
         Intent intent = new Intent(getActivity(), CoursesActivity.class);
         intent.putExtra(Constants.COURSEID,courseId);
+        intent.putExtra(Constants.COURSENAME, courseName);
         intent.putExtra(Constants.SHOWPAGE,Constants.SHOWPROJECTS);
         startActivity(intent);
     }
