@@ -31,14 +31,6 @@
         <item name="colorPrimaryDark">@color/colorPrimaryDark</item>
         <item name="colorAccent">@color/colorAccent</item>
     </style>
-    <style name="authFragmentstheme" parent="Widget.MaterialComponents.TextInputLayout.OutlinedBox">
-        <item name="boxStrokeColor">@color/colorPrimaryDark</item>
-        <item name="boxCornerRadiusTopEnd">40dp</item>
-        <item name="boxCornerRadiusTopStart">40dp</item>
-        <item name="boxCornerRadiusBottomEnd">40dp</item>
-        <item name="boxCornerRadiusBottomStart">40dp</item>
-    </style>
-
 
     <style name="SplashTheme" parent="AppTheme">
         <item name="android:windowFullscreen">true</item>
