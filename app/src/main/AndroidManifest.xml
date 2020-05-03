@@ -44,7 +44,7 @@
         <activity
             android:name=".profile.ui.EditPreferenceActivity"
             android:theme="@style/ProfileTheme" />
-        <activity android:name=".authentication.ui.forgetPassword" android:theme="@style/ProfileTheme"/>
+        <activity android:name=".authentication.ui.forgetPassword" />
         <activity android:name=".authentication.ui.VerifyEmailActivity" />
         <activity
             android:name=".profile.ui.activity.UpdatePasswordActivity"
@@ -125,8 +125,7 @@
         <activity android:name=".quiz.QuizActivity" />
 
         <activity
-            android:name=".authentication.ui.AuthenticationActivity"
-            android:theme="@style/ProfileTheme">
+            android:name=".authentication.ui.AuthenticationActivity">
             <intent-filter>
                 <action android:name="android.intent.action.VIEW" />
 

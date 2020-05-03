@@ -22,8 +22,6 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.TextView;
 
-import com.google.android.material.textfield.TextInputEditText;
-import com.google.android.material.textfield.TextInputLayout;
 import com.prepare.prepareurself.Home.ui.HomeActivity;
 import com.prepare.prepareurself.R;
 import com.prepare.prepareurself.authentication.data.model.AuthenticationResponseModel;
@@ -40,8 +38,7 @@ import com.prepare.prepareurself.youtubeplayer.youtubeplaylistapi.ui.VideoActivi
  * A simple {@link Fragment} subclass.
  */
 public class LoginFragment extends Fragment implements View.OnClickListener{
-    //private EditText etEmail, etPassword;
-    TextInputEditText etEmail, etPassword;
+    private EditText etEmail, etPassword;
     private Button btnLogin;
     private String TAG="login button";
     private ProgressDialog progressDialog;
