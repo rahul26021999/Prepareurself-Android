@@ -16,21 +16,21 @@ public interface ProjectsRoomDao {
     @Insert(onConflict = OnConflictStrategy.REPLACE)
     public void insertProject(ProjectsModel projectsModel);
 
-    @Query("SELECT * FROM projects")
+    @Query("SELECT * FROM projects ORDER BY sequence ASC")
     public LiveData<List<ProjectsModel>> getAllProjects();
 
-    @Query("SELECT * FROM projects WHERE level=:level")
+    @Query("SELECT * FROM projects WHERE level=:level ORDER by sequence ASC")
     public LiveData<List<ProjectsModel>> getProjectsByLevel(String level);
 
-    @Query("SELECT * FROM projects WHERE id=:id")
+    @Query("SELECT * FROM projects WHERE id=:id ORDER BY sequence ASC")
     public LiveData<ProjectsModel> getProjectById(int id);
 
-    @Query("SELECT * FROM projects WHERE course_id=:courseId")
+    @Query("SELECT * FROM projects WHERE course_id=:courseId ORDER BY sequence ASC")
     LiveData<List<ProjectsModel>> getProjectsByCourseId(int courseId);
 
     @Query("DELETE FROM projects")
     public void deleteAllProjects();
 
-    @Query("SELECT * FROM projects WHERE course_id=:courseId LIMIT 5")
+    @Query("SELECT * FROM projects WHERE course_id=:courseId ORDER BY sequence ASC LIMIT 5")
     LiveData<List<ProjectsModel>> getFiveProjectsByCourseId(int courseId);
 }
