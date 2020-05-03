@@ -77,8 +77,20 @@ public class ProjectsModel {
     @SerializedName("total_views")
     private int total_views;
 
+    @ColumnInfo(name = "sequence")
+    @SerializedName("sequence")
+    private int sequence;
+
     public int getLike() {
         return like;
+    }
+
+    public int getSequence() {
+        return sequence;
+    }
+
+    public void setSequence(int sequence) {
+        this.sequence = sequence;
     }
 
     public void setLike(int like) {
