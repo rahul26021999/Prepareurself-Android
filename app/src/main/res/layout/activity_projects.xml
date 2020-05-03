@@ -196,9 +196,8 @@
                         android:scaleType="centerCrop"/>
 
                     <TextView
-                        android:layout_width="match_parent"
-                        android:background="?attr/selectableItemBackground"
-                        android:layout_height="match_parent"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
                         android:id="@+id/tv_card_video_project"
                         android:layout_toEndOf="@+id/project_video_image_view"
                         android:textSize="16sp"
@@ -207,6 +206,7 @@
                         android:textStyle="bold"
                         android:maxLines="6"
                         android:ellipsize="end"
+                        android:background="?attr/selectableItemBackground"
                         android:textColor="@color/resource_active_color"
                         android:padding="20dp" />
 
