@@ -1,140 +1,188 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:fillViewport="true"
     android:background="@color/white"
     android:focusableInTouchMode="true"
     android:focusable="true"
     tools:context=".authentication.ui.RegisterFragment"
-    android:orientation="vertical">
+    android:id="@+id/mainlayout">
 
-    <TextView
-        android:id="@+id/tv_logo"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="@string/app_name"
-        android:textAlignment="center"
-        android:textSize="50sp"
-        android:layout_marginStart="25dp"
-        android:layout_marginBottom="5dp"
-        android:fontFamily="@font/indigo_daisy"
-        android:layout_marginTop="60dp"/>
-
-    <TextView
-        android:id="@+id/tv_subtitle"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="@string/tag"
-        android:textSize="17sp"
-        android:fontFamily="@font/roboto_regular"
-        android:layout_marginStart="25dp"
-        android:layout_marginBottom="50dp"/>
-
-
-    <EditText
-        android:id="@+id/et_name"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:hint="@string/your_name"
-        android:layout_marginLeft="20dp"
-        android:layout_marginRight="20dp"
-        android:layout_marginBottom="15dp"
-        android:padding="15dp"
-        android:inputType="textPersonName"
-        android:fontFamily="@font/roboto_regular"
-        android:background="@drawable/et_custom"
-        android:textSize="15sp" />
-
-
-    <EditText
-        android:id="@+id/et_email"
-        android:layout_width="match_parent"
-        android:layout_height="50dp"
-        android:hint="@string/e_mail"
-        android:layout_marginLeft="20dp"
-        android:layout_marginRight="20dp"
-        android:layout_marginBottom="15dp"
-        android:padding="15dp"
-        android:fontFamily="@font/roboto_regular"
-        android:inputType="textEmailAddress"
-        android:background="@drawable/et_custom"
-        android:textSize="15sp" />
-
-    <EditText
-        android:id="@+id/et_password"
-        android:layout_width="match_parent"
-        android:layout_height="50dp"
-        android:hint="@string/password"
-        android:layout_marginLeft="20dp"
-        android:layout_marginRight="20dp"
-        android:layout_marginBottom="15dp"
-        android:padding="15dp"
-        android:fontFamily="@font/roboto_regular"
-        android:inputType="textPassword"
-        android:background="@drawable/et_custom"
-        android:textSize="15sp" />
-
-    <EditText
-        android:id="@+id/et_repassword"
-        android:layout_width="match_parent"
-        android:layout_height="50dp"
-        android:hint="@string/re_type_password"
-        android:layout_marginLeft="20dp"
-        android:layout_marginRight="20dp"
-        android:padding="15dp"
-        android:fontFamily="@font/roboto_regular"
-        android:inputType="textPassword"
-        android:background="@drawable/et_custom"
-        android:textSize="15sp"
-        android:layout_marginBottom="15dp"/>
-    <Button
-        android:id="@+id/btn_register"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:background="@drawable/button_custom"
-        android:fontFamily="@font/roboto_regular"
-        android:layout_marginLeft="20dp"
-        android:layout_marginRight="20dp"
-        android:layout_marginBottom="30dp"
-        android:layout_marginTop="60dp"
-        android:textColor="@android:color/white"
-        android:textSize="16sp"
-        android:text="@string/register"/>
 
     <RelativeLayout
         android:layout_width="match_parent"
-        android:layout_height="0dp"
-        android:layout_weight="1">
+        android:layout_height="match_parent">
+
+
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:orientation="vertical"
+            android:layout_centerInParent="true">
+
+
+            <TextView
+                android:id="@+id/tv_title"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/app_name"
+                android:textSize="50sp"
+                android:fontFamily="@font/indigo_daisy"
+                android:layout_marginStart="25dp"
+                android:layout_marginBottom="5dp"
+                android:layout_marginTop="80dp"
+
+                />
+
+            <TextView
+                android:id="@+id/tv_subtitle"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/tag"
+                android:textSize="17sp"
+                android:fontFamily="@font/roboto_regular"
+                android:layout_marginStart="25dp"
+                android:layout_marginBottom="50dp" />
+
+            <com.google.android.material.textfield.TextInputLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:hint="@string/your_name"
+                android:layout_marginLeft="20dp"
+                android:layout_marginRight="20dp"
+                android:layout_marginBottom="20dp"
+                style="@style/authFragmentstheme">
+
+                <com.google.android.material.textfield.TextInputEditText
+                    android:id="@+id/et_name"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:inputType="textPersonName"
+                    android:fontFamily="@font/roboto_regular"
+                    android:textSize="15sp"
+                    android:paddingStart="20dp"
+                    android:paddingEnd="20dp"
+                    android:paddingTop="15dp"
+                    android:paddingBottom="15dp"
+                    />
+            </com.google.android.material.textfield.TextInputLayout>
+
+
+            <com.google.android.material.textfield.TextInputLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:hint="@string/e_mail"
+                android:layout_marginLeft="20dp"
+                android:layout_marginRight="20dp"
+                android:layout_marginBottom="20dp"
+                style="@style/authFragmentstheme">
+                <com.google.android.material.textfield.TextInputEditText
+                    android:id="@+id/et_email"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:textSize="15sp"
+                    android:inputType="textEmailAddress"
+                    android:fontFamily="@font/roboto_regular"
+                    android:paddingStart="20dp"
+                    android:paddingEnd="20dp"
+                    android:paddingTop="15dp"
+                    android:paddingBottom="15dp"
+                    />
+            </com.google.android.material.textfield.TextInputLayout>
+
+            <com.google.android.material.textfield.TextInputLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:hint="@string/password"
+                android:layout_marginLeft="20dp"
+                android:layout_marginRight="20dp"
+                android:layout_marginBottom="20dp"
+                style="@style/authFragmentstheme">
+                <com.google.android.material.textfield.TextInputEditText
+                    android:id="@+id/et_password"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:textSize="15sp"
+                    android:inputType="textPassword"
+                    android:fontFamily="@font/roboto_regular"
+                    android:paddingStart="20dp"
+                    android:paddingEnd="20dp"
+                    android:paddingTop="15dp"
+                    android:paddingBottom="15dp"
+                    />
+            </com.google.android.material.textfield.TextInputLayout>
+
+            <com.google.android.material.textfield.TextInputLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:hint="@string/re_type_password"
+                android:layout_marginLeft="20dp"
+                android:layout_marginRight="20dp"
+                android:layout_marginBottom="20dp"
+                style="@style/authFragmentstheme">
+                <com.google.android.material.textfield.TextInputEditText
+                    android:id="@+id/et_repassword"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:textSize="15sp"
+                    android:inputType="textPassword"
+                    android:fontFamily="@font/roboto_regular"
+                    android:paddingStart="20dp"
+                    android:paddingEnd="20dp"
+                    android:paddingTop="15dp"
+                    android:paddingBottom="15dp"
+                    />
+            </com.google.android.material.textfield.TextInputLayout>
+
+
+            <com.google.android.material.button.MaterialButton
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:padding="15dp"
+                android:id="@+id/btn_register"
+                android:layout_marginLeft="20dp"
+                android:layout_marginRight="20dp"
+                android:layout_marginTop="70dp"
+                android:fontFamily="@font/roboto_regular"
+                android:textColor="@android:color/white"
+                android:text="@string/register"
+                android:textSize="16sp"
+                app:cornerRadius="40dp"
+                android:background="@color/colorPrimaryDark"/>
+
+        </LinearLayout>
 
         <ImageView
-            android:id="@+id/arrowimg"
+            android:id="@+id/btn_swipeRight"
             android:layout_width="30dp"
             android:layout_height="30dp"
-            android:src="@drawable/arrow_left"
-            android:layout_above="@+id/swipeLeft1"
-            android:layout_centerHorizontal="true"/>
-
+            android:src="@drawable/arrow_right"
+            android:layout_marginTop="50dp"
+            android:layout_above="@+id/swipeRight1"
+            android:layout_centerHorizontal="true" />
         <TextView
-            android:id="@+id/swipeLeft1"
+            android:id="@+id/swipeRight1"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="Already a user?"
             android:textSize="15sp"
             android:fontFamily="@font/roboto_regular"
-            android:layout_centerHorizontal="true"
-            android:layout_above="@+id/swipeleft2"
-            android:layout_marginBottom="5dp"/>
+            android:layout_marginBottom="5dp"
+            android:layout_above="@+id/swipeRight2"
+            android:layout_centerHorizontal="true"/>
         <TextView
-            android:id="@+id/swipeleft2"
+            android:id="@+id/swipeRight2"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="@string/swipe_right_for_login"
             android:textSize="15sp"
             android:fontFamily="@font/roboto_regular"
-            android:layout_centerHorizontal="true"
+            android:layout_marginBottom="20dp"
             android:layout_alignParentBottom="true"
-            android:layout_marginBottom="20dp"/>
-
+            android:layout_centerHorizontal="true" />
     </RelativeLayout>
-</LinearLayout>
+</ScrollView>
