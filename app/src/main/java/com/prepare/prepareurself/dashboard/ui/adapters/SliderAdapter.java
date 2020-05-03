@@ -24,9 +24,11 @@ public class SliderAdapter extends SliderViewAdapter<SliderAdapter.SliderAdapter
 
     private Context context;
     private List<BannerModel> mSliderItems = new ArrayList<>();
+    private SliderListener listener;
 
-    public SliderAdapter(Context context) {
+    public SliderAdapter(Context context, SliderListener listener) {
         this.context = context;
+        this.listener = listener;
     }
 
     public void setmSliderItems(List<BannerModel> mSliderItems) {
@@ -41,7 +43,7 @@ public class SliderAdapter extends SliderViewAdapter<SliderAdapter.SliderAdapter
 
     @Override
     public void onBindViewHolder(SliderAdapterVH viewHolder, int position) {
-        BannerModel courseModel = mSliderItems.get(position);
+        final BannerModel courseModel = mSliderItems.get(position);
 
         if (courseModel.getImage_url()!=null && courseModel.getImage_url().endsWith(".svg")){
             Utility.loadSVGImage(context, courseModel.getImage_url(), viewHolder.imageView);
@@ -51,6 +53,14 @@ public class SliderAdapter extends SliderViewAdapter<SliderAdapter.SliderAdapter
                     .into(viewHolder.imageView);
         }
         viewHolder.textView.setText(courseModel.getTitle());
+
+        viewHolder.itemView.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                listener.onBannerClicked(courseModel);
+            }
+        });
+
     }
 
     @Override
@@ -75,4 +85,9 @@ public class SliderAdapter extends SliderViewAdapter<SliderAdapter.SliderAdapter
 
 
     }
+
+    public interface SliderListener{
+        void onBannerClicked(BannerModel bannerModel);
+    }
+
 }

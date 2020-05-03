@@ -1,4 +1,4 @@
-package com.prepare.prepareurself.youtubeplayer.persitenceUtils;
+package com.prepare.prepareurself.persistence.persitenceUtils;
 
 import androidx.room.TypeConverter;
 

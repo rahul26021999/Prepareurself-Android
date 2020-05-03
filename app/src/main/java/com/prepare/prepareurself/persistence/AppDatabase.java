@@ -19,6 +19,7 @@ import com.prepare.prepareurself.dashboard.data.model.BannerModel;
 import com.prepare.prepareurself.dashboard.data.model.CourseModel;
 import com.prepare.prepareurself.dashboard.data.model.SuggestedProjectModel;
 import com.prepare.prepareurself.dashboard.data.model.SuggestedTopicsModel;
+import com.prepare.prepareurself.persistence.persitenceUtils.CourseModelTypeCorveter;
 import com.prepare.prepareurself.profile.data.db.dao.MyPreferenceDao;
 import com.prepare.prepareurself.profile.data.db.dao.UserPrefernceDao;
 import com.prepare.prepareurself.profile.data.model.MyPreferenceTechStack;
@@ -27,9 +28,9 @@ import com.prepare.prepareurself.resources.data.db.dao.ResourcesRoomDao;
 import com.prepare.prepareurself.resources.data.model.ResourceModel;
 import com.prepare.prepareurself.authentication.data.db.dao.UserRoomDao;
 import com.prepare.prepareurself.authentication.data.model.UserModel;
-import com.prepare.prepareurself.youtubeplayer.persitenceUtils.ThumbnaiTypeConverter;
-import com.prepare.prepareurself.youtubeplayer.persitenceUtils.VideoContentDetailsConverter;
-import com.prepare.prepareurself.youtubeplayer.persitenceUtils.VideoSnippetConverter;
+import com.prepare.prepareurself.persistence.persitenceUtils.ThumbnaiTypeConverter;
+import com.prepare.prepareurself.persistence.persitenceUtils.VideoContentDetailsConverter;
+import com.prepare.prepareurself.persistence.persitenceUtils.VideoSnippetConverter;
 import com.prepare.prepareurself.youtubeplayer.youtubeplaylistapi.db.PlaylistContentDeatilsDao;
 import com.prepare.prepareurself.youtubeplayer.youtubeplaylistapi.db.SingleVideoItemDao;
 import com.prepare.prepareurself.youtubeplayer.youtubeplaylistapi.models.SingleVIdeoItemWrapper;
@@ -51,7 +52,8 @@ import com.prepare.prepareurself.youtubeplayer.youtubeplaylistapi.models.VideoIt
 }, version = 1)
 @TypeConverters({VideoContentDetailsConverter.class,
         VideoSnippetConverter.class,
-        ThumbnaiTypeConverter.class})
+        ThumbnaiTypeConverter.class,
+        CourseModelTypeCorveter.class})
 public abstract class AppDatabase extends RoomDatabase {
 
     public abstract UserRoomDao userRoomDao();
