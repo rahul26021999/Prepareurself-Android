@@ -200,7 +200,15 @@ public class LoginFragment extends Fragment implements View.OnClickListener{
                                 startActivity(intent);
                                 getActivity().finish();
 
-                            } else{
+                            }else if (AuthenticationActivity.PROFILESHARE){
+
+                                Intent intent = new Intent(getActivity(), HomeActivity.class);
+                                intent.putExtra(Constants.PROFILESHAREINTENT, true);
+                                startActivity(intent);
+                                getActivity().finish();
+
+                            }
+                            else{
                                 Intent intent=new Intent(getActivity(), HomeActivity.class);
                                 startActivity(intent);
                                 getActivity().finish();

@@ -70,4 +70,6 @@ public class Constants {
     public static final String FEEDBACKSHARE = "feedback_share";
     public static final String FEEDBACKSHAREINTENT = "feedback_share_intent";
     public static final String TYPE = "type";
+    public static final String PROFILESHARE = "profile_share";
+    public static final String PROFILESHAREINTENT = "profile_share_intent";
 }

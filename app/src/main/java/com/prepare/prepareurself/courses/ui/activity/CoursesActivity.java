@@ -62,7 +62,29 @@ public class CoursesActivity extends BaseActivity implements View.OnClickListene
         Intent intent = getIntent();
 
         if (intent.getData()!=null){
+            //com.prepare.prepareurself.courses.ui.activity.CoursesActivity?type=Projects&course_id=1&course_name=Android
             Log.d("deeplink_debug","course avtivity : "+getIntent().getData()+"");
+            String data = intent.getData().toString();
+            String CourseName = data.split("&course_name=")[1];
+            String CourseId = data.split("&course_id=")[1].split("&course_name=")[0];
+            String type = data.split("type=")[1].split("&course_id=")[0];
+
+            courseId = Integer.parseInt(CourseId);
+            courseName = CourseName;
+
+            if (!TextUtils.isEmpty(courseName)){
+                title.setText(courseName);
+            }else{
+                title.setText("Tech Stack");
+            }
+
+            if(type.equals("Projects")){
+                viewPager.setCurrentItem(0);
+            }else if (type.equals("Topics")){
+                viewPager.setCurrentItem(1);
+            }
+
+            Log.d("deeplink_debug",courseName+","+courseId+","+type);
         }else{
             courseId = intent.getIntExtra(Constants.COURSEID, -1);
             courseName = intent.getStringExtra(Constants.COURSENAME);
