@@ -65,7 +65,9 @@ import java.util.List;
 import java.util.Timer;
 import java.util.TimerTask;
 
-public class DashboardFragment extends Fragment implements DashboardRvAdapter.DashBoardInteractor, View.OnClickListener {
+public class DashboardFragment extends Fragment implements DashboardRvAdapter.DashBoardInteractor,
+        View.OnClickListener,
+        SliderAdapter.SliderListener {
 
     private DashboardViewModel mViewModel;
     private ImageView menu;
@@ -95,6 +97,7 @@ public class DashboardFragment extends Fragment implements DashboardRvAdapter.Da
         void onTopicClicked(SuggestedTopicsModel topicsModel);
         void onProjectClicked(SuggestedProjectModel projectsModel);
         void onBarClicked();
+        void onBannerClicked(BannerModel bannerModel);
     }
 
     public static DashboardFragment newInstance() {
@@ -217,7 +220,7 @@ public class DashboardFragment extends Fragment implements DashboardRvAdapter.Da
     }
 
     private void setUpSlider() {
-        sliderAdapter = new SliderAdapter(getActivity());
+        sliderAdapter = new SliderAdapter(getActivity(), this);
         sliderView.setSliderAdapter(sliderAdapter);
         sliderView.setIndicatorAnimation(IndicatorAnimations.WORM); //set indicator animation by using SliderLayout.IndicatorAnimations. :WORM or THIN_WORM or COLOR or DROP or FILL or NONE or SCALE or SCALE_DOWN or SLIDE and SWAP!!
         sliderView.setSliderTransformAnimation(SliderAnimations.SIMPLETRANSFORMATION);
@@ -239,6 +242,10 @@ public class DashboardFragment extends Fragment implements DashboardRvAdapter.Da
         });
     }
 
+    @Override
+    public void onBannerClicked(BannerModel bannerModel) {
+        listener.onBannerClicked(bannerModel);
+    }
 
     @Override
     public void onCourseClicked(CourseModel courseModel) {

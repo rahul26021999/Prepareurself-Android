@@ -26,6 +26,42 @@ public class BannerModel {
     @SerializedName("image_url")
     private String image_url;
 
+    @ColumnInfo(name = "screen")
+    @SerializedName("screen")
+    private String screen;
+
+    @ColumnInfo(name = "screen_id")
+    @SerializedName("screen_id")
+    private int screen_id;
+
+    @ColumnInfo(name = "course")
+    @SerializedName("course")
+    private CourseModel course;
+
+    public String getScreen() {
+        return screen;
+    }
+
+    public void setScreen(String screen) {
+        this.screen = screen;
+    }
+
+    public int getScreen_id() {
+        return screen_id;
+    }
+
+    public void setScreen_id(int screen_id) {
+        this.screen_id = screen_id;
+    }
+
+    public CourseModel getCourse() {
+        return course;
+    }
+
+    public void setCourse(CourseModel course) {
+        this.course = course;
+    }
+
     public int getId() {
         return id;
     }

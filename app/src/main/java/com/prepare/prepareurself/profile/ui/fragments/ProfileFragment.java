@@ -31,6 +31,7 @@ import android.widget.TextView;
 
 import com.bumptech.glide.GenericTransitionOptions;
 import com.bumptech.glide.Glide;
+import com.prepare.prepareurself.Home.ui.HomeActivity;
 import com.prepare.prepareurself.authentication.ui.AuthenticationActivity;
 import com.prepare.prepareurself.profile.data.model.PreferredTechStack;
 import com.prepare.prepareurself.profile.data.model.UpdatePreferenceResponseModel;
@@ -149,6 +150,14 @@ public class ProfileFragment extends Fragment implements View.OnClickListener {
         recyclerView.setAdapter(adapter);
 
         tvPreferenceEdit.setOnClickListener(this);
+
+        if (HomeActivity.gotoPrefFromBanner){
+            tabPreference.setTextColor(getResources().getColor(R.color.colorPrimaryDark));
+            tabUserInfo.setTextColor(getResources().getColor(R.color.dark_grey));
+            userInfo.setVisibility(View.GONE);
+            prefrences.setVisibility(View.VISIBLE);
+            HomeActivity.gotoPrefFromBanner = false;
+        }
 
         hideAboutEditTexts();
         showAboutTextViews();

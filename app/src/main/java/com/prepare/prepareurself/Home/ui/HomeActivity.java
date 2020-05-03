@@ -21,8 +21,10 @@ import com.bumptech.glide.Glide;
 import com.prepare.prepareurself.authentication.ui.AuthenticationActivity;
 import com.prepare.prepareurself.courses.data.model.ProjectsModel;
 import com.prepare.prepareurself.courses.data.model.TopicsModel;
+import com.prepare.prepareurself.courses.ui.activity.AllCoursesActivity;
 import com.prepare.prepareurself.courses.ui.activity.CoursesActivity;
 import com.prepare.prepareurself.courses.ui.activity.ProjectsActivity;
+import com.prepare.prepareurself.dashboard.data.model.BannerModel;
 import com.prepare.prepareurself.dashboard.data.model.CourseModel;
 import com.prepare.prepareurself.dashboard.data.model.SuggestedProjectModel;
 import com.prepare.prepareurself.dashboard.data.model.SuggestedTopicsModel;
@@ -67,6 +69,7 @@ public class HomeActivity extends BaseActivity implements NavigationView.OnNavig
     private DrawerLayout drawer;
     private ImageView profileImageView;
     private PrefManager prefManager;
+    public static boolean gotoPrefFromBanner = false;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -218,6 +221,48 @@ public class HomeActivity extends BaseActivity implements NavigationView.OnNavig
 
         return true;
 
+    }
+
+
+    @Override
+    public void onBannerClicked(BannerModel bannerModel) {
+        if (bannerModel!=null && bannerModel.getScreen()!=null){
+            switch (bannerModel.getScreen()){
+                case "allProject":
+                    if (bannerModel.getCourse()!=null){
+                        Intent intent = new Intent(this, CoursesActivity.class);
+                        intent.putExtra(Constants.COURSEID, bannerModel.getCourse().getId());
+                        intent.putExtra(Constants.COURSENAME, bannerModel.getCourse().getName());
+                        intent.putExtra(Constants.SHOWPAGE,Constants.SHOWPROJECTS);
+                        startActivity(intent);
+                    }
+                    break;
+                case "allTopic":
+                    if(bannerModel.getCourse()!=null){
+                        Intent intent = new Intent(this, CoursesActivity.class);
+                        intent.putExtra(Constants.COURSEID, bannerModel.getCourse().getId());
+                        intent.putExtra(Constants.COURSENAME, bannerModel.getCourse().getName());
+                        intent.putExtra(Constants.SHOWPAGE,Constants.SHOWTOPICS);
+                        startActivity(intent);
+                    }
+                    break;
+
+                case "allCourse":
+                    Intent intent = new Intent(this, AllCoursesActivity.class);
+                    startActivity(intent);
+                    break;
+
+                case "feedback":
+                    navController.navigate(R.id.nav_feedback);
+                    break;
+
+                case "prefrence":
+                    navController.navigate(R.id.nav_profile);
+                    gotoPrefFromBanner = true;
+                    break;
+
+            }
+        }
     }
 
     private void shareApp() {
