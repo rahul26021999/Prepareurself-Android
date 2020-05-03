@@ -18,6 +18,7 @@ import android.view.MenuItem;
 import android.view.View;
 import android.widget.ImageView;
 import android.widget.ProgressBar;
+import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import com.bumptech.glide.GenericTransitionOptions;
@@ -66,6 +67,7 @@ public class ProjectsActivity extends BaseActivity implements PlaylistVideosRvAd
     private PrefManager prefManager;
     private ProgressBar progressBar;
     private String courseName;
+    private RelativeLayout singleCardRel;
 
     private TextView level;
     private AdView mAdView;
@@ -92,6 +94,7 @@ public class ProjectsActivity extends BaseActivity implements PlaylistVideosRvAd
         level=findViewById(R.id.level);
         mAdView=findViewById(R.id.adView);
         title=findViewById(R.id.title);
+        singleCardRel = findViewById(R.id.singleContainerCard);
 
         recyclerView.setVisibility(View.GONE);
         cardImageView.setVisibility(View.GONE);
@@ -342,6 +345,7 @@ public class ProjectsActivity extends BaseActivity implements PlaylistVideosRvAd
         final String videoCode = Utility.getVideoCode(projectsModel.getLink());
         loadCardImageViewWithVideo(videoCode);
         cardImageView.setOnClickListener(this);
+        tvCardVideoTitle.setOnClickListener(this);
     }
 
     private void loadCardImageViewWithVideo(final String v) {
@@ -465,6 +469,7 @@ public class ProjectsActivity extends BaseActivity implements PlaylistVideosRvAd
         switch (v.getId())
         {
             case R.id.card_single:
+            case R.id.tv_card_video_project:
                 if (!TextUtils.isEmpty(videoTitle)){
                     Intent intent = new Intent(ProjectsActivity.this,VideoActivity.class);
                     intent.putExtra(Constants.VIDEOCODE,videoCode);
