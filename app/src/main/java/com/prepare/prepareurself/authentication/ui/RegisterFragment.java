@@ -54,7 +54,7 @@ public class RegisterFragment extends Fragment implements View.OnClickListener {
         etFullname =v.findViewById(R.id.et_name);
         etEmail =v.findViewById(R.id.et_email);
         etPassword =v.findViewById(R.id.et_password);
-        etRetypePassword =v.findViewById(R.id.et_repassword);
+        //etRetypePassword =v.findViewById(R.id.et_repassword);
         btnRegister =v.findViewById(R.id.btn_register);
         btnRegister.setOnClickListener(this);
 
