@@ -137,8 +137,8 @@ public class HomeActivity extends BaseActivity implements NavigationView.OnNavig
 
         Intent intent = getIntent();
         if (intent.getData()!=null){
-            String feedback = intent.getData().toString();
-            if (!TextUtils.isEmpty(feedback)){
+            String data = intent.getData().toString().split("type=")[1];
+            if (!TextUtils.isEmpty(data) && data.equals("feedback")){
                 if (prefManager.getBoolean(Constants.ISLOGGEDIN)){
                     navController.navigate(R.id.nav_feedback);
                 }else{
@@ -146,9 +146,19 @@ public class HomeActivity extends BaseActivity implements NavigationView.OnNavig
                     loginIntent.putExtra(Constants.FEEDBACKSHARE, true);
                     startActivity(loginIntent);
                 }
+            }else if (!TextUtils.isEmpty(data) && data.equals("profile]")){
+                if (prefManager.getBoolean(Constants.ISLOGGEDIN)){
+                    navController.navigate(R.id.nav_profile);
+                }else{
+                    Intent loginIntent = new Intent(HomeActivity.this, AuthenticationActivity.class);
+                    loginIntent.putExtra(Constants.PROFILESHARE, true);
+                    startActivity(loginIntent);
+                }
             }
         }else if (intent.getBooleanExtra(Constants.FEEDBACKSHAREINTENT, false)){
             navController.navigate(R.id.nav_feedback);
+        }else if (intent.getBooleanExtra(Constants.PROFILESHAREINTENT, false)){
+            navController.navigate(R.id.nav_profile);
         }
 
     }

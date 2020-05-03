@@ -40,7 +40,18 @@
             android:name="com.google.android.gms.ads.AdActivity"
             android:configChanges="keyboard|keyboardHidden|orientation|screenLayout|uiMode|screenSize|smallestScreenSize"
             android:theme="@android:style/Theme.Translucent" />
-        <activity android:name=".courses.ui.activity.AllCoursesActivity" />
+        <activity android:name=".courses.ui.activity.AllCoursesActivity" >
+            <intent-filter>
+                <action android:name="android.intent.action.VIEW" />
+
+                <category android:name="android.intent.category.BROWSABLE" />
+                <category android:name="android.intent.category.DEFAULT" />
+
+                <data
+                    android:host="app.prepareurself"
+                    android:scheme="allcourse" />
+            </intent-filter>
+        </activity>
         <activity
             android:name=".profile.ui.EditPreferenceActivity"
             android:theme="@style/ProfileTheme" />

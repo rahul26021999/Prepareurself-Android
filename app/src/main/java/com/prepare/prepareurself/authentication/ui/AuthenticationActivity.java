@@ -29,6 +29,7 @@ public class AuthenticationActivity extends BaseActivity {
     public static int resourceId = -1;
     public static int projectId = -1;
     public static boolean FEEDBACKSHARE = false;
+    public static boolean PROFILESHARE = false;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -50,6 +51,8 @@ public class AuthenticationActivity extends BaseActivity {
         projectId = getIntent().getIntExtra(Constants.PROJECTID, -1);
 
         FEEDBACKSHARE = getIntent().getBooleanExtra(Constants.FEEDBACKSHARE, false);
+
+        PROFILESHARE = getIntent().getBooleanExtra(Constants.PROFILESHARE, false);
 
         ViewPager viewPager=findViewById(R.id.viewPager);
         AuthenticationPagerAdapter pagerAdapter =new AuthenticationPagerAdapter(getSupportFragmentManager());

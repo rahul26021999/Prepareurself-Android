@@ -16,13 +16,13 @@ public interface CourseRoomDao {
     @Insert(onConflict = OnConflictStrategy.REPLACE)
     void insert(CourseModel courseModel);
 
-    @Query("SELECT * FROM course")
+    @Query("SELECT * FROM course ORDER BY sequence")
     LiveData<List<CourseModel>> getAllCourses();
 
     @Query("DELETE FROM course")
     void deleteAllCourses();
 
-    @Query("SELECT * FROM course LIMIT 5")
+    @Query("SELECT * FROM course ORDER BY sequence LIMIT 5")
     LiveData<List<CourseModel>> getFiveCourses();
 
     @Query("SELECT * FROM course WHERE id=:id")

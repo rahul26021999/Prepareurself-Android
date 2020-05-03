@@ -64,22 +64,36 @@ public class ResourcesActivity extends BaseActivity implements View.OnClickListe
         sectionsPagerAdapter.addFragment(TheoryResourceFragment.newInstance(),"Theories");
         viewPager.setAdapter(sectionsPagerAdapter);
 
+
+
         if (intent.getData()!=null){
             Log.d("deeplink_debug","resource activity "+intent.getData()+"");
-           // topicID = Integer.parseInt(intent.getData().toString().split("&id=")[1]);
-          //  Utility.redirectUsingCustomTab(this,resource.getLink());
-            viewPager.setCurrentItem(1);
-//            try {
-//
-////                String tempData = intent.getData().toString().split("resource_theory")[1];
-////                topicID =  Utility.base64DecodeForInt(tempData);
-////                viewPager.setCurrentItem(1, true);
-//            } catch (UnsupportedEncodingException e) {
-//                e.printStackTrace();
-//            }
 
-            String url = intent.getData().toString().split("&link=")[1];
-            Utility.redirectUsingCustomTab(this,url);
+            String data = intent.getData().toString();
+//            String data = "com.prepare.prepareurself.resources.ui.activity.ResourcesActivity?type=video&topic_id=1&topic_name=getting started&course_name=Android";
+
+
+            if (data.contains("type")){
+                String CourseName = data.split("&course_name=")[1];
+                String topic_name = data.split("&topic_name=")[1].split("&course_name=")[0];
+                String topic_id = data.split("&topic_id=")[1].split("&topic_name=")[0];
+                String type = data.split("type=")[1].split("&topic_id=")[0];
+
+
+                title.setText(CourseName);
+                topicID = Integer.parseInt(topic_id);
+
+                if (type.equals("video")){
+                    viewPager.setCurrentItem(0);
+                }else{
+                    viewPager.setCurrentItem(1);
+                }
+            }else if (data.contains("link")){
+                viewPager.setCurrentItem(1);
+                String url = intent.getData().toString().split("&link=")[1];
+                Utility.redirectUsingCustomTab(this,url);
+                finish();
+            }
 
         }else{
             topicID = intent.getIntExtra(Constants.TOPICID,-1);

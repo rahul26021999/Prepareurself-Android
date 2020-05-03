@@ -32,6 +32,18 @@ public class CourseModel {
     @SerializedName("updated_at")
     private String updated_at;
 
+    @ColumnInfo(name = "sequence")
+    @SerializedName("sequence")
+    private int sequence;
+
+    public int getSequence() {
+        return sequence;
+    }
+
+    public void setSequence(int sequence) {
+        this.sequence = sequence;
+    }
+
     public int getId() {
         return id;
     }
