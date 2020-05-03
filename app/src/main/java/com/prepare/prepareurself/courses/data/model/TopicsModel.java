@@ -32,7 +32,7 @@ public class TopicsModel {
 
     @ColumnInfo(name = "sequence")
     @SerializedName("sequence")
-    private String sequence;
+    private int sequence;
 
     @ColumnInfo(name = "created_at")
     @SerializedName("created_at")
@@ -82,11 +82,11 @@ public class TopicsModel {
         this.course_id = course_id;
     }
 
-    public String getSequence() {
+    public int getSequence() {
         return sequence;
     }
 
-    public void setSequence(String sequence) {
+    public void setSequence(int sequence) {
         this.sequence = sequence;
     }
 
