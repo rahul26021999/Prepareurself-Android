@@ -1,10 +1,8 @@
 package com.prepare.prepareurself.dashboard.ui.fragment;
 
-import androidx.appcompat.widget.SearchView;
 import androidx.lifecycle.Observer;
 import androidx.lifecycle.ViewModelProvider;
 
-import android.app.SearchManager;
 import android.content.Context;
 import android.content.Intent;
 import android.graphics.Color;
@@ -15,73 +13,50 @@ import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
-import androidx.viewpager.widget.ViewPager;
 
-import android.os.Handler;
-import android.text.Editable;
 import android.text.TextUtils;
-import android.text.TextWatcher;
 import android.util.Log;
 import android.view.LayoutInflater;
-import android.view.Menu;
-import android.view.MenuInflater;
-import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
-import android.view.animation.AccelerateInterpolator;
 import android.view.inputmethod.InputMethodManager;
 import android.widget.EditText;
 import android.widget.ImageView;
-import android.widget.LinearLayout;
-import android.widget.Toast;
 
 import com.google.android.gms.ads.AdListener;
-import com.google.android.gms.ads.AdLoader;
 import com.google.android.gms.ads.AdRequest;
-import com.google.android.gms.ads.AdSize;
 import com.google.android.gms.ads.AdView;
-import com.google.android.gms.ads.formats.NativeAdOptions;
-import com.google.android.gms.ads.formats.UnifiedNativeAd;
 import com.google.android.material.appbar.AppBarLayout;
-import com.prepare.prepareurself.authentication.data.model.UserModel;
 import com.prepare.prepareurself.courses.data.model.ProjectsModel;
 import com.prepare.prepareurself.courses.data.model.TopicsModel;
-import com.prepare.prepareurself.courses.data.model.TopicsResponseModel;
 import com.prepare.prepareurself.courses.ui.activity.AllCoursesActivity;
 import com.prepare.prepareurself.courses.ui.activity.CoursesActivity;
 import com.prepare.prepareurself.courses.ui.activity.ProjectsActivity;
-import com.prepare.prepareurself.dashboard.data.model.BannerModel;
+import com.prepare.prepareurself.banner.BannerModel;
 import com.prepare.prepareurself.dashboard.data.model.CourseModel;
 import com.prepare.prepareurself.dashboard.data.model.SuggestedProjectModel;
 import com.prepare.prepareurself.dashboard.data.model.SuggestedTopicsModel;
-import com.prepare.prepareurself.dashboard.ui.adapters.SliderAdapter;
+import com.prepare.prepareurself.banner.SliderAdapter;
 import com.prepare.prepareurself.dashboard.viewmodel.DashboardViewModel;
 import com.prepare.prepareurself.dashboard.data.model.DashboardRecyclerviewModel;
-import com.prepare.prepareurself.dashboard.ui.adapters.CustomPagerAdapter;
 import com.prepare.prepareurself.dashboard.ui.adapters.DashboardRvAdapter;
 import com.prepare.prepareurself.R;
 import com.prepare.prepareurself.resources.data.model.ResourceModel;
-import com.prepare.prepareurself.resources.data.model.ResourcesResponse;
 import com.prepare.prepareurself.resources.ui.activity.ResourcesActivity;
 import com.prepare.prepareurself.search.SearchAdapter;
 import com.prepare.prepareurself.search.SearchModel;
 import com.prepare.prepareurself.search.SearchRecyclerviewModel;
 import com.prepare.prepareurself.search.SearchResponseModel;
 import com.prepare.prepareurself.utils.Constants;
-import com.prepare.prepareurself.utils.FixedSpeedScroller;
 import com.prepare.prepareurself.utils.PrefManager;
 import com.prepare.prepareurself.utils.Utility;
-import com.prepare.prepareurself.utils.ZoomPageOutTransaformer;
 import com.prepare.prepareurself.youtubeplayer.youtubeplaylistapi.ui.VideoActivity;
 import com.smarteist.autoimageslider.IndicatorAnimations;
 import com.smarteist.autoimageslider.SliderAnimations;
 import com.smarteist.autoimageslider.SliderView;
 
-import java.lang.reflect.Field;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Timer;
-import java.util.TimerTask;
 
 public class DashboardFragment extends Fragment implements DashboardRvAdapter.DashBoardInteractor,
         View.OnClickListener,

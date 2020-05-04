@@ -8,13 +8,12 @@ import androidx.lifecycle.MutableLiveData;
 
 import com.prepare.prepareurself.Apiservice.ApiClient;
 import com.prepare.prepareurself.Apiservice.ApiInterface;
-import com.prepare.prepareurself.dashboard.data.db.repository.BannerDbRepository;
+import com.prepare.prepareurself.banner.BannerDbRepository;
 import com.prepare.prepareurself.dashboard.data.db.repository.CourseDbRepository;
-import com.prepare.prepareurself.dashboard.data.model.BannerImageResponseModel;
-import com.prepare.prepareurself.dashboard.data.model.BannerModel;
+import com.prepare.prepareurself.banner.BannerImageResponseModel;
+import com.prepare.prepareurself.banner.BannerModel;
 import com.prepare.prepareurself.dashboard.data.model.CourseModel;
 import com.prepare.prepareurself.dashboard.data.model.GetCourseResponseModel;
-import com.prepare.prepareurself.utils.Utility;
 
 import java.util.List;
 

@@ -1,12 +1,12 @@
-package com.prepare.prepareurself.dashboard.data.db.repository;
+package com.prepare.prepareurself.banner;
 
 import android.app.Application;
 import android.os.AsyncTask;
 
 import androidx.lifecycle.LiveData;
 
-import com.prepare.prepareurself.dashboard.data.db.dao.BannerImageRoomDao;
-import com.prepare.prepareurself.dashboard.data.model.BannerModel;
+import com.prepare.prepareurself.banner.BannerImageRoomDao;
+import com.prepare.prepareurself.banner.BannerModel;
 import com.prepare.prepareurself.persistence.AppDatabase;
 
 import java.util.List;

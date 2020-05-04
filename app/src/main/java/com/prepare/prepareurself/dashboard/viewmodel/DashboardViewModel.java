@@ -13,27 +13,22 @@ import com.prepare.prepareurself.courses.data.db.repository.ProjectsDbRepository
 import com.prepare.prepareurself.courses.data.db.repository.TopicsDbRepository;
 import com.prepare.prepareurself.courses.data.model.ProjectsModel;
 import com.prepare.prepareurself.courses.data.model.TopicsModel;
-import com.prepare.prepareurself.courses.data.model.TopicsResponseModel;
 import com.prepare.prepareurself.courses.data.repository.ProjectsRespository;
 import com.prepare.prepareurself.courses.data.repository.TopicsRepository;
-import com.prepare.prepareurself.dashboard.data.db.repository.BannerDbRepository;
+import com.prepare.prepareurself.banner.BannerDbRepository;
 import com.prepare.prepareurself.dashboard.data.db.repository.CourseDbRepository;
 import com.prepare.prepareurself.dashboard.data.db.repository.SuggestedProjectsDbRespository;
 import com.prepare.prepareurself.dashboard.data.db.repository.SuggestedTopicsDbRepository;
-import com.prepare.prepareurself.dashboard.data.model.BannerModel;
+import com.prepare.prepareurself.banner.BannerModel;
 import com.prepare.prepareurself.dashboard.data.model.CourseModel;
 import com.prepare.prepareurself.dashboard.data.model.GetCourseResponseModel;
 import com.prepare.prepareurself.dashboard.data.model.SuggestedProjectModel;
 import com.prepare.prepareurself.dashboard.data.model.SuggestedTopicsModel;
 import com.prepare.prepareurself.dashboard.data.repository.CourseRepository;
 import com.prepare.prepareurself.dashboard.data.repository.DashboardRespoisitory;
-import com.prepare.prepareurself.resources.data.db.repository.ResourcesDbRepository;
-import com.prepare.prepareurself.resources.data.model.ResourceModel;
 import com.prepare.prepareurself.resources.data.model.ResourcesResponse;
-import com.prepare.prepareurself.resources.data.repository.ResourceRespository;
 import com.prepare.prepareurself.search.SearchRepository;
 import com.prepare.prepareurself.search.SearchResponseModel;
-import com.prepare.prepareurself.utils.Constants;
 
 import java.util.List;
 
