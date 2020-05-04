@@ -31,6 +31,8 @@ import com.prepare.prepareurself.resources.data.db.repository.ResourcesDbReposit
 import com.prepare.prepareurself.resources.data.model.ResourceModel;
 import com.prepare.prepareurself.resources.data.model.ResourcesResponse;
 import com.prepare.prepareurself.resources.data.repository.ResourceRespository;
+import com.prepare.prepareurself.search.SearchRepository;
+import com.prepare.prepareurself.search.SearchResponseModel;
 import com.prepare.prepareurself.utils.Constants;
 
 import java.util.List;
@@ -51,6 +53,7 @@ public class DashboardViewModel extends AndroidViewModel {
     private DashboardRespoisitory dashboardRespoisitory;
     private SuggestedTopicsDbRepository suggestedTopicsDbRepository;
     private SuggestedProjectsDbRespository suggestedProjectsDbRespository;
+    private SearchRepository searchRepository;
     public DashboardViewModel(@NonNull Application application) {
         super(application);
         courseRepository = new CourseRepository(application);
@@ -64,6 +67,11 @@ public class DashboardViewModel extends AndroidViewModel {
         dashboardRespoisitory = new DashboardRespoisitory(application);
         suggestedProjectsDbRespository = new SuggestedProjectsDbRespository(application);
         suggestedTopicsDbRepository = new SuggestedTopicsDbRepository(application);
+        searchRepository = new SearchRepository();
+    }
+
+    public LiveData<SearchResponseModel> search(String token, String query){
+        return searchRepository.search(token, query);
     }
 
     public void getCourses(String token){
