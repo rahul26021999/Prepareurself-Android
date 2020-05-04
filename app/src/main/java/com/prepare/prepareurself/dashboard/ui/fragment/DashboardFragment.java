@@ -1,8 +1,10 @@
 package com.prepare.prepareurself.dashboard.ui.fragment;
 
+import androidx.appcompat.widget.SearchView;
 import androidx.lifecycle.Observer;
 import androidx.lifecycle.ViewModelProvider;
 
+import android.app.SearchManager;
 import android.content.Context;
 import android.content.Intent;
 import android.graphics.Color;
@@ -16,11 +18,19 @@ import androidx.recyclerview.widget.RecyclerView;
 import androidx.viewpager.widget.ViewPager;
 
 import android.os.Handler;
+import android.text.Editable;
+import android.text.TextUtils;
+import android.text.TextWatcher;
 import android.util.Log;
 import android.view.LayoutInflater;
+import android.view.Menu;
+import android.view.MenuInflater;
+import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 import android.view.animation.AccelerateInterpolator;
+import android.view.inputmethod.InputMethodManager;
+import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.Toast;
@@ -32,6 +42,7 @@ import com.google.android.gms.ads.AdSize;
 import com.google.android.gms.ads.AdView;
 import com.google.android.gms.ads.formats.NativeAdOptions;
 import com.google.android.gms.ads.formats.UnifiedNativeAd;
+import com.google.android.material.appbar.AppBarLayout;
 import com.prepare.prepareurself.authentication.data.model.UserModel;
 import com.prepare.prepareurself.courses.data.model.ProjectsModel;
 import com.prepare.prepareurself.courses.data.model.TopicsModel;
@@ -50,6 +61,10 @@ import com.prepare.prepareurself.dashboard.ui.adapters.DashboardRvAdapter;
 import com.prepare.prepareurself.R;
 import com.prepare.prepareurself.resources.data.model.ResourceModel;
 import com.prepare.prepareurself.resources.data.model.ResourcesResponse;
+import com.prepare.prepareurself.search.SearchAdapter;
+import com.prepare.prepareurself.search.SearchModel;
+import com.prepare.prepareurself.search.SearchRecyclerviewModel;
+import com.prepare.prepareurself.search.SearchResponseModel;
 import com.prepare.prepareurself.utils.Constants;
 import com.prepare.prepareurself.utils.FixedSpeedScroller;
 import com.prepare.prepareurself.utils.PrefManager;
@@ -67,7 +82,8 @@ import java.util.TimerTask;
 
 public class DashboardFragment extends Fragment implements DashboardRvAdapter.DashBoardInteractor,
         View.OnClickListener,
-        SliderAdapter.SliderListener {
+        SliderAdapter.SliderListener,
+        SearchAdapter.SearchListener {
 
     private DashboardViewModel mViewModel;
     private ImageView menu;
@@ -81,6 +97,17 @@ public class DashboardFragment extends Fragment implements DashboardRvAdapter.Da
     private SliderView sliderView;
     SliderAdapter sliderAdapter;
     private AdView mAdView;
+
+    private static final String TAG = "ToolbarFragment";
+    private static final int STANDARD_APPBAR = 0;
+    private static final int SEARCH_APPBAR = 1;
+    private int mAppBarState;
+
+    private AppBarLayout viewContactsBar, searchBar;
+    private RecyclerView searchRv;
+    private EditText searchEdit;
+    private ImageView searchImage;
+
 
     @Override
     public void onClick(View v) {
@@ -115,10 +142,94 @@ public class DashboardFragment extends Fragment implements DashboardRvAdapter.Da
         prefManager = new PrefManager(getActivity());
         menu.setOnClickListener(this);
         mAdView = view.findViewById(R.id.adView);
+        searchRv = view.findViewById(R.id.searchcontentrv);
+
+        viewContactsBar = (AppBarLayout) view.findViewById(R.id.viewContactsToolbar);
+        searchBar = (AppBarLayout) view.findViewById(R.id.searchToolbar);
+
+        Log.d(TAG, "onCreateView: started");
+
+        setAppBaeState(STANDARD_APPBAR);
+
+
+        ImageView ivSearchContact = view.findViewById(R.id.ivSearchIcon);
+        ivSearchContact.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Log.d(TAG, "onClick: clicked searched icon");
+                toggleToolBarState();
+            }
+        });
+
+        ImageView ivBackArrow = view.findViewById(R.id.ivBackArrow);
+        ivBackArrow.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Log.d(TAG, "onClick: clicked back arrow.");
+                toggleToolBarState();
+
+            }
+        });
+
+        searchEdit = view.findViewById(R.id.etSearch);
+
+        searchImage = view.findViewById(R.id.seacrh_image);
+
+
 
         setGoogleAdd();
 
         return view;
+    }
+
+    // Initiate toggle (it means when you click the search icon it pops up the editText and clicking the back button goes to the search icon again)
+    private void toggleToolBarState() {
+        Log.d(TAG, "toggleToolBarState: toggling AppBarState.");
+        if (mAppBarState == STANDARD_APPBAR) {
+            setAppBaeState(SEARCH_APPBAR);
+        } else {
+            setAppBaeState(STANDARD_APPBAR);
+        }
+    }
+
+    // Sets the appbar state for either search mode or standard mode.
+    private void setAppBaeState(int state) {
+
+        Log.d(TAG, "setAppBaeState: changing app bar state to: " + state);
+
+        mAppBarState = state;
+        if (mAppBarState == STANDARD_APPBAR) {
+            searchBar.setVisibility(View.GONE);
+            viewContactsBar.setVisibility(View.VISIBLE);
+            searchRv.setVisibility(View.GONE);
+
+            View view = getView();
+            InputMethodManager im = (InputMethodManager) getActivity().getSystemService(Context.INPUT_METHOD_SERVICE);
+            try {
+                im.hideSoftInputFromWindow(view.getWindowToken(), 0); // make keyboard hide
+            } catch (NullPointerException e) {
+                Log.d(TAG, "setAppBaeState: NullPointerException: " + e);
+            }
+        } else if (mAppBarState == SEARCH_APPBAR) {
+            viewContactsBar.setVisibility(View.GONE);
+            searchBar.setVisibility(View.VISIBLE);
+            searchRv.setVisibility(View.VISIBLE);
+            InputMethodManager im = (InputMethodManager) getActivity().getSystemService(Context.INPUT_METHOD_SERVICE);
+            im.toggleSoftInput(InputMethodManager.SHOW_FORCED, 0); // make keyboard popup
+
+        }
+    }
+
+    @Override
+    public void onResume() {
+        super.onResume();
+        setAppBaeState(STANDARD_APPBAR);
+    }
+
+    @Override
+    public void onCreate(@Nullable Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        setHasOptionsMenu(true);
     }
 
     private void setGoogleAdd() {
@@ -171,6 +282,52 @@ public class DashboardFragment extends Fragment implements DashboardRvAdapter.Da
 
         mViewModel.fetchBanners(prefManager.getString(Constants.JWTTOKEN));
         mViewModel.getCourses(prefManager.getString(Constants.JWTTOKEN));
+
+        final SearchAdapter adapter = new SearchAdapter(getActivity(), this);
+        searchRv.setLayoutManager(new LinearLayoutManager(getActivity()));
+        searchRv.setAdapter(adapter);
+
+
+        searchImage.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                String query = searchEdit.getText().toString();
+                if (!TextUtils.isEmpty(query)){
+                    mViewModel.search(prefManager.getString(Constants.JWTTOKEN), query)
+                            .observe(getActivity(), new Observer<SearchResponseModel>() {
+                                @Override
+                                public void onChanged(SearchResponseModel searchResponseModel) {
+                                    if (searchResponseModel!=null){
+                                        List<SearchRecyclerviewModel> searchRecyclerviewModels = new ArrayList<>();
+                                        if (searchResponseModel.getData()!=null && !searchResponseModel.getData().isEmpty()){
+                                            for (int i = 0; i< searchResponseModel.getData().size(); i++){
+                                                SearchModel searchModel = searchResponseModel.getData().get(i);
+                                                if (searchModel!=null){
+
+                                                    if (searchModel.getTopics()!=null){
+                                                        SearchRecyclerviewModel searchRecyclerviewModel = new SearchRecyclerviewModel(1,"Topics",searchModel.getTopics());
+                                                        searchRecyclerviewModels.add(searchRecyclerviewModel);
+                                                    }else if (searchModel.getProjects()!=null){
+                                                        SearchRecyclerviewModel searchRecyclerviewModel = new SearchRecyclerviewModel(searchModel.getProjects(),"Projects", 2);
+                                                        searchRecyclerviewModels.add(searchRecyclerviewModel);
+                                                    }else if (searchModel.getResources()!=null){
+                                                        SearchRecyclerviewModel searchRecyclerviewModel = new SearchRecyclerviewModel(3, searchModel.getResources(),"Resources");
+                                                        searchRecyclerviewModels.add(searchRecyclerviewModel);
+                                                    }
+                                                }
+                                            }
+
+                                            adapter.setData(searchRecyclerviewModels);
+                                            adapter.notifyDataSetChanged();
+                                        }
+                                    }
+                                }
+                            });
+                }
+            }
+        });
+
+
 
 
         dashboardRvAdapter = new DashboardRvAdapter(getActivity(), this);

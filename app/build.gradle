@@ -123,4 +123,8 @@ dependencies {
     //glide to vector
     implementation 'com.github.corouteam:GlideToVectorYou:v2.0.0'
 
+    //search
+    implementation 'com.miguelcatalan:materialsearchview:1.4.0'
+
+
 }

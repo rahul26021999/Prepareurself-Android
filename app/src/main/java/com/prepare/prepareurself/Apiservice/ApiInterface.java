@@ -19,6 +19,8 @@ import com.prepare.prepareurself.resources.data.model.ResourceLikesResponse;
 import com.prepare.prepareurself.resources.data.model.ResourceViewsResponse;
 import com.prepare.prepareurself.authentication.data.model.AuthenticationResponseModel;
 import com.prepare.prepareurself.resources.data.model.VideoShareResponseModel;
+import com.prepare.prepareurself.search.SearchModel;
+import com.prepare.prepareurself.search.SearchResponseModel;
 
 import java.util.List;
 
@@ -132,5 +134,9 @@ public interface ApiInterface {
     @POST("store-feedback")
     Call<FeedbacksubmitModel> saveFeedback(@Query("token") String token,
                                            @Query("answers[]") List<String> answers);
+
+    @POST("search")
+    Call<SearchResponseModel> search(@Query("token") String token,
+                                     @Query("query") String query);
 
 }
