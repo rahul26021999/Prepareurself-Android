@@ -28,7 +28,9 @@ public class DetailedSearchAdapter extends RecyclerView.Adapter<DetailedSearchAd
     private int type;
 
     public interface DeatiledSearchListener{
-
+        void onProjectClicked(ProjectsModel projectsModel);
+        void onTopicsClicked(TopicsModel topicsModel);
+        void onResourceClicked(ResourceModel resourceModel);
     }
 
     public DetailedSearchAdapter(Context context, DeatiledSearchListener listener) {
@@ -65,16 +67,34 @@ public class DetailedSearchAdapter extends RecyclerView.Adapter<DetailedSearchAd
     public void onBindViewHolder(@NonNull DetailedSearchViewHolder holder, int position) {
         switch (type){
             case 1 :
-                TopicsModel topicsModel = topicsModels.get(position);
+                final TopicsModel topicsModel = topicsModels.get(position);
                 holder.textView.setText(topicsModel.getName());
+                holder.itemView.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+                        listener.onTopicsClicked(topicsModel);
+                    }
+                });
                 break;
             case 2:
-                ProjectsModel projectsModel = projectsModels.get(position);
+                final ProjectsModel projectsModel = projectsModels.get(position);
                 holder.textView.setText(projectsModel.getName());
+                holder.itemView.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+                        listener.onProjectClicked(projectsModel);
+                    }
+                });
                 break;
             case 3:
-                ResourceModel resourceModel = resourceModels.get(position);
+                final ResourceModel resourceModel = resourceModels.get(position);
                 holder.textView.setText(resourceModel.getTitle());
+                holder.itemView.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+                        listener.onResourceClicked(resourceModel);
+                    }
+                });
                 break;
         }
     }

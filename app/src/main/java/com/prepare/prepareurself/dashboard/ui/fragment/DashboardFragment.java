@@ -49,6 +49,7 @@ import com.prepare.prepareurself.courses.data.model.TopicsModel;
 import com.prepare.prepareurself.courses.data.model.TopicsResponseModel;
 import com.prepare.prepareurself.courses.ui.activity.AllCoursesActivity;
 import com.prepare.prepareurself.courses.ui.activity.CoursesActivity;
+import com.prepare.prepareurself.courses.ui.activity.ProjectsActivity;
 import com.prepare.prepareurself.dashboard.data.model.BannerModel;
 import com.prepare.prepareurself.dashboard.data.model.CourseModel;
 import com.prepare.prepareurself.dashboard.data.model.SuggestedProjectModel;
@@ -61,6 +62,7 @@ import com.prepare.prepareurself.dashboard.ui.adapters.DashboardRvAdapter;
 import com.prepare.prepareurself.R;
 import com.prepare.prepareurself.resources.data.model.ResourceModel;
 import com.prepare.prepareurself.resources.data.model.ResourcesResponse;
+import com.prepare.prepareurself.resources.ui.activity.ResourcesActivity;
 import com.prepare.prepareurself.search.SearchAdapter;
 import com.prepare.prepareurself.search.SearchModel;
 import com.prepare.prepareurself.search.SearchRecyclerviewModel;
@@ -70,6 +72,7 @@ import com.prepare.prepareurself.utils.FixedSpeedScroller;
 import com.prepare.prepareurself.utils.PrefManager;
 import com.prepare.prepareurself.utils.Utility;
 import com.prepare.prepareurself.utils.ZoomPageOutTransaformer;
+import com.prepare.prepareurself.youtubeplayer.youtubeplaylistapi.ui.VideoActivity;
 import com.smarteist.autoimageslider.IndicatorAnimations;
 import com.smarteist.autoimageslider.SliderAnimations;
 import com.smarteist.autoimageslider.SliderView;
@@ -397,6 +400,35 @@ public class DashboardFragment extends Fragment implements DashboardRvAdapter.Da
                 }
             }
         });
+    }
+
+    @Override
+    public void onProjectClickedFromSearch(ProjectsModel projectsModel) {
+        Intent intent = new Intent(getActivity(), ProjectsActivity.class);
+        intent.putExtra(Constants.PROJECTID,projectsModel.getId());
+        startActivity(intent);
+    }
+
+    @Override
+    public void onTopicsClickedFromSearch(TopicsModel topicsModel) {
+        Intent intent = new Intent(getActivity(), ResourcesActivity.class);
+        intent.putExtra(Constants.TOPICID,topicsModel.getId());
+        intent.putExtra(Constants.COURSEID, topicsModel.getCourse_id());
+        startActivity(intent);
+    }
+
+    @Override
+    public void onResourceClickedFromSearch(ResourceModel resourceModel) {
+        if (resourceModel.getType().equalsIgnoreCase("video")){
+            Intent intent = new Intent(getActivity(), VideoActivity.class);
+            intent.putExtra(Constants.VIDEOCODE, Utility.getVideoCode(resourceModel.getLink()));
+            intent.putExtra(Constants.VIDEOTITLE, resourceModel.getTitle());
+            intent.putExtra(Constants.VIDEODESCRIPTION, resourceModel.getDescription());
+            intent.putExtra(Constants.SINGLEVIDEO, true);
+            startActivity(intent);
+        }else if (resourceModel.getType().equalsIgnoreCase("theory")){
+            Utility.redirectUsingCustomTab(getActivity(), resourceModel.getLink());
+        }
     }
 
     @Override

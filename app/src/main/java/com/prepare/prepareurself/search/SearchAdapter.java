@@ -138,6 +138,7 @@ public class SearchAdapter extends RecyclerView.Adapter implements DetailedSearc
         }
 
         public void bindView(Context context, List<ProjectsModel> projectsModels, String header, DetailedSearchAdapter.DeatiledSearchListener listener) {
+            textView.setText(header);
             DetailedSearchAdapter adapter = new DetailedSearchAdapter(context,listener);
             adapter.setProjectsModels(projectsModels);
             recyclerView.setLayoutManager(new LinearLayoutManager(context));
@@ -166,8 +167,25 @@ public class SearchAdapter extends RecyclerView.Adapter implements DetailedSearc
         }
     }
 
-    public interface SearchListener{
+    @Override
+    public void onProjectClicked(ProjectsModel projectsModel) {
+        listener.onProjectClickedFromSearch(projectsModel);
+    }
 
+    @Override
+    public void onTopicsClicked(TopicsModel topicsModel) {
+        listener.onTopicsClickedFromSearch(topicsModel);
+    }
+
+    @Override
+    public void onResourceClicked(ResourceModel resourceModel) {
+        listener.onResourceClickedFromSearch(resourceModel);
+    }
+
+    public interface SearchListener{
+        void onProjectClickedFromSearch(ProjectsModel projectsModel);
+        void onTopicsClickedFromSearch(TopicsModel topicsModel);
+        void onResourceClickedFromSearch(ResourceModel resourceModel);
     }
 
 
