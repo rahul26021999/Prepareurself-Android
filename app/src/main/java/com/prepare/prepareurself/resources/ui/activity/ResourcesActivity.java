@@ -42,6 +42,7 @@ public class ResourcesActivity extends BaseActivity implements View.OnClickListe
     private ImageView BackBtn;
     public static int topicID;
     public int courseId;
+    public int showPage = -1;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -64,7 +65,28 @@ public class ResourcesActivity extends BaseActivity implements View.OnClickListe
         sectionsPagerAdapter.addFragment(TheoryResourceFragment.newInstance(),"Theories");
         viewPager.setAdapter(sectionsPagerAdapter);
 
+        viewPager.addOnPageChangeListener(new ViewPager.OnPageChangeListener() {
+            @Override
+            public void onPageScrolled(int position, float positionOffset, int positionOffsetPixels) {
+                if (position==0){
+                    tvTopVideo.setTextColor(getResources().getColor(R.color.colorPrimaryDark));
+                    tvTopTheory.setTextColor(getResources().getColor(R.color.dark_grey));
+                }else if (position == 1){
+                    tvTopVideo.setTextColor(getResources().getColor(R.color.dark_grey));
+                    tvTopTheory.setTextColor(getResources().getColor(R.color.colorPrimaryDark));
+                }
+            }
 
+            @Override
+            public void onPageSelected(int position) {
+
+            }
+
+            @Override
+            public void onPageScrollStateChanged(int state) {
+
+            }
+        });
 
         if (intent.getData()!=null){
             Log.d("deeplink_debug","resource activity "+intent.getData()+"");
@@ -98,6 +120,7 @@ public class ResourcesActivity extends BaseActivity implements View.OnClickListe
         }else{
             topicID = intent.getIntExtra(Constants.TOPICID,-1);
             courseId = intent.getIntExtra(Constants.COURSEID, -1);
+            showPage = intent.getIntExtra(Constants.SHOWPAGE, -1);
         }
 
         BackBtn.setOnClickListener(this);
@@ -120,29 +143,16 @@ public class ResourcesActivity extends BaseActivity implements View.OnClickListe
             title.setText("Resource");
         }
 
-
-        viewPager.addOnPageChangeListener(new ViewPager.OnPageChangeListener() {
-            @Override
-            public void onPageScrolled(int position, float positionOffset, int positionOffsetPixels) {
-                if (position==0){
-                    tvTopVideo.setTextColor(getResources().getColor(R.color.colorPrimaryDark));
-                    tvTopTheory.setTextColor(getResources().getColor(R.color.dark_grey));
-                }else if (position == 1){
-                    tvTopVideo.setTextColor(getResources().getColor(R.color.dark_grey));
-                    tvTopTheory.setTextColor(getResources().getColor(R.color.colorPrimaryDark));
-                }
+        if (showPage!=-1){
+            if (showPage==0){
+                viewPager.setCurrentItem(0);
+            }else if (showPage==1){
+                viewPager.setCurrentItem(1);
             }
+        }
 
-            @Override
-            public void onPageSelected(int position) {
 
-            }
 
-            @Override
-            public void onPageScrollStateChanged(int state) {
-
-            }
-        });
 
     }
 
