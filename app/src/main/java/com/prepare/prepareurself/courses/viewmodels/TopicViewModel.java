@@ -11,6 +11,8 @@ import com.prepare.prepareurself.courses.data.db.repository.TopicsDbRepository;
 import com.prepare.prepareurself.courses.data.model.TopicsModel;
 import com.prepare.prepareurself.courses.data.model.TopicsResponseModel;
 import com.prepare.prepareurself.courses.data.repository.TopicsRepository;
+import com.prepare.prepareurself.dashboard.data.db.repository.CourseDbRepository;
+import com.prepare.prepareurself.dashboard.data.model.CourseModel;
 
 import java.util.List;
 
@@ -20,11 +22,13 @@ public class TopicViewModel extends AndroidViewModel {
     private LiveData<TopicsResponseModel> topicsResponseModelLiveData = new MutableLiveData<>();
     TopicsDbRepository topicsDbRepository;
     TopicsRepository topicsRepository;
+    CourseDbRepository courseDbRepository;
 
     public TopicViewModel(@NonNull Application application) {
         super(application);
         topicsRepository = new TopicsRepository(application);
         topicsDbRepository = new TopicsDbRepository(application);
+        courseDbRepository = new CourseDbRepository(application);
     }
 
     public LiveData<TopicsResponseModel> getTopicsResponseModelLiveData() {
@@ -40,5 +44,9 @@ public class TopicViewModel extends AndroidViewModel {
             liveData = topicsDbRepository.getTopicsById(courseId);
         }
         return liveData;
+    }
+
+    public LiveData<CourseModel> getCourseModelById(int courseId){
+        return courseDbRepository.getCourseById(courseId);
     }
 }

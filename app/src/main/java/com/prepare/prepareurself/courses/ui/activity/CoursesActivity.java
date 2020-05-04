@@ -1,6 +1,7 @@
 package com.prepare.prepareurself.courses.ui.activity;
 
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.lifecycle.Observer;
 import androidx.lifecycle.ViewModelProviders;
 import androidx.viewpager.widget.ViewPager;
 
@@ -16,6 +17,7 @@ import android.widget.TextView;
 import com.prepare.prepareurself.courses.ui.fragments.ProjectsFragment;
 import com.prepare.prepareurself.courses.ui.fragments.ResourcesFragment;
 import com.prepare.prepareurself.courses.viewmodels.TopicViewModel;
+import com.prepare.prepareurself.dashboard.data.model.CourseModel;
 import com.prepare.prepareurself.resources.ui.adapter.SectionsPagerAdapter;
 import com.prepare.prepareurself.R;
 import com.prepare.prepareurself.utils.BaseActivity;
@@ -91,7 +93,16 @@ public class CoursesActivity extends BaseActivity implements View.OnClickListene
             if (!TextUtils.isEmpty(courseName)){
                 title.setText(courseName);//Course Name Here
             }else{
-                title.setText("Tech Stack");
+                topicViewModel.getCourseModelById(courseId).observe(this, new Observer<CourseModel>() {
+                    @Override
+                    public void onChanged(CourseModel courseModel) {
+                        if (courseModel!=null){
+                            title.setText(courseModel.getName());
+                        }else{
+                            title.setText("Tech-Stack");
+                        }
+                    }
+                });
             }
             if (intent.getStringExtra(Constants.SHOWPAGE)!=null){
                 String showPage = intent.getStringExtra(Constants.SHOWPAGE);
