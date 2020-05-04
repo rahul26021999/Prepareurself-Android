@@ -1,10 +1,11 @@
-package com.prepare.prepareurself.dashboard.data.model;
+package com.prepare.prepareurself.banner;
 
 import androidx.room.ColumnInfo;
 import androidx.room.Entity;
 import androidx.room.PrimaryKey;
 
 import com.google.gson.annotations.SerializedName;
+import com.prepare.prepareurself.dashboard.data.model.CourseModel;
 
 @Entity(tableName = "banner")
 public class BannerModel {

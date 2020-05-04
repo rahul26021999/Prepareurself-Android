@@ -1,4 +1,4 @@
-package com.prepare.prepareurself.dashboard.data.model;
+package com.prepare.prepareurself.banner;
 
 import java.util.List;
 

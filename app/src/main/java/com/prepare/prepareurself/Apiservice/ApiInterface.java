@@ -5,7 +5,7 @@ import com.prepare.prepareurself.authentication.data.model.RegisterResponseModel
 import com.prepare.prepareurself.courses.data.model.GetProjectResponse;
 import com.prepare.prepareurself.courses.data.model.GetTopicResponseModel;
 import com.prepare.prepareurself.courses.data.model.ProjectResponseModel;
-import com.prepare.prepareurself.dashboard.data.model.BannerImageResponseModel;
+import com.prepare.prepareurself.banner.BannerImageResponseModel;
 import com.prepare.prepareurself.dashboard.data.model.GetCourseResponseModel;
 import com.prepare.prepareurself.dashboard.data.model.GetSuggestedProjectsModel;
 import com.prepare.prepareurself.dashboard.data.model.GetSuggestedTopicsModel;
@@ -13,19 +13,16 @@ import com.prepare.prepareurself.feedback.data.model.FeedbacksubmitModel;
 import com.prepare.prepareurself.profile.data.model.UpdatePasswordResponseModel;
 import com.prepare.prepareurself.profile.data.model.UpdatePreferenceResponseModel;
 import com.prepare.prepareurself.profile.data.model.AllPreferencesResponseModel;
-import com.prepare.prepareurself.profile.data.model.UploadImageResponse;
 import com.prepare.prepareurself.resources.data.model.GetResourcesResponse;
 import com.prepare.prepareurself.resources.data.model.ResourceLikesResponse;
 import com.prepare.prepareurself.resources.data.model.ResourceViewsResponse;
 import com.prepare.prepareurself.authentication.data.model.AuthenticationResponseModel;
 import com.prepare.prepareurself.resources.data.model.VideoShareResponseModel;
-import com.prepare.prepareurself.search.SearchModel;
 import com.prepare.prepareurself.search.SearchResponseModel;
 
 import java.util.List;
 
 import okhttp3.MultipartBody;
-import okhttp3.RequestBody;
 import retrofit2.Call;
 import retrofit2.http.Multipart;
 import retrofit2.http.POST;

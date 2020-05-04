@@ -9,7 +9,6 @@ import android.graphics.drawable.Drawable;
 import android.net.Uri;
 import android.os.Bundle;
 import android.text.TextUtils;
-import android.util.Log;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.Menu;
@@ -19,12 +18,10 @@ import android.widget.TextView;
 import com.bumptech.glide.GenericTransitionOptions;
 import com.bumptech.glide.Glide;
 import com.prepare.prepareurself.authentication.ui.AuthenticationActivity;
-import com.prepare.prepareurself.courses.data.model.ProjectsModel;
-import com.prepare.prepareurself.courses.data.model.TopicsModel;
 import com.prepare.prepareurself.courses.ui.activity.AllCoursesActivity;
 import com.prepare.prepareurself.courses.ui.activity.CoursesActivity;
 import com.prepare.prepareurself.courses.ui.activity.ProjectsActivity;
-import com.prepare.prepareurself.dashboard.data.model.BannerModel;
+import com.prepare.prepareurself.banner.BannerModel;
 import com.prepare.prepareurself.dashboard.data.model.CourseModel;
 import com.prepare.prepareurself.dashboard.data.model.SuggestedProjectModel;
 import com.prepare.prepareurself.dashboard.data.model.SuggestedTopicsModel;
@@ -50,11 +47,9 @@ import androidx.navigation.Navigation;
 import androidx.navigation.ui.AppBarConfiguration;
 import androidx.navigation.ui.NavigationUI;
 import androidx.drawerlayout.widget.DrawerLayout;
-import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
 
 import java.io.IOException;
-import java.io.UnsupportedEncodingException;
 
 public class HomeActivity extends BaseActivity implements NavigationView.OnNavigationItemSelectedListener,
         DashboardFragment.HomeActivityInteractor,

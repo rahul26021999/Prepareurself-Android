@@ -1,4 +1,4 @@
-package com.prepare.prepareurself.dashboard.data.db.dao;
+package com.prepare.prepareurself.banner;
 
 import androidx.lifecycle.LiveData;
 import androidx.room.Dao;
@@ -6,7 +6,7 @@ import androidx.room.Insert;
 import androidx.room.OnConflictStrategy;
 import androidx.room.Query;
 
-import com.prepare.prepareurself.dashboard.data.model.BannerModel;
+import com.prepare.prepareurself.banner.BannerModel;
 
 import java.util.List;
 
