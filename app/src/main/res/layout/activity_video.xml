@@ -60,6 +60,7 @@
         <ImageView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            style="@style/SelectableItemBackground"
             android:layout_centerVertical="true"
             android:padding="10dp"
             android:visibility="gone"
@@ -141,6 +142,7 @@
                 android:focusableInTouchMode="false"
                 android:id="@+id/rv_playlist_item_player"
                 android:visibility="gone"
+                android:background="#181818"
                 android:layout_below="@+id/tvPlaylst"/>
 
             <TextView
