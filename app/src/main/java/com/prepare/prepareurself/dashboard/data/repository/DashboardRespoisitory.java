@@ -1,6 +1,7 @@
 package com.prepare.prepareurself.dashboard.data.repository;
 
 import android.app.Application;
+import android.util.Log;
 
 import androidx.lifecycle.LiveData;
 import androidx.lifecycle.MutableLiveData;
@@ -11,6 +12,8 @@ import com.prepare.prepareurself.dashboard.data.db.repository.SuggestedProjectsD
 import com.prepare.prepareurself.dashboard.data.db.repository.SuggestedTopicsDbRepository;
 import com.prepare.prepareurself.dashboard.data.model.GetSuggestedProjectsModel;
 import com.prepare.prepareurself.dashboard.data.model.GetSuggestedTopicsModel;
+import com.prepare.prepareurself.dashboard.data.model.HomepageData;
+import com.prepare.prepareurself.dashboard.data.model.HomepageResponseModel;
 import com.prepare.prepareurself.dashboard.data.model.SuggestedProjectModel;
 import com.prepare.prepareurself.dashboard.data.model.SuggestedTopicsModel;
 
@@ -97,4 +100,35 @@ public class DashboardRespoisitory {
         return data;
 
     }
+
+    public LiveData<HomepageResponseModel> fetchHomePageData(String token){
+
+        final MutableLiveData<HomepageResponseModel> data = new MutableLiveData<>();
+
+        apiInterface.fetchHomePage(token).enqueue(new Callback<HomepageResponseModel>() {
+            @Override
+            public void onResponse(Call<HomepageResponseModel> call, Response<HomepageResponseModel> response) {
+                HomepageResponseModel responseModel  = response.body();
+//                Log.d("home_debug",responseModel+" hjb");
+                if (responseModel!=null){
+                    if (responseModel.getError_code()==0){
+                        data.setValue(responseModel);
+                    }else{
+                        data.setValue(null);
+                    }
+                }else{
+                    data.setValue(null);
+                }
+            }
+
+            @Override
+            public void onFailure(Call<HomepageResponseModel> call, Throwable t) {
+                data.setValue(null);
+            }
+        });
+
+        return data;
+
+    }
+
 }

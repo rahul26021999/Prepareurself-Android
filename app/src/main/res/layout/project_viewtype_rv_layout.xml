@@ -26,6 +26,18 @@
             android:id="@+id/image_course_viewtype"
             android:src="@drawable/placeholder"/>
 
+        <com.google.android.youtube.player.YouTubeThumbnailView
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            android:scaleType="centerCrop"
+            android:visibility="gone"
+            android:id="@+id/image_thumb_course_viewtype"
+            android:src="@drawable/placeholder"/>
+
+
     </androidx.cardview.widget.CardView>
 
     <TextView

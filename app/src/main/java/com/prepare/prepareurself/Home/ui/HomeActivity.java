@@ -18,6 +18,8 @@ import android.widget.TextView;
 import com.bumptech.glide.GenericTransitionOptions;
 import com.bumptech.glide.Glide;
 import com.prepare.prepareurself.authentication.ui.AuthenticationActivity;
+import com.prepare.prepareurself.courses.data.model.ProjectsModel;
+import com.prepare.prepareurself.courses.data.model.TopicsModel;
 import com.prepare.prepareurself.courses.ui.activity.AllCoursesActivity;
 import com.prepare.prepareurself.courses.ui.activity.CoursesActivity;
 import com.prepare.prepareurself.courses.ui.activity.ProjectsActivity;
@@ -30,12 +32,14 @@ import com.prepare.prepareurself.Home.viewmodel.HomeActivityViewModel;
 import com.prepare.prepareurself.R;
 import com.prepare.prepareurself.authentication.data.model.UserModel;
 import com.prepare.prepareurself.firebase.UpdateHelper;
+import com.prepare.prepareurself.resources.data.model.ResourceModel;
 import com.prepare.prepareurself.resources.ui.activity.ResourcesActivity;
 import com.prepare.prepareurself.utils.BaseActivity;
 import com.prepare.prepareurself.utils.Constants;
 import com.google.android.material.navigation.NavigationView;
 import com.prepare.prepareurself.utils.PrefManager;
 import com.prepare.prepareurself.utils.Utility;
+import com.prepare.prepareurself.youtubeplayer.youtubeplaylistapi.ui.VideoActivity;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AlertDialog;
@@ -317,7 +321,7 @@ public class HomeActivity extends BaseActivity implements NavigationView.OnNavig
     }
 
     @Override
-    public void onTopicClicked(SuggestedTopicsModel topicsModel) {
+    public void onTopicClicked(TopicsModel topicsModel) {
         Intent intent = new Intent(HomeActivity.this, ResourcesActivity.class);
         intent.putExtra(Constants.TOPICID,topicsModel.getId());
         intent.putExtra(Constants.COURSEID, topicsModel.getCourse_id());
@@ -325,10 +329,24 @@ public class HomeActivity extends BaseActivity implements NavigationView.OnNavig
     }
 
     @Override
-    public void onProjectClicked(SuggestedProjectModel projectsModel) {
+    public void onProjectClicked(ProjectsModel projectsModel) {
         Intent intent = new Intent(HomeActivity.this, ProjectsActivity.class);
         intent.putExtra(Constants.PROJECTID,projectsModel.getId());
         startActivity(intent);
+    }
+
+    @Override
+    public void onResourceCliked(ResourceModel resourceModel) {
+        if (resourceModel.getType().equalsIgnoreCase("video")){
+            Intent intent = new Intent(HomeActivity.this, VideoActivity.class);
+            intent.putExtra(Constants.VIDEOCODE, Utility.getVideoCode(resourceModel.getLink()));
+            intent.putExtra(Constants.VIDEOTITLE, resourceModel.getTitle());
+            intent.putExtra(Constants.VIDEODESCRIPTION, resourceModel.getDescription());
+            intent.putExtra(Constants.SINGLEVIDEO, true);
+            startActivity(intent);
+        }else if (resourceModel.getType().equalsIgnoreCase("theory")){
+            Utility.redirectUsingCustomTab(HomeActivity.this, resourceModel.getLink());
+        }
     }
 
     @Override

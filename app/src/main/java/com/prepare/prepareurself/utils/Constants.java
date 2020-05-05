@@ -26,6 +26,7 @@ public class Constants {
     public static final int ADDVIEWTYPE = 2;
     public static final int TOPICVIEWTYPE = 3;
     public static final int PROJECTVIEWTYPE = 4;
+    public static final int RESOURCEVIEWTYPE = 5;
 
     public static final String UNABLETOLOADVIDEOSATTHEMOMENT = "Unable to load videos at the moment";
     public static final String VIDEOCODE = "video_code";
@@ -72,4 +73,5 @@ public class Constants {
     public static final String TYPE = "type";
     public static final String PROFILESHARE = "profile_share";
     public static final String PROFILESHAREINTENT = "profile_share_intent";
+
 }

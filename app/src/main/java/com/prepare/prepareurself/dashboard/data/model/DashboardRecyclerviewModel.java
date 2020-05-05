@@ -5,6 +5,7 @@ import androidx.lifecycle.LiveData;
 
 import com.prepare.prepareurself.courses.data.model.ProjectsModel;
 import com.prepare.prepareurself.courses.data.model.TopicsModel;
+import com.prepare.prepareurself.resources.data.model.ResourceModel;
 
 import java.util.List;
 
@@ -17,32 +18,46 @@ public class DashboardRecyclerviewModel {
 
     // course view type
     private int imageResource;
-    private LiveData<List<CourseModel>> courses;
+    private List<CourseModel> courses;
 
     //topic viewtype
-    private LiveData<List<SuggestedTopicsModel>> topicsModels;
+    private List<TopicsModel> topicsModels;
 
-    private LiveData<List<SuggestedProjectModel>> projectModels;
+    private List<ProjectsModel> projectModels;
+
+    private List<ResourceModel> resourceModels;
 
     //add view type
     private String addText;
 
-    public DashboardRecyclerviewModel(int viewType, String categoryName, LiveData<List<CourseModel>> courses) {
+    private boolean seeAll;
+
+    public DashboardRecyclerviewModel(int viewType, String categoryName, boolean seeAll,List<CourseModel> courses) {
         this.categoryName = categoryName;
         this.courses = courses;
         this.viewType = viewType;
+        this.seeAll =seeAll;
     }
 
-    public DashboardRecyclerviewModel(int viewType, LiveData< List<SuggestedTopicsModel>> topicsModels, String categoryName) {
+    public DashboardRecyclerviewModel(int viewType, List<TopicsModel> topicsModels, String categoryName, boolean seeAll) {
         this.viewType = viewType;
         this.categoryName = categoryName;
         this.topicsModels = topicsModels;
+        this.seeAll = seeAll;
     }
 
-    public DashboardRecyclerviewModel(LiveData<List<SuggestedProjectModel>> projectModels, int viewType, String categoryName){
+    public DashboardRecyclerviewModel(List<ProjectsModel> projectModels, int viewType, String categoryName, boolean seeAll){
         this.projectModels = projectModels;
         this.viewType = viewType;
         this.categoryName = categoryName;
+        this.seeAll = seeAll;
+    }
+
+    public DashboardRecyclerviewModel(int viewType, String categoryName, List<ResourceModel> resourceModels, boolean seeAll) {
+        this.viewType = viewType;
+        this.categoryName = categoryName;
+        this.resourceModels = resourceModels;
+        this.seeAll = seeAll;
     }
 
     public DashboardRecyclerviewModel(int viewType, String addText) {
@@ -50,19 +65,35 @@ public class DashboardRecyclerviewModel {
         this.viewType = viewType;
     }
 
-    public LiveData<List<SuggestedTopicsModel>> getTopicsModels() {
+    public List<ResourceModel> getResourceModels() {
+        return resourceModels;
+    }
+
+    public void setResourceModels(List<ResourceModel> resourceModels) {
+        this.resourceModels = resourceModels;
+    }
+
+    public boolean isSeeAll() {
+        return seeAll;
+    }
+
+    public void setSeeAll(boolean seeAll) {
+        this.seeAll = seeAll;
+    }
+
+    public List<TopicsModel> getTopicsModels() {
         return topicsModels;
     }
 
-    public void setTopicsModels(LiveData<List<SuggestedTopicsModel>> topicsModels) {
+    public void setTopicsModels(List<TopicsModel> topicsModels) {
         this.topicsModels = topicsModels;
     }
 
-    public LiveData<List<SuggestedProjectModel>> getProjectModels() {
+    public List<ProjectsModel> getProjectModels() {
         return projectModels;
     }
 
-    public void setProjectModels(LiveData<List<SuggestedProjectModel>> projectModels) {
+    public void setProjectModels(List<ProjectsModel> projectModels) {
         this.projectModels = projectModels;
     }
 
@@ -90,11 +121,11 @@ public class DashboardRecyclerviewModel {
         this.imageResource = imageResource;
     }
 
-    public LiveData<List<CourseModel>> getCourses() {
+    public List<CourseModel> getCourses() {
         return courses;
     }
 
-    public void setCourses(LiveData<List<CourseModel>> courses) {
+    public void setCourses(List<CourseModel> courses) {
         this.courses = courses;
     }
 
