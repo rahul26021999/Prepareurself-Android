@@ -14,14 +14,19 @@ import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import android.text.Editable;
 import android.text.TextUtils;
+import android.text.TextWatcher;
 import android.util.Log;
+import android.view.KeyEvent;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.inputmethod.EditorInfo;
 import android.view.inputmethod.InputMethodManager;
 import android.widget.EditText;
 import android.widget.ImageView;
+import android.widget.TextView;
 
 import com.google.android.gms.ads.AdListener;
 import com.google.android.gms.ads.AdRequest;
@@ -86,7 +91,9 @@ public class DashboardFragment extends Fragment implements DashboardRvAdapter.Da
     private AppBarLayout viewContactsBar, searchBar;
     private RecyclerView searchRv;
     private EditText searchEdit;
-    private ImageView searchImage;
+    private ImageView closeSearch;
+
+    private SearchAdapter adapter;
 
 
     @Override
@@ -94,6 +101,9 @@ public class DashboardFragment extends Fragment implements DashboardRvAdapter.Da
         switch (v.getId()){
             case R.id.menu:
                 listener.onBarClicked();
+                break;
+            case R.id.closeSearch:
+                searchEdit.setText("");
                 break;
         }
     }
@@ -125,10 +135,8 @@ public class DashboardFragment extends Fragment implements DashboardRvAdapter.Da
         mAdView = view.findViewById(R.id.adView);
         searchRv = view.findViewById(R.id.searchcontentrv);
 
-        viewContactsBar = (AppBarLayout) view.findViewById(R.id.viewContactsToolbar);
-        searchBar = (AppBarLayout) view.findViewById(R.id.searchToolbar);
-
-        Log.d(TAG, "onCreateView: started");
+        viewContactsBar =  view.findViewById(R.id.viewContactsToolbar);
+        searchBar =  view.findViewById(R.id.searchToolbar);
 
         setAppBaeState(STANDARD_APPBAR);
 
@@ -153,10 +161,8 @@ public class DashboardFragment extends Fragment implements DashboardRvAdapter.Da
         });
 
         searchEdit = view.findViewById(R.id.etSearch);
-
-        searchImage = view.findViewById(R.id.seacrh_image);
-
-
+        closeSearch = view.findViewById(R.id.closeSearch);
+        closeSearch.setOnClickListener(this);
 
         setGoogleAdd();
 
@@ -168,6 +174,7 @@ public class DashboardFragment extends Fragment implements DashboardRvAdapter.Da
         Log.d(TAG, "toggleToolBarState: toggling AppBarState.");
         if (mAppBarState == STANDARD_APPBAR) {
             setAppBaeState(SEARCH_APPBAR);
+            searchEdit.setPressed(true);
         } else {
             setAppBaeState(STANDARD_APPBAR);
         }
@@ -260,54 +267,45 @@ public class DashboardFragment extends Fragment implements DashboardRvAdapter.Da
 
         mViewModel = new ViewModelProvider(this).get(DashboardViewModel.class);
 
-
         mViewModel.fetchBanners(prefManager.getString(Constants.JWTTOKEN));
         mViewModel.getCourses(prefManager.getString(Constants.JWTTOKEN));
 
-        final SearchAdapter adapter = new SearchAdapter(getActivity(), this);
+        adapter = new SearchAdapter(getActivity(), this);
         searchRv.setLayoutManager(new LinearLayoutManager(getActivity()));
         searchRv.setAdapter(adapter);
 
-
-        searchImage.setOnClickListener(new View.OnClickListener() {
+        searchEdit.addTextChangedListener(new TextWatcher() {
             @Override
-            public void onClick(View v) {
-                String query = searchEdit.getText().toString();
-                if (!TextUtils.isEmpty(query)){
-                    mViewModel.search(prefManager.getString(Constants.JWTTOKEN), query)
-                            .observe(getActivity(), new Observer<SearchResponseModel>() {
-                                @Override
-                                public void onChanged(SearchResponseModel searchResponseModel) {
-                                    if (searchResponseModel!=null){
-                                        List<SearchRecyclerviewModel> searchRecyclerviewModels = new ArrayList<>();
-                                        if (searchResponseModel.getData()!=null && !searchResponseModel.getData().isEmpty()){
-                                            for (int i = 0; i< searchResponseModel.getData().size(); i++){
-                                                SearchModel searchModel = searchResponseModel.getData().get(i);
-                                                if (searchModel!=null){
+            public void beforeTextChanged(CharSequence s, int start, int count, int after) {
 
-                                                    if (searchModel.getTopics()!=null){
-                                                        SearchRecyclerviewModel searchRecyclerviewModel = new SearchRecyclerviewModel(1,"Topics",searchModel.getTopics());
-                                                        searchRecyclerviewModels.add(searchRecyclerviewModel);
-                                                    }else if (searchModel.getProjects()!=null){
-                                                        SearchRecyclerviewModel searchRecyclerviewModel = new SearchRecyclerviewModel(searchModel.getProjects(),"Projects", 2);
-                                                        searchRecyclerviewModels.add(searchRecyclerviewModel);
-                                                    }else if (searchModel.getResources()!=null){
-                                                        SearchRecyclerviewModel searchRecyclerviewModel = new SearchRecyclerviewModel(3, searchModel.getResources(),"Resources");
-                                                        searchRecyclerviewModels.add(searchRecyclerviewModel);
-                                                    }
-                                                }
-                                            }
+            }
 
-                                            adapter.setData(searchRecyclerviewModels);
-                                            adapter.notifyDataSetChanged();
-                                        }
-                                    }
-                                }
-                            });
+            @Override
+            public void onTextChanged(CharSequence s, int start, int before, int count) {
+                if(s.length()>0){
+                    closeSearch.setVisibility(View.VISIBLE);
                 }
+                else{
+                    closeSearch.setVisibility(View.GONE);
+                }
+            }
+
+            @Override
+            public void afterTextChanged(Editable s) {
+
             }
         });
 
+        searchEdit.setOnEditorActionListener(new TextView.OnEditorActionListener() {
+            @Override
+            public boolean onEditorAction(TextView v, int actionId, KeyEvent event) {
+                if (actionId == EditorInfo.IME_ACTION_SEARCH) {
+                    performSearch();
+                    return true;
+                }
+                return false;
+            }
+        });
 
         dashboardRvAdapter = new DashboardRvAdapter(getActivity(), this);
         LinearLayoutManager layoutManager = new LinearLayoutManager(getActivity(), RecyclerView.VERTICAL, false);
@@ -390,6 +388,43 @@ public class DashboardFragment extends Fragment implements DashboardRvAdapter.Da
 
 
 
+    }
+
+    private void performSearch(){
+
+        String query = searchEdit.getText().toString();
+        if (!TextUtils.isEmpty(query)){
+            mViewModel.search(prefManager.getString(Constants.JWTTOKEN), query)
+                    .observe(getActivity(), new Observer<SearchResponseModel>() {
+                        @Override
+                        public void onChanged(SearchResponseModel searchResponseModel) {
+                            if (searchResponseModel!=null){
+                                List<SearchRecyclerviewModel> searchRecyclerviewModels = new ArrayList<>();
+                                if (searchResponseModel.getData()!=null && !searchResponseModel.getData().isEmpty()){
+                                    for (int i = 0; i< searchResponseModel.getData().size(); i++){
+                                        SearchModel searchModel = searchResponseModel.getData().get(i);
+                                        if (searchModel!=null){
+
+                                            if (searchModel.getTopics()!=null){
+                                                SearchRecyclerviewModel searchRecyclerviewModel = new SearchRecyclerviewModel(1,"Topics",searchModel.getTopics());
+                                                searchRecyclerviewModels.add(searchRecyclerviewModel);
+                                            }else if (searchModel.getProjects()!=null){
+                                                SearchRecyclerviewModel searchRecyclerviewModel = new SearchRecyclerviewModel(searchModel.getProjects(),"Projects", 2);
+                                                searchRecyclerviewModels.add(searchRecyclerviewModel);
+                                            }else if (searchModel.getResources()!=null){
+                                                SearchRecyclerviewModel searchRecyclerviewModel = new SearchRecyclerviewModel(3, searchModel.getResources(),"Resources");
+                                                searchRecyclerviewModels.add(searchRecyclerviewModel);
+                                            }
+                                        }
+                                    }
+
+                                    adapter.setData(searchRecyclerviewModels);
+                                    adapter.notifyDataSetChanged();
+                                }
+                            }
+                        }
+                    });
+        }
     }
 
     private void setUpSlider() {

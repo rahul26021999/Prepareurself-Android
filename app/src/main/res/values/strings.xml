@@ -11,25 +11,11 @@
     <string name="register">Register</string>
     <string name="re_type_password">Confirm Password</string>
     <string name="your_name">Full Name</string>
-    <string name="your_username">Username</string>
     <string name="title_activity_home">HomeActivity</string>
-    <string name="navigation_drawer_open">Open navigation drawer</string>
-    <string name="navigation_drawer_close">Close navigation drawer</string>
     <string name="nav_header_title">Android Studio</string>
-    <string name="nav_header_subtitle">android.studio@android.com</string>
-    <string name="nav_header_desc">Navigation header</string>
     <string name="action_settings">Settings</string>
 
     <string name="menu_dashboard">Home</string>
-    <string name="title_activity_login">Sign in</string>
-    <string name="prompt_email">Email</string>
-    <string name="prompt_password">Password</string>
-    <string name="action_sign_in">Sign in or register</string>
-    <string name="action_sign_in_short">Sign in</string>
-    <string name="welcome">"Welcome !"</string>
-    <string name="invalid_username">Not a valid username</string>
-    <string name="invalid_password">Password must be >5 characters</string>
-    <string name="login_failed">"Login failed"</string>
     <string name="menu_profile">Profile</string>
     <string name="menu_contact_us">Contact us</string>
     <string name="menu_feedback">Feedback</string>
@@ -41,15 +27,7 @@
     <string name="error_player">There was an error initializing the YouTubePlayer (%1$s)</string>
 
     <!-- TODO: Remove or change this placeholder text -->
-    <string name="hello_blank_fragment">Hello blank fragment</string>
     <string name="title_activity_courses">CoursesActivity</string>
-    <string name="tab_text_1">Tab 1</string>
-    <string name="tab_text_2">Tab 2</string>
-    <string name="courses">Courses</string>
-
-    <string name="edit_profile">Edit Profile</string>
-    <string name="display">Display Name</string>
-    <string name="default_notification_channel_id">default</string>
 
     <!--aboutus strngs-->
     <string name="sources">Learning resources from some of the best blogs, websites, articles, etc from all over the internet.</string>
@@ -60,28 +38,13 @@
     We have gathered the best resources for all the topics at one place.You can learn from android development to amazing web technologies like laravel, nodejs, etc.
     Indulge yourself in the wonderful learning experience.</string>
 
-    <string-array name="array_techstacks">
-        <item>Android</item>
-        <item>Node.js</item>
-        <item>Laravel</item>
-        <item>Php</item>
-        <item>C++</item>
-        <item>Java</item>
-        <item>DDMS</item>
-        <item>JavaScript</item>
-        <item>Python</item>
-    </string-array>
-
     <!-- AdMob ad unit IDs -->
     <string name="admob_app_id">ca-app-pub-7841426065660181~4749952270</string>
-    <string name="nativeAds">ca-app-pub-7841426065660181/2245216046</string>
     <string name="bannerAds">ca-app-pub-7841426065660181/4498670833</string>
 
     <string name="sourcesTitle">Sources</string>
     <string name="visionTitle">Vision</string>
     <string name="about_app_Title">About App</string>
-    <string name="nativetestAds">ca-app-pub-3940256099942544/2247696110</string>
-    <string name="bannertestAds">ca-app-pub-3940256099942544/6300978111</string>
 
 
 </resources>

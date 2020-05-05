@@ -15,12 +15,13 @@
         android:id="@+id/relLayout1"
         android:layout_height="wrap_content">
 
-
         <include layout="@layout/snippet_search_toolbar"/>
         <include layout="@layout/snippet_view_dashboard_toolbar"/>
+
         <androidx.recyclerview.widget.RecyclerView
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
+            android:focusableInTouchMode="false"
+            android:layout_height="match_parent"
             android:layout_below="@+id/searchToolbar"
             android:id="@+id/searchcontentrv"
             android:visibility="visible"/>

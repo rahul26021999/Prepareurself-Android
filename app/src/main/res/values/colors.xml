@@ -6,7 +6,6 @@
     <color name="colorAccent">#293859</color>
 
     <color name="colorWhite">#FFFFFF</color>
-    <color name="colorBlack">#000000</color>
     <color name="lightred">#ED2E55</color>
     <color name="lightgreen">#469A0A</color>
 
@@ -21,10 +20,7 @@
     <color name="quiz_question_no_text">#8687b7</color>
 
     <!--    dashboard-->
-    <color name="active_dots">#F31919</color>
-    <color name="inactive_dots">#C1B9B9</color>
     <color name="black">#000</color>
-    <color name="resource_background">#f2f3f7</color>
     <color name="resource_active_color">#5b6063</color>
 
     <color name="lightGrey">#f3f3f3</color>
@@ -32,15 +28,11 @@
     <color name="like_grey">#A1A3A5</color>
     <color name="like_blue">#2664FF</color>
 
-    <color name="colorPrimary1">#008577</color>
-    <color name="colorPrimaryDar1">#293859</color>
-    <color name="colorAccent1">#D81B60</color>
     <color name="white">#ffffff</color>
     <color name="grey">#E9EAEE</color>
     <color name="yellow">#F8BA0F</color>
     <color name="goodgrey">#535353</color>
     <color name="blue">#293859</color>
-    <color name="lightgrey">#EEEEEE</color>
     <color name="green">#20CA0D</color>
     <color name="cureentitem">#FF5722</color>
 
