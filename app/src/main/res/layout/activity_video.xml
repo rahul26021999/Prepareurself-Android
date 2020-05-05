@@ -61,12 +61,11 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_centerVertical="true"
-            android:padding="8dp"
+            android:padding="10dp"
             android:visibility="gone"
             android:background="?attr/selectableItemBackgroundBorderless"
             android:src="@drawable/ic_share_black_24dp"
             android:id="@+id/img_share_youtube_video"
-            android:layout_marginEnd="dp"
             android:layout_toStartOf="@+id/img_down_video" />
 
     </RelativeLayout>
