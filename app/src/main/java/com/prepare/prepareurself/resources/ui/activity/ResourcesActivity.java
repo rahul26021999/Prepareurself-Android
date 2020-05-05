@@ -127,21 +127,21 @@ public class ResourcesActivity extends BaseActivity implements View.OnClickListe
         tvTopVideo.setOnClickListener(this);
         tvTopTheory.setOnClickListener(this);
 
-        if (courseId!=-1){
-            viewModel.getCourseById(courseId)
-                    .observe(ResourcesActivity.this, new Observer<CourseModel>() {
-                        @Override
-                        public void onChanged(CourseModel courseModel) {
-                            if (courseModel!=null){
-                                title.setText(courseModel.getName());
-                            }else{
-                                title.setText("Resource");
-                            }
-                        }
-                    });
-        }else{
-            title.setText("Resource");
-        }
+//        if (courseId!=-1){
+//            viewModel.getCourseById(courseId)
+//                    .observe(ResourcesActivity.this, new Observer<CourseModel>() {
+//                        @Override
+//                        public void onChanged(CourseModel courseModel) {
+//                            if (courseModel!=null){
+//                                title.setText(courseModel.getName());
+//                            }else{
+//                                title.setText("Resource");
+//                            }
+//                        }
+//                    });
+//        }else{
+//            title.setText("Resource");
+//        }
 
         if (showPage!=-1){
             if (showPage==0){

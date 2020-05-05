@@ -363,8 +363,7 @@
                         android:layout_width="match_parent"
                         android:layout_marginTop="20dp"
                         android:layout_height="wrap_content"
-                        android:layout_gravity="center_vertical"
-                        >
+                        android:layout_gravity="center_vertical">
                         <ImageView
                             android:layout_width="40dp"
                             android:layout_height="40dp"
@@ -375,13 +374,13 @@
                         <TextView
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:text="***************"
-                            android:letterSpacing="0.1"
-                            android:gravity="center_vertical"
+                            android:text="*********"
+                            android:letterSpacing="0.2"
+                            android:layout_marginTop="8dp"
+                            android:gravity="center"
                             android:layout_marginStart="20dp"
                             android:textColor="@color/goodgrey"
-                            android:textSize="15sp"
-                            android:layout_marginTop="15dp"
+                            android:textSize="25sp"
                             android:fontFamily="@font/proximanovaregular" />
 
                     </LinearLayout>

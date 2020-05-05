@@ -105,6 +105,8 @@ public class ProjectsActivity extends BaseActivity implements PlaylistVideosRvAd
         backBtn.setOnClickListener(this);
         prefManager = new PrefManager(this);
 
+        title.setText("Project");
+
         setGoogleAdd();
 
         Intent intent = getIntent();
@@ -203,16 +205,15 @@ public class ProjectsActivity extends BaseActivity implements PlaylistVideosRvAd
     private void setGoogleAdd() {
         AdRequest adRequest = new AdRequest.Builder().build();
         mAdView.loadAd(adRequest);
-
         mAdView.setAdListener(new AdListener() {
             @Override
             public void onAdLoaded() {
-                // Code to be executed when an ad finishes loading.
+                mAdView.setVisibility(View.VISIBLE);
             }
 
             @Override
             public void onAdFailedToLoad(int errorCode) {
-                // Code to be executed when an ad request fails.
+
             }
 
             @Override
@@ -228,7 +229,7 @@ public class ProjectsActivity extends BaseActivity implements PlaylistVideosRvAd
 
             @Override
             public void onAdLeftApplication() {
-                // Code to be executed when the user has left the app.
+
             }
 
             @Override
@@ -295,17 +296,17 @@ public class ProjectsActivity extends BaseActivity implements PlaylistVideosRvAd
         level.setText(projectsModel.getLevel());
         projectTitle = projectsModel.getName();
         tvProjectTitle.setText(projectTitle);
-        viewModel.getCourseById(projectsModel.getCourse_id())
-                .observe(ProjectsActivity.this, new Observer<CourseModel>() {
-                    @Override
-                    public void onChanged(CourseModel courseModel) {
-                        if (courseModel!=null){
-                            title.setText(courseModel.getName());
-                        }else{
-                            title.setText(courseName);
-                        }
-                    }
-                });
+//        viewModel.getCourseById(projectsModel.getCourse_id())
+//                .observe(ProjectsActivity.this, new Observer<CourseModel>() {
+//                    @Override
+//                    public void onChanged(CourseModel courseModel) {
+//                        if (courseModel!=null){
+//                            title.setText(courseModel.getName());
+//                        }else{
+//                            title.setText(courseName);
+//                        }
+//                    }
+//                });
 
         if (projectsModel.getDescription()!=null){
             tvProjectDescription.setText(Html.fromHtml(projectsModel.getDescription()));

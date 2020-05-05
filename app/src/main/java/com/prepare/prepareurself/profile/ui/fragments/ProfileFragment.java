@@ -134,7 +134,7 @@ public class ProfileFragment extends Fragment implements View.OnClickListener {
         tvPreferenceEdit = view.findViewById(R.id.tv_preference_edit);
 
         backBtn.setOnClickListener(this);
-        title.setText("Profile");
+        title.setText("My Profile");
         return view;
     }
 
