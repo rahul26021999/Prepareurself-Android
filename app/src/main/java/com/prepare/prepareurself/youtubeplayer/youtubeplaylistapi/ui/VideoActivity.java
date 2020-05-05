@@ -283,12 +283,6 @@ public class VideoActivity extends YouTubeBaseActivity implements YouTubePlayer.
                     });
         }
         youTubePlayerView.initialize(Constants.YOUTUBE_PLAYER_API_KEY,this);
-        mYoutubePlayer.setOnFullscreenListener(new YouTubePlayer.OnFullscreenListener() {
-            @Override
-            public void onFullscreen(boolean b) {
-                isFullscreen=b;
-            }
-        });
         imageDown.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -381,6 +375,12 @@ public class VideoActivity extends YouTubeBaseActivity implements YouTubePlayer.
                 mYoutubePlayer = youTubePlayer;
                 mYoutubePlayer.loadVideo(videoCode);
                 mYoutubePlayer.setPlayerStyle(YouTubePlayer.PlayerStyle.DEFAULT);
+                mYoutubePlayer.setOnFullscreenListener(new YouTubePlayer.OnFullscreenListener() {
+                    @Override
+                    public void onFullscreen(boolean b) {
+                        isFullscreen=b;
+                    }
+                });
 
             }else if (!TextUtils.isEmpty(playlistId)){
                 mYoutubePlayer = youTubePlayer;
@@ -404,6 +404,12 @@ public class VideoActivity extends YouTubeBaseActivity implements YouTubePlayer.
                     @Override
                     public void onPlaylistEnded() {
 
+                    }
+                });
+                mYoutubePlayer.setOnFullscreenListener(new YouTubePlayer.OnFullscreenListener() {
+                    @Override
+                    public void onFullscreen(boolean b) {
+                        isFullscreen=b;
                     }
                 });
             }else if (resourceId!=-1 && topicId!=-1){
@@ -469,13 +475,9 @@ public class VideoActivity extends YouTubeBaseActivity implements YouTubePlayer.
 
     @Override
     public void onBackPressed() {
-        super.onBackPressed();
         if (mYoutubePlayer != null && isFullscreen) {
-            // if fullscreen, set fullscreen false
             mYoutubePlayer.setFullscreen(false);
-
         } else {
-            // if NOT fullscreen, perform default call on back press
             super.onBackPressed();
         }
     }
