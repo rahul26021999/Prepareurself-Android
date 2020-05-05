@@ -175,6 +175,7 @@ public class DashboardFragment extends Fragment implements DashboardRvAdapter.Da
         if (mAppBarState == STANDARD_APPBAR) {
             setAppBaeState(SEARCH_APPBAR);
             searchEdit.setPressed(true);
+            searchEdit.requestFocus();
         } else {
             setAppBaeState(STANDARD_APPBAR);
         }
