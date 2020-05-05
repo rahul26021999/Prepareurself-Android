@@ -18,6 +18,7 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:paddingTop="10dp"
+        android:background="?attr/selectableItemBackground"
         android:paddingBottom="10dp"
         android:layout_below="@+id/youtube_playerview"
         android:id="@+id/rel_title_youtube">
@@ -44,9 +45,10 @@
         <ImageView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginStart="10dp"
+            android:layout_marginStart="5dp"
             android:layout_marginEnd="15dp"
             android:rotation="180"
+            style="@style/SelectableItemBackground"
             android:clickable="true"
             android:layout_centerVertical="true"
             android:background="?attr/selectableItemBackgroundBorderless"
@@ -56,15 +58,16 @@
             android:focusable="true" />
 
         <ImageView
-            android:layout_width="40dp"
-            android:layout_height="40dp"
-            android:padding="7dp"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerVertical="true"
+            android:padding="8dp"
             android:visibility="gone"
             android:background="?attr/selectableItemBackgroundBorderless"
-            android:src="@drawable/ic_image_share"
+            android:src="@drawable/ic_share_black_24dp"
             android:id="@+id/img_share_youtube_video"
-            android:layout_toStartOf="@+id/img_down_video"
-            android:layout_marginEnd="20dp"/>
+            android:layout_marginEnd="dp"
+            android:layout_toStartOf="@+id/img_down_video" />
 
     </RelativeLayout>
     <View
