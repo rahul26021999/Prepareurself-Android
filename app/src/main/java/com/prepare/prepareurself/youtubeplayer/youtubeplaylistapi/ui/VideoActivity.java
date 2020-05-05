@@ -78,6 +78,7 @@ public class VideoActivity extends YouTubeBaseActivity implements YouTubePlayer.
 
     @Nullable
     private ViewModelStore viewModelStore = null;
+    private boolean isFullscreen=false;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -140,8 +141,6 @@ public class VideoActivity extends YouTubeBaseActivity implements YouTubePlayer.
             playlistItemAdapter = new PlaylistItemAdapter(getApplicationContext(),this);
             LinearLayoutManager layoutManager = new LinearLayoutManager(this);
             playlistItemRecyclerView.setLayoutManager(layoutManager);
-            DividerItemDecoration decoration = new DividerItemDecoration(this,R.drawable.playlist_resource_divider);
-            playlistItemRecyclerView.addItemDecoration(decoration);
             playlistItemRecyclerView.setAdapter(playlistItemAdapter);
 
             videoViewModel.getListLiveData(playlistId).observeForever(new Observer<List<VideoItemWrapper>>() {
@@ -170,8 +169,6 @@ public class VideoActivity extends YouTubeBaseActivity implements YouTubePlayer.
             playlistItemAdapter = new PlaylistItemAdapter(getApplicationContext(),this);
             LinearLayoutManager layoutManager = new LinearLayoutManager(this);
             playlistItemRecyclerView.setLayoutManager(layoutManager);
-            DividerItemDecoration decoration = new DividerItemDecoration(this,R.drawable.playlist_resource_divider);
-            playlistItemRecyclerView.addItemDecoration(decoration);
             playlistItemRecyclerView.setAdapter(playlistItemAdapter);
 
             videoViewModel.getListLiveData(playlistId).observeForever(new Observer<List<VideoItemWrapper>>() {
@@ -286,7 +283,12 @@ public class VideoActivity extends YouTubeBaseActivity implements YouTubePlayer.
                     });
         }
         youTubePlayerView.initialize(Constants.YOUTUBE_PLAYER_API_KEY,this);
-
+        mYoutubePlayer.setOnFullscreenListener(new YouTubePlayer.OnFullscreenListener() {
+            @Override
+            public void onFullscreen(boolean b) {
+                isFullscreen=b;
+            }
+        });
         imageDown.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -409,7 +411,6 @@ public class VideoActivity extends YouTubeBaseActivity implements YouTubePlayer.
             } else{
                 Utility.showToast(this,Constants.SOMETHINGWENTWRONG);
             }
-
         }
     }
 
@@ -464,5 +465,18 @@ public class VideoActivity extends YouTubeBaseActivity implements YouTubePlayer.
         ViewModelProvider.Factory factory =
                 ViewModelProvider.AndroidViewModelFactory.getInstance(getApplication());
         return new ViewModelProvider(getViewModelStore(), factory);
+    }
+
+    @Override
+    public void onBackPressed() {
+        super.onBackPressed();
+        if (mYoutubePlayer != null && isFullscreen) {
+            // if fullscreen, set fullscreen false
+            mYoutubePlayer.setFullscreen(false);
+
+        } else {
+            // if NOT fullscreen, perform default call on back press
+            super.onBackPressed();
+        }
     }
 }

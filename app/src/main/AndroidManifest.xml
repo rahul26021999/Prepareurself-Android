@@ -60,7 +60,8 @@
         <activity
             android:name=".profile.ui.activity.UpdatePasswordActivity"
             android:windowSoftInputMode="stateVisible|adjustResize" />
-        <activity android:name=".youtubeplayer.youtubeplaylistapi.ui.VideoActivity">
+        <activity android:name=".youtubeplayer.youtubeplaylistapi.ui.VideoActivity"
+            android:configChanges="orientation|screenSize|locale">
             <intent-filter>
                 <action android:name="android.intent.action.VIEW" />
 

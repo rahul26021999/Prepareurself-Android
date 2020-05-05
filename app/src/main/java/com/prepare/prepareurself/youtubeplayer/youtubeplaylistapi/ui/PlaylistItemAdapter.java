@@ -5,6 +5,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
+import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
@@ -66,9 +67,9 @@ public class PlaylistItemAdapter extends RecyclerView.Adapter<PlaylistItemAdapte
         });
 
         if (position == selectedPosition){
-            holder.textView.setTextColor(context.getResources().getColor(R.color.cureentitem));
+            holder.rootLayout.setBackgroundResource(R.color.DarkModePrimarySelectedBlack);
         }else{
-            holder.textView.setTextColor(context.getResources().getColor(R.color.colorPrimaryDark));
+            holder.rootLayout.setBackgroundResource(R.color.DarkModePrimaryBlack);
         }
 
     }
@@ -85,11 +86,13 @@ public class PlaylistItemAdapter extends RecyclerView.Adapter<PlaylistItemAdapte
     public class PlaylistItemViewHolder extends RecyclerView.ViewHolder{
 
         ImageView imageView;
+        RelativeLayout rootLayout;
         TextView textView;
 
         public PlaylistItemViewHolder(@NonNull View itemView) {
             super(itemView);
             textView = itemView.findViewById(R.id.tv_playlist_item_title);
+            rootLayout = itemView.findViewById(R.id.rootLayout);
         }
 
         public void bindView(VideoItemWrapper videoItemWrapper){
