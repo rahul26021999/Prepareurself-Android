@@ -34,6 +34,8 @@ import com.prepare.prepareurself.courses.ui.activity.CoursesActivity;
 import com.prepare.prepareurself.courses.ui.activity.ProjectsActivity;
 import com.prepare.prepareurself.banner.BannerModel;
 import com.prepare.prepareurself.dashboard.data.model.CourseModel;
+import com.prepare.prepareurself.dashboard.data.model.HomepageData;
+import com.prepare.prepareurself.dashboard.data.model.HomepageResponseModel;
 import com.prepare.prepareurself.dashboard.data.model.SuggestedProjectModel;
 import com.prepare.prepareurself.dashboard.data.model.SuggestedTopicsModel;
 import com.prepare.prepareurself.banner.SliderAdapter;
@@ -99,10 +101,11 @@ public class DashboardFragment extends Fragment implements DashboardRvAdapter.Da
 
     public interface HomeActivityInteractor{
         void onCourseClicked(CourseModel courseModel);
-        void onTopicClicked(SuggestedTopicsModel topicsModel);
-        void onProjectClicked(SuggestedProjectModel projectsModel);
+        void onTopicClicked(TopicsModel topicsModel);
+        void onProjectClicked(ProjectsModel projectsModel);
         void onBarClicked();
         void onBannerClicked(BannerModel bannerModel);
+        void onResourceCliked(ResourceModel resourceModel);
     }
 
     public static DashboardFragment newInstance() {
@@ -306,8 +309,6 @@ public class DashboardFragment extends Fragment implements DashboardRvAdapter.Da
         });
 
 
-
-
         dashboardRvAdapter = new DashboardRvAdapter(getActivity(), this);
         LinearLayoutManager layoutManager = new LinearLayoutManager(getActivity(), RecyclerView.VERTICAL, false);
         recyclerView.setLayoutManager(layoutManager);
@@ -317,20 +318,57 @@ public class DashboardFragment extends Fragment implements DashboardRvAdapter.Da
 
         setUpSlider();
 
-        DashboardRecyclerviewModel dashboardRecyclerviewModel = new DashboardRecyclerviewModel(Constants.COURSEVIEWTYPE, Constants.TECHSTACK, mViewModel.getFiveCourses());
-        dashboardRecyclerviewModelList.add(dashboardRecyclerviewModel);
-        dashboardRvAdapter.setData(dashboardRecyclerviewModelList);
-        dashboardRvAdapter.notifyDataSetChanged();
+        mViewModel.fetchHomePageData(prefManager.getString(Constants.JWTTOKEN))
+                .observe(getActivity(), new Observer<HomepageResponseModel>() {
+                    @Override
+                    public void onChanged(HomepageResponseModel homepageResponseModel) {
+                        if (homepageResponseModel!=null){
+                            for (HomepageData homepageData : homepageResponseModel.getData()){
+                                switch (homepageData.getType()){
+                                    case "course":
+                                        DashboardRecyclerviewModel d1 = new DashboardRecyclerviewModel(Constants.COURSEVIEWTYPE,homepageData.getTitle(),homepageData.isSeeAll(),homepageData.getCourses());
+                                        Log.d("home_debug","d1 : "+d1.getCategoryName());
+                                        dashboardRecyclerviewModelList.add(d1);
+                                        break;
+                                    case "project":
+                                        DashboardRecyclerviewModel d2 = new DashboardRecyclerviewModel(homepageData.getProject(), Constants.PROJECTVIEWTYPE, homepageData.getTitle(), homepageData.isSeeAll());
+                                        Log.d("home_debug","d1 : "+d2.getCategoryName());
+                                        dashboardRecyclerviewModelList.add(d2);
+                                        break;
+                                    case "resource":
+                                        DashboardRecyclerviewModel d3 = new DashboardRecyclerviewModel(Constants.RESOURCEVIEWTYPE,homepageData.getTitle(), homepageData.getResource(),homepageData.isSeeAll());
+                                        Log.d("home_debug","d1 : "+d3.getCategoryName());
+                                        dashboardRecyclerviewModelList.add(d3);
+                                        break;
+                                    case "topic":
+                                        DashboardRecyclerviewModel d4 = new DashboardRecyclerviewModel(Constants.TOPICVIEWTYPE,homepageData.getTopics(),homepageData.getTitle(), homepageData.isSeeAll());
+                                        Log.d("home_debug","d1 : "+d4.getCategoryName());
+                                        dashboardRecyclerviewModelList.add(d4);
+                                        break;
+                                }
+                            }
 
-        DashboardRecyclerviewModel topisDashboardModel = new DashboardRecyclerviewModel(Constants.TOPICVIEWTYPE, mViewModel.getSuggestedTopics(prefManager.getString(Constants.JWTTOKEN)), Constants.TOPICSYOUMAYLIKE);
-        dashboardRecyclerviewModelList.add(topisDashboardModel);
-        dashboardRvAdapter.setData(dashboardRecyclerviewModelList);
-        dashboardRvAdapter.notifyDataSetChanged();
+                            dashboardRvAdapter.setData(dashboardRecyclerviewModelList);
+                            dashboardRvAdapter.notifyDataSetChanged();
 
-        DashboardRecyclerviewModel projectDashboardModel = new DashboardRecyclerviewModel(mViewModel.getSuggestedProjects(prefManager.getString(Constants.JWTTOKEN)), Constants.PROJECTVIEWTYPE, Constants.PROJECTSYOUMAYLIKE);
-        dashboardRecyclerviewModelList.add(projectDashboardModel);
-        dashboardRvAdapter.setData(dashboardRecyclerviewModelList);
-        dashboardRvAdapter.notifyDataSetChanged();
+                        }
+                    }
+                });
+
+//        DashboardRecyclerviewModel dashboardRecyclerviewModel = new DashboardRecyclerviewModel(Constants.COURSEVIEWTYPE, Constants.TECHSTACK, mViewModel.getFiveCourses());
+//        dashboardRecyclerviewModelList.add(dashboardRecyclerviewModel);
+//        dashboardRvAdapter.setData(dashboardRecyclerviewModelList);
+//        dashboardRvAdapter.notifyDataSetChanged();
+//
+//        DashboardRecyclerviewModel topisDashboardModel = new DashboardRecyclerviewModel(Constants.TOPICVIEWTYPE, mViewModel.getSuggestedTopics(prefManager.getString(Constants.JWTTOKEN)), Constants.TOPICSYOUMAYLIKE);
+//        dashboardRecyclerviewModelList.add(topisDashboardModel);
+//        dashboardRvAdapter.setData(dashboardRecyclerviewModelList);
+//        dashboardRvAdapter.notifyDataSetChanged();
+//
+//        DashboardRecyclerviewModel projectDashboardModel = new DashboardRecyclerviewModel(mViewModel.getSuggestedProjects(prefManager.getString(Constants.JWTTOKEN)), Constants.PROJECTVIEWTYPE, Constants.PROJECTSYOUMAYLIKE);
+//        dashboardRecyclerviewModelList.add(projectDashboardModel);
+//        dashboardRvAdapter.setData(dashboardRecyclerviewModelList);
+//        dashboardRvAdapter.notifyDataSetChanged();
 
 //        mViewModel.getUserInfo().observe(getActivity(), new Observer<UserModel>() {
 //            @Override
@@ -417,12 +455,12 @@ public class DashboardFragment extends Fragment implements DashboardRvAdapter.Da
     }
 
     @Override
-    public void onTopicClicked(SuggestedTopicsModel topicsModel) {
+    public void onTopicClicked(TopicsModel topicsModel) {
         listener.onTopicClicked(topicsModel);
     }
 
     @Override
-    public void onProjectClicked(SuggestedProjectModel projectsModel) {
+    public void onProjectClicked(ProjectsModel projectsModel) {
         listener.onProjectClicked(projectsModel);
     }
 
@@ -439,6 +477,18 @@ public class DashboardFragment extends Fragment implements DashboardRvAdapter.Da
         Intent intent = new Intent(getActivity(), CoursesActivity.class);
         intent.putExtra(Constants.COURSEID,courseId);
         intent.putExtra(Constants.SHOWPAGE,Constants.SHOWPROJECTS);
+        startActivity(intent);
+    }
+
+    @Override
+    public void onResourceClicked(ResourceModel resourceModel) {
+        listener.onResourceCliked(resourceModel);
+    }
+
+    @Override
+    public void onResourceSeeAllClicked(int course_topic_id) {
+        Intent intent = new Intent(getActivity(), ResourcesActivity.class);
+        intent.putExtra(Constants.TOPICID, course_topic_id);
         startActivity(intent);
     }
 

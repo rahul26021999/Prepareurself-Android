@@ -22,6 +22,7 @@ import com.prepare.prepareurself.dashboard.data.db.repository.SuggestedTopicsDbR
 import com.prepare.prepareurself.banner.BannerModel;
 import com.prepare.prepareurself.dashboard.data.model.CourseModel;
 import com.prepare.prepareurself.dashboard.data.model.GetCourseResponseModel;
+import com.prepare.prepareurself.dashboard.data.model.HomepageResponseModel;
 import com.prepare.prepareurself.dashboard.data.model.SuggestedProjectModel;
 import com.prepare.prepareurself.dashboard.data.model.SuggestedTopicsModel;
 import com.prepare.prepareurself.dashboard.data.repository.CourseRepository;
@@ -133,4 +134,9 @@ public class DashboardViewModel extends AndroidViewModel {
 
         return response;
     }
+
+    public LiveData<HomepageResponseModel> fetchHomePageData(String token){
+        return dashboardRespoisitory.fetchHomePageData(token);
+    }
+
 }

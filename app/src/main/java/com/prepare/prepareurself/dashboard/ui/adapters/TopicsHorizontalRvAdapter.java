@@ -26,7 +26,7 @@ import java.util.List;
 public class TopicsHorizontalRvAdapter extends RecyclerView.Adapter<TopicsHorizontalRvAdapter.TopicsViewolder> {
 
     private Context context;
-    private List<SuggestedTopicsModel> topicsModels;
+    private List<TopicsModel> topicsModels;
     private TopicsHorizontalRvListener listener;
 
     public TopicsHorizontalRvAdapter(Context context, TopicsHorizontalRvListener listener) {
@@ -62,7 +62,7 @@ public class TopicsHorizontalRvAdapter extends RecyclerView.Adapter<TopicsHorizo
             return 0;
     }
 
-    public void setData(List<SuggestedTopicsModel> topicsModels) {
+    public void setData(List<TopicsModel> topicsModels) {
         this.topicsModels = topicsModels;
     }
 
@@ -79,7 +79,7 @@ public class TopicsHorizontalRvAdapter extends RecyclerView.Adapter<TopicsHorizo
 
         }
 
-        public void bindView(Context context, SuggestedTopicsModel topicsModel){
+        public void bindView(Context context, TopicsModel topicsModel){
 
             if (topicsModel.getImage_url()!=null && topicsModel.getImage_url().endsWith(".svg")){
                 Utility.loadSVGImage(context,Constants.TOPICSBASEURL+  topicsModel.getImage_url(), imageView);
@@ -97,6 +97,6 @@ public class TopicsHorizontalRvAdapter extends RecyclerView.Adapter<TopicsHorizo
     }
 
     public interface TopicsHorizontalRvListener{
-        void onItemClicked(SuggestedTopicsModel topicsModel);
+        void onItemClicked(TopicsModel topicsModel);
     }
 }

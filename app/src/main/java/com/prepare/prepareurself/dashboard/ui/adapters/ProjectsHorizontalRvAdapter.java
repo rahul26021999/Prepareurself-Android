@@ -26,7 +26,7 @@ import java.util.List;
 public class ProjectsHorizontalRvAdapter extends RecyclerView.Adapter<ProjectsHorizontalRvAdapter.ProjectsViewHolder> {
 
     private Context context;
-    private List<SuggestedProjectModel> projectsModels;
+    private List<ProjectsModel> projectsModels;
     private ProjectsHorizontalRvListener listener;
 
     public ProjectsHorizontalRvAdapter(Context context, ProjectsHorizontalRvListener listener) {
@@ -62,7 +62,7 @@ public class ProjectsHorizontalRvAdapter extends RecyclerView.Adapter<ProjectsHo
             return 0;
     }
 
-    public void setData(List<SuggestedProjectModel> projectsModels) {
+    public void setData(List<ProjectsModel> projectsModels) {
         this.projectsModels = projectsModels;
     }
 
@@ -79,7 +79,7 @@ public class ProjectsHorizontalRvAdapter extends RecyclerView.Adapter<ProjectsHo
 
         }
 
-        public void bindView(Context context, SuggestedProjectModel projectsModel){
+        public void bindView(Context context, ProjectsModel projectsModel){
 
             if (projectsModel.getImage_url()!=null && projectsModel.getImage_url().endsWith(".svg")){
                 Utility.loadSVGImage(context, Constants.PROJECTSIMAGEBASEURL+ projectsModel.getImage_url(), imageView);
@@ -98,6 +98,6 @@ public class ProjectsHorizontalRvAdapter extends RecyclerView.Adapter<ProjectsHo
     }
 
     public interface ProjectsHorizontalRvListener {
-        void onItemClicked(SuggestedProjectModel projectsModel);
+        void onItemClicked(ProjectsModel projectsModel);
     }
 }

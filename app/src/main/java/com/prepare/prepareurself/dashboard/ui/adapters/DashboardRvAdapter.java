@@ -19,16 +19,19 @@ import com.prepare.prepareurself.dashboard.data.model.DashboardRecyclerviewModel
 import com.prepare.prepareurself.R;
 import com.prepare.prepareurself.dashboard.data.model.SuggestedProjectModel;
 import com.prepare.prepareurself.dashboard.data.model.SuggestedTopicsModel;
+import com.prepare.prepareurself.resources.data.model.ResourceModel;
 
 import java.util.List;
 
 import static com.prepare.prepareurself.utils.Constants.ADDVIEWTYPE;
 import static com.prepare.prepareurself.utils.Constants.COURSEVIEWTYPE;
 import static com.prepare.prepareurself.utils.Constants.PROJECTVIEWTYPE;
+import static com.prepare.prepareurself.utils.Constants.RESOURCEVIEWTYPE;
 import static com.prepare.prepareurself.utils.Constants.TOPICVIEWTYPE;
 
 public class DashboardRvAdapter extends RecyclerView.Adapter implements CoursesHorizontalRvAdapter.DashboardRvInteractor,
-        TopicsHorizontalRvAdapter.TopicsHorizontalRvListener, ProjectsHorizontalRvAdapter.ProjectsHorizontalRvListener {
+        TopicsHorizontalRvAdapter.TopicsHorizontalRvListener, ProjectsHorizontalRvAdapter.ProjectsHorizontalRvListener,
+        ResourceRvHorizontalAdapter.ResourceHomePageListener {
 
     private List<DashboardRecyclerviewModel> modelList;
     private Activity context;
@@ -54,6 +57,8 @@ public class DashboardRvAdapter extends RecyclerView.Adapter implements CoursesH
                 return TOPICVIEWTYPE;
             case PROJECTVIEWTYPE:
                 return PROJECTVIEWTYPE;
+            case RESOURCEVIEWTYPE:
+                return RESOURCEVIEWTYPE;
             default:
                 return -1;
         }
@@ -78,6 +83,9 @@ public class DashboardRvAdapter extends RecyclerView.Adapter implements CoursesH
             case PROJECTVIEWTYPE:
                 View projectView = LayoutInflater.from(context).inflate(R.layout.course_header_rv_viewtype_layout,parent, false);
                 return new ProjectViewHolder(projectView);
+            case RESOURCEVIEWTYPE:
+                View resourceView = LayoutInflater.from(context).inflate(R.layout.course_header_rv_viewtype_layout, parent, false);
+                return new ResourceHomeViewHolder(resourceView);
 
             default:
                 return null;
@@ -89,8 +97,13 @@ public class DashboardRvAdapter extends RecyclerView.Adapter implements CoursesH
         switch (modelList.get(position).getViewType()){
             case COURSEVIEWTYPE :
                 String categoryName = modelList.get(position).getCategoryName();
-                final LiveData<List<CourseModel>> courses = modelList.get(position).getCourses();
+                final List<CourseModel> courses = modelList.get(position).getCourses();
                 ((CourseViewHolder) holder).bindCoursesView(categoryName,courses, this);
+                if (modelList.get(position).isSeeAll()){
+                    ((CourseViewHolder) holder).tvSeeAll.setVisibility(View.VISIBLE);
+                }else{
+                    ((CourseViewHolder) holder).tvSeeAll.setVisibility(View.GONE);
+                }
                 ((CourseViewHolder) holder).tvSeeAll.setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View v) {
@@ -103,27 +116,53 @@ public class DashboardRvAdapter extends RecyclerView.Adapter implements CoursesH
                 ((AddViewHolder) holder).bindAddView(adText);
                 break;
             case TOPICVIEWTYPE:
-                final LiveData<List<SuggestedTopicsModel>> topicsModels = modelList.get(position).getTopicsModels();
+                final List<TopicsModel> topicsModels = modelList.get(position).getTopicsModels();
                 ((TopicViewHolder) holder).bindCoursesView(modelList.get(position).getCategoryName(),topicsModels, this);
+                if (modelList.get(position).isSeeAll()){
+                    ((TopicViewHolder) holder).tvSeeAll.setVisibility(View.VISIBLE);
+                }else{
+                    ((TopicViewHolder) holder).tvSeeAll.setVisibility(View.GONE);
+                }
                 ((TopicViewHolder) holder).tvSeeAll.setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View v) {
-                        if (topicsModels.getValue()!=null)
-                            listener.onTopicSeeAll(topicsModels.getValue().get(0).getCourse_id(), topicsModels.getValue().get(0).getName());
+                        if (topicsModels!=null)
+                            listener.onTopicSeeAll(topicsModels.get(0).getCourse_id(), topicsModels.get(0).getName());
                     }
                 });
                 break;
             case PROJECTVIEWTYPE:
-                final LiveData<List<SuggestedProjectModel>> projectModel = modelList.get(position).getProjectModels();
+                final List<ProjectsModel> projectModel = modelList.get(position).getProjectModels();
                 ((ProjectViewHolder) holder).bindProjectsView(modelList.get(position).getCategoryName(),projectModel, this);
+                if (modelList.get(position).isSeeAll()){
+                    ((ProjectViewHolder) holder).tvSeeAll.setVisibility(View.VISIBLE);
+                }else{
+                    ((ProjectViewHolder) holder).tvSeeAll.setVisibility(View.GONE);
+                }
                 ((ProjectViewHolder) holder).tvSeeAll.setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View v) {
-                        if (projectModel.getValue()!=null)
-                            listener.onProjectSeeAll(projectModel.getValue().get(0).getCourse_id(), projectModel.getValue().get(0).getName());
+                        if (projectModel!=null)
+                            listener.onProjectSeeAll(projectModel.get(0).getCourse_id(), projectModel.get(0).getName());
                     }
                 });
                 break;
+            case RESOURCEVIEWTYPE:
+                final List<ResourceModel> resourceModels = modelList.get(position).getResourceModels();
+                ((ResourceHomeViewHolder) holder).bindResourceView(modelList.get(position).getCategoryName(),resourceModels,this);
+                if (modelList.get(position).isSeeAll()){
+                    ((ResourceHomeViewHolder) holder).tvSeeAll.setVisibility(View.VISIBLE);
+                }else{
+                    ((ResourceHomeViewHolder) holder).tvSeeAll.setVisibility(View.GONE);
+                }
+                ((ResourceHomeViewHolder) holder).tvSeeAll.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+                        if (resourceModels!=null){
+                            listener.onResourceSeeAllClicked(resourceModels.get(0).getCourse_topic_id());
+                        }
+                    }
+                });
             default:
                 return;
         }
@@ -150,22 +189,14 @@ public class DashboardRvAdapter extends RecyclerView.Adapter implements CoursesH
             tvSeeAll  =itemView.findViewById(R.id.tv_see_all);
         }
 
-        public void bindCoursesView(String categoryName, LiveData<List<CourseModel>> courses, CoursesHorizontalRvAdapter.DashboardRvInteractor interactor){
+        public void bindCoursesView(String categoryName, List<CourseModel> courses, CoursesHorizontalRvAdapter.DashboardRvInteractor interactor){
             tvCourses.setText(categoryName);
             final CoursesHorizontalRvAdapter adapter = new CoursesHorizontalRvAdapter(context,interactor);
             LinearLayoutManager layoutManager = new LinearLayoutManager(context,RecyclerView.HORIZONTAL,false);
             rvCourses.setLayoutManager(layoutManager);
             rvCourses.setAdapter(adapter);
-
-            courses.observeForever(new Observer<List<CourseModel>>() {
-                @Override
-                public void onChanged(List<CourseModel> courseModels) {
-                    if (courseModels!=null){
-                        adapter.setCourses(courseModels);
-                        adapter.notifyDataSetChanged();
-                    }
-                }
-            });
+            adapter.setCourses(courses);
+            adapter.notifyDataSetChanged();
 
         }
     }
@@ -182,23 +213,14 @@ public class DashboardRvAdapter extends RecyclerView.Adapter implements CoursesH
             tvSeeAll  =itemView.findViewById(R.id.tv_see_all);
         }
 
-        public void bindCoursesView(String categoryName, LiveData< List<SuggestedTopicsModel>> topicsModels, TopicsHorizontalRvAdapter.TopicsHorizontalRvListener interactor){
+        public void bindCoursesView(String categoryName,  List<TopicsModel> topicsModels, TopicsHorizontalRvAdapter.TopicsHorizontalRvListener interactor){
             tvCourses.setText(categoryName);
             final TopicsHorizontalRvAdapter adapter = new TopicsHorizontalRvAdapter(context,interactor);
             LinearLayoutManager layoutManager = new LinearLayoutManager(context,RecyclerView.HORIZONTAL,false);
             rvCourses.setLayoutManager(layoutManager);
             rvCourses.setAdapter(adapter);
-
-            topicsModels.observeForever(new Observer<List<SuggestedTopicsModel>>() {
-                @Override
-                public void onChanged(List<SuggestedTopicsModel> topicsModels) {
-                    if (topicsModels!=null){
-                        adapter.setData(topicsModels);
-                        adapter.notifyDataSetChanged();
-                    }
-                }
-            });
-
+            adapter.setData(topicsModels);
+            adapter.notifyDataSetChanged();
         }
     }
 
@@ -214,22 +236,41 @@ public class DashboardRvAdapter extends RecyclerView.Adapter implements CoursesH
             tvSeeAll  =itemView.findViewById(R.id.tv_see_all);
         }
 
-        public void bindProjectsView(String categoryName, final LiveData<List<SuggestedProjectModel>> projectModels, ProjectsHorizontalRvAdapter.ProjectsHorizontalRvListener interactor){
+        public void bindProjectsView(String categoryName, final List<ProjectsModel> projectModels, ProjectsHorizontalRvAdapter.ProjectsHorizontalRvListener interactor){
             tvCourses.setText(categoryName);
             final ProjectsHorizontalRvAdapter adapter = new ProjectsHorizontalRvAdapter(context,interactor);
             LinearLayoutManager layoutManager = new LinearLayoutManager(context,RecyclerView.HORIZONTAL,false);
             rvCourses.setLayoutManager(layoutManager);
             rvCourses.setAdapter(adapter);
+            adapter.setData(projectModels);
+            adapter.notifyDataSetChanged();
 
-            projectModels.observeForever(new Observer<List<SuggestedProjectModel>>() {
-                @Override
-                public void onChanged(List<SuggestedProjectModel> p) {
-                    if (p!=null){
-                        adapter.setData(p);
-                        adapter.notifyDataSetChanged();
-                    }
-                }
-            });
+        }
+    }
+
+    private class ResourceHomeViewHolder extends RecyclerView.ViewHolder {
+        TextView tvCourses, tvSeeAll;
+        RecyclerView rvCourses;
+
+        public ResourceHomeViewHolder(View resourceView) {
+            super(resourceView);
+
+            tvCourses = itemView.findViewById(R.id.tv_courses_header_viewtype);
+            rvCourses = itemView.findViewById(R.id.rv_courses_dashboard);
+            tvSeeAll = itemView.findViewById(R.id.tv_see_all);
+
+        }
+
+        public void bindResourceView(String categoryName, final List<ResourceModel> resourceModels, ResourceRvHorizontalAdapter.ResourceHomePageListener interactor) {
+            tvCourses.setText(categoryName);
+            final ResourceRvHorizontalAdapter adapter = new ResourceRvHorizontalAdapter(context, interactor);
+            LinearLayoutManager layoutManager = new LinearLayoutManager(context, RecyclerView.HORIZONTAL, false);
+            rvCourses.setLayoutManager(layoutManager);
+            rvCourses.setAdapter(adapter);
+
+            adapter.setResourceModels(resourceModels);
+            adapter.notifyDataSetChanged();
+
 
         }
     }
@@ -254,22 +295,29 @@ public class DashboardRvAdapter extends RecyclerView.Adapter implements CoursesH
     }
 
     @Override
-    public void onItemClicked(SuggestedTopicsModel topicsModel) {
+    public void onItemClicked(TopicsModel topicsModel) {
         listener.onTopicClicked(topicsModel);
     }
 
     @Override
-    public void onItemClicked(SuggestedProjectModel projectsModel) {
+    public void onItemClicked(ProjectsModel projectsModel) {
         listener.onProjectClicked(projectsModel);
+    }
+
+    @Override
+    public void onResourceHomeClicked(ResourceModel resourceModel) {
+        listener.onResourceClicked(resourceModel);
     }
 
     public interface DashBoardInteractor{
         void onCourseClicked(CourseModel courseModel);
-        void onTopicClicked(SuggestedTopicsModel topicsModel);
-        void onProjectClicked(SuggestedProjectModel projectsModel);
+        void onTopicClicked(TopicsModel topicsModel);
+        void onProjectClicked(ProjectsModel projectsModel);
         void onTopicSeeAll(int courseId, String name);
         void onProjectSeeAll(int courseId, String name);
         void onCourseSeeAll();
+        void onResourceClicked(ResourceModel resourceModel);
+        void onResourceSeeAllClicked(int course_topic_id);
     }
 
 

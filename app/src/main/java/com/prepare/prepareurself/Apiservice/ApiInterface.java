@@ -9,6 +9,7 @@ import com.prepare.prepareurself.banner.BannerImageResponseModel;
 import com.prepare.prepareurself.dashboard.data.model.GetCourseResponseModel;
 import com.prepare.prepareurself.dashboard.data.model.GetSuggestedProjectsModel;
 import com.prepare.prepareurself.dashboard.data.model.GetSuggestedTopicsModel;
+import com.prepare.prepareurself.dashboard.data.model.HomepageResponseModel;
 import com.prepare.prepareurself.feedback.data.model.FeedbacksubmitModel;
 import com.prepare.prepareurself.profile.data.model.UpdatePasswordResponseModel;
 import com.prepare.prepareurself.profile.data.model.UpdatePreferenceResponseModel;
@@ -135,5 +136,8 @@ public interface ApiInterface {
     @POST("search")
     Call<SearchResponseModel> search(@Query("token") String token,
                                      @Query("query") String query);
+
+    @POST("get-home-page")
+    Call<HomepageResponseModel> fetchHomePage(@Query("token") String token);
 
 }
