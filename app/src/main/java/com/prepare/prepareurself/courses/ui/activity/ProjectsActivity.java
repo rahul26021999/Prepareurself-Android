@@ -9,6 +9,7 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import android.content.Intent;
 import android.graphics.drawable.Drawable;
+import android.net.Uri;
 import android.os.Bundle;
 import android.text.Html;
 import android.text.TextUtils;
@@ -43,6 +44,8 @@ import com.prepare.prepareurself.youtubeplayer.youtubeplaylistapi.models.VideoIt
 import com.prepare.prepareurself.youtubeplayer.youtubeplaylistapi.models.YoutubePlaylistResponseModel;
 import com.prepare.prepareurself.youtubeplayer.youtubeplaylistapi.ui.VideoActivity;
 
+import java.io.IOException;
+import java.io.UnsupportedEncodingException;
 import java.util.List;
 
 import me.saket.bettermovementmethod.BetterLinkMovementMethod;
@@ -68,6 +71,7 @@ public class ProjectsActivity extends BaseActivity implements PlaylistVideosRvAd
     private ProgressBar progressBar;
     private String courseName;
     private RelativeLayout singleCardRel;
+    private ImageView shareImageView;
 
     private TextView level;
     private AdView mAdView;
@@ -95,6 +99,7 @@ public class ProjectsActivity extends BaseActivity implements PlaylistVideosRvAd
         mAdView=findViewById(R.id.adView);
         title=findViewById(R.id.title);
         singleCardRel = findViewById(R.id.singleContainerCard);
+        shareImageView = findViewById(R.id.image_project_share);
 
         recyclerView.setVisibility(View.GONE);
         cardImageView.setVisibility(View.GONE);
@@ -274,7 +279,7 @@ public class ProjectsActivity extends BaseActivity implements PlaylistVideosRvAd
                 });
     }
 
-    private void updateUIWithProject(ProjectsModel projectsModel) {
+    private void updateUIWithProject(final ProjectsModel projectsModel) {
 
         if (projectsModel.getImage_url()!=null && projectsModel.getImage_url().endsWith(".svg")){
             Utility.loadSVGImage(ProjectsActivity.this, Constants.PROJECTSIMAGEBASEURL + projectsModel.getImage_url(), imageProject);
@@ -333,6 +338,24 @@ public class ProjectsActivity extends BaseActivity implements PlaylistVideosRvAd
 
             loadSingleLink(projectsModel);
         }
+
+        shareImageView.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                try {
+                    Uri uri = Utility.getUriOfBitmap(Utility.getBitmapFromView(imageProject),ProjectsActivity.this);
+                    String encodedId = Utility.base64EncodeForInt(projectsModel.getId());
+                    String text = "Prepareurself is preparing me for my internships." +
+                            "I found some best and amazing project work.\n" +
+                            "Checkout them at :\n"+
+                            "prepareurself.in/project/"+encodedId;
+                    Utility.shareContent(ProjectsActivity.this,uri,text);
+                } catch (IOException e) {
+                    e.printStackTrace();
+                }
+            }
+        });
+
 
     }
 
