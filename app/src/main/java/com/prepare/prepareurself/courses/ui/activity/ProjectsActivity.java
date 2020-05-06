@@ -7,6 +7,8 @@ import androidx.lifecycle.ViewModelProviders;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import android.animation.ArgbEvaluator;
+import android.animation.ValueAnimator;
 import android.content.Intent;
 import android.graphics.drawable.Drawable;
 import android.net.Uri;
@@ -34,6 +36,7 @@ import com.prepare.prepareurself.courses.data.model.ProjectsModel;
 import com.prepare.prepareurself.courses.ui.adapters.PlaylistVideosRvAdapter;
 import com.prepare.prepareurself.courses.viewmodels.ProjectsViewModel;
 import com.prepare.prepareurself.dashboard.data.model.CourseModel;
+import com.prepare.prepareurself.resources.data.model.ResourceLikesResponse;
 import com.prepare.prepareurself.resources.data.model.ResourceViewsResponse;
 import com.prepare.prepareurself.utils.BaseActivity;
 import com.prepare.prepareurself.utils.Constants;
@@ -72,6 +75,7 @@ public class ProjectsActivity extends BaseActivity implements PlaylistVideosRvAd
     private String courseName;
     private RelativeLayout singleCardRel;
     private ImageView shareImageView;
+    private ImageView likeButton;
 
     private TextView level;
     private AdView mAdView;
@@ -100,6 +104,7 @@ public class ProjectsActivity extends BaseActivity implements PlaylistVideosRvAd
         title=findViewById(R.id.title);
         singleCardRel = findViewById(R.id.singleContainerCard);
         shareImageView = findViewById(R.id.image_project_share);
+        likeButton = findViewById(R.id.spark_button);
 
         recyclerView.setVisibility(View.GONE);
         cardImageView.setVisibility(View.GONE);
@@ -291,6 +296,12 @@ public class ProjectsActivity extends BaseActivity implements PlaylistVideosRvAd
                     .into(imageProject);
         }
 
+        if (projectsModel.getLike() == 1){
+            likeButton.setImageDrawable(this.getResources().getDrawable(R.drawable.ic_thumb_up_blue_24dp));
+        }else{
+            likeButton.setImageDrawable(this.getResources().getDrawable(R.drawable.ic_thumb_up_grey_24dp));
+        }
+
         if(projectsModel.getLevel().equals("hard"))
             level.setTextColor(getResources().getColorStateList(R.color.lightred));
         else if(projectsModel.getLevel().equals("easy"))
@@ -356,7 +367,56 @@ public class ProjectsActivity extends BaseActivity implements PlaylistVideosRvAd
             }
         });
 
+        likeButton.setOnClickListener(new View.OnClickListener() {
 
+            ValueAnimator buttonColorAnim = null;
+
+            @Override
+            public void onClick(View v) {
+
+                if (buttonColorAnim == null && projectsModel.getLike() ==1){
+                    likeButton.setImageDrawable(ProjectsActivity.this.getResources().getDrawable(R.drawable.ic_thumb_up_grey_24dp));
+                    onProjectLiked(projectsModel,1);
+                    projectsModel.setTotal_likes(projectsModel.getTotal_likes()-1);
+                    projectsModel.setLike(0);
+                }else{
+                    if(buttonColorAnim != null){
+                        buttonColorAnim.reverse();
+                        buttonColorAnim = null;
+                        onProjectLiked(projectsModel,1);
+                    }
+                    else {
+                        final ImageView button = (ImageView) v;
+                        buttonColorAnim = ValueAnimator.ofObject(new ArgbEvaluator(), ProjectsActivity.this.getResources().getColor(R.color.like_grey), ProjectsActivity.this.getResources().getColor(R.color.like_blue));
+                        buttonColorAnim.addUpdateListener(new ValueAnimator.AnimatorUpdateListener() {
+                            @Override
+                            public void onAnimationUpdate(ValueAnimator animator) {
+                                button.setColorFilter((Integer) animator.getAnimatedValue());
+                            }
+                        });
+                        buttonColorAnim.start();
+                        onProjectLiked(projectsModel,0);
+                    }
+                }
+
+            }
+        });
+
+
+    }
+
+    private void onProjectLiked(ProjectsModel projectsModel, int i) {
+        viewModel.likeProject(prefManager.getString(Constants.JWTTOKEN),projectsModel.getId(), i)
+                .observe(this, new Observer<ResourceLikesResponse>() {
+                    @Override
+                    public void onChanged(ResourceLikesResponse resourceLikesResponse) {
+                        if (resourceLikesResponse!=null){
+                            if (!resourceLikesResponse.getSuccess()){
+                                Utility.showToast(ProjectsActivity.this,"Unable to like at the moment");
+                            }
+                        }
+                    }
+                });
     }
 
     private void loadSingleLink(ProjectsModel projectsModel) {
