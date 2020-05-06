@@ -102,7 +102,7 @@ public class ResourcesActivity extends BaseActivity implements View.OnClickListe
                 String type = data.split("type=")[1].split("&topic_id=")[0];
 
 
-                title.setText(CourseName);
+               // title.setText(CourseName);
                 topicID = Integer.parseInt(topic_id);
 
                 if (type.equals("video")){
@@ -150,8 +150,6 @@ public class ResourcesActivity extends BaseActivity implements View.OnClickListe
                 viewPager.setCurrentItem(1);
             }
         }
-
-
 
 
     }
