@@ -516,7 +516,8 @@ public class VideoActivity extends YouTubeBaseActivity implements YouTubePlayer.
             youTubePlayerView.setLayoutParams(new RelativeLayout.LayoutParams(WindowManager.LayoutParams.MATCH_PARENT, RelativeLayout.LayoutParams.MATCH_PARENT));
         }
         else{
-            youTubePlayerView.setLayoutParams(new WindowManager.LayoutParams(WindowManager.LayoutParams.MATCH_PARENT,270));
+            final float scale = this.getResources().getDisplayMetrics().density;
+            youTubePlayerView.setLayoutParams(new RelativeLayout.LayoutParams(WindowManager.LayoutParams.MATCH_PARENT,(int) (270 * scale + 0.5f )));
         }
     }
 }
