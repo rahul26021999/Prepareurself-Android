@@ -14,6 +14,7 @@ import com.prepare.prepareurself.R;
 import com.prepare.prepareurself.courses.data.model.ProjectsModel;
 import com.prepare.prepareurself.courses.data.model.TopicsModel;
 import com.prepare.prepareurself.resources.data.model.ResourceModel;
+import com.prepare.prepareurself.utils.DividerItemDecoration;
 
 import java.util.List;
 
@@ -32,6 +33,13 @@ public class SearchAdapter extends RecyclerView.Adapter implements DetailedSearc
 
     public void setData(List<SearchRecyclerviewModel> searchRecyclerviewModels){
         this.searchRecyclerviewModels = searchRecyclerviewModels;
+    }
+
+    public void clearData(){
+        if (this.searchRecyclerviewModels!=null){
+            this.searchRecyclerviewModels.clear();
+            notifyDataSetChanged();
+        }
     }
 
     @Override
@@ -122,6 +130,8 @@ public class SearchAdapter extends RecyclerView.Adapter implements DetailedSearc
             DetailedSearchAdapter adapter = new DetailedSearchAdapter(context,listener);
             adapter.setTopicsModels(topicsModels);
             recyclerView.setLayoutManager(new LinearLayoutManager(context));
+            DividerItemDecoration decoration = new DividerItemDecoration(context,R.drawable.theory_resource_divider);
+            recyclerView.addItemDecoration(decoration);
             recyclerView.setAdapter(adapter);
         }
     }
@@ -142,6 +152,8 @@ public class SearchAdapter extends RecyclerView.Adapter implements DetailedSearc
             DetailedSearchAdapter adapter = new DetailedSearchAdapter(context,listener);
             adapter.setProjectsModels(projectsModels);
             recyclerView.setLayoutManager(new LinearLayoutManager(context));
+            DividerItemDecoration decoration = new DividerItemDecoration(context,R.drawable.theory_resource_divider);
+            recyclerView.addItemDecoration(decoration);
             recyclerView.setAdapter(adapter);
         }
     }
@@ -162,6 +174,8 @@ public class SearchAdapter extends RecyclerView.Adapter implements DetailedSearc
             DetailedSearchAdapter adapter = new DetailedSearchAdapter(context,listener);
             adapter.setResourceModels(resourceModels);
             recyclerView.setLayoutManager(new LinearLayoutManager(context));
+            DividerItemDecoration decoration = new DividerItemDecoration(context,R.drawable.theory_resource_divider);
+            recyclerView.addItemDecoration(decoration);
             recyclerView.setAdapter(adapter);
 
         }
