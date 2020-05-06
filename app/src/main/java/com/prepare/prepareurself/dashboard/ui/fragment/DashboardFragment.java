@@ -26,6 +26,9 @@ import android.view.inputmethod.EditorInfo;
 import android.view.inputmethod.InputMethodManager;
 import android.widget.EditText;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
+import android.widget.ProgressBar;
+import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import com.google.android.gms.ads.AdListener;
@@ -94,6 +97,10 @@ public class DashboardFragment extends Fragment implements DashboardRvAdapter.Da
     private ImageView closeSearch;
 
     private SearchAdapter adapter;
+    private LinearLayout linMainDasboard;
+    private RelativeLayout relSearchParent;
+    private ProgressBar searchProgressBar;
+    private TextView notFoundSearch;
 
 
     @Override
@@ -137,6 +144,10 @@ public class DashboardFragment extends Fragment implements DashboardRvAdapter.Da
 
         viewContactsBar =  view.findViewById(R.id.viewContactsToolbar);
         searchBar =  view.findViewById(R.id.searchToolbar);
+        linMainDasboard = view.findViewById(R.id.lin_main_dashboard);
+        relSearchParent = view.findViewById(R.id.rel_search_parent);
+        notFoundSearch = view.findViewById(R.id.not_found_tv);
+        searchProgressBar = view.findViewById(R.id.progress_bar_search);
 
         setAppBaeState(STANDARD_APPBAR);
 
@@ -191,6 +202,8 @@ public class DashboardFragment extends Fragment implements DashboardRvAdapter.Da
             searchBar.setVisibility(View.GONE);
             viewContactsBar.setVisibility(View.VISIBLE);
             searchRv.setVisibility(View.GONE);
+            relSearchParent.setVisibility(View.GONE);
+            linMainDasboard.setVisibility(View.VISIBLE);
 
             View view = getView();
             InputMethodManager im = (InputMethodManager) getActivity().getSystemService(Context.INPUT_METHOD_SERVICE);
@@ -203,6 +216,8 @@ public class DashboardFragment extends Fragment implements DashboardRvAdapter.Da
             viewContactsBar.setVisibility(View.GONE);
             searchBar.setVisibility(View.VISIBLE);
             searchRv.setVisibility(View.VISIBLE);
+            relSearchParent.setVisibility(View.VISIBLE);
+            linMainDasboard.setVisibility(View.GONE);
             InputMethodManager im = (InputMethodManager) getActivity().getSystemService(Context.INPUT_METHOD_SERVICE);
             im.toggleSoftInput(InputMethodManager.SHOW_FORCED, 0); // make keyboard popup
 
@@ -274,6 +289,7 @@ public class DashboardFragment extends Fragment implements DashboardRvAdapter.Da
         adapter = new SearchAdapter(getActivity(), this);
         searchRv.setLayoutManager(new LinearLayoutManager(getActivity()));
         searchRv.setAdapter(adapter);
+        //searchRv.setNestedScrollingEnabled(true);
 
         searchEdit.addTextChangedListener(new TextWatcher() {
             @Override
@@ -289,6 +305,12 @@ public class DashboardFragment extends Fragment implements DashboardRvAdapter.Da
                 else{
                     closeSearch.setVisibility(View.GONE);
                 }
+
+                if (s.toString().isEmpty()){
+                    searchProgressBar.setVisibility(View.GONE);
+                    notFoundSearch.setVisibility(View.GONE);
+                }
+
             }
 
             @Override
@@ -395,6 +417,8 @@ public class DashboardFragment extends Fragment implements DashboardRvAdapter.Da
 
         String query = searchEdit.getText().toString();
         if (!TextUtils.isEmpty(query)){
+            searchProgressBar.setVisibility(View.VISIBLE);
+            notFoundSearch.setVisibility(View.GONE);
             mViewModel.search(prefManager.getString(Constants.JWTTOKEN), query)
                     .observe(getActivity(), new Observer<SearchResponseModel>() {
                         @Override
@@ -419,9 +443,23 @@ public class DashboardFragment extends Fragment implements DashboardRvAdapter.Da
                                         }
                                     }
 
-                                    adapter.setData(searchRecyclerviewModels);
-                                    adapter.notifyDataSetChanged();
+                                    searchProgressBar.setVisibility(View.GONE);
+                                    if (!searchRecyclerviewModels.isEmpty()){
+                                        adapter.setData(searchRecyclerviewModels);
+                                        adapter.notifyDataSetChanged();
+                                    }else{
+                                        notFoundSearch.setVisibility(View.VISIBLE);
+                                    }
+
+                                }else{
+                                    searchProgressBar.setVisibility(View.GONE);
+                                    notFoundSearch.setVisibility(View.VISIBLE);
+                                    adapter.clearData();
                                 }
+                            }else{
+                                searchProgressBar.setVisibility(View.GONE);
+                                notFoundSearch.setVisibility(View.VISIBLE);
+                                adapter.clearData();
                             }
                         }
                     });
