@@ -145,6 +145,19 @@
                 android:background="#181818"
                 android:layout_below="@+id/tvPlaylst"/>
 
+            <com.google.android.gms.ads.AdView
+                android:id="@+id/adViewProject"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="20dp"
+                android:visibility="gone"
+                android:layout_marginBottom="10dp"
+                android:layout_below="@+id/expandable_layout"
+                android:background="@color/white"
+                android:layout_centerHorizontal="true"
+                ads:adSize="BANNER"
+                ads:adUnitId="@string/bannerAds" />
+
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
