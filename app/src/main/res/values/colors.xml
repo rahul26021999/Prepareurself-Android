@@ -38,5 +38,7 @@
     <color name="blue">#293859</color>
     <color name="green">#20CA0D</color>
 
+    <color name="shimmer_background">#dddddd</color>
+
 
 </resources>
