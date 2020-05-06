@@ -10,13 +10,17 @@ import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import android.content.Intent;
+import android.content.res.Configuration;
 import android.net.Uri;
 import android.os.Bundle;
 import android.text.TextUtils;
 import android.text.util.Linkify;
 import android.util.Log;
 import android.view.View;
+import android.view.WindowManager;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
+import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import com.google.android.gms.ads.AdListener;
@@ -47,7 +51,7 @@ import me.saket.bettermovementmethod.BetterLinkMovementMethod;
 public class VideoActivity extends YouTubeBaseActivity implements YouTubePlayer.OnInitializedListener,
         PlaylistItemAdapter.PlaylistItemListener,
         ViewModelStoreOwner,
-        RelatedVideosRvAdapter.RelatedRvListener {
+        RelatedVideosRvAdapter.RelatedRvListener, YouTubePlayer.OnFullscreenListener {
 
     private static final int RECOVERY_DIALOG_REQUEST = 1;
     YouTubePlayerView youTubePlayerView;
@@ -310,6 +314,8 @@ public class VideoActivity extends YouTubeBaseActivity implements YouTubePlayer.
 
     }
 
+
+
     private void setGoogleAdd() {
         AdRequest adRequest = new AdRequest.Builder().build();
         mAdView.loadAd(adRequest);
@@ -371,16 +377,17 @@ public class VideoActivity extends YouTubeBaseActivity implements YouTubePlayer.
     @Override
     public void onInitializationSuccess(YouTubePlayer.Provider provider, YouTubePlayer youTubePlayer, boolean b) {
         if (!b){
+
+            int mYouTubeFullscreenFlags = YouTubePlayer.FULLSCREEN_FLAG_CUSTOM_LAYOUT |
+                    YouTubePlayer.FULLSCREEN_FLAG_CONTROL_SYSTEM_UI |
+                    YouTubePlayer.FULLSCREEN_FLAG_CONTROL_ORIENTATION;
+
             if (!TextUtils.isEmpty(videoCode)){
                 mYoutubePlayer = youTubePlayer;
                 mYoutubePlayer.loadVideo(videoCode);
                 mYoutubePlayer.setPlayerStyle(YouTubePlayer.PlayerStyle.DEFAULT);
-                mYoutubePlayer.setOnFullscreenListener(new YouTubePlayer.OnFullscreenListener() {
-                    @Override
-                    public void onFullscreen(boolean b) {
-                        isFullscreen=b;
-                    }
-                });
+                mYoutubePlayer.setFullscreenControlFlags(mYouTubeFullscreenFlags);
+                mYoutubePlayer.setOnFullscreenListener(this);
 
             }else if (!TextUtils.isEmpty(playlistId)){
                 mYoutubePlayer = youTubePlayer;
@@ -389,7 +396,9 @@ public class VideoActivity extends YouTubeBaseActivity implements YouTubePlayer.
                 }else {
                     mYoutubePlayer.loadPlaylist(playlistId);
                 }
+                mYoutubePlayer.setOnFullscreenListener(this);
                 mYoutubePlayer.setPlayerStyle(YouTubePlayer.PlayerStyle.DEFAULT);
+                mYoutubePlayer.setFullscreenControlFlags(mYouTubeFullscreenFlags);
                 mYoutubePlayer.setPlaylistEventListener(new YouTubePlayer.PlaylistEventListener() {
                     @Override
                     public void onPrevious() {
@@ -404,12 +413,6 @@ public class VideoActivity extends YouTubeBaseActivity implements YouTubePlayer.
                     @Override
                     public void onPlaylistEnded() {
 
-                    }
-                });
-                mYoutubePlayer.setOnFullscreenListener(new YouTubePlayer.OnFullscreenListener() {
-                    @Override
-                    public void onFullscreen(boolean b) {
-                        isFullscreen=b;
                     }
                 });
             }else if (resourceId!=-1 && topicId!=-1){
@@ -479,6 +482,41 @@ public class VideoActivity extends YouTubeBaseActivity implements YouTubePlayer.
             mYoutubePlayer.setFullscreen(false);
         } else {
             super.onBackPressed();
+        }
+    }
+
+    @Override
+    protected void onResume() {
+        super.onResume();
+        Log.i("SEE","Resume");
+    }
+
+    @Override
+    protected void onStart() {
+        super.onStart();
+        Log.i("SEE","Satrt");
+    }
+
+    @Override
+    protected void onRestart() {
+        super.onRestart();
+        Log.i("SEE","restart");
+    }
+
+    @Override
+    protected void onStop() {
+        super.onStop();
+        Log.i("SEE","Stop");
+    }
+
+    @Override
+    public void onFullscreen(boolean b) {
+        isFullscreen=b;
+        if(b){
+            youTubePlayerView.setLayoutParams(new RelativeLayout.LayoutParams(WindowManager.LayoutParams.MATCH_PARENT, RelativeLayout.LayoutParams.MATCH_PARENT));
+        }
+        else{
+            youTubePlayerView.setLayoutParams(new WindowManager.LayoutParams(WindowManager.LayoutParams.MATCH_PARENT,270));
         }
     }
 }
