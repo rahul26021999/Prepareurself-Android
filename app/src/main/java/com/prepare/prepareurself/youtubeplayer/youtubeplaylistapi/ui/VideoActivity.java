@@ -78,7 +78,7 @@ public class VideoActivity extends YouTubeBaseActivity implements YouTubePlayer.
     private RecyclerView rvOtherVideos;
     private TextView tvRelatedVideosHeader;
     private PrefManager prefManager;
-    private AdView mAdView;
+    private AdView mAdView, projectAdView;
 
     @Nullable
     private ViewModelStore viewModelStore = null;
@@ -103,6 +103,7 @@ public class VideoActivity extends YouTubeBaseActivity implements YouTubePlayer.
         //fnd
         tvPlaylst= findViewById(R.id.tvPlaylst);
         mAdView=findViewById(R.id.adView);
+        projectAdView = findViewById(R.id.adViewProject);
 
 
         prefManager = new PrefManager(this);
@@ -169,6 +170,7 @@ public class VideoActivity extends YouTubeBaseActivity implements YouTubePlayer.
             rvOtherVideos.setVisibility(View.GONE);
             tvRelatedVideosHeader.setVisibility(View.GONE);
             tvPlaylst.setVisibility(View.VISIBLE);
+            projectAdView.setVisibility(View.VISIBLE);
 
             playlistItemAdapter = new PlaylistItemAdapter(getApplicationContext(),this);
             LinearLayoutManager layoutManager = new LinearLayoutManager(this);
@@ -319,6 +321,41 @@ public class VideoActivity extends YouTubeBaseActivity implements YouTubePlayer.
     private void setGoogleAdd() {
         AdRequest adRequest = new AdRequest.Builder().build();
         mAdView.loadAd(adRequest);
+        projectAdView.loadAd(adRequest);
+
+        projectAdView.setAdListener(new AdListener(){
+            @Override
+            public void onAdLoaded() {
+                // Code to be executed when an ad finishes loading.
+            }
+
+            @Override
+            public void onAdFailedToLoad(int errorCode) {
+                // Code to be executed when an ad request fails.
+            }
+
+            @Override
+            public void onAdOpened() {
+                // Code to be executed when an ad opens an overlay that
+                // covers the screen.
+            }
+
+            @Override
+            public void onAdClicked() {
+                // Code to be executed when the user clicks on an ad.
+            }
+
+            @Override
+            public void onAdLeftApplication() {
+                // Code to be executed when the user has left the app.
+            }
+
+            @Override
+            public void onAdClosed() {
+                // Code to be executed when the user is about to return
+                // to the app after tapping on an ad.
+            }
+        });
 
         mAdView.setAdListener(new AdListener() {
             @Override
