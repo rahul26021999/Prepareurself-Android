@@ -1,5 +1,6 @@
 package com.prepare.prepareurself.dashboard.ui.fragment;
 
+import androidx.activity.OnBackPressedCallback;
 import androidx.lifecycle.Observer;
 import androidx.lifecycle.ViewModelProvider;
 
@@ -234,6 +235,19 @@ public class DashboardFragment extends Fragment implements DashboardRvAdapter.Da
     public void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setHasOptionsMenu(true);
+
+        getActivity().getOnBackPressedDispatcher().addCallback(new OnBackPressedCallback(true) {
+            @Override
+            public void handleOnBackPressed() {
+                if (mAppBarState == SEARCH_APPBAR){
+                    toggleToolBarState();
+                }else{
+                    getActivity().finish();
+                }
+
+            }
+        });
+
     }
 
     private void setGoogleAdd() {
@@ -570,6 +584,8 @@ public class DashboardFragment extends Fragment implements DashboardRvAdapter.Da
     public void onCourseSeeAll() {
         startActivity(new Intent(getActivity(), AllCoursesActivity.class));
     }
+
+
 
     @Override
     public void onAttach(@NonNull Context context) {
