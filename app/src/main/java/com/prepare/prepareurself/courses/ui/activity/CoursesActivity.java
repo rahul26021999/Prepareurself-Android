@@ -61,6 +61,7 @@ public class CoursesActivity extends BaseActivity implements View.OnClickListene
         viewPager.setAdapter(sectionsPagerAdapter);
         tabs.setupWithViewPager(viewPager);
 
+
         Intent intent = getIntent();
 
         if (intent.getData()!=null){
@@ -74,11 +75,11 @@ public class CoursesActivity extends BaseActivity implements View.OnClickListene
             courseId = Integer.parseInt(CourseId);
             courseName = CourseName;
 
-            if (!TextUtils.isEmpty(courseName)){
-                title.setText(courseName);
-            }else{
-                title.setText("Tech Stack");
-            }
+//            if (!TextUtils.isEmpty(courseName)){
+//                title.setText(courseName);
+//            }else{
+//                title.setText("Tech Stack");
+//            }
 
             if(type.equals("Projects")){
                 viewPager.setCurrentItem(0);
@@ -90,20 +91,20 @@ public class CoursesActivity extends BaseActivity implements View.OnClickListene
         }else{
             courseId = intent.getIntExtra(Constants.COURSEID, -1);
             courseName = intent.getStringExtra(Constants.COURSENAME);
-            if (!TextUtils.isEmpty(courseName)){
-                title.setText(courseName);//Course Name Here
-            }else{
-                topicViewModel.getCourseModelById(courseId).observe(this, new Observer<CourseModel>() {
-                    @Override
-                    public void onChanged(CourseModel courseModel) {
-                        if (courseModel!=null){
-                            title.setText(courseModel.getName());
-                        }else{
-                            title.setText("Tech-Stack");
-                        }
-                    }
-                });
-            }
+//            if (!TextUtils.isEmpty(courseName)){
+//                title.setText(courseName);//Course Name Here
+//            }else{
+//                topicViewModel.getCourseModelById(courseId).observe(this, new Observer<CourseModel>() {
+//                    @Override
+//                    public void onChanged(CourseModel courseModel) {
+//                        if (courseModel!=null){
+//                            title.setText(courseModel.getName());
+//                        }else{
+//                            title.setText("Tech-Stack");
+//                        }
+//                    }
+//                });
+//            }
             if (intent.getStringExtra(Constants.SHOWPAGE)!=null){
                 String showPage = intent.getStringExtra(Constants.SHOWPAGE);
                 Log.d("se_all_debug",showPage+"");
@@ -115,9 +116,36 @@ public class CoursesActivity extends BaseActivity implements View.OnClickListene
                     }
                 }
 
+            }else{
+                viewPager.setCurrentItem(0);
             }
 
         }
+
+        viewPager.addOnPageChangeListener(new ViewPager.OnPageChangeListener() {
+            @Override
+            public void onPageScrolled(int position, float positionOffset, int positionOffsetPixels) {
+                if (position ==0){
+                    title.setText("Projects");
+                }else if (position ==1){
+                    title.setText("Resources");
+                }
+            }
+
+            @Override
+            public void onPageSelected(int position) {
+//                if (position ==0){
+//                    title.setText("Projects");
+//                }else if (position ==1){
+//                    title.setText("Resources");
+//                }
+            }
+
+            @Override
+            public void onPageScrollStateChanged(int state) {
+
+            }
+        });
 
     }
 
