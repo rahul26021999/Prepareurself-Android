@@ -1,6 +1,7 @@
 package com.prepare.prepareurself.youtubeplayer.youtubeplaylistapi.ui;
 
 import android.content.Context;
+import android.graphics.drawable.Drawable;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -11,7 +12,10 @@ import android.widget.TextView;
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.bumptech.glide.GenericTransitionOptions;
+import com.bumptech.glide.Glide;
 import com.prepare.prepareurself.R;
+import com.prepare.prepareurself.utils.Utility;
 import com.prepare.prepareurself.youtubeplayer.youtubeplaylistapi.models.VideoItemWrapper;
 
 import java.util.List;
@@ -93,10 +97,48 @@ public class PlaylistItemAdapter extends RecyclerView.Adapter<PlaylistItemAdapte
             super(itemView);
             textView = itemView.findViewById(R.id.tv_playlist_item_title);
             rootLayout = itemView.findViewById(R.id.rootLayout);
+            imageView = itemView.findViewById(R.id.image_playlist_item);
         }
 
         public void bindView(VideoItemWrapper videoItemWrapper){
             textView.setText(videoItemWrapper.getSnippet().getTitle());
+            if (videoItemWrapper.getSnippet().getThumbnails().getMaxres()!=null){
+                Glide.with(context).load(
+                        videoItemWrapper.getSnippet().getThumbnails().getMaxres().getUrl())
+                        .placeholder(R.drawable.placeholder)
+                        .override(400,400)
+                        .transition(GenericTransitionOptions.<Drawable>with(Utility.getAnimationObject()))
+                        .into(imageView);
+            }else if (videoItemWrapper.getSnippet().getThumbnails().getHigh()!=null){
+                Glide.with(context).load(
+                        videoItemWrapper.getSnippet().getThumbnails().getHigh().getUrl())
+                        .placeholder(R.drawable.placeholder)
+                        .override(400,400)
+                        .transition(GenericTransitionOptions.<Drawable>with(Utility.getAnimationObject()))
+                        .into(imageView);
+            }else if (videoItemWrapper.getSnippet().getThumbnails().getMedium()!=null){
+                Glide.with(context).load(
+                        videoItemWrapper.getSnippet().getThumbnails().getMedium().getUrl())
+                        .placeholder(R.drawable.placeholder)
+                        .override(400,400)
+                        .transition(GenericTransitionOptions.<Drawable>with(Utility.getAnimationObject()))
+                        .into(imageView);
+            }else if (videoItemWrapper.getSnippet().getThumbnails().getStandard()!=null){
+                Glide.with(context).load(
+                        videoItemWrapper.getSnippet().getThumbnails().getStandard().getUrl())
+                        .placeholder(R.drawable.placeholder)
+                        .override(400,400)
+                        .transition(GenericTransitionOptions.<Drawable>with(Utility.getAnimationObject()))
+                        .into(imageView);
+            }else if (videoItemWrapper.getSnippet().getThumbnails().getDefaultThumbnail()!=null){
+                Glide.with(context).load(
+                        videoItemWrapper.getSnippet().getThumbnails().getDefaultThumbnail().getUrl())
+                        .placeholder(R.drawable.placeholder)
+                        .override(400,400)
+                        .transition(GenericTransitionOptions.<Drawable>with(Utility.getAnimationObject()))
+                        .into(imageView);
+            }
+
         }
 
     }
