@@ -380,6 +380,10 @@ public class DashboardFragment extends Fragment implements DashboardRvAdapter.Da
                                         Log.d("home_debug","d1 : "+d4.getCategoryName());
                                         dashboardRecyclerviewModelList.add(d4);
                                         break;
+                                    case "add":
+                                        DashboardRecyclerviewModel d5 = new DashboardRecyclerviewModel(Constants.ADDVIEWTYPE,"Add");
+                                        dashboardRecyclerviewModelList.add(d5);
+                                        break;
                                 }
                             }
 
