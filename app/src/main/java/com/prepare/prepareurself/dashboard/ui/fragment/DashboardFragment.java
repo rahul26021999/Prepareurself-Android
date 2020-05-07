@@ -399,7 +399,8 @@ public class DashboardFragment extends Fragment implements DashboardRvAdapter.Da
             searchProgressBar.setVisibility(View.VISIBLE);
             notFoundSearch.setVisibility(View.GONE);
 
-
+            searchRecyclerviewModels.clear();
+            rvCurrentPageSearch = 0;
 
             searchRv.addOnScrollListener(new RecyclerView.OnScrollListener() {
                 @Override
