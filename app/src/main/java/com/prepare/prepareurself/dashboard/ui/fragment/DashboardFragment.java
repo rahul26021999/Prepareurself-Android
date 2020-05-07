@@ -25,6 +25,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.view.inputmethod.EditorInfo;
 import android.view.inputmethod.InputMethodManager;
+import android.widget.AbsListView;
 import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
@@ -45,8 +46,6 @@ import com.prepare.prepareurself.banner.BannerModel;
 import com.prepare.prepareurself.dashboard.data.model.CourseModel;
 import com.prepare.prepareurself.dashboard.data.model.HomepageData;
 import com.prepare.prepareurself.dashboard.data.model.HomepageResponseModel;
-import com.prepare.prepareurself.dashboard.data.model.SuggestedProjectModel;
-import com.prepare.prepareurself.dashboard.data.model.SuggestedTopicsModel;
 import com.prepare.prepareurself.banner.SliderAdapter;
 import com.prepare.prepareurself.dashboard.viewmodel.DashboardViewModel;
 import com.prepare.prepareurself.dashboard.data.model.DashboardRecyclerviewModel;
@@ -57,7 +56,6 @@ import com.prepare.prepareurself.resources.ui.activity.ResourcesActivity;
 import com.prepare.prepareurself.search.SearchAdapter;
 import com.prepare.prepareurself.search.SearchModel;
 import com.prepare.prepareurself.search.SearchRecyclerviewModel;
-import com.prepare.prepareurself.search.SearchResponseModel;
 import com.prepare.prepareurself.utils.Constants;
 import com.prepare.prepareurself.utils.PrefManager;
 import com.prepare.prepareurself.utils.Utility;
@@ -102,6 +100,14 @@ public class DashboardFragment extends Fragment implements DashboardRvAdapter.Da
     private RelativeLayout relSearchParent;
     private ProgressBar searchProgressBar;
     private TextView notFoundSearch;
+
+    //search
+    private Boolean isScrolling = false;
+    private int rvCurrentItemsSearch, rvTotalItemsSearch, rvScrolledOutItemsSearch, rvLastPage, rvCurrentPageSearch =0;
+    private LinearLayoutManager searchLayoutManager;
+
+    List<SearchRecyclerviewModel> searchRecyclerviewModels = new ArrayList<>();
+    List<String> headings = new ArrayList<>();
 
 
     @Override
@@ -301,7 +307,8 @@ public class DashboardFragment extends Fragment implements DashboardRvAdapter.Da
         mViewModel.getCourses(prefManager.getString(Constants.JWTTOKEN));
 
         adapter = new SearchAdapter(getActivity(), this);
-        searchRv.setLayoutManager(new LinearLayoutManager(getActivity()));
+        searchLayoutManager=  new LinearLayoutManager(getActivity());
+        searchRv.setLayoutManager(searchLayoutManager);
         searchRv.setAdapter(adapter);
         //searchRv.setNestedScrollingEnabled(true);
 
@@ -428,60 +435,111 @@ public class DashboardFragment extends Fragment implements DashboardRvAdapter.Da
 
 
 
-
     }
 
     private void performSearch(){
 
-        String query = searchEdit.getText().toString();
+        final String query = searchEdit.getText().toString();
         if (!TextUtils.isEmpty(query)){
             searchProgressBar.setVisibility(View.VISIBLE);
             notFoundSearch.setVisibility(View.GONE);
-            mViewModel.search(prefManager.getString(Constants.JWTTOKEN), query)
-                    .observe(getActivity(), new Observer<SearchResponseModel>() {
-                        @Override
-                        public void onChanged(SearchResponseModel searchResponseModel) {
-                            if (searchResponseModel!=null){
-                                List<SearchRecyclerviewModel> searchRecyclerviewModels = new ArrayList<>();
-                                if (searchResponseModel.getData()!=null && !searchResponseModel.getData().isEmpty()){
-                                    for (int i = 0; i< searchResponseModel.getData().size(); i++){
-                                        SearchModel searchModel = searchResponseModel.getData().get(i);
-                                        if (searchModel!=null){
 
-                                            if (searchModel.getTopics()!=null){
-                                                SearchRecyclerviewModel searchRecyclerviewModel = new SearchRecyclerviewModel(1,"Topics",searchModel.getTopics());
-                                                searchRecyclerviewModels.add(searchRecyclerviewModel);
-                                            }else if (searchModel.getProjects()!=null){
-                                                SearchRecyclerviewModel searchRecyclerviewModel = new SearchRecyclerviewModel(searchModel.getProjects(),"Projects", 2);
-                                                searchRecyclerviewModels.add(searchRecyclerviewModel);
-                                            }else if (searchModel.getResources()!=null){
-                                                SearchRecyclerviewModel searchRecyclerviewModel = new SearchRecyclerviewModel(3, searchModel.getResources(),"Resources");
-                                                searchRecyclerviewModels.add(searchRecyclerviewModel);
-                                            }
-                                        }
-                                    }
 
-                                    searchProgressBar.setVisibility(View.GONE);
-                                    if (!searchRecyclerviewModels.isEmpty()){
-                                        adapter.setData(searchRecyclerviewModels);
-                                        adapter.notifyDataSetChanged();
-                                    }else{
-                                        notFoundSearch.setVisibility(View.VISIBLE);
-                                    }
 
-                                }else{
-                                    searchProgressBar.setVisibility(View.GONE);
-                                    notFoundSearch.setVisibility(View.VISIBLE);
-                                    adapter.clearData();
+            searchRv.addOnScrollListener(new RecyclerView.OnScrollListener() {
+                @Override
+                public void onScrollStateChanged(@NonNull RecyclerView recyclerView, int newState) {
+                    super.onScrollStateChanged(recyclerView, newState);
+                    if (newState == AbsListView.OnScrollListener.SCROLL_STATE_TOUCH_SCROLL){
+                        isScrolling = true;
+                    }
+                }
+
+                @Override
+                public void onScrolled(@NonNull RecyclerView recyclerView, int dx, int dy) {
+                    super.onScrolled(recyclerView, dx, dy);
+
+                    rvCurrentItemsSearch = searchLayoutManager.getChildCount();
+                    rvTotalItemsSearch = searchLayoutManager.getItemCount();
+                    rvScrolledOutItemsSearch = searchLayoutManager.findFirstVisibleItemPosition();
+
+                    // rvLastPage = topicsResponseModel.getLast_page();
+
+                    Log.d("paging_debug", rvCurrentPageSearch +","+rvLastPage);
+
+                    if (isScrolling && (rvCurrentItemsSearch + rvScrolledOutItemsSearch) == rvTotalItemsSearch){
+                        isScrolling = false;
+                        loadMoreItems(false, query);
+                    }
+
+                }
+            });
+
+            loadMoreItems(true, query);
+
+
+
+
+
+            mViewModel.getSearchModelLiveData()
+                            .observe(getActivity(), new Observer<List<SearchModel>>() {
+                @Override
+                public void onChanged(List<SearchModel> searchModels) {
+                    if (searchModels!=null){
+                        searchRecyclerviewModels.clear();
+                        Log.d("paging_debug", searchModels+" : this is id");
+                        for (SearchModel searchModel : searchModels){
+                            if (searchModel.getTopics()!=null){
+
+                                if (!headings.contains("Topics")){
+                                    searchRecyclerviewModels.add(new SearchRecyclerviewModel("Topics", 1));
+                                    headings.add("Topics");
                                 }
-                            }else{
-                                searchProgressBar.setVisibility(View.GONE);
-                                notFoundSearch.setVisibility(View.VISIBLE);
-                                adapter.clearData();
+                                for (TopicsModel topicsModel : searchModel.getTopics()){
+                                    searchRecyclerviewModels.add(new SearchRecyclerviewModel(topicsModel,2));
+                                }
+
+                            }else if (searchModel.getProjects()!=null){
+
+                                if (!headings.contains("Projects")){
+                                    searchRecyclerviewModels.add(new SearchRecyclerviewModel("Projects", 1));
+                                    headings.add("Projects");
+                                }
+                                for (ProjectsModel topicsModel : searchModel.getProjects()){
+                                    searchRecyclerviewModels.add(new SearchRecyclerviewModel(topicsModel,3));
+                                }
+                            }else if (searchModel.getResource()!=null){
+                                if (!headings.contains("Resources")){
+                                    searchRecyclerviewModels.add(new SearchRecyclerviewModel("Resources", 1));
+                                    headings.add("Resources");
+                                }
+                                for (ResourceModel topicsModel : searchModel.getResource()){
+                                    searchRecyclerviewModels.add(new SearchRecyclerviewModel(topicsModel,4));
+                                }
                             }
                         }
-                    });
+
+                        searchProgressBar.setVisibility(View.GONE);
+                        if (!searchRecyclerviewModels.isEmpty()){
+                            Log.d("paging_debug", searchRecyclerviewModels.get(0).getHeading()+"");
+                            adapter.setData(searchRecyclerviewModels);
+                            adapter.notifyDataSetChanged();
+                        }
+
+                    }else{
+                        searchProgressBar.setVisibility(View.GONE);
+                        notFoundSearch.setVisibility(View.VISIBLE);
+                        adapter.clearData();
+                    }
+                }
+            });
+
         }
+    }
+
+    private void loadMoreItems(final boolean isFirstPage, String query) {
+        rvCurrentPageSearch+=1;
+        mViewModel.search(prefManager.getString(Constants.JWTTOKEN), query, rvCurrentPageSearch);
     }
 
     private void setUpSlider() {

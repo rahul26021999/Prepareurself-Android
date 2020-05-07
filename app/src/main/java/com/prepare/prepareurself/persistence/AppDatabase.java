@@ -20,6 +20,9 @@ import com.prepare.prepareurself.dashboard.data.model.CourseModel;
 import com.prepare.prepareurself.dashboard.data.model.SuggestedProjectModel;
 import com.prepare.prepareurself.dashboard.data.model.SuggestedTopicsModel;
 import com.prepare.prepareurself.persistence.persitenceUtils.CourseModelTypeCorveter;
+import com.prepare.prepareurself.persistence.persitenceUtils.ListProjectTypeConverter;
+import com.prepare.prepareurself.persistence.persitenceUtils.ListResourceTypeConverter;
+import com.prepare.prepareurself.persistence.persitenceUtils.ListTopicsTypeConverter;
 import com.prepare.prepareurself.profile.data.db.dao.MyPreferenceDao;
 import com.prepare.prepareurself.profile.data.db.dao.UserPrefernceDao;
 import com.prepare.prepareurself.profile.data.model.MyPreferenceTechStack;
@@ -31,6 +34,8 @@ import com.prepare.prepareurself.authentication.data.model.UserModel;
 import com.prepare.prepareurself.persistence.persitenceUtils.ThumbnaiTypeConverter;
 import com.prepare.prepareurself.persistence.persitenceUtils.VideoContentDetailsConverter;
 import com.prepare.prepareurself.persistence.persitenceUtils.VideoSnippetConverter;
+import com.prepare.prepareurself.search.SearchModel;
+import com.prepare.prepareurself.search.db.SearchDao;
 import com.prepare.prepareurself.youtubeplayer.youtubeplaylistapi.db.PlaylistContentDeatilsDao;
 import com.prepare.prepareurself.youtubeplayer.youtubeplaylistapi.db.SingleVideoItemDao;
 import com.prepare.prepareurself.youtubeplayer.youtubeplaylistapi.models.SingleVIdeoItemWrapper;
@@ -48,12 +53,16 @@ import com.prepare.prepareurself.youtubeplayer.youtubeplaylistapi.models.VideoIt
         MyPreferenceTechStack.class,
         BannerModel.class,
         SuggestedTopicsModel.class,
-        SuggestedProjectModel.class
+        SuggestedProjectModel.class,
+        SearchModel.class
 }, version = 1)
 @TypeConverters({VideoContentDetailsConverter.class,
         VideoSnippetConverter.class,
         ThumbnaiTypeConverter.class,
-        CourseModelTypeCorveter.class})
+        CourseModelTypeCorveter.class,
+        ListTopicsTypeConverter.class,
+        ListResourceTypeConverter.class,
+        ListProjectTypeConverter.class})
 public abstract class AppDatabase extends RoomDatabase {
 
     public abstract UserRoomDao userRoomDao();
@@ -68,6 +77,7 @@ public abstract class AppDatabase extends RoomDatabase {
     public abstract BannerImageRoomDao bannerImageRoomDao();
     public abstract SuggestedTopicsDao suggestedTopicsDao();
     public abstract SuggestedProjectsDao suggestedProjectsDao();
+    public abstract SearchDao searchDao();
 
     private static AppDatabase INSTANCE;
 

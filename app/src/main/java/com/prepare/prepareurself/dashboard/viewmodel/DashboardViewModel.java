@@ -28,8 +28,10 @@ import com.prepare.prepareurself.dashboard.data.model.SuggestedTopicsModel;
 import com.prepare.prepareurself.dashboard.data.repository.CourseRepository;
 import com.prepare.prepareurself.dashboard.data.repository.DashboardRespoisitory;
 import com.prepare.prepareurself.resources.data.model.ResourcesResponse;
+import com.prepare.prepareurself.search.SearchModel;
 import com.prepare.prepareurself.search.SearchRepository;
 import com.prepare.prepareurself.search.SearchResponseModel;
+import com.prepare.prepareurself.search.db.SearchDbRespository;
 
 import java.util.List;
 
@@ -38,6 +40,8 @@ public class DashboardViewModel extends AndroidViewModel {
     private LiveData<ResourcesResponse> resourcesLiveData = new MutableLiveData<>();
     private LiveData<List<CourseModel>> liveCourses = new MutableLiveData<>();
     private LiveData<GetCourseResponseModel> getCourseResponseModelLiveData = new MutableLiveData<>();
+    private LiveData<SearchResponseModel> searchResponseModelLiveData = new MutableLiveData<>();
+    private LiveData<SearchModel> searchModelLiveData = new MutableLiveData<>();
     CourseRepository courseRepository;
     CourseDbRepository courseDbRepository;
     UserDBRepository userDBRepository;
@@ -50,6 +54,7 @@ public class DashboardViewModel extends AndroidViewModel {
     private SuggestedTopicsDbRepository suggestedTopicsDbRepository;
     private SuggestedProjectsDbRespository suggestedProjectsDbRespository;
     private SearchRepository searchRepository;
+    private SearchDbRespository searchDbRespository;
     public DashboardViewModel(@NonNull Application application) {
         super(application);
         courseRepository = new CourseRepository(application);
@@ -63,11 +68,21 @@ public class DashboardViewModel extends AndroidViewModel {
         dashboardRespoisitory = new DashboardRespoisitory(application);
         suggestedProjectsDbRespository = new SuggestedProjectsDbRespository(application);
         suggestedTopicsDbRepository = new SuggestedTopicsDbRepository(application);
-        searchRepository = new SearchRepository();
+        searchRepository = new SearchRepository(application);
+        searchDbRespository = new SearchDbRespository(application);
     }
 
-    public LiveData<SearchResponseModel> search(String token, String query){
-        return searchRepository.search(token, query);
+    public void search(String token, String query, int page){
+        searchResponseModelLiveData = searchRepository.search(token, query, page);
+        //return searchResponseModelLiveData;
+    }
+
+    public LiveData<SearchResponseModel> getSearchResponseModelLiveData() {
+        return searchResponseModelLiveData;
+    }
+
+    public LiveData<List<SearchModel>> getSearchModelLiveData() {
+        return searchDbRespository.getSearchItems();
     }
 
     public void getCourses(String token){
