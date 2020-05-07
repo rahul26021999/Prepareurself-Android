@@ -1,11 +1,13 @@
 package com.prepare.prepareurself.favourites.data.model;
 
+import com.prepare.prepareurself.courses.data.model.ProjectsModel;
+
 import java.util.List;
 
-public class LikedItems {
+public class LikedItemsProjects {
 
     private int current_page;
-    private List<LikedItemDataModel> data;
+    private List<LikedProjectsModel> data;
     private String first_page_url;
     private int from;
     private int last_page;
@@ -17,7 +19,7 @@ public class LikedItems {
     private int to;
     private int total;
 
-    public LikedItems(){
+    public LikedItemsProjects(){
 
     }
 
@@ -29,11 +31,11 @@ public class LikedItems {
         this.current_page = current_page;
     }
 
-    public List<LikedItemDataModel> getData() {
+    public List<LikedProjectsModel> getData() {
         return data;
     }
 
-    public void setData(List<LikedItemDataModel> data) {
+    public void setData(List<LikedProjectsModel> data) {
         this.data = data;
     }
 
