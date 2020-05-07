@@ -93,7 +93,7 @@
                 android:layout_height="wrap_content"
                 app:el_duration="1000"
                 app:el_expanded="true"
-                app:el_parallax="0.5">
+                app:el_parallax="0">
                 <LinearLayout
                     android:layout_width="match_parent"
                     android:orientation="vertical"
@@ -107,8 +107,9 @@
                         android:paddingStart="15dp"
                         android:paddingTop="10dp"
                         android:paddingBottom="10dp"
+                        android:textColorLink="@color/like_blue"
                         android:lineSpacingExtra="2dp"
-                        android:textColor="@color/white"
+                        android:textColor="@color/colorPrimaryLight"
                         android:fontFamily="@font/proximanovaregular"
                         android:id="@+id/tv_youtube_description"
                         android:layout_marginTop="5dp" />

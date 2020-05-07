@@ -31,7 +31,7 @@
         android:src="@drawable/ic_image_share_white"
         android:layout_alignParentEnd="true"
         android:layout_centerVertical="true"
-        android:layout_marginEnd="5dp"
+        android:padding="10dp"
         android:background="?selectableItemBackgroundBorderless"
         android:id="@+id/image_project_share"/>
 

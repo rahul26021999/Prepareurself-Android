@@ -29,8 +29,8 @@
                 android:id="@+id/image_card_view"
                 android:layout_margin="10dp"
                 app:cardElevation="0dp"
-                app:cardCornerRadius="20dp"
-                android:layout_height="250dp">
+                app:cardCornerRadius="15dp"
+                android:layout_height="220dp">
              <RelativeLayout
                  android:layout_width="match_parent"
                  android:layout_height="match_parent">
@@ -50,65 +50,74 @@
                      android:background="@drawable/dark_gradient"
                      android:fontFamily="@font/proximanovaregular"
                      android:textColor="@color/white"
-                     android:textSize="18sp"
+                     android:textSize="16sp"
                      android:textStyle="bold"
                      tools:text="Project Title" />
              </RelativeLayout>
             </androidx.cardview.widget.CardView>
-            <RelativeLayout
+            <androidx.cardview.widget.CardView
                 android:layout_width="match_parent"
-                android:id="@+id/desc_box"
+                android:layout_height="wrap_content"
                 android:layout_marginStart="10dp"
+                app:cardElevation="0dp"
                 android:layout_marginEnd="10dp"
-                android:paddingTop="20dp"
-                android:paddingStart="20dp"
-                android:paddingEnd="20dp"
-                android:paddingBottom="10dp"
-                android:background="@drawable/circularbordersolid"
+                android:id="@+id/desc_box"
                 android:layout_below="@+id/image_card_view"
-                android:layout_height="wrap_content">
-                <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="Description"
-                    android:textSize="16sp"
-                    android:fontFamily="@font/proximanovaregular"
-                    android:textColor="@color/colorPrimaryDark"
-                    android:textStyle="bold"
-                    android:id="@+id/tv_project_description_heading"/>
+                app:cardCornerRadius="15dp">
+                <RelativeLayout
+                    android:layout_width="match_parent"
+                    android:paddingStart="20dp"
+                    android:paddingEnd="20dp"
+                    android:paddingBottom="20dp"
+                    android:background="@color/white"
+                    android:layout_height="wrap_content">
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="Description"
+                        android:layout_marginTop="20dp"
+                        android:textSize="14sp"
+                        android:textAllCaps="true"
+                        android:fontFamily="@font/proximanovaregular"
+                        android:textColor="@color/colorPrimaryDark"
+                        android:textStyle="bold"
+                        android:id="@+id/tv_project_description_heading"/>
 
-                <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:id="@+id/tv_project_decription"
-                    android:layout_below="@id/tv_project_description_heading"
-                    android:layout_marginTop="10dp"
-                    tools:text="sakdfhkjsa sadbjbfkbaskb askdfkbask jaskdfk  baskfbk  ksabfk ma fkbaks fk askfkas kf k"
-                    android:textColor="@color/resource_active_color"/>
-                <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    tools:text="Level"
-                    android:layout_marginEnd="20dp"
-                    android:textSize="14sp"
-                    android:textAllCaps="true"
-                    android:layout_toLeftOf="@+id/spark_button"
-                    android:fontFamily="@font/proximanovaregular"
-                    android:textColor="@color/colorPrimaryDark"
-                    android:textStyle="bold"
-                    android:id="@+id/level"/>
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:id="@+id/tv_project_decription"
+                        android:layout_below="@id/tv_project_description_heading"
+                        android:layout_marginTop="10dp"
+                        android:textSize="13sp"
+                        android:textColorLink="@color/like_blue"
+                        tools:text="sakdfhkjsa sadbjbfkbaskb askdfkbask jaskdfk  baskfbk  ksabfk ma fkbaks fk askfkas kf k"
+                        android:textColor="@color/resource_active_color"/>
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        tools:text="Level"
+                        android:layout_marginTop="20dp"
+                        android:layout_marginEnd="20dp"
+                        android:textSize="14sp"
+                        android:textAllCaps="true"
+                        android:layout_toLeftOf="@+id/spark_button"
+                        android:fontFamily="@font/proximanovaregular"
+                        android:textColor="@color/colorPrimaryDark"
+                        android:textStyle="bold"
+                        android:id="@+id/level"/>
 
-                <ImageView
-                    android:id="@+id/spark_button"
-                    android:layout_width="20dp"
-                    android:layout_height="20dp"
-                    android:layout_marginEnd="20dp"
-                    android:background="?attr/selectableItemBackgroundBorderless"
-                    android:layout_alignParentEnd="true"
-                    android:layout_alignBottom="@+id/level"
-                    android:src="@drawable/ic_thumb_up_blue_24dp"/>
+                    <ImageView
+                        android:id="@+id/spark_button"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_alignBottom="@+id/level"
+                        android:background="?attr/selectableItemBackgroundBorderless"
+                        android:layout_alignParentEnd="true"
+                        android:src="@drawable/ic_thumb_up_blue_24dp"/>
 
-            </RelativeLayout>
+                </RelativeLayout>
+            </androidx.cardview.widget.CardView>
 
             <com.google.android.gms.ads.AdView
                 android:id="@+id/adView"
@@ -130,7 +139,7 @@
                 android:layout_marginTop="20dp"
                 android:layout_marginStart="20dp"
                 android:text="Reference"
-                android:textSize="16sp"
+                android:textSize="14sp"
                 android:textColor="@color/colorPrimaryDark"
                 android:textStyle="bold"
                 android:id="@+id/tv_reference_heading"/>
@@ -144,7 +153,7 @@
                 android:layout_marginStart="10dp"
                 android:layout_marginEnd="20dp"
                 android:text="View Playlist"
-                android:textSize="16sp"
+                android:textSize="14sp"
                 android:textColor="@color/colorPrimaryDark"
                 android:textStyle="bold"
                 android:id="@+id/tv_viewfullplaylist"/>
@@ -177,7 +186,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:textSize="16sp"
-                android:layout_marginTop="40dp"
+                android:layout_marginTop="60dp"
                 android:id="@+id/loading_project"
                 android:layout_below="@+id/tv_reference_heading"
                 android:visibility="visible"
