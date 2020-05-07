@@ -56,6 +56,16 @@
         <item name="android:background">?attr/selectableItemBackground</item>
     </style>
 
+    <style name="EditTextViewStyleLoginRegister">
+        <item name="android:paddingBottom">17dp</item>
+        <item name="android:paddingTop">17dp</item>
+        <item name="android:paddingStart">20dp</item>
+        <item name="android:textSize">15sp</item>
+        <item name="fontFamily">@font/roboto_regular</item>
+        <item name="android:paddingEnd">20dp</item>
+        <item name="android:background">@drawable/et_custom</item>
+    </style>
+
     <!--radiobutton-->
 
 

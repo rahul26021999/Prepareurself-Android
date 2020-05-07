@@ -14,6 +14,7 @@
 
     <RelativeLayout
         android:layout_width="match_parent"
+        android:gravity="center_vertical"
         android:layout_height="match_parent">
 
         <TextView
@@ -23,17 +24,16 @@
             android:textSize="16sp"
             android:textColor="@color/colorPrimaryDark"
             android:fontFamily="@font/proximanovaregular"
-            android:padding="10dp"
             android:textAlignment="center"
             android:id="@+id/tv_verify"
-            android:layout_centerInParent="true"/>
+            android:layout_centerHorizontal="true"/>
 
         <ImageView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
+            android:layout_width="15dp"
+            android:layout_height="15dp"
             android:src="@drawable/ic_info_blue"
+            android:layout_toStartOf="@+id/spamtitle"
             android:layout_below="@+id/tv_verify"
-            android:layout_alignStart="@+id/tv_verify"
             android:layout_marginTop="10dp"
             android:id="@+id/img_info"/>
 
@@ -41,12 +41,34 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_below="@+id/tv_verify"
-            android:layout_toRightOf="@+id/img_info"
             android:layout_marginStart="10dp"
+            android:id="@+id/spamtitle"
+            android:layout_centerHorizontal="true"
             android:layout_marginTop="10dp"
+            android:textSize="12sp"
             android:fontFamily="@font/proximanovaregular"
             android:textColor="@color/colorPrimaryDark"
             android:text="Please check spam folder as well"/>
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/spamtitle"
+            android:layout_marginStart="20dp"
+            android:layout_centerHorizontal="true"
+            android:id="@+id/resendMail"
+            android:layout_marginTop="10dp"
+            android:paddingTop="5dp"
+            android:paddingBottom="5dp"
+            android:paddingStart="10dp"
+            android:paddingEnd="10dp"
+            android:textSize="13sp"
+            android:background="?attr/selectableItemBackground"
+            android:textStyle="bold"
+            android:textAllCaps="true"
+            android:fontFamily="@font/proximanovaregular"
+            android:textColor="@color/colorPrimaryDark"
+            android:text="Resend Mail"/>
 
     </RelativeLayout>
 

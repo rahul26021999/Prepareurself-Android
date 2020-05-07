@@ -1,14 +1,18 @@
 <?xml version="1.0" encoding="utf-8"?>
-<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<ScrollView android:layout_height="match_parent"
+    android:layout_width="match_parent"
+    android:fillViewport="true"
     xmlns:tools="http://schemas.android.com/tools"
+    tools:context=".authentication.ui.LoginFragment"
+    xmlns:android="http://schemas.android.com/apk/res/android" >
+<LinearLayout
+    android:orientation="vertical"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="@color/white"
     android:focusableInTouchMode="true"
     android:focusable="true"
-    tools:context=".authentication.ui.LoginFragment"
     android:id="@+id/mainlayout">
-
     <TextView
         android:id="@+id/tv_title"
         android:layout_width="wrap_content"
@@ -17,9 +21,8 @@
         android:textSize="50sp"
         android:fontFamily="@font/indigo_daisy"
         android:layout_marginStart="25dp"
-        android:layout_marginBottom="10dp"
-        android:layout_marginTop="60dp"
-        />
+        android:layout_marginBottom="5dp"
+        android:layout_marginTop="80dp" />
 
     <TextView
         android:id="@+id/tv_subtitle"
@@ -29,13 +32,8 @@
         android:textSize="17sp"
         android:fontFamily="@font/roboto_regular"
         android:layout_marginStart="25dp"
-        android:layout_marginBottom="50dp"
-        android:layout_below="@+id/tv_title"/>
+        android:layout_marginBottom="50dp"/>
 
-   <RelativeLayout
-       android:layout_width="match_parent"
-       android:layout_height="wrap_content"
-       android:layout_centerInParent="true">
        <EditText
            android:id="@+id/et_email"
            android:layout_width="match_parent"
@@ -43,13 +41,9 @@
            android:hint="@string/e_mail"
            android:layout_marginLeft="20dp"
            android:layout_marginRight="20dp"
-           android:padding="15dp"
+           style="@style/EditTextViewStyleLoginRegister"
            android:inputType="textEmailAddress"
-           android:fontFamily="@font/roboto_regular"
-           android:background="@drawable/et_custom"
-           android:textSize="15sp"
-           android:textColorHighlight="@color/white"
-           />
+           android:textColorHighlight="@color/white" />
 
        <EditText
            android:id="@+id/et_password"
@@ -57,23 +51,19 @@
            android:layout_height="wrap_content"
            android:hint="@string/password"
            android:layout_marginLeft="20dp"
+           style="@style/EditTextViewStyleLoginRegister"
            android:layout_marginRight="20dp"
            android:layout_marginTop="15dp"
-           android:padding="15dp"
-           android:fontFamily="@font/roboto_regular"
-           android:inputType="textPassword"
-           android:layout_below="@id/et_email"
-           android:background="@drawable/et_custom"
-           android:textSize="15sp" />
+           android:inputType="textPassword" />
 
        <Button
            android:id="@+id/btn_login"
            android:layout_width="match_parent"
            android:layout_height="wrap_content"
-           android:layout_below="@id/et_password"
            android:background="@drawable/button_custom"
            android:layout_marginLeft="20dp"
            android:layout_marginRight="20dp"
+           android:padding="15dp"
            android:layout_marginTop="60dp"
            android:fontFamily="@font/roboto_regular"
            android:textColor="@android:color/white"
@@ -83,32 +73,32 @@
        <TextView
            android:layout_width="wrap_content"
            android:layout_height="wrap_content"
-           android:layout_below="@+id/btn_login"
+           android:layout_gravity="end"
            android:text="Forgot Password ?"
            android:textSize="16sp"
            android:id="@+id/tv_forgot_password"
            android:textColor="@color/colorPrimaryDark"
            android:fontFamily="@font/roboto_regular"
            android:layout_marginTop="20dp"
-           android:layout_alignParentEnd="true"
            android:layout_marginEnd="40dp"/>
-   </RelativeLayout>
 
     <ImageView
-        android:layout_width="30dp"
-        android:layout_height="30dp"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
         android:src="@drawable/arrow_right"
-        android:layout_above="@id/swipeRight1"
-        android:layout_centerHorizontal="true"/>
+        android:padding="10dp"
+        android:layout_marginTop="40dp"
+        android:id="@+id/arrow"
+        android:layout_gravity="center_horizontal"
+        android:background="?attr/selectableItemBackgroundBorderless" />
     <TextView
         android:id="@+id/swipeRight1"
         android:layout_width="wrap_content"
+        android:layout_gravity="center_horizontal"
         android:layout_height="wrap_content"
         android:text="New user?"
         android:textSize="15sp"
         android:fontFamily="@font/roboto_regular"
-        android:layout_centerHorizontal="true"
-        android:layout_above="@+id/swipeRight2"
         android:layout_marginBottom="5dp"/>
 
     <TextView
@@ -117,9 +107,10 @@
         android:layout_height="wrap_content"
         android:text="@string/swipe_left_for_register"
         android:textSize="15sp"
+        android:layout_marginTop="5dp"
         android:fontFamily="@font/roboto_regular"
-        android:layout_centerHorizontal="true"
-        android:layout_alignParentBottom="true"
+        android:layout_gravity="center_horizontal"
         android:layout_marginBottom="20dp"/>
 
-</RelativeLayout>
+</LinearLayout>
+</ScrollView>

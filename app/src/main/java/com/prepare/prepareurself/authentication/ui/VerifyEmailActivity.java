@@ -16,7 +16,7 @@ import com.prepare.prepareurself.utils.Constants;
 public class VerifyEmailActivity extends BaseActivity {
 
     private TextView textView;
-    private TextView title;
+    private TextView title,resendMail;
     private ImageView back;
 
     @Override
@@ -27,12 +27,19 @@ public class VerifyEmailActivity extends BaseActivity {
         textView = findViewById(R.id.tv_verify);
         title = findViewById(R.id.title);
         back = findViewById(R.id.backBtn);
+        resendMail = findViewById(R.id.resendMail);
 
         title.setText("Verify Email");
         back.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 finish();
+            }
+        });
+        resendMail.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+//                TODO::Add resendVerificationMail
             }
         });
 

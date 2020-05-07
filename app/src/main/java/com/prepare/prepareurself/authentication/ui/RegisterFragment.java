@@ -16,6 +16,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.ImageView;
 
 import com.prepare.prepareurself.Home.ui.HomeActivity;
 import com.prepare.prepareurself.R;
@@ -38,6 +39,7 @@ public class RegisterFragment extends Fragment implements View.OnClickListener {
     private ProgressDialog dialog;
     private PrefManager prefManager;
     private AuthViewModel viewModel;
+    private ImageView arrow;
 
     public RegisterFragment() {
         // Required empty public constructor
@@ -51,12 +53,15 @@ public class RegisterFragment extends Fragment implements View.OnClickListener {
 
         View v=inflater.inflate(R.layout.fragment_register, container, false);
 
+        arrow =v.findViewById(R.id.arrow);
         etFullname =v.findViewById(R.id.et_name);
         etEmail =v.findViewById(R.id.et_email);
         etPassword =v.findViewById(R.id.et_password);
         etRetypePassword =v.findViewById(R.id.et_repassword);
         btnRegister =v.findViewById(R.id.btn_register);
         btnRegister.setOnClickListener(this);
+
+        arrow.setOnClickListener(this);
 
         prefManager = new PrefManager(this.getActivity());
         dialog = new ProgressDialog(this.getActivity());
@@ -74,6 +79,9 @@ public class RegisterFragment extends Fragment implements View.OnClickListener {
     @Override
     public void onClick(View v) {
 
+        if(v.getId()==R.id.arrow){
+
+        }
         if (v.getId() == R.id.btn_register ){
 
             String str_password= etPassword.getText().toString().trim();

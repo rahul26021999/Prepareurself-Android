@@ -20,6 +20,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.prepare.prepareurself.Home.ui.HomeActivity;
@@ -44,6 +45,7 @@ public class LoginFragment extends Fragment implements View.OnClickListener{
     private ProgressDialog progressDialog;
     private PrefManager prefManager;
     private TextView tvForgotPassword;
+    private ImageView arrow;
 
     private AuthViewModel viewModel;
 
@@ -61,11 +63,15 @@ public class LoginFragment extends Fragment implements View.OnClickListener{
         etEmail =v.findViewById(R.id.et_email);
         etPassword =v.findViewById(R.id.et_password);
         btnLogin =v.findViewById(R.id.btn_login);
+        arrow =v.findViewById(R.id.arrow);
         tvForgotPassword = v.findViewById(R.id.tv_forgot_password);
         btnLogin.setOnClickListener(this);
         tvForgotPassword.setOnClickListener(this);
         progressDialog=new ProgressDialog(this.getActivity());
         prefManager=new PrefManager(this.getActivity());
+
+
+        arrow.setOnClickListener(this);
 
         return v;
     }
@@ -81,6 +87,9 @@ public class LoginFragment extends Fragment implements View.OnClickListener{
     @Override
     public void onClick(View v) {
 
+        if(v.getId()==R.id.arrow){
+
+        }
         if (v.getId() == R.id.tv_forgot_password){
             Intent i = new Intent(getActivity(), forgetPassword.class);
             startActivity(i);

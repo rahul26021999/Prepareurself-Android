@@ -12,6 +12,7 @@
         android:layout_height="40dp"
         android:id="@+id/backBtn"
         android:padding="10dp"
+        style="@style/SelectableItemTheme"
         android:background="?attr/selectableItemBackgroundBorderless"
         android:src="@drawable/ic_arrow_back_24dp" />
 
@@ -31,6 +32,7 @@
         android:src="@drawable/ic_image_share_white"
         android:layout_alignParentEnd="true"
         android:layout_centerVertical="true"
+        style="@style/SelectableItemTheme"
         android:padding="10dp"
         android:background="?selectableItemBackgroundBorderless"
         android:id="@+id/image_project_share"/>

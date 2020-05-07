@@ -37,7 +37,7 @@
                     android:paddingEnd="20dp"
                     android:layout_centerVertical="true"
                     android:singleLine="true"
-                    android:textColorHint="@color/white"
+                    android:textColorHint="@color/colorPrimaryLight"
                     android:textSize="18sp"
                     android:layout_toStartOf="@id/closeSearch"
                     android:layout_toEndOf="@id/ivBackArrow"
