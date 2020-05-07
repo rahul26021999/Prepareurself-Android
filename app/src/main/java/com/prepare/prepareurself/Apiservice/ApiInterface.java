@@ -144,6 +144,7 @@ public interface ApiInterface {
 
     @POST("get-my-liked-things")
     Call<FavouritesResponseModel> fetchFavourites(@Query("token") String token,
+                                                  @Query("type") String type,
                                                   @Query("count") int count,
                                                   @Query("page") int page);
 

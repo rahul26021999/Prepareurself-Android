@@ -32,7 +32,7 @@ public class SearchRepository{
         searchDbRespository = new SearchDbRespository(application);
     }
 
-    public LiveData<SearchResponseModel> search(String token, String query, final int page){
+    public MutableLiveData<SearchResponseModel> search(String token, String query, final int page){
 
         final MutableLiveData<SearchResponseModel> data = new MutableLiveData<>();
 

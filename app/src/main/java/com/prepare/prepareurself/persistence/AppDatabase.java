@@ -19,6 +19,10 @@ import com.prepare.prepareurself.banner.BannerModel;
 import com.prepare.prepareurself.dashboard.data.model.CourseModel;
 import com.prepare.prepareurself.dashboard.data.model.SuggestedProjectModel;
 import com.prepare.prepareurself.dashboard.data.model.SuggestedTopicsModel;
+import com.prepare.prepareurself.favourites.data.db.dao.LikedProjectsDao;
+import com.prepare.prepareurself.favourites.data.db.dao.LikedResourcesDao;
+import com.prepare.prepareurself.favourites.data.model.LikedProjectsModel;
+import com.prepare.prepareurself.favourites.data.model.LikedResourcesModel;
 import com.prepare.prepareurself.persistence.persitenceUtils.CourseModelTypeCorveter;
 import com.prepare.prepareurself.persistence.persitenceUtils.ListProjectTypeConverter;
 import com.prepare.prepareurself.persistence.persitenceUtils.ListResourceTypeConverter;
@@ -54,7 +58,9 @@ import com.prepare.prepareurself.youtubeplayer.youtubeplaylistapi.models.VideoIt
         BannerModel.class,
         SuggestedTopicsModel.class,
         SuggestedProjectModel.class,
-        SearchModel.class
+        SearchModel.class,
+        LikedProjectsModel.class,
+        LikedResourcesModel.class
 }, version = 1)
 @TypeConverters({VideoContentDetailsConverter.class,
         VideoSnippetConverter.class,
@@ -78,6 +84,8 @@ public abstract class AppDatabase extends RoomDatabase {
     public abstract SuggestedTopicsDao suggestedTopicsDao();
     public abstract SuggestedProjectsDao suggestedProjectsDao();
     public abstract SearchDao searchDao();
+    public abstract LikedProjectsDao likedProjectsDao();
+    public abstract LikedResourcesDao likedResourcesDao();
 
     private static AppDatabase INSTANCE;
 

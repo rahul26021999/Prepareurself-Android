@@ -66,6 +66,9 @@ public class FavouritesFragment extends Fragment {
 
         viewModel = new ViewModelProvider(this).get(FavouritesViewModel.class);
 
+        tvTopVideo.setText("Projects");
+        tvTopTheory.setText("Resources");
+
         final SectionsPagerAdapter sectionsPagerAdapter = new SectionsPagerAdapter(getActivity().getSupportFragmentManager());
         sectionsPagerAdapter.addFragment(LikedProjectFragment.newInstance(),"Projects");
         sectionsPagerAdapter.addFragment(LikedResourcesFragment.newInstance(),"Resources");
