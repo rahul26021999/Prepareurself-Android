@@ -42,16 +42,16 @@ public class SearchRepository{
             @Override
             public void onResponse(Call<SearchResponseModel> call, Response<SearchResponseModel> response) {
                 SearchResponseModel responseModel = response.body();
-                if (page == 1){
-                    searchDbRespository.deleteAllSearches();
-                }
+//                if (page == 1){
+//                    searchDbRespository.deleteAllSearches();
+//                }
                 if (responseModel!=null){
                     if (responseModel.getError_code()==0){
-                        if (responseModel.getData()!=null && !responseModel.getData().isEmpty()){
-                            for (SearchModel searchModel : responseModel.getData()){
-                                searchDbRespository.insertSearch(searchModel);
-                            }
-                        }
+//                        if (responseModel.getData()!=null && !responseModel.getData().isEmpty()){
+//                            for (SearchModel searchModel : responseModel.getData()){
+//                                searchDbRespository.insertSearch(searchModel);
+//                            }
+//                        }
                         data.setValue(responseModel);
                     }else{
                         data.setValue(null);

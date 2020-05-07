@@ -1,6 +1,7 @@
 package com.prepare.prepareurself.courses.data.repository;
 
 import android.app.Application;
+import android.icu.util.LocaleData;
 import android.util.Log;
 
 import androidx.lifecycle.LiveData;
@@ -159,6 +160,7 @@ public class ProjectsRespository {
             public void onResponse(Call<ResourceLikesResponse> call, Response<ResourceLikesResponse> response) {
                 ResourceLikesResponse responseModel = response.body();
                 if (responseModel!=null){
+                    Log.d("liked", "onResponse: "+responseModel.getSuccess()+", "+responseModel.getMessage());
                     data.setValue(responseModel);
                 }else{
                     data.setValue(null);
