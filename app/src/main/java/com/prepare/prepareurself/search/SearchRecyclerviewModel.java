@@ -4,66 +4,35 @@ import com.prepare.prepareurself.courses.data.model.ProjectsModel;
 import com.prepare.prepareurself.courses.data.model.TopicsModel;
 import com.prepare.prepareurself.resources.data.model.ResourceModel;
 
+import java.util.ArrayList;
 import java.util.List;
 
 public class SearchRecyclerviewModel {
 
+    private String heading;
+    private TopicsModel topicsModel;
+    private ResourceModel resourceModel;
+    private ProjectsModel projectsModel;
     private int viewtype;
 
-    private List<TopicsModel> topics;
-    private List<ProjectsModel> projects;
-    private List<ResourceModel> resources;
-
-    private String heading;
-
-    public SearchRecyclerviewModel(int viewtype, String heading, List<TopicsModel> topics) {
-        this.viewtype = viewtype;
-        this.topics = topics;
+    public SearchRecyclerviewModel(String heading, int viewtype) {
         this.heading = heading;
-    }
-
-    public SearchRecyclerviewModel(List<ProjectsModel> projects, String heading, int viewtype) {
-        this.viewtype = viewtype;
-        this.projects = projects;
-        this.heading = heading;
-    }
-
-    public SearchRecyclerviewModel(int viewtype, List<ResourceModel> resources, String heading) {
-        this.viewtype = viewtype;
-        this.resources = resources;
-        this.heading = heading;
-    }
-
-    public int getViewtype() {
-        return viewtype;
-    }
-
-    public void setViewtype(int viewtype) {
         this.viewtype = viewtype;
     }
 
-    public List<TopicsModel> getTopics() {
-        return topics;
+    public SearchRecyclerviewModel(TopicsModel topicsModel, int viewtype) {
+        this.topicsModel = topicsModel;
+        this.viewtype = viewtype;
     }
 
-    public void setTopics(List<TopicsModel> topics) {
-        this.topics = topics;
+    public SearchRecyclerviewModel(ResourceModel resourceModel, int viewtype) {
+        this.resourceModel = resourceModel;
+        this.viewtype = viewtype;
     }
 
-    public List<ProjectsModel> getProjects() {
-        return projects;
-    }
-
-    public void setProjects(List<ProjectsModel> projects) {
-        this.projects = projects;
-    }
-
-    public List<ResourceModel> getResources() {
-        return resources;
-    }
-
-    public void setResources(List<ResourceModel> resources) {
-        this.resources = resources;
+    public SearchRecyclerviewModel(ProjectsModel projectsModel, int viewtype) {
+        this.projectsModel = projectsModel;
+        this.viewtype = viewtype;
     }
 
     public String getHeading() {
@@ -72,5 +41,37 @@ public class SearchRecyclerviewModel {
 
     public void setHeading(String heading) {
         this.heading = heading;
+    }
+
+    public TopicsModel getTopicsModel() {
+        return topicsModel;
+    }
+
+    public void setTopicsModel(TopicsModel topicsModel) {
+        this.topicsModel = topicsModel;
+    }
+
+    public ResourceModel getResourceModel() {
+        return resourceModel;
+    }
+
+    public void setResourceModel(ResourceModel resourceModel) {
+        this.resourceModel = resourceModel;
+    }
+
+    public ProjectsModel getProjectsModel() {
+        return projectsModel;
+    }
+
+    public void setProjectsModel(ProjectsModel projectsModel) {
+        this.projectsModel = projectsModel;
+    }
+
+    public int getViewtype() {
+        return viewtype;
+    }
+
+    public void setViewtype(int viewtype) {
+        this.viewtype = viewtype;
     }
 }

@@ -136,7 +136,8 @@ public interface ApiInterface {
 
     @POST("search")
     Call<SearchResponseModel> search(@Query("token") String token,
-                                     @Query("query") String query);
+                                     @Query("query") String query,
+                                     @Query("page") int page);
 
     @POST("get-home-page")
     Call<HomepageResponseModel> fetchHomePage(@Query("token") String token);

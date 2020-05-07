@@ -1,18 +1,43 @@
 package com.prepare.prepareurself.search;
 
+import androidx.room.ColumnInfo;
+import androidx.room.Entity;
+import androidx.room.PrimaryKey;
+
+import com.google.gson.annotations.SerializedName;
 import com.prepare.prepareurself.courses.data.model.ProjectsModel;
 import com.prepare.prepareurself.courses.data.model.TopicsModel;
 import com.prepare.prepareurself.resources.data.model.ResourceModel;
 
 import java.util.List;
 
+@Entity(tableName = "searchitems")
 public class SearchModel {
 
+    @PrimaryKey(autoGenerate = true)
+    private int id;
+
+    @ColumnInfo(name = "topics")
+    @SerializedName("topics")
     private List<TopicsModel> topics;
-    private List<ResourceModel> resources;
+
+    @ColumnInfo(name = "resource")
+    @SerializedName("resource")
+    private List<ResourceModel> resource;
+
+    @ColumnInfo(name = "projects")
+    @SerializedName("projects")
     private List<ProjectsModel> projects;
 
     public SearchModel() {
+    }
+
+    public int getId() {
+        return id;
+    }
+
+    public void setId(int id) {
+        this.id = id;
     }
 
     public List<TopicsModel> getTopics() {
@@ -23,12 +48,12 @@ public class SearchModel {
         this.topics = topics;
     }
 
-    public List<ResourceModel> getResources() {
-        return resources;
+    public List<ResourceModel> getResource() {
+        return resource;
     }
 
-    public void setResources(List<ResourceModel> resources) {
-        this.resources = resources;
+    public void setResource(List<ResourceModel> resource) {
+        this.resource = resource;
     }
 
     public List<ProjectsModel> getProjects() {
