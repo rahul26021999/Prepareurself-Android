@@ -90,6 +90,7 @@
                         android:layout_below="@id/tv_project_description_heading"
                         android:layout_marginTop="10dp"
                         android:textSize="13sp"
+                        android:lineSpacingExtra="2dp"
                         android:textColorLink="@color/like_blue"
                         tools:text="sakdfhkjsa sadbjbfkbaskb askdfkbask jaskdfk  baskfbk  ksabfk ma fkbaks fk askfkas kf k"
                         android:textColor="@color/resource_active_color"/>
