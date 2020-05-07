@@ -314,7 +314,7 @@ public class DashboardFragment extends Fragment implements DashboardRvAdapter.Da
         dashboardRecyclerviewModelList = new ArrayList<>();
 
         setUpSlider();
-        addListner();
+        addLisntner();
 
         mViewModel.fetchHomePageData(prefManager.getString(Constants.JWTTOKEN))
                 .observe(getActivity(), new Observer<HomepageResponseModel>() {
@@ -391,7 +391,7 @@ public class DashboardFragment extends Fragment implements DashboardRvAdapter.Da
 
     }
 
-    private void addListner()
+    private void addLisntner()
     {
         final String query = searchEdit.getText().toString();
         searchRv.addOnScrollListener(new RecyclerView.OnScrollListener() {
