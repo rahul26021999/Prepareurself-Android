@@ -90,6 +90,7 @@
                         android:id="@+id/tv_project_decription"
                         android:layout_below="@id/tv_project_description_heading"
                         android:layout_marginTop="15dp"
+                        android:includeFontPadding="false"
                         android:textSize="13sp"
                         android:lineSpacingExtra="2dp"
                         android:textColorLink="@color/like_blue"

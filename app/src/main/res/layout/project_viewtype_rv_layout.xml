@@ -9,8 +9,8 @@
     android:background="?attr/selectableItemBackground">
 
     <androidx.cardview.widget.CardView
-        android:layout_width="150dp"
-        android:layout_height="140dp"
+        android:layout_width="160dp"
+        android:layout_height="130dp"
         app:cardElevation="0dp"
         android:background="@color/white"
         android:id="@+id/card_course_view"
@@ -36,7 +36,6 @@
             android:visibility="gone"
             android:id="@+id/image_thumb_course_viewtype"
             android:src="@drawable/placeholder"/>
-
 
     </androidx.cardview.widget.CardView>
 

@@ -4,7 +4,9 @@ import android.app.Activity;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.RelativeLayout;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.lifecycle.LiveData;
@@ -14,6 +16,7 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.google.android.gms.ads.AdListener;
 import com.google.android.gms.ads.AdRequest;
+import com.google.android.gms.ads.AdSize;
 import com.google.android.gms.ads.AdView;
 import com.prepare.prepareurself.courses.data.model.ProjectsModel;
 import com.prepare.prepareurself.courses.data.model.TopicsModel;
@@ -280,20 +283,27 @@ public class DashboardRvAdapter extends RecyclerView.Adapter implements CoursesH
 
     class AddViewHolder extends RecyclerView.ViewHolder{
 
-        AdView adView;
+        AdView mAdView;
+        View adContainer;
 
         public AddViewHolder(@NonNull View itemView) {
             super(itemView);
-            adView = itemView.findViewById(R.id.adViewdashboardrv);
+            adContainer = itemView.findViewById(R.id.adViewdashboardrv);
+            mAdView = new AdView(context);
+            mAdView.setAdSize(AdSize.FULL_BANNER);
+            mAdView.setAdUnitId(context.getResources().getString(R.string.bannerAds));
+            ((RelativeLayout)adContainer).addView(mAdView);
+
         }
 
         public void bindAddView(String adText){
             AdRequest adRequest = new AdRequest.Builder().build();
-            adView.loadAd(adRequest);
+            mAdView.loadAd(adRequest);
 
-            adView.setAdListener(new AdListener(){
+            mAdView.setAdListener(new AdListener(){
                 @Override
                 public void onAdLoaded() {
+                    Toast.makeText(context,"hello chutoya ray hai ", Toast.LENGTH_SHORT).show();
                     // Code to be executed when an ad finishes loading.
                 }
 
