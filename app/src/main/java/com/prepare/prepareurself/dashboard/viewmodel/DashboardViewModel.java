@@ -40,7 +40,7 @@ public class DashboardViewModel extends AndroidViewModel {
     private LiveData<ResourcesResponse> resourcesLiveData = new MutableLiveData<>();
     private LiveData<List<CourseModel>> liveCourses = new MutableLiveData<>();
     private LiveData<GetCourseResponseModel> getCourseResponseModelLiveData = new MutableLiveData<>();
-    private LiveData<SearchResponseModel> searchResponseModelLiveData = new MutableLiveData<>();
+    private MutableLiveData<SearchResponseModel> searchResponseModelLiveData = new MutableLiveData<>();
     private LiveData<SearchModel> searchModelLiveData = new MutableLiveData<>();
     CourseRepository courseRepository;
     CourseDbRepository courseDbRepository;
@@ -77,7 +77,7 @@ public class DashboardViewModel extends AndroidViewModel {
         //return searchResponseModelLiveData;
     }
 
-    public LiveData<SearchResponseModel> getSearchResponseModelLiveData() {
+    public MutableLiveData<SearchResponseModel> getSearchResponseModelLiveData() {
         return searchResponseModelLiveData;
     }
 
