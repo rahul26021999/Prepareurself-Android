@@ -10,7 +10,6 @@ import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import android.content.Intent;
-import android.content.res.Configuration;
 import android.net.Uri;
 import android.os.Bundle;
 import android.text.TextUtils;
@@ -19,10 +18,8 @@ import android.util.Log;
 import android.view.View;
 import android.view.WindowManager;
 import android.widget.ImageView;
-import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
-
 import com.google.android.gms.ads.AdListener;
 import com.google.android.gms.ads.AdRequest;
 import com.google.android.gms.ads.AdView;
@@ -35,14 +32,11 @@ import com.prepare.prepareurself.authentication.ui.AuthenticationActivity;
 import com.prepare.prepareurself.resources.data.model.ResourceModel;
 import com.prepare.prepareurself.resources.data.model.VideoShareResponseModel;
 import com.prepare.prepareurself.utils.Constants;
-import com.prepare.prepareurself.utils.DividerItemDecoration;
 import com.prepare.prepareurself.utils.PrefManager;
 import com.prepare.prepareurself.utils.Utility;
 import com.prepare.prepareurself.youtubeplayer.youtubeplaylistapi.models.VideoItemWrapper;
 import com.prepare.prepareurself.youtubeplayer.youtubeplaylistapi.viewmodel.VideoViewModel;
-
 import net.cachapa.expandablelayout.ExpandableLayout;
-
 import java.io.UnsupportedEncodingException;
 import java.util.List;
 
@@ -123,6 +117,9 @@ public class VideoActivity extends YouTubeBaseActivity implements YouTubePlayer.
             tvTitle.setText(title);
             tvDescription.setText(decription);
 
+            projectAdView.setVisibility(View.GONE);
+            mAdView.setVisibility(View.VISIBLE);
+
             playlistItemRecyclerView.setVisibility(View.GONE);
             rvOtherVideos.setVisibility(View.GONE);
             tvRelatedVideosHeader.setVisibility(View.GONE);
@@ -141,7 +138,8 @@ public class VideoActivity extends YouTubeBaseActivity implements YouTubePlayer.
             playlistItemRecyclerView.setVisibility(View.VISIBLE);
             tvRelatedVideosHeader.setVisibility(View.GONE);
             tvPlaylst.setVisibility(View.VISIBLE);
-            //
+            projectAdView.setVisibility(View.GONE);
+            mAdView.setVisibility(View.GONE);
 
             playlistItemAdapter = new PlaylistItemAdapter(getApplicationContext(),this);
             LinearLayoutManager layoutManager = new LinearLayoutManager(this);
@@ -170,6 +168,7 @@ public class VideoActivity extends YouTubeBaseActivity implements YouTubePlayer.
             rvOtherVideos.setVisibility(View.GONE);
             tvRelatedVideosHeader.setVisibility(View.GONE);
             tvPlaylst.setVisibility(View.VISIBLE);
+
             projectAdView.setVisibility(View.VISIBLE);
 
             playlistItemAdapter = new PlaylistItemAdapter(getApplicationContext(),this);

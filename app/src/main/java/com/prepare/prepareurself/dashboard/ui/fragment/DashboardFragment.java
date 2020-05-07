@@ -400,6 +400,7 @@ public class DashboardFragment extends Fragment implements DashboardRvAdapter.Da
             notFoundSearch.setVisibility(View.GONE);
 
             searchRecyclerviewModels.clear();
+            headings.clear();
             rvCurrentPageSearch = 0;
 
             searchRv.addOnScrollListener(new RecyclerView.OnScrollListener() {
@@ -433,16 +434,11 @@ public class DashboardFragment extends Fragment implements DashboardRvAdapter.Da
 
             loadMoreItems(true, query);
 
-
-
-
-
             mViewModel.getSearchModelLiveData()
                             .observe(getActivity(), new Observer<List<SearchModel>>() {
                 @Override
                 public void onChanged(List<SearchModel> searchModels) {
                     if (searchModels!=null){
-                        searchRecyclerviewModels.clear();
                         Log.d("paging_debug", searchModels+" : this is id");
                         for (SearchModel searchModel : searchModels){
                             if (searchModel.getTopics()!=null){
