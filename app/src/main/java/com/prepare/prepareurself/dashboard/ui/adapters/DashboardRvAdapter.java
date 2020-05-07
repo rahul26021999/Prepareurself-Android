@@ -80,7 +80,7 @@ public class DashboardRvAdapter extends RecyclerView.Adapter implements CoursesH
 
             case ADDVIEWTYPE :
                 View addView = LayoutInflater.from(context).inflate(R.layout.add_viewtype_tv_layout,parent, false);
-                return new AddViewHolder(addView);
+                return new AddViewHolder(addView, "");
 
             case TOPICVIEWTYPE:
                 View topicView = LayoutInflater.from(context).inflate(R.layout.course_header_rv_viewtype_layout,parent, false);
@@ -286,11 +286,19 @@ public class DashboardRvAdapter extends RecyclerView.Adapter implements CoursesH
         AdView mAdView;
         View adContainer;
 
-        public AddViewHolder(@NonNull View itemView) {
+        public AddViewHolder(@NonNull View itemView,String adsSize) {
             super(itemView);
             adContainer = itemView.findViewById(R.id.adViewdashboardrv);
             mAdView = new AdView(context);
-            mAdView.setAdSize(AdSize.FULL_BANNER);
+
+            AdSize ads = AdSize.FULL_BANNER;
+            if(adsSize.equals("banner")) {
+                ads=AdSize.BANNER;
+            } else if(adsSize.equals("largeBanner")) {
+                ads = AdSize.LARGE_BANNER;
+            }
+
+            mAdView.setAdSize(ads);
             mAdView.setAdUnitId(context.getResources().getString(R.string.bannerAds));
             ((RelativeLayout)adContainer).addView(mAdView);
 
@@ -303,8 +311,7 @@ public class DashboardRvAdapter extends RecyclerView.Adapter implements CoursesH
             mAdView.setAdListener(new AdListener(){
                 @Override
                 public void onAdLoaded() {
-                    Toast.makeText(context,"hello chutoya ray hai ", Toast.LENGTH_SHORT).show();
-                    // Code to be executed when an ad finishes loading.
+                    adContainer.setVisibility(View.VISIBLE);
                 }
 
                 @Override

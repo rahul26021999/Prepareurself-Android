@@ -85,7 +85,6 @@ public class DashboardFragment extends Fragment implements DashboardRvAdapter.Da
     List<DashboardRecyclerviewModel> dashboardRecyclerviewModelList;
     private SliderView sliderView;
     SliderAdapter sliderAdapter;
-    private AdView mAdView;
 
     private static final String TAG = "ToolbarFragment";
     private static final int STANDARD_APPBAR = 0;
@@ -140,7 +139,6 @@ public class DashboardFragment extends Fragment implements DashboardRvAdapter.Da
         menu=view.findViewById(R.id.menu);
         prefManager = new PrefManager(getActivity());
         menu.setOnClickListener(this);
-        mAdView = view.findViewById(R.id.adView);
         searchRv = view.findViewById(R.id.searchcontentrv);
 
         viewContactsBar =  view.findViewById(R.id.viewContactsToolbar);
@@ -175,8 +173,6 @@ public class DashboardFragment extends Fragment implements DashboardRvAdapter.Da
         searchEdit = view.findViewById(R.id.etSearch);
         closeSearch = view.findViewById(R.id.closeSearch);
         closeSearch.setOnClickListener(this);
-
-        setGoogleAdd();
 
         return view;
     }
@@ -249,47 +245,6 @@ public class DashboardFragment extends Fragment implements DashboardRvAdapter.Da
         });
 
     }
-
-    private void setGoogleAdd() {
-        AdRequest adRequest = new AdRequest.Builder().build();
-        mAdView.loadAd(adRequest);
-
-        mAdView.setAdListener(new AdListener() {
-            @Override
-            public void onAdLoaded() {
-                // Code to be executed when an ad finishes loading.
-            }
-
-            @Override
-            public void onAdFailedToLoad(int errorCode) {
-                // Code to be executed when an ad request fails.
-            }
-
-            @Override
-            public void onAdOpened() {
-                // Code to be executed when an ad opens an overlay that
-                // covers the screen.
-            }
-
-            @Override
-            public void onAdClicked() {
-                // Code to be executed when the user clicks on an ad.
-            }
-
-            @Override
-            public void onAdLeftApplication() {
-                // Code to be executed when the user has left the app.
-            }
-
-            @Override
-            public void onAdClosed() {
-                // Code to be executed when the user is about to return
-                // to the app after tapping on an ad.
-            }
-        });
-
-    }
-
 
     @Override
     public void onActivityCreated(@Nullable Bundle savedInstanceState) {
