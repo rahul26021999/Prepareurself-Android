@@ -64,7 +64,8 @@ public class forgetPassword extends BaseActivity {
                         if (forgotPasswordResponseModel!=null){
                             if (forgotPasswordResponseModel.getError_code() == 0){
                                 textView.setVisibility(View.VISIBLE);
-                                textView.setText("Please go and check your email!");
+                                registeredEmail.setText("");
+                                textView.setText("Please go and check your email !");
                                 //submtted ardo
                             }else{
                                 textView.setVisibility(View.VISIBLE);
