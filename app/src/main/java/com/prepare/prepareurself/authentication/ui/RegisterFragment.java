@@ -17,6 +17,8 @@ import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageView;
+import android.widget.TextView;
+import android.widget.Toast;
 
 import com.prepare.prepareurself.Home.ui.HomeActivity;
 import com.prepare.prepareurself.R;
@@ -40,6 +42,7 @@ public class RegisterFragment extends Fragment implements View.OnClickListener {
     private PrefManager prefManager;
     private AuthViewModel viewModel;
     private ImageView arrow;
+    private TextView termsAndConditions;
 
     public RegisterFragment() {
         // Required empty public constructor
@@ -59,8 +62,10 @@ public class RegisterFragment extends Fragment implements View.OnClickListener {
         etPassword =v.findViewById(R.id.et_password);
         etRetypePassword =v.findViewById(R.id.et_repassword);
         btnRegister =v.findViewById(R.id.btn_register);
-        btnRegister.setOnClickListener(this);
+        termsAndConditions=v.findViewById(R.id.termsAndConditions);
 
+        btnRegister.setOnClickListener(this);
+        termsAndConditions.setOnClickListener(this);
         arrow.setOnClickListener(this);
 
         prefManager = new PrefManager(this.getActivity());
@@ -80,9 +85,12 @@ public class RegisterFragment extends Fragment implements View.OnClickListener {
     public void onClick(View v) {
 
         if(v.getId()==R.id.arrow){
-
+            Toast.makeText(getContext(),"arrow clicked",Toast.LENGTH_SHORT).show();
         }
-        if (v.getId() == R.id.btn_register ){
+        else if(v.getId()==R.id.termsAndConditions){
+            Toast.makeText(getContext(),"TermsAndConditionClicked",Toast.LENGTH_SHORT).show();
+        }
+        else if (v.getId() == R.id.btn_register ){
 
             String str_password= etPassword.getText().toString().trim();
             String str_retype_password= etRetypePassword.getText().toString().trim();

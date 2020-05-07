@@ -22,6 +22,7 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.prepare.prepareurself.Home.ui.HomeActivity;
 import com.prepare.prepareurself.R;
@@ -88,9 +89,9 @@ public class LoginFragment extends Fragment implements View.OnClickListener{
     public void onClick(View v) {
 
         if(v.getId()==R.id.arrow){
-
+            Toast.makeText(getContext(),"arrow clicked",Toast.LENGTH_SHORT).show();
         }
-        if (v.getId() == R.id.tv_forgot_password){
+        else if (v.getId() == R.id.tv_forgot_password){
             Intent i = new Intent(getActivity(), forgetPassword.class);
             startActivity(i);
             //changeFragment();
@@ -149,8 +150,7 @@ public class LoginFragment extends Fragment implements View.OnClickListener{
             alert.setCanceledOnTouchOutside(true);
             alert.show();*/
         }
-
-        if (v.getId()==R.id.btn_login){
+        else if (v.getId()==R.id.btn_login){
             String strEmail= etEmail.getText().toString().trim();
             String strPassword= etPassword.getText().toString().trim();
             if(TextUtils.isEmpty(strEmail)){
