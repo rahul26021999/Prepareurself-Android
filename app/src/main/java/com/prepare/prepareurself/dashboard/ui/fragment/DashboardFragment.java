@@ -314,6 +314,7 @@ public class DashboardFragment extends Fragment implements DashboardRvAdapter.Da
         dashboardRecyclerviewModelList = new ArrayList<>();
 
         setUpSlider();
+        addListner();
 
         mViewModel.fetchHomePageData(prefManager.getString(Constants.JWTTOKEN))
                 .observe(getActivity(), new Observer<HomepageResponseModel>() {
@@ -388,10 +389,91 @@ public class DashboardFragment extends Fragment implements DashboardRvAdapter.Da
 //            }
 //        });
 
-
-
     }
 
+    private void addListner()
+    {
+        final String query = searchEdit.getText().toString();
+        searchRv.addOnScrollListener(new RecyclerView.OnScrollListener() {
+            @Override
+            public void onScrollStateChanged(@NonNull RecyclerView recyclerView, int newState) {
+                super.onScrollStateChanged(recyclerView, newState);
+                if (newState == AbsListView.OnScrollListener.SCROLL_STATE_TOUCH_SCROLL){
+                    isScrolling = true;
+                }
+            }
+
+            @Override
+            public void onScrolled(@NonNull RecyclerView recyclerView, int dx, int dy) {
+                super.onScrolled(recyclerView, dx, dy);
+
+                rvCurrentItemsSearch = searchLayoutManager.getChildCount();
+                rvTotalItemsSearch = searchLayoutManager.getItemCount();
+                rvScrolledOutItemsSearch = searchLayoutManager.findFirstVisibleItemPosition();
+
+                // rvLastPage = topicsResponseModel.getLast_page();
+
+                Log.d("paging_debug", rvCurrentPageSearch +","+rvLastPage);
+
+                if (isScrolling && (rvCurrentItemsSearch + rvScrolledOutItemsSearch) == rvTotalItemsSearch){
+                    isScrolling = false;
+                    loadMoreItems(false, query);
+                }
+
+            }
+        });
+
+        mViewModel.getSearchModelLiveData().observe(getActivity(), new Observer<List<SearchModel>>() {
+            @Override
+            public void onChanged(List<SearchModel> searchModels) {
+                if (searchModels!=null){
+                    Log.d("paging_debug", searchModels+" : this is id");
+                    for (SearchModel searchModel : searchModels){
+                        if (searchModel.getTopics()!=null){
+
+                            if (!headings.contains("Topics")){
+                                searchRecyclerviewModels.add(new SearchRecyclerviewModel("Topics", 1));
+                                headings.add("Topics");
+                            }
+                            for (TopicsModel topicsModel : searchModel.getTopics()){
+                                searchRecyclerviewModels.add(new SearchRecyclerviewModel(topicsModel,2));
+                            }
+
+                        }else if (searchModel.getProjects()!=null){
+
+                            if (!headings.contains("Projects")){
+                                searchRecyclerviewModels.add(new SearchRecyclerviewModel("Projects", 1));
+                                headings.add("Projects");
+                            }
+                            for (ProjectsModel topicsModel : searchModel.getProjects()){
+                                searchRecyclerviewModels.add(new SearchRecyclerviewModel(topicsModel,3));
+                            }
+                        }else if (searchModel.getResource()!=null){
+                            if (!headings.contains("Resources")){
+                                searchRecyclerviewModels.add(new SearchRecyclerviewModel("Resources", 1));
+                                headings.add("Resources");
+                            }
+                            for (ResourceModel topicsModel : searchModel.getResource()){
+                                searchRecyclerviewModels.add(new SearchRecyclerviewModel(topicsModel,4));
+                            }
+                        }
+                    }
+
+                    searchProgressBar.setVisibility(View.GONE);
+                    if (!searchRecyclerviewModels.isEmpty()){
+                        Log.d("paging_debug", searchRecyclerviewModels.get(0).getHeading()+"");
+                        adapter.setData(searchRecyclerviewModels);
+                        adapter.notifyDataSetChanged();
+                    }
+
+                }else{
+                    searchProgressBar.setVisibility(View.GONE);
+                    notFoundSearch.setVisibility(View.VISIBLE);
+                    adapter.clearData();
+                }
+            }
+        });
+    }
     private void performSearch(){
 
         final String query = searchEdit.getText().toString();
@@ -403,89 +485,7 @@ public class DashboardFragment extends Fragment implements DashboardRvAdapter.Da
             headings.clear();
             rvCurrentPageSearch = 0;
 
-            searchRv.addOnScrollListener(new RecyclerView.OnScrollListener() {
-                @Override
-                public void onScrollStateChanged(@NonNull RecyclerView recyclerView, int newState) {
-                    super.onScrollStateChanged(recyclerView, newState);
-                    if (newState == AbsListView.OnScrollListener.SCROLL_STATE_TOUCH_SCROLL){
-                        isScrolling = true;
-                    }
-                }
-
-                @Override
-                public void onScrolled(@NonNull RecyclerView recyclerView, int dx, int dy) {
-                    super.onScrolled(recyclerView, dx, dy);
-
-                    rvCurrentItemsSearch = searchLayoutManager.getChildCount();
-                    rvTotalItemsSearch = searchLayoutManager.getItemCount();
-                    rvScrolledOutItemsSearch = searchLayoutManager.findFirstVisibleItemPosition();
-
-                    // rvLastPage = topicsResponseModel.getLast_page();
-
-                    Log.d("paging_debug", rvCurrentPageSearch +","+rvLastPage);
-
-                    if (isScrolling && (rvCurrentItemsSearch + rvScrolledOutItemsSearch) == rvTotalItemsSearch){
-                        isScrolling = false;
-                        loadMoreItems(false, query);
-                    }
-
-                }
-            });
-
             loadMoreItems(true, query);
-
-            mViewModel.getSearchModelLiveData()
-                            .observe(getActivity(), new Observer<List<SearchModel>>() {
-                @Override
-                public void onChanged(List<SearchModel> searchModels) {
-                    if (searchModels!=null){
-                        Log.d("paging_debug", searchModels+" : this is id");
-                        for (SearchModel searchModel : searchModels){
-                            if (searchModel.getTopics()!=null){
-
-                                if (!headings.contains("Topics")){
-                                    searchRecyclerviewModels.add(new SearchRecyclerviewModel("Topics", 1));
-                                    headings.add("Topics");
-                                }
-                                for (TopicsModel topicsModel : searchModel.getTopics()){
-                                    searchRecyclerviewModels.add(new SearchRecyclerviewModel(topicsModel,2));
-                                }
-
-                            }else if (searchModel.getProjects()!=null){
-
-                                if (!headings.contains("Projects")){
-                                    searchRecyclerviewModels.add(new SearchRecyclerviewModel("Projects", 1));
-                                    headings.add("Projects");
-                                }
-                                for (ProjectsModel topicsModel : searchModel.getProjects()){
-                                    searchRecyclerviewModels.add(new SearchRecyclerviewModel(topicsModel,3));
-                                }
-                            }else if (searchModel.getResource()!=null){
-                                if (!headings.contains("Resources")){
-                                    searchRecyclerviewModels.add(new SearchRecyclerviewModel("Resources", 1));
-                                    headings.add("Resources");
-                                }
-                                for (ResourceModel topicsModel : searchModel.getResource()){
-                                    searchRecyclerviewModels.add(new SearchRecyclerviewModel(topicsModel,4));
-                                }
-                            }
-                        }
-
-                        searchProgressBar.setVisibility(View.GONE);
-                        if (!searchRecyclerviewModels.isEmpty()){
-                            Log.d("paging_debug", searchRecyclerviewModels.get(0).getHeading()+"");
-                            adapter.setData(searchRecyclerviewModels);
-                            adapter.notifyDataSetChanged();
-                        }
-
-                    }else{
-                        searchProgressBar.setVisibility(View.GONE);
-                        notFoundSearch.setVisibility(View.VISIBLE);
-                        adapter.clearData();
-                    }
-                }
-            });
-
         }
     }
 
