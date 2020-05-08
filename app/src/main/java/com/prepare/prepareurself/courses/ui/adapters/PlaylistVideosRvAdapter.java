@@ -80,17 +80,56 @@ public class PlaylistVideosRvAdapter extends RecyclerView.Adapter<PlaylistVideos
 
         public void bindView(final VideoItemWrapper contentDetails){
 
-            String imageUrl = contentDetails.getSnippet().getThumbnails().getHigh().getUrl();
+            if (contentDetails.getSnippet().getThumbnails().getHigh()!=null){
+                String imageUrl = contentDetails.getSnippet().getThumbnails().getHigh().getUrl();
 
-            if (imageUrl!=null && imageUrl.endsWith(".svg")){
-                Utility.loadSVGImage(context,contentDetails.getSnippet().getThumbnails().getHigh().getUrl(), youTubeThumbnailView);
-            }else{
-                Glide.with(context)
-                        .load(contentDetails.getSnippet().getThumbnails().getHigh().getUrl())
-                        .transition(GenericTransitionOptions.<Drawable>with(Utility.getAnimationObject()))
-                        .placeholder(R.drawable.placeholder)
-                        .into(youTubeThumbnailView);
+                if (imageUrl!=null && imageUrl.endsWith(".svg")){
+                    Utility.loadSVGImage(context,contentDetails.getSnippet().getThumbnails().getHigh().getUrl(), youTubeThumbnailView);
+                }else{
+                    Glide.with(context)
+                            .load(contentDetails.getSnippet().getThumbnails().getHigh().getUrl())
+                            .transition(GenericTransitionOptions.<Drawable>with(Utility.getAnimationObject()))
+                            .placeholder(R.drawable.placeholder)
+                            .into(youTubeThumbnailView);
+                }
+            }else if (contentDetails.getSnippet().getThumbnails().getMedium()!=null){
+                String imageUrl = contentDetails.getSnippet().getThumbnails().getMedium().getUrl();
+
+                if (imageUrl!=null && imageUrl.endsWith(".svg")){
+                    Utility.loadSVGImage(context,contentDetails.getSnippet().getThumbnails().getMedium().getUrl(), youTubeThumbnailView);
+                }else{
+                    Glide.with(context)
+                            .load(contentDetails.getSnippet().getThumbnails().getMedium().getUrl())
+                            .transition(GenericTransitionOptions.<Drawable>with(Utility.getAnimationObject()))
+                            .placeholder(R.drawable.placeholder)
+                            .into(youTubeThumbnailView);
+                }
+            }else if (contentDetails.getSnippet().getThumbnails().getStandard()!=null){
+                String imageUrl = contentDetails.getSnippet().getThumbnails().getStandard().getUrl();
+
+                if (imageUrl!=null && imageUrl.endsWith(".svg")){
+                    Utility.loadSVGImage(context,contentDetails.getSnippet().getThumbnails().getStandard().getUrl(), youTubeThumbnailView);
+                }else{
+                    Glide.with(context)
+                            .load(contentDetails.getSnippet().getThumbnails().getStandard().getUrl())
+                            .transition(GenericTransitionOptions.<Drawable>with(Utility.getAnimationObject()))
+                            .placeholder(R.drawable.placeholder)
+                            .into(youTubeThumbnailView);
+                }
+            }else if (contentDetails.getSnippet().getThumbnails().getDefaultThumbnail()!=null){
+                String imageUrl = contentDetails.getSnippet().getThumbnails().getDefaultThumbnail().getUrl();
+
+                if (imageUrl!=null && imageUrl.endsWith(".svg")){
+                    Utility.loadSVGImage(context,contentDetails.getSnippet().getThumbnails().getDefaultThumbnail().getUrl(), youTubeThumbnailView);
+                }else{
+                    Glide.with(context)
+                            .load(contentDetails.getSnippet().getThumbnails().getDefaultThumbnail().getUrl())
+                            .transition(GenericTransitionOptions.<Drawable>with(Utility.getAnimationObject()))
+                            .placeholder(R.drawable.placeholder)
+                            .into(youTubeThumbnailView);
+                }
             }
+
 
             tvTitle.setText(contentDetails.getSnippet().getTitle());
         }
