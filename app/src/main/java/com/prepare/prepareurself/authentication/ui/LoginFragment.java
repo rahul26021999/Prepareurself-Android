@@ -1,19 +1,18 @@
 package com.prepare.prepareurself.authentication.ui;
 
 import android.app.ProgressDialog;
+import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
 
+import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
-import androidx.appcompat.app.AlertDialog;
 import androidx.fragment.app.Fragment;
 //import android.support.v4.app.FragmentManager;
-import androidx.fragment.app.FragmentTransaction;
 import androidx.lifecycle.Observer;
 import androidx.lifecycle.ViewModelProviders;
 
 import android.text.TextUtils;
-import android.util.Log;
 import android.util.Patterns;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -27,7 +26,6 @@ import android.widget.Toast;
 import com.prepare.prepareurself.Home.ui.HomeActivity;
 import com.prepare.prepareurself.R;
 import com.prepare.prepareurself.authentication.data.model.AuthenticationResponseModel;
-import com.prepare.prepareurself.authentication.data.model.ForgotPasswordResponseModel;
 import com.prepare.prepareurself.authentication.viewmodel.AuthViewModel;
 import com.prepare.prepareurself.courses.ui.activity.ProjectsActivity;
 import com.prepare.prepareurself.utils.Constants;
@@ -47,11 +45,16 @@ public class LoginFragment extends Fragment implements View.OnClickListener{
     private PrefManager prefManager;
     private TextView tvForgotPassword;
     private ImageView arrow;
+    private LoginFragmentListener listener;
 
     private AuthViewModel viewModel;
 
     public LoginFragment() {
         // Required empty public constructor
+    }
+
+    public interface LoginFragmentListener {
+        void onLoginArrowClicked();
     }
 
 
@@ -89,7 +92,8 @@ public class LoginFragment extends Fragment implements View.OnClickListener{
     public void onClick(View v) {
 
         if(v.getId()==R.id.arrow){
-            Toast.makeText(getContext(),"arrow clicked",Toast.LENGTH_SHORT).show();
+            //Toast.makeText(getContext(),"arrow clicked",Toast.LENGTH_SHORT).show();
+            listener.onLoginArrowClicked();
         }
         else if (v.getId() == R.id.tv_forgot_password){
             Intent i = new Intent(getActivity(), forgetPassword.class);
@@ -259,4 +263,16 @@ public class LoginFragment extends Fragment implements View.OnClickListener{
         fragmentTransaction.commit();
         Log.d("fraggg","show");
     }*/
+
+    @Override
+    public void onAttach(@NonNull Context context) {
+        super.onAttach(context);
+        try {
+            listener = (LoginFragmentListener) context;
+        } catch (ClassCastException e) {
+            throw new ClassCastException(context.toString() + " must implement LoginFragmentListener");
+        }
+
+    }
+
 }
