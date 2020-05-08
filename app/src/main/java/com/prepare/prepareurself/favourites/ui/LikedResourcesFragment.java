@@ -1,6 +1,8 @@
 package com.prepare.prepareurself.favourites.ui;
 
+import android.content.Intent;
 import android.graphics.Bitmap;
+import android.net.Uri;
 import android.os.Bundle;
 
 import androidx.annotation.Nullable;
@@ -21,7 +23,10 @@ import com.prepare.prepareurself.favourites.data.model.LikedResourcesModel;
 import com.prepare.prepareurself.favourites.viewmodel.FavouritesViewModel;
 import com.prepare.prepareurself.utils.Constants;
 import com.prepare.prepareurself.utils.PrefManager;
+import com.prepare.prepareurself.utils.Utility;
+import com.prepare.prepareurself.youtubeplayer.youtubeplaylistapi.ui.VideoActivity;
 
+import java.io.IOException;
 import java.util.List;
 
 public class LikedResourcesFragment extends Fragment implements LikedResourcesAdapter.LikedResourceRvInteractor {
@@ -81,17 +86,42 @@ public class LikedResourcesFragment extends Fragment implements LikedResourcesAd
     }
 
     @Override
-    public void onResourceClicked(LikedResourcesModel resource) {
+    public void videoClicked(LikedResourcesModel videoResources, String videoCode, Bitmap bitmap) {
+        Intent intent = new Intent(getActivity(), VideoActivity.class);
+        intent.putExtra(Constants.VIDEOCODE,videoCode);
+        intent.putExtra(Constants.RESOURCEID,videoResources.getId());
+        intent.putExtra(Constants.RESOURCEVIDEO,true);
+        intent.putExtra(Constants.VIDEOTITLE, videoResources.getTitle());
+        intent.putExtra(Constants.VIDEODESCRIPTION, videoResources.getDescription());
+        intent.putExtra(Constants.TOPICID, videoResources.getCourse_topic_id());
 
+        try {
+            Uri bitmapUri = Utility.getUriOfBitmap(bitmap, getActivity());
+            intent.putExtra(Constants.BITMAPURI,bitmapUri.toString());
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+
+        startActivity(intent);
+    }
+
+    @Override
+    public void onResourceClicked(LikedResourcesModel resource) {
+        Utility.redirectUsingCustomTab(getActivity(),resource.getLink());
     }
 
     @Override
     public void OnLikeButtonClicked(LikedResourcesModel resource, int checked) {
-
+        viewModel.likeResource(prefManager.getString(Constants.JWTTOKEN),resource.getId(), checked);
     }
 
     @Override
     public void onResourceShared(Bitmap bitmap, String text) {
-
+        try {
+            Uri bitmapUri = Utility.getUriOfBitmap(bitmap, getActivity());
+            Utility.shareContent(getActivity(),bitmapUri,text);
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
     }
 }

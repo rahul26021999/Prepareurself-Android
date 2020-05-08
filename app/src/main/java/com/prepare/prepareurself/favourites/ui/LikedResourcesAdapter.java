@@ -52,30 +52,50 @@ public class LikedResourcesAdapter extends RecyclerView.Adapter<LikedResourcesAd
     }
 
     @Override
-    public void onBindViewHolder(@NonNull final LikedResourceViewHolder holder, int position) {
+    public void onBindViewHolder(@NonNull final LikedResourceViewHolder holder, final int position) {
         final LikedResourcesModel theoryResources1= likedResourcesModels.get(position);
         holder.bindview(theoryResources1);
 
         holder.itemView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                listener.onResourceClicked(theoryResources1);
+                if (theoryResources1.getType().equalsIgnoreCase("theory")){
+                    listener.onResourceClicked(theoryResources1);
+                }else{
+                    Bitmap bitmap = Utility.getBitmapFromView(holder.youTubeThumbnailView);
+                    listener.videoClicked(theoryResources1,Utility.getVideoCode(theoryResources1.getLink()), bitmap);
+                }
             }
         });
 
         holder.imgShare.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                try {
-                    String encodedId = Utility.base64EncodeForInt(theoryResources1.getId());
-                    Bitmap bitmap = Utility.getBitmapFromView(holder.imageView);
-                    String text = "Checkout our prepareurself app. " +
-                            "I found some best resources  from internet at one place and learning is so much fun now.\n" +
-                            "You can learn them too here :\n"+
-                            "prepareurself.in/resource/"+encodedId;
-                    listener.onResourceShared(bitmap,text);
-                } catch (UnsupportedEncodingException e) {
-                    e.printStackTrace();
+
+                if (theoryResources1.getType().equalsIgnoreCase("video")){
+                    try {
+                        String encodedId = Utility.base64EncodeForInt(theoryResources1.getId());
+                        Bitmap bitmap = Utility.getBitmapFromView(holder.youTubeThumbnailView);
+                        String text = "Checkout our prepareurself app. " +
+                                "I found some best resources  from internet at one place and learning is so much fun now.\n" +
+                                "You can learn them too here :\n"+
+                                "prepareurself.in/resource/"+encodedId;
+                        listener.onResourceShared(bitmap,text);
+                    } catch (UnsupportedEncodingException e) {
+                        e.printStackTrace();
+                    }
+                }else if (theoryResources1.getType().equalsIgnoreCase("theory")){
+                    try {
+                        String encodedId = Utility.base64EncodeForInt(theoryResources1.getId());
+                        Bitmap bitmap = Utility.getBitmapFromView(holder.imageView);
+                        String text = "Checkout our prepareurself app. " +
+                                "I found some best resources  from internet at one place and learning is so much fun now.\n" +
+                                "You can learn them too here :\n"+
+                                "prepareurself.in/resource/"+encodedId;
+                        listener.onResourceShared(bitmap,text);
+                    } catch (UnsupportedEncodingException e) {
+                        e.printStackTrace();
+                    }
                 }
             }
         });
@@ -95,6 +115,8 @@ public class LikedResourcesAdapter extends RecyclerView.Adapter<LikedResourcesAd
                     holder.tvLikes.setText(theoryResources1.getTotal_likes()-1 + " likes");
                     theoryResources1.setTotal_likes(theoryResources1.getTotal_likes()-1);
                     theoryResources1.setLike(0);
+                    likedResourcesModels.remove(theoryResources1);
+                    notifyDataSetChanged();
                 }else{
                     if(buttonColorAnim != null){
                         buttonColorAnim.reverse();
@@ -238,6 +260,7 @@ public class LikedResourcesAdapter extends RecyclerView.Adapter<LikedResourcesAd
         void onResourceClicked(LikedResourcesModel resource);
         void OnLikeButtonClicked(LikedResourcesModel resource,int checked);
         void onResourceShared(Bitmap bitmap, String text);
+        void videoClicked(LikedResourcesModel videoResources, String videoCode, Bitmap bitmap);
     }
 
 }

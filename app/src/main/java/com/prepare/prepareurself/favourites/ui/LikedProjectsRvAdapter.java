@@ -5,6 +5,7 @@ import android.animation.ValueAnimator;
 import android.content.Context;
 import android.graphics.Bitmap;
 import android.graphics.drawable.Drawable;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -48,7 +49,7 @@ public class LikedProjectsRvAdapter extends RecyclerView.Adapter<LikedProjectsRv
     }
 
     @Override
-    public void onBindViewHolder(@NonNull final LikedProjectsViewHolder holder, int position) {
+    public void onBindViewHolder(@NonNull final LikedProjectsViewHolder holder, final int position) {
         final LikedProjectsModel projectsModel = likedProjectsModels.get(position);
 
         holder.bindView(projectsModel);
@@ -91,6 +92,9 @@ public class LikedProjectsRvAdapter extends RecyclerView.Adapter<LikedProjectsRv
                     holder.tvNoOfLikes.setText(projectsModel.getTotal_likes()-1 + " likes");
                     projectsModel.setTotal_likes(projectsModel.getTotal_likes()-1);
                     projectsModel.setLike(0);
+                    Log.d("remove_debug", "onClick: "+position);
+                    likedProjectsModels.remove(projectsModel);
+                    notifyDataSetChanged();
                 }else{
                     if(buttonColorAnim != null){
                         buttonColorAnim.reverse();
