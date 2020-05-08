@@ -1,9 +1,11 @@
 package com.prepare.prepareurself.authentication.ui;
 
 import android.app.ProgressDialog;
+import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
 
+import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 import androidx.lifecycle.Observer;
@@ -43,9 +45,14 @@ public class RegisterFragment extends Fragment implements View.OnClickListener {
     private AuthViewModel viewModel;
     private ImageView arrow;
     private TextView termsAndConditions;
+    private RegisterFragmentListener listener;
 
     public RegisterFragment() {
         // Required empty public constructor
+    }
+
+    public interface RegisterFragmentListener{
+        void onRegisterArrowClicked();
     }
 
 
@@ -85,7 +92,8 @@ public class RegisterFragment extends Fragment implements View.OnClickListener {
     public void onClick(View v) {
 
         if(v.getId()==R.id.arrow){
-            Toast.makeText(getContext(),"arrow clicked",Toast.LENGTH_SHORT).show();
+            //Toast.makeText(getContext(),"arrow clicked",Toast.LENGTH_SHORT).show();
+            listener.onRegisterArrowClicked();
         }
         else if(v.getId()==R.id.termsAndConditions){
             Toast.makeText(getContext(),"TermsAndConditionClicked",Toast.LENGTH_SHORT).show();
@@ -211,6 +219,17 @@ public class RegisterFragment extends Fragment implements View.OnClickListener {
         if (dialog!=null &&  dialog.isShowing()){
             dialog.hide();
         }
+    }
+
+    @Override
+    public void onAttach(@NonNull Context context) {
+        super.onAttach(context);
+        try {
+            listener = (RegisterFragmentListener) context;
+        } catch (ClassCastException e) {
+            throw new ClassCastException(context.toString() + " must implement RegisterFragmentListener");
+        }
+
     }
 
 }

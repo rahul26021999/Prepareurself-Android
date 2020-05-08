@@ -23,13 +23,14 @@ import com.prepare.prepareurself.utils.BaseActivity;
 import com.prepare.prepareurself.utils.Constants;
 import com.prepare.prepareurself.utils.PrefManager;
 
-public class AuthenticationActivity extends BaseActivity {
+public class AuthenticationActivity extends BaseActivity implements LoginFragment.LoginFragmentListener, RegisterFragment.RegisterFragmentListener {
 
     private PrefManager prefManager;
     public static int resourceId = -1;
     public static int projectId = -1;
     public static boolean FEEDBACKSHARE = false;
     public static boolean PROFILESHARE = false;
+    private  ViewPager viewPager;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -54,50 +55,22 @@ public class AuthenticationActivity extends BaseActivity {
 
         PROFILESHARE = getIntent().getBooleanExtra(Constants.PROFILESHARE, false);
 
-        ViewPager viewPager=findViewById(R.id.viewPager);
+        viewPager=findViewById(R.id.viewPager);
         AuthenticationPagerAdapter pagerAdapter =new AuthenticationPagerAdapter(getSupportFragmentManager());
         LoginFragment loginFragment= new LoginFragment();
         pagerAdapter.addFragment(loginFragment);
         pagerAdapter.addFragment(new RegisterFragment());
         viewPager.setAdapter(pagerAdapter);
-        //coded here
-
-        //fragement_forgetpassword forgetpassword=new fragement_forgetpassword();
-        //FragmentManager fm=getSupportFragmentManager();
-        //fm.beginTransaction().add(R.id.mainlayout,loginFragment).commit();
-
-
 
     }
 
     @Override
-    protected void onResume() {
-        super.onResume();
-//        getAndroidToken();
-
+    public void onLoginArrowClicked() {
+        viewPager.setCurrentItem(1, true);
     }
 
-//    private void getAndroidToken() {
-//        FirebaseInstanceId.getInstance().getInstanceId()
-//                .addOnCompleteListener(new OnCompleteListener<InstanceIdResult>() {
-//                    @Override
-//                    public void onComplete(@NonNull Task<InstanceIdResult> task) {
-//                        if (!task.isSuccessful()) {
-//                            Log.w("FCM_debug", "getInstanceId failed", task.getException());
-//                            return;
-//                        }
-//
-//                        // Get new Instance ID token
-//                        String token =  task.getResult().getToken();
-//                        prefManager.saveString(Constants.ANDROIDTOKEN,token);
-//
-//                        // Log and toast
-////                        String msg = getString(R.string.msg_token_fmt, token);
-//                        Log.d("FCM Token", token);
-////                        Toast.makeText(AuthenticationActivity.this, msg, Toast.LENGTH_SHORT).show();
-//                    }
-//                });
-//
-//    }
-
+    @Override
+    public void onRegisterArrowClicked() {
+        viewPager.setCurrentItem(0, true);
+    }
 }
