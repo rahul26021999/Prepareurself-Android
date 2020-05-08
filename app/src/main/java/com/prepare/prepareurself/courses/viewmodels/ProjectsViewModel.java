@@ -100,8 +100,8 @@ public class ProjectsViewModel extends AndroidViewModel {
         return respository.viewProject(token,id);
     }
 
-    public LiveData<ProjectResponseModel> getProjectByIdFromRemote(String token,int projectId) {
-        return respository.getProjectById(token, projectId);
+    public void getProjectByIdFromRemote(String token,int projectId) {
+        respository.getProjectById(token, projectId);
     }
 
     public void saveProject(ProjectsModel project) {

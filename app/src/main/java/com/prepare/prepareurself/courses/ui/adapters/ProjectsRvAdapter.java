@@ -100,6 +100,7 @@ public class ProjectsRvAdapter extends RecyclerView.Adapter<ProjectsRvAdapter.Pr
                         buttonColorAnim = null;
                         listener.onProjectLiked(projectsModel,1);
                         holder.tvNoOfLikes.setText(projectsModel.getTotal_likes() + " likes");
+                        //liked = false;
                     }
                     else {
                         final ImageView button = (ImageView) v;
@@ -113,6 +114,7 @@ public class ProjectsRvAdapter extends RecyclerView.Adapter<ProjectsRvAdapter.Pr
                         buttonColorAnim.start();
                         listener.onProjectLiked(projectsModel,0);
                         holder.tvNoOfLikes.setText(projectsModel.getTotal_likes()+1 + " likes");
+                       // liked = true;
                     }
                 }
             }

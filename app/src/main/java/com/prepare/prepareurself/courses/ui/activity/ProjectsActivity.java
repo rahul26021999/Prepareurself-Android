@@ -79,6 +79,7 @@ public class ProjectsActivity extends BaseActivity implements PlaylistVideosRvAd
 
     private TextView level;
     private AdView mAdView;
+    ProjectsModel currentProjectModel = null;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -141,44 +142,54 @@ public class ProjectsActivity extends BaseActivity implements PlaylistVideosRvAd
                 finish();
             }else {
                 projectId = id;
-                callProjectFromRemote(projectId);
+                viewModel.getProjectByIdFromRemote(prefManager.getString(Constants.JWTTOKEN), projectId);
             }
 
         }else if (intent.getBooleanExtra(Constants.DEEPSHAREPROECTAFTERLOGIN, false)){
             projectId = intent.getIntExtra(Constants.PROJECTID,-1);
             courseName = intent.getStringExtra(Constants.COURSENAME);
-            callProjectFromRemote(projectId);
+            viewModel.getProjectByIdFromRemote(prefManager.getString(Constants.JWTTOKEN), projectId);
         }else{
             projectId = intent.getIntExtra(Constants.PROJECTID,-1);
+            viewModel.getProjectByIdFromRemote(prefManager.getString(Constants.JWTTOKEN), projectId);
+        }
 
-            if (projectId != -1){
-                viewModel.getProjectById(projectId).observe(this, new Observer<ProjectsModel>() {
-                    @Override
-                    public void onChanged(final ProjectsModel projectsModel) {
-                        if (projectsModel!=null){
-                            if (projectsModel.getView()==0){
-                                viewModel.viewProject(prefManager.getString(Constants.JWTTOKEN),projectsModel.getId())
-                                        .observe(ProjectsActivity.this, new Observer<ResourceViewsResponse>() {
-                                            @Override
-                                            public void onChanged(ResourceViewsResponse resourceViewsResponse) {
-                                                if (resourceViewsResponse!=null){
-                                                    if (resourceViewsResponse.getError_code() == 0){
-                                                        Log.d("project_viewed", "project viewd");
-                                                        projectsModel.setView(1);
-                                                        viewModel.saveProject(projectsModel);
-                                                    }
-                                                }
-                                            }
-                                        });
-                            }
-                            updateUIWithProject(projectsModel);
-                        }else{
-                            callProjectFromRemote(projectId);
-                        }
+
+
+        if (projectId != -1){
+            viewModel.getProjectById(projectId).observe(this, new Observer<ProjectsModel>() {
+                @Override
+                public void onChanged(ProjectsModel projectsModel) {
+                    currentProjectModel = projectsModel;
+                    if (projectsModel!=null){
+                        Log.d("project_viewed", "current project" + currentProjectModel.getName());
+                        Log.d("project_viewed", "get view" + currentProjectModel.getView());
+//                        if (currentProjectModel.getView()==0){
+//                            currentProjectModel.setView(1);
+//                            viewModel.saveProject(currentProjectModel);
+//                            viewModel.viewProject(prefManager.getString(Constants.JWTTOKEN),projectsModel.getId())
+//                                    .observe(ProjectsActivity.this, new Observer<ResourceViewsResponse>() {
+//                                        @Override
+//                                        public void onChanged(ResourceViewsResponse resourceViewsResponse) {
+//                                            if (resourceViewsResponse!=null){
+//                                                if (resourceViewsResponse.getError_code() == 0){
+//                                                    Log.d("project_viewed", "project viewd");
+////                                                    currentProjectModel.setView(1);
+////                                                    viewModel.saveProject(currentProjectModel);
+//                                                }else{
+////                                                    currentProjectModel.setView(0);
+////                                                    viewModel.saveProject(currentProjectModel);
+//                                                }
+//                                            }
+//                                        }
+//                                    });
+//                        }
+                        updateUIWithProject(projectsModel);
+                    }else{
+                        viewModel.getProjectByIdFromRemote(prefManager.getString(Constants.JWTTOKEN), projectId);
                     }
-                });
-            }
-
+                }
+            });
         }
 
         tvViewPlaylist.setOnClickListener(new View.OnClickListener() {
@@ -251,38 +262,38 @@ public class ProjectsActivity extends BaseActivity implements PlaylistVideosRvAd
 
     }
     
-    private void callProjectFromRemote(int projectId) {
-        viewModel.getProjectByIdFromRemote(prefManager.getString(Constants.JWTTOKEN),projectId)
-                .observe(this, new Observer<ProjectResponseModel>() {
-                    @Override
-                    public void onChanged(final ProjectResponseModel projectResponseModel) {
-                        if (projectResponseModel!=null){
-                            if (projectResponseModel.getError_code() == 0 && projectResponseModel.getProject()!=null){
-                                if (projectResponseModel.getProject().getView()==0){
-                                    viewModel.viewProject(prefManager.getString(Constants.JWTTOKEN),projectResponseModel.getProject().getId())
-                                            .observe(ProjectsActivity.this, new Observer<ResourceViewsResponse>() {
-                                                @Override
-                                                public void onChanged(ResourceViewsResponse resourceViewsResponse) {
-                                                    if (resourceViewsResponse!=null){
-                                                        if (resourceViewsResponse.getError_code() == 0){
-                                                            Log.d("project_viewed", "project viewd");
-                                                            projectResponseModel.getProject().setView(1);
-                                                            viewModel.saveProject(projectResponseModel.getProject());
-                                                        }
-                                                    }
-                                                }
-                                            });
-                                }
-                                updateUIWithProject(projectResponseModel.getProject());
-                            }else{
-                                Utility.showToast(ProjectsActivity.this, "Project not found");
-                            }
-                        }else{
-                            Utility.showToast(ProjectsActivity.this,Constants.SOMETHINGWENTWRONG);
-                        }
-                    }
-                });
-    }
+//    private void callProjectFromRemote(int projectId) {
+//        viewModel.getProjectById(prefManager.getString(Constants.JWTTOKEN),projectId)
+//                .observe(this, new Observer<ProjectResponseModel>() {
+//                    @Override
+//                    public void onChanged(final ProjectResponseModel projectResponseModel) {
+//                        if (projectResponseModel!=null){
+//                            if (projectResponseModel.getError_code() == 0 && projectResponseModel.getProject()!=null){
+//                                if (projectResponseModel.getProject().getView()==0){
+//                                    viewModel.viewProject(prefManager.getString(Constants.JWTTOKEN),projectResponseModel.getProject().getId())
+//                                            .observe(ProjectsActivity.this, new Observer<ResourceViewsResponse>() {
+//                                                @Override
+//                                                public void onChanged(ResourceViewsResponse resourceViewsResponse) {
+//                                                    if (resourceViewsResponse!=null){
+//                                                        if (resourceViewsResponse.getError_code() == 0){
+//                                                            Log.d("project_viewed", "project viewd");
+//                                                            projectResponseModel.getProject().setView(1);
+//                                                            viewModel.saveProject(projectResponseModel.getProject());
+//                                                        }
+//                                                    }
+//                                                }
+//                                            });
+//                                }
+//                                updateUIWithProject(projectResponseModel.getProject());
+//                            }else{
+//                                Utility.showToast(ProjectsActivity.this, "Project not found");
+//                            }
+//                        }else{
+//                            Utility.showToast(ProjectsActivity.this,Constants.SOMETHINGWENTWRONG);
+//                        }
+//                    }
+//                });
+//    }
 
     private void updateUIWithProject(final ProjectsModel projectsModel) {
 
@@ -296,10 +307,24 @@ public class ProjectsActivity extends BaseActivity implements PlaylistVideosRvAd
                     .into(imageProject);
         }
 
+
+        Log.d("project_viewed_like", "view : done "+ projectsModel.getLike());
         if (projectsModel.getLike() == 1){
             likeButton.setImageDrawable(this.getResources().getDrawable(R.drawable.ic_thumb_up_blue_24dp));
         }else{
             likeButton.setImageDrawable(this.getResources().getDrawable(R.drawable.ic_thumb_up_grey_24dp));
+        }
+
+        if (projectsModel.getView() == 0){
+            viewModel.viewProject(prefManager.getString(Constants.JWTTOKEN),projectsModel.getId())
+                    .observe(this, new Observer<ResourceViewsResponse>() {
+                        @Override
+                        public void onChanged(ResourceViewsResponse resourceViewsResponse) {
+                            if (resourceViewsResponse!=null && resourceViewsResponse.getError_code() == 0){
+//                                Log.d("project_viewed", "view : done "+ resourceViewsResponse.getMessage() );
+                            }
+                        }
+                    });
         }
 
         if(projectsModel.getLevel().equals("hard"))

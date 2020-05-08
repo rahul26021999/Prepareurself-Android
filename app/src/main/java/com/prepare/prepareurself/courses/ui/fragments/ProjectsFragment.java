@@ -14,6 +14,7 @@ import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -44,6 +45,7 @@ public class ProjectsFragment extends Fragment implements ProjectsRvAdapter.Proj
     private Boolean isScrolling = false;
     private int rvCurrentItems, rvTotalItems, rvScrolledOutItems, rvLastPage, rvCurrentPage=1;
     private TextView tvComingSoon;
+    private ProjectsRvAdapter adapter;
 
     public static ProjectsFragment newInstance() {
         return new ProjectsFragment();
@@ -76,7 +78,7 @@ public class ProjectsFragment extends Fragment implements ProjectsRvAdapter.Proj
         }
 
         final LinearLayoutManager layoutManager = new LinearLayoutManager(getActivity());
-        final ProjectsRvAdapter adapter = new ProjectsRvAdapter(getActivity(), this);
+        adapter = new ProjectsRvAdapter(getActivity(), this);
         recyclerView.setLayoutManager(layoutManager);
         DividerItemDecoration decoration = new DividerItemDecoration(requireContext(),R.drawable.theory_resource_divider);
         recyclerView.addItemDecoration(decoration);
@@ -122,6 +124,12 @@ public class ProjectsFragment extends Fragment implements ProjectsRvAdapter.Proj
             }
         });
 
+
+    }
+
+    @Override
+    public void onResume() {
+        super.onResume();
         mViewModel.getProjectByCourseId(CoursesActivity.courseId).observe(getActivity(), new Observer<List<ProjectsModel>>() {
             @Override
             public void onChanged(List<ProjectsModel> projectsModels) {
@@ -141,8 +149,6 @@ public class ProjectsFragment extends Fragment implements ProjectsRvAdapter.Proj
 
             }
         });
-
-
     }
 
     @Override
@@ -163,7 +169,7 @@ public class ProjectsFragment extends Fragment implements ProjectsRvAdapter.Proj
     }
 
     @Override
-    public void onProjectLiked(ProjectsModel projectsModel, int liked) {
+    public void onProjectLiked(final ProjectsModel projectsModel, final int liked) {
         mViewModel.likeProject(prefManager.getString(Constants.JWTTOKEN),projectsModel.getId(), liked)
                 .observe(getActivity(), new Observer<ResourceLikesResponse>() {
                     @Override
@@ -171,6 +177,11 @@ public class ProjectsFragment extends Fragment implements ProjectsRvAdapter.Proj
                         if (resourceLikesResponse!=null){
                             if (!resourceLikesResponse.getSuccess()){
                                 Utility.showToast(getActivity(),"Unable to like at the moment");
+                            }else{
+//                                Log.d("project_viewed_liked", "before : "+projectsModel.getLike()+ " , "+liked );
+//                                projectsModel.setLike(liked);
+//                                Log.d("project_viewed_liked", "after : "+projectsModel.getLike()+ " , "+liked );
+//                                mViewModel.saveProject(projectsModel);
                             }
                         }
                     }
