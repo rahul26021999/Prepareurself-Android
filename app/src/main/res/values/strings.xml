@@ -40,7 +40,7 @@
 
     <!-- AdMob ad unit IDs -->
     <string name="admob_app_id">ca-app-pub-7841426065660181~4749952270</string>
-<!--    <string name="bannerAds">ca-app-pub-7841426065660181/4498670833</string>-->
+    <!--    <string name="bannerAds">ca-app-pub-7841426065660181/4498670833</string>-->
     <string name="bannerAds">ca-app-pub-3940256099942544/6300978111</string>
 
     <string name="sourcesTitle">Sources</string>
@@ -49,6 +49,7 @@
 
     <!-- TODO: Remove or change this placeholder text -->
     <string name="hello_blank_fragment">Hello blank fragment</string>
+    <string name="menu_fav">Favourites</string>
 
 
 </resources>

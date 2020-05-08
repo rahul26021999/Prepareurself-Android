@@ -1,0 +1,141 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools">
+
+    <androidx.cardview.widget.CardView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        app:cardBackgroundColor="@color/white"
+        android:id="@+id/card_resource_title">
+
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:background="?attr/selectableItemBackground"
+            android:layout_height="wrap_content"
+            android:padding="20dp">
+
+            <androidx.cardview.widget.CardView
+                android:layout_width="150dp"
+                android:id="@+id/image"
+                app:cardCornerRadius="12dp"
+                app:cardElevation="0dp"
+                android:layout_height="130dp">
+                <ImageView
+                    android:layout_width="150dp"
+                    android:layout_height="130dp"
+                    android:scaleType="centerCrop"
+                    android:id="@+id/project_image"
+                    android:src="@drawable/placeholder" />
+            </androidx.cardview.widget.CardView>
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="This is the title of the topicsknkljdnfkjdn"
+                android:textSize="14sp"
+                android:singleLine="false"
+                android:maxLines="2"
+                android:ellipsize="end"
+                android:layout_toEndOf="@id/image"
+                android:textColor="#000"
+                android:layout_toStartOf="@+id/img_share_project"
+                android:layout_marginStart="15dp"
+                android:layout_marginEnd="5dp"
+                android:fontFamily="@font/poppins_medium"
+                android:id="@+id/tv_title_project"/>
+
+            <com.google.android.material.chip.Chip
+                style="@style/Widget.MaterialComponents.Chip.Entry"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:id="@+id/tv_level_project"
+                app:closeIconVisible="false"
+                android:textSize="8sp"
+                android:textColor="@color/white"
+                android:layout_marginStart="15dp"
+                android:layout_marginTop="5dp"
+                android:checkable="false"
+                app:checkedIconVisible="false"
+                android:layout_marginEnd="5dp"
+                android:layout_toEndOf="@id/image"
+                android:layout_below="@+id/tv_title_project"
+                android:text="hard"/>
+
+
+
+            <ImageView
+                android:layout_width="40dp"
+                android:layout_height="40dp"
+                android:padding="8dp"
+                android:src="@drawable/ic_image_share"
+                android:background="?attr/selectableItemBackgroundBorderless"
+                android:layout_alignParentEnd="true"
+                android:id="@+id/img_share_project"
+                android:layout_marginBottom="10dp"/>
+
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_below="@+id/tv_title_project"
+                android:layout_marginTop="5dp"
+                android:layout_marginEnd="10dp"
+                android:text="This is the title of the topics"
+                android:textSize="11sp"
+                android:layout_toEndOf="@id/image"
+                android:maxLines="2"
+                android:visibility="gone"
+                android:ellipsize="end"
+                android:marqueeRepeatLimit="marquee_forever"
+                android:layout_marginStart="15dp"
+                android:fontFamily="@font/poppins_medium"
+                android:id="@+id/tv_decription_project"/>
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_below="@+id/tv_decription_topic"
+                android:layout_marginTop="10dp"
+                android:textColor="@color/colorAccent"
+                android:textSize="10sp"
+                android:layout_toRightOf="@id/image"
+                android:text="10 views"
+                android:visibility="visible"
+                android:singleLine="true"
+                android:layout_alignBottom="@id/image"
+                android:layout_marginStart="15dp"
+                android:fontFamily="@font/poppins_medium"
+                android:id="@+id/no_of_views"/>
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_toRightOf="@id/no_of_views"
+                android:layout_below="@+id/tv_decription_topic"
+                android:layout_marginTop="10dp"
+                android:textColor="@color/colorAccent"
+                android:textSize="10sp"
+                android:visibility="visible"
+                android:text="10 likes"
+                android:singleLine="true"
+                android:layout_alignBottom="@+id/image"
+                android:layout_marginStart="10dp"
+                android:fontFamily="@font/poppins_medium"
+                android:id="@+id/tv_no_of_likes"/>
+
+            <ImageView
+                android:id="@+id/spark_button"
+                android:layout_width="40dp"
+                android:layout_height="40dp"
+                android:padding="8dp"
+                android:background="?attr/selectableItemBackgroundBorderless"
+                android:layout_alignParentEnd="true"
+                android:layout_alignBottom="@id/image"
+                android:src="@drawable/ic_thumb_up_blue_24dp"/>
+        </RelativeLayout>
+
+    </androidx.cardview.widget.CardView>
+
+</RelativeLayout>

@@ -1,6 +1,7 @@
 package com.prepare.prepareurself.favourites.data.repository;
 
 import android.app.Application;
+import android.util.Log;
 
 import androidx.lifecycle.LiveData;
 import androidx.lifecycle.MutableLiveData;
@@ -32,6 +33,8 @@ public class FavouritesRepository {
     public LiveData<FavouritesResponseModel> fetchFavourites(String token, String type, int count, final int page){
 
         final MutableLiveData<FavouritesResponseModel> data = new MutableLiveData<>();
+
+        Log.d("fav", "fetchFavourites: "+apiInterface.fetchFavourites(token, type, count, page).request().url().toString());
 
         apiInterface.fetchFavourites(token, type, count, page).enqueue(new Callback<FavouritesResponseModel>() {
             @Override

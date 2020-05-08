@@ -31,6 +31,7 @@ import com.prepare.prepareurself.dashboard.ui.fragment.DashboardFragment;
 import com.prepare.prepareurself.Home.viewmodel.HomeActivityViewModel;
 import com.prepare.prepareurself.R;
 import com.prepare.prepareurself.authentication.data.model.UserModel;
+import com.prepare.prepareurself.favourites.ui.FavoritesActivity;
 import com.prepare.prepareurself.firebase.UpdateHelper;
 import com.prepare.prepareurself.resources.data.model.ResourceModel;
 import com.prepare.prepareurself.resources.ui.activity.ResourcesActivity;
@@ -222,6 +223,9 @@ public class HomeActivity extends BaseActivity implements NavigationView.OnNavig
                 break;
             case R.id.nav_feedback :
                 navController.navigate(R.id.nav_feedback);
+                break;
+            case R.id.nav_fav:
+                startActivity(new Intent(this, FavoritesActivity.class));
                 break;
 
         }
