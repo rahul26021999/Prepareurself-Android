@@ -205,11 +205,15 @@ public class ProjectsRespository {
 
     public LiveData<ProjectResponseModel> getProjectById(String token, int projectId) {
         final MutableLiveData<ProjectResponseModel> data = new MutableLiveData<>();
+        Log.d("project_url", "getProjectById: " + apiInterface.getProjectById(token, projectId).request().url().toString());
         apiInterface.getProjectById(token,projectId).enqueue(new Callback<ProjectResponseModel>() {
             @Override
             public void onResponse(Call<ProjectResponseModel> call, Response<ProjectResponseModel> response) {
                 ProjectResponseModel projectResponseModel = response.body();
                 if (projectResponseModel!=null){
+                    if (projectResponseModel.getError_code() == 0){
+                        projectsDbRepository.insertProject(projectResponseModel.getProject());
+                    }
                     data.setValue(projectResponseModel);
                 }else{
                     data.setValue(null);
