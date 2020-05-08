@@ -101,7 +101,6 @@ public class ResourceRvHorizontalAdapter extends RecyclerView.Adapter<ResourceRv
                             .placeholder(R.drawable.placeholder)
                             .diskCacheStrategy(DiskCacheStrategy.RESOURCE)
                             .override(500,500)
-                            .transition(GenericTransitionOptions.<Drawable>with(Utility.getAnimationObject()))
                             .into(imageView);
                 }
             }else if (res.getType().equalsIgnoreCase("video")){

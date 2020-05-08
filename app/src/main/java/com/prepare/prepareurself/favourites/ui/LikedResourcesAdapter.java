@@ -191,7 +191,6 @@ public class LikedResourcesAdapter extends RecyclerView.Adapter<LikedResourcesAd
                             Constants.THEORYRESOURCEBASEURL + resourceModel.getImage_url())
                             .placeholder(R.drawable.placeholder)
                             .override(400,400)
-                            .transition(GenericTransitionOptions.<Drawable>with(Utility.getAnimationObject()))
                             .into(imageView);
                 }
                 Log.d("liked", "bindview: "+Constants.THEORYRESOURCEBASEURL + resourceModel.getImage_url());

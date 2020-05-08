@@ -231,7 +231,6 @@ public class ProfileFragment extends Fragment implements View.OnClickListener {
                                     .load(Constants.USERIMAGEBASEURL + userModel.getProfile_image())
                                     .override(500,500)
                                     .placeholder(R.drawable.person_placeholder)
-                                    .transition(GenericTransitionOptions.<Drawable>with(Utility.getAnimationObject()))
                                     .into(userImageView);
                         }
 

@@ -159,7 +159,6 @@ public class ProjectsRvAdapter extends RecyclerView.Adapter<ProjectsRvAdapter.Pr
             }else{
                 Glide.with(context)
                         .load(Constants.PROJECTSIMAGEBASEURL + projectsModel.getImage_url())
-                        .transition(GenericTransitionOptions.<Drawable>with(Utility.getAnimationObject()))
                         .placeholder(R.drawable.placeholder)
                         .into(imageView);
             }

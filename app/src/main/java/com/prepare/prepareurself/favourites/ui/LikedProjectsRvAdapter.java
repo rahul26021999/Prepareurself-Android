@@ -157,7 +157,6 @@ public class LikedProjectsRvAdapter extends RecyclerView.Adapter<LikedProjectsRv
             }else{
                 Glide.with(context)
                         .load(Constants.PROJECTSIMAGEBASEURL + projectsModel.getImage_url())
-                        .transition(GenericTransitionOptions.<Drawable>with(Utility.getAnimationObject()))
                         .placeholder(R.drawable.placeholder)
                         .into(imageView);
             }

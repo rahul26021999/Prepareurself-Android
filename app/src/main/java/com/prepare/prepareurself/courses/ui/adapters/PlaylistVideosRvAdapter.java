@@ -88,7 +88,6 @@ public class PlaylistVideosRvAdapter extends RecyclerView.Adapter<PlaylistVideos
                 }else{
                     Glide.with(context)
                             .load(contentDetails.getSnippet().getThumbnails().getHigh().getUrl())
-                            .transition(GenericTransitionOptions.<Drawable>with(Utility.getAnimationObject()))
                             .placeholder(R.drawable.placeholder)
                             .into(youTubeThumbnailView);
                 }
@@ -100,7 +99,6 @@ public class PlaylistVideosRvAdapter extends RecyclerView.Adapter<PlaylistVideos
                 }else{
                     Glide.with(context)
                             .load(contentDetails.getSnippet().getThumbnails().getMedium().getUrl())
-                            .transition(GenericTransitionOptions.<Drawable>with(Utility.getAnimationObject()))
                             .placeholder(R.drawable.placeholder)
                             .into(youTubeThumbnailView);
                 }
@@ -112,7 +110,6 @@ public class PlaylistVideosRvAdapter extends RecyclerView.Adapter<PlaylistVideos
                 }else{
                     Glide.with(context)
                             .load(contentDetails.getSnippet().getThumbnails().getStandard().getUrl())
-                            .transition(GenericTransitionOptions.<Drawable>with(Utility.getAnimationObject()))
                             .placeholder(R.drawable.placeholder)
                             .into(youTubeThumbnailView);
                 }
@@ -124,7 +121,6 @@ public class PlaylistVideosRvAdapter extends RecyclerView.Adapter<PlaylistVideos
                 }else{
                     Glide.with(context)
                             .load(contentDetails.getSnippet().getThumbnails().getDefaultThumbnail().getUrl())
-                            .transition(GenericTransitionOptions.<Drawable>with(Utility.getAnimationObject()))
                             .placeholder(R.drawable.placeholder)
                             .into(youTubeThumbnailView);
                 }

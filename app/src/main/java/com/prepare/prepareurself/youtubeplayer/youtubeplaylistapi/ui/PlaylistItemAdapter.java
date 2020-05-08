@@ -107,35 +107,30 @@ public class PlaylistItemAdapter extends RecyclerView.Adapter<PlaylistItemAdapte
                         videoItemWrapper.getSnippet().getThumbnails().getMaxres().getUrl())
                         .placeholder(R.drawable.placeholder)
                         .override(550,300)
-                        .transition(GenericTransitionOptions.<Drawable>with(Utility.getAnimationObject()))
                         .into(imageView);
             }else if (videoItemWrapper.getSnippet().getThumbnails().getHigh()!=null){
                 Glide.with(context).load(
                         videoItemWrapper.getSnippet().getThumbnails().getHigh().getUrl())
                         .placeholder(R.drawable.placeholder)
                         .override(550,300)
-                        .transition(GenericTransitionOptions.<Drawable>with(Utility.getAnimationObject()))
                         .into(imageView);
             }else if (videoItemWrapper.getSnippet().getThumbnails().getMedium()!=null){
                 Glide.with(context).load(
                         videoItemWrapper.getSnippet().getThumbnails().getMedium().getUrl())
                         .placeholder(R.drawable.placeholder)
                         .override(550,300)
-                        .transition(GenericTransitionOptions.<Drawable>with(Utility.getAnimationObject()))
                         .into(imageView);
             }else if (videoItemWrapper.getSnippet().getThumbnails().getStandard()!=null){
                 Glide.with(context).load(
                         videoItemWrapper.getSnippet().getThumbnails().getStandard().getUrl())
                         .placeholder(R.drawable.placeholder)
                         .override(550,300)
-                        .transition(GenericTransitionOptions.<Drawable>with(Utility.getAnimationObject()))
                         .into(imageView);
             }else if (videoItemWrapper.getSnippet().getThumbnails().getDefaultThumbnail()!=null){
                 Glide.with(context).load(
                         videoItemWrapper.getSnippet().getThumbnails().getDefaultThumbnail().getUrl())
                         .placeholder(R.drawable.placeholder)
                         .override(550,300)
-                        .transition(GenericTransitionOptions.<Drawable>with(Utility.getAnimationObject()))
                         .into(imageView);
             }
 

@@ -83,7 +83,6 @@ public class CoursesHorizontalRvAdapter extends RecyclerView.Adapter<CoursesHori
                         .placeholder(R.drawable.placeholder)
                         .override(500,500)
                         .diskCacheStrategy(DiskCacheStrategy.RESOURCE)
-                        .transition(GenericTransitionOptions.<Drawable>with(Utility.getAnimationObject()))
                         .into(imageView);
             }
 

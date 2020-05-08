@@ -302,7 +302,6 @@ public class ProjectsActivity extends BaseActivity implements PlaylistVideosRvAd
         }else{
             Glide.with(this)
                     .load(Constants.PROJECTSIMAGEBASEURL + projectsModel.getImage_url())
-                    .transition(GenericTransitionOptions.<Drawable>with(Utility.getAnimationObject()))
                     .placeholder(R.drawable.placeholder)
                     .into(imageProject);
         }

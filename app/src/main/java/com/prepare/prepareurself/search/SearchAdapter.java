@@ -105,6 +105,7 @@ public class SearchAdapter extends RecyclerView.Adapter implements DetailedSearc
                 Glide.with(context)
                         .load(Constants.TOPICSBASEURL + topicsModel.getImage_url())
                         .placeholder(R.drawable.placeholder)
+                        .override(250,250)
                         .error(R.drawable.placeholder)
                         .into(((DetailedSearchViewHolder) holder).imageView);
                 holder.itemView.setOnClickListener(new View.OnClickListener() {
@@ -121,6 +122,7 @@ public class SearchAdapter extends RecyclerView.Adapter implements DetailedSearc
                         .load(Constants.PROJECTSIMAGEBASEURL + projectsModel.getImage_url())
                         .placeholder(R.drawable.placeholder)
                         .error(R.drawable.placeholder)
+                        .override(250,250)
                         .into(((DetailedSearchViewHolder) holder).imageView);
                 holder.itemView.setOnClickListener(new View.OnClickListener() {
                     @Override
@@ -139,6 +141,7 @@ public class SearchAdapter extends RecyclerView.Adapter implements DetailedSearc
                             .load(Constants.THEORYRESOURCEBASEURL + resourceModel.getImage_url())
                             .placeholder(R.drawable.placeholder)
                             .error(R.drawable.placeholder)
+                            .override(250,250)
                             .into(((DetailedSearchViewHolder) holder).imageView);
                 }else if (resourceModel.getType().equalsIgnoreCase("video")){
                     Glide.with(context)

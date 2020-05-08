@@ -89,7 +89,6 @@ public class TopicsHorizontalRvAdapter extends RecyclerView.Adapter<TopicsHorizo
                         .placeholder(R.drawable.placeholder)
                         .override(500,500)
                         .diskCacheStrategy(DiskCacheStrategy.RESOURCE)
-                        .transition(GenericTransitionOptions.<Drawable>with(Utility.getAnimationObject()))
                         .into(imageView);
             }
             tvCourseName.setText(topicsModel.getName());
