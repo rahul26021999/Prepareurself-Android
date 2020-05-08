@@ -38,7 +38,10 @@ public class NetwrokUtils {
 
         NetworkInfo activeNetwork = connectivityManager.getActiveNetworkInfo();
 
-        boolean isConnected = activeNetwork.isConnectedOrConnecting() == true;
+        boolean isConnected = false;
+        if (activeNetwork != null) {
+            isConnected = activeNetwork.isConnectedOrConnecting();
+        }
 
         networkLiveData.postValue(isConnected);
 
