@@ -16,9 +16,13 @@
         android:supportsRtl="true"
         android:theme="@style/AppTheme"
         android:usesCleartextTraffic="true">
-        <activity android:name=".utils.BaseActivity"></activity>
+        <activity android:name=".favourites.ui.FavoritesActivity"
+            android:theme="@style/ProfileTheme">
 
-        <activity android:name=".SplashActivity"
+        </activity>
+        <activity android:name=".utils.BaseActivity" />
+        <activity
+            android:name=".SplashActivity"
             android:theme="@style/SplashTheme">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
@@ -34,13 +38,12 @@
 
         <activity
             android:name="com.theartofdev.edmodo.cropper.CropImageActivity"
-            android:theme="@style/Base.Theme.AppCompat" />
-        <!-- Include the AdActivity configChanges and theme. -->
+            android:theme="@style/Base.Theme.AppCompat" /> <!-- Include the AdActivity configChanges and theme. -->
         <activity
             android:name="com.google.android.gms.ads.AdActivity"
             android:configChanges="keyboard|keyboardHidden|orientation|screenLayout|uiMode|screenSize|smallestScreenSize"
             android:theme="@android:style/Theme.Translucent" />
-        <activity android:name=".courses.ui.activity.AllCoursesActivity" >
+        <activity android:name=".courses.ui.activity.AllCoursesActivity">
             <intent-filter>
                 <action android:name="android.intent.action.VIEW" />
 
@@ -60,7 +63,8 @@
         <activity
             android:name=".profile.ui.activity.UpdatePasswordActivity"
             android:windowSoftInputMode="stateVisible|adjustResize" />
-        <activity android:name=".youtubeplayer.youtubeplaylistapi.ui.VideoActivity"
+        <activity
+            android:name=".youtubeplayer.youtubeplaylistapi.ui.VideoActivity"
             android:configChanges="orientation|screenSize|keyboardHidden">
             <intent-filter>
                 <action android:name="android.intent.action.VIEW" />
@@ -135,9 +139,7 @@
         </activity>
         <activity android:name=".utils.QuizBaseActivity" />
         <activity android:name=".quiz.QuizActivity" />
-
-        <activity
-            android:name=".authentication.ui.AuthenticationActivity">
+        <activity android:name=".authentication.ui.AuthenticationActivity">
             <intent-filter>
                 <action android:name="android.intent.action.VIEW" />
 

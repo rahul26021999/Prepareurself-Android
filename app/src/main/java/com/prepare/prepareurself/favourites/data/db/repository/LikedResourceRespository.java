@@ -23,7 +23,7 @@ public class LikedResourceRespository {
         resourcesDao = appDatabase.likedResourcesDao();
     }
 
-    public LiveData<List<LikedResourcesModel>> getAllProjects(){
+    public LiveData<List<LikedResourcesModel>> getAllResources(){
         listLiveData = resourcesDao.getAllResources();
         return listLiveData;
     }
