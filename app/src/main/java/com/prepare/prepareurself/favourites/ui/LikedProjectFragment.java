@@ -1,6 +1,8 @@
 package com.prepare.prepareurself.favourites.ui;
 
+import android.content.Intent;
 import android.graphics.Bitmap;
+import android.net.Uri;
 import android.os.Bundle;
 
 import androidx.annotation.Nullable;
@@ -16,11 +18,14 @@ import android.view.ViewGroup;
 import android.widget.LinearLayout;
 
 import com.prepare.prepareurself.R;
+import com.prepare.prepareurself.courses.ui.activity.ProjectsActivity;
 import com.prepare.prepareurself.favourites.data.model.LikedProjectsModel;
 import com.prepare.prepareurself.favourites.viewmodel.FavouritesViewModel;
 import com.prepare.prepareurself.utils.Constants;
 import com.prepare.prepareurself.utils.PrefManager;
+import com.prepare.prepareurself.utils.Utility;
 
+import java.io.IOException;
 import java.util.List;
 
 public class LikedProjectFragment extends Fragment implements LikedProjectsRvAdapter.LikedProjectsRvInteractor {
@@ -83,16 +88,23 @@ public class LikedProjectFragment extends Fragment implements LikedProjectsRvAda
 
     @Override
     public void onProjectClicked(LikedProjectsModel projectsModel) {
-
+        Intent intent = new Intent(getActivity(), ProjectsActivity.class);
+        intent.putExtra(Constants.PROJECTID,projectsModel.getId());
+        startActivity(intent);
     }
 
     @Override
     public void onProjectShared(Bitmap bitmap, String text) {
-
+        try {
+            Uri bitmapUri = Utility.getUriOfBitmap(bitmap, getActivity());
+            Utility.shareContent(getActivity(),bitmapUri,text);
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
     }
 
     @Override
     public void onProjectLiked(LikedProjectsModel projectsModel, int liked) {
-
+        viewModel.likeProject(prefManager.getString(Constants.JWTTOKEN),projectsModel.getId(), liked);
     }
 }
