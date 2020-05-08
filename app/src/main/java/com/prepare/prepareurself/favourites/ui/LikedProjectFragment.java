@@ -57,9 +57,10 @@ public class LikedProjectFragment extends Fragment implements LikedProjectsRvAda
         return view;
     }
 
+
     @Override
-    public void onStart() {
-        super.onStart();
+    public void onActivityCreated(@Nullable Bundle savedInstanceState) {
+        super.onActivityCreated(savedInstanceState);
 
         viewModel.fetchFavourites(prefManager.getString(Constants.JWTTOKEN),"project",10,1);
 
@@ -77,12 +78,6 @@ public class LikedProjectFragment extends Fragment implements LikedProjectsRvAda
                 }
             }
         });
-
-    }
-
-    @Override
-    public void onActivityCreated(@Nullable Bundle savedInstanceState) {
-        super.onActivityCreated(savedInstanceState);
 
     }
 

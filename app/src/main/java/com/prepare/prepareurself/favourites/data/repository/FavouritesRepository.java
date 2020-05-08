@@ -30,7 +30,7 @@ public class FavouritesRepository {
         likedResourceRespository = new LikedResourceRespository(application);
     }
 
-    public LiveData<FavouritesResponseModel> fetchFavourites(String token, String type, int count, final int page){
+    public LiveData<FavouritesResponseModel> fetchFavourites(String token, final String type, int count, final int page){
 
         final MutableLiveData<FavouritesResponseModel> data = new MutableLiveData<>();
 
@@ -43,8 +43,12 @@ public class FavouritesRepository {
                 if (responseModel!=null && responseModel.getError_code() == 0){
 
                     if (page == 1){
-                        likedProjectRepository.deleteAllProjects();
-                        likedResourceRespository.deleteAllResources();
+
+                        if (type.equals("project")){
+                            likedProjectRepository.deleteAllProjects();
+                        }else if (type.equals("resource")){
+                            likedResourceRespository.deleteAllResources();
+                        }
                     }
 
                     if (responseModel.getProjects()!=null){
