@@ -49,10 +49,12 @@ public class FavouritesRepository {
 
                     if (responseModel.getProjects()!=null){
                         for (LikedProjectsModel projectsModel : responseModel.getProjects().getData()){
+                            projectsModel.setLike(1);
                             likedProjectRepository.insertProject(projectsModel);
                         }
                     }else if (responseModel.getResources()!=null){
                         for (LikedResourcesModel resourceModel : responseModel.getResources().getData()){
+                            resourceModel.setLike(1);
                             likedResourceRespository.insertResource(resourceModel);
                         }
                     }
