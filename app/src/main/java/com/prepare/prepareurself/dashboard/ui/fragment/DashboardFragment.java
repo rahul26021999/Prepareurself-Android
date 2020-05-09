@@ -55,6 +55,7 @@ import com.prepare.prepareurself.search.models.SearchModel;
 import com.prepare.prepareurself.search.models.SearchRecyclerviewModel;
 import com.prepare.prepareurself.search.models.SearchResponseModel;
 import com.prepare.prepareurself.utils.Constants;
+import com.prepare.prepareurself.utils.DividerItemDecoration;
 import com.prepare.prepareurself.utils.PrefManager;
 import com.prepare.prepareurself.utils.Utility;
 import com.prepare.prepareurself.youtubeplayer.youtubeplaylistapi.ui.VideoActivity;
@@ -262,6 +263,8 @@ public class DashboardFragment extends Fragment implements DashboardRvAdapter.Da
         adapter = new SearchAdapter(getActivity(), this);
         searchLayoutManager=  new LinearLayoutManager(getActivity());
         searchRv.setLayoutManager(searchLayoutManager);
+//        DividerItemDecoration decoration = new DividerItemDecoration(getActivity(),R.drawable.theory_resource_divider);
+//        searchRv.addItemDecoration(decoration);
         searchRv.setAdapter(adapter);
         //searchRv.setNestedScrollingEnabled(true);
 
