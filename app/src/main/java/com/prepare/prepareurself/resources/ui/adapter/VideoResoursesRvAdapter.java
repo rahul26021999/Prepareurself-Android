@@ -4,6 +4,7 @@ import android.animation.ArgbEvaluator;
 import android.animation.ValueAnimator;
 import android.content.Context;
 import android.graphics.Bitmap;
+import android.graphics.drawable.Drawable;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -14,8 +15,8 @@ import android.widget.TextView;
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
-import com.like.LikeButton;
-import com.like.OnLikeListener;
+import com.bumptech.glide.GenericTransitionOptions;
+import com.bumptech.glide.Glide;
 import com.prepare.prepareurself.resources.data.model.ResourceModel;
 import com.prepare.prepareurself.R;
 import com.prepare.prepareurself.utils.Constants;
@@ -60,8 +61,14 @@ public class VideoResoursesRvAdapter extends RecyclerView.Adapter<VideoResourses
         holder.itemView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Bitmap bitmap = Utility.getBitmapFromView(holder.imageView);
-                listener.videoClicked(v1,videoCode, bitmap);
+                if (v1.getLink().contains("youtu.be") || v1.getLink().contains("youtube")){
+                    Bitmap bitmap = Utility.getBitmapFromView(holder.youTubeThumbnailView);
+                    listener.videoClicked(v1,videoCode, bitmap);
+                }else{
+                    listener.videoClicked(v1,videoCode, null);
+                }
+
+
             }
         });
 
@@ -71,7 +78,7 @@ public class VideoResoursesRvAdapter extends RecyclerView.Adapter<VideoResourses
 
                 try {
                     String encodedId = Utility.base64EncodeForInt(v1.getId());
-                    Bitmap bitmap = Utility.getBitmapFromView(holder.imageView);
+                    Bitmap bitmap = Utility.getBitmapFromView(holder.youTubeThumbnailView);
                     String text = "Checkout our prepareurself app. " +
                             "I found some best resources  from internet at one place and learning is so much fun now.\n" +
                             "You can learn them too here :\n"+
@@ -141,10 +148,10 @@ public class VideoResoursesRvAdapter extends RecyclerView.Adapter<VideoResourses
 
 
         private ImageView hitLike;
-        private YouTubeThumbnailView imageView;
+        private YouTubeThumbnailView youTubeThumbnailView;
         private TextView tvTitle;
         private TextView tvDescription;
-        private ImageView imgShare;
+        private ImageView imgShare, imageView;
         private TextView tvViews, tvLikes;
 
         private boolean readyForLoadingYoutubeThumbnail = true;
@@ -156,13 +163,14 @@ public class VideoResoursesRvAdapter extends RecyclerView.Adapter<VideoResourses
 //            tvTitle = itemView.findViewById(R.id.tv_video_resources_title);
 //            tvDescription = itemView.findViewById(R.id.tv_video_resources_decription);
 
-            imageView = itemView.findViewById(R.id.topic_image);
+            youTubeThumbnailView = itemView.findViewById(R.id.topic_image_youtube);
             tvTitle = itemView.findViewById(R.id.tv_title_topic);
             tvDescription = itemView.findViewById(R.id.tv_decription_topic);
             hitLike=itemView.findViewById(R.id.spark_button);
             imgShare = itemView.findViewById(R.id.img_share_theory_resource);
             tvViews = itemView.findViewById(R.id.no_of_views);
             tvLikes = itemView.findViewById(R.id.tv_no_of_likes);
+            imageView = itemView.findViewById(R.id.topic_image);
         }
 
         public void bindView(final ResourceModel v1, final String videoCode) {
@@ -172,45 +180,65 @@ public class VideoResoursesRvAdapter extends RecyclerView.Adapter<VideoResourses
             tvLikes.setText(v1.getTotal_likes() + " likes");
             tvViews.setText(v1.getTotal_views() + " views");
 
-            if (v1.getLike() == 1){
-                hitLike.setImageDrawable(context.getResources().getDrawable(R.drawable.ic_thumb_up_blue_24dp));
+            if (v1.getLink().contains("youtu.be") || v1.getLink().contains("youtube")){
+                youTubeThumbnailView.setVisibility(View.VISIBLE);
+                imageView.setVisibility(View.GONE);
+
+                if (v1.getLike() == 1){
+                    hitLike.setImageDrawable(context.getResources().getDrawable(R.drawable.ic_thumb_up_blue_24dp));
+                }else{
+                    hitLike.setImageDrawable(context.getResources().getDrawable(R.drawable.ic_thumb_up_grey_24dp));
+                }
+
+                if (readyForLoadingYoutubeThumbnail){
+                    readyForLoadingYoutubeThumbnail = false;
+
+                    youTubeThumbnailView.initialize(Constants.YOUTUBE_PLAYER_API_KEY, new YouTubeThumbnailView.OnInitializedListener() {
+                        @Override
+                        public void onInitializationSuccess(YouTubeThumbnailView youTubeThumbnailView, final YouTubeThumbnailLoader youTubeThumbnailLoader) {
+                            youTubeThumbnailLoader.setVideo(videoCode);
+
+                            youTubeThumbnailLoader.setOnThumbnailLoadedListener(new YouTubeThumbnailLoader.OnThumbnailLoadedListener() {
+                                @Override
+                                public void onThumbnailLoaded(YouTubeThumbnailView youTubeThumbnailView, String s) {
+                                    youTubeThumbnailLoader.release();
+                                }
+
+                                @Override
+                                public void onThumbnailError(YouTubeThumbnailView youTubeThumbnailView, YouTubeThumbnailLoader.ErrorReason errorReason) {
+                                    Utility.showToast(context,Constants.UNABLETOLOADVIDEOSATTHEMOMENT);
+                                }
+                            });
+
+                            readyForLoadingYoutubeThumbnail = true;
+
+                        }
+
+                        @Override
+                        public void onInitializationFailure(YouTubeThumbnailView youTubeThumbnailView, YouTubeInitializationResult youTubeInitializationResult) {
+                            String errorMessage = String.format(
+                                    context.getString(R.string.error_player), youTubeInitializationResult.toString());
+                            Utility.showToast(context,errorMessage);
+
+                            readyForLoadingYoutubeThumbnail = true;
+                        }
+                    });
+
+                }
+
             }else{
-                hitLike.setImageDrawable(context.getResources().getDrawable(R.drawable.ic_thumb_up_grey_24dp));
-            }
+                youTubeThumbnailView.setVisibility(View.GONE);
+                imageView.setVisibility(View.VISIBLE);
 
-            if (readyForLoadingYoutubeThumbnail){
-                readyForLoadingYoutubeThumbnail = false;
-
-                imageView.initialize(Constants.YOUTUBE_PLAYER_API_KEY, new YouTubeThumbnailView.OnInitializedListener() {
-                    @Override
-                    public void onInitializationSuccess(YouTubeThumbnailView youTubeThumbnailView, final YouTubeThumbnailLoader youTubeThumbnailLoader) {
-                        youTubeThumbnailLoader.setVideo(videoCode);
-
-                        youTubeThumbnailLoader.setOnThumbnailLoadedListener(new YouTubeThumbnailLoader.OnThumbnailLoadedListener() {
-                            @Override
-                            public void onThumbnailLoaded(YouTubeThumbnailView youTubeThumbnailView, String s) {
-                                youTubeThumbnailLoader.release();
-                            }
-
-                            @Override
-                            public void onThumbnailError(YouTubeThumbnailView youTubeThumbnailView, YouTubeThumbnailLoader.ErrorReason errorReason) {
-                                Utility.showToast(context,Constants.UNABLETOLOADVIDEOSATTHEMOMENT);
-                            }
-                        });
-
-                        readyForLoadingYoutubeThumbnail = true;
-
-                    }
-
-                    @Override
-                    public void onInitializationFailure(YouTubeThumbnailView youTubeThumbnailView, YouTubeInitializationResult youTubeInitializationResult) {
-                        String errorMessage = String.format(
-                                context.getString(R.string.error_player), youTubeInitializationResult.toString());
-                        Utility.showToast(context,errorMessage);
-
-                        readyForLoadingYoutubeThumbnail = true;
-                    }
-                });
+                if (v1.getImage_url()!=null && v1.getImage_url().endsWith(".svg")){
+                    Utility.loadSVGImage(context,Constants.THEORYRESOURCEBASEURL + v1.getImage_url(), imageView);
+                }else{
+                    Glide.with(context).load(
+                            Constants.THEORYRESOURCEBASEURL + v1.getImage_url())
+                            .placeholder(R.drawable.placeholder)
+                            .transition(GenericTransitionOptions.<Drawable>with(Utility.getAnimationObject()))
+                            .into(imageView);
+                }
 
             }
 
