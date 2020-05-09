@@ -168,6 +168,7 @@ public class ProjectsActivity extends BaseActivity implements PlaylistVideosRvAd
                         if (projectsModel.getLink().contains("youtu.be") || projectsModel.getLink().contains("youtube")){
                             updateUIWithProject(projectsModel);
                         }else{
+                            Log.d("project_viewed", "theory project view : get "+ projectsModel.getView());
                             if (projectsModel.getView() == 0){
                                 viewModel.viewProject(prefManager.getString(Constants.JWTTOKEN),projectsModel.getId())
                                         .observe(ProjectsActivity.this, new Observer<ResourceViewsResponse>() {
@@ -312,13 +313,14 @@ public class ProjectsActivity extends BaseActivity implements PlaylistVideosRvAd
             likeButton.setImageDrawable(this.getResources().getDrawable(R.drawable.ic_thumb_up_grey_24dp));
         }
 
+        Log.d("project_viewed", "video project view : get "+ projectsModel.getView());
         if (projectsModel.getView() == 0){
             viewModel.viewProject(prefManager.getString(Constants.JWTTOKEN),projectsModel.getId())
                     .observe(this, new Observer<ResourceViewsResponse>() {
                         @Override
                         public void onChanged(ResourceViewsResponse resourceViewsResponse) {
                             if (resourceViewsResponse!=null && resourceViewsResponse.getError_code() == 0){
-                                Log.d("project_viewed", "video projects view : done "+ resourceViewsResponse.getMessage() );
+                                Log.d("project_viewed", "video project view : done "+ resourceViewsResponse.getMessage() );
                             }
                         }
                     });
@@ -385,7 +387,13 @@ public class ProjectsActivity extends BaseActivity implements PlaylistVideosRvAd
             @Override
             public void onClick(View v) {
 
-                if (buttonColorAnim == null && projectsModel.getLike() ==1){
+                if (projectsModel.getLike() == 1){
+                    onProjectLiked(projectsModel,0);
+                }else if (projectsModel.getLike() == 0){
+                    onProjectLiked(projectsModel,1);
+                }
+
+                /*if (buttonColorAnim == null && projectsModel.getLike() ==1){
                     likeButton.setImageDrawable(ProjectsActivity.this.getResources().getDrawable(R.drawable.ic_thumb_up_grey_24dp));
                     onProjectLiked(projectsModel,1);
                     projectsModel.setTotal_likes(projectsModel.getTotal_likes()-1);
@@ -408,7 +416,7 @@ public class ProjectsActivity extends BaseActivity implements PlaylistVideosRvAd
                         buttonColorAnim.start();
                         onProjectLiked(projectsModel,0);
                     }
-                }
+                }*/
 
             }
         });
@@ -416,7 +424,7 @@ public class ProjectsActivity extends BaseActivity implements PlaylistVideosRvAd
 
     }
 
-    private void onProjectLiked(final ProjectsModel projectsModel, int i) {
+    private void onProjectLiked(final ProjectsModel projectsModel, final int i) {
         viewModel.likeProject(prefManager.getString(Constants.JWTTOKEN),projectsModel.getId(), i)
                 .observe(this, new Observer<ResourceLikesResponse>() {
                     @Override
@@ -425,8 +433,13 @@ public class ProjectsActivity extends BaseActivity implements PlaylistVideosRvAd
                             if (!resourceLikesResponse.getSuccess()){
                                 Utility.showToast(ProjectsActivity.this,"Unable to like at the moment");
                             }else{
-                                projectsModel.setLike(1);
+                                projectsModel.setLike(i);
                                 viewModel.saveProject(projectsModel);
+//                                if (i == 1){
+//                                    likeButton.setImageDrawable(getResources().getDrawable(R.drawable.ic_thumb_up_blue_24dp));
+//                                }else{
+//                                    likeButton.setImageDrawable(getResources().getDrawable(R.drawable.ic_thumb_up_grey_24dp));
+//                                }
                             }
                         }
                     }

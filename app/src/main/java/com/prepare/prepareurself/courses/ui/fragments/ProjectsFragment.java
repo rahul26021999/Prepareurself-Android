@@ -179,9 +179,10 @@ public class ProjectsFragment extends Fragment implements ProjectsRvAdapter.Proj
                                 Utility.showToast(getActivity(),"Unable to like at the moment");
                             }else{
 //                                Log.d("project_viewed_liked", "before : "+projectsModel.getLike()+ " , "+liked );
-//                                projectsModel.setLike(liked);
+                                projectsModel.setLike(liked);
 //                                Log.d("project_viewed_liked", "after : "+projectsModel.getLike()+ " , "+liked );
-//                                mViewModel.saveProject(projectsModel);
+                                mViewModel.saveProject(projectsModel);
+                                adapter.notifyDataSetChanged();
                             }
                         }
                     }
