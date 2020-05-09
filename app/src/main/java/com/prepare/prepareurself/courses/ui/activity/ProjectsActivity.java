@@ -168,6 +168,17 @@ public class ProjectsActivity extends BaseActivity implements PlaylistVideosRvAd
                         if (projectsModel.getLink().contains("youtu.be") || projectsModel.getLink().contains("youtube")){
                             updateUIWithProject(projectsModel);
                         }else{
+                            if (projectsModel.getView() == 0){
+                                viewModel.viewProject(prefManager.getString(Constants.JWTTOKEN),projectsModel.getId())
+                                        .observe(ProjectsActivity.this, new Observer<ResourceViewsResponse>() {
+                                            @Override
+                                            public void onChanged(ResourceViewsResponse resourceViewsResponse) {
+                                                if (resourceViewsResponse!=null && resourceViewsResponse.getError_code() == 0){
+                                                       Log.d("project_viewed", "theory project view : done "+ resourceViewsResponse.getMessage() );
+                                                }
+                                            }
+                                        });
+                            }
                             Utility.redirectUsingCustomTab(ProjectsActivity.this,projectsModel.getLink());
                             finish();
                         }
@@ -307,7 +318,7 @@ public class ProjectsActivity extends BaseActivity implements PlaylistVideosRvAd
                         @Override
                         public void onChanged(ResourceViewsResponse resourceViewsResponse) {
                             if (resourceViewsResponse!=null && resourceViewsResponse.getError_code() == 0){
-//                                Log.d("project_viewed", "view : done "+ resourceViewsResponse.getMessage() );
+                                Log.d("project_viewed", "video projects view : done "+ resourceViewsResponse.getMessage() );
                             }
                         }
                     });
@@ -405,7 +416,7 @@ public class ProjectsActivity extends BaseActivity implements PlaylistVideosRvAd
 
     }
 
-    private void onProjectLiked(ProjectsModel projectsModel, int i) {
+    private void onProjectLiked(final ProjectsModel projectsModel, int i) {
         viewModel.likeProject(prefManager.getString(Constants.JWTTOKEN),projectsModel.getId(), i)
                 .observe(this, new Observer<ResourceLikesResponse>() {
                     @Override
@@ -413,6 +424,9 @@ public class ProjectsActivity extends BaseActivity implements PlaylistVideosRvAd
                         if (resourceLikesResponse!=null){
                             if (!resourceLikesResponse.getSuccess()){
                                 Utility.showToast(ProjectsActivity.this,"Unable to like at the moment");
+                            }else{
+                                projectsModel.setLike(1);
+                                viewModel.saveProject(projectsModel);
                             }
                         }
                     }
