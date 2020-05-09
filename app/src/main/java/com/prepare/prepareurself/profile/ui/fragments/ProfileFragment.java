@@ -484,10 +484,16 @@ public class ProfileFragment extends Fragment implements View.OnClickListener {
                 Log.d("DOB0",userDob+"");
                 //int phnumber= Integer.parseInt(etContact.getText().toString());
                 //valdatn
-                if ((contact.length()>11 || contact.length()<10)){
-                    etContact.setError("enter valid phone number");
-                    return;
+
+                if (!TextUtils.isEmpty(contact)){
+                    if ((contact.length()>11 || contact.length()<10)){
+                        etContact.setError("enter valid phone number");
+                        return;
+                    }else{
+                        mUserModel.setPhone_number(contact);
+                    }
                 }
+
                 String firstName = "", lastName = "";
                 // first convert name to first name and last name
                 String[] name = Utility.splitName(getActivity(),fullName);

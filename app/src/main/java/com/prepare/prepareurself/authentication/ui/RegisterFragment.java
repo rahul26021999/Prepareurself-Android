@@ -47,6 +47,8 @@ public class RegisterFragment extends Fragment implements View.OnClickListener {
     private TextView termsAndConditions;
     private RegisterFragmentListener listener;
 
+    private String TermsUrl = "http://prepareurself.in/terms-and-conditions";
+
     public RegisterFragment() {
         // Required empty public constructor
     }
@@ -96,7 +98,9 @@ public class RegisterFragment extends Fragment implements View.OnClickListener {
             listener.onRegisterArrowClicked();
         }
         else if(v.getId()==R.id.termsAndConditions){
-            Toast.makeText(getContext(),"TermsAndConditionClicked",Toast.LENGTH_SHORT).show();
+//            Toast.makeText(getContext(),"TermsAndConditionClicked",Toast.LENGTH_SHORT).show();
+            Utility.redirectUsingCustomTab(getActivity(),TermsUrl);
+
         }
         else if (v.getId() == R.id.btn_register ){
 
