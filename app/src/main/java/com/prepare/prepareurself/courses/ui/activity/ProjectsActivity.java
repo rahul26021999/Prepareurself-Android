@@ -165,7 +165,13 @@ public class ProjectsActivity extends BaseActivity implements PlaylistVideosRvAd
                     if (projectsModel!=null){
                         Log.d("project_viewed", "current project" + projectsModel.getName());
                         Log.d("project_viewed", "get view" + projectsModel.getView());
-                        updateUIWithProject(projectsModel);
+                        if (projectsModel.getLink().contains("youtube")){
+                            updateUIWithProject(projectsModel);
+                        }else{
+                            Utility.redirectUsingCustomTab(ProjectsActivity.this,projectsModel.getLink());
+                            finish();
+                        }
+
                     }
                 }
             });
