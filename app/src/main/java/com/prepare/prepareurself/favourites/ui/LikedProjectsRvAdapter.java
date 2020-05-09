@@ -78,46 +78,46 @@ public class LikedProjectsRvAdapter extends RecyclerView.Adapter<LikedProjectsRv
             }
         });
 
-        holder.likeButton.setOnClickListener(new View.OnClickListener() {
-
-            ValueAnimator buttonColorAnim = null;
-
-
-            @Override
-            public void onClick(View v) {
-
-                if (buttonColorAnim == null && projectsModel.getLike() ==1){
-                    holder.likeButton.setImageDrawable(context.getResources().getDrawable(R.drawable.ic_thumb_up_grey_24dp));
-                    listener.onProjectLiked(projectsModel,1);
-                    holder.tvNoOfLikes.setText(projectsModel.getTotal_likes()-1 + " likes");
-                    projectsModel.setTotal_likes(projectsModel.getTotal_likes()-1);
-                    projectsModel.setLike(0);
-                    Log.d("remove_debug", "onClick: "+position);
-                    likedProjectsModels.remove(projectsModel);
-                    notifyDataSetChanged();
-                }else{
-                    if(buttonColorAnim != null){
-                        buttonColorAnim.reverse();
-                        buttonColorAnim = null;
-                        listener.onProjectLiked(projectsModel,1);
-                        holder.tvNoOfLikes.setText(projectsModel.getTotal_likes() + " likes");
-                    }
-                    else {
-                        final ImageView button = (ImageView) v;
-                        buttonColorAnim = ValueAnimator.ofObject(new ArgbEvaluator(), context.getResources().getColor(R.color.like_grey), context.getResources().getColor(R.color.like_blue));
-                        buttonColorAnim.addUpdateListener(new ValueAnimator.AnimatorUpdateListener() {
-                            @Override
-                            public void onAnimationUpdate(ValueAnimator animator) {
-                                button.setColorFilter((Integer) animator.getAnimatedValue());
-                            }
-                        });
-                        buttonColorAnim.start();
-                        listener.onProjectLiked(projectsModel,0);
-                        holder.tvNoOfLikes.setText(projectsModel.getTotal_likes()+1 + " likes");
-                    }
-                }
-            }
-        });
+//        holder.likeButton.setOnClickListener(new View.OnClickListener() {
+//
+//            ValueAnimator buttonColorAnim = null;
+//
+//
+//            @Override
+//            public void onClick(View v) {
+//
+//                if (buttonColorAnim == null && projectsModel.getLike() ==1){
+//                    holder.likeButton.setImageDrawable(context.getResources().getDrawable(R.drawable.ic_thumb_up_grey_24dp));
+//                    listener.onProjectLiked(projectsModel,1);
+//                    holder.tvNoOfLikes.setText(projectsModel.getTotal_likes()-1 + " likes");
+//                    projectsModel.setTotal_likes(projectsModel.getTotal_likes()-1);
+//                    projectsModel.setLike(0);
+//                    Log.d("remove_debug", "onClick: "+position);
+//                    likedProjectsModels.remove(projectsModel);
+//                    notifyDataSetChanged();
+//                }else{
+//                    if(buttonColorAnim != null){
+//                        buttonColorAnim.reverse();
+//                        buttonColorAnim = null;
+//                        listener.onProjectLiked(projectsModel,1);
+//                        holder.tvNoOfLikes.setText(projectsModel.getTotal_likes() + " likes");
+//                    }
+//                    else {
+//                        final ImageView button = (ImageView) v;
+//                        buttonColorAnim = ValueAnimator.ofObject(new ArgbEvaluator(), context.getResources().getColor(R.color.like_grey), context.getResources().getColor(R.color.like_blue));
+//                        buttonColorAnim.addUpdateListener(new ValueAnimator.AnimatorUpdateListener() {
+//                            @Override
+//                            public void onAnimationUpdate(ValueAnimator animator) {
+//                                button.setColorFilter((Integer) animator.getAnimatedValue());
+//                            }
+//                        });
+//                        buttonColorAnim.start();
+//                        listener.onProjectLiked(projectsModel,0);
+//                        holder.tvNoOfLikes.setText(projectsModel.getTotal_likes()+1 + " likes");
+//                    }
+//                }
+//            }
+//        });
     }
 
     @Override
@@ -175,11 +175,11 @@ public class LikedProjectsRvAdapter extends RecyclerView.Adapter<LikedProjectsRv
 
             tvLevel.setText(projectsModel.getLevel());
 
-            if (projectsModel.getLike() == 1){
-                likeButton.setImageDrawable(context.getResources().getDrawable(R.drawable.ic_thumb_up_blue_24dp));
-            }else{
-                likeButton.setImageDrawable(context.getResources().getDrawable(R.drawable.ic_thumb_up_grey_24dp));
-            }
+//            if (projectsModel.getLike() == 1){
+//                likeButton.setImageDrawable(context.getResources().getDrawable(R.drawable.ic_thumb_up_blue_24dp));
+//            }else{
+//                likeButton.setImageDrawable(context.getResources().getDrawable(R.drawable.ic_thumb_up_grey_24dp));
+//            }
 
 
         }

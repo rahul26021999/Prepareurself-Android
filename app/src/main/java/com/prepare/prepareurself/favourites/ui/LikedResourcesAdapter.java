@@ -101,47 +101,47 @@ public class LikedResourcesAdapter extends RecyclerView.Adapter<LikedResourcesAd
         });
 
 
-        holder.hitLike.setOnClickListener(new View.OnClickListener() {
-
-            ValueAnimator buttonColorAnim = null;
-
-
-            @Override
-            public void onClick(View v) {
-
-                if (buttonColorAnim == null && theoryResources1.getLike() ==1){
-                    holder.hitLike.setImageDrawable(context.getResources().getDrawable(R.drawable.ic_thumb_up_grey_24dp));
-                    listener.OnLikeButtonClicked(theoryResources1,1);
-                    holder.tvLikes.setText(theoryResources1.getTotal_likes()-1 + " likes");
-                    theoryResources1.setTotal_likes(theoryResources1.getTotal_likes()-1);
-                    theoryResources1.setLike(0);
-                    likedResourcesModels.remove(theoryResources1);
-                    notifyDataSetChanged();
-                }else{
-                    if(buttonColorAnim != null){
-                        buttonColorAnim.reverse();
-                        buttonColorAnim = null;
-                        listener.OnLikeButtonClicked(theoryResources1,1);
-                        holder.tvLikes.setText(theoryResources1.getTotal_likes() + " likes");
-                 //       liked = false;
-                    }
-                    else {
-                        final ImageView button = (ImageView) v;
-                        buttonColorAnim = ValueAnimator.ofObject(new ArgbEvaluator(), context.getResources().getColor(R.color.like_grey), context.getResources().getColor(R.color.like_blue));
-                        buttonColorAnim.addUpdateListener(new ValueAnimator.AnimatorUpdateListener() {
-                            @Override
-                            public void onAnimationUpdate(ValueAnimator animator) {
-                                button.setColorFilter((Integer) animator.getAnimatedValue());
-                            }
-                        });
-                        buttonColorAnim.start();
-                        listener.OnLikeButtonClicked(theoryResources1,0);
-                        holder.tvLikes.setText(theoryResources1.getTotal_likes()+1 + " likes");
-                    //    liked = true;
-                    }
-                }
-            }
-        });
+//        holder.hitLike.setOnClickListener(new View.OnClickListener() {
+//
+//            ValueAnimator buttonColorAnim = null;
+//
+//
+//            @Override
+//            public void onClick(View v) {
+//
+//                if (buttonColorAnim == null && theoryResources1.getLike() ==1){
+//                    holder.hitLike.setImageDrawable(context.getResources().getDrawable(R.drawable.ic_thumb_up_grey_24dp));
+//                    listener.OnLikeButtonClicked(theoryResources1,1);
+//                    holder.tvLikes.setText(theoryResources1.getTotal_likes()-1 + " likes");
+//                    theoryResources1.setTotal_likes(theoryResources1.getTotal_likes()-1);
+//                    theoryResources1.setLike(0);
+//                    likedResourcesModels.remove(theoryResources1);
+//                    notifyDataSetChanged();
+//                }else{
+//                    if(buttonColorAnim != null){
+//                        buttonColorAnim.reverse();
+//                        buttonColorAnim = null;
+//                        listener.OnLikeButtonClicked(theoryResources1,1);
+//                        holder.tvLikes.setText(theoryResources1.getTotal_likes() + " likes");
+//                 //       liked = false;
+//                    }
+//                    else {
+//                        final ImageView button = (ImageView) v;
+//                        buttonColorAnim = ValueAnimator.ofObject(new ArgbEvaluator(), context.getResources().getColor(R.color.like_grey), context.getResources().getColor(R.color.like_blue));
+//                        buttonColorAnim.addUpdateListener(new ValueAnimator.AnimatorUpdateListener() {
+//                            @Override
+//                            public void onAnimationUpdate(ValueAnimator animator) {
+//                                button.setColorFilter((Integer) animator.getAnimatedValue());
+//                            }
+//                        });
+//                        buttonColorAnim.start();
+//                        listener.OnLikeButtonClicked(theoryResources1,0);
+//                        holder.tvLikes.setText(theoryResources1.getTotal_likes()+1 + " likes");
+//                    //    liked = true;
+//                    }
+//                }
+//            }
+//        });
     }
 
     @Override
@@ -244,13 +244,13 @@ public class LikedResourcesAdapter extends RecyclerView.Adapter<LikedResourcesAd
             tvViews.setText(resourceModel.getTotal_views()+" views");
             tvLikes.setText(resourceModel.getTotal_likes() + " likes");
 
-            if (resourceModel.getLike() == 1){
-            //    liked = true;
-                hitLike.setImageDrawable(context.getResources().getDrawable(R.drawable.ic_thumb_up_blue_24dp));
-            }else{
-              //  liked = false;
-                hitLike.setImageDrawable(context.getResources().getDrawable(R.drawable.ic_thumb_up_grey_24dp));
-            }
+//            if (resourceModel.getLike() == 1){
+//            //    liked = true;
+//                hitLike.setImageDrawable(context.getResources().getDrawable(R.drawable.ic_thumb_up_blue_24dp));
+//            }else{
+//              //  liked = false;
+//                hitLike.setImageDrawable(context.getResources().getDrawable(R.drawable.ic_thumb_up_grey_24dp));
+//            }
 
         }
 
