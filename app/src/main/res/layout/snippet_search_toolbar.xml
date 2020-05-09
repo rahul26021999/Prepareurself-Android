@@ -29,7 +29,6 @@
                     android:imeOptions="actionSearch"
                     android:inputType="text"
                     android:cursorVisible="true"
-                    android:focusable="true"
                     android:textColor="@color/white"
                     android:paddingStart="20dp"
                     android:background="@null"

@@ -80,7 +80,7 @@ public class DashboardRvAdapter extends RecyclerView.Adapter implements CoursesH
 
             case ADDVIEWTYPE :
                 View addView = LayoutInflater.from(context).inflate(R.layout.add_viewtype_tv_layout,parent, false);
-                return new AddViewHolder(addView, "");
+                return new AddViewHolder(addView);
 
             case TOPICVIEWTYPE:
                 View topicView = LayoutInflater.from(context).inflate(R.layout.course_header_rv_viewtype_layout,parent, false);
@@ -286,19 +286,13 @@ public class DashboardRvAdapter extends RecyclerView.Adapter implements CoursesH
         AdView mAdView;
         View adContainer;
 
-        public AddViewHolder(@NonNull View itemView,String adsSize) {
+        public AddViewHolder(@NonNull View itemView) {
             super(itemView);
             adContainer = itemView.findViewById(R.id.adViewdashboardrv);
             mAdView = new AdView(context);
 
-            AdSize ads = AdSize.FULL_BANNER;
-            if(adsSize.equals("banner")) {
-                ads=AdSize.BANNER;
-            } else if(adsSize.equals("largeBanner")) {
-                ads = AdSize.LARGE_BANNER;
-            }
-
-            mAdView.setAdSize(ads);
+            mAdView.setAdSize(AdSize.LARGE_BANNER);
+            mAdView.setBackgroundResource(R.color.colorPrimaryLight);
             mAdView.setAdUnitId(context.getResources().getString(R.string.bannerAds));
             ((RelativeLayout)adContainer).addView(mAdView);
 

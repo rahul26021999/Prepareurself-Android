@@ -3,15 +3,16 @@
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     xmlns:ads="http://schemas.android.com/apk/res-auto"
-    android:background="@android:color/transparent">
+    android:background="@color/white">
 
         <RelativeLayout
-            android:layout_width="match_parent"
+            android:layout_width="wrap_content"
             android:visibility="gone"
-            android:id="@+id/adViewdashboardrv"
-            android:layout_marginTop="@dimen/padding_10"
             android:layout_marginBottom="@dimen/padding_10"
-            android:layout_height="match_parent">
+            android:layout_centerInParent="true"
+            android:background="@color/white"
+            android:id="@+id/adViewdashboardrv"
+            android:layout_height="wrap_content">
 
         </RelativeLayout>
 

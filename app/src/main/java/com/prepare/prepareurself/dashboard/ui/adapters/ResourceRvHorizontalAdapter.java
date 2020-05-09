@@ -73,7 +73,7 @@ public class ResourceRvHorizontalAdapter extends RecyclerView.Adapter<ResourceRv
 
     public class ResourceViewHolder extends RecyclerView.ViewHolder{
 
-        TextView tvCourseName;
+        TextView name;
         ImageView imageView;
         YouTubeThumbnailView youTubeThumbnailView;
 
@@ -82,7 +82,7 @@ public class ResourceRvHorizontalAdapter extends RecyclerView.Adapter<ResourceRv
         public ResourceViewHolder(@NonNull View itemView) {
             super(itemView);
 
-            tvCourseName = itemView.findViewById(R.id.tv_course_name_viewtype);
+            name = itemView.findViewById(R.id.name);
             imageView = itemView.findViewById(R.id.image_course_viewtype);
             youTubeThumbnailView = itemView.findViewById(R.id.image_thumb_course_viewtype);
             youTubeThumbnailView.setVisibility(View.GONE);
@@ -90,7 +90,7 @@ public class ResourceRvHorizontalAdapter extends RecyclerView.Adapter<ResourceRv
 
         public void bindView(final Context context, ResourceModel res){
 
-            tvCourseName.setText(res.getTitle());
+            name.setText(res.getTitle());
 
             if (res.getType().equalsIgnoreCase("theory")){
                 if (res.getImage_url()!=null && res.getImage_url().endsWith(".svg")){
@@ -100,7 +100,6 @@ public class ResourceRvHorizontalAdapter extends RecyclerView.Adapter<ResourceRv
                             Constants.THEORYRESOURCEBASEURL+ res.getImage_url())
                             .placeholder(R.drawable.placeholder)
                             .diskCacheStrategy(DiskCacheStrategy.RESOURCE)
-                            .override(500,500)
                             .transition(GenericTransitionOptions.<Drawable>with(Utility.getAnimationObject()))
                             .into(imageView);
                 }

@@ -19,7 +19,7 @@
         <com.google.android.youtube.player.YouTubeThumbnailView
             android:layout_width="match_parent"
             android:layout_height="150dp"
-            android:background="@drawable/placeholder"
+            android:background="#909090"
             android:scaleType="centerCrop"
             android:id="@+id/related_video_youtubethumnail"
             />

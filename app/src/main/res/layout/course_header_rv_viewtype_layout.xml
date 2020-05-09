@@ -3,6 +3,7 @@
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     android:orientation="vertical"
+    android:layout_marginBottom="@dimen/padding_10"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools">
     <RelativeLayout
@@ -14,10 +15,9 @@
         tools:text="Courses"
         android:textColor="@color/colorPrimary"
         android:padding="10dp"
-        android:layout_marginStart="10dp"
         android:textStyle="bold"
-        android:textSize="16sp"
-        android:fontFamily="@font/proximanovaregular"
+        android:textSize="18sp"
+        android:fontFamily="@font/roboto_regular"
         android:id="@+id/tv_courses_header_viewtype"/>
 
     <TextView
@@ -26,9 +26,10 @@
         android:text="See all"
         android:layout_alignParentEnd="true"
         android:layout_centerVertical="true"
-        android:textColor="@color/colorPrimaryDark"
+        android:textColor="@color/lightred"
         android:textSize="14sp"
         android:padding="10dp"
+        android:textStyle="bold"
         android:background="?attr/selectableItemBackground"
         android:fontFamily="@font/proximanovaregular"
         android:id="@+id/tv_see_all"/>
@@ -37,7 +38,8 @@
 <androidx.recyclerview.widget.RecyclerView
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:layout_marginBottom="20dp"
+    android:layout_marginTop="@dimen/padding_10"
+    android:layout_marginBottom="@dimen/padding_10"
     android:id="@+id/rv_courses_dashboard"/>
 
 </LinearLayout>

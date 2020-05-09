@@ -66,16 +66,14 @@ public class ProjectsHorizontalRvAdapter extends RecyclerView.Adapter<ProjectsHo
 
     class ProjectsViewHolder extends RecyclerView.ViewHolder {
 
-        TextView tvCourseName,courseName,views,level;
+        TextView name,courseName,views,level;
         ImageView imageView;
 
         public ProjectsViewHolder(@NonNull View itemView) {
             super(itemView);
 
-            tvCourseName = itemView.findViewById(R.id.tv_course_name_viewtype);
+            name = itemView.findViewById(R.id.name);
             imageView = itemView.findViewById(R.id.image_course_viewtype);
-            courseName = itemView.findViewById(R.id.courseName);
-            views = itemView.findViewById(R.id.views);
             level = itemView.findViewById(R.id.level);
 
         }
@@ -89,11 +87,20 @@ public class ProjectsHorizontalRvAdapter extends RecyclerView.Adapter<ProjectsHo
                         Constants.PROJECTSIMAGEBASEURL+ projectsModel.getImage_url())
                         .placeholder(R.drawable.placeholder)
                         .diskCacheStrategy(DiskCacheStrategy.RESOURCE)
-                        .override(500,500)
                         .transition(GenericTransitionOptions.<Drawable>with(Utility.getAnimationObject()))
                         .into(imageView);
             }
-            tvCourseName.setText(projectsModel.getName());
+            name.setText(projectsModel.getName());
+            if(projectsModel.getLevel().equals("hard")){
+                level.setBackgroundTintList(context.getResources().getColorStateList(R.color.lightred));
+            }
+            else if(projectsModel.getLevel().equals("easy")){
+                level.setBackgroundTintList(context.getResources().getColorStateList(R.color.green));
+            }
+            else{
+                level.setBackgroundTintList(context.getResources().getColorStateList(R.color.yellow));
+            }
+            level.setText(projectsModel.getLevel());
 
         }
     }

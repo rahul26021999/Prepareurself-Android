@@ -190,7 +190,6 @@ public class LikedResourcesAdapter extends RecyclerView.Adapter<LikedResourcesAd
                     Glide.with(context).load(
                             Constants.THEORYRESOURCEBASEURL + resourceModel.getImage_url())
                             .placeholder(R.drawable.placeholder)
-                            .override(400,400)
                             .transition(GenericTransitionOptions.<Drawable>with(Utility.getAnimationObject()))
                             .into(imageView);
                 }

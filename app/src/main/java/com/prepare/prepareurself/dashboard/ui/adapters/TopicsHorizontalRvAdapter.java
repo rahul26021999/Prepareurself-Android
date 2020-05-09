@@ -37,7 +37,7 @@ public class TopicsHorizontalRvAdapter extends RecyclerView.Adapter<TopicsHorizo
     @NonNull
     @Override
     public TopicsViewolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
-        View view = LayoutInflater.from(context).inflate(R.layout.courses_viewtype_rv_layout,parent, false);
+        View view = LayoutInflater.from(context).inflate(R.layout.topics_viewtype_rv_layout,parent, false);
 
         return new TopicsViewolder(view);
     }
@@ -87,7 +87,6 @@ public class TopicsHorizontalRvAdapter extends RecyclerView.Adapter<TopicsHorizo
                 Glide.with(context).load(
                         Constants.TOPICSBASEURL + topicsModel.getImage_url())
                         .placeholder(R.drawable.placeholder)
-                        .override(500,500)
                         .diskCacheStrategy(DiskCacheStrategy.RESOURCE)
                         .transition(GenericTransitionOptions.<Drawable>with(Utility.getAnimationObject()))
                         .into(imageView);

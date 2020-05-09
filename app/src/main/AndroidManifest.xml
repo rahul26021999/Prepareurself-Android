@@ -125,7 +125,7 @@
         -->
         <activity
             android:name=".Home.ui.HomeActivity"
-            android:windowSoftInputMode="stateVisible|adjustPan"
+            android:windowSoftInputMode="adjustPan"
             android:label="@string/title_activity_home">
             <intent-filter>
                 <action android:name="android.intent.action.VIEW" />

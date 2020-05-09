@@ -34,7 +34,7 @@
                 <com.google.android.youtube.player.YouTubeThumbnailView
                     android:layout_width="150dp"
                     android:layout_height="130dp"
-                    android:scaleType="fitXY"
+                    android:scaleType="centerCrop"
                     android:id="@+id/topic_image_youtube"
                     android:src="@drawable/placeholder"
                     android:visibility="gone"/>
