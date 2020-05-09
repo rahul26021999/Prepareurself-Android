@@ -1,4 +1,4 @@
-package com.prepare.prepareurself.search;
+package com.prepare.prepareurself.search.models;
 
 import android.content.Context;
 import android.util.Log;
@@ -9,7 +9,6 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
-import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.bumptech.glide.Glide;
@@ -18,7 +17,6 @@ import com.prepare.prepareurself.courses.data.model.ProjectsModel;
 import com.prepare.prepareurself.courses.data.model.TopicsModel;
 import com.prepare.prepareurself.resources.data.model.ResourceModel;
 import com.prepare.prepareurself.utils.Constants;
-import com.prepare.prepareurself.utils.DividerItemDecoration;
 
 import java.util.List;
 

@@ -33,9 +33,6 @@ import android.widget.ProgressBar;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 
-import com.google.android.gms.ads.AdListener;
-import com.google.android.gms.ads.AdRequest;
-import com.google.android.gms.ads.AdView;
 import com.google.android.material.appbar.AppBarLayout;
 import com.prepare.prepareurself.courses.data.model.ProjectsModel;
 import com.prepare.prepareurself.courses.data.model.TopicsModel;
@@ -53,10 +50,10 @@ import com.prepare.prepareurself.dashboard.ui.adapters.DashboardRvAdapter;
 import com.prepare.prepareurself.R;
 import com.prepare.prepareurself.resources.data.model.ResourceModel;
 import com.prepare.prepareurself.resources.ui.activity.ResourcesActivity;
-import com.prepare.prepareurself.search.SearchAdapter;
-import com.prepare.prepareurself.search.SearchModel;
-import com.prepare.prepareurself.search.SearchRecyclerviewModel;
-import com.prepare.prepareurself.search.SearchResponseModel;
+import com.prepare.prepareurself.search.models.SearchAdapter;
+import com.prepare.prepareurself.search.models.SearchModel;
+import com.prepare.prepareurself.search.models.SearchRecyclerviewModel;
+import com.prepare.prepareurself.search.models.SearchResponseModel;
 import com.prepare.prepareurself.utils.Constants;
 import com.prepare.prepareurself.utils.PrefManager;
 import com.prepare.prepareurself.utils.Utility;
@@ -408,38 +405,38 @@ public class DashboardFragment extends Fragment implements DashboardRvAdapter.Da
             headings.clear();
             rvCurrentPageSearch = 0;
 
-            loadMoreItems(true, query);
+         //   loadMoreItems(true, query);
 
-            searchRv.addOnScrollListener(new RecyclerView.OnScrollListener() {
-                @Override
-                public void onScrollStateChanged(@NonNull RecyclerView recyclerView, int newState) {
-                    super.onScrollStateChanged(recyclerView, newState);
-                    if (newState == AbsListView.OnScrollListener.SCROLL_STATE_TOUCH_SCROLL){
-                        isScrolling = true;
-                    }
-                }
+//            searchRv.addOnScrollListener(new RecyclerView.OnScrollListener() {
+//                @Override
+//                public void onScrollStateChanged(@NonNull RecyclerView recyclerView, int newState) {
+//                    super.onScrollStateChanged(recyclerView, newState);
+//                    if (newState == AbsListView.OnScrollListener.SCROLL_STATE_TOUCH_SCROLL){
+//                        isScrolling = true;
+//                    }
+//                }
+//
+//                @Override
+//                public void onScrolled(@NonNull RecyclerView recyclerView, int dx, int dy) {
+//                    super.onScrolled(recyclerView, dx, dy);
+//
+//                    rvCurrentItemsSearch = searchLayoutManager.getChildCount();
+//                    rvTotalItemsSearch = searchLayoutManager.getItemCount();
+//                    rvScrolledOutItemsSearch = searchLayoutManager.findFirstVisibleItemPosition();
+//
+//                    // rvLastPage = topicsResponseModel.getLast_page();
+//
+//                    Log.d("paging_debug", rvCurrentPageSearch +","+rvLastPage);
+//
+//                    if (isScrolling && (rvCurrentItemsSearch + rvScrolledOutItemsSearch) == rvTotalItemsSearch){
+//                        isScrolling = false;
+//                        loadMoreItems(false, query);
+//                    }
+//
+//                }
+//            });
 
-                @Override
-                public void onScrolled(@NonNull RecyclerView recyclerView, int dx, int dy) {
-                    super.onScrolled(recyclerView, dx, dy);
-
-                    rvCurrentItemsSearch = searchLayoutManager.getChildCount();
-                    rvTotalItemsSearch = searchLayoutManager.getItemCount();
-                    rvScrolledOutItemsSearch = searchLayoutManager.findFirstVisibleItemPosition();
-
-                    // rvLastPage = topicsResponseModel.getLast_page();
-
-                    Log.d("paging_debug", rvCurrentPageSearch +","+rvLastPage);
-
-                    if (isScrolling && (rvCurrentItemsSearch + rvScrolledOutItemsSearch) == rvTotalItemsSearch){
-                        isScrolling = false;
-                        loadMoreItems(false, query);
-                    }
-
-                }
-            });
-
-            mViewModel.getSearchResponseModelLiveData().observe(getActivity(), new Observer<SearchResponseModel>() {
+            mViewModel.search(prefManager.getString(Constants.JWTTOKEN), query).observe(getActivity(), new Observer<SearchResponseModel>() {
                 @Override
                 public void onChanged(SearchResponseModel searchResponseModel) {
 
@@ -499,10 +496,10 @@ public class DashboardFragment extends Fragment implements DashboardRvAdapter.Da
         }
     }
 
-    private void loadMoreItems(final boolean isFirstPage, String query) {
-        rvCurrentPageSearch+=1;
-        mViewModel.search(prefManager.getString(Constants.JWTTOKEN), query, rvCurrentPageSearch);
-    }
+//    private void loadMoreItems(final boolean isFirstPage, String query) {
+//        rvCurrentPageSearch+=1;
+//        mViewModel.search(prefManager.getString(Constants.JWTTOKEN), query);
+//    }
 
     private void setUpSlider() {
         sliderAdapter = new SliderAdapter(getActivity(), this);

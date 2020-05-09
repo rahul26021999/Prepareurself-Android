@@ -6,11 +6,9 @@ import androidx.room.Insert;
 import androidx.room.OnConflictStrategy;
 import androidx.room.Query;
 
-import com.prepare.prepareurself.search.SearchModel;
+import com.prepare.prepareurself.search.models.SearchModel;
 
 import java.util.List;
-
-import retrofit2.http.DELETE;
 
 @Dao
 public interface SearchDao {
