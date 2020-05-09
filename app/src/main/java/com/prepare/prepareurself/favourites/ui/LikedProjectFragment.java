@@ -22,6 +22,7 @@ import com.prepare.prepareurself.courses.ui.activity.ProjectsActivity;
 import com.prepare.prepareurself.favourites.data.model.LikedProjectsModel;
 import com.prepare.prepareurself.favourites.viewmodel.FavouritesViewModel;
 import com.prepare.prepareurself.utils.Constants;
+import com.prepare.prepareurself.utils.DividerItemDecoration;
 import com.prepare.prepareurself.utils.PrefManager;
 import com.prepare.prepareurself.utils.Utility;
 
@@ -71,6 +72,8 @@ public class LikedProjectFragment extends Fragment implements LikedProjectsRvAda
 
         final LikedProjectsRvAdapter adapter = new LikedProjectsRvAdapter(getActivity(), this);
         LinearLayoutManager layoutManager = new LinearLayoutManager(getActivity());
+        DividerItemDecoration decoration = new DividerItemDecoration(getActivity(), R.drawable.theory_resource_divider);
+        recyclerView.addItemDecoration(decoration);
         recyclerView.setLayoutManager(layoutManager);
         recyclerView.setAdapter(adapter);
 

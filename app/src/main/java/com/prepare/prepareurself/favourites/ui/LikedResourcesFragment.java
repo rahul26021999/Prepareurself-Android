@@ -22,6 +22,7 @@ import com.prepare.prepareurself.favourites.data.model.LikedProjectsModel;
 import com.prepare.prepareurself.favourites.data.model.LikedResourcesModel;
 import com.prepare.prepareurself.favourites.viewmodel.FavouritesViewModel;
 import com.prepare.prepareurself.utils.Constants;
+import com.prepare.prepareurself.utils.DividerItemDecoration;
 import com.prepare.prepareurself.utils.PrefManager;
 import com.prepare.prepareurself.utils.Utility;
 import com.prepare.prepareurself.youtubeplayer.youtubeplaylistapi.ui.VideoActivity;
@@ -70,6 +71,8 @@ public class LikedResourcesFragment extends Fragment implements LikedResourcesAd
 
         final LikedResourcesAdapter adapter = new LikedResourcesAdapter(getActivity(), this);
         LinearLayoutManager layoutManager = new LinearLayoutManager(getActivity());
+        DividerItemDecoration decoration = new DividerItemDecoration(getActivity(), R.drawable.theory_resource_divider);
+        recyclerView.addItemDecoration(decoration);
         recyclerView.setLayoutManager(layoutManager);
         recyclerView.setAdapter(adapter);
 
