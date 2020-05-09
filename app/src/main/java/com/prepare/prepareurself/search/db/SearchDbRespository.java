@@ -6,7 +6,7 @@ import android.os.AsyncTask;
 import androidx.lifecycle.LiveData;
 
 import com.prepare.prepareurself.persistence.AppDatabase;
-import com.prepare.prepareurself.search.SearchModel;
+import com.prepare.prepareurself.search.models.SearchModel;
 
 import java.util.List;
 

@@ -1,4 +1,4 @@
-package com.prepare.prepareurself.search;
+package com.prepare.prepareurself.search.models;
 
 import androidx.room.ColumnInfo;
 import androidx.room.Entity;
@@ -21,15 +21,27 @@ public class SearchModel {
     @SerializedName("topics")
     private List<TopicsModel> topics;
 
-    @ColumnInfo(name = "resource")
-    @SerializedName("resource")
+    @ColumnInfo(name = "resources")
+    @SerializedName("resources")
     private List<ResourceModel> resource;
 
     @ColumnInfo(name = "projects")
     @SerializedName("projects")
     private List<ProjectsModel> projects;
 
+    @ColumnInfo(name = "type")
+    @SerializedName("type")
+    private String type;
+
     public SearchModel() {
+    }
+
+    public String getType() {
+        return type;
+    }
+
+    public void setType(String type) {
+        this.type = type;
     }
 
     public int getId() {

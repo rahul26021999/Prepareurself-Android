@@ -38,7 +38,7 @@ import com.prepare.prepareurself.authentication.data.model.UserModel;
 import com.prepare.prepareurself.persistence.persitenceUtils.ThumbnaiTypeConverter;
 import com.prepare.prepareurself.persistence.persitenceUtils.VideoContentDetailsConverter;
 import com.prepare.prepareurself.persistence.persitenceUtils.VideoSnippetConverter;
-import com.prepare.prepareurself.search.SearchModel;
+import com.prepare.prepareurself.search.models.SearchModel;
 import com.prepare.prepareurself.search.db.SearchDao;
 import com.prepare.prepareurself.youtubeplayer.youtubeplaylistapi.db.PlaylistContentDeatilsDao;
 import com.prepare.prepareurself.youtubeplayer.youtubeplaylistapi.db.SingleVideoItemDao;

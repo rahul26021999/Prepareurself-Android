@@ -28,9 +28,9 @@ import com.prepare.prepareurself.dashboard.data.model.SuggestedTopicsModel;
 import com.prepare.prepareurself.dashboard.data.repository.CourseRepository;
 import com.prepare.prepareurself.dashboard.data.repository.DashboardRespoisitory;
 import com.prepare.prepareurself.resources.data.model.ResourcesResponse;
-import com.prepare.prepareurself.search.SearchModel;
-import com.prepare.prepareurself.search.SearchRepository;
-import com.prepare.prepareurself.search.SearchResponseModel;
+import com.prepare.prepareurself.search.models.SearchModel;
+import com.prepare.prepareurself.search.models.SearchRepository;
+import com.prepare.prepareurself.search.models.SearchResponseModel;
 import com.prepare.prepareurself.search.db.SearchDbRespository;
 
 import java.util.List;
@@ -72,9 +72,9 @@ public class DashboardViewModel extends AndroidViewModel {
         searchDbRespository = new SearchDbRespository(application);
     }
 
-    public void search(String token, String query, int page){
-        searchResponseModelLiveData = searchRepository.search(token, query, page);
-        //return searchResponseModelLiveData;
+    public LiveData<SearchResponseModel> search(String token, String query){
+        searchResponseModelLiveData = searchRepository.search(token, query);
+        return searchResponseModelLiveData;
     }
 
     public MutableLiveData<SearchResponseModel> getSearchResponseModelLiveData() {

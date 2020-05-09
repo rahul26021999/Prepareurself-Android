@@ -20,7 +20,7 @@ import com.prepare.prepareurself.resources.data.model.ResourceLikesResponse;
 import com.prepare.prepareurself.resources.data.model.ResourceViewsResponse;
 import com.prepare.prepareurself.authentication.data.model.AuthenticationResponseModel;
 import com.prepare.prepareurself.resources.data.model.VideoShareResponseModel;
-import com.prepare.prepareurself.search.SearchResponseModel;
+import com.prepare.prepareurself.search.models.SearchResponseModel;
 
 import java.util.List;
 
@@ -134,10 +134,9 @@ public interface ApiInterface {
     Call<FeedbacksubmitModel> saveFeedback(@Query("token") String token,
                                            @Query("answers[]") List<String> answers);
 
-    @POST("search")
+    @POST("search-without-pagination")
     Call<SearchResponseModel> search(@Query("token") String token,
-                                     @Query("query") String query,
-                                     @Query("page") int page);
+                                     @Query("query") String query);
 
     @POST("get-home-page")
     Call<HomepageResponseModel> fetchHomePage(@Query("token") String token);

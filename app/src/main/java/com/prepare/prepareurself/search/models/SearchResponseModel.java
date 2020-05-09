@@ -1,4 +1,4 @@
-package com.prepare.prepareurself.search;
+package com.prepare.prepareurself.search.models;
 
 import java.util.List;
 
