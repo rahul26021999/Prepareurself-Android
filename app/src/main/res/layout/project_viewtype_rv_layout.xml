@@ -1,9 +1,9 @@
 <?xml version="1.0" encoding="utf-8"?>
-<RelativeLayout
-    xmlns:android="http://schemas.android.com/apk/res/android"
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="150dp"
     android:layout_height="wrap_content"
     xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
     android:layout_marginStart="10dp"
     android:layout_marginEnd="10dp"
     android:background="?attr/selectableItemBackground">
@@ -16,26 +16,69 @@
         android:id="@+id/card_course_view"
         app:cardCornerRadius="5dp">
 
-        <ImageView
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:scaleType="centerCrop"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintTop_toTopOf="parent"
-            android:id="@+id/image_course_viewtype"
-            android:src="@drawable/placeholder"/>
+     <RelativeLayout
+         android:layout_width="match_parent"
+         android:layout_height="match_parent">
 
-        <com.google.android.youtube.player.YouTubeThumbnailView
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintTop_toTopOf="parent"
-            android:scaleType="centerCrop"
-            android:visibility="gone"
-            android:id="@+id/image_thumb_course_viewtype"
-            android:src="@drawable/placeholder"/>
+         <ImageView
+             android:id="@+id/image_course_viewtype"
+             android:layout_width="match_parent"
+             android:layout_height="match_parent"
+             android:scaleType="centerCrop"
+             android:src="@drawable/placeholder"
+             app:layout_constraintEnd_toEndOf="parent"
+             app:layout_constraintStart_toStartOf="parent"
+             app:layout_constraintTop_toTopOf="parent" />
+
+         <TextView
+             android:layout_width="70dp"
+             tools:text="Course"
+             android:textAlignment="center"
+             android:paddingStart="@dimen/padding_10"
+             android:paddingEnd="@dimen/padding_10"
+             android:paddingTop="2dp"
+             android:singleLine="true"
+             android:layout_marginTop="5dp"
+             android:backgroundTint="@color/lightred"
+             android:paddingBottom="2dp"
+             android:background="@drawable/dashboard_course_name_chip"
+             android:textSize="8sp"
+             android:textColor="@color/white"
+             android:id="@+id/courseName"
+             android:layout_height="wrap_content"/>
+         <TextView
+             android:layout_width="60dp"
+             tools:text="level"
+             android:layout_marginTop="2dp"
+             android:paddingStart="@dimen/padding_10"
+             android:paddingEnd="@dimen/padding_10"
+             android:paddingTop="2dp"
+             android:paddingBottom="2dp"
+             android:background="@drawable/dashboard_course_name_chip"
+             android:textSize="8sp"
+             android:backgroundTint="@color/like_blue"
+             android:singleLine="true"
+             android:layout_below="@+id/courseName"
+             android:textColor="@color/white"
+             android:id="@+id/views"
+             android:layout_height="wrap_content"/>
+         <TextView
+             android:layout_width="50dp"
+             tools:text=""
+             android:layout_marginTop="2dp"
+             android:singleLine="true"
+             android:layout_below="@+id/views"
+             android:backgroundTint="@color/yellow"
+             android:paddingStart="@dimen/padding_10"
+             android:paddingEnd="@dimen/padding_10"
+             android:paddingTop="2dp"
+             android:paddingBottom="2dp"
+             android:background="@drawable/dashboard_course_name_chip"
+             android:textSize="6sp"
+             android:textColor="@color/white"
+             android:id="@+id/level"
+             android:layout_height="wrap_content"/>
+     </RelativeLayout>
 
     </androidx.cardview.widget.CardView>
 

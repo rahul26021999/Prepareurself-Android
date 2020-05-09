@@ -1,6 +1,7 @@
 package com.prepare.prepareurself.search.models;
 
 import android.content.Context;
+import android.text.Html;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -104,6 +105,7 @@ public class SearchAdapter extends RecyclerView.Adapter implements DetailedSearc
                         .load(Constants.TOPICSBASEURL + topicsModel.getImage_url())
                         .placeholder(R.drawable.placeholder)
                         .error(R.drawable.placeholder)
+                        .override(200,200)
                         .into(((DetailedSearchViewHolder) holder).imageView);
                 holder.itemView.setOnClickListener(new View.OnClickListener() {
                     @Override
@@ -115,9 +117,12 @@ public class SearchAdapter extends RecyclerView.Adapter implements DetailedSearc
             case 3:
                 final ProjectsModel projectsModel = searchRecyclerviewModels.get(position).getProjectsModel();
                 ((DetailedSearchViewHolder) holder).textView.setText(projectsModel.getName());
+                ((DetailedSearchViewHolder) holder).tvDescription.setVisibility(View.VISIBLE);
+                ((DetailedSearchViewHolder) holder).tvDescription.setText(Html.fromHtml(projectsModel.getDescription()));
                 Glide.with(context)
                         .load(Constants.PROJECTSIMAGEBASEURL + projectsModel.getImage_url())
                         .placeholder(R.drawable.placeholder)
+                        .override(200,200)
                         .error(R.drawable.placeholder)
                         .into(((DetailedSearchViewHolder) holder).imageView);
                 holder.itemView.setOnClickListener(new View.OnClickListener() {
@@ -135,12 +140,14 @@ public class SearchAdapter extends RecyclerView.Adapter implements DetailedSearc
                 if (resourceModel.getType().equalsIgnoreCase("theory")){
                     Glide.with(context)
                             .load(Constants.THEORYRESOURCEBASEURL + resourceModel.getImage_url())
+                            .override(200,200)
                             .placeholder(R.drawable.placeholder)
                             .error(R.drawable.placeholder)
                             .into(((DetailedSearchViewHolder) holder).imageView);
                 }else if (resourceModel.getType().equalsIgnoreCase("video")){
                     Glide.with(context)
                             .load(R.mipmap.ic_action_video)
+                            .override(200,200)
                             .placeholder(R.drawable.placeholder)
                             .error(R.drawable.placeholder)
                             .into(((DetailedSearchViewHolder) holder).imageView);

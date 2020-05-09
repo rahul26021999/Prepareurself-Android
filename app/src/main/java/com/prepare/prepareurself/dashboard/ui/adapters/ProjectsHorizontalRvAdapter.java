@@ -16,8 +16,6 @@ import com.bumptech.glide.Glide;
 import com.bumptech.glide.load.engine.DiskCacheStrategy;
 import com.prepare.prepareurself.R;
 import com.prepare.prepareurself.courses.data.model.ProjectsModel;
-import com.prepare.prepareurself.courses.data.model.TopicsModel;
-import com.prepare.prepareurself.dashboard.data.model.SuggestedProjectModel;
 import com.prepare.prepareurself.utils.Constants;
 import com.prepare.prepareurself.utils.Utility;
 
@@ -68,7 +66,7 @@ public class ProjectsHorizontalRvAdapter extends RecyclerView.Adapter<ProjectsHo
 
     class ProjectsViewHolder extends RecyclerView.ViewHolder {
 
-        TextView tvCourseName;
+        TextView tvCourseName,courseName,views,level;
         ImageView imageView;
 
         public ProjectsViewHolder(@NonNull View itemView) {
@@ -76,6 +74,9 @@ public class ProjectsHorizontalRvAdapter extends RecyclerView.Adapter<ProjectsHo
 
             tvCourseName = itemView.findViewById(R.id.tv_course_name_viewtype);
             imageView = itemView.findViewById(R.id.image_course_viewtype);
+            courseName = itemView.findViewById(R.id.courseName);
+            views = itemView.findViewById(R.id.views);
+            level = itemView.findViewById(R.id.level);
 
         }
 

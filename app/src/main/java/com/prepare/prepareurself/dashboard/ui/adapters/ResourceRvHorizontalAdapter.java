@@ -46,7 +46,7 @@ public class ResourceRvHorizontalAdapter extends RecyclerView.Adapter<ResourceRv
     @NonNull
     @Override
     public ResourceViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
-        View view = LayoutInflater.from(context).inflate(R.layout.project_viewtype_rv_layout,parent, false);
+        View view = LayoutInflater.from(context).inflate(R.layout.resource_viewtype_rv_layout,parent, false);
 
         return new ResourceViewHolder(view);
     }

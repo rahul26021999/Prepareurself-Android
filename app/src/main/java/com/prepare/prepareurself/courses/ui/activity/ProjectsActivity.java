@@ -323,17 +323,6 @@ public class ProjectsActivity extends BaseActivity implements PlaylistVideosRvAd
         level.setText(projectsModel.getLevel());
         projectTitle = projectsModel.getName();
         tvProjectTitle.setText(projectTitle);
-//        viewModel.getCourseById(projectsModel.getCourse_id())
-//                .observe(ProjectsActivity.this, new Observer<CourseModel>() {
-//                    @Override
-//                    public void onChanged(CourseModel courseModel) {
-//                        if (courseModel!=null){
-//                            title.setText(courseModel.getName());
-//                        }else{
-//                            title.setText(courseName);
-//                        }
-//                    }
-//                });
 
         if (projectsModel.getDescription()!=null){
             tvProjectDescription.setText(Html.fromHtml(projectsModel.getDescription()));

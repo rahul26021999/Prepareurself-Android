@@ -161,7 +161,8 @@ public class TheoryResourcesRvAdapter extends RecyclerView.Adapter<TheoryResourc
                 Glide.with(context).load(
                         Constants.THEORYRESOURCEBASEURL + resourceModel.getImage_url())
                         .placeholder(R.drawable.placeholder)
-                        .override(400,400)
+                        .override(450,390)
+                        .centerCrop()
                         .transition(GenericTransitionOptions.<Drawable>with(Utility.getAnimationObject()))
                         .into(imageView);
             }

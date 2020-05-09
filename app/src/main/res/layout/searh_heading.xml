@@ -4,7 +4,7 @@
     android:layout_height="wrap_content"
     xmlns:tools="http://schemas.android.com/tools"
     android:orientation="vertical"
-    android:background="@color/grey">
+    android:background="@color/colorPrimaryLight">
 
     <TextView
         android:layout_width="wrap_content"
@@ -15,7 +15,8 @@
         android:fontFamily="@font/proximanovaregular"
         android:id="@+id/tv_type_search"
         android:textColor="@color/black"
-        android:layout_marginTop="20dp"
+        android:layout_marginTop="@dimen/padding_10"
+        android:layout_marginBottom="@dimen/padding_10"
         android:layout_marginStart="10dp"/>
 
 </LinearLayout>

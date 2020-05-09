@@ -97,15 +97,15 @@ public class DashboardFragment extends Fragment implements DashboardRvAdapter.Da
     private LinearLayout linMainDasboard;
     private RelativeLayout relSearchParent;
     private ProgressBar searchProgressBar;
-    private TextView notFoundSearch;
+    private RelativeLayout notFoundSearch;
 
     //search
     private Boolean isScrolling = false;
     private int rvCurrentItemsSearch, rvTotalItemsSearch, rvScrolledOutItemsSearch, rvLastPage, rvCurrentPageSearch =0;
     private LinearLayoutManager searchLayoutManager;
 
-    List<SearchRecyclerviewModel> searchRecyclerviewModels = new ArrayList<>();
-    List<String> headings = new ArrayList<>();
+    private List<SearchRecyclerviewModel> searchRecyclerviewModels = new ArrayList<>();
+    private List<String> headings = new ArrayList<>();
 
 
     @Override
@@ -150,7 +150,7 @@ public class DashboardFragment extends Fragment implements DashboardRvAdapter.Da
         searchBar =  view.findViewById(R.id.searchToolbar);
         linMainDasboard = view.findViewById(R.id.lin_main_dashboard);
         relSearchParent = view.findViewById(R.id.rel_search_parent);
-        notFoundSearch = view.findViewById(R.id.not_found_tv);
+        notFoundSearch = view.findViewById(R.id.not_found_view);
         searchProgressBar = view.findViewById(R.id.progress_bar_search);
 
         setAppBaeState(STANDARD_APPBAR);
@@ -283,11 +283,6 @@ public class DashboardFragment extends Fragment implements DashboardRvAdapter.Da
                     closeSearch.setVisibility(View.GONE);
                 }
 
-                if (s.toString().isEmpty()){
-                    searchProgressBar.setVisibility(View.GONE);
-                    notFoundSearch.setVisibility(View.GONE);
-                }
-
             }
 
             @Override
@@ -315,7 +310,6 @@ public class DashboardFragment extends Fragment implements DashboardRvAdapter.Da
         dashboardRecyclerviewModelList = new ArrayList<>();
 
         setUpSlider();
-       // addLisntner();
 
         mViewModel.fetchHomePageData(prefManager.getString(Constants.JWTTOKEN))
                 .observe(getActivity(), new Observer<HomepageResponseModel>() {
@@ -392,11 +386,6 @@ public class DashboardFragment extends Fragment implements DashboardRvAdapter.Da
 
     }
 
-    private void addLisntner()
-    {
-        final String query = searchEdit.getText().toString();
-
-    }
     private void performSearch(){
 
         final String query = searchEdit.getText().toString();
@@ -483,6 +472,9 @@ public class DashboardFragment extends Fragment implements DashboardRvAdapter.Da
                                 Log.d("paging_debug", searchRecyclerviewModels.get(0).getHeading()+"");
                                 adapter.setData(searchRecyclerviewModels);
                                 adapter.notifyDataSetChanged();
+                            }else{
+                                notFoundSearch.setVisibility(View.VISIBLE);
+                                adapter.clearData();
                             }
 
                         }else{
@@ -491,8 +483,6 @@ public class DashboardFragment extends Fragment implements DashboardRvAdapter.Da
                             adapter.clearData();
                         }
                     }
-
-
                 }
             });
 
