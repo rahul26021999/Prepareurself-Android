@@ -111,6 +111,9 @@ public class UserModel {
 
     @NonNull
     public String getLast_name() {
+        if (last_name == null){
+            last_name = "";
+        }
         return last_name;
     }
 
