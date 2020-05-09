@@ -142,51 +142,30 @@ public class ProjectsActivity extends BaseActivity implements PlaylistVideosRvAd
                 finish();
             }else {
                 projectId = id;
-                viewModel.getProjectByIdFromRemote(prefManager.getString(Constants.JWTTOKEN), projectId);
             }
 
         }else if (intent.getBooleanExtra(Constants.DEEPSHAREPROECTAFTERLOGIN, false)){
             projectId = intent.getIntExtra(Constants.PROJECTID,-1);
             courseName = intent.getStringExtra(Constants.COURSENAME);
-            viewModel.getProjectByIdFromRemote(prefManager.getString(Constants.JWTTOKEN), projectId);
         }else{
             projectId = intent.getIntExtra(Constants.PROJECTID,-1);
-            viewModel.getProjectByIdFromRemote(prefManager.getString(Constants.JWTTOKEN), projectId);
         }
 
 
 
         if (projectId != -1){
+
+            Log.d("project_viewed", "current project id" + projectId);
+            viewModel.getProjectByIdFromRemote(prefManager.getString(Constants.JWTTOKEN), projectId);
+
+
             viewModel.getProjectById(projectId).observe(this, new Observer<ProjectsModel>() {
                 @Override
                 public void onChanged(ProjectsModel projectsModel) {
-                    currentProjectModel = projectsModel;
                     if (projectsModel!=null){
-                        Log.d("project_viewed", "current project" + currentProjectModel.getName());
-                        Log.d("project_viewed", "get view" + currentProjectModel.getView());
-//                        if (currentProjectModel.getView()==0){
-//                            currentProjectModel.setView(1);
-//                            viewModel.saveProject(currentProjectModel);
-//                            viewModel.viewProject(prefManager.getString(Constants.JWTTOKEN),projectsModel.getId())
-//                                    .observe(ProjectsActivity.this, new Observer<ResourceViewsResponse>() {
-//                                        @Override
-//                                        public void onChanged(ResourceViewsResponse resourceViewsResponse) {
-//                                            if (resourceViewsResponse!=null){
-//                                                if (resourceViewsResponse.getError_code() == 0){
-//                                                    Log.d("project_viewed", "project viewd");
-////                                                    currentProjectModel.setView(1);
-////                                                    viewModel.saveProject(currentProjectModel);
-//                                                }else{
-////                                                    currentProjectModel.setView(0);
-////                                                    viewModel.saveProject(currentProjectModel);
-//                                                }
-//                                            }
-//                                        }
-//                                    });
-//                        }
+                        Log.d("project_viewed", "current project" + projectsModel.getName());
+                        Log.d("project_viewed", "get view" + projectsModel.getView());
                         updateUIWithProject(projectsModel);
-                    }else{
-                        viewModel.getProjectByIdFromRemote(prefManager.getString(Constants.JWTTOKEN), projectId);
                     }
                 }
             });
@@ -203,6 +182,7 @@ public class ProjectsActivity extends BaseActivity implements PlaylistVideosRvAd
                         playlistIntent.putExtra(Constants.VIDEOTITLE,projectTitle);
                         playlistIntent.putExtra(Constants.VIDEODESCRIPTION,projectDescription);
                         startActivity(playlistIntent);
+
                     }
                 }
             }
