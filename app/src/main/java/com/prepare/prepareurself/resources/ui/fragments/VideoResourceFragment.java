@@ -149,39 +149,45 @@ public class VideoResourceFragment extends Fragment implements VideoResoursesRvA
     @Override
     public void videoClicked(final ResourceModel videoResources, String videoCode, Bitmap bitmap) {
 
-        if (videoResources.getView() == 0){
-            if (getActivity()!=null){
-                mViewModel.resourceViewed(prefManager.getString(Constants.JWTTOKEN),videoResources.getId())
-                        .observe(getActivity(), new Observer<ResourceViewsResponse>() {
-                            @Override
-                            public void onChanged(ResourceViewsResponse resourceViewsResponse) {
-                                if (resourceViewsResponse!=null){
-                                    if (resourceViewsResponse.getError_code() == 0){
-                                        videoResources.setView(1);
-                                        mViewModel.saveResource(videoResources);
+        if (videoResources.getLink().contains("youtu.be") || videoResources.getLink().contains("youtube")){
+            if (videoResources.getView() == 0){
+                if (getActivity()!=null){
+                    mViewModel.resourceViewed(prefManager.getString(Constants.JWTTOKEN),videoResources.getId())
+                            .observe(getActivity(), new Observer<ResourceViewsResponse>() {
+                                @Override
+                                public void onChanged(ResourceViewsResponse resourceViewsResponse) {
+                                    if (resourceViewsResponse!=null){
+                                        if (resourceViewsResponse.getError_code() == 0){
+                                            videoResources.setView(1);
+                                            mViewModel.saveResource(videoResources);
+                                        }
                                     }
                                 }
-                            }
-                        });
+                            });
+                }
             }
+
+            Intent intent = new Intent(getActivity(), VideoActivity.class);
+            intent.putExtra(Constants.VIDEOCODE,videoCode);
+            intent.putExtra(Constants.RESOURCEID,videoResources.getId());
+            intent.putExtra(Constants.RESOURCEVIDEO,true);
+            intent.putExtra(Constants.VIDEOTITLE, videoResources.getTitle());
+            intent.putExtra(Constants.VIDEODESCRIPTION, videoResources.getDescription());
+            intent.putExtra(Constants.TOPICID, videoResources.getCourse_topic_id());
+
+            try {
+                Uri bitmapUri = Utility.getUriOfBitmap(bitmap, getActivity());
+                intent.putExtra(Constants.BITMAPURI,bitmapUri.toString());
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+
+            startActivity(intent);
+        }else{
+            Utility.redirectUsingCustomTab(getActivity(),videoResources.getLink());
         }
 
-        Intent intent = new Intent(getActivity(), VideoActivity.class);
-        intent.putExtra(Constants.VIDEOCODE,videoCode);
-        intent.putExtra(Constants.RESOURCEID,videoResources.getId());
-        intent.putExtra(Constants.RESOURCEVIDEO,true);
-        intent.putExtra(Constants.VIDEOTITLE, videoResources.getTitle());
-        intent.putExtra(Constants.VIDEODESCRIPTION, videoResources.getDescription());
-        intent.putExtra(Constants.TOPICID, videoResources.getCourse_topic_id());
 
-        try {
-            Uri bitmapUri = Utility.getUriOfBitmap(bitmap, getActivity());
-            intent.putExtra(Constants.BITMAPURI,bitmapUri.toString());
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
-
-        startActivity(intent);
     }
 
     @Override

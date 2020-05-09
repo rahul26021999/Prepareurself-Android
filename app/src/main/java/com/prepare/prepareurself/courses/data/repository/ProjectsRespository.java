@@ -151,7 +151,7 @@ public class ProjectsRespository {
         return data;
     }
 
-    public LiveData<ResourceLikesResponse> likeProject(String token, int projectId, int like){
+    public LiveData<ResourceLikesResponse> likeProject(String token, int projectId, final int like){
 
         final MutableLiveData<ResourceLikesResponse> data = new MutableLiveData<>();
 
@@ -160,7 +160,7 @@ public class ProjectsRespository {
             public void onResponse(Call<ResourceLikesResponse> call, Response<ResourceLikesResponse> response) {
                 ResourceLikesResponse responseModel = response.body();
                 if (responseModel!=null){
-                    Log.d("liked", "onResponse: "+responseModel.getSuccess()+", "+responseModel.getMessage());
+                    Log.d("liked_debug", "onResponse: "+responseModel.getSuccess()+", "+responseModel.getMessage()+", passed value : "+like);
                     data.setValue(responseModel);
                 }else{
                     data.setValue(null);
@@ -186,7 +186,7 @@ public class ProjectsRespository {
             public void onResponse(Call<ResourceViewsResponse> call, Response<ResourceViewsResponse> response) {
                 ResourceViewsResponse resourceViewsResponse = response.body();
                 if (resourceViewsResponse!=null){
-                    Log.d("project_viewed",resourceViewsResponse.getMessage());
+                    Log.d("liked_debug","view : "+resourceViewsResponse.getMessage());
                     data.setValue(resourceViewsResponse);
                 }else{
                     data.setValue(null);
@@ -212,6 +212,7 @@ public class ProjectsRespository {
                 ProjectResponseModel projectResponseModel = response.body();
                 if (projectResponseModel!=null){
                     if (projectResponseModel.getError_code() == 0){
+                        Log.d("liked_debug","project model : "+projectResponseModel.getProject().getLike());
                         projectsDbRepository.insertProject(projectResponseModel.getProject());
                     }
                     data.setValue(projectResponseModel);
