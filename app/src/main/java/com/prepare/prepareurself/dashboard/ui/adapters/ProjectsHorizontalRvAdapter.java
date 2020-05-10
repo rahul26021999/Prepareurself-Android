@@ -21,7 +21,6 @@ import com.prepare.prepareurself.R;
 import com.prepare.prepareurself.courses.data.model.ProjectsModel;
 import com.prepare.prepareurself.utils.Constants;
 import com.prepare.prepareurself.utils.Utility;
-import com.squareup.picasso.Picasso;
 
 import java.util.List;
 
@@ -99,16 +98,11 @@ public class ProjectsHorizontalRvAdapter extends RecyclerView.Adapter<ProjectsHo
             if (projectsModel.getImage_url()!=null && projectsModel.getImage_url().endsWith(".svg")){
                 Utility.loadSVGImage(context, Constants.PROJECTSIMAGEBASEURL+ projectsModel.getImage_url(), imageView);
             }else{
-//                Glide.with(context).load(
-//                        Constants.PROJECTSIMAGEBASEURL+ projectsModel.getImage_url())
-//                        .placeholder(R.drawable.placeholder)
-//                        .diskCacheStrategy(DiskCacheStrategy.RESOURCE)
-//                        .transition(GenericTransitionOptions.<Drawable>with(Utility.getAnimationObject()))
-//                        .into(imageView);
-
-                Picasso.get()
-                        .load(Constants.PROJECTSIMAGEBASEURL+ projectsModel.getImage_url())
+                Glide.with(context).load(
+                        Constants.PROJECTSIMAGEBASEURL+ projectsModel.getImage_url())
                         .placeholder(R.drawable.placeholder)
+                        .diskCacheStrategy(DiskCacheStrategy.RESOURCE)
+                        .transition(GenericTransitionOptions.<Drawable>with(Utility.getAnimationObject()))
                         .into(imageView);
             }
             name.setText(projectsModel.getName());
