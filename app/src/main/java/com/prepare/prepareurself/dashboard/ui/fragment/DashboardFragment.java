@@ -229,7 +229,7 @@ public class DashboardFragment extends Fragment implements DashboardRvAdapter.Da
     @Override
     public void onResume() {
         super.onResume();
-        setAppBaeState(STANDARD_APPBAR);
+//        setAppBaeState(STANDARD_APPBAR);
     }
 
     @Override
