@@ -42,6 +42,8 @@ public class VideoResoursesRvAdapter extends RecyclerView.Adapter<VideoResourses
 
     public void setResourceModels(List<ResourceModel> resourceModels) {
         this.resourceModels = resourceModels;
+        Log.d("resource_viewed","adapter set data");
+
     }
 
     @NonNull
@@ -63,10 +65,11 @@ public class VideoResoursesRvAdapter extends RecyclerView.Adapter<VideoResourses
             public void onClick(View v) {
                 if (v1.getLink().contains("youtu.be") || v1.getLink().contains("youtube")){
                     Bitmap bitmap = Utility.getBitmapFromView(holder.youTubeThumbnailView);
-                    listener.videoClicked(v1,videoCode, bitmap);
+                    listener.videoClicked(v1,videoCode, bitmap, v1.getView(),v1.getTotal_views());
                 }else{
-                    listener.videoClicked(v1,videoCode, null);
+                    listener.videoClicked(v1,videoCode, null,  v1.getView(),v1.getTotal_views());
                 }
+                notifyDataSetChanged();
 
 
             }
@@ -153,6 +156,7 @@ public class VideoResoursesRvAdapter extends RecyclerView.Adapter<VideoResourses
             tvTitle.setText(v1.getTitle());
             tvDescription.setText(v1.getDescription());
             tvLikes.setText(v1.getTotal_likes() + " likes");
+            Log.d("resource_viewed","adapter : "+v1.getView()+", "+v1.getTotal_views()+", "+v1.getId());
             tvViews.setText(v1.getTotal_views() + " views");
 
             if (v1.getLink().contains("youtu.be") || v1.getLink().contains("youtube")){
@@ -223,7 +227,7 @@ public class VideoResoursesRvAdapter extends RecyclerView.Adapter<VideoResourses
     }
 
     public interface VideoResourceInteractor{
-        void videoClicked(ResourceModel videoResources, String videoCode, Bitmap bitmap);
+        void videoClicked(ResourceModel videoResources, String videoCode, Bitmap bitmap, int view, int total_views);
         void onVideoResourceLiked(ResourceModel resourceModel, int liked);
         void onResourceShared(Bitmap bitmap, String text);
     }

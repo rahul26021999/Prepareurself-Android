@@ -49,6 +49,7 @@ import com.prepare.prepareurself.dashboard.data.model.DashboardRecyclerviewModel
 import com.prepare.prepareurself.dashboard.ui.adapters.DashboardRvAdapter;
 import com.prepare.prepareurself.R;
 import com.prepare.prepareurself.resources.data.model.ResourceModel;
+import com.prepare.prepareurself.resources.data.model.ResourceViewsResponse;
 import com.prepare.prepareurself.resources.ui.activity.ResourcesActivity;
 import com.prepare.prepareurself.search.models.SearchAdapter;
 import com.prepare.prepareurself.search.models.SearchModel;
@@ -533,16 +534,55 @@ public class DashboardFragment extends Fragment implements DashboardRvAdapter.Da
     }
 
     @Override
-    public void onResourceClickedFromSearch(ResourceModel resourceModel) {
+    public void onResourceClickedFromSearch(final ResourceModel resourceModel) {
         if (resourceModel.getType().equalsIgnoreCase("video")){
-            Intent intent = new Intent(getActivity(), VideoActivity.class);
-            intent.putExtra(Constants.VIDEOCODE, Utility.getVideoCode(resourceModel.getLink()));
-            intent.putExtra(Constants.VIDEOTITLE, resourceModel.getTitle());
-            intent.putExtra(Constants.VIDEODESCRIPTION, resourceModel.getDescription());
-            intent.putExtra(Constants.SINGLEVIDEO, true);
-            startActivity(intent);
+
+            if (resourceModel.getLink().contains("youtu.be") || resourceModel.getLink().contains("youtube")){
+                Intent intent = new Intent(getActivity(), VideoActivity.class);
+                intent.putExtra(Constants.VIDEOCODE, Utility.getVideoCode(resourceModel.getLink()));
+                intent.putExtra(Constants.VIDEOTITLE, resourceModel.getTitle());
+                intent.putExtra(Constants.VIDEODESCRIPTION, resourceModel.getDescription());
+                intent.putExtra(Constants.SINGLEVIDEO, true);
+                startActivity(intent);
+            }else {
+                Utility.redirectUsingCustomTab(getActivity(), resourceModel.getLink());
+
+                Log.d("resource_viewed", "beforeliked : " + resourceModel.getView() + ", " + resourceModel.getTotal_views() + ", " + resourceModel.getId());
+                if (resourceModel.getView() == 0) {
+                    mViewModel.resourceViewed(prefManager.getString(Constants.JWTTOKEN), resourceModel.getId())
+                            .observeForever(new Observer<ResourceViewsResponse>() {
+                                @Override
+                                public void onChanged(ResourceViewsResponse resourceViewsResponse) {
+                                    if (resourceViewsResponse.getError_code() == 0) {
+                                        resourceModel.setView(1);
+                                        Log.d("resource_viewed", "onliked begore: " + resourceModel.getView() + ", " + resourceModel.getTotal_views() + ", " + resourceModel.getId());
+                                        resourceModel.setTotal_views(resourceModel.getTotal_views() + 1);
+                                        Log.d("resource_viewed", "onliked : " + resourceModel.getView() + ", " + resourceModel.getTotal_views() + ", " + resourceModel.getId());
+                                        mViewModel.saveResource(resourceModel);
+                                    }
+                                }
+                            });
+                }
+
+
+            }
         }else if (resourceModel.getType().equalsIgnoreCase("theory")){
             Utility.redirectUsingCustomTab(getActivity(), resourceModel.getLink());
+            if (resourceModel.getView() == 0) {
+                mViewModel.resourceViewed(prefManager.getString(Constants.JWTTOKEN), resourceModel.getId())
+                        .observeForever(new Observer<ResourceViewsResponse>() {
+                            @Override
+                            public void onChanged(ResourceViewsResponse resourceViewsResponse) {
+                                if (resourceViewsResponse.getError_code() == 0) {
+                                    resourceModel.setView(1);
+                                    Log.d("resource_viewed", "onliked begore: " + resourceModel.getView() + ", " + resourceModel.getTotal_views() + ", " + resourceModel.getId());
+                                    resourceModel.setTotal_views(resourceModel.getTotal_views() + 1);
+                                    Log.d("resource_viewed", "onliked : " + resourceModel.getView() + ", " + resourceModel.getTotal_views() + ", " + resourceModel.getId());
+                                    mViewModel.saveResource(resourceModel);
+                                }
+                            }
+                        });
+            }
         }
     }
 

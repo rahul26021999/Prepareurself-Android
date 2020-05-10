@@ -14,6 +14,7 @@ import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -148,25 +149,17 @@ public class VideoResourceFragment extends Fragment implements VideoResoursesRvA
     }
 
     @Override
-    public void videoClicked(final ResourceModel videoResources, String videoCode, Bitmap bitmap) {
+    public void onResume() {
+        super.onResume();
+        if (adapter!=null)
+            adapter.notifyDataSetChanged();
+    }
+
+    @Override
+    public void videoClicked(final ResourceModel videoResources, final String videoCode, final Bitmap bitmap, final int view, final int total_views) {
 
         if (videoResources.getLink().contains("youtu.be") || videoResources.getLink().contains("youtube")){
-            if (videoResources.getView() == 0){
-                if (getActivity()!=null){
-                    mViewModel.resourceViewed(prefManager.getString(Constants.JWTTOKEN),videoResources.getId())
-                            .observe(getActivity(), new Observer<ResourceViewsResponse>() {
-                                @Override
-                                public void onChanged(ResourceViewsResponse resourceViewsResponse) {
-                                    if (resourceViewsResponse!=null){
-                                        if (resourceViewsResponse.getError_code() == 0){
-                                            videoResources.setView(1);
-                                            mViewModel.saveResource(videoResources);
-                                        }
-                                    }
-                                }
-                            });
-                }
-            }
+
 
             Intent intent = new Intent(getActivity(), VideoActivity.class);
             intent.putExtra(Constants.VIDEOCODE,videoCode);
@@ -184,8 +177,27 @@ public class VideoResourceFragment extends Fragment implements VideoResoursesRvA
             }
 
             startActivity(intent);
+
         }else{
             Utility.redirectUsingCustomTab(getActivity(),videoResources.getLink());
+            if (videoResources!=null){
+                Log.d("resource_viewed","beforeliked : "+videoResources.getView()+", "+videoResources.getTotal_views()+", "+videoResources.getId());
+                if (videoResources.getView() == 0){
+                    mViewModel.resourceViewed(prefManager.getString(Constants.JWTTOKEN), videoResources.getId())
+                            .observeForever(new Observer<ResourceViewsResponse>() {
+                                @Override
+                                public void onChanged(ResourceViewsResponse resourceViewsResponse) {
+                                    if (resourceViewsResponse.getError_code() == 0){
+                                        videoResources.setView(1);
+                                        Log.d("resource_viewed","onliked begore: "+videoResources.getView()+", "+videoResources.getTotal_views()+", "+videoResources.getId());
+                                        videoResources.setTotal_views(videoResources.getTotal_views()+1);
+                                        Log.d("resource_viewed","onliked : "+videoResources.getView()+", "+videoResources.getTotal_views()+", "+videoResources.getId());
+                                        mViewModel.saveResource(videoResources);
+                                    }
+                                }
+                            });
+                }
+            }
         }
 
 

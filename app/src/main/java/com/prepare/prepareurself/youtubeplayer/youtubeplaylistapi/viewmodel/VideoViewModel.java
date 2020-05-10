@@ -11,6 +11,7 @@ import com.prepare.prepareurself.favourites.data.db.repository.LikedResourceResp
 import com.prepare.prepareurself.favourites.data.model.LikedResourcesModel;
 import com.prepare.prepareurself.resources.data.db.repository.ResourcesDbRepository;
 import com.prepare.prepareurself.resources.data.model.ResourceModel;
+import com.prepare.prepareurself.resources.data.model.ResourceViewsResponse;
 import com.prepare.prepareurself.resources.data.model.VideoShareResponseModel;
 import com.prepare.prepareurself.resources.data.repository.ResourceRespository;
 import com.prepare.prepareurself.youtubeplayer.youtubeplaylistapi.db.PlaylistVideosDbRepository;
@@ -50,8 +51,23 @@ public class VideoViewModel extends AndroidViewModel {
        return resourceRespository.getResourceByIdForShare(token,resourceId);
     }
 
+    public void fetchResourceById(String token, int resourceId){
+        resourceRespository.getResourceByIdForShare(token, resourceId);
+    }
+
+    public LiveData<ResourceModel> getResourceById(int resourceId, String type){
+        return resourcesDbRepository.getResourceByResourceId(resourceId, type);
+    }
+
     public LiveData<List<LikedResourcesModel>> getLikedResourceExceptId(int resourceId, String type){
         return likedResourceRespository.getLikedResourcesExceptId(resourceId, type);
+    }
+
+    public LiveData<ResourceViewsResponse> resourceViewed(String token, int resourceId){
+        return resourceRespository.resourceViewed(token,resourceId);
+    }
+    public void saveResource(ResourceModel videoResources) {
+        resourcesDbRepository.insertResource(videoResources);
     }
 
 }
