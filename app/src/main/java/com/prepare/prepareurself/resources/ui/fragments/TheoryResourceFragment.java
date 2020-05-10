@@ -13,6 +13,7 @@ import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -157,6 +158,7 @@ public class TheoryResourceFragment extends Fragment implements TheoryResourcesR
                             if (resourceViewsResponse!=null && resourceViewsResponse.getError_code() == 0){
                                 resource.setView(1);
                                 mViewModel.saveResource(resource);
+                                Log.d("resource_viewed",resourceViewsResponse.getMessage());
                             }
                         }
                     });

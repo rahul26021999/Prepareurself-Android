@@ -7,6 +7,8 @@ import androidx.lifecycle.AndroidViewModel;
 import androidx.lifecycle.LiveData;
 import androidx.lifecycle.MutableLiveData;
 
+import com.prepare.prepareurself.favourites.data.db.repository.LikedResourceRespository;
+import com.prepare.prepareurself.favourites.data.model.LikedResourcesModel;
 import com.prepare.prepareurself.resources.data.db.repository.ResourcesDbRepository;
 import com.prepare.prepareurself.resources.data.model.ResourceModel;
 import com.prepare.prepareurself.resources.data.model.VideoShareResponseModel;
@@ -21,6 +23,7 @@ public class VideoViewModel extends AndroidViewModel {
     private PlaylistVideosDbRepository playlistVideosDbRepository;
     private ResourceRespository resourceRespository;
     private ResourcesDbRepository resourcesDbRepository;
+    private LikedResourceRespository likedResourceRespository;
 
     private LiveData<List<VideoItemWrapper>> listLiveData = new MutableLiveData<>();
 
@@ -29,6 +32,7 @@ public class VideoViewModel extends AndroidViewModel {
         playlistVideosDbRepository = new PlaylistVideosDbRepository(application);
         resourceRespository = new ResourceRespository(application);
         resourcesDbRepository = new ResourcesDbRepository(application);
+        likedResourceRespository = new LikedResourceRespository(application);
     }
 
     public LiveData<List<VideoItemWrapper>> getListLiveData(String playlistId) {
@@ -45,4 +49,9 @@ public class VideoViewModel extends AndroidViewModel {
     public LiveData<VideoShareResponseModel> getResourceFromRemote(String token, int resourceId) {
        return resourceRespository.getResourceByIdForShare(token,resourceId);
     }
+
+    public LiveData<List<LikedResourcesModel>> getLikedResourceExceptId(int resourceId, String type){
+        return likedResourceRespository.getLikedResourcesExceptId(resourceId, type);
+    }
+
 }
