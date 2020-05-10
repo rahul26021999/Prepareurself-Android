@@ -479,13 +479,20 @@ public class VideoActivity extends YouTubeBaseActivity implements YouTubePlayer.
 
     @Override
     public void onRelatedItemClicked(ResourceModel resourceModel) {
-        if (mYoutubePlayer!=null){
-            String link = resourceModel.getLink();
-            String videoCode = Utility.getVideoCode(link);
-            mYoutubePlayer.loadVideo(videoCode);
-            tvTitle.setText(resourceModel.getTitle());
-            tvDescription.setText(resourceModel.getDescription());
+
+        if (resourceModel.getLink().contains("youtu.be") || resourceModel.getLink().contains("youtube")){
+            if (mYoutubePlayer!=null){
+                String link = resourceModel.getLink();
+                String videoCode = Utility.getVideoCode(link);
+                mYoutubePlayer.loadVideo(videoCode);
+                tvTitle.setText(resourceModel.getTitle());
+                tvDescription.setText(resourceModel.getDescription());
+            }
+        }else{
+            Utility.redirectUsingCustomTab(this,resourceModel.getLink());
         }
+
+
     }
 
     @NonNull
