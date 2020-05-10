@@ -160,6 +160,7 @@ public class VideoResourceFragment extends Fragment implements VideoResoursesRvA
                                     if (resourceViewsResponse!=null){
                                         if (resourceViewsResponse.getError_code() == 0){
                                             videoResources.setView(1);
+                                            videoResources.setTotal_views(videoResources.getTotal_views()+1);
                                             mViewModel.saveResource(videoResources);
                                         }
                                     }
