@@ -120,7 +120,7 @@ public class ResourceRvHorizontalAdapter extends RecyclerView.Adapter<ResourceRv
 
             if (isPostedOn){
                 posteon.setVisibility(View.VISIBLE);
-                String duration = Utility.getDurationBetweenTwoDays(res.getUpdated_at().split(" ")[0]);
+                String duration = Utility.getDurationBetweenTwoDays(res.getCreated_at().split(" ")[0]);
                 if (!TextUtils.isEmpty(duration)){
                     posteon.setText(duration);
                 }else{
