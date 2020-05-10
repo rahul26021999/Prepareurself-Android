@@ -219,7 +219,7 @@ public class Utility {
 
             if (days<7){
                 output = days+" days ago";
-            }else if (weeks<5){
+            }else if (weeks<=5){
                 output = weeks + " weeks ago";
             } else if (months < 12){
                 output = months+" months ago";
