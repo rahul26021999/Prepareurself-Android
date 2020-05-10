@@ -283,9 +283,9 @@ public class HomeActivity extends BaseActivity implements NavigationView.OnNavig
                 R.drawable.namelogo);
         try {
             Uri uri = Utility.getUriOfBitmapJPG(icon, this);
-            String text = "Prepareurself is preparing me for my internships. I found some best and amazing Project works, a wide range of latest Tech-Stacks and some best Resources from internet at one place.\n" +
-                    "Checkout our prepareurself app.\n\n"+
-                    "Click link to install\n"+
+            String text = "Prepareurself is providing various courses, projects and resources." +
+                    "One place to learn skills and test them by developing projects.\n" +
+                    "Checkout prepareurself app : \n" +
                     "prepareurself.in/install";
             Utility.shareContent(this,uri, text);
         } catch (IOException e) {

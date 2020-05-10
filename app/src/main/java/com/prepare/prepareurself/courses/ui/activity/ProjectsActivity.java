@@ -324,9 +324,10 @@ public class ProjectsActivity extends BaseActivity implements PlaylistVideosRvAd
                 try {
                     Uri uri = Utility.getUriOfBitmap(Utility.getBitmapFromView(imageProject),ProjectsActivity.this);
                     String encodedId = Utility.base64EncodeForInt(projectsModel.getId());
-                    String text = "Prepareurself is preparing me for my internships." +
-                            "I found some best and amazing project work.\n" +
-                            "Checkout them at :\n"+
+                    String text = projectsModel.getName()+"\n" +
+                            "Prepareurself is providing various courses, projects and resources." +
+                            "One place to learn skills and test them by developing projects.\n" +
+                            "Checkout prepareurself app : \n" +
                             "prepareurself.in/project/"+encodedId;
                     Utility.shareContent(ProjectsActivity.this,uri,text);
                 } catch (IOException e) {

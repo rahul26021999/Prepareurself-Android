@@ -69,9 +69,10 @@ public class ProjectsRvAdapter extends RecyclerView.Adapter<ProjectsRvAdapter.Pr
                 try {
                     String encodedId = Utility.base64EncodeForInt(projectsModel.getId());
                     Bitmap bitmap = Utility.getBitmapFromView(holder.imageView);
-                    String text = "Prepareurself is preparing me for my internships." +
-                            "I found some best and amazing project work.\n" +
-                            "Checkout them at :\n"+
+                    String text = projectsModel.getName()+"\n" +
+                            "Prepareurself is providing various courses, projects and resources." +
+                            "One place to learn skills and test them by developing projects.\n" +
+                            "Checkout prepareurself app : \n" +
                             "prepareurself.in/project/"+encodedId;
                     listener.onProjectShared(bitmap,text);
                 } catch (UnsupportedEncodingException e) {
