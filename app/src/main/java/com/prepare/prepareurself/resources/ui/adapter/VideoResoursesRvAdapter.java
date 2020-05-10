@@ -156,15 +156,15 @@ public class VideoResoursesRvAdapter extends RecyclerView.Adapter<VideoResourses
             tvLikes.setText(v1.getTotal_likes() + " likes");
             tvViews.setText(v1.getTotal_views() + " views");
 
+            if (v1.getLike() == 1){
+                hitLike.setImageDrawable(context.getResources().getDrawable(R.drawable.ic_thumb_up_blue_24dp));
+            }else{
+                hitLike.setImageDrawable(context.getResources().getDrawable(R.drawable.ic_thumb_up_grey_24dp));
+            }
+
             if (v1.getLink().contains("youtu.be") || v1.getLink().contains("youtube")){
                 youTubeThumbnailView.setVisibility(View.VISIBLE);
                 imageView.setVisibility(View.GONE);
-
-                if (v1.getLike() == 1){
-                    hitLike.setImageDrawable(context.getResources().getDrawable(R.drawable.ic_thumb_up_blue_24dp));
-                }else{
-                    hitLike.setImageDrawable(context.getResources().getDrawable(R.drawable.ic_thumb_up_grey_24dp));
-                }
 
                 if (readyForLoadingYoutubeThumbnail){
                     readyForLoadingYoutubeThumbnail = false;
