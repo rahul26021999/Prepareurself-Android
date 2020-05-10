@@ -133,4 +133,7 @@ dependencies {
     //paging
     implementation "android.arch.paging:runtime:$paging_version"
 
+    //picasso
+    implementation 'com.squareup.picasso:picasso:2.71828'
+
 }
