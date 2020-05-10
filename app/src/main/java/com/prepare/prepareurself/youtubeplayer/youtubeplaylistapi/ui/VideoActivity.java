@@ -10,6 +10,7 @@ import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import android.content.Intent;
+import android.graphics.Bitmap;
 import android.net.Uri;
 import android.os.Bundle;
 import android.text.TextUtils;
@@ -534,7 +535,7 @@ public class VideoActivity extends YouTubeBaseActivity implements YouTubePlayer.
     }
 
     @Override
-    public void onRelatedItemClicked(ResourceModel resourceModel) {
+    public void onRelatedItemClicked(ResourceModel resourceModel, Uri uri) {
 
         if (resourceModel.getLink().contains("youtu.be") || resourceModel.getLink().contains("youtube")){
             if (mYoutubePlayer!=null){
@@ -543,6 +544,9 @@ public class VideoActivity extends YouTubeBaseActivity implements YouTubePlayer.
                 mYoutubePlayer.loadVideo(videoCode);
                 tvTitle.setText(resourceModel.getTitle());
                 tvDescription.setText(resourceModel.getDescription());
+                bitmapUri = uri.toString();
+                resourceId =resourceModel.getId();
+
             }
         }else{
             Utility.redirectUsingCustomTab(this,resourceModel.getLink());
@@ -552,7 +556,7 @@ public class VideoActivity extends YouTubeBaseActivity implements YouTubePlayer.
     }
 
     @Override
-    public void onRelatedItemClicked(LikedResourcesModel resourceModel) {
+    public void onRelatedItemClicked(LikedResourcesModel resourceModel, Uri uri) {
         if (resourceModel.getLink().contains("youtu.be") || resourceModel.getLink().contains("youtube")){
             if (mYoutubePlayer!=null){
                 String link = resourceModel.getLink();
@@ -560,6 +564,8 @@ public class VideoActivity extends YouTubeBaseActivity implements YouTubePlayer.
                 mYoutubePlayer.loadVideo(videoCode);
                 tvTitle.setText(resourceModel.getTitle());
                 tvDescription.setText(resourceModel.getDescription());
+                bitmapUri = uri.toString();
+                resourceId =resourceModel.getId();
             }
         }else{
             Utility.redirectUsingCustomTab(this,resourceModel.getLink());

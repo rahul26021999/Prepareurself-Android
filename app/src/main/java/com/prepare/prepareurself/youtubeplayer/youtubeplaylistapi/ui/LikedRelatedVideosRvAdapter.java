@@ -2,6 +2,7 @@ package com.prepare.prepareurself.youtubeplayer.youtubeplaylistapi.ui;
 
 import android.content.Context;
 import android.graphics.drawable.Drawable;
+import android.net.Uri;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -22,6 +23,7 @@ import com.prepare.prepareurself.resources.data.model.ResourceModel;
 import com.prepare.prepareurself.utils.Constants;
 import com.prepare.prepareurself.utils.Utility;
 
+import java.io.IOException;
 import java.util.List;
 
 public class LikedRelatedVideosRvAdapter extends RecyclerView.Adapter<LikedRelatedVideosRvAdapter.RelatedVideosViewHolder> {
@@ -47,13 +49,18 @@ public class LikedRelatedVideosRvAdapter extends RecyclerView.Adapter<LikedRelat
     }
 
     @Override
-    public void onBindViewHolder(@NonNull RelatedVideosViewHolder holder, int position) {
+    public void onBindViewHolder(@NonNull final RelatedVideosViewHolder holder, int position) {
         final LikedResourcesModel resourceModel = resourceModels.get(position);
         holder.bindView(resourceModel);
         holder.itemView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                listener.onRelatedItemClicked(resourceModel);
+                try {
+                    listener.onRelatedItemClicked(resourceModel, Utility.getUriOfBitmap(Utility.getBitmapFromView(holder.youTubeThumbnailView),context));
+                } catch (IOException e) {
+                    e.printStackTrace();
+                    Utility.showToast(context,"Unable to share at the moment");
+                }
             }
         });
     }
@@ -148,7 +155,7 @@ public class LikedRelatedVideosRvAdapter extends RecyclerView.Adapter<LikedRelat
     }
 
     public interface RelatedRvListener{
-        void onRelatedItemClicked(LikedResourcesModel resourceModel);
+        void onRelatedItemClicked(LikedResourcesModel resourceModel, Uri uri);
     }
 
 }
