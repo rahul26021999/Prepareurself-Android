@@ -66,6 +66,7 @@
             android:background="?attr/selectableItemBackground"
             android:textStyle="bold"
             android:textAllCaps="true"
+            android:visibility="gone"
             android:fontFamily="@font/proximanovaregular"
             android:textColor="@color/colorPrimaryDark"
             android:text="Resend Mail"/>

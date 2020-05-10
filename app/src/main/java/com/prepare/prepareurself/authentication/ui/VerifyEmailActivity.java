@@ -52,6 +52,12 @@ public class VerifyEmailActivity extends BaseActivity {
 
         textView.setText("A verification link has been sent to "+email+"\n Please go and verify first.");
 
+//        resendMail.setOnClickListener(new View.OnClickListener() {
+//            @Override
+//            public void onClick(View v) {
+//
+//            }
+//        });
 
 
     }
