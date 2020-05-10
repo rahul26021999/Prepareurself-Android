@@ -126,6 +126,9 @@ public class ResourceRespository {
             public void onResponse(Call<VideoShareResponseModel> call, Response<VideoShareResponseModel> response) {
                 VideoShareResponseModel responseModel = response.body();
                 if (responseModel!=null){
+                    if (responseModel.getError_code() == 0){
+                        resourcesDbRepository.insertResource(responseModel.getResource());
+                    }
                     data.setValue(responseModel);
                 }else{
                     data.setValue(null);

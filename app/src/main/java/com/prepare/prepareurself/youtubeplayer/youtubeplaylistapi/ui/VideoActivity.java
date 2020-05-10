@@ -2,6 +2,7 @@ package com.prepare.prepareurself.youtubeplayer.youtubeplaylistapi.ui;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
+import androidx.lifecycle.LifecycleOwner;
 import androidx.lifecycle.Observer;
 import androidx.lifecycle.ViewModelProvider;
 import androidx.lifecycle.ViewModelStore;
@@ -32,6 +33,7 @@ import com.prepare.prepareurself.R;
 import com.prepare.prepareurself.authentication.ui.AuthenticationActivity;
 import com.prepare.prepareurself.favourites.data.model.LikedResourcesModel;
 import com.prepare.prepareurself.resources.data.model.ResourceModel;
+import com.prepare.prepareurself.resources.data.model.ResourceViewsResponse;
 import com.prepare.prepareurself.resources.data.model.VideoShareResponseModel;
 import com.prepare.prepareurself.utils.Constants;
 import com.prepare.prepareurself.utils.PrefManager;
@@ -211,37 +213,42 @@ public class VideoActivity extends YouTubeBaseActivity implements YouTubePlayer.
             mAdView.setVisibility(View.VISIBLE);
             projectAdView.setVisibility(View.GONE);
 
-            final RelatedVideosRvAdapter relatedVideosRvAdapter = new RelatedVideosRvAdapter(VideoActivity.this, this);
-            LinearLayoutManager layoutManager = new LinearLayoutManager(this, RecyclerView.HORIZONTAL, false);
-            rvOtherVideos.setLayoutManager(layoutManager);
-            rvOtherVideos.setAdapter(relatedVideosRvAdapter);
+            if (resourceId!=-1){
+                videoViewModel.fetchResourceById(prefManager.getString(Constants.JWTTOKEN), resourceId);
+                final RelatedVideosRvAdapter relatedVideosRvAdapter = new RelatedVideosRvAdapter(VideoActivity.this, this);
+                LinearLayoutManager layoutManager = new LinearLayoutManager(this, RecyclerView.HORIZONTAL, false);
+                rvOtherVideos.setLayoutManager(layoutManager);
+                rvOtherVideos.setAdapter(relatedVideosRvAdapter);
 
-            videoViewModel.getResourceExceptId(resourceId,Constants.VIDEO,topicId)
-                    .observeForever(new Observer<List<ResourceModel>>() {
-                        @Override
-                        public void onChanged(List<ResourceModel> resourceModels) {
-                            relatedVideosRvAdapter.setResources(resourceModels);
-                            relatedVideosRvAdapter.notifyDataSetChanged();
+                videoViewModel.getResourceExceptId(resourceId,Constants.VIDEO,topicId)
+                        .observeForever(new Observer<List<ResourceModel>>() {
+                            @Override
+                            public void onChanged(List<ResourceModel> resourceModels) {
+                                relatedVideosRvAdapter.setResources(resourceModels);
+                                relatedVideosRvAdapter.notifyDataSetChanged();
+                            }
+                        });
+
+                checkForViews(resourceId);
+
+                imageViewShare.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+                        Uri uri = Uri.parse(bitmapUri);
+                        try {
+                            String encodedId = Utility.base64EncodeForInt(resourceId);
+                            String text = "Checkout our prepareurself app. "
+                                    + "I found some best resources  from internet at one place and learning is so much fun now.\n"
+                                    + "You can learn them too here :\n"+
+                                    "prepareurself.in/resource/"+encodedId;
+                            share(uri,text);
+                        } catch (UnsupportedEncodingException e) {
+                            e.printStackTrace();
                         }
-                    });
-
-            imageViewShare.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View v) {
-                    Uri uri = Uri.parse(bitmapUri);
-                    try {
-                        String encodedId = Utility.base64EncodeForInt(resourceId);
-                        String text = title+"\n\n" +
-                                "Prepareurself is providing various courses, projects and resources." +
-                                "One place to learn skills and test them by developing projects.\n" +
-                                "Checkout prepareurself app : \n" +
-                                "prepareurself.in/resource/"+encodedId;
-                        share(uri,text);
-                    } catch (UnsupportedEncodingException e) {
-                        e.printStackTrace();
                     }
-                }
-            });
+                });
+
+            }
 
         }else if (intent.getBooleanExtra(Constants.RESOURCEVIDEOLIKED,false)){
             showShareAndLike();
@@ -264,6 +271,8 @@ public class VideoActivity extends YouTubeBaseActivity implements YouTubePlayer.
 
             mAdView.setVisibility(View.VISIBLE);
             projectAdView.setVisibility(View.GONE);
+
+            checkForViews(resourceId);
 
             final LikedRelatedVideosRvAdapter relatedVideosRvAdapter = new LikedRelatedVideosRvAdapter(VideoActivity.this, this);
             LinearLayoutManager layoutManager = new LinearLayoutManager(this, RecyclerView.HORIZONTAL, false);
@@ -375,6 +384,33 @@ public class VideoActivity extends YouTubeBaseActivity implements YouTubePlayer.
                     }
                 });
 
+    }
+
+    private void checkForViews(int resourceId){
+        videoViewModel.getResourceById(resourceId, Constants.VIDEO)
+                .observeForever( new Observer<ResourceModel>() {
+                    @Override
+                    public void onChanged(final ResourceModel videoResources) {
+                        if (videoResources!=null){
+                            Log.d("resource_viewed","beforeliked : "+videoResources.getView()+", "+videoResources.getTotal_views()+", "+videoResources.getId());
+                            if (videoResources.getView() == 0){
+                                videoViewModel.resourceViewed(prefManager.getString(Constants.JWTTOKEN), videoResources.getId())
+                                        .observeForever(new Observer<ResourceViewsResponse>() {
+                                            @Override
+                                            public void onChanged(ResourceViewsResponse resourceViewsResponse) {
+                                                if (resourceViewsResponse.getError_code() == 0){
+                                                    videoResources.setView(1);
+                                                    Log.d("resource_viewed","onliked begore: "+videoResources.getView()+", "+videoResources.getTotal_views()+", "+videoResources.getId());
+                                                    videoResources.setTotal_views(videoResources.getTotal_views()+1);
+                                                    Log.d("resource_viewed","onliked : "+videoResources.getView()+", "+videoResources.getTotal_views()+", "+videoResources.getId());
+                                                    videoViewModel.saveResource(videoResources);
+                                                }
+                                            }
+                                        });
+                            }
+                        }
+                    }
+                });
     }
 
 
@@ -552,9 +588,12 @@ public class VideoActivity extends YouTubeBaseActivity implements YouTubePlayer.
                 bitmapUri = uri.toString();
                 resourceId =resourceModel.getId();
 
+                checkForViews(resourceId);
+
             }
         }else{
             Utility.redirectUsingCustomTab(this,resourceModel.getLink());
+            checkForViews(resourceId);
         }
 
 
@@ -571,9 +610,12 @@ public class VideoActivity extends YouTubeBaseActivity implements YouTubePlayer.
                 tvDescription.setText(resourceModel.getDescription());
                 bitmapUri = uri.toString();
                 resourceId =resourceModel.getId();
+
+                checkForViews(resourceId);
             }
         }else{
             Utility.redirectUsingCustomTab(this,resourceModel.getLink());
+            checkForViews(resourceId);
         }
     }
 

@@ -27,7 +27,11 @@ import com.prepare.prepareurself.dashboard.data.model.SuggestedProjectModel;
 import com.prepare.prepareurself.dashboard.data.model.SuggestedTopicsModel;
 import com.prepare.prepareurself.dashboard.data.repository.CourseRepository;
 import com.prepare.prepareurself.dashboard.data.repository.DashboardRespoisitory;
+import com.prepare.prepareurself.resources.data.db.repository.ResourcesDbRepository;
+import com.prepare.prepareurself.resources.data.model.ResourceModel;
+import com.prepare.prepareurself.resources.data.model.ResourceViewsResponse;
 import com.prepare.prepareurself.resources.data.model.ResourcesResponse;
+import com.prepare.prepareurself.resources.data.repository.ResourceRespository;
 import com.prepare.prepareurself.search.models.SearchModel;
 import com.prepare.prepareurself.search.models.SearchRepository;
 import com.prepare.prepareurself.search.models.SearchResponseModel;
@@ -55,6 +59,8 @@ public class DashboardViewModel extends AndroidViewModel {
     private SuggestedProjectsDbRespository suggestedProjectsDbRespository;
     private SearchRepository searchRepository;
     private SearchDbRespository searchDbRespository;
+    private ResourcesDbRepository resourcesDbRepository;
+    private ResourceRespository resourceRespository;
     public DashboardViewModel(@NonNull Application application) {
         super(application);
         courseRepository = new CourseRepository(application);
@@ -70,6 +76,8 @@ public class DashboardViewModel extends AndroidViewModel {
         suggestedTopicsDbRepository = new SuggestedTopicsDbRepository(application);
         searchRepository = new SearchRepository(application);
         searchDbRespository = new SearchDbRespository(application);
+        resourcesDbRepository = new ResourcesDbRepository(application);
+        resourceRespository = new ResourceRespository(application);
     }
 
     public LiveData<SearchResponseModel> search(String token, String query){
@@ -152,6 +160,13 @@ public class DashboardViewModel extends AndroidViewModel {
 
     public LiveData<HomepageResponseModel> fetchHomePageData(String token){
         return dashboardRespoisitory.fetchHomePageData(token);
+    }
+
+    public LiveData<ResourceViewsResponse> resourceViewed(String token, int resourceId){
+        return resourceRespository.resourceViewed(token,resourceId);
+    }
+    public void saveResource(ResourceModel videoResources) {
+        resourcesDbRepository.insertResource(videoResources);
     }
 
 }
