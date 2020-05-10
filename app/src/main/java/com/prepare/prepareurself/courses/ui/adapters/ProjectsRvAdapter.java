@@ -69,7 +69,7 @@ public class ProjectsRvAdapter extends RecyclerView.Adapter<ProjectsRvAdapter.Pr
                 try {
                     String encodedId = Utility.base64EncodeForInt(projectsModel.getId());
                     Bitmap bitmap = Utility.getBitmapFromView(holder.imageView);
-                    String text = projectsModel.getName()+"\n" +
+                    String text = projectsModel.getName()+"\n\n" +
                             "Prepareurself is providing various courses, projects and resources." +
                             "One place to learn skills and test them by developing projects.\n" +
                             "Checkout prepareurself app : \n" +

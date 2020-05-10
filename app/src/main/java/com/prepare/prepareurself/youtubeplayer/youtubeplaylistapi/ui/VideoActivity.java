@@ -231,7 +231,7 @@ public class VideoActivity extends YouTubeBaseActivity implements YouTubePlayer.
                     Uri uri = Uri.parse(bitmapUri);
                     try {
                         String encodedId = Utility.base64EncodeForInt(resourceId);
-                        String text = title+"\n" +
+                        String text = title+"\n\n" +
                                 "Prepareurself is providing various courses, projects and resources." +
                                 "One place to learn skills and test them by developing projects.\n" +
                                 "Checkout prepareurself app : \n" +
@@ -285,9 +285,10 @@ public class VideoActivity extends YouTubeBaseActivity implements YouTubePlayer.
                     Uri uri = Uri.parse(bitmapUri);
                     try {
                         String encodedId = Utility.base64EncodeForInt(resourceId);
-                        String text = "Checkout our prepareurself app. "
-                                + "I found some best resources  from internet at one place and learning is so much fun now.\n"
-                                + "You can learn them too here :\n"+
+                        String text = title+"\n\n" +
+                                "Prepareurself is providing various courses, projects and resources." +
+                                "One place to learn skills and test them by developing projects.\n" +
+                                "Checkout prepareurself app : \n" +
                                 "prepareurself.in/resource/"+encodedId;
                         share(uri,text);
                     } catch (UnsupportedEncodingException e) {
