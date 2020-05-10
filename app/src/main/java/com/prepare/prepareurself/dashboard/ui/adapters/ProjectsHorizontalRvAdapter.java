@@ -3,6 +3,7 @@ package com.prepare.prepareurself.dashboard.ui.adapters;
 import android.annotation.SuppressLint;
 import android.content.Context;
 import android.graphics.drawable.Drawable;
+import android.text.TextUtils;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -28,6 +29,9 @@ public class ProjectsHorizontalRvAdapter extends RecyclerView.Adapter<ProjectsHo
     private Context context;
     private List<ProjectsModel> projectsModels;
     private ProjectsHorizontalRvListener listener;
+    private boolean isViews = false;
+    private boolean isLikes = false;
+    private boolean isPostedOn = false;
 
     public ProjectsHorizontalRvAdapter(Context context, ProjectsHorizontalRvListener listener) {
         this.context = context;
@@ -66,9 +70,15 @@ public class ProjectsHorizontalRvAdapter extends RecyclerView.Adapter<ProjectsHo
         this.projectsModels = projectsModels;
     }
 
+    public void setParams(boolean isViews, boolean isPostedOn, boolean isLikes){
+        this.isViews = isViews;
+        this.isPostedOn = isPostedOn;
+        this.isLikes = isLikes;
+    }
+
     class ProjectsViewHolder extends RecyclerView.ViewHolder {
 
-        TextView name,courseName,views,level;
+        TextView name,courseName,views,level, likes, posteon;
         ImageView imageView;
 
         public ProjectsViewHolder(@NonNull View itemView) {
@@ -78,6 +88,8 @@ public class ProjectsHorizontalRvAdapter extends RecyclerView.Adapter<ProjectsHo
             views=itemView.findViewById(R.id.views);
             imageView = itemView.findViewById(R.id.image_course_viewtype);
             level = itemView.findViewById(R.id.level);
+            likes=  itemView.findViewById(R.id.likes);
+            posteon =itemView.findViewById(R.id.postedon);
 
         }
 
@@ -94,6 +106,32 @@ public class ProjectsHorizontalRvAdapter extends RecyclerView.Adapter<ProjectsHo
                         .into(imageView);
             }
             name.setText(projectsModel.getName());
+            if (isViews){
+                views.setVisibility(View.VISIBLE);
+                views.setText(projectsModel.getTotal_views()+ " views");
+            }
+            else{
+                views.setVisibility(View.GONE);
+            }
+            if (isLikes){
+                likes.setVisibility(View.VISIBLE);
+                likes.setText(projectsModel.getTotal_likes() + " likes");
+            }else{
+                likes.setVisibility(View.GONE);
+            }
+
+            if (isPostedOn){
+                posteon.setVisibility(View.VISIBLE);
+                String duration = Utility.getDurationBetweenTwoDays(projectsModel.getUpdated_at().split(" ")[0]);
+                if (!TextUtils.isEmpty(duration)){
+                    posteon.setText(duration);
+                }else{
+                    posteon.setVisibility(View.GONE);
+                }
+            }else{
+                posteon.setVisibility(View.GONE);
+            }
+
             if(projectsModel.getLevel().equals("hard")){
                 level.setBackgroundTintList(context.getResources().getColorStateList(R.color.lightred));
             }
@@ -104,6 +142,7 @@ public class ProjectsHorizontalRvAdapter extends RecyclerView.Adapter<ProjectsHo
                 level.setBackgroundTintList(context.getResources().getColorStateList(R.color.yellow));
             }
             Log.i("views", String.valueOf(projectsModel.getTotal_views()));
+
             views.setText(projectsModel.getTotal_views()+ " views");
             level.setText(projectsModel.getLevel());
 

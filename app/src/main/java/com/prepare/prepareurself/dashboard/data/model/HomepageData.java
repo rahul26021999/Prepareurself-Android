@@ -11,6 +11,9 @@ public class HomepageData {
     private String title;
     private String type;
     private boolean seeAll;
+    private boolean postedOn;
+    private boolean views;
+    private boolean likes;
     private List<CourseModel> courses;
     private List<ProjectsModel> project;
     private List<ResourceModel> resource;
@@ -19,6 +22,30 @@ public class HomepageData {
 
     public HomepageData(){
 
+    }
+
+    public boolean isLikes() {
+        return likes;
+    }
+
+    public void setLikes(boolean likes) {
+        this.likes = likes;
+    }
+
+    public boolean isPostedOn() {
+        return postedOn;
+    }
+
+    public void setPostedOn(boolean postedOn) {
+        this.postedOn = postedOn;
+    }
+
+    public boolean isViews() {
+        return views;
+    }
+
+    public void setViews(boolean views) {
+        this.views = views;
     }
 
     public String getTitle() {
