@@ -16,8 +16,8 @@
         android:textColor="@color/colorPrimary"
         android:padding="10dp"
         android:textStyle="bold"
-        android:textSize="18sp"
-        android:fontFamily="@font/roboto_regular"
+        android:textSize="17sp"
+        android:fontFamily="@font/proximanovaregular"
         android:id="@+id/tv_courses_header_viewtype"/>
 
     <TextView

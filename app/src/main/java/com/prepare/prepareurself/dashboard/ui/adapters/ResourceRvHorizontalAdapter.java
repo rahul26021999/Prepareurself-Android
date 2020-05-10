@@ -102,6 +102,7 @@ public class ResourceRvHorizontalAdapter extends RecyclerView.Adapter<ResourceRv
                             Constants.THEORYRESOURCEBASEURL+ res.getImage_url())
                             .placeholder(R.drawable.placeholder)
                             .diskCacheStrategy(DiskCacheStrategy.RESOURCE)
+                            .centerInside()
                             .transition(GenericTransitionOptions.<Drawable>with(Utility.getAnimationObject()))
                             .into(imageView);
                 }

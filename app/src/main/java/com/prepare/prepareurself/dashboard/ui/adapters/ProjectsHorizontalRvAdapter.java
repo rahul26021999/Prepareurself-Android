@@ -1,7 +1,9 @@
 package com.prepare.prepareurself.dashboard.ui.adapters;
 
+import android.annotation.SuppressLint;
 import android.content.Context;
 import android.graphics.drawable.Drawable;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -73,6 +75,7 @@ public class ProjectsHorizontalRvAdapter extends RecyclerView.Adapter<ProjectsHo
             super(itemView);
 
             name = itemView.findViewById(R.id.name);
+            views=itemView.findViewById(R.id.views);
             imageView = itemView.findViewById(R.id.image_course_viewtype);
             level = itemView.findViewById(R.id.level);
 
@@ -87,6 +90,7 @@ public class ProjectsHorizontalRvAdapter extends RecyclerView.Adapter<ProjectsHo
                         Constants.PROJECTSIMAGEBASEURL+ projectsModel.getImage_url())
                         .placeholder(R.drawable.placeholder)
                         .diskCacheStrategy(DiskCacheStrategy.RESOURCE)
+                        .centerInside()
                         .transition(GenericTransitionOptions.<Drawable>with(Utility.getAnimationObject()))
                         .into(imageView);
             }
@@ -100,6 +104,8 @@ public class ProjectsHorizontalRvAdapter extends RecyclerView.Adapter<ProjectsHo
             else{
                 level.setBackgroundTintList(context.getResources().getColorStateList(R.color.yellow));
             }
+            Log.i("views", String.valueOf(projectsModel.getTotal_views()));
+            views.setText(projectsModel.getTotal_views()+ " views");
             level.setText(projectsModel.getLevel());
 
         }
