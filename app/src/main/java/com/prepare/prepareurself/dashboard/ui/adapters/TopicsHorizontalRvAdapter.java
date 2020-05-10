@@ -84,8 +84,9 @@ public class TopicsHorizontalRvAdapter extends RecyclerView.Adapter<TopicsHorizo
             if (topicsModel.getImage_url()!=null && topicsModel.getImage_url().endsWith(".svg")){
                 Utility.loadSVGImage(context,Constants.TOPICSBASEURL+  topicsModel.getImage_url(), imageView);
             }else{
-                Glide.with(context).load(
-                        Constants.TOPICSBASEURL + topicsModel.getImage_url())
+
+                Glide.with(context)
+                        .load(Constants.TOPICSBASEURL + topicsModel.getImage_url())
                         .placeholder(R.drawable.placeholder)
                         .diskCacheStrategy(DiskCacheStrategy.RESOURCE)
                         .transition(GenericTransitionOptions.<Drawable>with(Utility.getAnimationObject()))
