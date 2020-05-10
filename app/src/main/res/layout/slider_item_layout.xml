@@ -19,7 +19,7 @@
         android:layout_centerHorizontal="true"
         tools:text="this is title"
         android:textAlignment="center"
-        android:padding="@dimen/padding_10"
+        android:layout_marginBottom="15dp"
         android:textSize="14sp"
         android:textColor="@color/white"
         android:textStyle="bold"
