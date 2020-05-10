@@ -207,6 +207,7 @@ public class VideoResoursesRvAdapter extends RecyclerView.Adapter<VideoResourses
                                 @Override
                                 public void onThumbnailError(YouTubeThumbnailView youTubeThumbnailView, YouTubeThumbnailLoader.ErrorReason errorReason) {
                                     Utility.showToast(context,Constants.UNABLETOLOADVIDEOSATTHEMOMENT);
+                                    Log.d("video_resource", "onThumbnailError: "+v1.getTitle());
                                 }
                             });
 
@@ -219,6 +220,7 @@ public class VideoResoursesRvAdapter extends RecyclerView.Adapter<VideoResourses
                             String errorMessage = String.format(
                                     context.getString(R.string.error_player), youTubeInitializationResult.toString());
                             Utility.showToast(context,errorMessage);
+                            Log.d("video_resource", "onInitializeError: "+v1.getTitle());
 
                             readyForLoadingYoutubeThumbnail = true;
                         }

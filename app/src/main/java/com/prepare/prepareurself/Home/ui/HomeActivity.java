@@ -342,12 +342,18 @@ public class HomeActivity extends BaseActivity implements NavigationView.OnNavig
     @Override
     public void onResourceCliked(ResourceModel resourceModel) {
         if (resourceModel.getType().equalsIgnoreCase("video")){
-            Intent intent = new Intent(HomeActivity.this, VideoActivity.class);
-            intent.putExtra(Constants.VIDEOCODE, Utility.getVideoCode(resourceModel.getLink()));
-            intent.putExtra(Constants.VIDEOTITLE, resourceModel.getTitle());
-            intent.putExtra(Constants.VIDEODESCRIPTION, resourceModel.getDescription());
-            intent.putExtra(Constants.SINGLEVIDEO, true);
-            startActivity(intent);
+
+            if (resourceModel.getLink().contains("youtu.be") || resourceModel.getLink().contains("youtube")){
+                Intent intent = new Intent(HomeActivity.this, VideoActivity.class);
+                intent.putExtra(Constants.VIDEOCODE, Utility.getVideoCode(resourceModel.getLink()));
+                intent.putExtra(Constants.VIDEOTITLE, resourceModel.getTitle());
+                intent.putExtra(Constants.VIDEODESCRIPTION, resourceModel.getDescription());
+                intent.putExtra(Constants.SINGLEVIDEO, true);
+                startActivity(intent);
+            }else {
+                Utility.redirectUsingCustomTab(HomeActivity.this, resourceModel.getLink());
+            }
+
         }else if (resourceModel.getType().equalsIgnoreCase("theory")){
             Utility.redirectUsingCustomTab(HomeActivity.this, resourceModel.getLink());
         }
