@@ -18,6 +18,7 @@ import com.prepare.prepareurself.dashboard.data.model.CourseModel;
 import com.prepare.prepareurself.R;
 import com.prepare.prepareurself.utils.Constants;
 import com.prepare.prepareurself.utils.Utility;
+import com.squareup.picasso.Picasso;
 
 import java.util.List;
 
@@ -78,12 +79,16 @@ public class CoursesHorizontalRvAdapter extends RecyclerView.Adapter<CoursesHori
             if (course.getImage_url()!=null && course.getImage_url().endsWith(".svg")){
                 Utility.loadSVGImage(context,Constants.COURSEIMAGEBASEUSRL+ course.getImage_url(),imageView);
             }else{
-                Glide.with(context).load(
-                        Constants.COURSEIMAGEBASEUSRL+ course.getImage_url())
+                Picasso.get()
+                        .load(Constants.COURSEIMAGEBASEUSRL+ course.getImage_url())
                         .placeholder(R.drawable.placeholder)
-                        .diskCacheStrategy(DiskCacheStrategy.RESOURCE)
-                        .transition(GenericTransitionOptions.<Drawable>with(Utility.getAnimationObject()))
                         .into(imageView);
+//                Glide.with(context).load(
+//                        Constants.COURSEIMAGEBASEUSRL+ course.getImage_url())
+//                        .placeholder(R.drawable.placeholder)
+//                        .diskCacheStrategy(DiskCacheStrategy.RESOURCE)
+//                        .transition(GenericTransitionOptions.<Drawable>with(Utility.getAnimationObject()))
+//                        .into(imageView);
             }
 
             tvCourseName.setText(course.getName());

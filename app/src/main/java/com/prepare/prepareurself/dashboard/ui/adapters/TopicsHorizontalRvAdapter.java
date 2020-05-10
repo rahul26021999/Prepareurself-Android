@@ -20,6 +20,7 @@ import com.prepare.prepareurself.dashboard.data.model.SuggestedTopicsModel;
 import com.prepare.prepareurself.resources.data.model.ResourceModel;
 import com.prepare.prepareurself.utils.Constants;
 import com.prepare.prepareurself.utils.Utility;
+import com.squareup.picasso.Picasso;
 
 import java.util.List;
 
@@ -85,12 +86,16 @@ public class TopicsHorizontalRvAdapter extends RecyclerView.Adapter<TopicsHorizo
                 Utility.loadSVGImage(context,Constants.TOPICSBASEURL+  topicsModel.getImage_url(), imageView);
             }else{
 
-                Glide.with(context)
-                        .load(Constants.TOPICSBASEURL + topicsModel.getImage_url())
+                Picasso.get()
+                        .load(Constants.TOPICSBASEURL+ topicsModel.getImage_url())
                         .placeholder(R.drawable.placeholder)
-                        .diskCacheStrategy(DiskCacheStrategy.RESOURCE)
-                        .transition(GenericTransitionOptions.<Drawable>with(Utility.getAnimationObject()))
                         .into(imageView);
+//                Glide.with(context)
+//                        .load(Constants.TOPICSBASEURL + topicsModel.getImage_url())
+//                        .placeholder(R.drawable.placeholder)
+//                        .diskCacheStrategy(DiskCacheStrategy.RESOURCE)
+//                        .transition(GenericTransitionOptions.<Drawable>with(Utility.getAnimationObject()))
+//                        .into(imageView);
             }
             tvCourseName.setText(topicsModel.getName());
         }
