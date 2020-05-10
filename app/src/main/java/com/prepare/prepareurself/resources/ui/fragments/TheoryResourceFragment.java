@@ -20,6 +20,7 @@ import android.widget.AbsListView;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.prepare.prepareurself.resources.data.model.ResourceLikesResponse;
 import com.prepare.prepareurself.resources.data.model.ResourceModel;
 import com.prepare.prepareurself.resources.data.model.ResourceViewsResponse;
 import com.prepare.prepareurself.resources.data.model.ResourcesResponse;
@@ -164,9 +165,28 @@ public class TheoryResourceFragment extends Fragment implements TheoryResourcesR
     }
 
     @Override
-    public void OnLikeButtonClicked(ResourceModel resource, int checked) {
-        //liikkkee code added
-        mViewModel.resourcesLiked(prefManager.getString(Constants.JWTTOKEN),resource.getId(),checked);
+    public void OnLikeButtonClicked(final ResourceModel resource, final int checked) {
+        mViewModel.resourcesLiked(prefManager.getString(Constants.JWTTOKEN), resource.getId(), checked)
+                .observe(getActivity(), new Observer<ResourceLikesResponse>() {
+                    @Override
+                    public void onChanged(ResourceLikesResponse resourceLikesResponse) {
+                        if (resourceLikesResponse!=null){
+                            if (!resourceLikesResponse.getSuccess()){
+                                Utility.showToast(getActivity(),"Unable to like at the moment");
+                            }else{
+                                if (checked == 0){
+                                    resource.setLike(1);
+                                    resource.setTotal_likes(resource.getTotal_likes()+1);
+                                }else if (checked == 1){
+                                    resource.setLike(0);
+                                    resource.setTotal_likes(resource.getTotal_likes()-1);
+                                }
+                                mViewModel.saveResource(resource);
+                                adapter1.notifyDataSetChanged();
+                            }
+                        }
+                    }
+                });
     }
 
     @Override

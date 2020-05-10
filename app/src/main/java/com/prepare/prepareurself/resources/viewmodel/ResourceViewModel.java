@@ -10,6 +10,7 @@ import androidx.lifecycle.MutableLiveData;
 import com.prepare.prepareurself.dashboard.data.db.repository.CourseDbRepository;
 import com.prepare.prepareurself.dashboard.data.model.CourseModel;
 import com.prepare.prepareurself.resources.data.db.repository.ResourcesDbRepository;
+import com.prepare.prepareurself.resources.data.model.ResourceLikesResponse;
 import com.prepare.prepareurself.resources.data.model.ResourceModel;
 import com.prepare.prepareurself.resources.data.model.ResourceViewsResponse;
 import com.prepare.prepareurself.resources.data.model.ResourcesResponse;
@@ -38,8 +39,8 @@ public class ResourceViewModel extends AndroidViewModel {
         return resourceRespository.resourceViewed(token,resourceId);
     }
     // create like method
-    public  void  resourcesLiked(String token, int resourceId, int like){
-        resourceRespository.resourceLiked(token,resourceId,like);
+    public  LiveData<ResourceLikesResponse>  resourcesLiked(String token, int resourceId, int like){
+        return resourceRespository.resourceLiked(token,resourceId,like);
     }
 
     public void fetchResources(String token, int topicId, int pageNumber, int count, String type){
