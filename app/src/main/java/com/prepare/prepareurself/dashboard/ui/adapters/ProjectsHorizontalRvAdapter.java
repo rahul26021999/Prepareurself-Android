@@ -122,7 +122,7 @@ public class ProjectsHorizontalRvAdapter extends RecyclerView.Adapter<ProjectsHo
 
             if (isPostedOn){
                 posteon.setVisibility(View.VISIBLE);
-                String duration = Utility.getDurationBetweenTwoDays(projectsModel.getUpdated_at().split(" ")[0]);
+                String duration = Utility.getDurationBetweenTwoDays(projectsModel.getCreated_at().split(" ")[0]);
                 if (!TextUtils.isEmpty(duration)){
                     posteon.setText(duration);
                 }else{

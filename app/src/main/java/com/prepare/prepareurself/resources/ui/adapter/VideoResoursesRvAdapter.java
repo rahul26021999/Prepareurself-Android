@@ -82,9 +82,10 @@ public class VideoResoursesRvAdapter extends RecyclerView.Adapter<VideoResourses
                 try {
                     String encodedId = Utility.base64EncodeForInt(v1.getId());
                     Bitmap bitmap = Utility.getBitmapFromView(holder.youTubeThumbnailView);
-                    String text = "Checkout our prepareurself app. " +
-                            "I found some best resources  from internet at one place and learning is so much fun now.\n" +
-                            "You can learn them too here :\n"+
+                    String text = v1.getTitle()+"\n\n" +
+                            "Prepareurself is providing various courses, projects and resources." +
+                            "One place to learn skills and test them by developing projects.\n" +
+                            "Checkout prepareurself app : \n" +
                             "prepareurself.in/resource/"+encodedId;
                     listener.onResourceShared(bitmap,text);
                 } catch (UnsupportedEncodingException e) {
@@ -159,15 +160,15 @@ public class VideoResoursesRvAdapter extends RecyclerView.Adapter<VideoResourses
             Log.d("resource_viewed","adapter : "+v1.getView()+", "+v1.getTotal_views()+", "+v1.getId());
             tvViews.setText(v1.getTotal_views() + " views");
 
+            if (v1.getLike() == 1){
+                hitLike.setImageDrawable(context.getResources().getDrawable(R.drawable.ic_thumb_up_blue_24dp));
+            }else{
+                hitLike.setImageDrawable(context.getResources().getDrawable(R.drawable.ic_thumb_up_grey_24dp));
+            }
+
             if (v1.getLink().contains("youtu.be") || v1.getLink().contains("youtube")){
                 youTubeThumbnailView.setVisibility(View.VISIBLE);
                 imageView.setVisibility(View.GONE);
-
-                if (v1.getLike() == 1){
-                    hitLike.setImageDrawable(context.getResources().getDrawable(R.drawable.ic_thumb_up_blue_24dp));
-                }else{
-                    hitLike.setImageDrawable(context.getResources().getDrawable(R.drawable.ic_thumb_up_grey_24dp));
-                }
 
                 if (readyForLoadingYoutubeThumbnail){
                     readyForLoadingYoutubeThumbnail = false;

@@ -160,7 +160,6 @@ public class VideoResourceFragment extends Fragment implements VideoResoursesRvA
 
         if (videoResources.getLink().contains("youtu.be") || videoResources.getLink().contains("youtube")){
 
-
             Intent intent = new Intent(getActivity(), VideoActivity.class);
             intent.putExtra(Constants.VIDEOCODE,videoCode);
             intent.putExtra(Constants.RESOURCEID,videoResources.getId());

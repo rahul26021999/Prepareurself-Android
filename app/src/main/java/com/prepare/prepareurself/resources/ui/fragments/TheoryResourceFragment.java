@@ -157,6 +157,7 @@ public class TheoryResourceFragment extends Fragment implements TheoryResourcesR
                         public void onChanged(ResourceViewsResponse resourceViewsResponse) {
                             if (resourceViewsResponse!=null && resourceViewsResponse.getError_code() == 0){
                                 resource.setView(1);
+                                resource.setTotal_views(resource.getTotal_views()+1);
                                 mViewModel.saveResource(resource);
                                 Log.d("resource_viewed",resourceViewsResponse.getMessage());
                             }
