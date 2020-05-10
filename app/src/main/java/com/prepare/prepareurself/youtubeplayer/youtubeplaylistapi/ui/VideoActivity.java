@@ -172,7 +172,8 @@ public class VideoActivity extends YouTubeBaseActivity implements YouTubePlayer.
             tvRelatedVideosHeader.setVisibility(View.GONE);
             tvPlaylst.setVisibility(View.VISIBLE);
 
-            projectAdView.setVisibility(View.VISIBLE);
+            projectAdView.setVisibility(View.GONE);
+            mAdView.setVisibility(View.GONE);
 
             playlistItemAdapter = new PlaylistItemAdapter(getApplicationContext(),this);
             LinearLayoutManager layoutManager = new LinearLayoutManager(this);
@@ -208,6 +209,7 @@ public class VideoActivity extends YouTubeBaseActivity implements YouTubePlayer.
             tvRelatedVideosHeader.setText("Related Videos");
 
             mAdView.setVisibility(View.VISIBLE);
+            projectAdView.setVisibility(View.GONE);
 
             final RelatedVideosRvAdapter relatedVideosRvAdapter = new RelatedVideosRvAdapter(VideoActivity.this, this);
             LinearLayoutManager layoutManager = new LinearLayoutManager(this, RecyclerView.HORIZONTAL, false);
@@ -260,6 +262,7 @@ public class VideoActivity extends YouTubeBaseActivity implements YouTubePlayer.
             tvRelatedVideosHeader.setText("Other Liked Videos");
 
             mAdView.setVisibility(View.VISIBLE);
+            projectAdView.setVisibility(View.GONE);
 
             final LikedRelatedVideosRvAdapter relatedVideosRvAdapter = new LikedRelatedVideosRvAdapter(VideoActivity.this, this);
             LinearLayoutManager layoutManager = new LinearLayoutManager(this, RecyclerView.HORIZONTAL, false);
