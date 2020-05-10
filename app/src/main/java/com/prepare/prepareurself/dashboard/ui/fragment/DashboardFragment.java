@@ -324,12 +324,12 @@ public class DashboardFragment extends Fragment implements DashboardRvAdapter.Da
                                         dashboardRecyclerviewModelList.add(d1);
                                         break;
                                     case "project":
-                                        DashboardRecyclerviewModel d2 = new DashboardRecyclerviewModel(homepageData.getProject(), Constants.PROJECTVIEWTYPE, homepageData.getTitle(), homepageData.isSeeAll());
+                                        DashboardRecyclerviewModel d2 = new DashboardRecyclerviewModel(homepageData.getProject(), Constants.PROJECTVIEWTYPE, homepageData.getTitle(), homepageData.isSeeAll(),homepageData.isViews(),homepageData.isPostedOn(),homepageData.isLikes());
                                         Log.d("home_debug","d1 : "+d2.getCategoryName());
                                         dashboardRecyclerviewModelList.add(d2);
                                         break;
                                     case "resource":
-                                        DashboardRecyclerviewModel d3 = new DashboardRecyclerviewModel(Constants.RESOURCEVIEWTYPE,homepageData.getTitle(), homepageData.getResource(),homepageData.isSeeAll());
+                                        DashboardRecyclerviewModel d3 = new DashboardRecyclerviewModel(Constants.RESOURCEVIEWTYPE,homepageData.getTitle(), homepageData.getResource(),homepageData.isSeeAll(),homepageData.isViews(),homepageData.isPostedOn(),homepageData.isLikes());
                                         Log.d("home_debug","d1 : "+d3.getCategoryName());
                                         dashboardRecyclerviewModelList.add(d3);
                                         break;

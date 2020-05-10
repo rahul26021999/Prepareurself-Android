@@ -139,7 +139,10 @@ public class DashboardRvAdapter extends RecyclerView.Adapter implements CoursesH
                 break;
             case PROJECTVIEWTYPE:
                 final List<ProjectsModel> projectModel = modelList.get(position).getProjectModels();
-                ((ProjectViewHolder) holder).bindProjectsView(modelList.get(position).getCategoryName(),projectModel, this);
+                final boolean isViewsProject = modelList.get(position).isViews();
+                final boolean isPostedOnProject = modelList.get(position).isPostedOn();
+                final boolean isLikesProject = modelList.get(position).isLikes();
+                ((ProjectViewHolder) holder).bindProjectsView(modelList.get(position).getCategoryName(),projectModel, this, isViewsProject, isPostedOnProject, isLikesProject);
                 if (modelList.get(position).isSeeAll()){
                     ((ProjectViewHolder) holder).tvSeeAll.setVisibility(View.VISIBLE);
                 }else{
@@ -155,7 +158,10 @@ public class DashboardRvAdapter extends RecyclerView.Adapter implements CoursesH
                 break;
             case RESOURCEVIEWTYPE:
                 final List<ResourceModel> resourceModels = modelList.get(position).getResourceModels();
-                ((ResourceHomeViewHolder) holder).bindResourceView(modelList.get(position).getCategoryName(),resourceModels,this);
+                final boolean isViews = modelList.get(position).isViews();
+                final boolean isPostedOn = modelList.get(position).isPostedOn();
+                final boolean isLikes = modelList.get(position).isLikes();
+                ((ResourceHomeViewHolder) holder).bindResourceView(modelList.get(position).getCategoryName(),resourceModels,this,isViews, isLikes, isPostedOn);
                 if (modelList.get(position).isSeeAll()){
                     ((ResourceHomeViewHolder) holder).tvSeeAll.setVisibility(View.VISIBLE);
                 }else{
@@ -242,15 +248,15 @@ public class DashboardRvAdapter extends RecyclerView.Adapter implements CoursesH
             tvSeeAll  =itemView.findViewById(R.id.tv_see_all);
         }
 
-        public void bindProjectsView(String categoryName, final List<ProjectsModel> projectModels, ProjectsHorizontalRvAdapter.ProjectsHorizontalRvListener interactor){
+        public void bindProjectsView(String categoryName, final List<ProjectsModel> projectModels, ProjectsHorizontalRvAdapter.ProjectsHorizontalRvListener interactor, boolean isViews, boolean isPostedOn, boolean isLikes){
             tvCourses.setText(categoryName);
             final ProjectsHorizontalRvAdapter adapter = new ProjectsHorizontalRvAdapter(context,interactor);
             LinearLayoutManager layoutManager = new LinearLayoutManager(context,RecyclerView.HORIZONTAL,false);
             rvCourses.setLayoutManager(layoutManager);
             rvCourses.setAdapter(adapter);
             adapter.setData(projectModels);
+            adapter.setParams(isViews,isPostedOn,isLikes);
             adapter.notifyDataSetChanged();
-
         }
     }
 
@@ -267,7 +273,8 @@ public class DashboardRvAdapter extends RecyclerView.Adapter implements CoursesH
 
         }
 
-        public void bindResourceView(String categoryName, final List<ResourceModel> resourceModels, ResourceRvHorizontalAdapter.ResourceHomePageListener interactor) {
+        public void bindResourceView(String categoryName, final List<ResourceModel> resourceModels, ResourceRvHorizontalAdapter.ResourceHomePageListener interactor,
+                                     boolean isViews, boolean isLikes, boolean isPostedOn) {
             tvCourses.setText(categoryName);
             final ResourceRvHorizontalAdapter adapter = new ResourceRvHorizontalAdapter(context, interactor);
             LinearLayoutManager layoutManager = new LinearLayoutManager(context, RecyclerView.HORIZONTAL, false);
@@ -275,8 +282,8 @@ public class DashboardRvAdapter extends RecyclerView.Adapter implements CoursesH
             rvCourses.setAdapter(adapter);
 
             adapter.setResourceModels(resourceModels);
+            adapter.setParams(isViews, isPostedOn, isLikes);
             adapter.notifyDataSetChanged();
-
 
         }
     }

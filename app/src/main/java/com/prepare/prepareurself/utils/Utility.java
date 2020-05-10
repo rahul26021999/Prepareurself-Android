@@ -33,9 +33,13 @@ import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.UnsupportedEncodingException;
+import java.sql.Time;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
+import java.time.LocalDate;
+import java.util.Calendar;
 import java.util.Date;
+import java.util.concurrent.TimeUnit;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
@@ -190,6 +194,52 @@ public class Utility {
     public static Date stringToDate(String date) throws ParseException {
 
         return new SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss.SSSZ").parse(date);
+    }
+
+    public static String getDurationBetweenTwoDays(String endDate){
+        SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd");
+        String output = "";
+        try {
+            String startDate = dateFormat.format(new Date());
+            Date mStartDate = dateFormat.parse(startDate);
+            Calendar start = Calendar.getInstance();
+            start.setTime(mStartDate);
+            Date mEndDate = dateFormat.parse(endDate);
+            Calendar end = Calendar.getInstance();
+            end.setTime(mEndDate);
+            long diff = mStartDate.getTime() - mEndDate.getTime();
+
+            Calendar calendarDiff = Calendar.getInstance();
+            calendarDiff.setTimeInMillis(start.getTimeInMillis() -  end.getTimeInMillis());
+
+            int days = calendarDiff.get(Calendar.DAY_OF_MONTH);
+            int weeks = calendarDiff.get(Calendar.WEEK_OF_MONTH);
+            int months = calendarDiff.get(Calendar.MONTH);
+            int years = (calendarDiff.get(Calendar.YEAR) - 1970 );
+
+            if (days<7){
+                output = days+" days ago";
+            }else if (weeks<5){
+                output = weeks + " weeks ago";
+            } else if (months < 12){
+                output = months+" months ago";
+            }else if (years == 1){
+                output = years + "year ago";
+            }else if (years >1){
+                output = years + "years ago";
+            }else{
+                output = "";
+            }
+
+            Log.d("Date_debug", "getDurationBetweenTwoDays: "+(calendarDiff.get(Calendar.YEAR) - 1970 )+" year, "+calendarDiff.get(Calendar.WEEK_OF_MONTH)+" weeks, "+calendarDiff.get(Calendar.MONTH)+" months, "+calendarDiff.get(Calendar.DAY_OF_MONTH)+" days");
+
+        } catch (ParseException e) {
+            e.printStackTrace();
+            output = "";
+        }
+
+
+        return output;
     }
 
 

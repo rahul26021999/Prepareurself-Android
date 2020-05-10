@@ -31,6 +31,9 @@ public class DashboardRecyclerviewModel {
     private String addText;
 
     private boolean seeAll;
+    private boolean views;
+    private boolean postedOn;
+    private boolean likes;
 
     public DashboardRecyclerviewModel(int viewType, String categoryName, boolean seeAll,List<CourseModel> courses) {
         this.categoryName = categoryName;
@@ -46,18 +49,24 @@ public class DashboardRecyclerviewModel {
         this.seeAll = seeAll;
     }
 
-    public DashboardRecyclerviewModel(List<ProjectsModel> projectModels, int viewType, String categoryName, boolean seeAll){
+    public DashboardRecyclerviewModel(List<ProjectsModel> projectModels, int viewType, String categoryName, boolean seeAll, boolean views, boolean postedOn, boolean likes){
         this.projectModels = projectModels;
         this.viewType = viewType;
         this.categoryName = categoryName;
         this.seeAll = seeAll;
+        this.views = views;
+        this.postedOn = postedOn;
+        this.likes = likes;
     }
 
-    public DashboardRecyclerviewModel(int viewType, String categoryName, List<ResourceModel> resourceModels, boolean seeAll) {
+    public DashboardRecyclerviewModel(int viewType, String categoryName, List<ResourceModel> resourceModels, boolean seeAll, boolean views, boolean postedOn, boolean likes) {
         this.viewType = viewType;
         this.categoryName = categoryName;
         this.resourceModels = resourceModels;
         this.seeAll = seeAll;
+        this.views = views;
+        this.postedOn = postedOn;
+        this.likes = likes;
     }
 
     public DashboardRecyclerviewModel(int viewType, String addText) {
@@ -75,6 +84,30 @@ public class DashboardRecyclerviewModel {
 
     public boolean isSeeAll() {
         return seeAll;
+    }
+
+    public boolean isViews() {
+        return views;
+    }
+
+    public void setViews(boolean views) {
+        this.views = views;
+    }
+
+    public boolean isPostedOn() {
+        return postedOn;
+    }
+
+    public void setPostedOn(boolean postedOn) {
+        this.postedOn = postedOn;
+    }
+
+    public boolean isLikes() {
+        return likes;
+    }
+
+    public void setLikes(boolean likes) {
+        this.likes = likes;
     }
 
     public void setSeeAll(boolean seeAll) {

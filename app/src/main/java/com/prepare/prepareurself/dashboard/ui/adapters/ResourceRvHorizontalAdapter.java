@@ -2,6 +2,7 @@ package com.prepare.prepareurself.dashboard.ui.adapters;
 
 import android.content.Context;
 import android.graphics.drawable.Drawable;
+import android.text.TextUtils;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -29,6 +30,9 @@ public class ResourceRvHorizontalAdapter extends RecyclerView.Adapter<ResourceRv
     private Context context;
     private List<ResourceModel> resourceModels;
     private ResourceHomePageListener listener;
+    private boolean isViews = false;
+    private boolean isLikes = false;
+    private boolean isPostedOn = false;
 
     public ResourceRvHorizontalAdapter(Context context, ResourceHomePageListener listener) {
         this.context = context;
@@ -37,6 +41,12 @@ public class ResourceRvHorizontalAdapter extends RecyclerView.Adapter<ResourceRv
 
     public void setResourceModels(List<ResourceModel> resourceModels){
         this.resourceModels = resourceModels;
+    }
+
+    public void setParams(boolean isViews, boolean isPostedOn, boolean isLikes){
+        this.isViews = isViews;
+        this.isPostedOn = isPostedOn;
+        this.isLikes = isLikes;
     }
 
     public interface ResourceHomePageListener{
@@ -73,7 +83,7 @@ public class ResourceRvHorizontalAdapter extends RecyclerView.Adapter<ResourceRv
 
     public class ResourceViewHolder extends RecyclerView.ViewHolder{
 
-        TextView name;
+        TextView name, views, likes, posteon;
         ImageView imageView;
         YouTubeThumbnailView youTubeThumbnailView;
 
@@ -85,12 +95,40 @@ public class ResourceRvHorizontalAdapter extends RecyclerView.Adapter<ResourceRv
             name = itemView.findViewById(R.id.name);
             imageView = itemView.findViewById(R.id.image_course_viewtype);
             youTubeThumbnailView = itemView.findViewById(R.id.image_thumb_course_viewtype);
+            views=itemView.findViewById(R.id.views);
+            likes=  itemView.findViewById(R.id.likes);
+            posteon =itemView.findViewById(R.id.postedon);
             youTubeThumbnailView.setVisibility(View.GONE);
         }
 
         public void bindView(final Context context, ResourceModel res){
 
             name.setText(res.getTitle());
+            if (isViews){
+                views.setVisibility(View.VISIBLE);
+                views.setText(res.getTotal_views()+ " views");
+            }
+            else{
+                views.setVisibility(View.GONE);
+            }
+            if (isLikes){
+                likes.setVisibility(View.VISIBLE);
+                likes.setText(res.getTotal_likes() + " likes");
+            }else{
+                likes.setVisibility(View.GONE);
+            }
+
+            if (isPostedOn){
+                posteon.setVisibility(View.VISIBLE);
+                String duration = Utility.getDurationBetweenTwoDays(res.getUpdated_at().split(" ")[0]);
+                if (!TextUtils.isEmpty(duration)){
+                    posteon.setText(duration);
+                }else{
+                    posteon.setVisibility(View.GONE);
+                }
+            }else{
+                posteon.setVisibility(View.GONE);
+            }
 
             if (res.getType().equalsIgnoreCase("theory")){
                 youTubeThumbnailView.setVisibility(View.GONE);
