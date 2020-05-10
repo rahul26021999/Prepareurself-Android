@@ -20,7 +20,7 @@
         tools:text="this is title"
         android:textAlignment="center"
         android:padding="@dimen/padding_10"
-        android:background="#65000000"
+        android:background="#3B000000"
         android:textSize="14sp"
         android:textColor="#85E9EAEE"
         android:textStyle="bold"
