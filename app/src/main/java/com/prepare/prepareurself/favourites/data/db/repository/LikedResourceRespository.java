@@ -32,6 +32,10 @@ public class LikedResourceRespository {
         new insertAsyncTask(resourcesDao).execute(projectsModel);
     }
 
+    public LiveData<List<LikedResourcesModel>> getLikedResourcesExceptId(int resourceId, String type){
+        return resourcesDao.getResourceByIdExcept(type, resourceId);
+    }
+
     public void deleteAllResources(){
         new deleteAllAsyncTask(resourcesDao).execute();
     }

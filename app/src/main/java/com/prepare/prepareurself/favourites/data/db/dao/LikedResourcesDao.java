@@ -23,8 +23,8 @@ public interface LikedResourcesDao {
     @Query("SELECT * FROM likedresources WHERE course_topic_id=:course_topic_id AND type =:type")
     LiveData<List<LikedResourcesModel>> getResourcesByID(int course_topic_id, String type);
 
-    @Query("SELECT * FROM likedresources WHERE course_topic_id=:topic_id AND type =:type AND id != :resource_id")
-    LiveData<List<LikedResourcesModel>> getResourceByIdExcept(int topic_id, String type, int resource_id);
+    @Query("SELECT * FROM likedresources WHERE type =:type AND id != :resource_id")
+    LiveData<List<LikedResourcesModel>> getResourceByIdExcept(String type, int resource_id);
 
     @Query("SELECT * FROM likedresources WHERE id=:resourceId AND type=:type")
     LiveData<LikedResourcesModel> getResourceByResourceId(int resourceId, String type);

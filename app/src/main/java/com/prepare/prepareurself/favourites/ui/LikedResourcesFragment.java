@@ -93,7 +93,7 @@ public class LikedResourcesFragment extends Fragment implements LikedResourcesAd
         Intent intent = new Intent(getActivity(), VideoActivity.class);
         intent.putExtra(Constants.VIDEOCODE,videoCode);
         intent.putExtra(Constants.RESOURCEID,videoResources.getId());
-        intent.putExtra(Constants.RESOURCEVIDEO,true);
+        intent.putExtra(Constants.RESOURCEVIDEOLIKED,true);
         intent.putExtra(Constants.VIDEOTITLE, videoResources.getTitle());
         intent.putExtra(Constants.VIDEODESCRIPTION, videoResources.getDescription());
         intent.putExtra(Constants.TOPICID, videoResources.getCourse_topic_id());

@@ -53,6 +53,7 @@ public class Constants {
     public static final String PLAYLIST = "playlist";
     public static final String SINGLEVIDEO = "single_video";
     public static final String RESOURCEVIDEO = "resource_video";
+    public static final String RESOURCEVIDEOLIKED = "resource_video_liked";
     public static final String ANDROIDTOKEN = "android_token";
     public static final String TOPICSYOUMAYLIKE = "Topics you may like";
     public static final String PROJECTSYOUMAYLIKE = "Projects you may like";

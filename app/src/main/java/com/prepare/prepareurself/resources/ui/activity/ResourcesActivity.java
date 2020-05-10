@@ -12,6 +12,7 @@ import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import com.prepare.prepareurself.dashboard.data.model.CourseModel;
+import com.prepare.prepareurself.resources.data.model.ResourceViewsResponse;
 import com.prepare.prepareurself.resources.ui.fragments.TheoryResourceFragment;
 import com.prepare.prepareurself.resources.ui.fragments.VideoResourceFragment;
 import com.prepare.prepareurself.resources.ui.adapter.SectionsPagerAdapter;

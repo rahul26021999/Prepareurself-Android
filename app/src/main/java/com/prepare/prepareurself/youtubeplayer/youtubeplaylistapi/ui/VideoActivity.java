@@ -29,6 +29,7 @@ import com.google.android.youtube.player.YouTubePlayer;
 import com.google.android.youtube.player.YouTubePlayerView;
 import com.prepare.prepareurself.R;
 import com.prepare.prepareurself.authentication.ui.AuthenticationActivity;
+import com.prepare.prepareurself.favourites.data.model.LikedResourcesModel;
 import com.prepare.prepareurself.resources.data.model.ResourceModel;
 import com.prepare.prepareurself.resources.data.model.VideoShareResponseModel;
 import com.prepare.prepareurself.utils.Constants;
@@ -45,7 +46,8 @@ import me.saket.bettermovementmethod.BetterLinkMovementMethod;
 public class VideoActivity extends YouTubeBaseActivity implements YouTubePlayer.OnInitializedListener,
         PlaylistItemAdapter.PlaylistItemListener,
         ViewModelStoreOwner,
-        RelatedVideosRvAdapter.RelatedRvListener, YouTubePlayer.OnFullscreenListener {
+        RelatedVideosRvAdapter.RelatedRvListener, YouTubePlayer.OnFullscreenListener,
+        LikedRelatedVideosRvAdapter.RelatedRvListener {
 
     private static final int RECOVERY_DIALOG_REQUEST = 1;
     YouTubePlayerView youTubePlayerView;
@@ -202,6 +204,8 @@ public class VideoActivity extends YouTubeBaseActivity implements YouTubePlayer.
             rvOtherVideos.setVisibility(View.VISIBLE);
             tvPlaylst.setVisibility(View.GONE);
 
+            tvRelatedVideosHeader.setText("Related Videos");
+
             mAdView.setVisibility(View.VISIBLE);
 
             final RelatedVideosRvAdapter relatedVideosRvAdapter = new RelatedVideosRvAdapter(VideoActivity.this, this);
@@ -213,6 +217,58 @@ public class VideoActivity extends YouTubeBaseActivity implements YouTubePlayer.
                     .observeForever(new Observer<List<ResourceModel>>() {
                         @Override
                         public void onChanged(List<ResourceModel> resourceModels) {
+                            relatedVideosRvAdapter.setResources(resourceModels);
+                            relatedVideosRvAdapter.notifyDataSetChanged();
+                        }
+                    });
+
+            imageViewShare.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    Uri uri = Uri.parse(bitmapUri);
+                    try {
+                        String encodedId = Utility.base64EncodeForInt(resourceId);
+                        String text = "Checkout our prepareurself app. "
+                                + "I found some best resources  from internet at one place and learning is so much fun now.\n"
+                                + "You can learn them too here :\n"+
+                                "prepareurself.in/resource/"+encodedId;
+                        share(uri,text);
+                    } catch (UnsupportedEncodingException e) {
+                        e.printStackTrace();
+                    }
+                }
+            });
+
+        }else if (intent.getBooleanExtra(Constants.RESOURCEVIDEOLIKED,false)){
+            showShareAndLike();
+            videoCode = intent.getStringExtra(Constants.VIDEOCODE);
+            title = intent.getStringExtra(Constants.VIDEOTITLE);
+            decription = intent.getStringExtra(Constants.VIDEODESCRIPTION);
+            bitmapUri = intent.getStringExtra(Constants.BITMAPURI);
+            resourceId = intent.getIntExtra(Constants.RESOURCEID, -1);
+            topicId = intent.getIntExtra(Constants.TOPICID,-1);
+
+            tvTitle.setText(title);
+            tvDescription.setText(decription);
+
+            playlistItemRecyclerView.setVisibility(View.GONE);
+            tvRelatedVideosHeader.setVisibility(View.VISIBLE);
+            rvOtherVideos.setVisibility(View.VISIBLE);
+            tvPlaylst.setVisibility(View.GONE);
+
+            tvRelatedVideosHeader.setText("Other Liked Videos");
+
+            mAdView.setVisibility(View.VISIBLE);
+
+            final LikedRelatedVideosRvAdapter relatedVideosRvAdapter = new LikedRelatedVideosRvAdapter(VideoActivity.this, this);
+            LinearLayoutManager layoutManager = new LinearLayoutManager(this, RecyclerView.HORIZONTAL, false);
+            rvOtherVideos.setLayoutManager(layoutManager);
+            rvOtherVideos.setAdapter(relatedVideosRvAdapter);
+
+            videoViewModel.getLikedResourceExceptId(resourceId,Constants.VIDEO)
+                    .observeForever(new Observer<List<LikedResourcesModel>>() {
+                        @Override
+                        public void onChanged(List<LikedResourcesModel> resourceModels) {
                             relatedVideosRvAdapter.setResources(resourceModels);
                             relatedVideosRvAdapter.notifyDataSetChanged();
                         }
@@ -493,6 +549,21 @@ public class VideoActivity extends YouTubeBaseActivity implements YouTubePlayer.
         }
 
 
+    }
+
+    @Override
+    public void onRelatedItemClicked(LikedResourcesModel resourceModel) {
+        if (resourceModel.getLink().contains("youtu.be") || resourceModel.getLink().contains("youtube")){
+            if (mYoutubePlayer!=null){
+                String link = resourceModel.getLink();
+                String videoCode = Utility.getVideoCode(link);
+                mYoutubePlayer.loadVideo(videoCode);
+                tvTitle.setText(resourceModel.getTitle());
+                tvDescription.setText(resourceModel.getDescription());
+            }
+        }else{
+            Utility.redirectUsingCustomTab(this,resourceModel.getLink());
+        }
     }
 
     @NonNull
