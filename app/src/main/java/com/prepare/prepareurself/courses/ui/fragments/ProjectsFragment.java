@@ -140,8 +140,6 @@ public class ProjectsFragment extends Fragment implements ProjectsRvAdapter.Proj
                     adapter.notifyDataSetChanged();
                 }else{
                     tvComingSoon.setText("Coming soon...");
-                    //null aya matlb data no..so comng soon
-                    //data load hora h so
                     tvComingSoon.setVisibility(View.VISIBLE);
 
                     recyclerView.setVisibility(View.GONE);
@@ -178,9 +176,13 @@ public class ProjectsFragment extends Fragment implements ProjectsRvAdapter.Proj
                             if (!resourceLikesResponse.getSuccess()){
                                 Utility.showToast(getActivity(),"Unable to like at the moment");
                             }else{
-//                                Log.d("project_viewed_liked", "before : "+projectsModel.getLike()+ " , "+liked );
-                                projectsModel.setLike(liked);
-//                                Log.d("project_viewed_liked", "after : "+projectsModel.getLike()+ " , "+liked );
+                                if (liked == 0){
+                                    projectsModel.setLike(1);
+                                    projectsModel.setTotal_likes(projectsModel.getTotal_likes()+1);
+                                }else if (liked == 1){
+                                    projectsModel.setLike(0);
+                                    projectsModel.setTotal_likes(projectsModel.getTotal_likes()-1);
+                                }
                                 mViewModel.saveProject(projectsModel);
                                 adapter.notifyDataSetChanged();
                             }

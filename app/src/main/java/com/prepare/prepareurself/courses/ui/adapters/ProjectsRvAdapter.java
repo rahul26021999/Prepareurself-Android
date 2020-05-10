@@ -81,48 +81,14 @@ public class ProjectsRvAdapter extends RecyclerView.Adapter<ProjectsRvAdapter.Pr
         });
 
         holder.likeButton.setOnClickListener(new View.OnClickListener() {
-
-            ValueAnimator buttonColorAnim = null;
-
-
             @Override
             public void onClick(View v) {
 
                 if (projectsModel.getLike() == 0){
-                    listener.onProjectLiked(projectsModel, 1);
-                }else{
                     listener.onProjectLiked(projectsModel, 0);
+                }else if (projectsModel.getLike() == 1){
+                    listener.onProjectLiked(projectsModel, 1);
                 }
-
-//                if (buttonColorAnim == null && projectsModel.getLike() ==1){
-//                    holder.likeButton.setImageDrawable(context.getResources().getDrawable(R.drawable.ic_thumb_up_grey_24dp));
-//                    listener.onProjectLiked(projectsModel,1);
-//                    holder.tvNoOfLikes.setText(projectsModel.getTotal_likes()-1 + " likes");
-//                    projectsModel.setTotal_likes(projectsModel.getTotal_likes()-1);
-//                    projectsModel.setLike(0);
-//                }else{
-//                    if(buttonColorAnim != null){
-//                        buttonColorAnim.reverse();
-//                        buttonColorAnim = null;
-//                        listener.onProjectLiked(projectsModel,1);
-//                        holder.tvNoOfLikes.setText(projectsModel.getTotal_likes() + " likes");
-//                        //liked = false;
-//                    }
-//                    else {
-//                        final ImageView button = (ImageView) v;
-//                        buttonColorAnim = ValueAnimator.ofObject(new ArgbEvaluator(), context.getResources().getColor(R.color.like_grey), context.getResources().getColor(R.color.like_blue));
-//                        buttonColorAnim.addUpdateListener(new ValueAnimator.AnimatorUpdateListener() {
-//                            @Override
-//                            public void onAnimationUpdate(ValueAnimator animator) {
-//                                button.setColorFilter((Integer) animator.getAnimatedValue());
-//                            }
-//                        });
-//                        buttonColorAnim.start();
-//                        listener.onProjectLiked(projectsModel,0);
-//                        holder.tvNoOfLikes.setText(projectsModel.getTotal_likes()+1 + " likes");
-//                       // liked = true;
-//                    }
-//                }
             }
         });
 
@@ -183,7 +149,7 @@ public class ProjectsRvAdapter extends RecyclerView.Adapter<ProjectsRvAdapter.Pr
 
             tvLevel.setText(projectsModel.getLevel());
 
-            if (projectsModel.getLike() == 0){
+            if (projectsModel.getLike() == 1){
                 likeButton.setImageDrawable(context.getResources().getDrawable(R.drawable.ic_thumb_up_blue_24dp));
             }else{
                 likeButton.setImageDrawable(context.getResources().getDrawable(R.drawable.ic_thumb_up_grey_24dp));
