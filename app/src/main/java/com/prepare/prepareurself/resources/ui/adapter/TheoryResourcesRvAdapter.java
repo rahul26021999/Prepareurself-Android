@@ -90,34 +90,10 @@ public class TheoryResourcesRvAdapter extends RecyclerView.Adapter<TheoryResourc
             @Override
             public void onClick(View v) {
 
-                if (buttonColorAnim == null && theoryResources1.getLike() ==1){
-                    holder.hitLike.setImageDrawable(context.getResources().getDrawable(R.drawable.ic_thumb_up_grey_24dp));
-                    listener.OnLikeButtonClicked(theoryResources1,1);
-                    holder.tvLikes.setText(theoryResources1.getTotal_likes()-1 + " likes");
-                    theoryResources1.setTotal_likes(theoryResources1.getTotal_likes()-1);
-                    theoryResources1.setLike(0);
-                }else{
-                    if(buttonColorAnim != null){
-                        buttonColorAnim.reverse();
-                        buttonColorAnim = null;
-                        listener.OnLikeButtonClicked(theoryResources1,1);
-                        holder.tvLikes.setText(theoryResources1.getTotal_likes() + " likes");
-                        liked = false;
-                    }
-                    else {
-                        final ImageView button = (ImageView) v;
-                        buttonColorAnim = ValueAnimator.ofObject(new ArgbEvaluator(), context.getResources().getColor(R.color.like_grey), context.getResources().getColor(R.color.like_blue));
-                        buttonColorAnim.addUpdateListener(new ValueAnimator.AnimatorUpdateListener() {
-                            @Override
-                            public void onAnimationUpdate(ValueAnimator animator) {
-                                button.setColorFilter((Integer) animator.getAnimatedValue());
-                            }
-                        });
-                        buttonColorAnim.start();
-                        listener.OnLikeButtonClicked(theoryResources1,0);
-                        holder.tvLikes.setText(theoryResources1.getTotal_likes()+1 + " likes");
-                        liked = true;
-                    }
+                if (theoryResources1.getLike() == 0){
+                    listener.OnLikeButtonClicked(theoryResources1, 0);
+                }else if (theoryResources1.getLike() == 1){
+                    listener.OnLikeButtonClicked(theoryResources1, 1);
                 }
             }
         });

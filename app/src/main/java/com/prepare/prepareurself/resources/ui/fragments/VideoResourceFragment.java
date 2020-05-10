@@ -20,6 +20,7 @@ import android.view.ViewGroup;
 import android.widget.AbsListView;
 import android.widget.TextView;
 
+import com.prepare.prepareurself.resources.data.model.ResourceLikesResponse;
 import com.prepare.prepareurself.resources.data.model.ResourceModel;
 import com.prepare.prepareurself.resources.data.model.ResourceViewsResponse;
 import com.prepare.prepareurself.resources.data.model.ResourcesResponse;
@@ -191,8 +192,28 @@ public class VideoResourceFragment extends Fragment implements VideoResoursesRvA
     }
 
     @Override
-    public void onVideoResourceLiked(ResourceModel resourceModel, int liked) {
-        mViewModel.resourcesLiked(prefManager.getString(Constants.JWTTOKEN), resourceModel.getId(), liked);
+    public void onVideoResourceLiked(final ResourceModel resourceModel, final int liked) {
+        mViewModel.resourcesLiked(prefManager.getString(Constants.JWTTOKEN), resourceModel.getId(), liked)
+                .observe(getActivity(), new Observer<ResourceLikesResponse>() {
+                    @Override
+                    public void onChanged(ResourceLikesResponse resourceLikesResponse) {
+                        if (resourceLikesResponse!=null){
+                            if (!resourceLikesResponse.getSuccess()){
+                                Utility.showToast(getActivity(),"Unable to like at the moment");
+                            }else{
+                                if (liked == 0){
+                                    resourceModel.setLike(1);
+                                    resourceModel.setTotal_likes(resourceModel.getTotal_likes()+1);
+                                }else if (liked == 1){
+                                    resourceModel.setLike(0);
+                                    resourceModel.setTotal_likes(resourceModel.getTotal_likes()-1);
+                                }
+                                mViewModel.saveResource(resourceModel);
+                                adapter.notifyDataSetChanged();
+                            }
+                        }
+                    }
+                });
     }
 
     @Override

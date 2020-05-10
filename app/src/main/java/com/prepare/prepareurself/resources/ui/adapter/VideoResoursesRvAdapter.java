@@ -92,38 +92,13 @@ public class VideoResoursesRvAdapter extends RecyclerView.Adapter<VideoResourses
 
         holder.hitLike.setOnClickListener(new View.OnClickListener() {
 
-            ValueAnimator buttonColorAnim = null;
-
-
             @Override
             public void onClick(View v) {
 
-                if (buttonColorAnim == null && v1.getLike() ==1){
-                    holder.hitLike.setImageDrawable(context.getResources().getDrawable(R.drawable.ic_thumb_up_grey_24dp));
-                    listener.onVideoResourceLiked(v1,1);
-                    holder.tvLikes.setText(v1.getTotal_likes()-1 + " likes");
-                    v1.setTotal_likes(v1.getTotal_likes()-1);
-                    v1.setLike(0);
-                }else{
-                    if(buttonColorAnim != null){
-                        buttonColorAnim.reverse();
-                        buttonColorAnim = null;
-                        listener.onVideoResourceLiked(v1,1);
-                        holder.tvLikes.setText(v1.getTotal_likes() + " likes");
-                      }
-                    else {
-                        final ImageView button = (ImageView) v;
-                        buttonColorAnim = ValueAnimator.ofObject(new ArgbEvaluator(), context.getResources().getColor(R.color.like_grey), context.getResources().getColor(R.color.like_blue));
-                        buttonColorAnim.addUpdateListener(new ValueAnimator.AnimatorUpdateListener() {
-                            @Override
-                            public void onAnimationUpdate(ValueAnimator animator) {
-                                button.setColorFilter((Integer) animator.getAnimatedValue());
-                            }
-                        });
-                        buttonColorAnim.start();
-                        listener.onVideoResourceLiked(v1,0);
-                        holder.tvLikes.setText(v1.getTotal_likes()+1 + " likes");
-                    }
+                if (v1.getLike() == 0){
+                    listener.onVideoResourceLiked(v1, 0);
+                }else if (v1.getLike() == 1){
+                    listener.onVideoResourceLiked(v1, 1);
                 }
             }
         });

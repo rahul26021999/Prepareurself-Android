@@ -91,23 +91,31 @@ public class ResourceRespository {
     }
 
     //wrte here for likes
-    public  void  resourceLiked(String token, int resource_id , int like){
+    public  LiveData<ResourceLikesResponse>  resourceLiked(String token, int resource_id , int like){
+
+        final MutableLiveData<ResourceLikesResponse> data = new MutableLiveData<>();
+
         apiInterface.resourceLiked(token, resource_id, like).enqueue(new Callback<ResourceLikesResponse>() {
             @Override
             public void onResponse(Call<ResourceLikesResponse> call, Response<ResourceLikesResponse> response) {
                 ResourceLikesResponse resourceLikesResponse = response.body();
                 if (resourceLikesResponse!=null){
                     Log.d("resource_Liked",resourceLikesResponse.getMessage());
+                    data.setValue(resourceLikesResponse);
                 }else{
                     Log.d("resource_Liked","null response");
+                    data.setValue(null);
                 }
             }
 
             @Override
             public void onFailure(Call<ResourceLikesResponse> call, Throwable t) {
                 Log.d("resource_Liked","failure "+ t.getLocalizedMessage());
+                data.setValue(null);
             }
         });
+
+        return data;
     }
 
     public LiveData<VideoShareResponseModel> getResourceByIdForShare(String token, int resourceId) {
