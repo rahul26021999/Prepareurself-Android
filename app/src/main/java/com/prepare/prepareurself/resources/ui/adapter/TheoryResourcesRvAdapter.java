@@ -71,8 +71,8 @@ public class TheoryResourcesRvAdapter extends RecyclerView.Adapter<TheoryResourc
                     String encodedId = Utility.base64EncodeForInt(theoryResources1.getId());
                     Bitmap bitmap = Utility.getBitmapFromView(holder.imageView);
                     String text = theoryResources1.getTitle()+"\n\n" +
-                            "Prepareurself is providing various courses, projects and resources." +
-                            "One place to learn skills and test them by developing projects.\n" +
+                            "Prepareurself is providing various courses, projects and resources. " +
+                            "One place to learn skills and test them by developing projects. \n" +
                             "Checkout prepareurself app : \n" +
                             "prepareurself.in/resource/"+encodedId;
                     listener.onResourceShared(bitmap,text);
