@@ -62,8 +62,14 @@ public class LikedResourcesAdapter extends RecyclerView.Adapter<LikedResourcesAd
                 if (theoryResources1.getType().equalsIgnoreCase("theory")){
                     listener.onResourceClicked(theoryResources1);
                 }else{
-                    Bitmap bitmap = Utility.getBitmapFromView(holder.youTubeThumbnailView);
-                    listener.videoClicked(theoryResources1,Utility.getVideoCode(theoryResources1.getLink()), bitmap);
+                    if (theoryResources1.getLink().contains("youtu.be") || theoryResources1.getLink().contains("youtube")){
+                        Bitmap bitmap = Utility.getBitmapFromView(holder.youTubeThumbnailView);
+                        String videoCode = Utility.getVideoCode(theoryResources1.getLink());
+                        listener.videoClicked(theoryResources1,videoCode, bitmap);
+                    }else{
+                        listener.videoClicked(theoryResources1,null, null);
+                    }
+                    notifyDataSetChanged();
                 }
             }
         });
@@ -76,9 +82,10 @@ public class LikedResourcesAdapter extends RecyclerView.Adapter<LikedResourcesAd
                     try {
                         String encodedId = Utility.base64EncodeForInt(theoryResources1.getId());
                         Bitmap bitmap = Utility.getBitmapFromView(holder.youTubeThumbnailView);
-                        String text = "Checkout our prepareurself app. " +
-                                "I found some best resources  from internet at one place and learning is so much fun now.\n" +
-                                "You can learn them too here :\n"+
+                        String text = theoryResources1.getTitle()+"\n\n" +
+                                "Prepareurself is providing various courses, projects and resources." +
+                                "One place to learn skills and test them by developing projects.\n" +
+                                "Checkout prepareurself app : \n" +
                                 "prepareurself.in/resource/"+encodedId;
                         listener.onResourceShared(bitmap,text);
                     } catch (UnsupportedEncodingException e) {
@@ -153,46 +160,66 @@ public class LikedResourcesAdapter extends RecyclerView.Adapter<LikedResourcesAd
                             .into(imageView);
                 }
                 Log.d("liked", "bindview: "+Constants.THEORYRESOURCEBASEURL + resourceModel.getImage_url());
-            }else if (resourceModel.getType().equalsIgnoreCase("video")){
+            }else if (resourceModel.getType().equalsIgnoreCase("video")) {
 
-                imageView.setVisibility(View.GONE);
-                youTubeThumbnailView.setVisibility(View.VISIBLE);
+                if (resourceModel.getLink().contains("youtu.be") || resourceModel.getLink().contains("youtube")){
 
-                final String videoCode = Utility.getVideoCode(resourceModel.getLink());
+                    youTubeThumbnailView.setVisibility(View.VISIBLE);
+                    imageView.setVisibility(View.GONE);
 
-                if (readyForLoadingYoutubeThumbnail){
-                    readyForLoadingYoutubeThumbnail = false;
+                    final String videoCode = Utility.getVideoCode(resourceModel.getLink());
 
-                    youTubeThumbnailView.initialize(Constants.YOUTUBE_PLAYER_API_KEY, new YouTubeThumbnailView.OnInitializedListener() {
-                        @Override
-                        public void onInitializationSuccess(YouTubeThumbnailView youTubeThumbnailView, final YouTubeThumbnailLoader youTubeThumbnailLoader) {
-                            youTubeThumbnailLoader.setVideo(videoCode);
+                    if (readyForLoadingYoutubeThumbnail){
+                        readyForLoadingYoutubeThumbnail = false;
 
-                            youTubeThumbnailLoader.setOnThumbnailLoadedListener(new YouTubeThumbnailLoader.OnThumbnailLoadedListener() {
-                                @Override
-                                public void onThumbnailLoaded(YouTubeThumbnailView youTubeThumbnailView, String s) {
-                                    youTubeThumbnailLoader.release();
-                                }
+                        youTubeThumbnailView.initialize(Constants.YOUTUBE_PLAYER_API_KEY, new YouTubeThumbnailView.OnInitializedListener() {
+                            @Override
+                            public void onInitializationSuccess(YouTubeThumbnailView youTubeThumbnailView, final YouTubeThumbnailLoader youTubeThumbnailLoader) {
+                                youTubeThumbnailLoader.setVideo(videoCode);
 
-                                @Override
-                                public void onThumbnailError(YouTubeThumbnailView youTubeThumbnailView, YouTubeThumbnailLoader.ErrorReason errorReason) {
-                                    Utility.showToast(context,Constants.UNABLETOLOADVIDEOSATTHEMOMENT);
-                                }
-                            });
+                                youTubeThumbnailLoader.setOnThumbnailLoadedListener(new YouTubeThumbnailLoader.OnThumbnailLoadedListener() {
+                                    @Override
+                                    public void onThumbnailLoaded(YouTubeThumbnailView youTubeThumbnailView, String s) {
+                                        youTubeThumbnailLoader.release();
+                                    }
 
-                            readyForLoadingYoutubeThumbnail = true;
+                                    @Override
+                                    public void onThumbnailError(YouTubeThumbnailView youTubeThumbnailView, YouTubeThumbnailLoader.ErrorReason errorReason) {
+                                        Utility.showToast(context,Constants.UNABLETOLOADVIDEOSATTHEMOMENT);
+                                        Log.d("video_resource", "onThumbnailError: "+resourceModel.getTitle());
+                                    }
+                                });
 
-                        }
+                                readyForLoadingYoutubeThumbnail = true;
 
-                        @Override
-                        public void onInitializationFailure(YouTubeThumbnailView youTubeThumbnailView, YouTubeInitializationResult youTubeInitializationResult) {
-                            String errorMessage = String.format(
-                                    context.getString(R.string.error_player), youTubeInitializationResult.toString());
-                            Utility.showToast(context,errorMessage);
+                            }
 
-                            readyForLoadingYoutubeThumbnail = true;
-                        }
-                    });
+                            @Override
+                            public void onInitializationFailure(YouTubeThumbnailView youTubeThumbnailView, YouTubeInitializationResult youTubeInitializationResult) {
+                                String errorMessage = String.format(
+                                        context.getString(R.string.error_player), youTubeInitializationResult.toString());
+                                Utility.showToast(context,errorMessage);
+                                Log.d("video_resource", "onInitializeError: "+resourceModel.getTitle());
+
+                                readyForLoadingYoutubeThumbnail = true;
+                            }
+                        });
+
+                    }
+
+                }else{
+                    youTubeThumbnailView.setVisibility(View.GONE);
+                    imageView.setVisibility(View.VISIBLE);
+
+                    if (resourceModel.getImage_url()!=null && resourceModel.getImage_url().endsWith(".svg")){
+                        Utility.loadSVGImage(context,Constants.THEORYRESOURCEBASEURL + resourceModel.getImage_url(), imageView);
+                    }else{
+                        Glide.with(context).load(
+                                Constants.THEORYRESOURCEBASEURL + resourceModel.getImage_url())
+                                .placeholder(R.drawable.placeholder)
+                                .transition(GenericTransitionOptions.<Drawable>with(Utility.getAnimationObject()))
+                                .into(imageView);
+                    }
 
                 }
             }

@@ -56,7 +56,11 @@ public class LikedRelatedVideosRvAdapter extends RecyclerView.Adapter<LikedRelat
             @Override
             public void onClick(View v) {
                 try {
-                    listener.onRelatedItemClicked(resourceModel, Utility.getUriOfBitmap(Utility.getBitmapFromView(holder.youTubeThumbnailView),context));
+                    if (resourceModel.getLink().contains("youtu.be") || resourceModel.getLink().contains("youtube")){
+                        listener.onRelatedItemClicked(resourceModel, Utility.getUriOfBitmap(Utility.getBitmapFromView(holder.youTubeThumbnailView),context));
+                    }else{
+                        listener.onRelatedItemClicked(resourceModel, null);
+                    }
                 } catch (IOException e) {
                     e.printStackTrace();
                     Utility.showToast(context,"Unable to share at the moment");

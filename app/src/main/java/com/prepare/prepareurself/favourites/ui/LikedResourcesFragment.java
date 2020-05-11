@@ -22,6 +22,7 @@ import com.prepare.prepareurself.R;
 import com.prepare.prepareurself.favourites.data.model.LikedProjectsModel;
 import com.prepare.prepareurself.favourites.data.model.LikedResourcesModel;
 import com.prepare.prepareurself.favourites.viewmodel.FavouritesViewModel;
+import com.prepare.prepareurself.resources.data.model.ResourceViewsResponse;
 import com.prepare.prepareurself.utils.Constants;
 import com.prepare.prepareurself.utils.DividerItemDecoration;
 import com.prepare.prepareurself.utils.PrefManager;
@@ -97,22 +98,28 @@ public class LikedResourcesFragment extends Fragment implements LikedResourcesAd
 
     @Override
     public void videoClicked(LikedResourcesModel videoResources, String videoCode, Bitmap bitmap) {
-        Intent intent = new Intent(getActivity(), VideoActivity.class);
-        intent.putExtra(Constants.VIDEOCODE,videoCode);
-        intent.putExtra(Constants.RESOURCEID,videoResources.getId());
-        intent.putExtra(Constants.RESOURCEVIDEOLIKED,true);
-        intent.putExtra(Constants.VIDEOTITLE, videoResources.getTitle());
-        intent.putExtra(Constants.VIDEODESCRIPTION, videoResources.getDescription());
-        intent.putExtra(Constants.TOPICID, videoResources.getCourse_topic_id());
+        if (videoResources.getLink().contains("youtu.be") || videoResources.getLink().contains("youtube")){
 
-        try {
-            Uri bitmapUri = Utility.getUriOfBitmap(bitmap, getActivity());
-            intent.putExtra(Constants.BITMAPURI,bitmapUri.toString());
-        } catch (IOException e) {
-            e.printStackTrace();
+            Intent intent = new Intent(getActivity(), VideoActivity.class);
+            intent.putExtra(Constants.VIDEOCODE,videoCode);
+            intent.putExtra(Constants.RESOURCEID,videoResources.getId());
+            intent.putExtra(Constants.RESOURCEVIDEOLIKED,true);
+            intent.putExtra(Constants.VIDEOTITLE, videoResources.getTitle());
+            intent.putExtra(Constants.VIDEODESCRIPTION, videoResources.getDescription());
+            intent.putExtra(Constants.TOPICID, videoResources.getCourse_topic_id());
+
+            try {
+                Uri bitmapUri = Utility.getUriOfBitmap(bitmap, getActivity());
+                intent.putExtra(Constants.BITMAPURI,bitmapUri.toString());
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+
+            startActivity(intent);
+
+        }else{
+            Utility.redirectUsingCustomTab(getActivity(),videoResources.getLink());
         }
-
-        startActivity(intent);
     }
 
     @Override
