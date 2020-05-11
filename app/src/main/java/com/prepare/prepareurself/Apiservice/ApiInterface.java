@@ -147,4 +147,7 @@ public interface ApiInterface {
                                                   @Query("count") int count,
                                                   @Query("page") int page);
 
+    @POST("update-user")
+    Call<UpdatePreferenceResponseModel> updateAndroidToken(@Query("token") String token,
+                                                         @Query("android_token") String androidToken);
 }
