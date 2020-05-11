@@ -217,19 +217,46 @@ public class Utility {
             int months = calendarDiff.get(Calendar.MONTH);
             int years = (calendarDiff.get(Calendar.YEAR) - 1970 );
 
-            if (days<7){
-                output = days+" days ago";
-            }else if (weeks<=5){
-                output = weeks + " weeks ago";
-            } else if (months < 12){
-                output = months+" months ago";
-            }else if (years == 1){
-                output = years + "year ago";
-            }else if (years >1){
-                output = years + "years ago";
-            }else{
-                output = "";
+
+            if (years == 1){
+                output = years + " year ago";
+            }else if (years>1){
+                output = years + " years ago";
+            }else if (years == 0){
+                if (months == 1){
+                    output = months + " month ago";
+                }else if (months>1){
+                    output = months + " months ago";
+                }else if (months == 0){
+                    if (weeks == 1){
+                        output = weeks + " week ago";
+                    }else if (weeks>1){
+                        output = weeks + " weeks ago";
+                    }else if (weeks == 0){
+                        if (days == 1){
+                            output = days + " day ago";
+                        }else if (days>1){
+                            output = days + " days ago";
+                        }else if (days == 0){
+                            output = "";
+                        }
+                    }
+                }
             }
+
+//            if (days<7){
+//                output = days+" days ago";
+//            }else if (weeks<=5){
+//                output = weeks + " weeks ago";
+//            } else if (months < 12){
+//                output = months+" months ago";
+//            }else if (years == 1){
+//                output = years + "year ago";
+//            }else if (years >1){
+//
+//            }else{
+//                output = "";
+//            }
 
             Log.d("Date_debug", "getDurationBetweenTwoDays: "+(calendarDiff.get(Calendar.YEAR) - 1970 )+" year, "+calendarDiff.get(Calendar.WEEK_OF_MONTH)+" weeks, "+calendarDiff.get(Calendar.MONTH)+" months, "+calendarDiff.get(Calendar.DAY_OF_MONTH)+" days");
 
