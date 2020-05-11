@@ -283,6 +283,9 @@ public class VideoActivity extends YouTubeBaseActivity implements YouTubePlayer.
                     .observeForever(new Observer<List<LikedResourcesModel>>() {
                         @Override
                         public void onChanged(List<LikedResourcesModel> resourceModels) {
+                            if (resourceModels.isEmpty()){
+                                tvRelatedVideosHeader.setVisibility(View.GONE);
+                            }
                             relatedVideosRvAdapter.setResources(resourceModels);
                             relatedVideosRvAdapter.notifyDataSetChanged();
                         }
