@@ -16,6 +16,7 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.RelativeLayout;
 
 import com.prepare.prepareurself.R;
 import com.prepare.prepareurself.favourites.data.model.LikedProjectsModel;
@@ -35,6 +36,7 @@ public class LikedResourcesFragment extends Fragment implements LikedResourcesAd
     private RecyclerView recyclerView;
     private FavouritesViewModel viewModel;
     private PrefManager prefManager;
+    private RelativeLayout emptyLayout;
 
     public LikedResourcesFragment() {
         // Required empty public constructor
@@ -56,6 +58,7 @@ public class LikedResourcesFragment extends Fragment implements LikedResourcesAd
         View view =  inflater.inflate(R.layout.fragment_liked_resources, container, false);
 
         recyclerView = view.findViewById(R.id.like_resources_rv);
+        emptyLayout = view.findViewById(R.id.emptyFavourites);
 
         return view;
     }
@@ -79,10 +82,14 @@ public class LikedResourcesFragment extends Fragment implements LikedResourcesAd
         viewModel.getLikedResourcesModelLiveData().observe(getActivity(), new Observer<List<LikedResourcesModel>>() {
             @Override
             public void onChanged(List<LikedResourcesModel> likedResourcesModels) {
-                if (likedResourcesModels!=null){
+
+                if (likedResourcesModels!=null && !likedResourcesModels.isEmpty()){
                     Log.d("liked_project", "onChanged: "+likedResourcesModels);
                     adapter.setLikedResourcesModels(likedResourcesModels);
                     adapter.notifyDataSetChanged();
+                    emptyLayout.setVisibility(View.GONE);
+                }else{
+                    emptyLayout.setVisibility(View.VISIBLE);
                 }
             }
         });

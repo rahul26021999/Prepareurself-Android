@@ -16,6 +16,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.LinearLayout;
+import android.widget.RelativeLayout;
 
 import com.prepare.prepareurself.R;
 import com.prepare.prepareurself.courses.ui.activity.ProjectsActivity;
@@ -34,6 +35,7 @@ public class LikedProjectFragment extends Fragment implements LikedProjectsRvAda
     private RecyclerView recyclerView;
     private FavouritesViewModel viewModel;
     private PrefManager prefManager;
+    private RelativeLayout emptyLayout;
 
     public LikedProjectFragment() {
         // Required empty public constructor
@@ -54,6 +56,7 @@ public class LikedProjectFragment extends Fragment implements LikedProjectsRvAda
                              Bundle savedInstanceState) {
         View view =  inflater.inflate(R.layout.fragment_liked_project, container, false);
         recyclerView = view.findViewById(R.id.like_projects_rv);
+        emptyLayout = view.findViewById(R.id.emptyFavourites);
 
 
         viewModel = new ViewModelProvider(this).get(FavouritesViewModel.class);
@@ -80,9 +83,12 @@ public class LikedProjectFragment extends Fragment implements LikedProjectsRvAda
         viewModel.getLikedProjectsModelLiveData().observe(getActivity(), new Observer<List<LikedProjectsModel>>() {
             @Override
             public void onChanged(List<LikedProjectsModel> likedProjectsModel) {
-                if (likedProjectsModel!=null){
+                if (likedProjectsModel!=null && !likedProjectsModel.isEmpty()){
                     adapter.setLikedProjectsModels(likedProjectsModel);
                     adapter.notifyDataSetChanged();
+                    emptyLayout.setVisibility(View.GONE);
+                }else{
+                    emptyLayout.setVisibility(View.VISIBLE);
                 }
             }
         });
