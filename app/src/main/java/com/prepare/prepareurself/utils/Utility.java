@@ -213,14 +213,12 @@ public class Utility {
             end.setTime(mEndDate);
             long diff = mStartDate.getTime() - mEndDate.getTime();
 
-            Calendar calendarDiff = Calendar.getInstance();
-            calendarDiff.setTimeInMillis(start.getTimeInMillis() -  end.getTimeInMillis());
+            long days = (diff / (1000 * 60 * 60 * 24)) % 365;
+            long months = (diff / (1000l * 60 * 60 * 24 * 30 )) % 12;
+            long weeks = (diff / (1000l * 60 * 60 * 24 * 7 )) % 7;
+            long years =  (diff / (1000l * 60 * 60 * 24 * 365));
 
-            int days = calendarDiff.get(Calendar.DAY_OF_MONTH);
-            int weeks = calendarDiff.get(Calendar.WEEK_OF_MONTH);
-            int months = calendarDiff.get(Calendar.MONTH);
-            int years = (calendarDiff.get(Calendar.YEAR) - 1970 );
-
+            Log.d("Date_debug","days: "+ days+"| weeks : "+weeks+" months : "+months +" years : "+years);
 
             if (years == 1){
                 output = years + " year ago";
@@ -262,7 +260,7 @@ public class Utility {
 //                output = "";
 //            }
 
-            Log.d("Date_debug", "getDurationBetweenTwoDays: "+(calendarDiff.get(Calendar.YEAR) - 1970 )+" year, "+calendarDiff.get(Calendar.WEEK_OF_MONTH)+" weeks, "+calendarDiff.get(Calendar.MONTH)+" months, "+calendarDiff.get(Calendar.DAY_OF_MONTH)+" days");
+//            Log.d("Date_debug", "getDurationBetweenTwoDays: "+(calendarDiff.get(Calendar.YEAR) - 1970 )+" year, "+calendarDiff.get(Calendar.WEEK_OF_MONTH)+" weeks, "+calendarDiff.get(Calendar.MONTH)+" months, "+calendarDiff.get(Calendar.DAY_OF_MONTH)+" days");
 
         } catch (ParseException e) {
             e.printStackTrace();
