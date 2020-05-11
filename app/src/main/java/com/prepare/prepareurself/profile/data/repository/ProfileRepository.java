@@ -173,6 +173,31 @@ public class ProfileRepository {
 
         return data;
     }
+
+    public LiveData<UpdatePreferenceResponseModel> updateAndroidToken(String token, String androidToken) {
+        final MutableLiveData<UpdatePreferenceResponseModel> data = new MutableLiveData<>();
+
+        apiInterface.updateAndroidToken(token,androidToken).enqueue(new Callback<UpdatePreferenceResponseModel>() {
+            @Override
+            public void onResponse(Call<UpdatePreferenceResponseModel> call, Response<UpdatePreferenceResponseModel> response) {
+                UpdatePreferenceResponseModel responseModel = response.body();
+                if (responseModel!=null){
+                    Log.d("tojen_debug", "onResponse: "+responseModel.getUser_data().getAndroid_token());
+                    userDBRepository.insertUser(responseModel.getUser_data());
+                    data.setValue(responseModel);
+                }else{
+                    data.setValue(null);
+                }
+            }
+
+            @Override
+            public void onFailure(Call<UpdatePreferenceResponseModel> call, Throwable t) {
+                data.setValue(null);
+            }
+        });
+
+        return data;
+    }
 }
 
 

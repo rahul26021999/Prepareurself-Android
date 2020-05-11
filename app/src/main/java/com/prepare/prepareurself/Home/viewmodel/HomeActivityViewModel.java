@@ -8,6 +8,7 @@ import androidx.lifecycle.MutableLiveData;
 
 import com.prepare.prepareurself.authentication.data.db.repository.UserDBRepository;
 import com.prepare.prepareurself.authentication.data.model.UserModel;
+import com.prepare.prepareurself.profile.data.repository.ProfileRepository;
 import com.prepare.prepareurself.resources.data.db.repository.ResourcesDbRepository;
 import com.prepare.prepareurself.resources.data.model.ResourceModel;
 import com.prepare.prepareurself.resources.data.model.ResourceViewsResponse;
@@ -19,12 +20,13 @@ public class HomeActivityViewModel extends AndroidViewModel {
     private LiveData<UserModel> userModelLiveData = new MutableLiveData<>();
     private ResourceRespository resourceRespository;
     private ResourcesDbRepository resourcesDbRepository;
-
+    private ProfileRepository profileRepository;
     public HomeActivityViewModel(Application application){
         super(application);
         dbRepository = new UserDBRepository(application);
         resourceRespository = new ResourceRespository(application);
         resourcesDbRepository = new ResourcesDbRepository(application);
+        profileRepository = new ProfileRepository(application);
     }
 
     public void retrieveUserData(){
@@ -40,6 +42,10 @@ public class HomeActivityViewModel extends AndroidViewModel {
     }
     public void saveResource(ResourceModel videoResources) {
         resourcesDbRepository.insertResource(videoResources);
+    }
+
+    public void updateToken(String token, String androidToken){
+        profileRepository.updateAndroidToken(token, androidToken);
     }
 
 }

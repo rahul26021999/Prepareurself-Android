@@ -130,6 +130,14 @@ public class HomeActivity extends BaseActivity implements NavigationView.OnNavig
                         }
                     }
 
+
+                    Log.d("tojen_debug", "before onResponse: "+userModel.getAndroid_token());
+                    if (TextUtils.isEmpty(userModel.getAndroid_token()) || userModel.getAndroid_token() == null){
+                        viewModel.updateToken(prefManager.getString(Constants.JWTTOKEN),Utility.getOneSignalId());
+                    }
+
+//                    viewModel.updateToken(prefManager.getString(Constants.JWTTOKEN),Utility.getOneSignalId());
+
                 }
 
             }
