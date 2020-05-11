@@ -214,9 +214,9 @@ public class Utility {
             long diff = mStartDate.getTime() - mEndDate.getTime();
 
             long days = (diff / (1000 * 60 * 60 * 24)) % 365;
-            long months = (diff / (1000l * 60 * 60 * 24 * 30 )) % 12;
-            long weeks = (diff / (1000l * 60 * 60 * 24 * 7 )) % 7;
-            long years =  (diff / (1000l * 60 * 60 * 24 * 365));
+            long months = (diff / (1000L * 60 * 60 * 24 * 30 )) % 12;
+            long weeks = (diff / (1000L * 60 * 60 * 24 * 7 )) % 7;
+            long years =  (diff / (1000L * 60 * 60 * 24 * 365));
 
             Log.d("Date_debug","days: "+ days+"| weeks : "+weeks+" months : "+months +" years : "+years);
 
