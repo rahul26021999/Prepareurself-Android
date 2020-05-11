@@ -1,6 +1,7 @@
 package com.prepare.prepareurself.utils;
 
 import android.animation.ObjectAnimator;
+import android.app.ActivityManager;
 import android.content.Context;
 import android.content.Intent;
 import android.graphics.Bitmap;
@@ -8,6 +9,7 @@ import android.graphics.Canvas;
 import android.graphics.Color;
 import android.graphics.drawable.Drawable;
 import android.net.Uri;
+import android.os.Build;
 import android.text.TextUtils;
 import android.util.Base64;
 import android.util.Log;
@@ -42,6 +44,8 @@ import java.util.Date;
 import java.util.concurrent.TimeUnit;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
+
+import static android.content.Context.ACTIVITY_SERVICE;
 
 public class Utility {
 
@@ -309,6 +313,13 @@ public class Utility {
                 })
                 .setPlaceHolder(R.drawable.placeholder,R.drawable.placeholder)
                 .load(Uri.parse(ImageUrl), imageView);
+    }
+
+    public static void clearAppData(Context context){
+        if (Build.VERSION_CODES.KITKAT <= Build.VERSION.SDK_INT) {
+            ((ActivityManager) context.getSystemService(ACTIVITY_SERVICE))
+                    .clearApplicationUserData();
+        }
     }
 
 }

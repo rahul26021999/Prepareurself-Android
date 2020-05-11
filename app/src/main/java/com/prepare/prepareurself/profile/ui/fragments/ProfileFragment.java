@@ -177,7 +177,9 @@ public class ProfileFragment extends Fragment implements View.OnClickListener {
         btnLogout.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                mViewModel.removeUser();
                 prefManager.saveBoolean(Constants.ISLOGGEDIN, false);
+               // Utility.clearAppData(getActivity().getApplicationContext());
                 startActivity(new Intent(getActivity(), AuthenticationActivity.class));
                 getActivity().finish();
             }

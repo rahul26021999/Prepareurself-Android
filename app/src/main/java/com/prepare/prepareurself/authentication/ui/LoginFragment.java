@@ -180,6 +180,8 @@ public class LoginFragment extends Fragment implements View.OnClickListener{
                 return;
             }
 
+
+
             viewModel.login(strEmail,strPassword, androidToken);
 
             showLoader();

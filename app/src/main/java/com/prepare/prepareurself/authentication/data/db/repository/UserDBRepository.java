@@ -25,7 +25,7 @@ public class UserDBRepository {
     }
 
     public void insertUser(UserModel userModel){
-        new insertAsyncTask(userRoomDao).execute(userModel);
+        new clearDataAsyncTask(userRoomDao).execute(userModel);
     }
 
     public void clearUser(){
@@ -59,6 +59,24 @@ public class UserDBRepository {
         @Override
         protected Void doInBackground(UserModel... userModels) {
             asyncUserDao.deleteAll();
+
+            return null;
+        }
+    }
+
+    private static class clearDataAsyncTask extends AsyncTask<UserModel,Void, Void>{
+
+        private UserRoomDao asyncUserDao;
+
+        clearDataAsyncTask(UserRoomDao userRoomDao){
+            asyncUserDao = userRoomDao;
+        }
+
+        @Override
+        protected Void doInBackground(UserModel... userModels) {
+            asyncUserDao.deleteAll();
+
+            new insertAsyncTask(asyncUserDao).execute(userModels[0]);
 
             return null;
         }

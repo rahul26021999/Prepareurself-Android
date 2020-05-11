@@ -62,6 +62,10 @@ public class ProfileViewModel extends AndroidViewModel {
         return profileRepository.updatePreferences(token,Strings);
     }
 
+    public void removeUser(){
+        userDBRepository.clearUser();
+    }
+
     public void addStacks(PreferredTechStack preferredTechStack){
 
         boolean isPresent = false;
