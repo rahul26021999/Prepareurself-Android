@@ -41,7 +41,11 @@ public class FavouritesViewModel extends AndroidViewModel {
         return favouritesResponseModelLiveData;
     }
 
-    public void fetchFavourites(String token, String type,int count, int page){
+    public LiveData<FavouritesResponseModel> fetchFavourites(){
+        return favouritesResponseModelLiveData;
+    }
+
+    public void getFavourites(String token, String type, int count, int page){
         favouritesResponseModelLiveData = favouritesRepository.fetchFavourites(token,type, count, page);
     }
 

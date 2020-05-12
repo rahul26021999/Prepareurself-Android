@@ -5,6 +5,7 @@ import android.graphics.Bitmap;
 import android.net.Uri;
 import android.os.Bundle;
 
+import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 import androidx.lifecycle.Observer;
@@ -19,6 +20,7 @@ import android.view.ViewGroup;
 import android.widget.RelativeLayout;
 
 import com.prepare.prepareurself.R;
+import com.prepare.prepareurself.favourites.data.model.FavouritesResponseModel;
 import com.prepare.prepareurself.favourites.data.model.LikedProjectsModel;
 import com.prepare.prepareurself.favourites.data.model.LikedResourcesModel;
 import com.prepare.prepareurself.favourites.viewmodel.FavouritesViewModel;
@@ -38,6 +40,8 @@ public class LikedResourcesFragment extends Fragment implements LikedResourcesAd
     private FavouritesViewModel viewModel;
     private PrefManager prefManager;
     private RelativeLayout emptyLayout;
+    private Boolean isScrolling = false;
+    private int rvCurrentItems, rvTotalItems, rvScrolledOutItems, rvLastPage, rvCurrentPage=1;
 
     public LikedResourcesFragment() {
         // Required empty public constructor
@@ -71,14 +75,51 @@ public class LikedResourcesFragment extends Fragment implements LikedResourcesAd
         viewModel = new ViewModelProvider(this).get(FavouritesViewModel.class);
         prefManager = new PrefManager(getActivity());
 
-        viewModel.fetchFavourites(prefManager.getString(Constants.JWTTOKEN),"resource",10,1);
+        viewModel.getFavourites(prefManager.getString(Constants.JWTTOKEN),"resource",10,rvCurrentPage);
+        rvCurrentPage+=1;
 
         final LikedResourcesAdapter adapter = new LikedResourcesAdapter(getActivity(), this);
-        LinearLayoutManager layoutManager = new LinearLayoutManager(getActivity());
+        final LinearLayoutManager layoutManager = new LinearLayoutManager(getActivity());
         DividerItemDecoration decoration = new DividerItemDecoration(getActivity(), R.drawable.theory_resource_divider);
         recyclerView.addItemDecoration(decoration);
         recyclerView.setLayoutManager(layoutManager);
         recyclerView.setAdapter(adapter);
+
+        viewModel.fetchFavourites()
+                .observe(getActivity(), new Observer<FavouritesResponseModel>() {
+                    @Override
+                    public void onChanged(final FavouritesResponseModel favouritesResponseModel) {
+                        if (favouritesResponseModel!=null && favouritesResponseModel.getResources()!=null){
+                            recyclerView.addOnScrollListener(new RecyclerView.OnScrollListener() {
+                                @Override
+                                public void onScrollStateChanged(@NonNull RecyclerView recyclerView, int newState) {
+                                    super.onScrollStateChanged(recyclerView, newState);
+                                    isScrolling = true;
+                                }
+
+                                @Override
+                                public void onScrolled(@NonNull RecyclerView recyclerView, int dx, int dy) {
+                                    super.onScrolled(recyclerView, dx, dy);
+
+                                    rvCurrentItems = layoutManager.getChildCount();
+                                    rvTotalItems = layoutManager.getItemCount();
+                                    rvScrolledOutItems = layoutManager.findFirstVisibleItemPosition();
+
+                                    rvLastPage = favouritesResponseModel.getResources().getLast_page();
+
+                                    Log.d("paging_debug",rvCurrentPage+","+rvLastPage);
+
+                                    if (isScrolling && (rvCurrentItems + rvScrolledOutItems) == rvTotalItems && rvCurrentPage<=rvLastPage){
+                                        isScrolling = false;
+                                        viewModel.getFavourites(prefManager.getString(Constants.JWTTOKEN),"resource",10,rvCurrentPage);
+                                        rvCurrentPage+=1;
+                                    }
+
+                                }
+                            });
+                        }
+                    }
+                });
 
         viewModel.getLikedResourcesModelLiveData().observe(getActivity(), new Observer<List<LikedResourcesModel>>() {
             @Override
