@@ -1,6 +1,7 @@
 package com.prepare.prepareurself.dashboard.viewmodel;
 
 import android.app.Application;
+import android.content.Context;
 
 import androidx.annotation.NonNull;
 import androidx.lifecycle.AndroidViewModel;
@@ -158,8 +159,8 @@ public class DashboardViewModel extends AndroidViewModel {
         return response;
     }
 
-    public LiveData<HomepageResponseModel> fetchHomePageData(String token){
-        return dashboardRespoisitory.fetchHomePageData(token);
+    public LiveData<HomepageResponseModel> fetchHomePageData(String token, Context context){
+        return dashboardRespoisitory.fetchHomePageData(token, context);
     }
 
     public LiveData<ResourceViewsResponse> resourceViewed(String token, int resourceId){

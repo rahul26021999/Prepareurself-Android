@@ -4,13 +4,24 @@ import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.lifecycle.Observer;
 
+import android.app.Dialog;
+import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
 import android.provider.Settings;
 import android.view.LayoutInflater;
+import android.view.View;
+import android.widget.LinearLayout;
+import android.widget.RelativeLayout;
+import android.widget.TextView;
 
 import com.prepare.prepareurself.R;
+import com.prepare.prepareurself.authentication.ui.AuthenticationActivity;
+
+import org.w3c.dom.Text;
+
+import static com.prepare.prepareurself.utils.BaseApplication.getAppContext;
 
 
 public class BaseActivity extends AppCompatActivity{
@@ -18,6 +29,8 @@ public class BaseActivity extends AppCompatActivity{
     public PrefManager prefManager;
     public AlertDialog.Builder alertDialog;
     public AlertDialog dialog;
+    public Dialog alertDialogUnauth;
+   // public AlertDialog dialogUauth;
 
 
     @Override
@@ -59,5 +72,8 @@ public class BaseActivity extends AppCompatActivity{
                         }
                     }
                 });
+
+
     }
+
 }

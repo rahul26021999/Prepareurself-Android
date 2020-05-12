@@ -312,7 +312,7 @@ public class DashboardFragment extends Fragment implements DashboardRvAdapter.Da
 
         setUpSlider();
 
-        mViewModel.fetchHomePageData(prefManager.getString(Constants.JWTTOKEN))
+        mViewModel.fetchHomePageData(prefManager.getString(Constants.JWTTOKEN), getActivity())
                 .observe(getActivity(), new Observer<HomepageResponseModel>() {
                     @Override
                     public void onChanged(HomepageResponseModel homepageResponseModel) {

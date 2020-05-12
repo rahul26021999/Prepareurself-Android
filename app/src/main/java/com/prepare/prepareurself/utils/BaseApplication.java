@@ -1,6 +1,8 @@
 package com.prepare.prepareurself.utils;
 
 import android.app.Application;
+import android.content.Context;
+import android.content.Intent;
 import android.os.StrictMode;
 import android.text.TextUtils;
 import android.util.Log;
@@ -17,6 +19,7 @@ import com.google.android.gms.tasks.Task;
 import com.google.firebase.remoteconfig.FirebaseRemoteConfig;
 import com.onesignal.OneSignal;
 import com.prepare.prepareurself.R;
+import com.prepare.prepareurself.authentication.ui.AuthenticationActivity;
 import com.prepare.prepareurself.firebase.UpdateHelper;
 
 import java.util.HashMap;
@@ -26,10 +29,13 @@ public class BaseApplication extends Application {
 
     private PrefManager prefManager;
     private static BaseApplication mInstance;
+    private static Context context;
 
     @Override
     public void onCreate() {
         super.onCreate();
+
+        BaseApplication.context = getApplicationContext();
 
         prefManager = new PrefManager(this);
 
@@ -66,6 +72,10 @@ public class BaseApplication extends Application {
 
         StrictMode.VmPolicy.Builder builder = new StrictMode.VmPolicy.Builder();
         StrictMode.setVmPolicy(builder.build());
+    }
+
+    public static Context getAppContext() {
+        return BaseApplication.context;
     }
 
 }

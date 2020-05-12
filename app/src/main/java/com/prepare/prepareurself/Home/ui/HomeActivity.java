@@ -284,6 +284,11 @@ public class HomeActivity extends BaseActivity implements NavigationView.OnNavig
                     gotoPrefFromBanner = true;
                     break;
 
+                case "project":
+                    Intent intentProject = new Intent(this, ProjectsActivity.class);
+                    intentProject.putExtra(Constants.PROJECTID,bannerModel.getScreen_id());
+                    startActivity(intentProject);
+
             }
         }
     }

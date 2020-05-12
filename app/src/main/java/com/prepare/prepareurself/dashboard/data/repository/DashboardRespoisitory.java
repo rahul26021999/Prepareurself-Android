@@ -1,6 +1,9 @@
 package com.prepare.prepareurself.dashboard.data.repository;
 
+import android.app.Activity;
 import android.app.Application;
+import android.content.Context;
+import android.content.Intent;
 import android.util.Log;
 
 import androidx.lifecycle.LiveData;
@@ -8,6 +11,7 @@ import androidx.lifecycle.MutableLiveData;
 
 import com.prepare.prepareurself.Apiservice.ApiClient;
 import com.prepare.prepareurself.Apiservice.ApiInterface;
+import com.prepare.prepareurself.authentication.ui.AuthenticationActivity;
 import com.prepare.prepareurself.dashboard.data.db.repository.SuggestedProjectsDbRespository;
 import com.prepare.prepareurself.dashboard.data.db.repository.SuggestedTopicsDbRepository;
 import com.prepare.prepareurself.dashboard.data.model.GetSuggestedProjectsModel;
@@ -16,6 +20,9 @@ import com.prepare.prepareurself.dashboard.data.model.HomepageData;
 import com.prepare.prepareurself.dashboard.data.model.HomepageResponseModel;
 import com.prepare.prepareurself.dashboard.data.model.SuggestedProjectModel;
 import com.prepare.prepareurself.dashboard.data.model.SuggestedTopicsModel;
+import com.prepare.prepareurself.utils.Constants;
+import com.prepare.prepareurself.utils.PrefManager;
+import com.prepare.prepareurself.utils.Utility;
 
 import java.util.List;
 
@@ -101,7 +108,7 @@ public class DashboardRespoisitory {
 
     }
 
-    public LiveData<HomepageResponseModel> fetchHomePageData(String token){
+    public LiveData<HomepageResponseModel> fetchHomePageData(String token, final Context context){
 
         final MutableLiveData<HomepageResponseModel> data = new MutableLiveData<>();
 
@@ -109,7 +116,16 @@ public class DashboardRespoisitory {
             @Override
             public void onResponse(Call<HomepageResponseModel> call, Response<HomepageResponseModel> response) {
                 HomepageResponseModel responseModel  = response.body();
-//                Log.d("home_debug",responseModel+" hjb");
+
+                if (response.code() == 401){
+                    PrefManager prefManager = new PrefManager(context);
+                    Utility.showLongToast(context,"Session Expired! Please login again");
+                    Intent intent = new Intent();
+                    intent.setClass(context, AuthenticationActivity.class);
+                    prefManager.saveBoolean(Constants.ISLOGGEDIN, false);
+                    context.startActivity(intent);
+                    ((Activity)context).finish();
+                }
                 if (responseModel!=null){
                     if (responseModel.getError_code()==0){
                         data.setValue(responseModel);

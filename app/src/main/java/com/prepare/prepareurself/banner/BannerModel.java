@@ -39,8 +39,20 @@ public class BannerModel {
     @SerializedName("course")
     private CourseModel course;
 
+    @ColumnInfo(name = "project_id")
+    @SerializedName("project_id")
+    private int project_id;
+
     public String getScreen() {
         return screen;
+    }
+
+    public int getProject_id() {
+        return project_id;
+    }
+
+    public void setProject_id(int project_id) {
+        this.project_id = project_id;
     }
 
     public void setScreen(String screen) {

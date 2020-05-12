@@ -1,6 +1,7 @@
 package com.prepare.prepareurself.dashboard.data.repository;
 
 import android.app.Application;
+import android.content.Context;
 import android.util.Log;
 
 import androidx.lifecycle.LiveData;
@@ -14,6 +15,9 @@ import com.prepare.prepareurself.banner.BannerImageResponseModel;
 import com.prepare.prepareurself.banner.BannerModel;
 import com.prepare.prepareurself.dashboard.data.model.CourseModel;
 import com.prepare.prepareurself.dashboard.data.model.GetCourseResponseModel;
+import com.prepare.prepareurself.utils.BaseActivity;
+import com.prepare.prepareurself.utils.BaseApplication;
+import com.prepare.prepareurself.utils.Utility;
 
 import java.util.List;
 
@@ -26,11 +30,13 @@ public class CourseRepository {
     private ApiInterface apiInterface;
     private CourseDbRepository courseDbRepository;
     private BannerDbRepository bannerDbRepository;
+    private Context context;
 
     public CourseRepository(Application application){
         apiInterface = ApiClient.getApiClient().create(ApiInterface.class);
         courseDbRepository = new CourseDbRepository(application);
         bannerDbRepository = new BannerDbRepository(application);
+        context = application;
     }
 
     public LiveData<List<CourseModel>> getCourses(String token){
@@ -41,7 +47,9 @@ public class CourseRepository {
             public void onResponse(Call<GetCourseResponseModel> call, Response<GetCourseResponseModel> response) {
                 GetCourseResponseModel responseModel = response.body();
 
-                Log.d("course_api_debug",responseModel+" ,kj");
+                Log.d("course_api_debug",responseModel+" ,kj"+",  "+response.code());
+
+
 
                 if (responseModel!=null){
                     if (responseModel.getError_code()==0){

@@ -1,8 +1,10 @@
 package com.prepare.prepareurself.utils;
 
 import android.animation.ObjectAnimator;
+import android.app.Activity;
 import android.app.ActivityManager;
 import android.content.Context;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.graphics.Bitmap;
 import android.graphics.Canvas;
@@ -10,14 +12,18 @@ import android.graphics.Color;
 import android.graphics.drawable.Drawable;
 import android.net.Uri;
 import android.os.Build;
+import android.provider.Settings;
 import android.text.TextUtils;
 import android.util.Base64;
 import android.util.Log;
 import android.util.Patterns;
+import android.view.LayoutInflater;
 import android.view.View;
 import android.widget.ImageView;
+import android.widget.TextView;
 import android.widget.Toast;
 
+import androidx.appcompat.app.AlertDialog;
 import androidx.browser.customtabs.CustomTabsIntent;
 import androidx.core.content.ContextCompat;
 
@@ -29,6 +35,7 @@ import com.github.twocoffeesoneteam.glidetovectoryou.GlideToVectorYou;
 import com.github.twocoffeesoneteam.glidetovectoryou.GlideToVectorYouListener;
 import com.onesignal.OneSignal;
 import com.prepare.prepareurself.R;
+import com.prepare.prepareurself.authentication.ui.AuthenticationActivity;
 
 import java.io.File;
 import java.io.FileNotFoundException;
@@ -318,6 +325,11 @@ public class Utility {
             ((ActivityManager) context.getSystemService(ACTIVITY_SERVICE))
                     .clearApplicationUserData();
         }
+    }
+
+    public static void showLongToast(Context context, String s) {
+        Toast.makeText(context,s,Toast.LENGTH_LONG).show();
+
     }
 
 }

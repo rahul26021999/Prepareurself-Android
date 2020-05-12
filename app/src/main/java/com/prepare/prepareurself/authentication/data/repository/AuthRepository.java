@@ -1,6 +1,8 @@
 package com.prepare.prepareurself.authentication.data.repository;
 
 import android.app.Application;
+import android.content.Context;
+import android.content.Intent;
 
 import androidx.lifecycle.LiveData;
 import androidx.lifecycle.MutableLiveData;
@@ -11,6 +13,9 @@ import com.prepare.prepareurself.authentication.data.model.AuthenticationRespons
 import com.prepare.prepareurself.authentication.data.db.repository.UserDBRepository;
 import com.prepare.prepareurself.authentication.data.model.ForgotPasswordResponseModel;
 import com.prepare.prepareurself.authentication.data.model.RegisterResponseModel;
+import com.prepare.prepareurself.utils.BaseActivity;
+import com.prepare.prepareurself.utils.BaseApplication;
+import com.prepare.prepareurself.utils.Utility;
 
 import org.json.JSONException;
 import org.json.JSONObject;
@@ -25,10 +30,12 @@ public class AuthRepository {
 
     private ApiInterface apiInterface;
     private UserDBRepository userDBRepository;
+    private Context context;
 
     public AuthRepository(Application application){
         apiInterface= ApiClient.getApiClient().create(ApiInterface.class);
         userDBRepository = new UserDBRepository(application);
+        context = application;
     }
 
     public LiveData<AuthenticationResponseModel> login(String email, String password, String androidToken){
@@ -80,6 +87,8 @@ public class AuthRepository {
         apiInterface.registerUser(firstName, lastName, password, email, androidToken).enqueue(new Callback<RegisterResponseModel>() {
             @Override
             public void onResponse(Call<RegisterResponseModel> call, Response<RegisterResponseModel> response) {
+
+
                 RegisterResponseModel responseModel = response.body();
                 if (responseModel != null) {
                     data.setValue(responseModel);

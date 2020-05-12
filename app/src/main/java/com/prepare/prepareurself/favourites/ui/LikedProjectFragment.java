@@ -18,6 +18,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.LinearLayout;
+import android.widget.ProgressBar;
 import android.widget.RelativeLayout;
 
 import com.prepare.prepareurself.R;
@@ -41,6 +42,7 @@ public class LikedProjectFragment extends Fragment implements LikedProjectsRvAda
     private RelativeLayout emptyLayout;
     private Boolean isScrolling = false;
     private int rvCurrentItems, rvTotalItems, rvScrolledOutItems, rvLastPage, rvCurrentPage=1;
+    private ProgressBar progressBar;
 
     public LikedProjectFragment() {
         // Required empty public constructor
@@ -62,6 +64,9 @@ public class LikedProjectFragment extends Fragment implements LikedProjectsRvAda
         View view =  inflater.inflate(R.layout.fragment_liked_project, container, false);
         recyclerView = view.findViewById(R.id.like_projects_rv);
         emptyLayout = view.findViewById(R.id.emptyFavourites);
+        progressBar = view.findViewById(R.id.like_project_loader);
+
+        progressBar.setVisibility(View.GONE);
 
 
         viewModel = new ViewModelProvider(this).get(FavouritesViewModel.class);
@@ -78,6 +83,8 @@ public class LikedProjectFragment extends Fragment implements LikedProjectsRvAda
 
         viewModel.getFavourites(prefManager.getString(Constants.JWTTOKEN),"project",10,rvCurrentPage);
         rvCurrentPage+=1;
+
+        progressBar.setVisibility(View.VISIBLE);
 
         final LikedProjectsRvAdapter adapter = new LikedProjectsRvAdapter(getActivity(), this);
         final LinearLayoutManager layoutManager = new LinearLayoutManager(getActivity());
@@ -129,7 +136,9 @@ public class LikedProjectFragment extends Fragment implements LikedProjectsRvAda
                     adapter.setLikedProjectsModels(likedProjectsModel);
                     adapter.notifyDataSetChanged();
                     emptyLayout.setVisibility(View.GONE);
+                    progressBar.setVisibility(View.GONE);
                 }else{
+                    progressBar.setVisibility(View.GONE);
                     emptyLayout.setVisibility(View.VISIBLE);
                 }
             }

@@ -17,6 +17,7 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ProgressBar;
 import android.widget.RelativeLayout;
 
 import com.prepare.prepareurself.R;
@@ -42,6 +43,7 @@ public class LikedResourcesFragment extends Fragment implements LikedResourcesAd
     private RelativeLayout emptyLayout;
     private Boolean isScrolling = false;
     private int rvCurrentItems, rvTotalItems, rvScrolledOutItems, rvLastPage, rvCurrentPage=1;
+    private ProgressBar progressBar;
 
     public LikedResourcesFragment() {
         // Required empty public constructor
@@ -64,6 +66,9 @@ public class LikedResourcesFragment extends Fragment implements LikedResourcesAd
 
         recyclerView = view.findViewById(R.id.like_resources_rv);
         emptyLayout = view.findViewById(R.id.emptyFavourites);
+        progressBar = view.findViewById(R.id.like_resource_loader);
+
+        progressBar.setVisibility(View.GONE);
 
         return view;
     }
@@ -77,6 +82,8 @@ public class LikedResourcesFragment extends Fragment implements LikedResourcesAd
 
         viewModel.getFavourites(prefManager.getString(Constants.JWTTOKEN),"resource",10,rvCurrentPage);
         rvCurrentPage+=1;
+
+        progressBar.setVisibility(View.VISIBLE);
 
         final LikedResourcesAdapter adapter = new LikedResourcesAdapter(getActivity(), this);
         final LinearLayoutManager layoutManager = new LinearLayoutManager(getActivity());
@@ -130,8 +137,10 @@ public class LikedResourcesFragment extends Fragment implements LikedResourcesAd
                     adapter.setLikedResourcesModels(likedResourcesModels);
                     adapter.notifyDataSetChanged();
                     emptyLayout.setVisibility(View.GONE);
+                    progressBar.setVisibility(View.GONE);
                 }else{
                     emptyLayout.setVisibility(View.VISIBLE);
+                    progressBar.setVisibility(View.GONE);
                 }
             }
         });
