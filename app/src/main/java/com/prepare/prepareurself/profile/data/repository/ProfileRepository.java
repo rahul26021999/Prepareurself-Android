@@ -1,6 +1,9 @@
 package com.prepare.prepareurself.profile.data.repository;
 
+import android.app.Activity;
 import android.app.Application;
+import android.content.Context;
+import android.content.Intent;
 import android.util.Log;
 
 import androidx.lifecycle.LiveData;
@@ -9,12 +12,17 @@ import androidx.lifecycle.MutableLiveData;
 import com.prepare.prepareurself.Apiservice.ApiClient;
 import com.prepare.prepareurself.Apiservice.ApiInterface;
 import com.prepare.prepareurself.authentication.data.db.repository.UserDBRepository;
+import com.prepare.prepareurself.authentication.data.model.AuthenticationResponseModel;
+import com.prepare.prepareurself.authentication.ui.AuthenticationActivity;
 import com.prepare.prepareurself.profile.data.db.repository.PreferncesDbRespoitory;
 import com.prepare.prepareurself.profile.data.model.PreferredTechStack;
 import com.prepare.prepareurself.profile.data.model.UpdatePasswordResponseModel;
 import com.prepare.prepareurself.profile.data.model.UpdatePreferenceResponseModel;
 import com.prepare.prepareurself.profile.data.model.AllPreferencesResponseModel;
 import com.prepare.prepareurself.profile.data.model.UploadImageResponse;
+import com.prepare.prepareurself.utils.Constants;
+import com.prepare.prepareurself.utils.PrefManager;
+import com.prepare.prepareurself.utils.Utility;
 
 import java.util.List;
 
@@ -197,6 +205,42 @@ public class ProfileRepository {
         });
 
         return data;
+    }
+
+    public LiveData<AuthenticationResponseModel> getUser(String token, final Context context){
+
+        final MutableLiveData<AuthenticationResponseModel> data = new MutableLiveData<>();
+
+        apiInterface.getUser(token).enqueue(new Callback<AuthenticationResponseModel>() {
+            @Override
+            public void onResponse(Call<AuthenticationResponseModel> call, Response<AuthenticationResponseModel> response) {
+
+                if (response.code() == 401){
+                    PrefManager prefManager = new PrefManager(context);
+                    Utility.showLongToast(context,"Session Expired! Please login again");
+                    Intent intent = new Intent();
+                    intent.setClass(context, AuthenticationActivity.class);
+                    prefManager.saveBoolean(Constants.ISLOGGEDIN, false);
+                    context.startActivity(intent);
+                    ((Activity)context).finish();
+                }
+                AuthenticationResponseModel responseModel = response.body();
+                if (responseModel!=null && responseModel.getError_code() == 0){
+                    userDBRepository.insertUser(responseModel.getUser());
+                    data.setValue(responseModel);
+                }else{
+                    data.setValue(null);
+                }
+            }
+
+            @Override
+            public void onFailure(Call<AuthenticationResponseModel> call, Throwable t) {
+                data.setValue(null);
+            }
+        });
+
+        return data;
+
     }
 }
 

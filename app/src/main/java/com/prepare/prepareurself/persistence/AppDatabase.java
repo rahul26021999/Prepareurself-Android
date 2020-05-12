@@ -61,7 +61,7 @@ import com.prepare.prepareurself.youtubeplayer.youtubeplaylistapi.models.VideoIt
         SearchModel.class,
         LikedProjectsModel.class,
         LikedResourcesModel.class
-}, version = 1)
+}, version = 2)
 @TypeConverters({VideoContentDetailsConverter.class,
         VideoSnippetConverter.class,
         ThumbnaiTypeConverter.class,
@@ -95,6 +95,7 @@ public abstract class AppDatabase extends RoomDatabase {
                 if (INSTANCE == null){
                     INSTANCE = Room.databaseBuilder(context.getApplicationContext(),
                             AppDatabase.class,"app_database")
+                            .fallbackToDestructiveMigration()
                             .build();
                 }
             }

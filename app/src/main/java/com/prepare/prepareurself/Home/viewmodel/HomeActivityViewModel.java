@@ -1,6 +1,7 @@
 package com.prepare.prepareurself.Home.viewmodel;
 
 import android.app.Application;
+import android.content.Context;
 
 import androidx.lifecycle.AndroidViewModel;
 import androidx.lifecycle.LiveData;
@@ -46,6 +47,10 @@ public class HomeActivityViewModel extends AndroidViewModel {
 
     public void updateToken(String token, String androidToken){
         profileRepository.updateAndroidToken(token, androidToken);
+    }
+
+    public void getUser(String token, Context context){
+        profileRepository.getUser(token, context);
     }
 
 }

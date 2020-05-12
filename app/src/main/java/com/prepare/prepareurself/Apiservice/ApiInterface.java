@@ -2,6 +2,7 @@ package com.prepare.prepareurself.Apiservice;
 
 import com.prepare.prepareurself.authentication.data.model.ForgotPasswordResponseModel;
 import com.prepare.prepareurself.authentication.data.model.RegisterResponseModel;
+import com.prepare.prepareurself.authentication.data.model.UserModel;
 import com.prepare.prepareurself.courses.data.model.GetProjectResponse;
 import com.prepare.prepareurself.courses.data.model.GetTopicResponseModel;
 import com.prepare.prepareurself.courses.data.model.ProjectResponseModel;
@@ -150,4 +151,7 @@ public interface ApiInterface {
     @POST("update-user")
     Call<UpdatePreferenceResponseModel> updateAndroidToken(@Query("token") String token,
                                                          @Query("android_token") String androidToken);
+
+    @POST("user")
+    Call<AuthenticationResponseModel> getUser(@Query("token") String token);
 }

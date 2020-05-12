@@ -108,6 +108,7 @@ public class HomeActivity extends BaseActivity implements NavigationView.OnNavig
 
         viewModel.retrieveUserData();
 
+
         viewModel.getUserModelLiveData().observe(this, new Observer<UserModel>() {
             @Override
             public void onChanged(UserModel userModel) {
@@ -136,8 +137,10 @@ public class HomeActivity extends BaseActivity implements NavigationView.OnNavig
                         viewModel.updateToken(prefManager.getString(Constants.JWTTOKEN),Utility.getOneSignalId());
                     }
 
-//                    viewModel.updateToken(prefManager.getString(Constants.JWTTOKEN),Utility.getOneSignalId());
+             //       viewModel.updateToken(prefManager.getString(Constants.JWTTOKEN),Utility.getOneSignalId());
 
+                }else{
+                    viewModel.getUser(prefManager.getString(Constants.JWTTOKEN), HomeActivity.this);
                 }
 
             }
