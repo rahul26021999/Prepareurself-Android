@@ -13,6 +13,7 @@ import androidx.lifecycle.Observer;
 import androidx.lifecycle.ViewModelProviders;
 
 import android.text.TextUtils;
+import android.util.Log;
 import android.util.Patterns;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -23,9 +24,17 @@ import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.google.android.gms.auth.api.signin.GoogleSignIn;
+import com.google.android.gms.auth.api.signin.GoogleSignInAccount;
+import com.google.android.gms.auth.api.signin.GoogleSignInClient;
+import com.google.android.gms.auth.api.signin.GoogleSignInOptions;
+import com.google.android.gms.common.SignInButton;
+import com.google.android.gms.common.api.ApiException;
+import com.google.android.gms.tasks.Task;
 import com.prepare.prepareurself.Home.ui.HomeActivity;
 import com.prepare.prepareurself.R;
 import com.prepare.prepareurself.authentication.data.model.AuthenticationResponseModel;
+import com.prepare.prepareurself.authentication.data.model.UserModel;
 import com.prepare.prepareurself.authentication.viewmodel.AuthViewModel;
 import com.prepare.prepareurself.courses.ui.activity.ProjectsActivity;
 import com.prepare.prepareurself.utils.Constants;
@@ -38,6 +47,7 @@ import com.prepare.prepareurself.youtubeplayer.youtubeplaylistapi.ui.VideoActivi
  * A simple {@link Fragment} subclass.
  */
 public class LoginFragment extends Fragment implements View.OnClickListener{
+    private static final int RC_SIGN_IN = 100;
     private EditText etEmail, etPassword;
     private Button btnLogin;
     private String TAG="login button";
@@ -46,6 +56,9 @@ public class LoginFragment extends Fragment implements View.OnClickListener{
     private TextView tvForgotPassword;
     private ImageView arrow;
     private LoginFragmentListener listener;
+    private SignInButton signInButton;
+    private GoogleSignInOptions gso;
+    private GoogleSignInClient mGoogleSignInClient;
 
     private AuthViewModel viewModel;
 
@@ -69,7 +82,11 @@ public class LoginFragment extends Fragment implements View.OnClickListener{
         btnLogin =v.findViewById(R.id.btn_login);
         arrow =v.findViewById(R.id.arrow);
         tvForgotPassword = v.findViewById(R.id.tv_forgot_password);
+        signInButton = v.findViewById(R.id.sign_in_button);
+        signInButton.setSize(SignInButton.SIZE_STANDARD);
+
         btnLogin.setOnClickListener(this);
+        signInButton.setOnClickListener(this);
         tvForgotPassword.setOnClickListener(this);
         progressDialog=new ProgressDialog(this.getActivity());
         prefManager=new PrefManager(this.getActivity());
@@ -85,6 +102,19 @@ public class LoginFragment extends Fragment implements View.OnClickListener{
         super.onActivityCreated(savedInstanceState);
 
         viewModel = ViewModelProviders.of(this).get(AuthViewModel.class);
+
+        gso = new GoogleSignInOptions.Builder(GoogleSignInOptions.DEFAULT_SIGN_IN)
+                .requestEmail()
+                .build();
+
+        mGoogleSignInClient = GoogleSignIn.getClient(getActivity(), gso);
+
+        GoogleSignInAccount account = GoogleSignIn.getLastSignedInAccount(getActivity());
+        if (account == null){
+            prefManager.saveBoolean(Constants.ISLOGGEDIN, false);
+        }else{
+            prefManager.saveBoolean(Constants.ISLOGGEDIN, true);
+        }
 
     }
 
@@ -239,8 +269,78 @@ public class LoginFragment extends Fragment implements View.OnClickListener{
                 }
             });
         }
+        else if (v.getId() == R.id.sign_in_button){
+            signIn();
+        }
 
 }
+
+    private void signIn() {
+        showLoader();
+        Intent signInIntent = mGoogleSignInClient.getSignInIntent();
+        startActivityForResult(signInIntent, RC_SIGN_IN);
+    }
+
+    @Override
+    public void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+        if (requestCode == RC_SIGN_IN){
+            Task<GoogleSignInAccount> task = GoogleSignIn.getSignedInAccountFromIntent(data);
+            handleSignInResult(task);
+
+        }
+    }
+
+    private void handleSignInResult(Task<GoogleSignInAccount> completedTask) {
+        try {
+            final GoogleSignInAccount account = completedTask.getResult(ApiException.class);
+            if (account!=null){
+                viewModel.userModelLiveData().observe(getActivity(), new Observer<UserModel>() {
+                    @Override
+                    public void onChanged(UserModel userModel) {
+                        String firstName = "";
+                        String lastName = "";
+                        if (!TextUtils.isEmpty(account.getDisplayName())){
+                            if (account.getDisplayName().contains(" ")){
+                                firstName = account.getDisplayName().split(" ")[0];
+                                lastName = account.getDisplayName().split(" ")[1];
+                            }else{
+                                firstName = account.getDisplayName();
+                            }
+                        }
+
+                        if (userModel == null){
+                            userModel = new UserModel();
+                            userModel.setId(1);
+                        }
+
+                        userModel.setFirst_name(firstName);
+                        userModel.setLast_name(lastName);
+                        if (!TextUtils.isEmpty(account.getEmail())){
+                            userModel.setEmail(account.getEmail());
+                        }
+                        viewModel.saveUseData(userModel);
+                        Log.d(TAG, "signInResult:" + userModel.getFirst_name()+" "+userModel.getLast_name());
+                        prefManager.saveBoolean(Constants.ISLOGGEDIN, true);
+                        prefManager.saveBoolean(Constants.GOOGLELOGGEDIN, true);
+                        startActivity(new Intent(getActivity(), HomeActivity.class));
+                        getActivity().finish();
+                    }
+                });
+            }else{
+                prefManager.saveBoolean(Constants.ISLOGGEDIN, false);
+                Utility.showToast(getActivity(), "Unable to login using Google at the moment!");
+            }
+        } catch (ApiException e) {
+            prefManager.saveBoolean(Constants.ISLOGGEDIN, false);
+            Log.d(TAG, "signInResult:failed code=" + e.getStatusCode());
+            Utility.showToast(getActivity(), Constants.SOMETHINGWENTWRONG);
+            //updateUI(null);
+        }
+        hideLoader();
+
+    }
+
     private boolean isValidEmail(CharSequence str_email){
         return(Patterns.EMAIL_ADDRESS.matcher(str_email).matches());
     }

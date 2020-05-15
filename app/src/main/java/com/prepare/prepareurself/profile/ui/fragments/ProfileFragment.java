@@ -31,6 +31,11 @@ import android.widget.TextView;
 
 import com.bumptech.glide.GenericTransitionOptions;
 import com.bumptech.glide.Glide;
+import com.google.android.gms.auth.api.signin.GoogleSignIn;
+import com.google.android.gms.auth.api.signin.GoogleSignInClient;
+import com.google.android.gms.auth.api.signin.GoogleSignInOptions;
+import com.google.android.gms.tasks.OnCompleteListener;
+import com.google.android.gms.tasks.Task;
 import com.prepare.prepareurself.Home.ui.HomeActivity;
 import com.prepare.prepareurself.authentication.ui.AuthenticationActivity;
 import com.prepare.prepareurself.profile.data.model.PreferredTechStack;
@@ -179,9 +184,29 @@ public class ProfileFragment extends Fragment implements View.OnClickListener {
             public void onClick(View v) {
                 mViewModel.removeUser();
                 prefManager.saveBoolean(Constants.ISLOGGEDIN, false);
+                if (prefManager.getBoolean(Constants.GOOGLELOGGEDIN)){
+                    GoogleSignInOptions gso = new GoogleSignInOptions.Builder(GoogleSignInOptions.DEFAULT_SIGN_IN)
+                            .requestEmail()
+                            .build();
+                   GoogleSignInClient mGoogleSignInClient = GoogleSignIn.getClient(getActivity(), gso);
+                   mGoogleSignInClient.signOut()
+                           .addOnCompleteListener(new OnCompleteListener<Void>() {
+                               @Override
+                               public void onComplete(@NonNull Task<Void> task) {
+                                   if (task.isSuccessful()){
+                                       startActivity(new Intent(getActivity(), AuthenticationActivity.class));
+                                       getActivity().finish();
+                                   }else{
+                                       Utility.showToast(getActivity(), "Unable to sign out at the moment");
+                                   }
+                               }
+                           });
+                }else{
+                    startActivity(new Intent(getActivity(), AuthenticationActivity.class));
+                    getActivity().finish();
+                }
                // Utility.clearAppData(getActivity().getApplicationContext());
-                startActivity(new Intent(getActivity(), AuthenticationActivity.class));
-                getActivity().finish();
+
             }
         });
 
