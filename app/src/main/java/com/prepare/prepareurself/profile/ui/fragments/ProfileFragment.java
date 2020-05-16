@@ -254,12 +254,22 @@ public class ProfileFragment extends Fragment implements View.OnClickListener {
                         tv_email_profile.setText(userModel.getEmail());
 
                         if (getActivity()!=null){
-                            Glide.with(getActivity())
-                                    .load(Constants.USERIMAGEBASEURL + userModel.getProfile_image())
-                                    .override(500,500)
-                                    .placeholder(R.drawable.person_placeholder)
-                                    .transition(GenericTransitionOptions.<Drawable>with(Utility.getAnimationObject()))
-                                    .into(userImageView);
+
+                            if (userModel.getProfile_image()!=null && (userModel.getProfile_image().contains("https") || userModel.getProfile_image().contains("http"))){
+                                Glide.with(getActivity())
+                                        .load(userModel.getProfile_image())
+                                        .override(500,500)
+                                        .placeholder(R.drawable.person_placeholder)
+                                        .transition(GenericTransitionOptions.<Drawable>with(Utility.getAnimationObject()))
+                                        .into(userImageView);
+                            }else{
+                                Glide.with(getActivity())
+                                        .load(Constants.USERIMAGEBASEURL + userModel.getProfile_image())
+                                        .override(500,500)
+                                        .placeholder(R.drawable.person_placeholder)
+                                        .transition(GenericTransitionOptions.<Drawable>with(Utility.getAnimationObject()))
+                                        .into(userImageView);
+                            }
                         }
 
                         if(userModel.getPreferences()!=null) {

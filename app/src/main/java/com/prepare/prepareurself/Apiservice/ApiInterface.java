@@ -154,4 +154,13 @@ public interface ApiInterface {
 
     @POST("user")
     Call<AuthenticationResponseModel> getUser(@Query("token") String token);
+
+    @POST("social-register")
+    Call<AuthenticationResponseModel> socialRegister(@Query("first_name") String firstName,
+                                                     @Query("last_name") String lastName,
+                                                     @Query("android_token") String androidToken,
+                                                     @Query("google_id") String googleId,
+                                                     @Query("email") String email,
+                                                     @Query("profile_image") String profileImage);
+
 }

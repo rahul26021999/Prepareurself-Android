@@ -131,4 +131,52 @@ public class AuthRepository {
 
     }
 
+    public LiveData<AuthenticationResponseModel> socialRegister(String firstName,
+                                                                String lastName,
+                                                                String androidToken,
+                                                                String googleId,
+                                                                String email,
+                                                                String profileImage){
+
+        final MutableLiveData<AuthenticationResponseModel> data = new MutableLiveData<>();
+
+        apiInterface.socialRegister(firstName, lastName, androidToken, googleId, email, profileImage).enqueue(new Callback<AuthenticationResponseModel>() {
+            @Override
+            public void onResponse(Call<AuthenticationResponseModel> call, Response<AuthenticationResponseModel> response) {
+                AuthenticationResponseModel responseModel =  response.body();
+                if (responseModel!=null){
+                    if (responseModel.isSuccess()){
+                        data.setValue(responseModel);
+                        userDBRepository.clearUser();
+                        userDBRepository.insertUser(responseModel.getUser());
+                    }else{
+                        data.setValue(responseModel);
+                    }
+                }else{
+                    if (response.errorBody()!=null){
+                        try {
+                            AuthenticationResponseModel model = new AuthenticationResponseModel();
+                            JSONObject jsonObject = new JSONObject(response.errorBody().string());
+                            model.setMessage(jsonObject.getString("message"));
+                            data.setValue(model);
+                        } catch (JSONException | IOException e) {
+                            e.printStackTrace();
+                            data.setValue(null);
+                        }
+                    }else{
+                        data.setValue(null);
+                    }
+                }
+            }
+
+            @Override
+            public void onFailure(Call<AuthenticationResponseModel> call, Throwable t) {
+                data.setValue(null);
+            }
+        });
+
+        return data;
+
+    }
+
 }

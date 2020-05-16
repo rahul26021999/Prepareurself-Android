@@ -84,6 +84,20 @@ public class UserModel {
     private String preferences;
 
     @Nullable
+    @ColumnInfo(name = "google_id")
+    @SerializedName("google_id")
+    private String google_id;
+
+    @Nullable
+    public String getGoogle_id() {
+        return google_id;
+    }
+
+    public void setGoogle_id(@Nullable String google_id) {
+        this.google_id = google_id;
+    }
+
+    @Nullable
     public String getPreferences() {
         return preferences;
     }
