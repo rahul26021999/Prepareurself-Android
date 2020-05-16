@@ -38,6 +38,10 @@ public class AuthViewModel extends AndroidViewModel {
         authenticationResponseModelMutableLiveData = repository.login(email,password, androidToken);
     }
 
+    public void socialRegister(String firstName, String lastName, String androidToken, String googleId, String email, String profileImage){
+        authenticationResponseModelMutableLiveData = repository.socialRegister(firstName, lastName, androidToken, googleId, email, profileImage);
+    }
+
     public void register(String firstname, String lastname, String email, String password, String androidToken){
         registerResponseModelLiveData = repository.register(firstname, lastname, email, password, androidToken);
     }

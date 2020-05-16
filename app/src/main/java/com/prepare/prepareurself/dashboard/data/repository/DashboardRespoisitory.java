@@ -112,6 +112,8 @@ public class DashboardRespoisitory {
 
         final MutableLiveData<HomepageResponseModel> data = new MutableLiveData<>();
 
+        Log.d("home_data_debug", "fetchHomePageData: "+apiInterface.fetchHomePage(token).request().url().toString());
+
         apiInterface.fetchHomePage(token).enqueue(new Callback<HomepageResponseModel>() {
             @Override
             public void onResponse(Call<HomepageResponseModel> call, Response<HomepageResponseModel> response) {

@@ -185,12 +185,14 @@ public class ProfileRepository {
     public LiveData<UpdatePreferenceResponseModel> updateAndroidToken(String token, String androidToken) {
         final MutableLiveData<UpdatePreferenceResponseModel> data = new MutableLiveData<>();
 
+        Log.d("tojen_debug", "onResponse: "+apiInterface.updateAndroidToken(token, androidToken).request().url().toString());
+
         apiInterface.updateAndroidToken(token,androidToken).enqueue(new Callback<UpdatePreferenceResponseModel>() {
             @Override
             public void onResponse(Call<UpdatePreferenceResponseModel> call, Response<UpdatePreferenceResponseModel> response) {
                 UpdatePreferenceResponseModel responseModel = response.body();
                 if (responseModel!=null){
-                    Log.d("tojen_debug", "onResponse: "+responseModel.getUser_data().getAndroid_token());
+                    //Log.d("tojen_debug", "onResponse: "+responseModel.getUser_data().getAndroid_token());
                     userDBRepository.insertUser(responseModel.getUser_data());
                     data.setValue(responseModel);
                 }else{

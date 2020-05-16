@@ -295,38 +295,54 @@ public class LoginFragment extends Fragment implements View.OnClickListener{
         try {
             final GoogleSignInAccount account = completedTask.getResult(ApiException.class);
             if (account!=null){
-                viewModel.userModelLiveData().observe(getActivity(), new Observer<UserModel>() {
+
+                String firstName = "";
+                String lastName = "";
+                if (!TextUtils.isEmpty(account.getDisplayName())){
+                    if (account.getDisplayName().contains(" ")){
+                        firstName = account.getDisplayName().split(" ")[0];
+                        lastName = account.getDisplayName().split(" ")[1];
+                    }else{
+                        firstName = account.getDisplayName();
+                    }
+                }
+
+                String androidToken = Utility.getOneSignalId();
+
+                String email = account.getEmail();
+
+                String profileImage = "";
+
+                if (account.getPhotoUrl()!=null){
+                    profileImage = account.getPhotoUrl().toString();
+                }
+
+                String googleId = account.getId();
+
+                viewModel.socialRegister(firstName, lastName,androidToken, googleId,email,profileImage);
+
+
+                viewModel.getAuthenticationResponseModelMutableLiveData().observe(getActivity(), new Observer<AuthenticationResponseModel>() {
                     @Override
-                    public void onChanged(UserModel userModel) {
-                        String firstName = "";
-                        String lastName = "";
-                        if (!TextUtils.isEmpty(account.getDisplayName())){
-                            if (account.getDisplayName().contains(" ")){
-                                firstName = account.getDisplayName().split(" ")[0];
-                                lastName = account.getDisplayName().split(" ")[1];
+                    public void onChanged(AuthenticationResponseModel authenticationResponseModel) {
+                        if (authenticationResponseModel!=null){
+                            if (authenticationResponseModel.getError_code() == 0){
+                                prefManager.saveBoolean(Constants.ISLOGGEDIN, true);
+                                prefManager.saveString(Constants.JWTTOKEN,authenticationResponseModel.getToken());
+                                prefManager.saveBoolean(Constants.GOOGLELOGGEDIN, true);
+                                Utility.showToast(getActivity(),"Login done!");
+                                Intent intent=new Intent(getActivity(), HomeActivity.class);
+                                startActivity(intent);
+                                getActivity().finish();
                             }else{
-                                firstName = account.getDisplayName();
+                                Utility.showToast(getActivity(),authenticationResponseModel.getMessage());
                             }
+                        }else{
+                            Utility.showToast(getActivity(),Constants.SOMETHINGWENTWRONG);
                         }
-
-                        if (userModel == null){
-                            userModel = new UserModel();
-                            userModel.setId(1);
-                        }
-
-                        userModel.setFirst_name(firstName);
-                        userModel.setLast_name(lastName);
-                        if (!TextUtils.isEmpty(account.getEmail())){
-                            userModel.setEmail(account.getEmail());
-                        }
-                        viewModel.saveUseData(userModel);
-                        Log.d(TAG, "signInResult:" + userModel.getFirst_name()+" "+userModel.getLast_name());
-                        prefManager.saveBoolean(Constants.ISLOGGEDIN, true);
-                        prefManager.saveBoolean(Constants.GOOGLELOGGEDIN, true);
-                        startActivity(new Intent(getActivity(), HomeActivity.class));
-                        getActivity().finish();
                     }
                 });
+
             }else{
                 prefManager.saveBoolean(Constants.ISLOGGEDIN, false);
                 Utility.showToast(getActivity(), "Unable to login using Google at the moment!");

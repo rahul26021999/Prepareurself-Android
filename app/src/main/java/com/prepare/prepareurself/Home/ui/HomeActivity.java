@@ -122,12 +122,23 @@ public class HomeActivity extends BaseActivity implements NavigationView.OnNavig
                         if (userModel.getProfile_image().endsWith(".svg")){
                             Utility.loadSVGImage(HomeActivity.this,Constants.USERIMAGEBASEURL + userModel.getProfile_image(), profileImageView);
                         }else{
-                            Glide.with(HomeActivity.this)
-                                    .load(Constants.USERIMAGEBASEURL + userModel.getProfile_image())
-                                    .override(300,300)
-                                    .placeholder(R.drawable.person_placeholder)
-                                    .transition(GenericTransitionOptions.<Drawable>with(Utility.getAnimationObject()))
-                                    .into(profileImageView);
+
+                            if (userModel.getProfile_image().contains("https") || userModel.getProfile_image().contains("http")){
+                                Glide.with(HomeActivity.this)
+                                        .load(userModel.getProfile_image())
+                                        .override(300,300)
+                                        .placeholder(R.drawable.person_placeholder)
+                                        .transition(GenericTransitionOptions.<Drawable>with(Utility.getAnimationObject()))
+                                        .into(profileImageView);
+                            }else{
+                                Glide.with(HomeActivity.this)
+                                        .load(Constants.USERIMAGEBASEURL + userModel.getProfile_image())
+                                        .override(300,300)
+                                        .placeholder(R.drawable.person_placeholder)
+                                        .transition(GenericTransitionOptions.<Drawable>with(Utility.getAnimationObject()))
+                                        .into(profileImageView);
+                            }
+
                         }
                     }
 
