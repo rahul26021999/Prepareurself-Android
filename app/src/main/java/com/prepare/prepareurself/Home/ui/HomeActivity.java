@@ -127,6 +127,7 @@ public class HomeActivity extends BaseActivity implements NavigationView.OnNavig
                                 Glide.with(HomeActivity.this)
                                         .load(userModel.getProfile_image())
                                         .override(300,300)
+                                        .override(300,300)
                                         .placeholder(R.drawable.person_placeholder)
                                         .transition(GenericTransitionOptions.<Drawable>with(Utility.getAnimationObject()))
                                         .into(profileImageView);
