@@ -83,7 +83,16 @@ public class LoginFragment extends Fragment implements View.OnClickListener{
         arrow =v.findViewById(R.id.arrow);
         tvForgotPassword = v.findViewById(R.id.tv_forgot_password);
         signInButton = v.findViewById(R.id.sign_in_button);
-        signInButton.setSize(SignInButton.SIZE_STANDARD);
+
+        for (int i = 0; i < signInButton.getChildCount(); i++) {
+            View view = signInButton.getChildAt(i);
+
+            if (view instanceof TextView) {
+                TextView tv = (TextView) view;
+                tv.setText("Sign In with Google");
+                break;
+            }
+        }
 
         btnLogin.setOnClickListener(this);
         signInButton.setOnClickListener(this);
