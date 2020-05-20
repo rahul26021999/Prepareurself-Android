@@ -222,6 +222,7 @@ public class LoginFragment extends Fragment implements View.OnClickListener{
                     if (authenticationResponseModel!=null){
                         if (authenticationResponseModel.getError_code()==0){
                             prefManager.saveBoolean(Constants.ISLOGGEDIN, true);
+                            prefManager.saveBoolean(Constants.GOOGLELOGGEDIN, false);
                             prefManager.saveString(Constants.JWTTOKEN,authenticationResponseModel.getToken());
                             Utility.showToast(getActivity(),"Login done!");
 

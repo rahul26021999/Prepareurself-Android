@@ -95,6 +95,7 @@ public class ProfileFragment extends Fragment implements View.OnClickListener {
     private EditText etName, etDob, etContact;
     private TextView tvEditAboutMe, tvCancelAboutMe;
     private Button btnAboutMeSave;
+    private LinearLayout securityLin;
 
     private RecyclerView recyclerView;
     private List<String> preferences=new ArrayList<>();
@@ -137,6 +138,13 @@ public class ProfileFragment extends Fragment implements View.OnClickListener {
         tabUserInfo = view.findViewById(R.id.tabUserInfo);
         recyclerView = view.findViewById(R.id.rv_user_preference);
         tvPreferenceEdit = view.findViewById(R.id.tv_preference_edit);
+        securityLin = view.findViewById(R.id.securoty_lin);
+
+        prefManager = new PrefManager(getActivity());
+
+        if (prefManager.getBoolean(Constants.GOOGLELOGGEDIN)){
+            securityLin.setVisibility(View.GONE);
+        }
 
         backBtn.setOnClickListener(this);
         title.setText("My Profile");
@@ -166,8 +174,6 @@ public class ProfileFragment extends Fragment implements View.OnClickListener {
 
         hideAboutEditTexts();
         showAboutTextViews();
-
-        prefManager = new PrefManager(getActivity());
 
         dateFormatter = new SimpleDateFormat("MM/dd/yyyy", Locale.US);
 

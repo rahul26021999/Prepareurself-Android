@@ -350,7 +350,8 @@
                     android:layout_marginBottom="10dp"
                     android:background="@drawable/circularbordersolid"
                     android:orientation="vertical"
-                    android:padding="25dp">
+                    android:padding="25dp"
+                    android:id="@+id/securoty_lin">
                     <TextView
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
