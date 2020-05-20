@@ -84,7 +84,6 @@ public class LoginFragment extends Fragment implements View.OnClickListener{
         arrow =v.findViewById(R.id.arrow);
         tvForgotPassword = v.findViewById(R.id.tv_forgot_password);
         signInButton = v.findViewById(R.id.sign_in_button);
-
         btnLogin.setOnClickListener(this);
         signInButton.setOnClickListener(this);
         tvForgotPassword.setOnClickListener(this);
