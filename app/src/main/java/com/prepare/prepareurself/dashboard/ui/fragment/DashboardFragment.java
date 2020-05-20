@@ -542,7 +542,8 @@ public class DashboardFragment extends Fragment implements DashboardRvAdapter.Da
                 intent.putExtra(Constants.VIDEOCODE, Utility.getVideoCode(resourceModel.getLink()));
                 intent.putExtra(Constants.VIDEOTITLE, resourceModel.getTitle());
                 intent.putExtra(Constants.VIDEODESCRIPTION, resourceModel.getDescription());
-                intent.putExtra(Constants.SINGLEVIDEO, true);
+                intent.putExtra(Constants.RESOURCEID, resourceModel.getId());
+                intent.putExtra(Constants.RESOURCEVIDEO, true);
                 startActivity(intent);
             }else {
                 Utility.redirectUsingCustomTab(getActivity(), resourceModel.getLink());

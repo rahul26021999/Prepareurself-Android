@@ -377,8 +377,9 @@ public class HomeActivity extends BaseActivity implements NavigationView.OnNavig
                 Intent intent = new Intent(HomeActivity.this, VideoActivity.class);
                 intent.putExtra(Constants.VIDEOCODE, Utility.getVideoCode(resourceModel.getLink()));
                 intent.putExtra(Constants.VIDEOTITLE, resourceModel.getTitle());
+                intent.putExtra(Constants.RESOURCEID, resourceModel.getId());
                 intent.putExtra(Constants.VIDEODESCRIPTION, resourceModel.getDescription());
-                intent.putExtra(Constants.SINGLEVIDEO, true);
+                intent.putExtra(Constants.RESOURCEVIDEO, true);
                 startActivity(intent);
             }else {
                 Utility.redirectUsingCustomTab(HomeActivity.this, resourceModel.getLink());
