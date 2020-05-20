@@ -31,6 +31,7 @@ import com.google.android.gms.auth.api.signin.GoogleSignInOptions;
 import com.google.android.gms.common.SignInButton;
 import com.google.android.gms.common.api.ApiException;
 import com.google.android.gms.tasks.Task;
+import com.google.android.material.button.MaterialButton;
 import com.prepare.prepareurself.Home.ui.HomeActivity;
 import com.prepare.prepareurself.R;
 import com.prepare.prepareurself.authentication.data.model.AuthenticationResponseModel;
@@ -49,14 +50,14 @@ import com.prepare.prepareurself.youtubeplayer.youtubeplaylistapi.ui.VideoActivi
 public class LoginFragment extends Fragment implements View.OnClickListener{
     private static final int RC_SIGN_IN = 100;
     private EditText etEmail, etPassword;
-    private Button btnLogin;
+    private MaterialButton btnLogin;
     private String TAG="login button";
     private ProgressDialog progressDialog;
     private PrefManager prefManager;
     private TextView tvForgotPassword;
     private ImageView arrow;
     private LoginFragmentListener listener;
-    private SignInButton signInButton;
+    private MaterialButton signInButton;
     private GoogleSignInOptions gso;
     private GoogleSignInClient mGoogleSignInClient;
 
@@ -83,17 +84,6 @@ public class LoginFragment extends Fragment implements View.OnClickListener{
         arrow =v.findViewById(R.id.arrow);
         tvForgotPassword = v.findViewById(R.id.tv_forgot_password);
         signInButton = v.findViewById(R.id.sign_in_button);
-
-        for (int i = 0; i < signInButton.getChildCount(); i++) {
-            View view = signInButton.getChildAt(i);
-
-            if (view instanceof TextView) {
-                TextView tv = (TextView) view;
-                tv.setText("Sign In with Google");
-                break;
-            }
-        }
-
         btnLogin.setOnClickListener(this);
         signInButton.setOnClickListener(this);
         tvForgotPassword.setOnClickListener(this);
