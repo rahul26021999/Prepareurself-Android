@@ -1,10 +1,11 @@
 <?xml version="1.0" encoding="utf-8"?>
 <ScrollView android:layout_height="match_parent"
     android:layout_width="match_parent"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:fillViewport="true"
     xmlns:tools="http://schemas.android.com/tools"
     tools:context=".authentication.ui.LoginFragment"
-    xmlns:android="http://schemas.android.com/apk/res/android" >
+    xmlns:android="http://schemas.android.com/apk/res/android">
 <LinearLayout
     android:orientation="vertical"
     android:layout_width="match_parent"
@@ -56,13 +57,15 @@
            android:layout_marginTop="15dp"
            android:inputType="textPassword" />
 
-       <Button
+       <com.google.android.material.button.MaterialButton
            android:id="@+id/btn_login"
            android:layout_width="match_parent"
            android:layout_height="wrap_content"
-           android:background="@drawable/button_custom"
-           android:layout_marginLeft="20dp"
-           android:layout_marginRight="20dp"
+           android:background="@color/colorPrimaryDark"
+           app:cornerRadius="50dp"
+           android:layout_marginLeft="25dp"
+           android:layout_marginRight="25dp"
+           android:textAllCaps="false"
            android:padding="15dp"
            android:layout_marginTop="60dp"
            android:fontFamily="@font/roboto_regular"
@@ -70,30 +73,43 @@
            android:text="@string/login"
            android:textSize="16sp"/>
 
-       <TextView
-           android:layout_width="wrap_content"
-           android:layout_height="wrap_content"
-           android:layout_gravity="end"
-           android:text="Forgot Password ?"
-           android:textSize="16sp"
-           android:paddingTop="5dp"
-           android:paddingBottom="5dp"
-           android:paddingStart="@dimen/padding_10"
-           android:paddingEnd="@dimen/padding_10"
-           android:background="?attr/selectableItemBackground"
-           android:id="@+id/tv_forgot_password"
-           android:textColor="@color/colorPrimaryDark"
-           android:fontFamily="@font/roboto_regular"
-           android:layout_marginTop="20dp"
-           android:layout_marginEnd="30dp"/>
-
-    <com.google.android.gms.common.SignInButton
+    <com.google.android.material.button.MaterialButton
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
         android:id="@+id/sign_in_button"
+        android:layout_marginLeft="25dp"
+        android:layout_marginRight="25dp"
+        android:textColor="@color/white"
+        android:backgroundTint="#EBDD4B39"
+        android:layout_gravity="center_horizontal"
+        android:layout_marginTop="10dp"
+        android:paddingStart="40dp"
+        android:paddingEnd="40dp"
+        android:paddingTop="15dp"
+        android:paddingBottom="15dp"
+        android:drawableLeft="@drawable/ic_google_brands"
+        android:textAllCaps="false"
+        app:cornerRadius="30dp"
+        android:fontFamily="@font/roboto_regular"
+        android:text="@string/google_login"
+        android:textSize="16sp"/>
+
+    <TextView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_gravity="center_horizontal"
-        android:layout_margin="20dp"/>
-
+        android:layout_gravity="end"
+        android:text="Forgot Password ?"
+        android:textSize="12sp"
+        android:paddingTop="5dp"
+        android:paddingBottom="5dp"
+        android:paddingStart="@dimen/padding_10"
+        android:paddingEnd="@dimen/padding_10"
+        android:background="?attr/selectableItemBackground"
+        android:id="@+id/tv_forgot_password"
+        android:textColor="@color/colorPrimaryDark"
+        android:fontFamily="@font/roboto_regular"
+        android:layout_marginTop="20dp"
+        android:layout_marginEnd="30dp"/>
 
     <ImageView
         android:layout_width="wrap_content"

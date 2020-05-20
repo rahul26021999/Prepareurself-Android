@@ -22,6 +22,7 @@ import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.google.android.material.button.MaterialButton;
 import com.prepare.prepareurself.Home.ui.HomeActivity;
 import com.prepare.prepareurself.R;
 import com.prepare.prepareurself.authentication.data.model.AuthenticationResponseModel;
@@ -38,7 +39,7 @@ import com.prepare.prepareurself.utils.Utility;
  */
 public class RegisterFragment extends Fragment implements View.OnClickListener {
     private EditText etFullname, etEmail, etPassword, etRetypePassword;
-    private Button btnRegister;
+    private MaterialButton btnRegister;
     private String TAG="onclick of register button";
     private ProgressDialog dialog;
     private PrefManager prefManager;

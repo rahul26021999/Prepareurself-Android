@@ -2,8 +2,9 @@
 <ScrollView xmlns:tools="http://schemas.android.com/tools"
     android:layout_height="match_parent"
     android:layout_width="match_parent"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:fillViewport="true"
-    xmlns:android="http://schemas.android.com/apk/res/android" >
+    xmlns:android="http://schemas.android.com/apk/res/android">
 <LinearLayout
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
@@ -80,15 +81,18 @@
         style="@style/EditTextViewStyleLoginRegister"
         android:inputType="textPassword"
         android:layout_marginBottom="15dp"/>
-    <Button
+
+    <com.google.android.material.button.MaterialButton
         android:id="@+id/btn_register"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:background="@drawable/button_custom"
+        app:cornerRadius="50dp"
+        app:backgroundTint="@color/colorPrimaryDark"
         android:fontFamily="@font/roboto_regular"
-        android:layout_marginLeft="20dp"
-        android:layout_marginRight="20dp"
+        android:layout_marginLeft="25dp"
+        android:layout_marginRight="25dp"
         android:padding="15dp"
+        android:textAllCaps="false"
         android:layout_marginBottom="10dp"
         android:layout_marginTop="60dp"
         android:textColor="@android:color/white"
@@ -99,7 +103,7 @@
         android:id="@+id/termsAndConditions"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="Terms and Conditions"
+        android:text="Terms and Services"
         android:textColor="@color/colorPrimaryDark"
         android:layout_gravity="center_horizontal"
         android:textSize="12sp"
