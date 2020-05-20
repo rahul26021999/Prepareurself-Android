@@ -61,7 +61,7 @@ import com.prepare.prepareurself.youtubeplayer.youtubeplaylistapi.models.VideoIt
         SearchModel.class,
         LikedProjectsModel.class,
         LikedResourcesModel.class
-}, version = 2)
+}, version = 3)
 @TypeConverters({VideoContentDetailsConverter.class,
         VideoSnippetConverter.class,
         ThumbnaiTypeConverter.class,
