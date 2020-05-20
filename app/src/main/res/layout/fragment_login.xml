@@ -71,7 +71,7 @@
            android:fontFamily="@font/roboto_regular"
            android:textColor="@android:color/white"
            android:text="@string/login"
-           android:textSize="16sp"/>
+           android:textSize="14sp"/>
 
     <com.google.android.material.button.MaterialButton
         android:layout_width="match_parent"
@@ -82,9 +82,8 @@
         android:textColor="@color/white"
         android:backgroundTint="#EBDD4B39"
         android:layout_gravity="center_horizontal"
-        android:layout_marginTop="10dp"
-        android:paddingStart="40dp"
-        android:paddingEnd="40dp"
+        android:paddingStart="30dp"
+        android:paddingEnd="30dp"
         android:paddingTop="15dp"
         android:paddingBottom="15dp"
         android:drawableLeft="@drawable/ic_google_brands"
@@ -92,7 +91,7 @@
         app:cornerRadius="30dp"
         android:fontFamily="@font/roboto_regular"
         android:text="@string/google_login"
-        android:textSize="16sp"/>
+        android:textSize="14sp"/>
 
     <TextView
         android:layout_width="wrap_content"
