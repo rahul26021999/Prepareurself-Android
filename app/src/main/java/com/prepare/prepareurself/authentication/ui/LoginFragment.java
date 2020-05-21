@@ -60,6 +60,7 @@ public class LoginFragment extends Fragment implements View.OnClickListener{
     private MaterialButton signInButton;
     private GoogleSignInOptions gso;
     private GoogleSignInClient mGoogleSignInClient;
+    private TextView loginExceptionTv;
 
     private AuthViewModel viewModel;
 
@@ -84,6 +85,8 @@ public class LoginFragment extends Fragment implements View.OnClickListener{
         arrow =v.findViewById(R.id.arrow);
         tvForgotPassword = v.findViewById(R.id.tv_forgot_password);
         signInButton = v.findViewById(R.id.sign_in_button);
+        loginExceptionTv = v.findViewById(R.id.tv_login_exception);
+
         btnLogin.setOnClickListener(this);
         signInButton.setOnClickListener(this);
         tvForgotPassword.setOnClickListener(this);
@@ -347,11 +350,14 @@ public class LoginFragment extends Fragment implements View.OnClickListener{
                 prefManager.saveBoolean(Constants.ISLOGGEDIN, false);
                 Utility.showToast(getActivity(), "Unable to login using Google at the moment!");
             }
+            loginExceptionTv.setVisibility(View.GONE);
         } catch (ApiException e) {
             prefManager.saveBoolean(Constants.ISLOGGEDIN, false);
             Log.d(TAG, "signInResult:failed code=" + e.getStatusCode());
             Utility.showToast(getActivity(), Constants.SOMETHINGWENTWRONG);
             //updateUI(null);
+            loginExceptionTv.setVisibility(View.VISIBLE);
+            loginExceptionTv.setText("signInResult:failed code= " + e.getStatusCode() + "\nmessage : "+e.getLocalizedMessage());
         }
         hideLoader();
 
