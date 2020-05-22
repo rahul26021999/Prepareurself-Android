@@ -52,5 +52,6 @@
     <string name="menu_fav">Favourites</string>
     <string name="google_login">Login with Google</string>
 
+    <string name="google_web_client_id">18612087306-d0dtitcl7gu4kmqmcm76879lg1ohb9re.apps.googleusercontent.com</string>
 
 </resources>

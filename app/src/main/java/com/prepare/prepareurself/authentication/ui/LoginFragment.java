@@ -106,6 +106,7 @@ public class LoginFragment extends Fragment implements View.OnClickListener{
         viewModel = ViewModelProviders.of(this).get(AuthViewModel.class);
 
         gso = new GoogleSignInOptions.Builder(GoogleSignInOptions.DEFAULT_SIGN_IN)
+                .requestIdToken(getString(R.string.google_web_client_id))
                 .requestEmail()
                 .build();
 

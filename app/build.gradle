@@ -37,8 +37,8 @@ android {
         applicationId "com.prepare.prepareurself"
         minSdkVersion 23
         targetSdkVersion 29
-        versionCode 8
-        versionName "2.2.4"
+        versionCode 11
+        versionName "2.2.7"
 
         testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
     }
