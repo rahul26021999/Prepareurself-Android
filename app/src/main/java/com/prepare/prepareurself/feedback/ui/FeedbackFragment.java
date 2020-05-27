@@ -4,12 +4,12 @@ import androidx.cardview.widget.CardView;
 import androidx.lifecycle.Observer;
 import androidx.lifecycle.ViewModelProviders;
 
+import android.content.Context;
 import android.os.Bundle;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
-import androidx.viewpager.widget.ViewPager;
 
 import android.text.TextUtils;
 import android.util.Log;
@@ -24,7 +24,6 @@ import android.widget.TextView;
 
 import com.bumptech.glide.Glide;
 import com.prepare.prepareurself.R;
-import com.prepare.prepareurself.dashboard.ui.adapters.CustomPagerAdapter;
 import com.prepare.prepareurself.feedback.data.model.FeedbackFourOptionsModel;
 import com.prepare.prepareurself.feedback.data.model.FeedbackInoutModel;
 import com.prepare.prepareurself.feedback.data.model.FeedbackParentModel;
@@ -64,6 +63,8 @@ public class FeedbackFragment extends Fragment {
     private FeedbackParentModel feedbackParentModel;
     private PrefManager prefManager;
 
+    private FeedBackHomeInteractor listener;
+
     public static FeedbackFragment newInstance() {
         return new FeedbackFragment();
     }
@@ -82,7 +83,7 @@ public class FeedbackFragment extends Fragment {
         backBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                getActivity().onBackPressed();
+                listener.onFeedbackBackPressed();
             }
         });
 
@@ -365,4 +366,20 @@ public class FeedbackFragment extends Fragment {
 
 
     }
+
+    public interface FeedBackHomeInteractor{
+        void onFeedbackBackPressed();
+    }
+
+    @Override
+    public void onAttach(@NonNull Context context) {
+        super.onAttach(context);
+        try {
+            listener = (FeedBackHomeInteractor) context;
+        } catch (ClassCastException e) {
+            throw new ClassCastException(context.toString() + " must implement FeedBackHomeInteractor");
+        }
+
+    }
+
 }

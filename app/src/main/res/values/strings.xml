@@ -1,6 +1,10 @@
 <resources>
     <string name="app_name">Prepareurself</string>
 
+    <string name="navigation_drawer_open">Open navigation drawer</string>
+    <string name="navigation_drawer_close">Close navigation drawer</string>
+    <string name="nav_header_desc">Navigation header</string>
+
     <!-- TODO: Remove or change this placeholder text -->
     <string name="swipe_left_for_register">Swipe Left for Register</string>
     <string name="login">Login</string>

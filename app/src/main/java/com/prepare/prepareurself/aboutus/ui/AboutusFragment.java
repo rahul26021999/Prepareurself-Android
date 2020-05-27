@@ -2,7 +2,7 @@ package com.prepare.prepareurself.aboutus.ui;
 
 import androidx.lifecycle.ViewModelProviders;
 
-import android.graphics.drawable.Drawable;
+import android.content.Context;
 import android.os.Bundle;
 
 import androidx.annotation.NonNull;
@@ -15,7 +15,6 @@ import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
 
-import com.bumptech.glide.Glide;
 import com.prepare.prepareurself.R;
 import com.prepare.prepareurself.utils.Utility;
 
@@ -25,6 +24,8 @@ public class AboutusFragment extends Fragment implements View.OnClickListener {
     private TextView title;
     private ImageView backBtn;
     private TextView tvTerms;
+
+    private AboutUsHomeInteractor listener;
 
     private String TermsUrl = "http://prepareurself.in/terms-and-conditions";
 
@@ -58,7 +59,7 @@ public class AboutusFragment extends Fragment implements View.OnClickListener {
         switch (v.getId())
         {
             case R.id.backBtn:
-                getActivity().onBackPressed();
+                listener.onAboutUsBackPressed();
                 break;
 
             case R.id.tv_terms:
@@ -66,4 +67,20 @@ public class AboutusFragment extends Fragment implements View.OnClickListener {
                 break;
         }
     }
+
+    public interface AboutUsHomeInteractor{
+        void onAboutUsBackPressed();
+    }
+
+    @Override
+    public void onAttach(@NonNull Context context) {
+        super.onAttach(context);
+        try {
+            listener = (AboutUsHomeInteractor) context;
+        } catch (ClassCastException e) {
+            throw new ClassCastException(context.toString() + " must implement AboutUsHomeInteractor");
+        }
+
+    }
+
 }

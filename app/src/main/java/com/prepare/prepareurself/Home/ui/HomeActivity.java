@@ -18,6 +18,7 @@ import android.widget.TextView;
 
 import com.bumptech.glide.GenericTransitionOptions;
 import com.bumptech.glide.Glide;
+import com.prepare.prepareurself.aboutus.ui.AboutusFragment;
 import com.prepare.prepareurself.authentication.ui.AuthenticationActivity;
 import com.prepare.prepareurself.courses.data.model.ProjectsModel;
 import com.prepare.prepareurself.courses.data.model.TopicsModel;
@@ -33,18 +34,23 @@ import com.prepare.prepareurself.Home.viewmodel.HomeActivityViewModel;
 import com.prepare.prepareurself.R;
 import com.prepare.prepareurself.authentication.data.model.UserModel;
 import com.prepare.prepareurself.favourites.ui.FavoritesActivity;
+import com.prepare.prepareurself.feedback.ui.FeedbackFragment;
 import com.prepare.prepareurself.firebase.UpdateHelper;
+import com.prepare.prepareurself.profile.ui.fragments.ProfileFragment;
 import com.prepare.prepareurself.resources.data.model.ResourceModel;
 import com.prepare.prepareurself.resources.data.model.ResourceViewsResponse;
 import com.prepare.prepareurself.resources.ui.activity.ResourcesActivity;
 import com.prepare.prepareurself.utils.BaseActivity;
 import com.prepare.prepareurself.utils.Constants;
 import com.google.android.material.navigation.NavigationView;
+import com.prepare.prepareurself.utils.HomeViewPagerAdapter;
+import com.prepare.prepareurself.utils.NonSwipableViewPager;
 import com.prepare.prepareurself.utils.PrefManager;
 import com.prepare.prepareurself.utils.Utility;
 import com.prepare.prepareurself.youtubeplayer.youtubeplaylistapi.ui.VideoActivity;
 
 import androidx.annotation.NonNull;
+import androidx.appcompat.app.ActionBarDrawerToggle;
 import androidx.appcompat.app.AlertDialog;
 import androidx.core.view.GravityCompat;
 import androidx.lifecycle.Observer;
@@ -61,7 +67,10 @@ import java.io.IOException;
 public class HomeActivity extends BaseActivity implements NavigationView.OnNavigationItemSelectedListener,
         DashboardFragment.HomeActivityInteractor,
         View.OnClickListener,
-        UpdateHelper.OnUpdateCheckListener {
+        UpdateHelper.OnUpdateCheckListener,
+        AboutusFragment.AboutUsHomeInteractor,
+        FeedbackFragment.FeedBackHomeInteractor,
+        ProfileFragment.ProfileHomeInteractor {
 
     private AppBarConfiguration mAppBarConfiguration;
     private TextView tvNameNavHeader;
@@ -72,6 +81,7 @@ public class HomeActivity extends BaseActivity implements NavigationView.OnNavig
     private ImageView profileImageView;
     private PrefManager prefManager;
     public static boolean gotoPrefFromBanner = false;
+    private NonSwipableViewPager viewPager;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -80,29 +90,37 @@ public class HomeActivity extends BaseActivity implements NavigationView.OnNavig
         Toolbar toolbar = findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
 
+        viewModel = ViewModelProviders.of(this).get(HomeActivityViewModel.class);
+
         drawer = findViewById(R.id.drawer_layout);
         navigationView = findViewById(R.id.nav_view);
+        viewPager = findViewById(R.id.main_view_pager);
 
         UpdateHelper.with(this)
                 .onUpdateCheck(this)
                 .check();
 
 
-
-        viewModel = ViewModelProviders.of(this).get(HomeActivityViewModel.class);
+        ActionBarDrawerToggle toggle = new ActionBarDrawerToggle(this,drawer,R.string.navigation_drawer_open, R.string.navigation_drawer_close);
+        toggle.syncState();
 
         View navHeaderView = navigationView.getHeaderView(0);
         tvNameNavHeader = navHeaderView.findViewById(R.id.tv_user_name_nav_header);
         profileImageView = navHeaderView.findViewById(R.id.profile_image);
 
+        HomeViewPagerAdapter viewPagerAdapter = new HomeViewPagerAdapter(getSupportFragmentManager());
+        viewPager.setAdapter(viewPagerAdapter);
+        viewPager.setOffscreenPageLimit(4);
 
-        mAppBarConfiguration = new AppBarConfiguration.Builder(
-                R.id.nav_dashboard, R.id.nav_profile, R.id.nav_contact_us)
-                .setDrawerLayout(drawer)
-                .build();
-        navController = Navigation.findNavController(this, R.id.nav_host_fragment);
-        NavigationUI.setupActionBarWithNavController(this, navController, mAppBarConfiguration);
-        NavigationUI.setupWithNavController(navigationView, navController);
+//        mAppBarConfiguration = new AppBarConfiguration.Builder(
+//                R.id.nav_dashboard, R.id.nav_profile, R.id.nav_contact_us)
+//                .setDrawerLayout(drawer)
+//                .build();
+//        navController = Navigation.findNavController(this, R.id.nav_host_fragment);
+//        NavigationUI.setupActionBarWithNavController(this, navController, mAppBarConfiguration);
+//        NavigationUI.setupWithNavController(navigationView, navController);
+
+
 
         navigationView.setNavigationItemSelectedListener(this);
 
@@ -212,11 +230,15 @@ public class HomeActivity extends BaseActivity implements NavigationView.OnNavig
         return true;
     }
 
-    @Override
-    public boolean onSupportNavigateUp() {
-        NavController navController = Navigation.findNavController(this, R.id.nav_host_fragment);
-        return NavigationUI.navigateUp(navController, mAppBarConfiguration)
-                || super.onSupportNavigateUp();
+//    @Override
+//    public boolean onSupportNavigateUp() {
+//        NavController navController = Navigation.findNavController(this, R.id.nav_host_fragment);
+//        return NavigationUI.navigateUp(navController, mAppBarConfiguration)
+//                || super.onSupportNavigateUp();
+//    }
+
+    public void navigateHome(int position){
+        viewPager.setCurrentItem(position);
     }
 
     @Override
@@ -232,10 +254,10 @@ public class HomeActivity extends BaseActivity implements NavigationView.OnNavig
                 sendEmailToDeveloper();
                 break;
             case R.id.nav_profile :
-                navController.navigate(R.id.nav_profile);
+                viewPager.setCurrentItem(1);
                 break;
             case R.id.nav_dashboard :
-                navController.navigate(R.id.nav_dashboard);
+                viewPager.setCurrentItem(0);
                 break;
             case R.id.nav_star:
                 redirectToPlayStore();
@@ -244,18 +266,16 @@ public class HomeActivity extends BaseActivity implements NavigationView.OnNavig
                 shareApp();
                 break;
             case R.id.nav_about_us :
-                navController.navigate(R.id.nav_about_us);
+                viewPager.setCurrentItem(3);
                 break;
             case R.id.nav_feedback :
-                navController.navigate(R.id.nav_feedback);
+                viewPager.setCurrentItem(2);
                 break;
             case R.id.nav_fav:
                 startActivity(new Intent(this, FavoritesActivity.class));
                 break;
 
         }
-
-
 
         return true;
 
@@ -438,5 +458,20 @@ public class HomeActivity extends BaseActivity implements NavigationView.OnNavig
         } else {
             super.onBackPressed();
         }
+    }
+
+    @Override
+    public void onFeedbackBackPressed() {
+        navigateHome(0);
+    }
+
+    @Override
+    public void onProfileBackPressed() {
+        navigateHome(0);
+    }
+
+    @Override
+    public void onAboutUsBackPressed() {
+        navigateHome(0);
     }
 }

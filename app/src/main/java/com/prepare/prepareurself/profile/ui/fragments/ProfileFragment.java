@@ -6,6 +6,7 @@ import androidx.lifecycle.ViewModelProviders;
 import android.app.Activity;
 import android.app.DatePickerDialog;
 import android.content.ActivityNotFoundException;
+import android.content.Context;
 import android.content.Intent;
 import android.graphics.drawable.Drawable;
 import android.net.Uri;
@@ -38,7 +39,6 @@ import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
 import com.prepare.prepareurself.Home.ui.HomeActivity;
 import com.prepare.prepareurself.authentication.ui.AuthenticationActivity;
-import com.prepare.prepareurself.profile.data.model.PreferredTechStack;
 import com.prepare.prepareurself.profile.data.model.UpdatePreferenceResponseModel;
 import com.prepare.prepareurself.profile.ui.EditPreferenceActivity;
 import com.prepare.prepareurself.profile.ui.activity.UpdatePasswordActivity;
@@ -53,20 +53,14 @@ import com.theartofdev.edmodo.cropper.CropImage;
 import com.theartofdev.edmodo.cropper.CropImageView;
 
 import java.io.ByteArrayOutputStream;
-import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.io.InputStream;
-import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Calendar;
-import java.util.Date;
-import java.util.HashMap;
 import java.util.List;
 import java.util.Locale;
-import java.util.Map;
-import java.util.Objects;
 
 import okhttp3.MediaType;
 import okhttp3.MultipartBody;
@@ -105,6 +99,8 @@ public class ProfileFragment extends Fragment implements View.OnClickListener {
 
     String userDob = "", userName = "", userContact = "";
     private SimpleDateFormat dateFormatter;
+
+    private ProfileHomeInteractor listener;
 
     public static ProfileFragment newInstance() {
         return new ProfileFragment();
@@ -456,7 +452,7 @@ public class ProfileFragment extends Fragment implements View.OnClickListener {
         switch (v.getId())
         {
             case R.id.backBtn:
-                    Objects.requireNonNull(getActivity()).onBackPressed();
+                    listener.onProfileBackPressed();
                 break;
             case R.id.tabPreference:
                 tabPreference.setTextColor(getResources().getColor(R.color.colorPrimaryDark));
@@ -576,6 +572,21 @@ public class ProfileFragment extends Fragment implements View.OnClickListener {
                 break;
 
         }
+    }
+
+    public interface ProfileHomeInteractor{
+        void onProfileBackPressed();
+    }
+
+    @Override
+    public void onAttach(@NonNull Context context) {
+        super.onAttach(context);
+        try {
+            listener = (ProfileHomeInteractor) context;
+        } catch (ClassCastException e) {
+            throw new ClassCastException(context.toString() + " must implement ProfileHomeInteractor");
+        }
+
     }
 
 }
