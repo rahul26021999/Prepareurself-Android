@@ -33,4 +33,6 @@ public interface LikedProjectsDao {
     @Query("SELECT * FROM likedprojects WHERE course_id=:courseId ORDER BY sequence ASC LIMIT 5")
     LiveData<List<LikedProjectsModel>> getFiveProjectsByCourseId(int courseId);
 
+    @Query("DELETE FROM likedprojects WHERE id=:projectId")
+    void deleteProject(int projectId);
 }

@@ -115,4 +115,8 @@ public class ProjectsViewModel extends AndroidViewModel {
     public void insertLikedProject(LikedProjectsModel likedProjectsModel){
         likedProjectRepository.insertProject(likedProjectsModel);
     }
+
+    public void deleteLikedProject(LikedProjectsModel likedProjectsModel){
+        likedProjectRepository.deleteLikedProject(likedProjectsModel);
+    }
 }

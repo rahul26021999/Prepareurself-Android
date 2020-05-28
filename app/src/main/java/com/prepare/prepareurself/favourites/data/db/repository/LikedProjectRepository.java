@@ -51,6 +51,10 @@ public class LikedProjectRepository {
         return projectsRoomDao.getFiveProjectsByCourseId(courseId);
     }
 
+    public void deleteLikedProject(LikedProjectsModel likedProjectsModel) {
+        new deleteProjectAsyncTask(projectsRoomDao).execute(likedProjectsModel);
+    }
+
     private static class insertAsyncTask extends AsyncTask<LikedProjectsModel,Void, Void> {
 
         private LikedProjectsDao dao;
@@ -78,6 +82,22 @@ public class LikedProjectRepository {
         @Override
         protected Void doInBackground(LikedProjectsModel... projectsModels) {
             dao.deleteAllProjects();
+
+            return null;
+        }
+    }
+
+    private static class deleteProjectAsyncTask extends AsyncTask<LikedProjectsModel,Void, Void>{
+
+        private LikedProjectsDao dao;
+
+        deleteProjectAsyncTask(LikedProjectsDao dao){
+            this.dao = dao;
+        }
+
+        @Override
+        protected Void doInBackground(LikedProjectsModel... projectsModels) {
+            dao.deleteProject(projectsModels[0].getId());
 
             return null;
         }

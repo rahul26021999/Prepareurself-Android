@@ -204,7 +204,11 @@ public class ProjectsFragment extends Fragment implements ProjectsRvAdapter.Proj
                                 likedProjectsModel.setView(projectsModel.getView());
                                 likedProjectsModel.setSequence(projectsModel.getSequence());
 
-                                mViewModel.insertLikedProject(likedProjectsModel);
+                                if (liked == 1){
+                                    mViewModel.deleteLikedProject(likedProjectsModel);
+                                }else if (liked == 0){
+                                    mViewModel.insertLikedProject(likedProjectsModel);
+                                }
 
                             }
                         }
