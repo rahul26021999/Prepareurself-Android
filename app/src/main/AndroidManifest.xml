@@ -128,7 +128,8 @@
         <activity
             android:name=".Home.ui.HomeActivity"
             android:windowSoftInputMode="adjustPan"
-            android:label="@string/title_activity_home">
+            android:label="@string/title_activity_home"
+            android:theme="@style/ProfileTheme">
             <intent-filter>
                 <action android:name="android.intent.action.VIEW" />
 

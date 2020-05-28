@@ -34,6 +34,7 @@ import com.prepare.prepareurself.Home.viewmodel.HomeActivityViewModel;
 import com.prepare.prepareurself.R;
 import com.prepare.prepareurself.authentication.data.model.UserModel;
 import com.prepare.prepareurself.favourites.ui.FavoritesActivity;
+import com.prepare.prepareurself.favourites.ui.FavouritesFragment;
 import com.prepare.prepareurself.feedback.ui.FeedbackFragment;
 import com.prepare.prepareurself.firebase.UpdateHelper;
 import com.prepare.prepareurself.profile.ui.fragments.ProfileFragment;
@@ -70,7 +71,8 @@ public class HomeActivity extends BaseActivity implements NavigationView.OnNavig
         UpdateHelper.OnUpdateCheckListener,
         AboutusFragment.AboutUsHomeInteractor,
         FeedbackFragment.FeedBackHomeInteractor,
-        ProfileFragment.ProfileHomeInteractor {
+        ProfileFragment.ProfileHomeInteractor,
+        FavouritesFragment.FavouritesHomeInteractor {
 
     private AppBarConfiguration mAppBarConfiguration;
     private TextView tvNameNavHeader;
@@ -110,7 +112,7 @@ public class HomeActivity extends BaseActivity implements NavigationView.OnNavig
 
         HomeViewPagerAdapter viewPagerAdapter = new HomeViewPagerAdapter(getSupportFragmentManager());
         viewPager.setAdapter(viewPagerAdapter);
-        viewPager.setOffscreenPageLimit(4);
+        viewPager.setOffscreenPageLimit(5);
 
 //        mAppBarConfiguration = new AppBarConfiguration.Builder(
 //                R.id.nav_dashboard, R.id.nav_profile, R.id.nav_contact_us)
@@ -266,13 +268,13 @@ public class HomeActivity extends BaseActivity implements NavigationView.OnNavig
                 shareApp();
                 break;
             case R.id.nav_about_us :
-                viewPager.setCurrentItem(3);
+                viewPager.setCurrentItem(4);
                 break;
             case R.id.nav_feedback :
-                viewPager.setCurrentItem(2);
+                viewPager.setCurrentItem(3);
                 break;
             case R.id.nav_fav:
-                startActivity(new Intent(this, FavoritesActivity.class));
+                viewPager.setCurrentItem(2);
                 break;
 
         }
@@ -472,6 +474,11 @@ public class HomeActivity extends BaseActivity implements NavigationView.OnNavig
 
     @Override
     public void onAboutUsBackPressed() {
+        navigateHome(0);
+    }
+
+    @Override
+    public void onFavBackPressed() {
         navigateHome(0);
     }
 }

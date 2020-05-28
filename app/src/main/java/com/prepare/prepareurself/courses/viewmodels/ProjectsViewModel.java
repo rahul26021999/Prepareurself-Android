@@ -14,6 +14,8 @@ import com.prepare.prepareurself.courses.data.model.ProjectsModel;
 import com.prepare.prepareurself.courses.data.repository.ProjectsRespository;
 import com.prepare.prepareurself.dashboard.data.db.repository.CourseDbRepository;
 import com.prepare.prepareurself.dashboard.data.model.CourseModel;
+import com.prepare.prepareurself.favourites.data.db.repository.LikedProjectRepository;
+import com.prepare.prepareurself.favourites.data.model.LikedProjectsModel;
 import com.prepare.prepareurself.resources.data.model.ResourceLikesResponse;
 import com.prepare.prepareurself.resources.data.model.ResourceViewsResponse;
 import com.prepare.prepareurself.youtubeplayer.youtubeplaylistapi.db.PlaylistVideosDbRepository;
@@ -31,6 +33,7 @@ public class ProjectsViewModel extends AndroidViewModel {
     private PlaylistVideosDbRepository playlistVideosDbRepository;
     private SingleVideoItemWrapperRespository singleVideoItemWrapperRespository;
     private CourseDbRepository courseDbRepository;
+    private LikedProjectRepository likedProjectRepository;
 
     private LiveData<SingleVIdeoItemWrapper> singleVIdeoItemWrapperLiveData = new MutableLiveData<>();
     private LiveData<ProjectResponse> projectResponseMutableLiveData = new MutableLiveData<>();
@@ -45,6 +48,7 @@ public class ProjectsViewModel extends AndroidViewModel {
         playlistVideosDbRepository = new PlaylistVideosDbRepository(application);
         singleVideoItemWrapperRespository = new SingleVideoItemWrapperRespository(application);
         courseDbRepository = new CourseDbRepository(application);
+        likedProjectRepository = new LikedProjectRepository(application);
     }
 
     public LiveData<CourseModel> getCourseById(int id){
@@ -106,5 +110,9 @@ public class ProjectsViewModel extends AndroidViewModel {
 
     public void saveProject(ProjectsModel project) {
         dbRepository.insertProject(project);
+    }
+
+    public void insertLikedProject(LikedProjectsModel likedProjectsModel){
+        likedProjectRepository.insertProject(likedProjectsModel);
     }
 }

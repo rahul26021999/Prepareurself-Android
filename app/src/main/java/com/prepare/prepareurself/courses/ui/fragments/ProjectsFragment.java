@@ -28,6 +28,7 @@ import com.prepare.prepareurself.courses.ui.activity.ProjectsActivity;
 import com.prepare.prepareurself.courses.ui.adapters.ProjectsRvAdapter;
 import com.prepare.prepareurself.courses.viewmodels.ProjectsViewModel;
 import com.prepare.prepareurself.R;
+import com.prepare.prepareurself.favourites.data.model.LikedProjectsModel;
 import com.prepare.prepareurself.resources.data.model.ResourceLikesResponse;
 import com.prepare.prepareurself.utils.Constants;
 import com.prepare.prepareurself.utils.DividerItemDecoration;
@@ -185,6 +186,26 @@ public class ProjectsFragment extends Fragment implements ProjectsRvAdapter.Proj
                                 }
                                 mViewModel.saveProject(projectsModel);
                                 adapter.notifyDataSetChanged();
+                                LikedProjectsModel likedProjectsModel = new LikedProjectsModel();
+                                likedProjectsModel.setId(projectsModel.getId());
+                                likedProjectsModel.setName(projectsModel.getName());
+                                likedProjectsModel.setDescription(projectsModel.getDescription());
+                                likedProjectsModel.setType(projectsModel.getType());
+                                likedProjectsModel.setLevel(projectsModel.getLevel());
+                                likedProjectsModel.setImage_url(projectsModel.getImage_url());
+                                likedProjectsModel.setLink(projectsModel.getLink());
+                                likedProjectsModel.setPlaylist(projectsModel.getPlaylist());
+                                likedProjectsModel.setCourse_id(projectsModel.getCourse_id());
+                                likedProjectsModel.setAdmin_id(projectsModel.getAdmin_id());
+                                likedProjectsModel.setCreated_at(projectsModel.getCreated_at());
+                                likedProjectsModel.setUpdated_at(projectsModel.getUpdated_at());
+                                likedProjectsModel.setLike(projectsModel.getLike());
+                                likedProjectsModel.setTotal_likes(projectsModel.getTotal_likes());
+                                likedProjectsModel.setView(projectsModel.getView());
+                                likedProjectsModel.setSequence(projectsModel.getSequence());
+
+                                mViewModel.insertLikedProject(likedProjectsModel);
+
                             }
                         }
                     }
