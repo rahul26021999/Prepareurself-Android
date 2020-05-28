@@ -35,4 +35,6 @@ public interface LikedResourcesDao {
     @Query("SELECT * FROM likedresources WHERE course_topic_id=:topicId AND type =:type LIMIT 5")
     LiveData<List<LikedResourcesModel>> getFiveResourceByResourceId(int topicId, String type);
 
+    @Query("DELETE FROM likedresources WHERE id=:id")
+    void deleteResource(int id);
 }

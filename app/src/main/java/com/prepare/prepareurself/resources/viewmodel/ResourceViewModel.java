@@ -9,6 +9,8 @@ import androidx.lifecycle.MutableLiveData;
 
 import com.prepare.prepareurself.dashboard.data.db.repository.CourseDbRepository;
 import com.prepare.prepareurself.dashboard.data.model.CourseModel;
+import com.prepare.prepareurself.favourites.data.db.repository.LikedResourceRespository;
+import com.prepare.prepareurself.favourites.data.model.LikedResourcesModel;
 import com.prepare.prepareurself.resources.data.db.repository.ResourcesDbRepository;
 import com.prepare.prepareurself.resources.data.model.ResourceLikesResponse;
 import com.prepare.prepareurself.resources.data.model.ResourceModel;
@@ -27,12 +29,14 @@ public class ResourceViewModel extends AndroidViewModel {
     private ResourceRespository resourceRespository;
     private ResourcesDbRepository resourcesDbRepository;
     private CourseDbRepository courseDbRepository;
+    private LikedResourceRespository likedResourceRespository;
 
     public ResourceViewModel(@NonNull Application application) {
         super(application);
         resourceRespository = new ResourceRespository(application);
         resourcesDbRepository = new ResourcesDbRepository(application);
         courseDbRepository = new CourseDbRepository(application);
+        likedResourceRespository = new LikedResourceRespository(application);
     }
 
     public LiveData<ResourceViewsResponse> resourceViewed(String token, int resourceId){
@@ -66,5 +70,13 @@ public class ResourceViewModel extends AndroidViewModel {
 
     public LiveData<CourseModel> getCourseById(int courseId) {
         return courseDbRepository.getCourseById(courseId);
+    }
+
+    public void insertLikedResource(LikedResourcesModel likedResourcesModel){
+        likedResourceRespository.insertResource(likedResourcesModel);
+    }
+
+    public void deleteLikedResource(LikedResourcesModel likedResourcesModel){
+        likedResourceRespository.deleteResource(likedResourcesModel);
     }
 }

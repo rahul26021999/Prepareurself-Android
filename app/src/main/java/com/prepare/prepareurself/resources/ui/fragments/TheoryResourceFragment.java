@@ -21,6 +21,7 @@ import android.widget.AbsListView;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.prepare.prepareurself.favourites.data.model.LikedResourcesModel;
 import com.prepare.prepareurself.resources.data.model.ResourceLikesResponse;
 import com.prepare.prepareurself.resources.data.model.ResourceModel;
 import com.prepare.prepareurself.resources.data.model.ResourceViewsResponse;
@@ -186,6 +187,29 @@ public class TheoryResourceFragment extends Fragment implements TheoryResourcesR
                                 }
                                 mViewModel.saveResource(resource);
                                 adapter1.notifyDataSetChanged();
+
+                                LikedResourcesModel likedResourcesModel = new LikedResourcesModel();
+                                likedResourcesModel.setId(resource.getId());
+                                likedResourcesModel.setTitle(resource.getTitle());
+                                likedResourcesModel.setDescription(resource.getDescription());
+                                likedResourcesModel.setType(resource.getType());
+                                likedResourcesModel.setImage_url(resource.getImage_url());
+                                likedResourcesModel.setLink(resource.getLink());
+                                likedResourcesModel.setCourse_topic_id(resource.getCourse_topic_id());
+                                likedResourcesModel.setAdmin_id(resource.getAdmin_id());
+                                likedResourcesModel.setCreated_at(resource.getCreated_at());
+                                likedResourcesModel.setUpdated_at(resource.getUpdated_at());
+                                likedResourcesModel.setLike(resource.getLike());
+                                likedResourcesModel.setTotal_likes(resource.getTotal_likes());
+                                likedResourcesModel.setView(resource.getView());
+                                likedResourcesModel.setTotal_views(resource.getTotal_views());
+
+                                if (checked == 0){
+                                    mViewModel.insertLikedResource(likedResourcesModel);
+                                }else if (checked == 1){
+                                    mViewModel.deleteLikedResource(likedResourcesModel);
+                                }
+
                             }
                         }
                     }

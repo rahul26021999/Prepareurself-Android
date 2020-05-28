@@ -36,6 +36,10 @@ public class LikedResourceRespository {
         return resourcesDao.getResourceByIdExcept(type, resourceId);
     }
 
+    public void deleteResource(LikedResourcesModel likedResourcesModel){
+        new deleteResourceAsyncTask(resourcesDao).execute(likedResourcesModel);
+    }
+
     public void deleteAllResources(){
         new deleteAllAsyncTask(resourcesDao).execute();
     }
@@ -68,6 +72,22 @@ public class LikedResourceRespository {
         @Override
         protected Void doInBackground(LikedResourcesModel... projectsModels) {
             dao.deleteAllResources();
+
+            return null;
+        }
+    }
+
+    private static class deleteResourceAsyncTask extends AsyncTask<LikedResourcesModel,Void, Void>{
+
+        private LikedResourcesDao dao;
+
+        deleteResourceAsyncTask(LikedResourcesDao dao){
+            this.dao = dao;
+        }
+
+        @Override
+        protected Void doInBackground(LikedResourcesModel... projectsModels) {
+            dao.deleteResource(projectsModels[0].getId());
 
             return null;
         }
