@@ -33,6 +33,7 @@ import android.widget.ProgressBar;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 
+import com.facebook.shimmer.ShimmerFrameLayout;
 import com.google.android.material.appbar.AppBarLayout;
 import com.prepare.prepareurself.courses.data.model.ProjectsModel;
 import com.prepare.prepareurself.courses.data.model.TopicsModel;
@@ -100,6 +101,8 @@ public class DashboardFragment extends Fragment implements DashboardRvAdapter.Da
     private ProgressBar searchProgressBar;
     private RelativeLayout notFoundSearch;
 
+    private ShimmerFrameLayout shimmerFrameLayout;
+
     //search
     private Boolean isScrolling = false;
     private int rvCurrentItemsSearch, rvTotalItemsSearch, rvScrolledOutItemsSearch, rvLastPage, rvCurrentPageSearch =0;
@@ -146,6 +149,7 @@ public class DashboardFragment extends Fragment implements DashboardRvAdapter.Da
         prefManager = new PrefManager(getActivity());
         menu.setOnClickListener(this);
         searchRv = view.findViewById(R.id.searchcontentrv);
+        shimmerFrameLayout = view.findViewById(R.id.shimmer_view_container);
 
         viewContactsBar =  view.findViewById(R.id.viewContactsToolbar);
         searchBar =  view.findViewById(R.id.searchToolbar);
@@ -228,8 +232,15 @@ public class DashboardFragment extends Fragment implements DashboardRvAdapter.Da
     }
 
     @Override
+    public void onPause() {
+        shimmerFrameLayout.stopShimmerAnimation();
+        super.onPause();
+    }
+
+    @Override
     public void onResume() {
         super.onResume();
+        shimmerFrameLayout.startShimmerAnimation();
 //        setAppBaeState(STANDARD_APPBAR);
     }
 
@@ -317,6 +328,8 @@ public class DashboardFragment extends Fragment implements DashboardRvAdapter.Da
                     @Override
                     public void onChanged(HomepageResponseModel homepageResponseModel) {
                         if (homepageResponseModel!=null){
+                            shimmerFrameLayout.stopShimmerAnimation();
+                            shimmerFrameLayout.setVisibility(View.GONE);
                             for (HomepageData homepageData : homepageResponseModel.getData()){
                                 switch (homepageData.getType()){
                                     case "course":
