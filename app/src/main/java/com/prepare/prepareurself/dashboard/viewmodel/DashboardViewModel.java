@@ -18,11 +18,13 @@ import com.prepare.prepareurself.courses.data.repository.ProjectsRespository;
 import com.prepare.prepareurself.courses.data.repository.TopicsRepository;
 import com.prepare.prepareurself.banner.BannerDbRepository;
 import com.prepare.prepareurself.dashboard.data.db.repository.CourseDbRepository;
+import com.prepare.prepareurself.dashboard.data.db.repository.HomePageDbRepository;
 import com.prepare.prepareurself.dashboard.data.db.repository.SuggestedProjectsDbRespository;
 import com.prepare.prepareurself.dashboard.data.db.repository.SuggestedTopicsDbRepository;
 import com.prepare.prepareurself.banner.BannerModel;
 import com.prepare.prepareurself.dashboard.data.model.CourseModel;
 import com.prepare.prepareurself.dashboard.data.model.GetCourseResponseModel;
+import com.prepare.prepareurself.dashboard.data.model.HomepageData;
 import com.prepare.prepareurself.dashboard.data.model.HomepageResponseModel;
 import com.prepare.prepareurself.dashboard.data.model.SuggestedProjectModel;
 import com.prepare.prepareurself.dashboard.data.model.SuggestedTopicsModel;
@@ -47,6 +49,8 @@ public class DashboardViewModel extends AndroidViewModel {
     private LiveData<GetCourseResponseModel> getCourseResponseModelLiveData = new MutableLiveData<>();
     private MutableLiveData<SearchResponseModel> searchResponseModelLiveData = new MutableLiveData<>();
     private LiveData<SearchModel> searchModelLiveData = new MutableLiveData<>();
+    public LiveData<List<HomepageData>> homepageLiveData = new MutableLiveData<>();
+
     CourseRepository courseRepository;
     CourseDbRepository courseDbRepository;
     UserDBRepository userDBRepository;
@@ -62,6 +66,7 @@ public class DashboardViewModel extends AndroidViewModel {
     private SearchDbRespository searchDbRespository;
     private ResourcesDbRepository resourcesDbRepository;
     private ResourceRespository resourceRespository;
+    private HomePageDbRepository homePageDbRepository;
     public DashboardViewModel(@NonNull Application application) {
         super(application);
         courseRepository = new CourseRepository(application);
@@ -79,6 +84,7 @@ public class DashboardViewModel extends AndroidViewModel {
         searchDbRespository = new SearchDbRespository(application);
         resourcesDbRepository = new ResourcesDbRepository(application);
         resourceRespository = new ResourceRespository(application);
+        homePageDbRepository = new HomePageDbRepository(application);
     }
 
     public LiveData<SearchResponseModel> search(String token, String query){
@@ -159,8 +165,13 @@ public class DashboardViewModel extends AndroidViewModel {
         return response;
     }
 
-    public LiveData<HomepageResponseModel> fetchHomePageData(String token, Context context){
-        return dashboardRespoisitory.fetchHomePageData(token, context);
+    public void fetchHomePageData(String token, Context context){
+         dashboardRespoisitory.fetchHomePageData(token, context);
+    }
+
+    public LiveData<List<HomepageData>> getHomePageData(){
+        homepageLiveData = homePageDbRepository.getHomePageData();
+        return homepageLiveData;
     }
 
     public LiveData<ResourceViewsResponse> resourceViewed(String token, int resourceId){

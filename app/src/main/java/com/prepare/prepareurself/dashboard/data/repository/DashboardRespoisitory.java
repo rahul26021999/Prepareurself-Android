@@ -12,6 +12,7 @@ import androidx.lifecycle.MutableLiveData;
 import com.prepare.prepareurself.Apiservice.ApiClient;
 import com.prepare.prepareurself.Apiservice.ApiInterface;
 import com.prepare.prepareurself.authentication.ui.AuthenticationActivity;
+import com.prepare.prepareurself.dashboard.data.db.repository.HomePageDbRepository;
 import com.prepare.prepareurself.dashboard.data.db.repository.SuggestedProjectsDbRespository;
 import com.prepare.prepareurself.dashboard.data.db.repository.SuggestedTopicsDbRepository;
 import com.prepare.prepareurself.dashboard.data.model.GetSuggestedProjectsModel;
@@ -35,12 +36,13 @@ public class DashboardRespoisitory {
     private ApiInterface apiInterface;
     private SuggestedProjectsDbRespository suggestedProjectsDbRespository;
     private SuggestedTopicsDbRepository suggestedTopicsDbRepository;
+    private HomePageDbRepository homePageDbRepository;
 
     public DashboardRespoisitory(Application application) {
         apiInterface = ApiClient.getApiClient().create(ApiInterface.class);
         suggestedProjectsDbRespository = new SuggestedProjectsDbRespository(application);
         suggestedTopicsDbRepository = new SuggestedTopicsDbRepository(application);
-
+        homePageDbRepository = new HomePageDbRepository(application);
     }
 
     public LiveData<List<SuggestedTopicsModel>> fetSuggestedTopics(String token) {
@@ -130,6 +132,13 @@ public class DashboardRespoisitory {
                 }
                 if (responseModel!=null){
                     if (responseModel.getError_code()==0){
+
+                      //  homePageDbRepository.deleteHomePageData();
+
+                        for (HomepageData homepageData:responseModel.getData()) {
+                            homePageDbRepository.insertHomePageData(homepageData);
+                        }
+
                         data.setValue(responseModel);
                     }else{
                         data.setValue(null);

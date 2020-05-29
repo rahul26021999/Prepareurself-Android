@@ -13,10 +13,12 @@ import com.prepare.prepareurself.courses.data.model.ProjectsModel;
 import com.prepare.prepareurself.courses.data.model.TopicsModel;
 import com.prepare.prepareurself.banner.BannerImageRoomDao;
 import com.prepare.prepareurself.dashboard.data.db.dao.CourseRoomDao;
+import com.prepare.prepareurself.dashboard.data.db.dao.HomePageDao;
 import com.prepare.prepareurself.dashboard.data.db.dao.SuggestedProjectsDao;
 import com.prepare.prepareurself.dashboard.data.db.dao.SuggestedTopicsDao;
 import com.prepare.prepareurself.banner.BannerModel;
 import com.prepare.prepareurself.dashboard.data.model.CourseModel;
+import com.prepare.prepareurself.dashboard.data.model.HomepageData;
 import com.prepare.prepareurself.dashboard.data.model.SuggestedProjectModel;
 import com.prepare.prepareurself.dashboard.data.model.SuggestedTopicsModel;
 import com.prepare.prepareurself.favourites.data.db.dao.LikedProjectsDao;
@@ -24,6 +26,7 @@ import com.prepare.prepareurself.favourites.data.db.dao.LikedResourcesDao;
 import com.prepare.prepareurself.favourites.data.model.LikedProjectsModel;
 import com.prepare.prepareurself.favourites.data.model.LikedResourcesModel;
 import com.prepare.prepareurself.persistence.persitenceUtils.CourseModelTypeCorveter;
+import com.prepare.prepareurself.persistence.persitenceUtils.ListCourseModelTypeConverter;
 import com.prepare.prepareurself.persistence.persitenceUtils.ListProjectTypeConverter;
 import com.prepare.prepareurself.persistence.persitenceUtils.ListResourceTypeConverter;
 import com.prepare.prepareurself.persistence.persitenceUtils.ListTopicsTypeConverter;
@@ -60,7 +63,8 @@ import com.prepare.prepareurself.youtubeplayer.youtubeplaylistapi.models.VideoIt
         SuggestedProjectModel.class,
         SearchModel.class,
         LikedProjectsModel.class,
-        LikedResourcesModel.class
+        LikedResourcesModel.class,
+        HomepageData.class
 }, version = 3)
 @TypeConverters({VideoContentDetailsConverter.class,
         VideoSnippetConverter.class,
@@ -68,7 +72,8 @@ import com.prepare.prepareurself.youtubeplayer.youtubeplaylistapi.models.VideoIt
         CourseModelTypeCorveter.class,
         ListTopicsTypeConverter.class,
         ListResourceTypeConverter.class,
-        ListProjectTypeConverter.class})
+        ListProjectTypeConverter.class,
+        ListCourseModelTypeConverter.class})
 public abstract class AppDatabase extends RoomDatabase {
 
     public abstract UserRoomDao userRoomDao();
@@ -86,6 +91,7 @@ public abstract class AppDatabase extends RoomDatabase {
     public abstract SearchDao searchDao();
     public abstract LikedProjectsDao likedProjectsDao();
     public abstract LikedResourcesDao likedResourcesDao();
+    public abstract HomePageDao homePageDao();
 
     private static AppDatabase INSTANCE;
 

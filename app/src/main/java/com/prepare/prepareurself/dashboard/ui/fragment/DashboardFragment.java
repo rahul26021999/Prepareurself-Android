@@ -312,12 +312,14 @@ public class DashboardFragment extends Fragment implements DashboardRvAdapter.Da
 
         setUpSlider();
 
-        mViewModel.fetchHomePageData(prefManager.getString(Constants.JWTTOKEN), getActivity())
-                .observe(getActivity(), new Observer<HomepageResponseModel>() {
+        mViewModel.fetchHomePageData(prefManager.getString(Constants.JWTTOKEN), getActivity());
+
+        mViewModel.getHomePageData()
+                .observe(getActivity(), new Observer<List<HomepageData>>() {
                     @Override
-                    public void onChanged(HomepageResponseModel homepageResponseModel) {
-                        if (homepageResponseModel!=null){
-                            for (HomepageData homepageData : homepageResponseModel.getData()){
+                    public void onChanged(List<HomepageData> homepageDataList) {
+                        if (homepageDataList!=null){
+                            for (HomepageData homepageData : homepageDataList){
                                 switch (homepageData.getType()){
                                     case "course":
                                         DashboardRecyclerviewModel d1 = new DashboardRecyclerviewModel(Constants.COURSEVIEWTYPE,homepageData.getTitle(),homepageData.isSeeAll(),homepageData.getCourses());
