@@ -180,7 +180,6 @@ public class DashboardFragment extends Fragment implements DashboardRvAdapter.Da
         return view;
     }
 
-    // Initiate toggle (it means when you click the search icon it pops up the editText and clicking the back button goes to the search icon again)
     private void toggleToolBarState() {
         Log.d(TAG, "toggleToolBarState: toggling AppBarState.");
         if (mAppBarState == STANDARD_APPBAR) {
@@ -192,7 +191,6 @@ public class DashboardFragment extends Fragment implements DashboardRvAdapter.Da
         }
     }
 
-    // Sets the appbar state for either search mode or standard mode.
     private void setAppBaeState(int state) {
 
         Log.d(TAG, "setAppBaeState: changing app bar state to: " + state);
@@ -201,11 +199,7 @@ public class DashboardFragment extends Fragment implements DashboardRvAdapter.Da
         if (mAppBarState == STANDARD_APPBAR) {
             searchBar.setVisibility(View.GONE);
             viewContactsBar.setVisibility(View.VISIBLE);
-       //     searchRv.setVisibility(View.GONE);
-//            linMainDasboard.setVisibility(View.VISIBLE);
-
             closeSearchFragment();
-
             View view = getView();
             InputMethodManager im = (InputMethodManager) getActivity().getSystemService(Context.INPUT_METHOD_SERVICE);
             try {
@@ -217,7 +211,6 @@ public class DashboardFragment extends Fragment implements DashboardRvAdapter.Da
             viewContactsBar.setVisibility(View.GONE);
             searchBar.setVisibility(View.VISIBLE);
             openSearchFragment();
-//            linMainDasboard.setVisibility(View.GONE);
             InputMethodManager im = (InputMethodManager) getActivity().getSystemService(Context.INPUT_METHOD_SERVICE);
             im.toggleSoftInput(InputMethodManager.SHOW_FORCED, 0); // make keyboard popup
 
@@ -227,9 +220,6 @@ public class DashboardFragment extends Fragment implements DashboardRvAdapter.Da
     private void closeSearchFragment() {
 
         listener.closeSearchFragment();
-
-
-       // frameLayout.setVisibility(View.GONE);
     }
 
     private void openSearchFragment() {
@@ -248,7 +238,6 @@ public class DashboardFragment extends Fragment implements DashboardRvAdapter.Da
     public void onResume() {
         super.onResume();
         shimmerFrameLayout.startShimmerAnimation();
-//        setAppBaeState(STANDARD_APPBAR);
     }
 
     @Override
@@ -278,9 +267,6 @@ public class DashboardFragment extends Fragment implements DashboardRvAdapter.Da
 
         mViewModel.fetchBanners(prefManager.getString(Constants.JWTTOKEN));
         mViewModel.getCourses(prefManager.getString(Constants.JWTTOKEN));
-
-
-        //searchRv.setNestedScrollingEnabled(true);
 
         searchEdit.addTextChangedListener(new TextWatcher() {
             @Override
@@ -367,39 +353,6 @@ public class DashboardFragment extends Fragment implements DashboardRvAdapter.Da
                         }
                     }
                 });
-
-//        DashboardRecyclerviewModel dashboardRecyclerviewModel = new DashboardRecyclerviewModel(Constants.COURSEVIEWTYPE, Constants.TECHSTACK, mViewModel.getFiveCourses());
-//        dashboardRecyclerviewModelList.add(dashboardRecyclerviewModel);
-//        dashboardRvAdapter.setData(dashboardRecyclerviewModelList);
-//        dashboardRvAdapter.notifyDataSetChanged();
-//
-//        DashboardRecyclerviewModel topisDashboardModel = new DashboardRecyclerviewModel(Constants.TOPICVIEWTYPE, mViewModel.getSuggestedTopics(prefManager.getString(Constants.JWTTOKEN)), Constants.TOPICSYOUMAYLIKE);
-//        dashboardRecyclerviewModelList.add(topisDashboardModel);
-//        dashboardRvAdapter.setData(dashboardRecyclerviewModelList);
-//        dashboardRvAdapter.notifyDataSetChanged();
-//
-//        DashboardRecyclerviewModel projectDashboardModel = new DashboardRecyclerviewModel(mViewModel.getSuggestedProjects(prefManager.getString(Constants.JWTTOKEN)), Constants.PROJECTVIEWTYPE, Constants.PROJECTSYOUMAYLIKE);
-//        dashboardRecyclerviewModelList.add(projectDashboardModel);
-//        dashboardRvAdapter.setData(dashboardRecyclerviewModelList);
-//        dashboardRvAdapter.notifyDataSetChanged();
-
-//        mViewModel.getUserInfo().observe(getActivity(), new Observer<UserModel>() {
-//            @Override
-//            public void onChanged(UserModel userModel) {
-//
-//                if (userModel.getPreferences() != null) {
-//                    preferredCourseId = Integer.parseInt(userModel.getPreferences().split(",")[0]);
-//                } else {
-//                    preferredCourseId = 1;
-//                }
-//
-//                mViewModel.getFiveTopicsByCourseIdFromRemote(prefManager.getString(Constants.JWTTOKEN), preferredCourseId);
-//                mViewModel.getFiveProjectsByCourseIdFromRemote(prefManager.getString(Constants.JWTTOKEN), preferredCourseId);
-//
-//
-//            }
-//        });
-
     }
 
     private void setUpSlider() {

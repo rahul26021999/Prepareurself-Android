@@ -88,8 +88,6 @@ public class SearchFragment extends Fragment implements SearchAdapter.SearchList
         adapter = new SearchAdapter(getActivity(), this);
         searchLayoutManager=  new LinearLayoutManager(getActivity());
         searchRv.setLayoutManager(searchLayoutManager);
-//        DividerItemDecoration decoration = new DividerItemDecoration(getActivity(),R.drawable.theory_resource_divider);
-//        searchRv.addItemDecoration(decoration);
         searchRv.setAdapter(adapter);
 
         return view;
@@ -102,41 +100,6 @@ public class SearchFragment extends Fragment implements SearchAdapter.SearchList
 
             searchRecyclerviewModels.clear();
             headings.clear();
-         //   rvCurrentPageSearch = 0;
-
-            //   loadMoreItems(true, query);
-
-//            searchRv.addOnScrollListener(new RecyclerView.OnScrollListener() {
-//                @Override
-//                public void onScrollStateChanged(@NonNull RecyclerView recyclerView, int newState) {
-//                    super.onScrollStateChanged(recyclerView, newState);
-//                    if (newState == AbsListView.OnScrollListener.SCROLL_STATE_TOUCH_SCROLL){
-//                        isScrolling = true;
-//                    }
-//                }
-//
-//                @Override
-//                public void onScrolled(@NonNull RecyclerView recyclerView, int dx, int dy) {
-//                    super.onScrolled(recyclerView, dx, dy);
-//
-//                    rvCurrentItemsSearch = searchLayoutManager.getChildCount();
-//                    rvTotalItemsSearch = searchLayoutManager.getItemCount();
-//                    rvScrolledOutItemsSearch = searchLayoutManager.findFirstVisibleItemPosition();
-//
-//                    // rvLastPage = topicsResponseModel.getLast_page();
-//
-//                    Log.d("paging_debug", rvCurrentPageSearch +","+rvLastPage);
-//
-//                    if (isScrolling && (rvCurrentItemsSearch + rvScrolledOutItemsSearch) == rvTotalItemsSearch){
-//                        isScrolling = false;
-//                        loadMoreItems(false, query);
-//                    }
-//
-//                }
-//            });
-
-
-
             mViewModel.searchWithPagination(prefManager.getString(Constants.JWTTOKEN),query,currentSearchPage);
 
             mViewModel.searchResponseModelLiveData.observe(getActivity(), new Observer<SearchResponseModel>() {
@@ -160,8 +123,6 @@ public class SearchFragment extends Fragment implements SearchAdapter.SearchList
                             rvCurrentItemsSearch = searchLayoutManager.getChildCount();
                             rvTotalItemsSearch = searchLayoutManager.getItemCount();
                             rvScrolledOutItemsSearch = searchLayoutManager.findFirstVisibleItemPosition();
-
-//                    Log.d("paging_debug", rvCurrentPageSearch +","+rvLastPage);
 
                             if (isScrolling && !shouldSearchPaginationStopped && (rvCurrentItemsSearch + rvScrolledOutItemsSearch) == rvTotalItemsSearch){
                                 isScrolling = false;
@@ -208,17 +169,6 @@ public class SearchFragment extends Fragment implements SearchAdapter.SearchList
 
                             searchProgressBar.setVisibility(View.GONE);
                             if (searchRecyclerviewModels.isEmpty()){
-//                                Log.d("paging_debug", searchRecyclerviewModels.get(0).getHeading()+"");
-//                                if (currentSearchPage == 1){
-//                                    Log.d("paging_debug", searchRecyclerviewModels.get(0).getHeading()+"");
-//                                }
-//                                else{
-//                                    adapter.addAll(searchRecyclerviewModels);
-//                                    //adapter.notifyDataSetChanged();
-//                                }
-
-                                Log.d("paging_debug", currentSearchPage+" current page");
-
                                 notFoundSearch.setVisibility(View.VISIBLE);
                                 adapter.clearData();
 
