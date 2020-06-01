@@ -45,7 +45,7 @@ public class DashboardViewModel extends AndroidViewModel {
     private LiveData<ResourcesResponse> resourcesLiveData = new MutableLiveData<>();
     private LiveData<List<CourseModel>> liveCourses = new MutableLiveData<>();
     private LiveData<GetCourseResponseModel> getCourseResponseModelLiveData = new MutableLiveData<>();
-    private MutableLiveData<SearchResponseModel> searchResponseModelLiveData = new MutableLiveData<>();
+    public MutableLiveData<SearchResponseModel> searchResponseModelLiveData = new MutableLiveData<>();
     private LiveData<SearchModel> searchModelLiveData = new MutableLiveData<>();
     CourseRepository courseRepository;
     CourseDbRepository courseDbRepository;
@@ -84,6 +84,10 @@ public class DashboardViewModel extends AndroidViewModel {
     public LiveData<SearchResponseModel> search(String token, String query){
         searchResponseModelLiveData = searchRepository.search(token, query);
         return searchResponseModelLiveData;
+    }
+
+    public void searchWithPagination(String token, String query, int page){
+        searchResponseModelLiveData = searchRepository.searchWithPagination(token,query, page);
     }
 
     public MutableLiveData<SearchResponseModel> getSearchResponseModelLiveData() {

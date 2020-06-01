@@ -21,8 +21,8 @@ public class SearchModel {
     @SerializedName("topics")
     private List<TopicsModel> topics;
 
-    @ColumnInfo(name = "resources")
-    @SerializedName("resources")
+    @ColumnInfo(name = "resource")
+    @SerializedName("resource")
     private List<ResourceModel> resource;
 
     @ColumnInfo(name = "projects")

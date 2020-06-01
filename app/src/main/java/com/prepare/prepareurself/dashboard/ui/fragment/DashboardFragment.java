@@ -107,6 +107,8 @@ public class DashboardFragment extends Fragment implements DashboardRvAdapter.Da
     private Boolean isScrolling = false;
     private int rvCurrentItemsSearch, rvTotalItemsSearch, rvScrolledOutItemsSearch, rvLastPage, rvCurrentPageSearch =0;
     private LinearLayoutManager searchLayoutManager;
+    private int currentSearchPage = 1;
+    private Boolean shouldSearchPaginationStopped = false;
 
     private List<SearchRecyclerviewModel> searchRecyclerviewModels = new ArrayList<>();
     private List<String> headings = new ArrayList<>();
@@ -442,13 +444,45 @@ public class DashboardFragment extends Fragment implements DashboardRvAdapter.Da
 //                }
 //            });
 
-            mViewModel.search(prefManager.getString(Constants.JWTTOKEN), query).observe(getActivity(), new Observer<SearchResponseModel>() {
+
+
+            mViewModel.searchWithPagination(prefManager.getString(Constants.JWTTOKEN),query,currentSearchPage);
+
+            mViewModel.searchResponseModelLiveData.observe(getActivity(), new Observer<SearchResponseModel>() {
                 @Override
                 public void onChanged(SearchResponseModel searchResponseModel) {
 
+                    Log.d("paging_debug",searchResponseModel+" on change");
+
+                    searchRv.addOnScrollListener(new RecyclerView.OnScrollListener() {
+                        @Override
+                        public void onScrollStateChanged(@NonNull RecyclerView recyclerView, int newState) {
+                            super.onScrollStateChanged(recyclerView, newState);
+                            if (newState == AbsListView.OnScrollListener.SCROLL_STATE_TOUCH_SCROLL){
+                                isScrolling = true;
+                            }
+                        }
+
+                        @Override
+                        public void onScrolled(@NonNull RecyclerView recyclerView, int dx, int dy) {
+                            super.onScrolled(recyclerView, dx, dy);
+                            rvCurrentItemsSearch = searchLayoutManager.getChildCount();
+                            rvTotalItemsSearch = searchLayoutManager.getItemCount();
+                            rvScrolledOutItemsSearch = searchLayoutManager.findFirstVisibleItemPosition();
+
+//                    Log.d("paging_debug", rvCurrentPageSearch +","+rvLastPage);
+
+                            if (isScrolling && !shouldSearchPaginationStopped && (rvCurrentItemsSearch + rvScrolledOutItemsSearch) == rvTotalItemsSearch){
+                                isScrolling = false;
+                                currentSearchPage = currentSearchPage+1;
+                                mViewModel.searchWithPagination(prefManager.getString(Constants.JWTTOKEN),query,currentSearchPage);
+                            }
+                        }
+                    });
+
                     if (searchResponseModel!=null){
                         List<SearchModel> searchModels = searchResponseModel.getData();
-                        if (searchModels!=null){
+                        if (searchModels!=null && !searchModels.isEmpty()){
                             Log.d("paging_debug", searchModels+" : this is id");
                             for (SearchModel searchModel : searchModels){
                                 if (searchModel.getTopics()!=null){
@@ -482,19 +516,35 @@ public class DashboardFragment extends Fragment implements DashboardRvAdapter.Da
                             }
 
                             searchProgressBar.setVisibility(View.GONE);
-                            if (!searchRecyclerviewModels.isEmpty()){
-                                Log.d("paging_debug", searchRecyclerviewModels.get(0).getHeading()+"");
-                                adapter.setData(searchRecyclerviewModels);
-                                adapter.notifyDataSetChanged();
-                            }else{
+                            if (searchRecyclerviewModels.isEmpty()){
+//                                Log.d("paging_debug", searchRecyclerviewModels.get(0).getHeading()+"");
+//                                if (currentSearchPage == 1){
+//                                    Log.d("paging_debug", searchRecyclerviewModels.get(0).getHeading()+"");
+//                                }
+//                                else{
+//                                    adapter.addAll(searchRecyclerviewModels);
+//                                    //adapter.notifyDataSetChanged();
+//                                }
+
+                                Log.d("paging_debug", currentSearchPage+" current page");
+
                                 notFoundSearch.setVisibility(View.VISIBLE);
                                 adapter.clearData();
+
+                            }else{
+                                adapter.setData(searchRecyclerviewModels);
                             }
 
                         }else{
-                            searchProgressBar.setVisibility(View.GONE);
-                            notFoundSearch.setVisibility(View.VISIBLE);
-                            adapter.clearData();
+
+                            if (currentSearchPage == 1){
+                                searchProgressBar.setVisibility(View.GONE);
+                                notFoundSearch.setVisibility(View.VISIBLE);
+                                adapter.clearData();
+                            }else{
+                                currentSearchPage = 1;
+                                shouldSearchPaginationStopped = true;
+                            }
                         }
                     }
                 }

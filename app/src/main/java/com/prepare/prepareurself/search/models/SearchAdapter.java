@@ -36,6 +36,7 @@ public class SearchAdapter extends RecyclerView.Adapter implements DetailedSearc
 
     public void setData(List<SearchRecyclerviewModel> searchRecyclerviewModels){
         this.searchRecyclerviewModels = searchRecyclerviewModels;
+        notifyDataSetChanged();
     }
 
     public void addAll(List<SearchRecyclerviewModel> newList) {
