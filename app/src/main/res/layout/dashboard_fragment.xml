@@ -17,44 +17,6 @@
         <include layout="@layout/snippet_search_toolbar"/>
         <include layout="@layout/snippet_view_dashboard_toolbar"/>
 
-        <RelativeLayout
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:layout_below="@+id/searchToolbar"
-            android:id="@+id/rel_search_parent">
-
-            <ProgressBar
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_centerHorizontal="true"
-                android:layout_marginTop="50dp"
-                android:indeterminate="true"
-                android:id="@+id/progress_bar_search"
-                android:visibility="gone"/>
-
-            <androidx.recyclerview.widget.RecyclerView
-                android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:id="@+id/searchcontentrv" />
-
-
-            <RelativeLayout
-                android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:visibility="gone"
-                android:id="@+id/not_found_view">
-                <ImageView
-                    android:layout_width="300dp"
-                    android:layout_height="300dp"
-                    android:layout_centerHorizontal="true"
-                    android:layout_marginTop="150dp"
-                    android:src="@drawable/result_no_found"/>
-            </RelativeLayout>
-
-
-        </RelativeLayout>
-
-
     </RelativeLayout>
 
     <androidx.core.widget.NestedScrollView

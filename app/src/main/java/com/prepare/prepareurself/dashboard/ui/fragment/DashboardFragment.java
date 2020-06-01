@@ -1,6 +1,7 @@
 package com.prepare.prepareurself.dashboard.ui.fragment;
 
 import androidx.activity.OnBackPressedCallback;
+import androidx.fragment.app.FragmentManager;
 import androidx.lifecycle.Observer;
 import androidx.lifecycle.ViewModelProvider;
 
@@ -27,6 +28,7 @@ import android.view.inputmethod.EditorInfo;
 import android.view.inputmethod.InputMethodManager;
 import android.widget.AbsListView;
 import android.widget.EditText;
+import android.widget.FrameLayout;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.ProgressBar;
@@ -35,6 +37,7 @@ import android.widget.TextView;
 
 import com.facebook.shimmer.ShimmerFrameLayout;
 import com.google.android.material.appbar.AppBarLayout;
+import com.prepare.prepareurself.Home.ui.SearchFragment;
 import com.prepare.prepareurself.courses.data.model.ProjectsModel;
 import com.prepare.prepareurself.courses.data.model.TopicsModel;
 import com.prepare.prepareurself.courses.ui.activity.AllCoursesActivity;
@@ -70,8 +73,7 @@ import java.util.List;
 
 public class DashboardFragment extends Fragment implements DashboardRvAdapter.DashBoardInteractor,
         View.OnClickListener,
-        SliderAdapter.SliderListener,
-        SearchAdapter.SearchListener {
+        SliderAdapter.SliderListener {
 
     private DashboardViewModel mViewModel;
     private ImageView menu;
@@ -91,28 +93,14 @@ public class DashboardFragment extends Fragment implements DashboardRvAdapter.Da
     private int mAppBarState;
 
     private AppBarLayout viewContactsBar, searchBar;
-    private RecyclerView searchRv;
+
     private EditText searchEdit;
     private ImageView closeSearch;
 
-    private SearchAdapter adapter;
     private LinearLayout linMainDasboard;
-    private RelativeLayout relSearchParent;
-    private ProgressBar searchProgressBar;
-    private RelativeLayout notFoundSearch;
 
     private ShimmerFrameLayout shimmerFrameLayout;
-
-    //search
-    private Boolean isScrolling = false;
-    private int rvCurrentItemsSearch, rvTotalItemsSearch, rvScrolledOutItemsSearch, rvLastPage, rvCurrentPageSearch =0;
-    private LinearLayoutManager searchLayoutManager;
-    private int currentSearchPage = 1;
-    private Boolean shouldSearchPaginationStopped = false;
-
-    private List<SearchRecyclerviewModel> searchRecyclerviewModels = new ArrayList<>();
-    private List<String> headings = new ArrayList<>();
-
+    private FrameLayout frameLayout;
 
     @Override
     public void onClick(View v) {
@@ -134,6 +122,9 @@ public class DashboardFragment extends Fragment implements DashboardRvAdapter.Da
         void onBarClicked();
         void onBannerClicked(BannerModel bannerModel);
         void onResourceCliked(ResourceModel resourceModel);
+        void openSearchFragment();
+        void closeSearchFragment();
+        void performSearch(String query);
     }
 
     public static DashboardFragment newInstance() {
@@ -147,18 +138,18 @@ public class DashboardFragment extends Fragment implements DashboardRvAdapter.Da
 
         recyclerView = view.findViewById(R.id.rv_main_dashboard);
         sliderView =view.findViewById(R.id.imageSlider);
+        frameLayout = view.findViewById(R.id.search_container);
+
         menu=view.findViewById(R.id.menu);
         prefManager = new PrefManager(getActivity());
         menu.setOnClickListener(this);
-        searchRv = view.findViewById(R.id.searchcontentrv);
+
         shimmerFrameLayout = view.findViewById(R.id.shimmer_view_container);
 
         viewContactsBar =  view.findViewById(R.id.viewContactsToolbar);
         searchBar =  view.findViewById(R.id.searchToolbar);
         linMainDasboard = view.findViewById(R.id.lin_main_dashboard);
-        relSearchParent = view.findViewById(R.id.rel_search_parent);
-        notFoundSearch = view.findViewById(R.id.not_found_view);
-        searchProgressBar = view.findViewById(R.id.progress_bar_search);
+
 
         setAppBaeState(STANDARD_APPBAR);
 
@@ -210,9 +201,10 @@ public class DashboardFragment extends Fragment implements DashboardRvAdapter.Da
         if (mAppBarState == STANDARD_APPBAR) {
             searchBar.setVisibility(View.GONE);
             viewContactsBar.setVisibility(View.VISIBLE);
-            searchRv.setVisibility(View.GONE);
-            relSearchParent.setVisibility(View.GONE);
-            linMainDasboard.setVisibility(View.VISIBLE);
+       //     searchRv.setVisibility(View.GONE);
+//            linMainDasboard.setVisibility(View.VISIBLE);
+
+            closeSearchFragment();
 
             View view = getView();
             InputMethodManager im = (InputMethodManager) getActivity().getSystemService(Context.INPUT_METHOD_SERVICE);
@@ -224,14 +216,27 @@ public class DashboardFragment extends Fragment implements DashboardRvAdapter.Da
         } else if (mAppBarState == SEARCH_APPBAR) {
             viewContactsBar.setVisibility(View.GONE);
             searchBar.setVisibility(View.VISIBLE);
-            searchRv.setVisibility(View.VISIBLE);
-            relSearchParent.setVisibility(View.VISIBLE);
-            linMainDasboard.setVisibility(View.GONE);
+            openSearchFragment();
+//            linMainDasboard.setVisibility(View.GONE);
             InputMethodManager im = (InputMethodManager) getActivity().getSystemService(Context.INPUT_METHOD_SERVICE);
             im.toggleSoftInput(InputMethodManager.SHOW_FORCED, 0); // make keyboard popup
 
         }
     }
+
+    private void closeSearchFragment() {
+
+        listener.closeSearchFragment();
+
+
+       // frameLayout.setVisibility(View.GONE);
+    }
+
+    private void openSearchFragment() {
+        listener.openSearchFragment();
+    }
+
+
 
     @Override
     public void onPause() {
@@ -274,12 +279,7 @@ public class DashboardFragment extends Fragment implements DashboardRvAdapter.Da
         mViewModel.fetchBanners(prefManager.getString(Constants.JWTTOKEN));
         mViewModel.getCourses(prefManager.getString(Constants.JWTTOKEN));
 
-        adapter = new SearchAdapter(getActivity(), this);
-        searchLayoutManager=  new LinearLayoutManager(getActivity());
-        searchRv.setLayoutManager(searchLayoutManager);
-//        DividerItemDecoration decoration = new DividerItemDecoration(getActivity(),R.drawable.theory_resource_divider);
-//        searchRv.addItemDecoration(decoration);
-        searchRv.setAdapter(adapter);
+
         //searchRv.setNestedScrollingEnabled(true);
 
         searchEdit.addTextChangedListener(new TextWatcher() {
@@ -309,7 +309,7 @@ public class DashboardFragment extends Fragment implements DashboardRvAdapter.Da
             @Override
             public boolean onEditorAction(TextView v, int actionId, KeyEvent event) {
                 if (actionId == EditorInfo.IME_ACTION_SEARCH) {
-                    performSearch();
+                    listener.performSearch(searchEdit.getText().toString());
                     return true;
                 }
                 return false;
@@ -402,162 +402,6 @@ public class DashboardFragment extends Fragment implements DashboardRvAdapter.Da
 
     }
 
-    private void performSearch(){
-
-        final String query = searchEdit.getText().toString();
-        if (!TextUtils.isEmpty(query)){
-            searchProgressBar.setVisibility(View.VISIBLE);
-            notFoundSearch.setVisibility(View.GONE);
-
-            searchRecyclerviewModels.clear();
-            headings.clear();
-            rvCurrentPageSearch = 0;
-
-         //   loadMoreItems(true, query);
-
-//            searchRv.addOnScrollListener(new RecyclerView.OnScrollListener() {
-//                @Override
-//                public void onScrollStateChanged(@NonNull RecyclerView recyclerView, int newState) {
-//                    super.onScrollStateChanged(recyclerView, newState);
-//                    if (newState == AbsListView.OnScrollListener.SCROLL_STATE_TOUCH_SCROLL){
-//                        isScrolling = true;
-//                    }
-//                }
-//
-//                @Override
-//                public void onScrolled(@NonNull RecyclerView recyclerView, int dx, int dy) {
-//                    super.onScrolled(recyclerView, dx, dy);
-//
-//                    rvCurrentItemsSearch = searchLayoutManager.getChildCount();
-//                    rvTotalItemsSearch = searchLayoutManager.getItemCount();
-//                    rvScrolledOutItemsSearch = searchLayoutManager.findFirstVisibleItemPosition();
-//
-//                    // rvLastPage = topicsResponseModel.getLast_page();
-//
-//                    Log.d("paging_debug", rvCurrentPageSearch +","+rvLastPage);
-//
-//                    if (isScrolling && (rvCurrentItemsSearch + rvScrolledOutItemsSearch) == rvTotalItemsSearch){
-//                        isScrolling = false;
-//                        loadMoreItems(false, query);
-//                    }
-//
-//                }
-//            });
-
-
-
-            mViewModel.searchWithPagination(prefManager.getString(Constants.JWTTOKEN),query,currentSearchPage);
-
-            mViewModel.searchResponseModelLiveData.observe(getActivity(), new Observer<SearchResponseModel>() {
-                @Override
-                public void onChanged(SearchResponseModel searchResponseModel) {
-
-                    Log.d("paging_debug",searchResponseModel+" on change");
-
-                    searchRv.addOnScrollListener(new RecyclerView.OnScrollListener() {
-                        @Override
-                        public void onScrollStateChanged(@NonNull RecyclerView recyclerView, int newState) {
-                            super.onScrollStateChanged(recyclerView, newState);
-                            if (newState == AbsListView.OnScrollListener.SCROLL_STATE_TOUCH_SCROLL){
-                                isScrolling = true;
-                            }
-                        }
-
-                        @Override
-                        public void onScrolled(@NonNull RecyclerView recyclerView, int dx, int dy) {
-                            super.onScrolled(recyclerView, dx, dy);
-                            rvCurrentItemsSearch = searchLayoutManager.getChildCount();
-                            rvTotalItemsSearch = searchLayoutManager.getItemCount();
-                            rvScrolledOutItemsSearch = searchLayoutManager.findFirstVisibleItemPosition();
-
-//                    Log.d("paging_debug", rvCurrentPageSearch +","+rvLastPage);
-
-                            if (isScrolling && !shouldSearchPaginationStopped && (rvCurrentItemsSearch + rvScrolledOutItemsSearch) == rvTotalItemsSearch){
-                                isScrolling = false;
-                                currentSearchPage = currentSearchPage+1;
-                                mViewModel.searchWithPagination(prefManager.getString(Constants.JWTTOKEN),query,currentSearchPage);
-                            }
-                        }
-                    });
-
-                    if (searchResponseModel!=null){
-                        List<SearchModel> searchModels = searchResponseModel.getData();
-                        if (searchModels!=null && !searchModels.isEmpty()){
-                            Log.d("paging_debug", searchModels+" : this is id");
-                            for (SearchModel searchModel : searchModels){
-                                if (searchModel.getTopics()!=null){
-
-                                    if (!headings.contains("Topics")){
-                                        searchRecyclerviewModels.add(new SearchRecyclerviewModel("Topics", 1));
-                                        headings.add("Topics");
-                                    }
-                                    for (TopicsModel topicsModel : searchModel.getTopics()){
-                                        searchRecyclerviewModels.add(new SearchRecyclerviewModel(topicsModel,2));
-                                    }
-
-                                }else if (searchModel.getProjects()!=null){
-
-                                    if (!headings.contains("Projects")){
-                                        searchRecyclerviewModels.add(new SearchRecyclerviewModel("Projects", 1));
-                                        headings.add("Projects");
-                                    }
-                                    for (ProjectsModel topicsModel : searchModel.getProjects()){
-                                        searchRecyclerviewModels.add(new SearchRecyclerviewModel(topicsModel,3));
-                                    }
-                                }else if (searchModel.getResource()!=null){
-                                    if (!headings.contains("Resources")){
-                                        searchRecyclerviewModels.add(new SearchRecyclerviewModel("Resources", 1));
-                                        headings.add("Resources");
-                                    }
-                                    for (ResourceModel topicsModel : searchModel.getResource()){
-                                        searchRecyclerviewModels.add(new SearchRecyclerviewModel(topicsModel,4));
-                                    }
-                                }
-                            }
-
-                            searchProgressBar.setVisibility(View.GONE);
-                            if (searchRecyclerviewModels.isEmpty()){
-//                                Log.d("paging_debug", searchRecyclerviewModels.get(0).getHeading()+"");
-//                                if (currentSearchPage == 1){
-//                                    Log.d("paging_debug", searchRecyclerviewModels.get(0).getHeading()+"");
-//                                }
-//                                else{
-//                                    adapter.addAll(searchRecyclerviewModels);
-//                                    //adapter.notifyDataSetChanged();
-//                                }
-
-                                Log.d("paging_debug", currentSearchPage+" current page");
-
-                                notFoundSearch.setVisibility(View.VISIBLE);
-                                adapter.clearData();
-
-                            }else{
-                                adapter.setData(searchRecyclerviewModels);
-                            }
-
-                        }else{
-
-                            if (currentSearchPage == 1){
-                                searchProgressBar.setVisibility(View.GONE);
-                                notFoundSearch.setVisibility(View.VISIBLE);
-                                adapter.clearData();
-                            }else{
-                                currentSearchPage = 1;
-                                shouldSearchPaginationStopped = true;
-                            }
-                        }
-                    }
-                }
-            });
-
-        }
-    }
-
-//    private void loadMoreItems(final boolean isFirstPage, String query) {
-//        rvCurrentPageSearch+=1;
-//        mViewModel.search(prefManager.getString(Constants.JWTTOKEN), query);
-//    }
-
     private void setUpSlider() {
         sliderAdapter = new SliderAdapter(getActivity(), this);
         sliderView.setSliderAdapter(sliderAdapter);
@@ -579,75 +423,6 @@ public class DashboardFragment extends Fragment implements DashboardRvAdapter.Da
                 }
             }
         });
-    }
-
-    @Override
-    public void onProjectClickedFromSearch(ProjectsModel projectsModel) {
-        Intent intent = new Intent(getActivity(), ProjectsActivity.class);
-        intent.putExtra(Constants.PROJECTID,projectsModel.getId());
-        startActivity(intent);
-    }
-
-    @Override
-    public void onTopicsClickedFromSearch(TopicsModel topicsModel) {
-        Intent intent = new Intent(getActivity(), ResourcesActivity.class);
-        intent.putExtra(Constants.TOPICID,topicsModel.getId());
-        intent.putExtra(Constants.COURSEID, topicsModel.getCourse_id());
-        startActivity(intent);
-    }
-
-    @Override
-    public void onResourceClickedFromSearch(final ResourceModel resourceModel) {
-        if (resourceModel.getType().equalsIgnoreCase("video")){
-
-            if (resourceModel.getLink().contains("youtu.be") || resourceModel.getLink().contains("youtube")){
-                Intent intent = new Intent(getActivity(), VideoActivity.class);
-                intent.putExtra(Constants.VIDEOCODE, Utility.getVideoCode(resourceModel.getLink()));
-                intent.putExtra(Constants.VIDEOTITLE, resourceModel.getTitle());
-                intent.putExtra(Constants.VIDEODESCRIPTION, resourceModel.getDescription());
-                intent.putExtra(Constants.RESOURCEID, resourceModel.getId());
-                intent.putExtra(Constants.RESOURCEVIDEO, true);
-                startActivity(intent);
-            }else {
-                Utility.redirectUsingCustomTab(getActivity(), resourceModel.getLink());
-
-                Log.d("resource_viewed", "beforeliked : " + resourceModel.getView() + ", " + resourceModel.getTotal_views() + ", " + resourceModel.getId());
-                if (resourceModel.getView() == 0) {
-                    mViewModel.resourceViewed(prefManager.getString(Constants.JWTTOKEN), resourceModel.getId())
-                            .observeForever(new Observer<ResourceViewsResponse>() {
-                                @Override
-                                public void onChanged(ResourceViewsResponse resourceViewsResponse) {
-                                    if (resourceViewsResponse.getError_code() == 0) {
-                                        resourceModel.setView(1);
-                                        Log.d("resource_viewed", "onliked begore: " + resourceModel.getView() + ", " + resourceModel.getTotal_views() + ", " + resourceModel.getId());
-                                        resourceModel.setTotal_views(resourceModel.getTotal_views() + 1);
-                                        Log.d("resource_viewed", "onliked : " + resourceModel.getView() + ", " + resourceModel.getTotal_views() + ", " + resourceModel.getId());
-                                        mViewModel.saveResource(resourceModel);
-                                    }
-                                }
-                            });
-                }
-
-
-            }
-        }else if (resourceModel.getType().equalsIgnoreCase("theory")){
-            Utility.redirectUsingCustomTab(getActivity(), resourceModel.getLink());
-            if (resourceModel.getView() == 0) {
-                mViewModel.resourceViewed(prefManager.getString(Constants.JWTTOKEN), resourceModel.getId())
-                        .observeForever(new Observer<ResourceViewsResponse>() {
-                            @Override
-                            public void onChanged(ResourceViewsResponse resourceViewsResponse) {
-                                if (resourceViewsResponse.getError_code() == 0) {
-                                    resourceModel.setView(1);
-                                    Log.d("resource_viewed", "onliked begore: " + resourceModel.getView() + ", " + resourceModel.getTotal_views() + ", " + resourceModel.getId());
-                                    resourceModel.setTotal_views(resourceModel.getTotal_views() + 1);
-                                    Log.d("resource_viewed", "onliked : " + resourceModel.getView() + ", " + resourceModel.getTotal_views() + ", " + resourceModel.getId());
-                                    mViewModel.saveResource(resourceModel);
-                                }
-                            }
-                        });
-            }
-        }
     }
 
     @Override

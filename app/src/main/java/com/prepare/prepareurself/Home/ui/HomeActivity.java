@@ -54,6 +54,8 @@ import androidx.annotation.NonNull;
 import androidx.appcompat.app.ActionBarDrawerToggle;
 import androidx.appcompat.app.AlertDialog;
 import androidx.core.view.GravityCompat;
+import androidx.fragment.app.Fragment;
+import androidx.fragment.app.FragmentManager;
 import androidx.lifecycle.Observer;
 import androidx.lifecycle.ViewModelProviders;
 import androidx.navigation.NavController;
@@ -84,6 +86,7 @@ public class HomeActivity extends BaseActivity implements NavigationView.OnNavig
     private PrefManager prefManager;
     public static boolean gotoPrefFromBanner = false;
     private NonSwipableViewPager viewPager;
+    SearchFragment searchFragment;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -93,6 +96,8 @@ public class HomeActivity extends BaseActivity implements NavigationView.OnNavig
         setSupportActionBar(toolbar);
 
         viewModel = ViewModelProviders.of(this).get(HomeActivityViewModel.class);
+
+        searchFragment = SearchFragment.newInstance();
 
         drawer = findViewById(R.id.drawer_layout);
         navigationView = findViewById(R.id.nav_view);
@@ -454,6 +459,28 @@ public class HomeActivity extends BaseActivity implements NavigationView.OnNavig
     }
 
     @Override
+    public void openSearchFragment() {
+
+        //frameLayout.setVisibility(View.VISIBLE);
+        getSupportFragmentManager().beginTransaction().replace(R.id.search_container,searchFragment)
+                .addToBackStack(null)
+                .commit();
+    }
+
+    @Override
+    public void closeSearchFragment() {
+        FragmentManager fm = getSupportFragmentManager();
+        if (fm.getBackStackEntryCount()>0){
+            fm.popBackStack();
+        }
+    }
+
+    @Override
+    public void performSearch(String query) {
+        searchFragment.performSearch(query);
+    }
+
+    @Override
     public void onBackPressed() {
         if (drawer.isDrawerOpen(GravityCompat.START)) {
             drawer.closeDrawer(GravityCompat.START);
@@ -481,4 +508,5 @@ public class HomeActivity extends BaseActivity implements NavigationView.OnNavig
     public void onFavBackPressed() {
         navigateHome(0);
     }
+
 }
