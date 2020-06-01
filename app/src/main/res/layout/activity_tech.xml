@@ -1,0 +1,98 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    tools:context=".courses.ui.activity.TechActivity">
+
+    <include android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        layout="@layout/layout_topbar"
+        android:id="@+id/topbar"/>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="vertical"
+        android:padding="10dp">
+
+        <androidx.cardview.widget.CardView
+            android:id="@+id/slider_card"
+            android:layout_width="match_parent"
+            app:cardElevation="0dp"
+            android:layout_height="wrap_content"
+            app:cardCornerRadius="10dp"
+            android:background="?selectableItemBackground">
+
+            <RelativeLayout
+                android:id="@+id/imageSlider"
+                android:layout_width="match_parent"
+                android:layout_height="210dp"
+                android:background="@color/goodgrey">
+
+            </RelativeLayout>
+
+        </androidx.cardview.widget.CardView>
+
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/padding_10">
+
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Tech Stack"
+                android:fontFamily="@font/proximanovaregular"
+                android:textColor="@color/colorPrimaryDark"
+                android:textStyle="bold"
+                android:textSize="16sp"
+                android:id="@+id/tv_tech_name"/>
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Review"
+                android:fontFamily="@font/proximanovaregular"
+                android:textColor="@color/colorPrimaryDark"
+                android:textStyle="bold"
+                android:textSize="16sp"
+                android:id="@+id/tv_tech_review"
+                android:layout_alignParentEnd="true"/>
+
+        </RelativeLayout>
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="This is the decription of the tech stack"
+            android:layout_marginTop="@dimen/padding_10"
+            android:id="@+id/tv_tech_desc"/>
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Go to Projects"
+            android:fontFamily="@font/proximanovaregular"
+            android:textColor="@color/colorPrimaryDark"
+            android:textStyle="bold"
+            android:textSize="16sp"
+            android:layout_marginTop="20dp"/>
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Go to Resources"
+            android:fontFamily="@font/proximanovaregular"
+            android:textColor="@color/colorPrimaryDark"
+            android:textStyle="bold"
+            android:textSize="16sp"
+            android:layout_marginTop="20dp"/>
+
+    </LinearLayout>
+
+
+</LinearLayout>

@@ -9,7 +9,6 @@
     <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
 
     <application
-        tools:replace="android:allowBackup"
         android:name=".utils.BaseApplication"
         android:allowBackup="false"
         android:icon="@mipmap/ic_logo"
@@ -17,11 +16,12 @@
         android:roundIcon="@mipmap/ic_logo_round"
         android:supportsRtl="true"
         android:theme="@style/AppTheme"
-        android:usesCleartextTraffic="true">
-        <activity android:name=".favourites.ui.FavoritesActivity"
-            android:theme="@style/ProfileTheme">
-
-        </activity>
+        android:usesCleartextTraffic="true"
+        tools:replace="android:allowBackup">
+        <activity android:name=".courses.ui.activity.TechActivity"></activity>
+        <activity
+            android:name=".favourites.ui.FavoritesActivity"
+            android:theme="@style/ProfileTheme"></activity>
         <activity android:name=".utils.BaseActivity" />
         <activity
             android:name=".SplashActivity"
@@ -127,9 +127,9 @@
         -->
         <activity
             android:name=".Home.ui.HomeActivity"
-            android:windowSoftInputMode="adjustPan"
             android:label="@string/title_activity_home"
-            android:theme="@style/ProfileTheme">
+            android:theme="@style/ProfileTheme"
+            android:windowSoftInputMode="adjustPan">
             <intent-filter>
                 <action android:name="android.intent.action.VIEW" />
 
@@ -143,8 +143,9 @@
         </activity>
         <activity android:name=".utils.QuizBaseActivity" />
         <activity android:name=".quiz.QuizActivity" />
-        <activity android:name=".authentication.ui.AuthenticationActivity"
-            android:theme="@style/ProfileTheme" >
+        <activity
+            android:name=".authentication.ui.AuthenticationActivity"
+            android:theme="@style/ProfileTheme">
             <intent-filter>
                 <action android:name="android.intent.action.VIEW" />
 
@@ -163,13 +164,12 @@
 
         <service
             android:name=".utils.OneSignalNotificaticationService"
-            android:permission="android.permission.BIND_JOB_SERVICE"
-            android:exported="false">
+            android:exported="false"
+            android:permission="android.permission.BIND_JOB_SERVICE">
             <intent-filter>
                 <action android:name="com.onesignal.NotificationExtender" />
             </intent-filter>
         </service>
-
     </application>
 
 </manifest>
