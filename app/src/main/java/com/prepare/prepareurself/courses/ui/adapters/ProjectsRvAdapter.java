@@ -46,7 +46,7 @@ public class ProjectsRvAdapter extends RecyclerView.Adapter<ProjectsRvAdapter.Pr
     @NonNull
     @Override
     public ProjectsViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
-        View view = LayoutInflater.from(context).inflate(R.layout.projects_rv_adapter_layout, parent, false);
+        View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.projects_rv_adapter_layout, parent, false);
         return new ProjectsViewHolder(view);
     }
 

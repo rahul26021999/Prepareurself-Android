@@ -35,6 +35,7 @@ public class TabResourceActivity extends AppCompatActivity implements ResourcesR
     private int rvCurrentItems, rvTotalItems, rvScrolledOutItems, rvLastPage, rvCurrentPage=1;
     private PrefManager prefManager;
     private TextView tvComingSoon;
+    private int courseId = -1;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -52,10 +53,13 @@ public class TabResourceActivity extends AppCompatActivity implements ResourcesR
         recyclerView.addItemDecoration(new GridSpaceItemDecoration(30));
         recyclerView.setAdapter(adapter);
 
-        Log.d("course_id", CoursesActivity.courseId+"");
-        if (CoursesActivity.courseId!=-1){
+        Intent intent = getIntent();
+        courseId = intent.getIntExtra(Constants.COURSEID,-1);
+
+        Log.d("course_id", courseId+"");
+        if (courseId!=-1){
             mViewModel.getCourseById(prefManager.getString(Constants.JWTTOKEN),
-                    CoursesActivity.courseId,
+                    courseId,
                     10,
                     rvCurrentPage);
             rvCurrentPage+=1;
@@ -89,7 +93,7 @@ public class TabResourceActivity extends AppCompatActivity implements ResourcesR
                             if (isScrolling && (rvCurrentItems + rvScrolledOutItems) == rvTotalItems && rvCurrentPage<=rvLastPage){
                                 isScrolling = false;
                                 mViewModel.getCourseById(prefManager.getString(Constants.JWTTOKEN),
-                                        CoursesActivity.courseId,
+                                        courseId,
                                         10,
                                         rvCurrentPage);
                                 rvCurrentPage+=1;
@@ -101,7 +105,7 @@ public class TabResourceActivity extends AppCompatActivity implements ResourcesR
             }
         });
 
-        mViewModel.getLiveData(CoursesActivity.courseId).observe(this, new Observer<List<TopicsModel>>() {
+        mViewModel.getLiveData(courseId).observe(this, new Observer<List<TopicsModel>>() {
             @Override
             public void onChanged(List<TopicsModel> topicsModels) {
 
