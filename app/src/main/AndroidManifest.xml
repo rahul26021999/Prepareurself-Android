@@ -18,10 +18,12 @@
         android:theme="@style/AppTheme"
         android:usesCleartextTraffic="true"
         tools:replace="android:allowBackup">
-        <activity android:name=".courses.ui.activity.TechActivity"></activity>
+        <activity android:name=".courses.ui.fragmentToActivity.TabResourceActivity"></activity>
+        <activity android:name=".courses.ui.fragmentToActivity.TabProjectctivity" />
+        <activity android:name=".courses.ui.activity.TechActivity" />
         <activity
             android:name=".favourites.ui.FavoritesActivity"
-            android:theme="@style/ProfileTheme"></activity>
+            android:theme="@style/ProfileTheme" />
         <activity android:name=".utils.BaseActivity" />
         <activity
             android:name=".SplashActivity"
