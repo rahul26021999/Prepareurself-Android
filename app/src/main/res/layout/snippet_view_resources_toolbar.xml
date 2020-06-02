@@ -24,10 +24,12 @@
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
+                    android:id="@+id/toolbarheading"
                     android:text="Resources"
                     android:layout_centerInParent="true"
                     android:textColor="@android:color/white"
-                    android:textSize="32sp"
+                    android:textSize="20sp"
+                    android:textStyle="bold"
                     android:fontFamily="@font/proximanovaregular"/>
 
 

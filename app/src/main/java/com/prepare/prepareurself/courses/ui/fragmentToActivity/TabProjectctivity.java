@@ -2,19 +2,32 @@ package com.prepare.prepareurself.courses.ui.fragmentToActivity;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.fragment.app.FragmentManager;
 import androidx.lifecycle.Observer;
 import androidx.lifecycle.ViewModelProviders;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import android.content.Context;
 import android.content.Intent;
 import android.graphics.Bitmap;
 import android.net.Uri;
 import android.os.Bundle;
+import android.text.Editable;
+import android.text.TextWatcher;
+import android.util.Log;
+import android.view.KeyEvent;
 import android.view.View;
+import android.view.inputmethod.EditorInfo;
+import android.view.inputmethod.InputMethodManager;
 import android.widget.AbsListView;
+import android.widget.EditText;
+import android.widget.ImageView;
+import android.widget.RelativeLayout;
 import android.widget.TextView;
 
+import com.google.android.material.appbar.AppBarLayout;
+import com.prepare.prepareurself.Home.ui.SearchFragment;
 import com.prepare.prepareurself.R;
 import com.prepare.prepareurself.courses.data.model.ProjectResponse;
 import com.prepare.prepareurself.courses.data.model.ProjectsModel;
@@ -32,7 +45,7 @@ import com.prepare.prepareurself.utils.Utility;
 import java.io.IOException;
 import java.util.List;
 
-public class TabProjectctivity extends BaseActivity implements ProjectsRvAdapter.ProjectsRvInteractor {
+public class TabProjectctivity extends BaseActivity implements ProjectsRvAdapter.ProjectsRvInteractor , View.OnClickListener {
     private ProjectsViewModel mViewModel;
     private RecyclerView recyclerView;
     private PrefManager prefManager;
@@ -41,12 +54,63 @@ public class TabProjectctivity extends BaseActivity implements ProjectsRvAdapter
     private TextView tvComingSoon;
     private ProjectsRvAdapter adapter;
     private int courseId = -1;
+    private EditText searchEdit;
+    private ImageView closeSearch, menu;
+    //here tootlbar name chnge work
+    private TextView toolbarTitle;
+
+    private static final String TAG = "ToolbarFragment";
+    private static final int STANDARD_APPBAR = 0;
+    private static final int SEARCH_APPBAR = 1;
+    private int mAppBarState;
+
+    private AppBarLayout viewContactsBar, searchBar;
+
+    private SearchFragment searchFragment;
+
+    private RelativeLayout relMainResource;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_tab_projectctivity);
         recyclerView = findViewById(R.id.rv_projects);
         tvComingSoon = findViewById(R.id.tv_coming_soon);
+
+        viewContactsBar =  findViewById(R.id.viewContactsToolbar);
+        searchBar =  findViewById(R.id.searchToolbar);
+        relMainResource = findViewById(R.id.lin_resource_main);
+        menu = findViewById(R.id.menu);
+        menu.setOnClickListener(this);
+        searchFragment = SearchFragment.newInstance();
+        toolbarTitle =findViewById(R.id.toolbarheading);
+        toolbarTitle.setText("Project");
+        setAppBaeState(STANDARD_APPBAR);
+        Log.d(TAG, "app bar"+STANDARD_APPBAR);
+
+
+        ImageView ivSearchContact = findViewById(R.id.ivSearchIcon);
+        ivSearchContact.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Log.d("TAG", "onClick: clicked searched icon");
+                toggleToolBarState();
+            }
+        });
+
+        ImageView ivBackArrow = findViewById(R.id.ivBackArrow);
+        ivBackArrow.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Log.d("TAG", "onClick: clicked back arrow.");
+                toggleToolBarState();
+
+            }
+        });
+
+        searchEdit = findViewById(R.id.etSearch);
+        closeSearch = findViewById(R.id.closeSearch);
+        closeSearch.setOnClickListener(this);
+
         mViewModel = ViewModelProviders.of(this).get(ProjectsViewModel.class);
         prefManager = new PrefManager(this);
 
@@ -127,7 +191,94 @@ public class TabProjectctivity extends BaseActivity implements ProjectsRvAdapter
                 }
             }
         });
+        searchEdit.addTextChangedListener(new TextWatcher() {
+            @Override
+            public void beforeTextChanged(CharSequence s, int start, int count, int after) {
+
+            }
+
+            @Override
+            public void onTextChanged(CharSequence s, int start, int before, int count) {
+                if(s.length()>0){
+                    closeSearch.setVisibility(View.VISIBLE);
+                }
+                else{
+                    closeSearch.setVisibility(View.GONE);
+                }
+
+            }
+
+            @Override
+            public void afterTextChanged(Editable s) {
+
+            }
+        });
+
+        searchEdit.setOnEditorActionListener(new TextView.OnEditorActionListener() {
+            @Override
+            public boolean onEditorAction(TextView v, int actionId, KeyEvent event) {
+                if (actionId == EditorInfo.IME_ACTION_SEARCH) {
+                    searchFragment.performSearch(searchEdit.getText().toString());
+                    return true;
+                }
+                return false;
+            }
+        });
+
     }
+
+    private void toggleToolBarState() {
+        Log.d("TAG", "toggleToolBarState: toggling AppBarState.");
+        if (mAppBarState == STANDARD_APPBAR) {
+            setAppBaeState(SEARCH_APPBAR);
+            searchEdit.setPressed(true);
+            searchEdit.requestFocus();
+        } else {
+            setAppBaeState(STANDARD_APPBAR);
+        }
+    }
+
+    private void setAppBaeState(int state) {
+
+        Log.d(TAG, "setAppBaeState: changing app bar state to: " + state);
+
+        mAppBarState = state;
+        if (mAppBarState == STANDARD_APPBAR) {
+            searchBar.setVisibility(View.GONE);
+            viewContactsBar.setVisibility(View.VISIBLE);
+            closeSearchFragment();
+            View view = getWindow().getDecorView();
+            InputMethodManager im = (InputMethodManager) getSystemService(Context.INPUT_METHOD_SERVICE);
+            try {
+                im.hideSoftInputFromWindow(view.getWindowToken(), 0); // make keyboard hide
+            } catch (NullPointerException e) {
+                Log.d(TAG, "setAppBaeState: NullPointerException: " + e);
+            }
+        } else if (mAppBarState == SEARCH_APPBAR) {
+            viewContactsBar.setVisibility(View.GONE);
+            searchBar.setVisibility(View.VISIBLE);
+            openSearchFragment();
+            InputMethodManager im = (InputMethodManager) getSystemService(Context.INPUT_METHOD_SERVICE);
+            im.toggleSoftInput(InputMethodManager.SHOW_FORCED, 0); // make keyboard popup
+
+        }
+    }
+
+    private void closeSearchFragment() {
+        FragmentManager fm = getSupportFragmentManager();
+        if (fm.getBackStackEntryCount()>0){
+            fm.popBackStack();
+        }
+        relMainResource.setVisibility(View.VISIBLE);
+    }
+
+    private void openSearchFragment() {
+        relMainResource.setVisibility(View.GONE);
+        getSupportFragmentManager().beginTransaction().replace(R.id.search_container,searchFragment)
+                .addToBackStack(null)
+                .commit();
+    }
+
     @Override
     public void onResume() {
         super.onResume();
@@ -201,5 +352,25 @@ public class TabProjectctivity extends BaseActivity implements ProjectsRvAdapter
                     }
                 });
     }
+
+    @Override
+    public void onClick(View v) {
+        switch (v.getId()){
+            case R.id.menu:
+                finish();
+                break;
+            case R.id.closeSearch:
+                searchEdit.setText("");
+                break;
+        }
     }
+    @Override
+    public void onBackPressed() {
+        if (mAppBarState == SEARCH_APPBAR){
+            toggleToolBarState();
+        }else{
+            super.onBackPressed();
+        }
+    }
+}
 
