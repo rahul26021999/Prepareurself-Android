@@ -49,7 +49,7 @@ public class TabResourceActivity extends AppCompatActivity implements ResourcesR
     private PrefManager prefManager;
     private TextView tvComingSoon;
     private int courseId = -1;
-
+    //
     private EditText searchEdit;
     private ImageView closeSearch, menu;
 
@@ -64,23 +64,24 @@ public class TabResourceActivity extends AppCompatActivity implements ResourcesR
 
     private RelativeLayout relMainResource;
 
-
+//
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_tab_resource);
         recyclerView= findViewById(R.id.rv_resources);
         tvComingSoon=findViewById(R.id.tv_coming_soon);
+        //
         viewContactsBar =  findViewById(R.id.viewContactsToolbar);
         searchBar =  findViewById(R.id.searchToolbar);
         relMainResource = findViewById(R.id.lin_resource_main);
         menu = findViewById(R.id.menu);
         menu.setOnClickListener(this);
-
+//
         mViewModel = ViewModelProviders.of(this).get(TopicViewModel.class);
 
         prefManager = new PrefManager(this);
-
+//
         searchFragment = SearchFragment.newInstance();
 
         setAppBaeState(STANDARD_APPBAR);
@@ -109,7 +110,7 @@ public class TabResourceActivity extends AppCompatActivity implements ResourcesR
         searchEdit = findViewById(R.id.etSearch);
         closeSearch = findViewById(R.id.closeSearch);
         closeSearch.setOnClickListener(this);
-
+//
         adapter = new ResourcesRvAdapter(this, this);
         //final LinearLayoutManager layoutManager = new LinearLayoutManager(getActivity());
         final GridLayoutManager layoutManager = new GridLayoutManager(this,2,RecyclerView.VERTICAL,false);
@@ -187,7 +188,7 @@ public class TabResourceActivity extends AppCompatActivity implements ResourcesR
 
             }
         });
-
+//
         searchEdit.addTextChangedListener(new TextWatcher() {
             @Override
             public void beforeTextChanged(CharSequence s, int start, int count, int after) {
@@ -287,7 +288,7 @@ public class TabResourceActivity extends AppCompatActivity implements ResourcesR
                 break;
         }
     }
-
+//
     @Override
     public void onResourceClicked(TopicsModel topicsModel) {
         Intent intent =new Intent(TabResourceActivity.this, ResourcesActivity.class);
@@ -295,7 +296,7 @@ public class TabResourceActivity extends AppCompatActivity implements ResourcesR
         intent.putExtra(Constants.COURSEID, topicsModel.getCourse_id());
         startActivity(intent);
     }
-
+//
     @Override
     public void onBackPressed() {
         if (mAppBarState == SEARCH_APPBAR){
