@@ -26,6 +26,8 @@ import com.prepare.prepareurself.courses.ui.activity.AllCoursesActivity;
 import com.prepare.prepareurself.courses.ui.activity.CoursesActivity;
 import com.prepare.prepareurself.courses.ui.activity.ProjectsActivity;
 import com.prepare.prepareurself.banner.BannerModel;
+import com.prepare.prepareurself.courses.ui.fragmentToActivity.TabProjectctivity;
+import com.prepare.prepareurself.courses.ui.fragmentToActivity.TabResourceActivity;
 import com.prepare.prepareurself.dashboard.data.model.CourseModel;
 import com.prepare.prepareurself.dashboard.data.model.SuggestedProjectModel;
 import com.prepare.prepareurself.dashboard.data.model.SuggestedTopicsModel;
@@ -267,10 +269,18 @@ public class HomeActivity extends BaseActivity implements NavigationView.OnNavig
                 viewPager.setCurrentItem(0);
                 break;
             case R.id.nav_star:
-                redirectToPlayStore();
+                //redirectToPlayStore();
+                Intent intent = new Intent(HomeActivity.this, TabProjectctivity.class);
+                intent.putExtra(Constants.COURSEID,1);
+                intent.putExtra(Constants.COURSENAME,"Android");
+                startActivity(intent);
                 break;
             case R.id.nav_share:
-                shareApp();
+                //shareApp();
+                Intent intent1 = new Intent(HomeActivity.this, TabResourceActivity.class);
+                intent1.putExtra(Constants.COURSEID,1);
+                intent1.putExtra(Constants.COURSENAME,"Android");
+                startActivity(intent1);
                 break;
             case R.id.nav_about_us :
                 viewPager.setCurrentItem(4);

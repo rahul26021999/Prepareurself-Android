@@ -18,15 +18,12 @@ import android.widget.TextView;
 import com.prepare.prepareurself.R;
 import com.prepare.prepareurself.courses.data.model.ProjectResponse;
 import com.prepare.prepareurself.courses.data.model.ProjectsModel;
-import com.prepare.prepareurself.courses.data.model.TopicsModel;
-import com.prepare.prepareurself.courses.ui.activity.CoursesActivity;
 import com.prepare.prepareurself.courses.ui.activity.ProjectsActivity;
 import com.prepare.prepareurself.courses.ui.adapters.ProjectsRvAdapter;
-import com.prepare.prepareurself.courses.ui.adapters.ResourcesRvAdapter;
 import com.prepare.prepareurself.courses.viewmodels.ProjectsViewModel;
 import com.prepare.prepareurself.favourites.data.model.LikedProjectsModel;
 import com.prepare.prepareurself.resources.data.model.ResourceLikesResponse;
-import com.prepare.prepareurself.resources.ui.activity.ResourcesActivity;
+import com.prepare.prepareurself.utils.BaseActivity;
 import com.prepare.prepareurself.utils.Constants;
 import com.prepare.prepareurself.utils.DividerItemDecoration;
 import com.prepare.prepareurself.utils.PrefManager;
@@ -35,7 +32,7 @@ import com.prepare.prepareurself.utils.Utility;
 import java.io.IOException;
 import java.util.List;
 
-public class TabProjectctivity extends AppCompatActivity implements ProjectsRvAdapter.ProjectsRvInteractor {
+public class TabProjectctivity extends BaseActivity implements ProjectsRvAdapter.ProjectsRvInteractor {
     private ProjectsViewModel mViewModel;
     private RecyclerView recyclerView;
     private PrefManager prefManager;
@@ -43,6 +40,7 @@ public class TabProjectctivity extends AppCompatActivity implements ProjectsRvAd
     private int rvCurrentItems, rvTotalItems, rvScrolledOutItems, rvLastPage, rvCurrentPage=1;
     private TextView tvComingSoon;
     private ProjectsRvAdapter adapter;
+    private int courseId = -1;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -52,21 +50,43 @@ public class TabProjectctivity extends AppCompatActivity implements ProjectsRvAd
         mViewModel = ViewModelProviders.of(this).get(ProjectsViewModel.class);
         prefManager = new PrefManager(this);
 
-        if(CoursesActivity.courseId!=-1){
+        Intent intent = getIntent();
+        courseId = intent.getIntExtra(Constants.COURSEID,-1);
+
+        final LinearLayoutManager layoutManager = new LinearLayoutManager(this);
+        adapter = new ProjectsRvAdapter(TabProjectctivity.this, this);
+        recyclerView.setLayoutManager(layoutManager);
+        DividerItemDecoration decoration = new DividerItemDecoration(this,R.drawable.theory_resource_divider);
+        recyclerView.addItemDecoration(decoration);
+        recyclerView.setAdapter(adapter);
+
+        if(courseId!=-1){
             mViewModel.fetchProjects(prefManager.getString(Constants.JWTTOKEN),
-                    CoursesActivity.courseId,
+                    courseId,
                     "",
                     10,
                     rvCurrentPage);
             rvCurrentPage+=1;
         }
 
-        final LinearLayoutManager layoutManager = new LinearLayoutManager(this);
-        adapter = new ProjectsRvAdapter(this, this);
-        recyclerView.setLayoutManager(layoutManager);
-        DividerItemDecoration decoration = new DividerItemDecoration(this,R.drawable.theory_resource_divider);
-        recyclerView.addItemDecoration(decoration);
-        recyclerView.setAdapter(adapter);
+
+        mViewModel.getProjectByCourseId(courseId).observe(this, new Observer<List<ProjectsModel>>() {
+            @Override
+            public void onChanged(List<ProjectsModel> projectsModels) {
+                if (projectsModels!=null && !projectsModels.isEmpty()){
+                    tvComingSoon.setVisibility(View.GONE);
+                    recyclerView.setVisibility(View.VISIBLE);
+                    adapter.setProjects(projectsModels);
+                    adapter.notifyDataSetChanged();
+                }else{
+                    tvComingSoon.setText("Coming soon...");
+                    tvComingSoon.setVisibility(View.VISIBLE);
+
+                    recyclerView.setVisibility(View.GONE);
+                }
+
+            }
+        });
 
         mViewModel.getProjectResponseMutableLiveData().observe(this, new Observer<ProjectResponse>() {
             @Override
@@ -94,7 +114,7 @@ public class TabProjectctivity extends AppCompatActivity implements ProjectsRvAd
                             if (isScrolling && (rvCurrentItems + rvScrolledOutItems) == rvTotalItems && rvCurrentPage <= rvLastPage){
                                 isScrolling = false;
                                 mViewModel.fetchProjects(prefManager.getString(Constants.JWTTOKEN),
-                                        CoursesActivity.courseId,
+                                        courseId,
                                         "",
                                         10,
                                         rvCurrentPage);
@@ -111,23 +131,7 @@ public class TabProjectctivity extends AppCompatActivity implements ProjectsRvAd
     @Override
     public void onResume() {
         super.onResume();
-        mViewModel.getProjectByCourseId(CoursesActivity.courseId).observe(this, new Observer<List<ProjectsModel>>() {
-            @Override
-            public void onChanged(List<ProjectsModel> projectsModels) {
-                if (projectsModels!=null && !projectsModels.isEmpty()){
-                    tvComingSoon.setVisibility(View.GONE);
-                    recyclerView.setVisibility(View.VISIBLE);
-                    adapter.setProjects(projectsModels);
-                    adapter.notifyDataSetChanged();
-                }else{
-                    tvComingSoon.setText("Coming soon...");
-                    tvComingSoon.setVisibility(View.VISIBLE);
 
-                    recyclerView.setVisibility(View.GONE);
-                }
-
-            }
-        });
     }
 
 
@@ -157,7 +161,7 @@ public class TabProjectctivity extends AppCompatActivity implements ProjectsRvAd
                     public void onChanged(ResourceLikesResponse resourceLikesResponse) {
                         if (resourceLikesResponse!=null){
                             if (!resourceLikesResponse.getSuccess()){
-                                Utility.showToast(getApplicationContext(),"Unable to like at the moment");
+                                Utility.showToast(TabProjectctivity.this,"Unable to like at the moment");
                             }else{
                                 if (liked == 0){
                                     projectsModel.setLike(1);
