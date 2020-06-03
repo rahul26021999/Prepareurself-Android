@@ -1,0 +1,29 @@
+package com.prepare.prepareurself.preferences.viewmodel
+
+import android.app.Application
+import androidx.lifecycle.AndroidViewModel
+import androidx.lifecycle.LiveData
+import com.prepare.prepareurself.preferences.data.PrefDbRepository
+import com.prepare.prepareurself.preferences.data.PrefRepository
+import com.prepare.prepareurself.preferences.data.PreferencesModel
+import com.prepare.prepareurself.profile.data.repository.ProfileRepository
+
+class PreferenceViewModel(application: Application):AndroidViewModel(application){
+
+    private var prefRepository:PrefRepository?=null
+    private var predDbRepository:PrefDbRepository?=null
+
+    init {
+        predDbRepository = PrefDbRepository(application)
+        prefRepository = PrefRepository(application)
+    }
+
+    fun fetchPreferences(token:String){
+        prefRepository?.fetchPrefs(token)
+    }
+
+    fun getPrefs():LiveData<List<PreferencesModel>>?{
+        return predDbRepository?.getPrefs()
+    }
+
+}
