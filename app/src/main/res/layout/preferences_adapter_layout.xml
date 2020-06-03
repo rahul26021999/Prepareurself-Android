@@ -1,0 +1,37 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout
+    xmlns:android="http://schemas.android.com/apk/res/android" android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:padding="15dp"
+    android:layout_margin="@dimen/padding_10"
+    android:background="@drawable/grey_rounded_stroked_rectangle">
+
+
+    <ImageView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/img_cancel_pref"
+        android:src="@drawable/ic_cancel"
+        android:layout_alignParentEnd="true"
+        android:layout_centerVertical="true"/>
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/tv_pref_count"
+        android:text="1."
+        android:textColor="@color/colorPrimaryDark"
+        android:layout_centerVertical="true"/>
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/tv_pref_name"
+        android:text="Android"
+        android:textColor="@color/colorPrimaryDark"
+        android:layout_toEndOf="@+id/tv_pref_count"
+        android:layout_marginStart="5dp"
+        android:layout_centerVertical="true"/>
+
+
+</RelativeLayout>

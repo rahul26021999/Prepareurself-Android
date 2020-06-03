@@ -27,6 +27,8 @@ import com.prepare.prepareurself.persistence.persitenceUtils.CourseModelTypeCorv
 import com.prepare.prepareurself.persistence.persitenceUtils.ListProjectTypeConverter;
 import com.prepare.prepareurself.persistence.persitenceUtils.ListResourceTypeConverter;
 import com.prepare.prepareurself.persistence.persitenceUtils.ListTopicsTypeConverter;
+import com.prepare.prepareurself.preferences.data.PrefDao;
+import com.prepare.prepareurself.preferences.data.PreferencesModel;
 import com.prepare.prepareurself.profile.data.db.dao.MyPreferenceDao;
 import com.prepare.prepareurself.profile.data.db.dao.UserPrefernceDao;
 import com.prepare.prepareurself.profile.data.model.MyPreferenceTechStack;
@@ -60,7 +62,8 @@ import com.prepare.prepareurself.youtubeplayer.youtubeplaylistapi.models.VideoIt
         SuggestedProjectModel.class,
         SearchModel.class,
         LikedProjectsModel.class,
-        LikedResourcesModel.class
+        LikedResourcesModel.class,
+        PreferencesModel.class
 }, version = 3)
 @TypeConverters({VideoContentDetailsConverter.class,
         VideoSnippetConverter.class,
@@ -86,6 +89,7 @@ public abstract class AppDatabase extends RoomDatabase {
     public abstract SearchDao searchDao();
     public abstract LikedProjectsDao likedProjectsDao();
     public abstract LikedResourcesDao likedResourcesDao();
+    public abstract PrefDao prefDao();
 
     private static AppDatabase INSTANCE;
 
