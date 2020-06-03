@@ -51,6 +51,8 @@ QuizSelectableOptionAdapter.OptionListener {
             optionAdapter.updateSelection(selectedOption)
         }
 
+        listener.onQuestionLoaded(position)
+
 //        view.tv_clear_response.setOnClickListener {
 //            listener.onClearResponse(question)
 //            optionAdapter.clearResponse()
@@ -77,6 +79,7 @@ QuizSelectableOptionAdapter.OptionListener {
 
     interface QuestionInteractor{
         fun onOptionSeleted(options: OptionsModel)
+        fun onQuestionLoaded(position: Int)
     }
 
     companion object{

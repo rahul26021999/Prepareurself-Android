@@ -85,12 +85,12 @@
             android:textColor="#2E3458"
             android:layout_centerVertical="true"/>
 
-        <Chronometer
+        <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:textColor="#2E3458"
-            android:id="@+id/chronometer_quiz"
-            android:layout_toRightOf="@+id/tv_q_no"
+            android:textColor="@color/colorPrimaryDark"
+            android:id="@+id/timer_quiz"
+            android:layout_toEndOf="@+id/tv_q_no"
             android:layout_centerVertical="true"
             android:layout_marginStart="10dp"/>
 
@@ -103,7 +103,8 @@
             android:paddingEnd="14dp"
             app:cornerRadius="@dimen/padding_10"
             android:text="Next"
-            android:visibility="gone"
+            android:id="@+id/btn_next"
+            android:visibility="visible"
             android:layout_alignParentEnd="true"
             android:layout_centerVertical="true"
             android:textColor="@color/white"
@@ -115,7 +116,7 @@
             android:layout_height="wrap_content"
             app:cardCornerRadius="10dp"
             android:elevation="10dp"
-            android:visibility="visible"
+            android:visibility="gone"
             android:id="@+id/card_next_q"
             android:layout_alignParentEnd="true"
             android:layout_centerVertical="true">
