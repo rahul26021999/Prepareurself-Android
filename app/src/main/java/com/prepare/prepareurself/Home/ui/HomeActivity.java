@@ -40,6 +40,7 @@ import com.prepare.prepareurself.favourites.ui.FavouritesFragment;
 import com.prepare.prepareurself.feedback.ui.FeedbackFragment;
 import com.prepare.prepareurself.firebase.UpdateHelper;
 import com.prepare.prepareurself.profile.ui.fragments.ProfileFragment;
+import com.prepare.prepareurself.quizv2.ui.QuizActivity;
 import com.prepare.prepareurself.resources.data.model.ResourceModel;
 import com.prepare.prepareurself.resources.data.model.ResourceViewsResponse;
 import com.prepare.prepareurself.resources.ui.activity.ResourcesActivity;
@@ -283,7 +284,8 @@ public class HomeActivity extends BaseActivity implements NavigationView.OnNavig
                 startActivity(intent1);
                 break;
             case R.id.nav_about_us :
-                viewPager.setCurrentItem(4);
+                startActivity(new Intent(HomeActivity.this, QuizActivity.class));
+                //viewPager.setCurrentItem(4);
                 break;
             case R.id.nav_feedback :
                 viewPager.setCurrentItem(3);
