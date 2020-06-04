@@ -1,8 +1,8 @@
 package com.prepare.prepareurself.preferences.ui
 
 import android.app.Dialog
-import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import android.util.Log
 import android.view.KeyEvent
 import android.view.LayoutInflater
 import android.view.Window
@@ -20,12 +20,15 @@ import com.prepare.prepareurself.utils.Constants
 import com.prepare.prepareurself.utils.PrefManager
 import kotlinx.android.synthetic.main.activity_preferences.*
 import kotlinx.android.synthetic.main.choose_pref_dialog_layout.view.*
+import kotlinx.android.synthetic.main.layout_topbar.view.*
 
 class PreferencesActivity : BaseActivity(),PreferenceRvAdapter.PrefListener,ChoosePrefAdapter.ChoosePrefListener {
 
     private lateinit var adapter: PreferenceRvAdapter
     private lateinit var vm:PreferenceViewModel
     private lateinit var pm: PrefManager
+    private lateinit var temList : ArrayList<PreferencesModel>
+    private lateinit var chooseDialog: Dialog
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -34,6 +37,8 @@ class PreferencesActivity : BaseActivity(),PreferenceRvAdapter.PrefListener,Choo
         vm = ViewModelProvider(this)[PreferenceViewModel::class.java]
 
         pm = PrefManager(this)
+
+        temList = ArrayList<PreferencesModel>()
 
         val title = findViewById<TextView>(R.id.title)
 
@@ -46,8 +51,10 @@ class PreferencesActivity : BaseActivity(),PreferenceRvAdapter.PrefListener,Choo
         vm.fetchPreferences(pm.getString(Constants.JWTTOKEN))
 
         vm.getPrefs()?.observe(this, Observer {
+            temList.clear()
             it?.let {
-                adapter.setData(it)
+                temList.addAll(it)
+                adapter.setData(temList)
             }
         })
 
@@ -55,20 +62,31 @@ class PreferencesActivity : BaseActivity(),PreferenceRvAdapter.PrefListener,Choo
             showAddPrefDialog()
         }
 
+        save_pref_btn.setOnClickListener {
+            Log.d("tempList","$temList")
+        }
+
+
     }
 
     private fun showAddPrefDialog() {
 
-        val dialog = Dialog(this,android.R.style.Theme_Light)
+        chooseDialog = Dialog(this,android.R.style.Theme_Light)
 
-        dialog.requestWindowFeature(Window.FEATURE_NO_TITLE)
+        chooseDialog.requestWindowFeature(Window.FEATURE_NO_TITLE)
         val view = LayoutInflater.from(this).inflate(R.layout.choose_pref_dialog_layout, null)
-        dialog.setContentView(view)
-        dialog.setCancelable(false)
+        chooseDialog.setContentView(view)
+        chooseDialog.setCancelable(false)
 
         val adapter = ChoosePrefAdapter(this)
         view.rv_choose_pref.layoutManager = LinearLayoutManager(this)
         view.rv_choose_pref.adapter = adapter
+
+        view.backBtn.setOnClickListener {
+            chooseDialog.cancel()
+        }
+
+        view.title.text = "Select Preference"
 
         vm.getCourses()?.observe(this, Observer {
             it?.let {
@@ -76,25 +94,30 @@ class PreferencesActivity : BaseActivity(),PreferenceRvAdapter.PrefListener,Choo
             }
         })
 
-        dialog.setOnKeyListener { d, keyCode, event ->
+        chooseDialog.setOnKeyListener { d, keyCode, event ->
             if (keyCode == KeyEvent.KEYCODE_BACK){
                 d.cancel()
             }
             return@setOnKeyListener true
         }
 
-        dialog.show()
+        chooseDialog.show()
 
-        val window = dialog.window
+        val window = chooseDialog.window
         window?.setLayout(WindowManager.LayoutParams.MATCH_PARENT,WindowManager.LayoutParams.MATCH_PARENT)
 
     }
 
-    override fun onPrefCanceled(prefModel: PreferencesModel?) {
-
+    override fun onPrefCanceled(prefModel: PreferencesModel?, position:Int) {
+        temList.removeAt(position)
+        adapter.updateDataset()
     }
 
     override fun onItemClicked(courseModel: CourseModel) {
-
+        val prefModel = PreferencesModel()
+        prefModel.id = courseModel.id
+        prefModel.name = courseModel.name
+        temList.add(prefModel)
+        chooseDialog.cancel()
     }
 }

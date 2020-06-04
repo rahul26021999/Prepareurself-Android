@@ -17,8 +17,12 @@ class PreferenceRvAdapter(var listener:PrefListener):RecyclerView.Adapter<Prefer
         notifyDataSetChanged()
     }
 
+    fun updateDataset(){
+        notifyDataSetChanged()
+    }
+
     interface PrefListener{
-        fun onPrefCanceled(prefModel: PreferencesModel?)
+        fun onPrefCanceled(prefModel: PreferencesModel?,position: Int)
     }
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): PrefViewHolder {
@@ -33,7 +37,7 @@ class PreferenceRvAdapter(var listener:PrefListener):RecyclerView.Adapter<Prefer
         val prefModel = data?.get(position)
         holder.bindView(prefModel, position)
         holder.itemView.img_cancel_pref.setOnClickListener {
-            listener.onPrefCanceled(prefModel)
+            listener.onPrefCanceled(prefModel, position)
         }
     }
 

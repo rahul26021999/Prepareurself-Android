@@ -62,6 +62,7 @@
             app:cornerRadius="@dimen/padding_10"
             android:background="@color/colorPrimaryDark"
             android:text="Save"
+            android:id="@+id/save_pref_btn"
             android:fontFamily="@font/proximanovaregular"
             android:textSize="16sp"
             android:textColor="@color/white"/>
