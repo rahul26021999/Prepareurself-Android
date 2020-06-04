@@ -18,8 +18,10 @@
         android:theme="@style/AppTheme"
         android:usesCleartextTraffic="true"
         tools:replace="android:allowBackup">
-        <activity android:name=".preferences.ui.PreferencesActivity"
-            android:theme="@style/ProfileTheme"/>
+        <activity android:name=".preferences.ui.AddPrefActivity"></activity>
+        <activity
+            android:name=".preferences.ui.PreferencesActivity"
+            android:theme="@style/ProfileTheme" />
         <activity
             android:name=".quizv2.ui.QuizActivity"
             android:theme="@style/ProfileTheme" />
