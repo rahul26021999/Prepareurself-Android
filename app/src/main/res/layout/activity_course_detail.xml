@@ -1,0 +1,129 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".courses.ui.activity.CourseDetailActivity">
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:id="@+id/rel_layoutmain1"
+        android:background="@drawable/courseblue_gradient"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        android:paddingBottom="10dp"
+        >
+        <RelativeLayout
+            android:id="@+id/rel_layout1"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            >
+            <ImageView
+                android:layout_width="30dp"
+                android:layout_height="30dp"
+                android:id="@+id/backBtn"
+                android:padding="2dp"
+                android:layout_margin="10dp"
+                android:background="?attr/selectableItemBackgroundBorderless"
+                android:src="@drawable/ic_arrow_back_24dp" />
+            <TextView
+                android:id="@+id/coursename"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Machne learnng"
+                android:textStyle="bold"
+                android:textSize="20sp"
+                android:textColor="@color/white"
+                android:layout_marginRight="10dp"
+                android:layout_marginTop="10dp"
+                android:layout_marginBottom="10dp"
+                android:layout_toEndOf="@+id/backBtn"
+                />
+            <ImageView
+                android:layout_width="30dp"
+                android:layout_height="30dp"
+                android:padding="2dp"
+                android:src="@drawable/ic_share_black_24dp"
+                android:layout_toLeftOf="@+id/courselove"
+                android:layout_margin="10dp"
+                android:tooltipText="share"/>
+            <ImageView
+                android:id="@+id/courselove"
+                android:layout_width="30dp"
+                android:layout_height="30dp"
+                android:padding="2dp"
+                android:src="@drawable/ic_library_add_black_24dp"
+                android:layout_toLeftOf="@+id/courseshare"
+                android:layout_margin="10dp"
+                android:tooltipText="Follow"/>
+            <ImageView
+                android:id="@+id/courseshare"
+                android:layout_width="30dp"
+                android:layout_height="30dp"
+                android:padding="2dp"
+                android:src="@drawable/ic_heart"
+                android:layout_alignParentEnd="true"
+                android:layout_margin="10dp"
+                android:tooltipText="Like"/>
+
+
+
+
+        </RelativeLayout>
+        <LinearLayout
+            android:id="@+id/linear_layout2"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/rel_layout1"
+            android:orientation="horizontal"
+            >
+            <TextView
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="2"
+                android:text="bsbnbshbbjhwhdw jhwhdwdh wjbdwjdhwd bdwhdwhdwjd udhwdhwhd wjjdbwhdwhdw dwdhwhdwhd jdhwhdwhdw bdwbdw"
+                android:textColor="@color/white"
+                android:layout_marginStart="50dp"
+                android:layout_marginTop="10dp"
+                android:layout_marginEnd="10dp"/>
+            <de.hdodenhof.circleimageview.CircleImageView
+                android:layout_width="0dp"
+                android:layout_height="100dp"
+                android:layout_weight="1"
+                android:padding="5dp"
+                android:scaleType="centerCrop"
+                android:src="@drawable/androcourse"
+                app:cardCornerRadius="6dp"
+                app:cardElevation="0dp"
+                android:id="@+id/user_image"
+                android:layout_marginTop="10dp"
+                android:layout_marginEnd="10dp"
+                app:civ_border_width="1dp"
+                app:civ_border_color="#FFFFFF">
+
+            </de.hdodenhof.circleimageview.CircleImageView>
+        </LinearLayout>
+        <RatingBar
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:scaleX="0.5"
+            android:scaleY="0.5"
+            android:transformPivotX="0dp"
+            android:transformPivotY="0dp"
+            android:numStars="5"
+            android:rating="3"
+            android:layout_below="@id/linear_layout2"
+            android:layout_marginStart="50dp"
+            android:stepSize="0.5"/>
+       <!-- style="?android:attr/ratingBarStyleIndicator"-->
+
+
+
+    </RelativeLayout>
+
+
+
+</androidx.constraintlayout.widget.ConstraintLayout>
