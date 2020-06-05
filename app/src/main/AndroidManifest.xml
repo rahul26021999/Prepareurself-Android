@@ -18,7 +18,10 @@
         android:theme="@style/AppTheme"
         android:usesCleartextTraffic="true"
         tools:replace="android:allowBackup">
-        <activity android:name=".courses.ui.activity.CourseDetailActivity"></activity>
+        <activity android:name=".courses.ui.activity.CourseDetailActivity"
+            android:theme="@style/ProfileTheme">
+
+        </activity>
         <activity
             android:name=".preferences.ui.PreferencesActivity"
             android:theme="@style/ProfileTheme" />
