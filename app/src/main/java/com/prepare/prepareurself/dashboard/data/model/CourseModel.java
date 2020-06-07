@@ -36,6 +36,18 @@ public class CourseModel {
     @SerializedName("sequence")
     private int sequence;
 
+    public String getDescription() {
+        return description;
+    }
+
+    public void setDescription(String description) {
+        this.description = description;
+    }
+
+    @ColumnInfo(name = "description")
+    @SerializedName("description")
+    private String description;
+
     public int getSequence() {
         return sequence;
     }

@@ -8,6 +8,7 @@ import com.prepare.prepareurself.courses.data.model.GetProjectResponse;
 import com.prepare.prepareurself.courses.data.model.GetTopicResponseModel;
 import com.prepare.prepareurself.courses.data.model.ProjectResponseModel;
 import com.prepare.prepareurself.banner.BannerImageResponseModel;
+import com.prepare.prepareurself.courses.data.model.RateCourseResponseModel;
 import com.prepare.prepareurself.dashboard.data.model.GetCourseResponseModel;
 import com.prepare.prepareurself.dashboard.data.model.GetSuggestedProjectsModel;
 import com.prepare.prepareurself.dashboard.data.model.GetSuggestedTopicsModel;
@@ -177,5 +178,10 @@ public interface ApiInterface {
     @POST("course")
     Call<CourseDetailReponseModel> fetchCourseDetails(@Query("token") String token,
                                                       @Query("course_id") int courseId);
+
+    @POST("rate-course")
+    Call<RateCourseResponseModel> fetchRateCourseDetails(@Query("token") String token,
+                                                         @Query("course_id") int courseId,
+                                                         @Query("rating") int rating);
 
 }

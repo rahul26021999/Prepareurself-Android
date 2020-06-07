@@ -49,8 +49,6 @@ public class CourseRepository {
 
                 Log.d("course_api_debug",responseModel+" ,kj"+",  "+response.code());
 
-
-
                 if (responseModel!=null){
                     if (responseModel.getError_code()==0){
                         courseDbRepository.deleteAllCourses();
