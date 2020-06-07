@@ -3,6 +3,7 @@ package com.prepare.prepareurself.Apiservice;
 import com.prepare.prepareurself.authentication.data.model.ForgotPasswordResponseModel;
 import com.prepare.prepareurself.authentication.data.model.RegisterResponseModel;
 import com.prepare.prepareurself.authentication.data.model.UserModel;
+import com.prepare.prepareurself.courses.data.model.CourseDetailReponseModel;
 import com.prepare.prepareurself.courses.data.model.GetProjectResponse;
 import com.prepare.prepareurself.courses.data.model.GetTopicResponseModel;
 import com.prepare.prepareurself.courses.data.model.ProjectResponseModel;
@@ -172,5 +173,9 @@ public interface ApiInterface {
                                                      @Query("google_id") String googleId,
                                                      @Query("email") String email,
                                                      @Query("profile_image") String profileImage);
+
+    @POST("course")
+    Call<CourseDetailReponseModel> fetchCourseDetails(@Query("token") String token,
+                                                      @Query("course_id") int courseId);
 
 }
