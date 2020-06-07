@@ -23,6 +23,7 @@ import com.prepare.prepareurself.authentication.ui.AuthenticationActivity;
 import com.prepare.prepareurself.courses.data.model.ProjectsModel;
 import com.prepare.prepareurself.courses.data.model.TopicsModel;
 import com.prepare.prepareurself.courses.ui.activity.AllCoursesActivity;
+import com.prepare.prepareurself.courses.ui.activity.CourseDetailActivity;
 import com.prepare.prepareurself.courses.ui.activity.CoursesActivity;
 import com.prepare.prepareurself.courses.ui.activity.ProjectsActivity;
 import com.prepare.prepareurself.banner.BannerModel;
@@ -262,7 +263,10 @@ public class HomeActivity extends BaseActivity implements NavigationView.OnNavig
 
         switch (id){
             case R.id.nav_contact_us :
-                sendEmailToDeveloper();
+                //sendEmailToDeveloper();
+                //intent to course actvty to check
+                Intent intentcourse = new Intent(HomeActivity.this, CourseDetailActivity.class);
+                startActivity(intentcourse);
                 break;
             case R.id.nav_profile :
                 viewPager.setCurrentItem(1);
