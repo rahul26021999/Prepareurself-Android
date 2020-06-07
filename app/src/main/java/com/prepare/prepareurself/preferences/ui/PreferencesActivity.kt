@@ -12,7 +12,6 @@ import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.prepare.prepareurself.R
-import com.prepare.prepareurself.dashboard.data.model.CourseModel
 import com.prepare.prepareurself.preferences.data.PreferencesModel
 import com.prepare.prepareurself.preferences.viewmodel.PreferenceViewModel
 import com.prepare.prepareurself.utils.BaseActivity
@@ -30,6 +29,8 @@ class PreferencesActivity : BaseActivity(),PreferenceRvAdapter.PrefListener,Choo
     private lateinit var temList : ArrayList<PreferencesModel>
     private lateinit var chooseDialog: Dialog
     private lateinit var mylist  : ArrayList<PreferencesModel>
+    val displyList = ArrayList<PreferencesModel>()
+    val allAdapter = ChoosePrefAdapter(this)
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -92,20 +93,18 @@ class PreferencesActivity : BaseActivity(),PreferenceRvAdapter.PrefListener,Choo
         chooseDialog.setContentView(view)
         chooseDialog.setCancelable(false)
 
-        val adapter = ChoosePrefAdapter(this)
-        view.rv_choose_pref.layoutManager = LinearLayoutManager(this)
-        view.rv_choose_pref.adapter = adapter
-
         view.backBtn.setOnClickListener {
             chooseDialog.cancel()
         }
 
-        view.title.text = "Select Preference"
+        view.rv_choose_pref.layoutManager = LinearLayoutManager(this)
+        view.rv_choose_pref.adapter = allAdapter
 
-        val displyList = ArrayList<PreferencesModel>()
+        view.title.text = "Select Preference"
 
         vm.getPrefs()?.observe(this, Observer {
             it?.let {it2->
+                displyList.clear()
                 displyList.addAll(it2)
                 it2.forEach {
                     mylist.forEach {it1->
@@ -114,7 +113,7 @@ class PreferencesActivity : BaseActivity(),PreferenceRvAdapter.PrefListener,Choo
                         }
                     }
                 }
-                adapter.setData(displyList)
+                allAdapter.setData(displyList)
             }
         })
 
@@ -134,14 +133,13 @@ class PreferencesActivity : BaseActivity(),PreferenceRvAdapter.PrefListener,Choo
 
     override fun onPrefCanceled(prefModel: PreferencesModel?, position:Int) {
         mylist.removeAt(position)
+        prefModel?.let { displyList.add(it) }
         adapter.updateDataset()
     }
 
-    override fun onItemClicked(courseModel: PreferencesModel) {
-        val prefModel = PreferencesModel()
-        prefModel.id = courseModel.id
-        prefModel.name = courseModel.name
+    override fun onItemClicked(prefModel: PreferencesModel) {
         mylist.add(prefModel)
+        displyList.add(prefModel)
         adapter.updateDataset()
         chooseDialog.cancel()
     }
