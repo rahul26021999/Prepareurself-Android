@@ -6,17 +6,18 @@ import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
 import com.prepare.prepareurself.R
 import com.prepare.prepareurself.dashboard.data.model.CourseModel
+import com.prepare.prepareurself.preferences.data.PreferencesModel
 import kotlinx.android.synthetic.main.choose_pref_adapter_layout.view.*
 
 class ChoosePrefAdapter(var listener:ChoosePrefListener):RecyclerView.Adapter<ChoosePrefAdapter.ChooseViewHolder>() {
 
-    private var data : List<CourseModel>?=null
+    private var data : List<PreferencesModel>?=null
 
     interface ChoosePrefListener{
-        fun onItemClicked(courseModel: CourseModel)
+        fun onItemClicked(courseModel: PreferencesModel)
     }
 
-    fun setData(list: List<CourseModel>){
+    fun setData(list: List<PreferencesModel>){
         data =list
         notifyDataSetChanged()
     }
@@ -39,7 +40,7 @@ class ChoosePrefAdapter(var listener:ChoosePrefListener):RecyclerView.Adapter<Ch
 
     class ChooseViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView){
 
-        fun bindView(courseModel: CourseModel?){
+        fun bindView(courseModel: PreferencesModel?){
             itemView.tv_choose_pref_name.text = courseModel?.name
         }
 

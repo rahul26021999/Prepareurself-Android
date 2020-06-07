@@ -29,6 +29,7 @@ class PreferencesActivity : BaseActivity(),PreferenceRvAdapter.PrefListener,Choo
     private lateinit var pm: PrefManager
     private lateinit var temList : ArrayList<PreferencesModel>
     private lateinit var chooseDialog: Dialog
+    private lateinit var mylist  : ArrayList<PreferencesModel>
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -39,6 +40,18 @@ class PreferencesActivity : BaseActivity(),PreferenceRvAdapter.PrefListener,Choo
         pm = PrefManager(this)
 
         temList = ArrayList<PreferencesModel>()
+        mylist = ArrayList()
+
+        val c1 = PreferencesModel()
+        c1.id = 1
+        c1.name = "Android"
+
+        val c2 = PreferencesModel()
+        c2.id = 3
+        c2.name = "Laravel"
+
+        mylist.add(c1)
+        mylist.add(c2)
 
         val title = findViewById<TextView>(R.id.title)
 
@@ -50,13 +63,14 @@ class PreferencesActivity : BaseActivity(),PreferenceRvAdapter.PrefListener,Choo
 
         vm.fetchPreferences(pm.getString(Constants.JWTTOKEN))
 
-        vm.getPrefs()?.observe(this, Observer {
-            temList.clear()
-            it?.let {
-                temList.addAll(it)
-                adapter.setData(temList)
-            }
-        })
+//        vm.getPrefs()?.observe(this, Observer {
+//            temList.clear()
+//            it?.let {
+//                temList.addAll(it)
+//                adapter.setData(temList)
+//            }
+//        })
+        adapter.setData(mylist)
 
         lin_add_pref.setOnClickListener {
             showAddPrefDialog()
@@ -88,9 +102,19 @@ class PreferencesActivity : BaseActivity(),PreferenceRvAdapter.PrefListener,Choo
 
         view.title.text = "Select Preference"
 
-        vm.getCourses()?.observe(this, Observer {
-            it?.let {
-                adapter.setData(it)
+        val displyList = ArrayList<PreferencesModel>()
+
+        vm.getPrefs()?.observe(this, Observer {
+            it?.let {it2->
+                displyList.addAll(it2)
+                it2.forEach {
+                    mylist.forEach {it1->
+                        if (it.id == it1.id){
+                            displyList.remove(it)
+                        }
+                    }
+                }
+                adapter.setData(displyList)
             }
         })
 
@@ -109,15 +133,16 @@ class PreferencesActivity : BaseActivity(),PreferenceRvAdapter.PrefListener,Choo
     }
 
     override fun onPrefCanceled(prefModel: PreferencesModel?, position:Int) {
-        temList.removeAt(position)
+        mylist.removeAt(position)
         adapter.updateDataset()
     }
 
-    override fun onItemClicked(courseModel: CourseModel) {
+    override fun onItemClicked(courseModel: PreferencesModel) {
         val prefModel = PreferencesModel()
         prefModel.id = courseModel.id
         prefModel.name = courseModel.name
-        temList.add(prefModel)
+        mylist.add(prefModel)
+        adapter.updateDataset()
         chooseDialog.cancel()
     }
 }
