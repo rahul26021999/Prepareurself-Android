@@ -217,6 +217,7 @@
                         android:layout_width="match_parent"
                         />
                     <TextView
+                        android:id="@+id/tv_setpref"
                         android:text="Set Preferences"
                         android:textSize="22sp"
                         android:layout_height="fill_parent"
@@ -302,6 +303,7 @@
                         android:layout_width="match_parent"
                         />
                     <TextView
+                        android:id="@+id/tv_takequiz"
                         android:text="Take Assessment"
                         android:textSize="22sp"
                         android:layout_height="fill_parent"

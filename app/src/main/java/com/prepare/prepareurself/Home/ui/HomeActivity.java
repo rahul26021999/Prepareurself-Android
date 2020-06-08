@@ -275,18 +275,18 @@ public class HomeActivity extends BaseActivity implements NavigationView.OnNavig
                 viewPager.setCurrentItem(0);
                 break;
             case R.id.nav_star:
-                //redirectToPlayStore();
-                Intent intent = new Intent(HomeActivity.this, TabProjectctivity.class);
+                redirectToPlayStore();
+                /*Intent intent = new Intent(HomeActivity.this, TabProjectctivity.class);
                 intent.putExtra(Constants.COURSEID,1);
                 intent.putExtra(Constants.COURSENAME,"Android");
-                startActivity(intent);
+                startActivity(intent);*/
                 break;
             case R.id.nav_share:
-                //shareApp();
-                Intent intent1 = new Intent(HomeActivity.this, TabResourceActivity.class);
+                shareApp();
+                /*Intent intent1 = new Intent(HomeActivity.this, TabResourceActivity.class);
                 intent1.putExtra(Constants.COURSEID,1);
                 intent1.putExtra(Constants.COURSENAME,"Android");
-                startActivity(intent1);
+                startActivity(intent1);*/
                 break;
             case R.id.nav_about_us :
                 startActivity(new Intent(HomeActivity.this, QuizActivity.class));
