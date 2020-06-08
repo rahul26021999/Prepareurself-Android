@@ -36,6 +36,30 @@ public class CourseModel {
     @SerializedName("sequence")
     private int sequence;
 
+    public int getTopic_count() {
+        return topic_count;
+    }
+
+    public void setTopic_count(int topic_count) {
+        this.topic_count = topic_count;
+    }
+
+    public int getProject_count() {
+        return project_count;
+    }
+
+    public void setProject_count(int project_count) {
+        this.project_count = project_count;
+    }
+
+    @ColumnInfo(name = "topic_count")
+    @SerializedName("topic_count")
+    private int topic_count;
+
+    @ColumnInfo(name = "project_count")
+    @SerializedName("project_count")
+    private int project_count;
+
     public String getDescription() {
         return description;
     }
