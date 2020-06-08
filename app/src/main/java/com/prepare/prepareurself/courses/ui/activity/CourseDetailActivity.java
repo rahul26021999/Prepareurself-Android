@@ -19,10 +19,15 @@ import android.widget.Toast;
 import com.bumptech.glide.GenericTransitionOptions;
 import com.bumptech.glide.Glide;
 import com.bumptech.glide.load.engine.DiskCacheStrategy;
+import com.prepare.prepareurself.Home.ui.HomeActivity;
 import com.prepare.prepareurself.R;
 import com.prepare.prepareurself.courses.data.model.CourseDetailReponseModel;
 import com.prepare.prepareurself.courses.data.model.RateCourseResponseModel;
+import com.prepare.prepareurself.courses.ui.fragmentToActivity.TabProjectctivity;
+import com.prepare.prepareurself.courses.ui.fragmentToActivity.TabResourceActivity;
 import com.prepare.prepareurself.courses.viewmodels.CourseDetailViewModel;
+import com.prepare.prepareurself.preferences.ui.PreferencesActivity;
+import com.prepare.prepareurself.quizv2.ui.QuizActivity;
 import com.prepare.prepareurself.utils.BaseActivity;
 import com.prepare.prepareurself.utils.Constants;
 import com.prepare.prepareurself.utils.PrefManager;
@@ -37,7 +42,7 @@ public class CourseDetailActivity extends BaseActivity implements View.OnClickLi
     private PrefManager prefManager;
     private RatingBar rateCourseBar;
     private Button btnProject, btnResources, btnShareCourse;
-    TextView course_name, course_description;
+    TextView course_name, course_description, tv_takequiz, tv_setpref;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -50,13 +55,20 @@ public class CourseDetailActivity extends BaseActivity implements View.OnClickLi
         rateCourseBar=findViewById(R.id.rateCourseBar);
         btnProject=findViewById(R.id.btnProject);
         btnResources=findViewById(R.id.btnResources);
-        //backBtn.setOnClickListener(this);
+        tv_takequiz=findViewById(R.id.tv_takequiz);
+        tv_setpref=findViewById(R.id.tv_setpref);
+        backBtn.setOnClickListener(this);
+        btnProject.setOnClickListener(this);
+        btnResources.setOnClickListener(this);
+        tv_takequiz.setOnClickListener(this);
+        tv_setpref.setOnClickListener(this);
         vm = new  ViewModelProvider(this).get(CourseDetailViewModel.class);
         prefManager = new PrefManager(this);
 
         Intent intent = getIntent();
 
       //  courseId = intent.getIntExtra(Constants.COURSEID, -1);
+
 
         courseId=1;
 
@@ -105,6 +117,8 @@ public class CourseDetailActivity extends BaseActivity implements View.OnClickLi
 
     }
 
+
+
     private void setdetails() {
 
     }
@@ -113,8 +127,29 @@ public class CourseDetailActivity extends BaseActivity implements View.OnClickLi
     public void onClick(View v) {
         switch (v.getId()) {
             case R.id.backBtn:
-
+                //
                 break;
+            case R.id.btnProject:
+                Intent intent = new Intent(CourseDetailActivity.this, TabProjectctivity.class);
+                intent.putExtra(Constants.COURSEID,1);
+                intent.putExtra(Constants.COURSENAME,"Android");
+                startActivity(intent);
+                break;
+            case R.id.btnResources:
+                Intent intent1 = new Intent(CourseDetailActivity.this, TabResourceActivity.class);
+                intent1.putExtra(Constants.COURSEID,1);
+                intent1.putExtra(Constants.COURSENAME,"Android");
+                startActivity(intent1);
+                break;
+            case R.id.tv_takequiz:
+                Intent intent2 = new Intent(CourseDetailActivity.this, QuizActivity.class);
+                startActivity(intent2);
+                break;
+            case R.id.tv_setpref:
+                Intent intent3 = new Intent(CourseDetailActivity.this, PreferencesActivity.class);
+                startActivity(intent3);
+                break;
+
         }
     }
 }
