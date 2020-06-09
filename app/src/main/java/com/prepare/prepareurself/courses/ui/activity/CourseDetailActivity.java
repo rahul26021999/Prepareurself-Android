@@ -157,8 +157,7 @@ public class CourseDetailActivity extends BaseActivity implements View.OnClickLi
                 try{
                     Uri uri = Utility.getUriOfBitmap(Utility.getBitmapFromView(course_image),CourseDetailActivity.this);
                     String encodedId = Utility.base64EncodeForInt(courseId);
-                    String text = course_name+"\n\n" +
-                            "Prepareurself is providing various courses, projects and resources. " +
+                    String text = "Prepareurself is providing various courses, projects and resources. " +
                             "One place to learn skills and test them by developing projects. \n" +
                             "Checkout prepareurself app : \n" +
                             "prepareurself.in/course/"+encodedId;
