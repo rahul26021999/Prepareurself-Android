@@ -38,4 +38,8 @@ class PreferenceViewModel(application: Application):AndroidViewModel(application
         return courseDbRepository?.allCourses
     }
 
+    fun getUserPreferences(token:String):LiveData<List<PreferencesModel>>?{
+        return prefRepository?.getUserPreferences(token)
+    }
+
 }

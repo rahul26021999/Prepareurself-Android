@@ -43,16 +43,11 @@ class PreferencesActivity : BaseActivity(),PreferenceRvAdapter.PrefListener,Choo
         temList = ArrayList<PreferencesModel>()
         mylist = ArrayList()
 
-        val c1 = PreferencesModel()
-        c1.id = 1
-        c1.name = "Android"
-
-        val c2 = PreferencesModel()
-        c2.id = 3
-        c2.name = "Laravel"
-
-        mylist.add(c1)
-        mylist.add(c2)
+        vm.getUserPreferences(pm.getString(Constants.JWTTOKEN))
+                ?.observe(this, Observer {
+                    mylist.addAll(it)
+                    adapter.setData(mylist)
+                })
 
         val title = findViewById<TextView>(R.id.title)
 
@@ -71,14 +66,13 @@ class PreferencesActivity : BaseActivity(),PreferenceRvAdapter.PrefListener,Choo
 //                adapter.setData(temList)
 //            }
 //        })
-        adapter.setData(mylist)
 
         lin_add_pref.setOnClickListener {
             showAddPrefDialog()
         }
 
         save_pref_btn.setOnClickListener {
-            Log.d("tempList","$temList")
+            Log.d("tempList","$mylist")
         }
 
 

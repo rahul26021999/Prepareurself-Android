@@ -184,4 +184,7 @@ public interface ApiInterface {
                                                          @Query("course_id") int courseId,
                                                          @Query("rating") int rating);
 
+    @POST("get-user-preferences")
+    Call<PrefernceResponseModel> getUserPrefs(@Query("token") String token);
+
 }
