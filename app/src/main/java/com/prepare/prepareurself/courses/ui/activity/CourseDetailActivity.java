@@ -161,7 +161,6 @@ public class CourseDetailActivity extends BaseActivity implements View.OnClickLi
                 startActivity(intent3);
                 break;
             case R.id.btn_shareimage:
-                Log.d("MG","clced");
                 try{
 
                 Uri uri = Utility.getUriOfBitmap(Utility.getBitmapFromView(course_image),CourseDetailActivity.this);
