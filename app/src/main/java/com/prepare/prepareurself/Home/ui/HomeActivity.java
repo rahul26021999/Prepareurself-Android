@@ -263,10 +263,10 @@ public class HomeActivity extends BaseActivity implements NavigationView.OnNavig
 
         switch (id){
             case R.id.nav_contact_us :
-                //sendEmailToDeveloper();
+                sendEmailToDeveloper();
                 //intent to course actvty to check
-                Intent intentcourse = new Intent(HomeActivity.this, CourseDetailActivity.class);
-                startActivity(intentcourse);
+                /*Intent intentcourse = new Intent(HomeActivity.this, CourseDetailActivity.class);
+                startActivity(intentcourse);*/
                 break;
             case R.id.nav_profile :
                 viewPager.setCurrentItem(1);
@@ -393,10 +393,11 @@ public class HomeActivity extends BaseActivity implements NavigationView.OnNavig
 
     @Override
     public void onCourseClicked(CourseModel courseModel) {
-        Intent intent = new Intent(HomeActivity.this,CoursesActivity.class);
+        Intent intent = new Intent(HomeActivity.this,CourseDetailActivity.class);
         intent.putExtra(Constants.COURSEID,courseModel.getId());
-        intent.putExtra(Constants.COURSENAME,courseModel.getName());
+        //intent.putExtra(Constants.COURSENAME,courseModel.getName());
         startActivity(intent);
+        Log.d("COURSEID",""+courseModel.getId());
     }
 
     @Override

@@ -7,6 +7,7 @@ import androidx.lifecycle.ViewModelProvider;
 import android.app.Activity;
 import android.content.Intent;
 import android.graphics.drawable.Drawable;
+import android.net.Uri;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
@@ -27,21 +28,24 @@ import com.prepare.prepareurself.courses.ui.fragmentToActivity.TabProjectctivity
 import com.prepare.prepareurself.courses.ui.fragmentToActivity.TabResourceActivity;
 import com.prepare.prepareurself.courses.viewmodels.CourseDetailViewModel;
 import com.prepare.prepareurself.preferences.ui.PreferencesActivity;
+import com.prepare.prepareurself.profile.ui.EditPreferenceActivity;
 import com.prepare.prepareurself.quizv2.ui.QuizActivity;
 import com.prepare.prepareurself.utils.BaseActivity;
 import com.prepare.prepareurself.utils.Constants;
 import com.prepare.prepareurself.utils.PrefManager;
 import com.prepare.prepareurself.utils.Utility;
 
+import java.io.IOException;
+
 import okio.Utf8;
 
 public class CourseDetailActivity extends BaseActivity implements View.OnClickListener{
-    private ImageView backBtn ,course_image;
+    private ImageView backBtn ,course_image, btn_shareimage;
     private CourseDetailViewModel vm;
     private int courseId = -1;
     private PrefManager prefManager;
     private RatingBar rateCourseBar;
-    private Button btnProject, btnResources, btnShareCourse;
+    private Button btnProject, btnResources;
     TextView course_name, course_description, tv_takequiz, tv_setpref;
 
     @Override
@@ -57,6 +61,7 @@ public class CourseDetailActivity extends BaseActivity implements View.OnClickLi
         btnResources=findViewById(R.id.btnResources);
         tv_takequiz=findViewById(R.id.tv_takequiz);
         tv_setpref=findViewById(R.id.tv_setpref);
+        btn_shareimage=findViewById(R.id.btn_shareimage);
         backBtn.setOnClickListener(this);
         btnProject.setOnClickListener(this);
         btnResources.setOnClickListener(this);
@@ -66,11 +71,7 @@ public class CourseDetailActivity extends BaseActivity implements View.OnClickLi
         prefManager = new PrefManager(this);
 
         Intent intent = getIntent();
-
-      //  courseId = intent.getIntExtra(Constants.COURSEID, -1);
-
-
-        courseId=1;
+        courseId = intent.getIntExtra(Constants.COURSEID, -1);
 
         if (courseId!=-1){
             vm.fetchCourseDetails(prefManager.getString(Constants.JWTTOKEN),courseId);
@@ -127,7 +128,8 @@ public class CourseDetailActivity extends BaseActivity implements View.OnClickLi
     public void onClick(View v) {
         switch (v.getId()) {
             case R.id.backBtn:
-                //
+                //startActivity(new Intent(CourseDetailActivity.this, HomeActivity.class));
+                finish();
                 break;
             case R.id.btnProject:
                 Intent intent = new Intent(CourseDetailActivity.this, TabProjectctivity.class);
@@ -149,7 +151,21 @@ public class CourseDetailActivity extends BaseActivity implements View.OnClickLi
                 Intent intent3 = new Intent(CourseDetailActivity.this, PreferencesActivity.class);
                 startActivity(intent3);
                 break;
-
+            case R.id.btn_shareimage:
+                Log.d("MG","clced");
+                try{
+                Uri uri = Utility.getUriOfBitmap(Utility.getBitmapFromView(course_image),CourseDetailActivity.this);
+                String encodedId = Utility.base64EncodeForInt(courseId);
+                String text = course_name+"\n\n" +
+                        "Prepareurself is providing various courses, projects and resources. " +
+                        "One place to learn skills and test them by developing projects. \n" +
+                        "Checkout prepareurself app : \n" +
+                        "prepareurself.in/project/"+encodedId;
+                Utility.shareContent(CourseDetailActivity.this,uri,text);
+        } catch (IOException e) {
+            e.printStackTrace();
         }
+                break;
     }
+}
 }
