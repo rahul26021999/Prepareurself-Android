@@ -1,6 +1,7 @@
 package com.prepare.prepareurself.dashboard.ui.adapters;
 
 import android.app.Activity;
+import android.content.Intent;
 import android.graphics.drawable.Drawable;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -14,8 +15,11 @@ import androidx.recyclerview.widget.RecyclerView;
 import com.bumptech.glide.GenericTransitionOptions;
 import com.bumptech.glide.Glide;
 import com.bumptech.glide.load.engine.DiskCacheStrategy;
+import com.prepare.prepareurself.courses.ui.activity.CourseDetailActivity;
+import com.prepare.prepareurself.courses.ui.fragmentToActivity.TabResourceActivity;
 import com.prepare.prepareurself.dashboard.data.model.CourseModel;
 import com.prepare.prepareurself.R;
+import com.prepare.prepareurself.dashboard.ui.fragment.DashboardFragment;
 import com.prepare.prepareurself.utils.Constants;
 import com.prepare.prepareurself.utils.Utility;
 
@@ -46,6 +50,9 @@ public class CoursesHorizontalRvAdapter extends RecyclerView.Adapter<CoursesHori
             @Override
             public void onClick(View v) {
                 listener.onCourseClicked(courses.get(position));
+                /*Intent intent1 = new Intent(., CourseDetailActivity.class);
+                intent1.putExtra(Constants.COURSEID,courses.get(position).getId());*/
+
             }
         });
     }

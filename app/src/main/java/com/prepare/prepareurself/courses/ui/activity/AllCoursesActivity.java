@@ -69,7 +69,7 @@ public class AllCoursesActivity extends BaseActivity implements AllCoursesRvAdap
 
     @Override
     public void onCourseClicked(CourseModel courseModel) {
-        Intent intent = new Intent(AllCoursesActivity.this, CoursesActivity.class);
+        Intent intent = new Intent(AllCoursesActivity.this, CourseDetailActivity.class);
         intent.putExtra(Constants.COURSEID, courseModel.getId());
         startActivity(intent);
     }

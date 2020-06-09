@@ -41,6 +41,7 @@ import com.prepare.prepareurself.Home.ui.SearchFragment;
 import com.prepare.prepareurself.courses.data.model.ProjectsModel;
 import com.prepare.prepareurself.courses.data.model.TopicsModel;
 import com.prepare.prepareurself.courses.ui.activity.AllCoursesActivity;
+import com.prepare.prepareurself.courses.ui.activity.CourseDetailActivity;
 import com.prepare.prepareurself.courses.ui.activity.CoursesActivity;
 import com.prepare.prepareurself.courses.ui.activity.ProjectsActivity;
 import com.prepare.prepareurself.banner.BannerModel;
@@ -386,6 +387,10 @@ public class DashboardFragment extends Fragment implements DashboardRvAdapter.Da
     @Override
     public void onCourseClicked(CourseModel courseModel) {
         listener.onCourseClicked(courseModel);
+       /* Intent intent1 = new Intent(getActivity(), CourseDetailActivity.class);
+        intent1.putExtra(Constants.COURSEID,courseModel.getId());
+        startActivity(intent1);
+        Log.d("COURSEID",""+courseModel.getId());*/
     }
 
     @Override

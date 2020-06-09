@@ -27,6 +27,7 @@ import com.prepare.prepareurself.courses.ui.fragmentToActivity.TabProjectctivity
 import com.prepare.prepareurself.courses.ui.fragmentToActivity.TabResourceActivity;
 import com.prepare.prepareurself.courses.viewmodels.CourseDetailViewModel;
 import com.prepare.prepareurself.preferences.ui.PreferencesActivity;
+import com.prepare.prepareurself.profile.ui.EditPreferenceActivity;
 import com.prepare.prepareurself.quizv2.ui.QuizActivity;
 import com.prepare.prepareurself.utils.BaseActivity;
 import com.prepare.prepareurself.utils.Constants;
@@ -66,11 +67,7 @@ public class CourseDetailActivity extends BaseActivity implements View.OnClickLi
         prefManager = new PrefManager(this);
 
         Intent intent = getIntent();
-
-      //  courseId = intent.getIntExtra(Constants.COURSEID, -1);
-
-
-        courseId=1;
+        courseId = intent.getIntExtra(Constants.COURSEID, -1);
 
         if (courseId!=-1){
             vm.fetchCourseDetails(prefManager.getString(Constants.JWTTOKEN),courseId);
@@ -127,7 +124,8 @@ public class CourseDetailActivity extends BaseActivity implements View.OnClickLi
     public void onClick(View v) {
         switch (v.getId()) {
             case R.id.backBtn:
-                //
+                //startActivity(new Intent(CourseDetailActivity.this, HomeActivity.class));
+                finish();
                 break;
             case R.id.btnProject:
                 Intent intent = new Intent(CourseDetailActivity.this, TabProjectctivity.class);
