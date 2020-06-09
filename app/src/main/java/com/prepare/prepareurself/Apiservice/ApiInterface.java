@@ -3,6 +3,7 @@ package com.prepare.prepareurself.Apiservice;
 import com.prepare.prepareurself.authentication.data.model.ForgotPasswordResponseModel;
 import com.prepare.prepareurself.authentication.data.model.RegisterResponseModel;
 import com.prepare.prepareurself.authentication.data.model.UserModel;
+import com.prepare.prepareurself.courses.data.model.AddToUserPrefResponseModel;
 import com.prepare.prepareurself.courses.data.model.CourseDetailReponseModel;
 import com.prepare.prepareurself.courses.data.model.GetProjectResponse;
 import com.prepare.prepareurself.courses.data.model.GetTopicResponseModel;
@@ -191,5 +192,10 @@ public interface ApiInterface {
     @POST("update-user-preferences")
     Call<UpdatePrefResponseModel> updateUserPref(@Query("token") String token,
                                                  @Query("preferences[]") List<Integer> list);
+
+    @POST("add-to-user-preferences")
+    Call<AddToUserPrefResponseModel> addToUserPref(@Query("token") String token,
+                                                   @Query("course_id") int course_id,
+                                                   @Query("type") int type);
 
 }

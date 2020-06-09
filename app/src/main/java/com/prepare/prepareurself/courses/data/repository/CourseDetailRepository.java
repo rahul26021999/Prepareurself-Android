@@ -7,6 +7,7 @@ import androidx.lifecycle.MutableLiveData;
 
 import com.prepare.prepareurself.Apiservice.ApiClient;
 import com.prepare.prepareurself.Apiservice.ApiInterface;
+import com.prepare.prepareurself.courses.data.model.AddToUserPrefResponseModel;
 import com.prepare.prepareurself.courses.data.model.CourseDetailReponseModel;
 import com.prepare.prepareurself.courses.data.model.RateCourseResponseModel;
 
@@ -21,7 +22,7 @@ public class CourseDetailRepository {
     public CourseDetailRepository(){
         apiInterface = ApiClient.getApiClient().create(ApiInterface.class);
     }
-
+    //CourseDetailReponseModel
     public LiveData<CourseDetailReponseModel> fetchCourseDetails(String token, int courseId){
 
         final MutableLiveData<CourseDetailReponseModel> data = new MutableLiveData<>();
@@ -67,6 +68,31 @@ public class CourseDetailRepository {
 
             @Override
             public void onFailure(Call<RateCourseResponseModel> call, Throwable t) {
+                data.setValue(null);
+                //t.getLocalizedMessage(); toast
+            }
+        });
+        return  data;
+    }
+
+    //add to user pref model
+    public LiveData<AddToUserPrefResponseModel> fetchAddUserPref(String token, int course_id, int type){
+        final  MutableLiveData<AddToUserPrefResponseModel> data=new MutableLiveData<>();
+        apiInterface.addToUserPref(token,course_id,type).enqueue(new Callback<AddToUserPrefResponseModel>() {
+            @Override
+            public void onResponse(Call<AddToUserPrefResponseModel> call, Response<AddToUserPrefResponseModel> response) {
+                AddToUserPrefResponseModel res=response.body();
+                if (res!=null && res.getError_code() == 0){
+                    data.setValue(res);
+                    Log.d("TAGSETPREF","SHOW : "+res.getError_code());
+                }else{
+                    data.setValue(null);
+                }
+
+            }
+
+            @Override
+            public void onFailure(Call<AddToUserPrefResponseModel> call, Throwable t) {
                 data.setValue(null);
                 //t.getLocalizedMessage(); toast
             }
