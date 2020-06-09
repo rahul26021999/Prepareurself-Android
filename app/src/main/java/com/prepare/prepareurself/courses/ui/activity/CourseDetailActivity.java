@@ -67,6 +67,7 @@ public class CourseDetailActivity extends BaseActivity implements View.OnClickLi
         btnResources.setOnClickListener(this);
         tv_takequiz.setOnClickListener(this);
         tv_setpref.setOnClickListener(this);
+        btn_shareimage.setOnClickListener(this);
         vm = new  ViewModelProvider(this).get(CourseDetailViewModel.class);
         prefManager = new PrefManager(this);
 
@@ -154,17 +155,16 @@ public class CourseDetailActivity extends BaseActivity implements View.OnClickLi
             case R.id.btn_shareimage:
                 Log.d("MG","clced");
                 try{
-                Uri uri = Utility.getUriOfBitmap(Utility.getBitmapFromView(course_image),CourseDetailActivity.this);
-                String encodedId = Utility.base64EncodeForInt(courseId);
-                String text = course_name+"\n\n" +
-                        "Prepareurself is providing various courses, projects and resources. " +
-                        "One place to learn skills and test them by developing projects. \n" +
-                        "Checkout prepareurself app : \n" +
-                        "prepareurself.in/project/"+encodedId;
-                Utility.shareContent(CourseDetailActivity.this,uri,text);
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
+                    Uri uri = Utility.getUriOfBitmap(Utility.getBitmapFromView(course_image),CourseDetailActivity.this);
+                    String encodedId = Utility.base64EncodeForInt(courseId);
+                    String text = "Prepareurself is providing various courses, projects and resources. " +
+                            "One place to learn skills and test them by developing projects. \n" +
+                            "Checkout prepareurself app : \n" +
+                            "prepareurself.in/course/"+encodedId;
+                    Utility.shareContent(CourseDetailActivity.this,uri,text);
+                 } catch (IOException e) {
+                    e.printStackTrace();
+                 }
                 break;
     }
 }
