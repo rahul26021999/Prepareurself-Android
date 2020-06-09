@@ -24,6 +24,7 @@ import com.bumptech.glide.Glide;
 import com.bumptech.glide.load.engine.DiskCacheStrategy;
 import com.prepare.prepareurself.Home.ui.HomeActivity;
 import com.prepare.prepareurself.R;
+import com.prepare.prepareurself.courses.data.model.AddToUserPrefResponseModel;
 import com.prepare.prepareurself.courses.data.model.CourseDetailReponseModel;
 import com.prepare.prepareurself.courses.data.model.RateCourseResponseModel;
 import com.prepare.prepareurself.courses.ui.fragmentToActivity.TabProjectctivity;
@@ -120,6 +121,14 @@ public class CourseDetailActivity extends BaseActivity implements View.OnClickLi
                 @Override
                 public void onChanged(RateCourseResponseModel rateCourseResponseModel) {
                     Toast.makeText(CourseDetailActivity.this,""+ rateCourseResponseModel.getMessage().toString(),Toast.LENGTH_LONG).show();
+                }
+            });
+            //Adduser pref model
+            vm.addToUserPrefResponseModelLiveData.observe(this, new Observer<AddToUserPrefResponseModel>() {
+                @Override
+                public void onChanged(AddToUserPrefResponseModel addToUserPrefResponseModel) {
+                    Toast.makeText(CourseDetailActivity.this,""+addToUserPrefResponseModel.getMessage(),Toast
+                    .LENGTH_LONG).show();
                 }
             });
 
