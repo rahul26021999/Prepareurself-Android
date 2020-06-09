@@ -32,12 +32,11 @@ QuizSelectableOptionAdapter.OptionListener {
         val view = LayoutInflater.from(context).inflate(R.layout.quiz_pager_adapter_layout,container,false)
         val question = questions[position]
 
-        questionId = question._id.toString()
+        questionId = question.id!!
 
         view.tv_quiz_q_no.text = "${position+1}"
-        view.tv_quiz_q_type.text = question.type
 
-        view.tv_quiz_q_text.text = question.question
+        view.tv_quiz_q_text.loadData(question.question,"text/html","UTF-8") 
 
 
 
@@ -45,7 +44,7 @@ QuizSelectableOptionAdapter.OptionListener {
         view.rv_options_quiz.layoutManager = LinearLayoutManager(context)
         view.rv_options_quiz.adapter = optionAdapter
 
-        question.options?.let { optionAdapter.setData(it) }
+        question.option?.let { optionAdapter.setData(it) }
 
         if (selectedOption!=-1){
             optionAdapter.updateSelection(selectedOption)
@@ -83,7 +82,7 @@ QuizSelectableOptionAdapter.OptionListener {
     }
 
     companion object{
-        var questionId = ""
+        var questionId = -1
         var selectedOption = -1
     }
 

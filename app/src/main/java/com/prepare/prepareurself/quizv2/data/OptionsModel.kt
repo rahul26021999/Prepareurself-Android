@@ -5,7 +5,10 @@ import kotlinx.android.parcel.Parcelize
 
 @Parcelize
 data class OptionsModel(
-        var optionImage:String?="",
-        var _id:String?="",
-        var option:String?=""
+        var id:Int?=0,
+        var option:String?="",
+        var image:String?="",
+        var question_id:String?="",
+        var created_at:String?="",
+        var updated_at:String?=""
 ): Parcelable

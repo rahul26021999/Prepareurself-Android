@@ -1,6 +1,7 @@
 package com.prepare.prepareurself.quizv2.ui
 
 import android.content.Context
+import android.text.Html
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -90,7 +91,7 @@ class QuizSelectableOptionAdapter(context: Context, interactor:OptionListener) :
                 2-> quiz_option_letter?.text = "C"
                 3-> quiz_option_letter?.text = "D"
             }
-            tv_option_text?.text = options.option
+            tv_option_text?.text = Html.fromHtml(options.option)
 
         }
 
