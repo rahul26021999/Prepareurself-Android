@@ -7,6 +7,7 @@ import androidx.lifecycle.ViewModelProvider;
 import android.app.Activity;
 import android.content.Intent;
 import android.graphics.drawable.Drawable;
+import android.net.Uri;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
@@ -34,15 +35,17 @@ import com.prepare.prepareurself.utils.Constants;
 import com.prepare.prepareurself.utils.PrefManager;
 import com.prepare.prepareurself.utils.Utility;
 
+import java.io.IOException;
+
 import okio.Utf8;
 
 public class CourseDetailActivity extends BaseActivity implements View.OnClickListener{
-    private ImageView backBtn ,course_image;
+    private ImageView backBtn ,course_image, btn_shareimage;
     private CourseDetailViewModel vm;
     private int courseId = -1;
     private PrefManager prefManager;
     private RatingBar rateCourseBar;
-    private Button btnProject, btnResources, btnShareCourse;
+    private Button btnProject, btnResources;
     TextView course_name, course_description, tv_takequiz, tv_setpref;
 
     @Override
@@ -58,6 +61,7 @@ public class CourseDetailActivity extends BaseActivity implements View.OnClickLi
         btnResources=findViewById(R.id.btnResources);
         tv_takequiz=findViewById(R.id.tv_takequiz);
         tv_setpref=findViewById(R.id.tv_setpref);
+        btn_shareimage=findViewById(R.id.btn_shareimage);
         backBtn.setOnClickListener(this);
         btnProject.setOnClickListener(this);
         btnResources.setOnClickListener(this);
@@ -147,7 +151,21 @@ public class CourseDetailActivity extends BaseActivity implements View.OnClickLi
                 Intent intent3 = new Intent(CourseDetailActivity.this, PreferencesActivity.class);
                 startActivity(intent3);
                 break;
-
+            case R.id.btn_shareimage:
+                Log.d("MG","clced");
+                try{
+                Uri uri = Utility.getUriOfBitmap(Utility.getBitmapFromView(course_image),CourseDetailActivity.this);
+                String encodedId = Utility.base64EncodeForInt(courseId);
+                String text = course_name+"\n\n" +
+                        "Prepareurself is providing various courses, projects and resources. " +
+                        "One place to learn skills and test them by developing projects. \n" +
+                        "Checkout prepareurself app : \n" +
+                        "prepareurself.in/project/"+encodedId;
+                Utility.shareContent(CourseDetailActivity.this,uri,text);
+        } catch (IOException e) {
+            e.printStackTrace();
         }
+                break;
     }
+}
 }
