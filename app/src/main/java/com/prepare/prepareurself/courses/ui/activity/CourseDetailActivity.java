@@ -1,6 +1,7 @@
 package com.prepare.prepareurself.courses.ui.activity;
 
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.cardview.widget.CardView;
 import androidx.lifecycle.Observer;
 import androidx.lifecycle.ViewModelProvider;
 
@@ -14,6 +15,7 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.RatingBar;
+import android.widget.RelativeLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -47,6 +49,7 @@ public class CourseDetailActivity extends BaseActivity implements View.OnClickLi
     private RatingBar rateCourseBar;
     private Button btnProject, btnResources;
     TextView course_name, course_description, tv_takequiz, tv_setpref;
+    CardView cd_forum, cd_takequiz;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -62,11 +65,14 @@ public class CourseDetailActivity extends BaseActivity implements View.OnClickLi
         tv_takequiz=findViewById(R.id.tv_takequiz);
         tv_setpref=findViewById(R.id.tv_setpref);
         btn_shareimage=findViewById(R.id.btn_shareimage);
+        /* cd_takequiz=findViewById(R.id.cd_takequiz);*/
+        cd_forum=findViewById(R.id.cd_forum);
         backBtn.setOnClickListener(this);
         btnProject.setOnClickListener(this);
         btnResources.setOnClickListener(this);
         tv_takequiz.setOnClickListener(this);
         tv_setpref.setOnClickListener(this);
+        cd_forum.setOnClickListener(this);
         vm = new  ViewModelProvider(this).get(CourseDetailViewModel.class);
         prefManager = new PrefManager(this);
 
@@ -162,9 +168,14 @@ public class CourseDetailActivity extends BaseActivity implements View.OnClickLi
                         "Checkout prepareurself app : \n" +
                         "prepareurself.in/project/"+encodedId;
                 Utility.shareContent(CourseDetailActivity.this,uri,text);
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
+                }
+                 catch (IOException e) {
+                         e.printStackTrace();
+                }
+                break;
+            case R.id.cd_forum:
+                Intent intent4 = new Intent(CourseDetailActivity.this, ForumActivity.class);
+                startActivity(intent4);
                 break;
     }
 }
