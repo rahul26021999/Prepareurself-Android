@@ -163,6 +163,7 @@ public class CourseDetailActivity extends BaseActivity implements View.OnClickLi
                 break;
             case R.id.tv_takequiz:
                 Intent intent2 = new Intent(CourseDetailActivity.this, QuizActivity.class);
+                intent2.putExtra(Constants.COURSEID,courseId);
                 startActivity(intent2);
                 break;
             case R.id.tv_setpref:

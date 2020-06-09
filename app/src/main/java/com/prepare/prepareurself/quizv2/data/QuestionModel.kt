@@ -5,10 +5,13 @@ import kotlinx.android.parcel.Parcelize
 
 @Parcelize
 data class QuestionModel(
-        var questionImage:String?="",
-        var type:String?="",
-        var _id:String?="",
+        var id:Int?=0,
         var question:String?="",
-        var options:List<OptionsModel>?=null
+        var course_id:Int?=0,
+        var ques_level:String?="",
+        var created_at:String?="",
+        var updated_at:String?="",
+        var option:List<OptionsModel>?=null,
+        var answer:AnswerModel?=null
 
 ): Parcelable

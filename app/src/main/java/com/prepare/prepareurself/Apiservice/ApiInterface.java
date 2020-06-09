@@ -21,6 +21,7 @@ import com.prepare.prepareurself.preferences.data.UpdatePrefResponseModel;
 import com.prepare.prepareurself.profile.data.model.UpdatePasswordResponseModel;
 import com.prepare.prepareurself.profile.data.model.UpdatePreferenceResponseModel;
 import com.prepare.prepareurself.profile.data.model.AllPreferencesResponseModel;
+import com.prepare.prepareurself.quizv2.data.QuizResponseModel;
 import com.prepare.prepareurself.resources.data.model.GetResourcesResponse;
 import com.prepare.prepareurself.resources.data.model.ResourceLikesResponse;
 import com.prepare.prepareurself.resources.data.model.ResourceViewsResponse;
@@ -193,7 +194,12 @@ public interface ApiInterface {
     Call<UpdatePrefResponseModel> updateUserPref(@Query("token") String token,
                                                  @Query("preferences[]") List<Integer> list);
 
-    @POST("add-to-user-preferences")
+    @POST("get-course-quiz")
+    Call<QuizResponseModel> fetchQuiz(@Query("token") String token,
+                                      @Query("course_id") Integer courseId,
+                                      @Query("level") String level);
+
+  @POST("add-to-user-preferences")
     Call<AddToUserPrefResponseModel> addToUserPref(@Query("token") String token,
                                                    @Query("course_id") int course_id,
                                                    @Query("type") int type);

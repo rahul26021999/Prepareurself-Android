@@ -5,10 +5,10 @@ import kotlinx.android.parcel.Parcelize
 
 @Parcelize
 data class QuizResponseBody(
-        var duration:Int?=0,
-        var questions:List<QuestionModel>?=null,
-        var type:String?="",
-        var title:String?="",
-        var description:String?="",
-        var instructions:List<InstructionsModel>?=null
+        var id:Int?=0,
+        var user_id:Int?=0,
+        var status:String?="",
+        var created_at:String?="",
+        var updated_at:String?="",
+        var questions:List<QuestionModel>?=null
 ): Parcelable
