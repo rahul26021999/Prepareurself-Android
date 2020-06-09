@@ -16,6 +16,7 @@ import com.prepare.prepareurself.dashboard.data.model.HomepageResponseModel;
 import com.prepare.prepareurself.favourites.data.model.FavouritesResponseModel;
 import com.prepare.prepareurself.feedback.data.model.FeedbacksubmitModel;
 import com.prepare.prepareurself.preferences.data.PrefernceResponseModel;
+import com.prepare.prepareurself.preferences.data.UpdatePrefResponseModel;
 import com.prepare.prepareurself.profile.data.model.UpdatePasswordResponseModel;
 import com.prepare.prepareurself.profile.data.model.UpdatePreferenceResponseModel;
 import com.prepare.prepareurself.profile.data.model.AllPreferencesResponseModel;
@@ -186,5 +187,9 @@ public interface ApiInterface {
 
     @POST("get-user-preferences")
     Call<PrefernceResponseModel> getUserPrefs(@Query("token") String token);
+
+    @POST("update-user-preferences")
+    Call<UpdatePrefResponseModel> updateUserPref(@Query("token") String token,
+                                                 @Query("preferences[]") List<Integer> list);
 
 }
