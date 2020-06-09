@@ -3,15 +3,20 @@ package com.prepare.prepareurself.preferences.ui
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.Filter
+import android.widget.Filterable
 import androidx.recyclerview.widget.RecyclerView
 import com.prepare.prepareurself.R
 import com.prepare.prepareurself.dashboard.data.model.CourseModel
 import com.prepare.prepareurself.preferences.data.PreferencesModel
 import kotlinx.android.synthetic.main.choose_pref_adapter_layout.view.*
+import java.util.*
+import kotlin.collections.ArrayList
 
-class ChoosePrefAdapter(var listener:ChoosePrefListener):RecyclerView.Adapter<ChoosePrefAdapter.ChooseViewHolder>() {
+class ChoosePrefAdapter(var listener:ChoosePrefListener):RecyclerView.Adapter<ChoosePrefAdapter.ChooseViewHolder>(), Filterable {
 
     private var data : List<PreferencesModel>?=null
+    private var filteredData : List<PreferencesModel>?=null
 
     interface ChoosePrefListener{
         fun onItemClicked(courseModel: PreferencesModel)
@@ -19,6 +24,7 @@ class ChoosePrefAdapter(var listener:ChoosePrefListener):RecyclerView.Adapter<Ch
 
     fun setData(list: List<PreferencesModel>){
         data =list
+        filteredData = data
         notifyDataSetChanged()
     }
 
@@ -27,14 +33,46 @@ class ChoosePrefAdapter(var listener:ChoosePrefListener):RecyclerView.Adapter<Ch
     }
 
     override fun getItemCount(): Int {
-        return data?.size ?: 0
+        return filteredData?.size ?: 0
     }
 
     override fun onBindViewHolder(holder: ChooseViewHolder, position: Int) {
-        val courseModel  = data?.get(position)
+        val courseModel  = filteredData?.get(position)
         holder.bindView(courseModel)
         holder.itemView.setOnClickListener {
             courseModel?.let { it1 -> listener.onItemClicked(it1) }
+        }
+    }
+
+    override fun getFilter(): Filter {
+        return object : Filter(){
+            override fun performFiltering(constraint: CharSequence?): FilterResults {
+                val charSearch = constraint.toString()
+                if (charSearch.isEmpty()){
+                    filteredData = data
+                }else{
+                    val resultList = ArrayList<PreferencesModel>()
+                    data?.forEach {
+                        if (it.name?.toLowerCase(Locale.ROOT)?.contains(charSearch.toLowerCase(Locale.ROOT))!!){
+                            resultList.add(it)
+                        }
+                    }
+                    filteredData = resultList
+                }
+
+                val filteredResults = FilterResults()
+                filteredResults.values = filteredData
+                return filteredResults
+
+            }
+
+            @Suppress("UNCHECKED_CAST")
+            override fun publishResults(constraint: CharSequence?, results: FilterResults?) {
+
+                filteredData = results?.values as List<PreferencesModel>?
+                notifyDataSetChanged()
+
+            }
         }
     }
 

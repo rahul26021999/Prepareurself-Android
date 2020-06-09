@@ -2,8 +2,11 @@ package com.prepare.prepareurself.preferences.ui
 
 import android.app.Dialog
 import android.os.Bundle
+import android.text.Editable
+import android.text.TextWatcher
 import android.util.Log
 import android.view.*
+import android.widget.EditText
 import android.widget.TextView
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
@@ -116,6 +119,21 @@ class PreferencesActivity : BaseActivity(),PreferenceRvAdapter.PrefListener,Choo
         view.rv_choose_pref.adapter = allAdapter
 
         view.title.text = "Select Preference"
+
+        view.et_pref_name.addTextChangedListener(object : TextWatcher{
+            override fun afterTextChanged(s: Editable?) {
+
+            }
+
+            override fun beforeTextChanged(s: CharSequence?, start: Int, count: Int, after: Int) {
+
+            }
+
+            override fun onTextChanged(s: CharSequence?, start: Int, before: Int, count: Int) {
+                allAdapter.filter.filter(s)
+            }
+        })
+
 
         vm.getPrefs()?.observe(this, Observer {
             it?.let {it2->
