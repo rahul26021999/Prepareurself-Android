@@ -2,11 +2,11 @@ package com.prepare.prepareurself.preferences.ui
 
 import android.app.Dialog
 import android.os.Bundle
+import android.text.Editable
+import android.text.TextWatcher
 import android.util.Log
-import android.view.KeyEvent
-import android.view.LayoutInflater
-import android.view.Window
-import android.view.WindowManager
+import android.view.*
+import android.widget.EditText
 import android.widget.TextView
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
@@ -17,8 +17,10 @@ import com.prepare.prepareurself.preferences.viewmodel.PreferenceViewModel
 import com.prepare.prepareurself.utils.BaseActivity
 import com.prepare.prepareurself.utils.Constants
 import com.prepare.prepareurself.utils.PrefManager
+import com.prepare.prepareurself.utils.Utility
 import kotlinx.android.synthetic.main.activity_preferences.*
 import kotlinx.android.synthetic.main.choose_pref_dialog_layout.view.*
+import kotlinx.android.synthetic.main.layout_topbar.*
 import kotlinx.android.synthetic.main.layout_topbar.view.*
 
 class PreferencesActivity : BaseActivity(),PreferenceRvAdapter.PrefListener,ChoosePrefAdapter.ChoosePrefListener {
@@ -43,16 +45,15 @@ class PreferencesActivity : BaseActivity(),PreferenceRvAdapter.PrefListener,Choo
         temList = ArrayList<PreferencesModel>()
         mylist = ArrayList()
 
-        val c1 = PreferencesModel()
-        c1.id = 1
-        c1.name = "Android"
-
-        val c2 = PreferencesModel()
-        c2.id = 3
-        c2.name = "Laravel"
-
-        mylist.add(c1)
-        mylist.add(c2)
+        vm.getUserPreferences(pm.getString(Constants.JWTTOKEN))
+                ?.observe(this, Observer {
+                   if (it!=null){
+                       mylist.addAll(it)
+                       adapter.setData(mylist)
+                   }else{
+                       Utility.showToast(this,Constants.SOMETHINGWENTWRONG)
+                   }
+                })
 
         val title = findViewById<TextView>(R.id.title)
 
@@ -71,14 +72,31 @@ class PreferencesActivity : BaseActivity(),PreferenceRvAdapter.PrefListener,Choo
 //                adapter.setData(temList)
 //            }
 //        })
-        adapter.setData(mylist)
 
         lin_add_pref.setOnClickListener {
             showAddPrefDialog()
         }
 
+        backBtn.setOnClickListener {
+            finish()
+        }
+
         save_pref_btn.setOnClickListener {
-            Log.d("tempList","$temList")
+            progress_bar_pref.visibility = View.VISIBLE
+            Log.d("tempList","$mylist")
+            val sublist = ArrayList<Int>()
+            mylist.forEach {
+                it.id?.let { it1 -> sublist.add(it1) }
+            }
+            vm.updatePref(pm.getString(Constants.JWTTOKEN),sublist)
+                    ?.observe(this, Observer {
+                        if (it!=null){
+                            Utility.showToast(this,it.message)
+                        }else{
+                            Utility.showToast(this, Constants.SOMETHINGWENTWRONG)
+                        }
+                        progress_bar_pref.visibility = View.GONE
+                    })
         }
 
 
@@ -101,6 +119,21 @@ class PreferencesActivity : BaseActivity(),PreferenceRvAdapter.PrefListener,Choo
         view.rv_choose_pref.adapter = allAdapter
 
         view.title.text = "Select Preference"
+
+        view.et_pref_name.addTextChangedListener(object : TextWatcher{
+            override fun afterTextChanged(s: Editable?) {
+
+            }
+
+            override fun beforeTextChanged(s: CharSequence?, start: Int, count: Int, after: Int) {
+
+            }
+
+            override fun onTextChanged(s: CharSequence?, start: Int, before: Int, count: Int) {
+                allAdapter.filter.filter(s)
+            }
+        })
+
 
         vm.getPrefs()?.observe(this, Observer {
             it?.let {it2->

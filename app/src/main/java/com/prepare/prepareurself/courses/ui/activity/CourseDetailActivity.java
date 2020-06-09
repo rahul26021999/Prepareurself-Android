@@ -72,7 +72,10 @@ public class CourseDetailActivity extends BaseActivity implements View.OnClickLi
         btnResources.setOnClickListener(this);
         tv_takequiz.setOnClickListener(this);
         tv_setpref.setOnClickListener(this);
+
         cd_forum.setOnClickListener(this);
+        btn_shareimage.setOnClickListener(this);
+
         vm = new  ViewModelProvider(this).get(CourseDetailViewModel.class);
         prefManager = new PrefManager(this);
 
@@ -160,6 +163,7 @@ public class CourseDetailActivity extends BaseActivity implements View.OnClickLi
             case R.id.btn_shareimage:
                 Log.d("MG","clced");
                 try{
+
                 Uri uri = Utility.getUriOfBitmap(Utility.getBitmapFromView(course_image),CourseDetailActivity.this);
                 String encodedId = Utility.base64EncodeForInt(courseId);
                 String text = course_name+"\n\n" +

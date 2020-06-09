@@ -8,6 +8,7 @@ import com.prepare.prepareurself.dashboard.data.model.CourseModel
 import com.prepare.prepareurself.preferences.data.PrefDbRepository
 import com.prepare.prepareurself.preferences.data.PrefRepository
 import com.prepare.prepareurself.preferences.data.PreferencesModel
+import com.prepare.prepareurself.preferences.data.UpdatePrefResponseModel
 import com.prepare.prepareurself.profile.data.repository.ProfileRepository
 
 class PreferenceViewModel(application: Application):AndroidViewModel(application){
@@ -36,6 +37,14 @@ class PreferenceViewModel(application: Application):AndroidViewModel(application
 
     fun getCourses():LiveData<List<CourseModel>>?{
         return courseDbRepository?.allCourses
+    }
+
+    fun getUserPreferences(token:String):LiveData<List<PreferencesModel>>?{
+        return prefRepository?.getUserPreferences(token)
+    }
+
+    fun updatePref(token: String,list: List<Int>):LiveData<UpdatePrefResponseModel>?{
+        return prefRepository?.updatePref(token, list)
     }
 
 }
