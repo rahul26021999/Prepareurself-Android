@@ -3,10 +3,7 @@ package com.prepare.prepareurself.preferences.ui
 import android.app.Dialog
 import android.os.Bundle
 import android.util.Log
-import android.view.KeyEvent
-import android.view.LayoutInflater
-import android.view.Window
-import android.view.WindowManager
+import android.view.*
 import android.widget.TextView
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
@@ -17,8 +14,10 @@ import com.prepare.prepareurself.preferences.viewmodel.PreferenceViewModel
 import com.prepare.prepareurself.utils.BaseActivity
 import com.prepare.prepareurself.utils.Constants
 import com.prepare.prepareurself.utils.PrefManager
+import com.prepare.prepareurself.utils.Utility
 import kotlinx.android.synthetic.main.activity_preferences.*
 import kotlinx.android.synthetic.main.choose_pref_dialog_layout.view.*
+import kotlinx.android.synthetic.main.layout_topbar.*
 import kotlinx.android.synthetic.main.layout_topbar.view.*
 
 class PreferencesActivity : BaseActivity(),PreferenceRvAdapter.PrefListener,ChoosePrefAdapter.ChoosePrefListener {
@@ -45,8 +44,12 @@ class PreferencesActivity : BaseActivity(),PreferenceRvAdapter.PrefListener,Choo
 
         vm.getUserPreferences(pm.getString(Constants.JWTTOKEN))
                 ?.observe(this, Observer {
-                    mylist.addAll(it)
-                    adapter.setData(mylist)
+                   if (it!=null){
+                       mylist.addAll(it)
+                       adapter.setData(mylist)
+                   }else{
+                       Utility.showToast(this,Constants.SOMETHINGWENTWRONG)
+                   }
                 })
 
         val title = findViewById<TextView>(R.id.title)
@@ -71,8 +74,26 @@ class PreferencesActivity : BaseActivity(),PreferenceRvAdapter.PrefListener,Choo
             showAddPrefDialog()
         }
 
+        backBtn.setOnClickListener {
+            finish()
+        }
+
         save_pref_btn.setOnClickListener {
+            progress_bar_pref.visibility = View.VISIBLE
             Log.d("tempList","$mylist")
+            val sublist = ArrayList<Int>()
+            mylist.forEach {
+                it.id?.let { it1 -> sublist.add(it1) }
+            }
+            vm.updatePref(pm.getString(Constants.JWTTOKEN),sublist)
+                    ?.observe(this, Observer {
+                        if (it!=null){
+                            Utility.showToast(this,it.message)
+                        }else{
+                            Utility.showToast(this, Constants.SOMETHINGWENTWRONG)
+                        }
+                        progress_bar_pref.visibility = View.GONE
+                    })
         }
 
 

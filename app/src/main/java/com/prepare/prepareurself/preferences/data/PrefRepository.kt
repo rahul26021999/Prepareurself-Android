@@ -66,4 +66,24 @@ class PrefRepository(var application: Application) {
 
     }
 
+    fun updatePref(token: String, list: List<Int>):LiveData<UpdatePrefResponseModel>{
+        val data = MutableLiveData<UpdatePrefResponseModel>()
+        apiInterface?.updateUserPref(token, list)?.enqueue(object : Callback<UpdatePrefResponseModel>{
+            override fun onFailure(call: Call<UpdatePrefResponseModel>, t: Throwable) {
+                data.value = null
+            }
+
+            override fun onResponse(call: Call<UpdatePrefResponseModel>, response: Response<UpdatePrefResponseModel>) {
+                val res = response.body()
+                if (res!=null && res.error_code == 0){
+                    data.value = res
+                }else{
+                    data.value = null
+                }
+            }
+        })
+
+        return data
+    }
+
 }
