@@ -98,6 +98,8 @@ public class SearchFragment extends Fragment implements SearchAdapter.SearchList
             searchProgressBar.setVisibility(View.VISIBLE);
             notFoundSearch.setVisibility(View.GONE);
 
+            Log.d("paging_debug","click on change");
+
             searchRecyclerviewModels.clear();
             headings.clear();
             mViewModel.searchWithPagination(prefManager.getString(Constants.JWTTOKEN),query,currentSearchPage);
@@ -173,6 +175,7 @@ public class SearchFragment extends Fragment implements SearchAdapter.SearchList
                                 adapter.clearData();
 
                             }else{
+                                notFoundSearch.setVisibility(View.GONE);
                                 adapter.setData(searchRecyclerviewModels);
                             }
 
