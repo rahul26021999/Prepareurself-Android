@@ -21,8 +21,8 @@ class QuizViewModel(application: Application) : AndroidViewModel(application) {
         quizResponseBodyLiveData = quizRepository?.fetchQuiz(token,courseId,level)
     }
 
-    fun submitQuiz(token: String,quizId:Int, responses:List<ResponsesModel>){
-        quizRepository?.submitQuiz(token, quizId, responses)
+    fun submitQuiz(token: String,quizId:Int, responses:List<ResponsesModel>):LiveData<QuizAnswerResponse>?{
+        return quizRepository?.submitQuiz(token, quizId, responses)
     }
 
     fun submitIndividualQuiz(token: String,quizId: Int,courseId:Int,questionId:Int, optionId:Int){
