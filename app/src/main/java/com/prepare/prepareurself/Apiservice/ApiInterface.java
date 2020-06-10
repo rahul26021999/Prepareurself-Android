@@ -21,6 +21,7 @@ import com.prepare.prepareurself.preferences.data.UpdatePrefResponseModel;
 import com.prepare.prepareurself.profile.data.model.UpdatePasswordResponseModel;
 import com.prepare.prepareurself.profile.data.model.UpdatePreferenceResponseModel;
 import com.prepare.prepareurself.profile.data.model.AllPreferencesResponseModel;
+import com.prepare.prepareurself.quizv2.data.QuizAnswerResponse;
 import com.prepare.prepareurself.quizv2.data.QuizResponseModel;
 import com.prepare.prepareurself.quizv2.data.ResponsesModel;
 import com.prepare.prepareurself.resources.data.model.GetResourcesResponse;
@@ -34,6 +35,7 @@ import java.util.List;
 
 import okhttp3.MultipartBody;
 import retrofit2.Call;
+import retrofit2.http.Body;
 import retrofit2.http.Multipart;
 import retrofit2.http.POST;
 import retrofit2.http.Part;
@@ -206,15 +208,14 @@ public interface ApiInterface {
                                                    @Query("type") int type);
 
     @POST("save-course-quiz-response")
-    Call<String> submitQuiz(@Query("token") String token,
+    Call<QuizAnswerResponse> submitQuiz(@Query("token") String token,
                             @Query("quiz_id")Integer quizId,
-                            @Query("answers[]")List<ResponsesModel> responses);
+                            @Body List<ResponsesModel> responses);
 
     @POST("save-individual-quiz-response")
-    Call<String> submitIndividualQuestion(@Query("token") String token,
-                                          @Query("quiz_id")Integer quizId,
-                                          @Query("course_id")Integer courseId,
-                                          @Query("question_id")Integer questionId,
-                                          @Query("option_id")Integer optionId);
+    Call<QuizAnswerResponse> submitIndividualQuestion(@Query("token") String token,
+                                                      @Query("quiz_id")Integer quizId,
+                                                      @Query("question_id")Integer questionId,
+                                                      @Query("answer_id")Integer optionId);
 
 }

@@ -13,7 +13,6 @@ import com.prepare.prepareurself.utils.BaseActivity
 import com.prepare.prepareurself.utils.Constants
 import com.prepare.prepareurself.utils.PrefManager
 import com.prepare.prepareurself.utils.Utility
-import kotlinx.android.synthetic.main.activity_main.*
 import kotlinx.android.synthetic.main.activity_quiz2.*
 import java.util.ArrayList
 
@@ -64,18 +63,36 @@ class QuizActivity : BaseActivity(),QuizQuestionPagerAdapter.QuestionInteractor 
 
                     btn_next.setOnClickListener {it1->
                         if (quiz_view_pager.currentItem +1 < it.questions?.size!!){
-                            val responsesModel = ResponsesModel()
-                            responsesModel.optionId = optionId
-                            responsesModel.questionId = questionId
-                            responses.add(responsesModel)
-                            quizViewModel.submitIndividualQuiz(pm.getString(Constants.JWTTOKEN), quizId,courseId, questionId, optionId)
+                            if (optionId!=-1){
+                                val responsesModel = ResponsesModel()
+                                responsesModel.answer_id = optionId
+                                responsesModel.question_id = questionId
+                                responses.add(responsesModel)
+                                optionId = -1
+                                quizViewModel.submitIndividualQuiz(pm.getString(Constants.JWTTOKEN), quizId,courseId, questionId, optionId)
+                            }
                             quiz_view_pager.currentItem = quiz_view_pager.currentItem+1
                         }else if (quiz_view_pager.currentItem + 1 == it.questions?.size){
-                            val responsesModel = ResponsesModel()
-                            responsesModel.optionId = optionId
-                            responsesModel.questionId = questionId
-                            responses.add(responsesModel)
+                            if (optionId!=-1){
+                                val responsesModel = ResponsesModel()
+                                responsesModel.answer_id = optionId
+                                responsesModel.question_id = questionId
+                                responses.add(responsesModel)
+                                optionId = -1
+                            }
                             quizViewModel.submitQuiz(pm.getString(Constants.JWTTOKEN), quizId,responses)
+                                    ?.observe(this, Observer {
+                                        if (it!=null){
+                                            if (it.error_code == 0){
+                                                Utility.showToast(this,"Quiz submitted successfully!")
+                                            }else{
+                                                Utility.showToast(this,"There was an error in submitting quiz!")
+                                            }
+                                            finish()
+                                        }else{
+                                            Utility.showToast(this, Constants.SOMETHINGWENTWRONG)
+                                        }
+                                    })
                         }
 
                     }
@@ -105,6 +122,7 @@ class QuizActivity : BaseActivity(),QuizQuestionPagerAdapter.QuestionInteractor 
                 }
             }else{
                 Utility.showToast(this@QuizActivity,Constants.SOMETHINGWENTWRONG)
+                finish()
             }
         })
     }

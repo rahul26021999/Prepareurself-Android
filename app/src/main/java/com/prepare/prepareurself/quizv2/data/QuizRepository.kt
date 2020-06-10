@@ -43,27 +43,37 @@ class QuizRepository {
         return data
     }
 
-    fun submitQuiz(token: String,quizId:Int,responses:List<ResponsesModel>){
-        apiInterface?.submitQuiz(token, quizId, responses)?.enqueue(object : Callback<String>{
-            override fun onFailure(call: Call<String>, t: Throwable) {
+    fun submitQuiz(token: String,quizId:Int,responses:List<ResponsesModel>):LiveData<QuizAnswerResponse>{
 
+        val data = MutableLiveData<QuizAnswerResponse>()
+
+        apiInterface?.submitQuiz(token, quizId, responses)?.enqueue(object : Callback<QuizAnswerResponse>{
+            override fun onFailure(call: Call<QuizAnswerResponse>, t: Throwable) {
+                data.value = null
             }
 
-            override fun onResponse(call: Call<String>, response: Response<String>) {
-
+            override fun onResponse(call: Call<QuizAnswerResponse>, response: Response<QuizAnswerResponse>) {
+                val res = response.body()
+                if(res!=null){
+                    data.value = res
+                }else{
+                    data.value = null
+                }
             }
         })
+
+        return data
     }
 
 
     fun submitIndividualQuiz(token: String,quizId:Int,courseId:Int,questionId:Int,optionId:Int){
-        apiInterface?.submitIndividualQuestion(token, quizId, courseId, questionId, optionId)?.enqueue(object : Callback<String>{
-            override fun onFailure(call: Call<String>, t: Throwable) {
-
+        apiInterface?.submitIndividualQuestion(token, quizId,questionId, optionId)?.enqueue(object : Callback<QuizAnswerResponse>{
+            override fun onFailure(call: Call<QuizAnswerResponse>, t: Throwable) {
+                Log.d("save_individual_quiz","error ${t.localizedMessage}")
             }
 
-            override fun onResponse(call: Call<String>, response: Response<String>) {
-
+            override fun onResponse(call: Call<QuizAnswerResponse>, response: Response<QuizAnswerResponse>) {
+                Log.d("save_individual_quiz","success ${response.body()}")
             }
         })
     }
