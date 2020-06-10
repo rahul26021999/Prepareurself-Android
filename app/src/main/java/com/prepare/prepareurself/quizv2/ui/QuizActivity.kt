@@ -7,6 +7,7 @@ import androidx.lifecycle.ViewModelProvider
 import androidx.viewpager.widget.ViewPager
 import com.prepare.prepareurself.R
 import com.prepare.prepareurself.quizv2.data.OptionsModel
+import com.prepare.prepareurself.quizv2.data.ResponsesModel
 import com.prepare.prepareurself.quizv2.viewmodel.QuizViewModel
 import com.prepare.prepareurself.utils.BaseActivity
 import com.prepare.prepareurself.utils.Constants
@@ -14,6 +15,7 @@ import com.prepare.prepareurself.utils.PrefManager
 import com.prepare.prepareurself.utils.Utility
 import kotlinx.android.synthetic.main.activity_main.*
 import kotlinx.android.synthetic.main.activity_quiz2.*
+import java.util.ArrayList
 
 
 class QuizActivity : BaseActivity(),QuizQuestionPagerAdapter.QuestionInteractor {
@@ -21,6 +23,8 @@ class QuizActivity : BaseActivity(),QuizQuestionPagerAdapter.QuestionInteractor 
     private lateinit var quizViewModel:QuizViewModel
     private lateinit var timer:CountDownTimer
     private lateinit var pm:PrefManager
+    private var courseId = 0
+    private lateinit var responses:ArrayList<ResponsesModel>
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -29,7 +33,9 @@ class QuizActivity : BaseActivity(),QuizQuestionPagerAdapter.QuestionInteractor 
         quizViewModel = ViewModelProvider(this)[QuizViewModel::class.java]
         pm = PrefManager(this)
 
-        val courseId = intent.getIntExtra(Constants.COURSEID,0)
+        responses = ArrayList<ResponsesModel>()
+
+        courseId = intent.getIntExtra(Constants.COURSEID,0)
 
         quizViewModel.fetchQuiz(pm.getString(Constants.JWTTOKEN),1,Constants.EASY)
 
@@ -47,16 +53,29 @@ class QuizActivity : BaseActivity(),QuizQuestionPagerAdapter.QuestionInteractor 
         }
 
 
-        quizViewModel.quizResponseBodyLiveData?.observe(this, Observer {
+        quizViewModel.quizResponseBodyLiveData?.observe(this, Observer { it ->
             if (it!=null){
                 it.quiz?.let {
                     val pagerAdapter  = it.questions?.let { QuizQuestionPagerAdapter(this, it, this, quizViewModel) }
                     quiz_view_pager.adapter = pagerAdapter
                     //  quiz_view_pager.offscreenPageLimit = it.questions?.size!!
 
+                    quizId = it.id!!
+
                     btn_next.setOnClickListener {it1->
                         if (quiz_view_pager.currentItem +1 < it.questions?.size!!){
+                            val responsesModel = ResponsesModel()
+                            responsesModel.optionId = optionId
+                            responsesModel.questionId = questionId
+                            responses.add(responsesModel)
+                            quizViewModel.submitIndividualQuiz(pm.getString(Constants.JWTTOKEN), quizId,courseId, questionId, optionId)
                             quiz_view_pager.currentItem = quiz_view_pager.currentItem+1
+                        }else if (quiz_view_pager.currentItem + 1 == it.questions?.size){
+                            val responsesModel = ResponsesModel()
+                            responsesModel.optionId = optionId
+                            responsesModel.questionId = questionId
+                            responses.add(responsesModel)
+                            quizViewModel.submitQuiz(pm.getString(Constants.JWTTOKEN), quizId,responses)
                         }
 
                     }
@@ -92,6 +111,8 @@ class QuizActivity : BaseActivity(),QuizQuestionPagerAdapter.QuestionInteractor 
 
     override fun onOptionSeleted(options: OptionsModel) {
         btn_next.isEnabled = true
+        optionId = options.id!!
+        questionId = options.question_id!!
     }
 
     override fun onQuestionLoaded(position: Int) {
@@ -100,4 +121,11 @@ class QuizActivity : BaseActivity(),QuizQuestionPagerAdapter.QuestionInteractor 
         btn_next.isEnabled = false
         tv_q_no.text = "Q${quiz_view_pager.currentItem+1}"
     }
+
+    companion object{
+        var quizId = 0
+        var questionId = 0
+        var optionId = -1
+    }
+
 }
