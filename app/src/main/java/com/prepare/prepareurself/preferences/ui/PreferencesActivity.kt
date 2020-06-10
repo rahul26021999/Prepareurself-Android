@@ -47,12 +47,12 @@ class PreferencesActivity : BaseActivity(),PreferenceRvAdapter.PrefListener,Choo
 
         vm.getUserPreferences(pm.getString(Constants.JWTTOKEN))
                 ?.observe(this, Observer {
-                   if (it!=null){
-                       mylist.addAll(it)
-                       adapter.setData(mylist)
-                   }else{
-                       Utility.showToast(this,Constants.SOMETHINGWENTWRONG)
-                   }
+                    if (it!=null){
+                        it.preferences?.let { it1 -> mylist.addAll(it1) }
+                        adapter.setData(mylist)
+                    }else{
+                        Utility.showToast(this,Constants.SOMETHINGWENTWRONG)
+                    }
                 })
 
         val title = findViewById<TextView>(R.id.title)
@@ -62,8 +62,6 @@ class PreferencesActivity : BaseActivity(),PreferenceRvAdapter.PrefListener,Choo
         adapter = PreferenceRvAdapter(this)
         rv_prefs.layoutManager = LinearLayoutManager(this)
         rv_prefs.adapter = adapter
-
-        vm.fetchPreferences(pm.getString(Constants.JWTTOKEN))
 
 //        vm.getPrefs()?.observe(this, Observer {
 //            temList.clear()
@@ -135,14 +133,16 @@ class PreferencesActivity : BaseActivity(),PreferenceRvAdapter.PrefListener,Choo
         })
 
 
-        vm.getPrefs()?.observe(this, Observer {
+        vm.fetchPreferences(pm.getString(Constants.JWTTOKEN))?.observe(this, Observer {
             it?.let {it2->
                 displyList.clear()
-                displyList.addAll(it2)
-                it2.forEach {
-                    mylist.forEach {it1->
-                        if (it.id == it1.id){
-                            displyList.remove(it)
+                it2.preferences?.let {
+                    it1 -> displyList.addAll(it1)
+                    it1.forEach {
+                        mylist.forEach {it1->
+                            if (it.id == it1.id){
+                                displyList.remove(it)
+                            }
                         }
                     }
                 }
