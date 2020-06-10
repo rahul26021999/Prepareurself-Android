@@ -42,6 +42,7 @@
     </style>
 
 
+
     <style name="EditPrefrenceChip">
         <item name="android:textSize">18sp</item>
         <item name="android:fontFamily">@font/roboto_regular</item>
@@ -83,5 +84,12 @@
 
     <!--radiobutton-->
 
+
+    <!--coursedetail button theme-->
+    <style name="coursedetailmaterialbutton" parent="Widget.MaterialComponents.Button.TextButton">
+        <item name="android:layout_margin">0dp</item>
+        <item name="android:paddingRight">0dp</item>
+        <item name="paddingStart" >0dp</item>
+    </style>
 
 </resources>

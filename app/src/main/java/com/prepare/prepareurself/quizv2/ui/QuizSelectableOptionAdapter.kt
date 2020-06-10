@@ -74,7 +74,7 @@ class QuizSelectableOptionAdapter(context: Context, interactor:OptionListener) :
         var view: View?=null
         var quiz_option_letter:TextView?=null
         var tv_option_text:TextView?=null
-        var lin_quiz_option_base:LinearLayout?=null
+        var lin_quiz_option_base:RelativeLayout?=null
         var rel_option_letter:RelativeLayout?=null
         init {
             view = itemView

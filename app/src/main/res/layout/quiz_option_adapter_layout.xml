@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:tools="http://schemas.android.com/tools"
+<RelativeLayout xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     xmlns:app="http://schemas.android.com/apk/res-auto"
@@ -8,15 +8,17 @@
     android:paddingTop="16dp"
     android:paddingBottom="16dp"
     android:id="@+id/lin_quiz_option_base"
-    android:orientation="horizontal"
     android:layout_margin="10dp"
     android:background="@drawable/darkgrey_rounded_stroked_rectangle"
-    xmlns:android="http://schemas.android.com/apk/res/android">
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    >
 
     <androidx.cardview.widget.CardView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        app:cardCornerRadius="10dp">
+        app:cardCornerRadius="10dp"
+        android:id="@+id/cd1"
+        >
 
         <RelativeLayout
             android:layout_width="wrap_content"
@@ -42,9 +44,9 @@
         android:text="Option 1"
         android:id="@+id/tv_option_text"
         android:layout_marginStart="10dp"
-        android:layout_gravity="center_vertical"
+        android:layout_toEndOf="@+id/cd1"
         android:textSize="16sp"
         android:textColor="@color/colorPrimaryDark"
         />
 
-</LinearLayout>
+</RelativeLayout>
