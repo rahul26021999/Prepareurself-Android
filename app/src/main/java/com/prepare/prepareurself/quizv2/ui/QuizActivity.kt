@@ -12,6 +12,7 @@ import com.prepare.prepareurself.utils.BaseActivity
 import com.prepare.prepareurself.utils.Constants
 import com.prepare.prepareurself.utils.PrefManager
 import com.prepare.prepareurself.utils.Utility
+import kotlinx.android.synthetic.main.activity_main.*
 import kotlinx.android.synthetic.main.activity_quiz2.*
 
 
@@ -97,5 +98,6 @@ class QuizActivity : BaseActivity(),QuizQuestionPagerAdapter.QuestionInteractor 
         timer.cancel()
         timer.start()
         btn_next.isEnabled = false
+        tv_q_no.text = "Q${quiz_view_pager.currentItem+1}"
     }
 }

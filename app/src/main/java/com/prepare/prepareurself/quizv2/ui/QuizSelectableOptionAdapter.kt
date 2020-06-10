@@ -91,7 +91,7 @@ class QuizSelectableOptionAdapter(context: Context, interactor:OptionListener) :
                 2-> quiz_option_letter?.text = "C"
                 3-> quiz_option_letter?.text = "D"
             }
-            tv_option_text?.text = Html.fromHtml(options.option)
+            tv_option_text?.text = Html.fromHtml(options.option).toString().trim()
 
         }
 
