@@ -22,6 +22,7 @@ import com.prepare.prepareurself.profile.data.model.UpdatePasswordResponseModel;
 import com.prepare.prepareurself.profile.data.model.UpdatePreferenceResponseModel;
 import com.prepare.prepareurself.profile.data.model.AllPreferencesResponseModel;
 import com.prepare.prepareurself.quizv2.data.QuizResponseModel;
+import com.prepare.prepareurself.quizv2.data.ResponsesModel;
 import com.prepare.prepareurself.resources.data.model.GetResourcesResponse;
 import com.prepare.prepareurself.resources.data.model.ResourceLikesResponse;
 import com.prepare.prepareurself.resources.data.model.ResourceViewsResponse;
@@ -199,9 +200,21 @@ public interface ApiInterface {
                                       @Query("course_id") Integer courseId,
                                       @Query("level") String level);
 
-  @POST("add-to-user-preferences")
+    @POST("add-to-user-preferences")
     Call<AddToUserPrefResponseModel> addToUserPref(@Query("token") String token,
                                                    @Query("course_id") int course_id,
                                                    @Query("type") int type);
+
+    @POST("save-course-quiz-response")
+    Call<String> submitQuiz(@Query("token") String token,
+                            @Query("quiz_id")Integer quizId,
+                            @Query("answers[]")List<ResponsesModel> responses);
+
+    @POST("save-individual-quiz-response")
+    Call<String> submitIndividualQuestion(@Query("token") String token,
+                                          @Query("quiz_id")Integer quizId,
+                                          @Query("course_id")Integer courseId,
+                                          @Query("question_id")Integer questionId,
+                                          @Query("option_id")Integer optionId);
 
 }

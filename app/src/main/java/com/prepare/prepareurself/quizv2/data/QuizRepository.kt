@@ -5,6 +5,7 @@ import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import com.prepare.prepareurself.Apiservice.ApiClient
 import com.prepare.prepareurself.Apiservice.ApiInterface
+import com.prepare.prepareurself.utils.Utility
 import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
@@ -40,7 +41,30 @@ class QuizRepository {
         })
 
         return data
-
     }
 
+    fun submitQuiz(token: String,quizId:Int,responses:List<ResponsesModel>){
+        apiInterface?.submitQuiz(token, quizId, responses)?.enqueue(object : Callback<String>{
+            override fun onFailure(call: Call<String>, t: Throwable) {
+
+            }
+
+            override fun onResponse(call: Call<String>, response: Response<String>) {
+
+            }
+        })
+    }
+
+
+    fun submitIndividualQuiz(token: String,quizId:Int,courseId:Int,questionId:Int,optionId:Int){
+        apiInterface?.submitIndividualQuestion(token, quizId, courseId, questionId, optionId)?.enqueue(object : Callback<String>{
+            override fun onFailure(call: Call<String>, t: Throwable) {
+
+            }
+
+            override fun onResponse(call: Call<String>, response: Response<String>) {
+
+            }
+        })
+    }
 }

@@ -21,6 +21,14 @@ class QuizViewModel(application: Application) : AndroidViewModel(application) {
         quizResponseBodyLiveData = quizRepository?.fetchQuiz(token,courseId,level)
     }
 
+    fun submitQuiz(token: String,quizId:Int, responses:List<ResponsesModel>){
+        quizRepository?.submitQuiz(token, quizId, responses)
+    }
+
+    fun submitIndividualQuiz(token: String,quizId: Int,courseId:Int,questionId:Int, optionId:Int){
+        quizRepository?.submitIndividualQuiz(token, quizId, courseId, questionId, optionId)
+    }
+
 //    fun createData(){
 //
 //        val op1 = OptionsModel()

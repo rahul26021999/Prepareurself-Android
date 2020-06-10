@@ -8,7 +8,7 @@ data class OptionsModel(
         var id:Int?=0,
         var option:String?="",
         var image:String?="",
-        var question_id:String?="",
+        var question_id:Int?=0,
         var created_at:String?="",
         var updated_at:String?=""
 ): Parcelable
