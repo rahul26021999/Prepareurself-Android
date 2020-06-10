@@ -51,6 +51,7 @@
     <style name="SelectableItemTheme">
         <item name="colorControlHighlight">@color/DarkModePrimarySelectedBlack</item>
     </style>
+
     <style name="SelectableItemBackground">
         <item name="android:theme">@style/SelectableItemTheme</item>
         <item name="android:background">?attr/selectableItemBackground</item>
@@ -59,6 +60,7 @@
     <style name="SelectableItemThemeWhite">
         <item name="colorControlHighlight">@color/white</item>
     </style>
+
     <style name="SelectableItemBackgroundWhite">
         <item name="android:theme">@style/SelectableItemTheme</item>
         <item name="android:background">?attr/selectableItemBackground</item>
@@ -72,6 +74,11 @@
         <item name="fontFamily">@font/roboto_regular</item>
         <item name="android:paddingEnd">20dp</item>
         <item name="android:background">@drawable/et_custom</item>
+    </style>
+
+    <style name="AppTheme.NoActionBar">
+        <item name="windowActionBar">false</item>
+        <item name="windowNoTitle">true</item>
     </style>
 
     <!--radiobutton-->
