@@ -21,41 +21,50 @@ class PrefRepository(var application: Application) {
         prefDbRepository = PrefDbRepository(application)
     }
 
-    fun fetchPrefs(token:String){
+    fun fetchPrefs(token:String):LiveData<PrefernceResponseModel>{
+
+        val data = MutableLiveData<PrefernceResponseModel>()
+
         apiInterface?.getPreferences(token)?.enqueue(object : Callback<PrefernceResponseModel>{
             override fun onFailure(call: Call<PrefernceResponseModel>, t: Throwable) {
                 Utility.showToast(application,Constants.SOMETHINGWENTWRONG)
-            }
-
-            override fun onResponse(call: Call<PrefernceResponseModel>, response: Response<PrefernceResponseModel>) {
-
-                val res = response.body()
-                if (res!=null && res.error_code == 0){
-                    res.preferences?.forEach {
-                        prefDbRepository?.insertPref(it)
-                    }
-                }else{
-                    Utility.showToast(application,Constants.SOMETHINGWENTWRONG)
-                }
-            }
-        })
-    }
-
-    fun getUserPreferences(token: String):LiveData<List<PreferencesModel>>{
-
-        val data = MutableLiveData<List<PreferencesModel>>()
-
-        apiInterface?.getUserPrefs(token)?.enqueue(object : Callback<PrefernceResponseModel>{
-            override fun onFailure(call: Call<PrefernceResponseModel>, t: Throwable) {
                 data.value = null
             }
 
             override fun onResponse(call: Call<PrefernceResponseModel>, response: Response<PrefernceResponseModel>) {
 
                 val res = response.body()
-                if(res!=null && res.error_code ==0){
-                    data.value = res.preferences
+                if (res!=null && res.error_code == 0){
+                    data.value = res
                 }else{
+                    Utility.showToast(application,Constants.SOMETHINGWENTWRONG)
+                    data.value = null
+                }
+            }
+        })
+        return data
+    }
+
+    fun getUserPreferences(token: String) : LiveData<PrefernceResponseModel>{
+
+        val data = MutableLiveData<PrefernceResponseModel>()
+
+        apiInterface?.getUserPrefs(token)?.enqueue(object : Callback<PrefernceResponseModel>{
+            override fun onFailure(call: Call<PrefernceResponseModel>, t: Throwable) {
+                data.value = null
+                Utility.showToast(application,Constants.SOMETHINGWENTWRONG)
+            }
+
+            override fun onResponse(call: Call<PrefernceResponseModel>, response: Response<PrefernceResponseModel>) {
+
+                val res = response.body()
+                if(res!=null && res.error_code ==0){
+                    data.value = res
+                    res.preferences?.forEach {
+                        prefDbRepository?.insertPref(it)
+                    }
+                }else{
+                    Utility.showToast(application,Constants.SOMETHINGWENTWRONG)
                     data.value = null
                 }
 
