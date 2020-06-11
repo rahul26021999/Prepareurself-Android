@@ -8,7 +8,7 @@
     tools:context=".courses.ui.activity.CourseDetalActivity">
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
+        android:layout_height="match_parent"
         tools:context=".courses.ui.activity.CourseDetalActivity">
 
         <LinearLayout
@@ -19,7 +19,7 @@
             app:layout_constraintTop_toTopOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
-            android:background="@drawable/coursedetailbg1">
+            android:background="@drawable/courseblue_gradient">
 
 
             <RelativeLayout
@@ -38,7 +38,7 @@
                     android:layout_width="30dp"
                     android:layout_height="30dp"
                     android:padding="2dp"
-                    android:src="@drawable/ic_heart"
+                    android:src="@drawable/heartempty"
                     android:layout_toLeftOf="@+id/btn_shareimage"
                     android:layout_margin="10dp"
                     android:tooltipText="Like"/>
@@ -69,7 +69,7 @@
                     android:textSize="20sp"
                     android:textColor="@color/white"
                     android:layout_marginStart="15dp"
-                    android:layout_marginTop="10dp"
+                    android:layout_marginTop="5dp"
                     android:layout_marginBottom="10dp"
                     android:layout_toEndOf="@+id/backBtn"
                     android:tooltipText="share"
@@ -89,7 +89,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:orientation="horizontal"
-                android:layout_marginStart="15dp"
+                android:layout_marginStart="20dp"
                 android:padding="5dp"
                 android:layout_marginTop="10dp"
                 android:background="@drawable/darkgrey_rounded_stroked_rectangle"
@@ -112,7 +112,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:orientation="horizontal"
-                android:layout_marginStart="15dp"
+                android:layout_marginStart="20dp"
                 android:padding="5dp"
                 android:layout_marginTop="10dp"
                 android:background="@drawable/darkgrey_rounded_stroked_rectangle"
@@ -148,7 +148,7 @@
         <LinearLayout
             android:id="@+id/ll2"
             android:layout_width="match_parent"
-            android:layout_height="450dp"
+            android:layout_height="match_parent"
             android:orientation="vertical"
             app:layout_constraintTop_toBottomOf="@+id/ll1"
             app:layout_constraintStart_toStartOf="parent"
@@ -170,15 +170,21 @@
                 android:orientation="vertical"
                 android:layout_gravity="center"
                 android:layout_marginTop="20dp">
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center"
+                    android:text="Rate Course"
+                    android:textSize="16sp"
+                    android:textStyle="bold"
+                    />
                 <com.willy.ratingbar.ScaleRatingBar
                     android:id="@+id/simpleRatingBar"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_marginTop="5dp"
                     android:layout_gravity="center"
                     app:srb_numStars="5"
                     app:srb_minimumStars="1"
-                    app:srb_rating="2"
                     app:srb_starWidth="30dp"
                     app:srb_starHeight="30dp"
                     app:srb_starPadding="15dp"
@@ -186,21 +192,10 @@
                     app:srb_isIndicator="false"
                     app:srb_clickable="true"
                     app:srb_scrollable="true"
-                    app:srb_clearRatingEnabled="true"
                     app:srb_drawableEmpty="@drawable/emptytar"
                     app:srb_drawableFilled="@drawable/filledstar">
                 </com.willy.ratingbar.ScaleRatingBar>
-                <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_gravity="center"
-                    android:text="Rate Course"
-                    android:textSize="16sp"
-                    android:layout_marginBottom="5dp"
-                    />
-
             </LinearLayout>
-
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
@@ -312,12 +307,8 @@
                         android:layout_alignParentBottom="true"
                         android:layout_marginStart="30dp"
                         android:layout_marginBottom="10dp"/>
-
                 </RelativeLayout>
             </LinearLayout>
-
-
-
         </LinearLayout>
 
     </androidx.constraintlayout.widget.ConstraintLayout>
