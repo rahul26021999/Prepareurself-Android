@@ -152,21 +152,11 @@
             android:orientation="vertical"
             app:layout_constraintTop_toBottomOf="@+id/ll1"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintEnd_toEndOf="parent"
-            >
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginEnd="120dp"
-                android:layout_marginStart="15dp"
-                android:layout_marginTop="5dp"
-                android:textColor="@android:color/black"
-                android:text="“In my opinion, the future of mobile is the future of everything.”"/>
+            app:layout_constraintEnd_toEndOf="parent">
 
             <LinearLayout
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:background="@drawable/black_rounded_stroked_rectangle"
                 android:orientation="vertical"
                 android:layout_gravity="center"
                 android:layout_marginTop="20dp">
@@ -202,12 +192,11 @@
                 android:orientation="horizontal"
                 android:weightSum="2"
                 android:id="@+id/l1">
-
                 <RelativeLayout
                     android:layout_width="0dp"
                     android:layout_height="140dp"
                     android:layout_weight="1"
-                    android:background="@drawable/courseboxstyle"
+                    android:background="@drawable/gradientbgpeach"
                     android:layout_marginEnd="20dp"
                     android:layout_marginTop="20dp"
                     android:layout_marginStart="40dp"
@@ -235,7 +224,7 @@
                     android:layout_marginEnd="40dp"
                     android:layout_marginTop="20dp"
                     android:layout_marginBottom="20dp"
-                    android:background="@drawable/courseboxstyle">
+                    android:background="@drawable/gradientbglightblue">
                     <ImageView
                         android:layout_width="100dp"
                         android:layout_height="50dp"
@@ -264,7 +253,7 @@
                     android:layout_width="0dp"
                     android:layout_height="140dp"
                     android:layout_weight="1"
-                    android:background="@drawable/courseboxstyle"
+                    android:background="@drawable/redgradientbg"
                     android:layout_marginEnd="20dp"
                     android:layout_marginTop="20dp"
                     android:layout_marginStart="40dp"
@@ -292,7 +281,7 @@
                     android:layout_marginEnd="40dp"
                     android:layout_marginTop="20dp"
                     android:layout_marginBottom="20dp"
-                    android:background="@drawable/courseboxstyle">
+                    android:background="@drawable/gradientbgpurple">
                     <ImageView
                         android:layout_width="100dp"
                         android:layout_height="40dp"
