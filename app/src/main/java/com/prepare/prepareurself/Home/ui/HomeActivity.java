@@ -24,8 +24,8 @@ import com.prepare.prepareurself.courses.data.model.ProjectsModel;
 import com.prepare.prepareurself.courses.data.model.TopicsModel;
 import com.prepare.prepareurself.courses.ui.activity.AllCoursesActivity;
 import com.prepare.prepareurself.courses.ui.activity.CourseDetailActivity;
+import com.prepare.prepareurself.courses.ui.activity.CourseDetalActivity;
 import com.prepare.prepareurself.courses.ui.activity.CoursesActivity;
-import com.prepare.prepareurself.courses.ui.activity.DemoActivity;
 import com.prepare.prepareurself.courses.ui.activity.ProjectsActivity;
 import com.prepare.prepareurself.banner.BannerModel;
 import com.prepare.prepareurself.courses.ui.fragmentToActivity.TabProjectctivity;
@@ -277,7 +277,7 @@ public class HomeActivity extends BaseActivity implements NavigationView.OnNavig
                 break;
             case R.id.nav_star:
                 //redirectToPlayStore();
-                Intent intent = new Intent(HomeActivity.this, DemoActivity.class);
+                Intent intent = new Intent(HomeActivity.this, CourseDetalActivity.class);
                 intent.putExtra(Constants.COURSEID,1);
                 intent.putExtra(Constants.COURSENAME,"Android");
                 startActivity(intent);
