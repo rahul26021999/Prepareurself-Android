@@ -176,8 +176,8 @@
                        app:srb_isIndicator="false"
                        app:srb_clickable="true"
                        app:srb_scrollable="true"
-                       app:srb_drawableEmpty="@drawable/ic_star_border_black_24dp"
-                       app:srb_drawableFilled="@drawable/ic_star_black_24dp">
+                       app:srb_drawableEmpty="@drawable/ic_emptynewstar"
+                       app:srb_drawableFilled="@drawable/ic_fillednewstar">
                    </com.willy.ratingbar.ScaleRatingBar>
                </LinearLayout>
                <LinearLayout
