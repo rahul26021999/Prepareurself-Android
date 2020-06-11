@@ -2,6 +2,7 @@ package com.prepare.prepareurself.quizv2.ui
 
 import android.os.Bundle
 import android.os.CountDownTimer
+import android.util.Log
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
 import androidx.viewpager.widget.ViewPager
@@ -9,10 +10,7 @@ import com.prepare.prepareurself.R
 import com.prepare.prepareurself.quizv2.data.OptionsModel
 import com.prepare.prepareurself.quizv2.data.ResponsesModel
 import com.prepare.prepareurself.quizv2.viewmodel.QuizViewModel
-import com.prepare.prepareurself.utils.BaseActivity
-import com.prepare.prepareurself.utils.Constants
-import com.prepare.prepareurself.utils.PrefManager
-import com.prepare.prepareurself.utils.Utility
+import com.prepare.prepareurself.utils.*
 import kotlinx.android.synthetic.main.activity_quiz2.*
 import java.util.ArrayList
 
@@ -36,6 +34,7 @@ class QuizActivity : BaseActivity(),QuizQuestionPagerAdapter.QuestionInteractor 
 
         courseId = intent.getIntExtra(Constants.COURSEID,0)
 
+//        quizViewModel.fetchQuiz(pm.getString(Constants.JWTTOKEN),1,Constants.EASY)
         quizViewModel.fetchQuiz(pm.getString(Constants.JWTTOKEN),1,Constants.EASY)
 
         timer = object :CountDownTimer(30000,1000){
@@ -57,7 +56,7 @@ class QuizActivity : BaseActivity(),QuizQuestionPagerAdapter.QuestionInteractor 
                 it.quiz?.let {
                     val pagerAdapter  = it.questions?.let { QuizQuestionPagerAdapter(this, it, this, quizViewModel) }
                     quiz_view_pager.adapter = pagerAdapter
-                    //  quiz_view_pager.offscreenPageLimit = it.questions?.size!!
+                    quiz_view_pager.offscreenPageLimit = 0
 
                     quizId = it.id!!
 
@@ -97,7 +96,7 @@ class QuizActivity : BaseActivity(),QuizQuestionPagerAdapter.QuestionInteractor 
 
                     }
 
-                    quiz_view_pager.addOnPageChangeListener(object :ViewPager.OnPageChangeListener{
+                    quiz_view_pager.setOnPageChangeListener(object :CustomViewPager.OnPageChangeListener{
                         override fun onPageScrollStateChanged(state: Int) {
 
                         }
@@ -119,7 +118,7 @@ class QuizActivity : BaseActivity(),QuizQuestionPagerAdapter.QuestionInteractor 
                         }
                     })
 
-                }
+                }!!
             }else{
                 Utility.showToast(this@QuizActivity,Constants.SOMETHINGWENTWRONG)
                 finish()
@@ -138,6 +137,7 @@ class QuizActivity : BaseActivity(),QuizQuestionPagerAdapter.QuestionInteractor 
         timer.start()
         btn_next.isEnabled = false
         tv_q_no.text = "Q${quiz_view_pager.currentItem+1}"
+        Log.d("question_loaded","$position question loade")
     }
 
     companion object{

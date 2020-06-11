@@ -60,7 +60,7 @@
 
     </RelativeLayout>
 
-    <com.prepare.prepareurself.utils.NonSwipableViewPager
+    <com.prepare.prepareurself.utils.CustomViewPager
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:id="@+id/quiz_view_pager"

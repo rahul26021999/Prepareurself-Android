@@ -57,12 +57,12 @@ class QuizSelectableOptionAdapter(context: Context, interactor:OptionListener) :
         }
 
         if (selectedPosition == position){
-            holder.lin_quiz_option_base?.background = mContext?.getDrawable(R.color.colorPrimaryDark)
+            holder.lin_quiz_option_base?.background = mContext?.getDrawable(R.drawable.blue_rounded_stroked_rectangle)
             holder.rel_option_letter?.background = mContext?.getDrawable(R.color.like_blue)
             holder.quiz_option_letter?.setTextColor(mContext?.getColor(R.color.white)!!)
             holder.tv_option_text?.setTextColor(mContext?.getColor(R.color.white)!!)
         }else{
-            holder.lin_quiz_option_base?.background = mContext?.getDrawable(R.color.white)
+            holder.lin_quiz_option_base?.background = mContext?.getDrawable(R.drawable.grey_rounded_stroked_rectangle)
             holder.rel_option_letter?.background = mContext?.getDrawable(R.color.grey)
             holder.quiz_option_letter?.setTextColor(mContext?.getColor(R.color.colorPrimaryDark)!!)
             holder.tv_option_text?.setTextColor(mContext?.getColor(R.color.colorPrimaryDark)!!)
