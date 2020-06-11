@@ -19,6 +19,7 @@ import android.view.ViewGroup;
 import android.widget.AbsListView;
 import android.widget.ProgressBar;
 import android.widget.RelativeLayout;
+import android.widget.Toast;
 
 import com.prepare.prepareurself.R;
 import com.prepare.prepareurself.courses.data.model.ProjectsModel;
@@ -50,11 +51,13 @@ public class SearchFragment extends Fragment implements SearchAdapter.SearchList
     private PrefManager prefManager;
     private LinearLayoutManager searchLayoutManager;
     private int currentSearchPage = 1;
+    private  boolean EndOfSearchData=false;
     private Boolean isScrolling = false;
     private int rvCurrentItemsSearch, rvTotalItemsSearch, rvScrolledOutItemsSearch, rvLastPage, rvCurrentPageSearch =0;
 
     private List<SearchRecyclerviewModel> searchRecyclerviewModels = new ArrayList<>();
     private List<String> headings = new ArrayList<>();
+    private String query="";
 
     private Boolean shouldSearchPaginationStopped = false;
 
@@ -93,15 +96,20 @@ public class SearchFragment extends Fragment implements SearchAdapter.SearchList
         return view;
     }
 
-    public void performSearch(final String query){
+    public void performSearch(String q)
+    {
+        query=q;
         if (!TextUtils.isEmpty(query)){
             searchProgressBar.setVisibility(View.VISIBLE);
             notFoundSearch.setVisibility(View.GONE);
 
             Log.d("paging_debug","click on change");
 
+            EndOfSearchData=false;
             searchRecyclerviewModels.clear();
             headings.clear();
+            currentSearchPage=1;
+
             mViewModel.searchWithPagination(prefManager.getString(Constants.JWTTOKEN),query,currentSearchPage);
 
             mViewModel.searchResponseModelLiveData.observe(getActivity(), new Observer<SearchResponseModel>() {
@@ -110,33 +118,16 @@ public class SearchFragment extends Fragment implements SearchAdapter.SearchList
 
                     Log.d("paging_debug",searchResponseModel+" on change");
 
-                    searchRv.addOnScrollListener(new RecyclerView.OnScrollListener() {
-                        @Override
-                        public void onScrollStateChanged(@NonNull RecyclerView recyclerView, int newState) {
-                            super.onScrollStateChanged(recyclerView, newState);
-                            if (newState == AbsListView.OnScrollListener.SCROLL_STATE_TOUCH_SCROLL){
-                                isScrolling = true;
-                            }
-                        }
-
-                        @Override
-                        public void onScrolled(@NonNull RecyclerView recyclerView, int dx, int dy) {
-                            super.onScrolled(recyclerView, dx, dy);
-                            rvCurrentItemsSearch = searchLayoutManager.getChildCount();
-                            rvTotalItemsSearch = searchLayoutManager.getItemCount();
-                            rvScrolledOutItemsSearch = searchLayoutManager.findFirstVisibleItemPosition();
-
-                            if (isScrolling && !shouldSearchPaginationStopped && (rvCurrentItemsSearch + rvScrolledOutItemsSearch) == rvTotalItemsSearch){
-                                isScrolling = false;
-                                currentSearchPage = currentSearchPage+1;
-                                mViewModel.searchWithPagination(prefManager.getString(Constants.JWTTOKEN),query,currentSearchPage);
-                            }
-                        }
-                    });
-
+                    if(currentSearchPage==1){
+                        searchRecyclerviewModels.clear();
+                        headings.clear();
+                        EndOfSearchData=false;
+                    }
                     if (searchResponseModel!=null){
+
                         List<SearchModel> searchModels = searchResponseModel.getData();
-                        if (searchModels!=null && !searchModels.isEmpty()){
+                        if (searchModels!=null && !searchModels.isEmpty())
+                        {
                             Log.d("paging_debug", searchModels+" : this is id");
                             for (SearchModel searchModel : searchModels){
                                 if (searchModel.getTopics()!=null){
@@ -170,30 +161,27 @@ public class SearchFragment extends Fragment implements SearchAdapter.SearchList
                             }
 
                             searchProgressBar.setVisibility(View.GONE);
-                            if (searchRecyclerviewModels.isEmpty()){
-                                notFoundSearch.setVisibility(View.VISIBLE);
-                                adapter.clearData();
+                            notFoundSearch.setVisibility(View.GONE);
+                            adapter.setData(searchRecyclerviewModels);
 
-                            }else{
-                                notFoundSearch.setVisibility(View.GONE);
-                                adapter.setData(searchRecyclerviewModels);
-                            }
-
-                        }else{
-
+                        }
+                        else{
                             if (currentSearchPage == 1){
                                 searchProgressBar.setVisibility(View.GONE);
                                 notFoundSearch.setVisibility(View.VISIBLE);
                                 adapter.clearData();
+                                EndOfSearchData=true;
                             }else{
-                                currentSearchPage = 1;
-                                shouldSearchPaginationStopped = true;
+                                EndOfSearchData=true;
                             }
                         }
                     }
                 }
             });
 
+        }
+        else{
+            currentSearchPage=1;
         }
     }
 
@@ -263,6 +251,15 @@ public class SearchFragment extends Fragment implements SearchAdapter.SearchList
                             }
                         });
             }
+        }
+    }
+
+    @Override
+    public void onBottomReached(int position) {
+        if(!EndOfSearchData){
+            currentSearchPage++;
+            Utility.showToast(getActivity(),"hello ray chutiya hai "+currentSearchPage);
+            mViewModel.searchWithPagination(prefManager.getString(Constants.JWTTOKEN),query,currentSearchPage);
         }
     }
 }

@@ -93,6 +93,11 @@ public class SearchAdapter extends RecyclerView.Adapter implements DetailedSearc
 
     @Override
     public void onBindViewHolder(@NonNull RecyclerView.ViewHolder holder, int position) {
+
+        if (position == searchRecyclerviewModels.size() - 1){
+            listener.onBottomReached(position);
+        }
+
         switch (searchRecyclerviewModels.get(position).getViewtype()){
             case 1:
                 final String heading = searchRecyclerviewModels.get(position).getHeading();
@@ -207,6 +212,7 @@ public class SearchAdapter extends RecyclerView.Adapter implements DetailedSearc
         void onProjectClickedFromSearch(ProjectsModel projectsModel);
         void onTopicsClickedFromSearch(TopicsModel topicsModel);
         void onResourceClickedFromSearch(ResourceModel resourceModel);
+        void onBottomReached(int position);
     }
 
 
