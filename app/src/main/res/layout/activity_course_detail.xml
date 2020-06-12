@@ -1,326 +1,338 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
-    android:layout_height="match_parent"
+    android:layout_height="wrap_content"
+    android:fillViewport="false"
+    android:background="@color/white"
     tools:context=".courses.ui.activity.CourseDetailActivity">
 
+
     <RelativeLayout
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
         android:id="@+id/rel_layoutmain1"
-        android:background="@drawable/courseblue_gradient"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        android:paddingBottom="10dp">
-        <RelativeLayout
-            android:id="@+id/rel_layout1"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+
+        <LinearLayout
+            android:id="@+id/linearlayout1"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            >
-            <ImageView
-                android:layout_width="30dp"
-                android:layout_height="30dp"
-                android:id="@+id/backBtn"
-                android:padding="2dp"
-                android:layout_margin="10dp"
-                android:background="?attr/selectableItemBackgroundBorderless"
-                android:src="@drawable/ic_arrow_back_24dp" />
-            <TextView
-                android:id="@+id/coursename"
+            android:paddingBottom="35dp"
+            android:orientation="vertical"
+            android:background="@drawable/courseblue_gradient">
+
+            <RelativeLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content">
+                <ImageView
+                    android:layout_width="30dp"
+                    android:layout_height="30dp"
+                    android:id="@+id/backBtn"
+                    android:padding="2dp"
+                    android:layout_margin="10dp"
+                    android:background="?attr/selectableItemBackgroundBorderless"
+                    android:src="@drawable/ic_arrow_back_24dp" />
+              <!--  <ImageView
+                    android:id="@+id/courseshare"
+                    android:layout_width="30dp"
+                    android:layout_height="30dp"
+                    android:padding="2dp"
+                    android:src="@drawable/heartempty"
+                    android:layout_toLeftOf="@+id/btn_shareimage"
+                    android:layout_margin="10dp"
+                    android:tooltipText="Like"/>-->
+
+
+                <ImageView
+                    android:id="@+id/btn_shareimage"
+                    android:layout_width="30dp"
+                    android:layout_height="30dp"
+                    android:padding="2dp"
+                    android:src="@drawable/ic_share_black_24dp"
+                    android:layout_alignParentEnd="true"
+                    android:layout_margin="10dp"
+                    android:tooltipText="share"/>
+            </RelativeLayout>
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical"
+                >
+                <TextView
+                    android:id="@+id/coursename"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Android"
+                    android:paddingStart="8dp"
+                    android:textStyle="bold"
+                    android:textSize="20sp"
+                    android:textColor="@color/white"
+                    android:layout_marginStart="15dp"
+                    android:layout_marginTop="5dp"
+                    android:layout_marginBottom="10dp"
+                    android:layout_toEndOf="@+id/backBtn"
+                    android:tooltipText="share"
+                    />
+                <TextView
+                    android:id="@+id/course_desc"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="my lfe my rules gve hula hula hula hula hula me power of fuck off you and androd s best to blah blah blah"
+                    android:textColor="@color/white"
+                    android:textSize="16sp"
+                    android:textStyle="normal"
+                    android:paddingStart="8dp"
+                    android:layout_marginStart="15dp"
+                    android:layout_marginEnd="30dp"/>
+            </LinearLayout>
+            <LinearLayout
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="Android"
-                android:textStyle="bold"
-                android:textSize="20sp"
-                android:textColor="@color/white"
-                android:layout_marginRight="10dp"
-                android:layout_marginTop="10dp"
-                android:layout_marginBottom="10dp"
-                android:layout_toEndOf="@+id/backBtn"
-                android:tooltipText="share"
-                />
-            <ImageView
-                android:id="@+id/btn_shareimage"
-                android:layout_width="30dp"
-                android:layout_height="30dp"
-                android:padding="2dp"
-                android:src="@drawable/ic_share_black_24dp"
-                android:layout_toLeftOf="@+id/courselove"
-                android:layout_margin="10dp"
-                android:tooltipText="share"/>
-            <ImageView
-                android:id="@+id/courselove"
-                android:layout_width="30dp"
-                android:layout_height="30dp"
-                android:padding="2dp"
-                android:src="@drawable/ic_library_add_black_24dp"
-                android:layout_toLeftOf="@+id/courseshare"
-                android:layout_margin="10dp"
-                android:tooltipText="Follow"/>
-            <ImageView
-                android:id="@+id/courseshare"
-                android:layout_width="30dp"
-                android:layout_height="30dp"
-                android:padding="2dp"
-                android:src="@drawable/ic_heart"
-                android:layout_alignParentEnd="true"
-                android:layout_margin="10dp"
-                android:tooltipText="Like"/>
-
-
-
-
-        </RelativeLayout>
-        <LinearLayout
-            android:id="@+id/linear_layout2"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_below="@+id/rel_layout1"
-            android:orientation="horizontal"
-            >
-            <TextView
-                android:id="@+id/course_desc"
-                android:layout_width="0dp"
-                android:layout_height="wrap_content"
-                android:layout_weight="2"
-                android:text="bsbnbshbbjhwhdw jhwhdwdh wjbdwjdhwd bdwhdwhdwjd udhwdhwhd wjjdbwhdwhdw dwdhwhdwhd jdhwhdwhdw bdwbdw"
-                android:textColor="@color/white"
-                android:layout_marginStart="50dp"
-                android:layout_marginTop="10dp"
-                android:layout_marginEnd="10dp"/>
-            <de.hdodenhof.circleimageview.CircleImageView
-                android:id="@+id/course_image"
-                android:layout_width="0dp"
-                android:layout_height="100dp"
-                android:layout_weight="1"
+                android:orientation="horizontal"
+                android:layout_marginStart="20dp"
                 android:padding="5dp"
-                android:scaleType="centerCrop"
-                android:src="@drawable/person_placeholder"
-                app:cardCornerRadius="6dp"
-                app:cardElevation="0dp"
                 android:layout_marginTop="10dp"
-                android:layout_marginEnd="10dp"
-                app:civ_border_width="1dp"
-                app:civ_border_color="#FFFFFF">
+                android:background="@drawable/darkgrey_rounded_stroked_rectangle"
+                >
+                <ImageView
+                    android:layout_width="20dp"
+                    android:layout_height="20dp"
+                    android:src="@drawable/ic_star_black_24dp"
+                    android:layout_gravity="start"
+                    android:layout_marginEnd="5dp"/>
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginEnd="5dp"
+                    android:text="3.5"
+                    android:textColor="@color/white"
+                    android:layout_gravity="end"/>
+            </LinearLayout>
+            <LinearLayout
+                android:id="@+id/l_layout_pref"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal"
+                android:layout_marginStart="20dp"
+                android:padding="5dp"
+                android:layout_marginTop="10dp"
+                android:background="@drawable/darkgrey_rounded_stroked_rectangle"
+                >
+                <ImageView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:src="@drawable/ic_add_black_24dp"
+                    android:layout_gravity="start"
+                    android:layout_marginEnd="5dp"/>
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginEnd="5dp"
+                    android:text="Add as Preference"
+                    android:textColor="@color/white"
+                    android:layout_gravity="end"/>
+            </LinearLayout>
 
-            </de.hdodenhof.circleimageview.CircleImageView>
-        </LinearLayout>
-        <RatingBar
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_below="@id/linear_layout2"
-            android:layout_marginTop="5dp"
-            style="?android:attr/ratingBarStyleSmall"
-            android:numStars="5"
-            android:rating="3"
-            android:layout_marginStart="50dp"
-            android:stepSize="0.1"
-            android:scaleX="1"
-            android:scaleY="1"
-            android:isIndicator="true"
-            android:transformPivotX="0dp"
-            android:transformPivotY="0dp"
-            android:id="@+id/rateCourseBar"
-            />
-       <!-- style="?android:attr/ratingBarStyleIndicator"-->
-    </RelativeLayout>
-    <LinearLayout
-        android:id="@+id/linear_layoutmain2"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/rel_layoutmain1"
-        android:orientation="horizontal"
-        android:padding="20dp"
-        android:layout_marginTop="30dp"
-        android:layout_marginBottom="30dp"
-        >
-        <com.google.android.material.button.MaterialButton
-            android:id="@+id/btnProject"
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:layout_weight="1"
-            android:text="Project"
-            android:textStyle="bold"
-            android:fontFamily="@font/roboto_regular"
-            android:layout_marginStart="25dp"
-            android:layout_marginEnd="10dp"
-            android:textSize="17sp"
-            app:cornerRadius="30dp"
-            android:padding="15dp"/>
-        <com.google.android.material.button.MaterialButton
-            android:id="@+id/btnResources"
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:layout_weight="1"
-            android:text="Resources"
-            android:textSize="17sp"
-            android:layout_marginStart="10dp"
-            android:layout_marginEnd="25dp"
-            app:cornerRadius="30dp"
-            android:padding="15dp"
-            />
-
-    </LinearLayout>
-    <Button
-        android:id="@+id/textButton"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="“In my opinion, the future of mobile is the future of everything.”"
-        style="@style/Widget.MaterialComponents.Button.TextButton"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        android:textColor="@color/colorPrimaryDark"
-        app:layout_constraintTop_toBottomOf="@+id/linear_layoutmain2"
-        android:textSize="15sp"
-        android:textStyle="italic"
-        android:layout_marginTop="10dp"
-        android:layout_marginBottom="10dp"
-        android:layout_marginStart="10dp"
-        android:layout_marginEnd="10dp"
-        />
-    <RelativeLayout
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        app:layout_constraintTop_toBottomOf="@+id/textButton"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        android:layout_marginStart="10dp"
-        android:layout_marginEnd="10dp"
-        android:layout_marginBottom="30dp"
-        android:layout_marginTop="20dp">
-
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:orientation="horizontal"
-            android:weightSum="2"
-            android:id="@+id/l1">
-            <androidx.cardview.widget.CardView
-                android:id="@+id/cd1"
-                android:layout_width="100dp"
-                android:layout_height="120dp"
-                android:layout_margin="10dp"
-                android:layout_weight="1"
-                app:cardCornerRadius="10dp"
-                android:background="@drawable/courseboxstyle">
-                <FrameLayout
-                    android:layout_width="fill_parent"
-                    android:layout_height="fill_parent">
-
-                    <ImageView
-                        android:src="@drawable/courseitemquiz"
-                        android:scaleType="centerCrop"
-                        android:layout_height="match_parent"
-                        android:layout_width="match_parent"
-                        />
-                    <TextView
-                        android:id="@+id/tv_setpref"
-                        android:text="Set Preferences"
-                        android:textSize="22sp"
-                        android:layout_height="fill_parent"
-                        android:layout_width="fill_parent"
-                        android:gravity="center"/>
-                </FrameLayout>
-
-            </androidx.cardview.widget.CardView>
-            <androidx.cardview.widget.CardView
-                android:id="@+id/cd_forum"
-                android:layout_width="100dp"
-                android:layout_height="120dp"
-                android:layout_margin="10dp"
-                app:cardCornerRadius="10dp"
-                android:layout_weight="1">
-                <FrameLayout
-                    android:layout_width="fill_parent"
-                    android:layout_height="fill_parent">
-
-                    <ImageView
-                        android:src="@drawable/courseitemforum"
-                        android:scaleType="centerCrop"
-                        android:layout_height="match_parent"
-                        android:layout_width="match_parent"
-                        />
-                    <TextView
-                        android:text="Forum"
-                        android:textSize="22sp"
-                        android:layout_height="fill_parent"
-                        android:layout_width="fill_parent"
-                        android:gravity="center"/>
-                </FrameLayout>
-            </androidx.cardview.widget.CardView>
         </LinearLayout>
         <LinearLayout
+            android:id="@+id/ll2"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:orientation="horizontal"
-            android:weightSum="2"
-            android:id="@+id/l2"
-            android:layout_below="@+id/l1"
-            android:layout_marginTop="10dp">
-            <androidx.cardview.widget.CardView
-                android:id="@+id/cd3"
-                android:layout_width="100dp"
-                android:layout_height="120dp"
-                android:layout_weight="1"
-                android:layout_margin="10dp"
-                app:cardCornerRadius="10dp">
-                <FrameLayout
-                    android:layout_width="fill_parent"
-                    android:layout_height="fill_parent">
+            android:layout_height="match_parent"
+            android:orientation="vertical"
+            android:background="@drawable/courseblue_gradient"
+            android:layout_below="@id/linearlayout1"
+            app:layout_constraintEnd_toEndOf="parent">
 
-                    <ImageView
-                        android:src="@drawable/courseitemyellow"
-                        android:scaleType="centerCrop"
-                        android:layout_height="match_parent"
-                        android:layout_width="match_parent"
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:background="@drawable/coursedetailbg2"
+                android:orientation="vertical">
 
-                        />
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="30dp"
+                    android:layout_marginTop="42dp"
+                    android:layout_marginEnd="30dp"
+                    android:orientation="vertical">
+
                     <TextView
-                        android:text="Comments"
-                        android:textSize="22sp"
-                        android:layout_height="fill_parent"
-                        android:layout_width="fill_parent"
-                        android:gravity="center"/>
-                </FrameLayout>
-            </androidx.cardview.widget.CardView>
-            <androidx.cardview.widget.CardView
-                android:id="@+id/cd_takequiz"
-                android:layout_width="100dp"
-                android:layout_margin="10dp"
-                android:layout_height="120dp"
-                app:cardCornerRadius="10dp"
-                android:layout_weight="1">
-                <FrameLayout
-                    android:layout_width="fill_parent"
-                    android:layout_height="fill_parent">
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginStart="15dp"
+                        android:fontFamily="@font/roboto_regular"
+                        android:text="Rate this course"
+                        android:textColor="#514E4E"
+                        android:textSize="18sp"
+                        android:textStyle="bold" />
 
-                    <ImageView
-                        android:src="@drawable/courseitemquiz"
-                        android:scaleType="centerCrop"
-                        android:layout_height="match_parent"
+                    <com.willy.ratingbar.ScaleRatingBar
+                        android:id="@+id/scaleRatingBar"
                         android:layout_width="match_parent"
-                        />
-                    <TextView
-                        android:id="@+id/tv_takequiz"
-                        android:text="Take Assessment"
-                        android:textSize="22sp"
-                        android:layout_height="fill_parent"
-                        android:layout_width="fill_parent"
-                        android:gravity="center"/>
-                </FrameLayout>
-            </androidx.cardview.widget.CardView>
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="center"
+                        app:srb_clickable="true"
+                        app:srb_drawableEmpty="@drawable/emptytar"
+                        app:srb_drawableFilled="@drawable/filledstar"
+                        app:srb_isIndicator="false"
+                        app:srb_minimumStars="0"
+                        app:srb_numStars="5"
+                        app:srb_scrollable="true"
+                        app:srb_starHeight="40dp"
+                        app:srb_starPadding="15dp"
+                        app:srb_starWidth="40dp"
+                        app:srb_stepSize="0.5"/>
+                </LinearLayout>
+
+                <LinearLayout
+                    android:id="@+id/l1"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="horizontal"
+                    android:weightSum="2">
+
+                    <RelativeLayout
+                        android:id="@+id/rel_resources"
+                        android:layout_width="0dp"
+                        android:layout_height="140dp"
+                        android:layout_marginStart="40dp"
+                        android:layout_marginTop="20dp"
+                        android:layout_marginEnd="20dp"
+                        android:layout_marginBottom="15dp"
+                        android:layout_weight="1"
+                        android:background="@drawable/gradientbglightblue">
+
+                        <ImageView
+                            android:layout_width="100dp"
+                            android:layout_height="50dp"
+                            android:layout_marginTop="30dp"
+                            android:layout_centerHorizontal="true"
+                            android:src="@drawable/courseresource" />
+
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_alignParentBottom="true"
+                            android:layout_marginStart="30dp"
+                            android:layout_marginBottom="10dp"
+                            android:layout_centerHorizontal="true"
+                            android:text="Resources"
+                            android:textColor="@color/white"
+                            android:textSize="16sp" />
+
+                    </RelativeLayout>
+
+                    <RelativeLayout
+                        android:id="@+id/rel_project"
+                        android:layout_width="0dp"
+                        android:layout_height="140dp"
+                        android:layout_marginTop="20dp"
+                        android:layout_marginEnd="40dp"
+                        android:layout_marginBottom="15dp"
+                        android:layout_weight="1"
+                        android:background="@drawable/gradientbgpeach">
+
+                        <ImageView
+                            android:layout_width="100dp"
+                            android:layout_height="70dp"
+                            android:layout_centerHorizontal="true"
+                            android:layout_marginTop="30dp"
+                            android:src="@drawable/courseprogrammer" />
+
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_alignParentBottom="true"
+                            android:layout_centerHorizontal="true"
+                            android:layout_marginStart="30dp"
+                            android:layout_marginBottom="10dp"
+                            android:text="Project"
+                            android:textColor="@color/white"
+                            android:textSize="16sp" />
+
+                    </RelativeLayout>
+                </LinearLayout>
+
+                <LinearLayout
+                    android:id="@+id/lbos2"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="horizontal"
+                    android:weightSum="2">
+
+                    <RelativeLayout
+                        android:id="@+id/rel_takequiz"
+                        android:layout_width="0dp"
+                        android:layout_height="140dp"
+                        android:layout_marginStart="40dp"
+                        android:layout_marginTop="10dp"
+                        android:layout_marginEnd="20dp"
+                        android:layout_marginBottom="20dp"
+                        android:layout_weight="1"
+                        android:background="@drawable/redgradientbg">
+
+                        <ImageView
+                            android:layout_width="110dp"
+                            android:layout_height="60dp"
+                            android:layout_marginTop="30dp"
+                            android:src="@drawable/coursequiz" />
+
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_alignParentBottom="true"
+                            android:layout_marginStart="30dp"
+                            android:layout_marginBottom="10dp"
+                            android:text="Quiz"
+                            android:textColor="@color/white"
+                            android:textSize="16sp" />
+
+                    </RelativeLayout>
+
+                    <RelativeLayout
+                        android:id="@+id/rel_forum"
+                        android:layout_width="0dp"
+                        android:layout_height="140dp"
+                        android:layout_marginTop="10dp"
+                        android:layout_marginEnd="40dp"
+                        android:layout_marginBottom="20dp"
+                        android:layout_weight="1"
+                        android:background="@drawable/gradientbgpurple">
+
+                        <ImageView
+                            android:layout_width="100dp"
+                            android:layout_height="40dp"
+                            android:layout_marginTop="30dp"
+                            android:src="@drawable/forum" />
+
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_alignParentBottom="true"
+                            android:layout_marginStart="30dp"
+                            android:layout_marginBottom="10dp"
+                            android:text="Forum"
+                            android:textColor="@color/white"
+                            android:textSize="16sp" />
+                    </RelativeLayout>
+                </LinearLayout>
+            </LinearLayout>
         </LinearLayout>
+        <de.hdodenhof.circleimageview.CircleImageView
+            android:id="@+id/course_image"
+            android:layout_width="100dp"
+            android:layout_height="100dp"
+            android:layout_marginEnd="50dp"
+            android:src="@drawable/androcourse"
+            app:civ_border_color="@color/white"
+            app:civ_border_width="2dp"
+            android:layout_alignParentEnd="true"
+            android:layout_marginTop="-50dp"
+            android:layout_below="@id/linearlayout1"
+            />
 
     </RelativeLayout>
 
-
-
-
-
-
-</androidx.constraintlayout.widget.ConstraintLayout>
+</ScrollView>
