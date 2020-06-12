@@ -22,6 +22,7 @@ apply plugin: 'kotlin-kapt'
 
 repositories {
     maven { url 'https://maven.google.com' }
+    maven { url 'https://jitpack.io' }
 }
 
 
@@ -149,4 +150,8 @@ dependencies {
 
 
     implementation "org.jetbrains.kotlin:kotlin-stdlib-jdk7:$kotlin_version"
+
+    //rate bar
+    implementation 'com.github.ome450901:SimpleRatingBar:1.5.0'
+
 }

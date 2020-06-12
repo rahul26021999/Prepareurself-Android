@@ -18,10 +18,11 @@
         android:theme="@style/AppTheme"
         android:usesCleartextTraffic="true"
         tools:replace="android:allowBackup">
+        <activity android:name=".courses.ui.activity.CourseDetalActivity"></activity>
         <activity
             android:name=".courses.ui.activity.DemoActivity"
             android:label="@string/title_activity_demo"
-            android:theme="@style/AppTheme.NoActionBar"></activity>
+            android:theme="@style/ProfileTheme" />
         <activity android:name=".courses.ui.activity.ForumActivity" />
         <activity
             android:name=".courses.ui.activity.CourseDetailActivity"
