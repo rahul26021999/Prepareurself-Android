@@ -1,20 +1,16 @@
 package com.prepare.prepareurself.courses.ui.activity;
 
-import androidx.appcompat.app.AppCompatActivity;
-import androidx.cardview.widget.CardView;
 import androidx.lifecycle.Observer;
 import androidx.lifecycle.ViewModelProvider;
 
-import android.app.Activity;
 import android.content.Intent;
 import android.graphics.drawable.Drawable;
 import android.net.Uri;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
-import android.widget.Button;
 import android.widget.ImageView;
-import android.widget.RatingBar;
+import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -22,7 +18,6 @@ import android.widget.Toast;
 import com.bumptech.glide.GenericTransitionOptions;
 import com.bumptech.glide.Glide;
 import com.bumptech.glide.load.engine.DiskCacheStrategy;
-import com.prepare.prepareurself.Home.ui.HomeActivity;
 import com.prepare.prepareurself.R;
 import com.prepare.prepareurself.courses.data.model.AddToUserPrefResponseModel;
 import com.prepare.prepareurself.courses.data.model.CourseDetailReponseModel;
@@ -30,8 +25,6 @@ import com.prepare.prepareurself.courses.data.model.RateCourseResponseModel;
 import com.prepare.prepareurself.courses.ui.fragmentToActivity.TabProjectctivity;
 import com.prepare.prepareurself.courses.ui.fragmentToActivity.TabResourceActivity;
 import com.prepare.prepareurself.courses.viewmodels.CourseDetailViewModel;
-import com.prepare.prepareurself.preferences.ui.PreferencesActivity;
-import com.prepare.prepareurself.profile.ui.EditPreferenceActivity;
 import com.prepare.prepareurself.quizv2.ui.QuizActivity;
 import com.prepare.prepareurself.utils.BaseActivity;
 import com.prepare.prepareurself.utils.Constants;
@@ -40,17 +33,17 @@ import com.prepare.prepareurself.utils.Utility;
 
 import java.io.IOException;
 
-import okio.Utf8;
-
 public class CourseDetailActivity extends BaseActivity implements View.OnClickListener{
     private ImageView backBtn ,course_image, btn_shareimage;
     private CourseDetailViewModel vm;
     private int courseId = -1;
     private PrefManager prefManager;
-    private RatingBar rateCourseBar;
-    private Button btnProject, btnResources;
-    TextView course_name, course_description, tv_takequiz, tv_setpref;
-    CardView cd_forum, cd_takequiz;
+    private com.willy.ratingbar.ScaleRatingBar scaleRatingBar;
+    //private Button btnProject, btnResources;
+    private LinearLayout l_layout_pref;
+    private RelativeLayout rel_project, rel_resources, rel_forum, rel_takequiz;
+    TextView course_name, course_description;
+    //CardView cd_forum, cd_takequiz;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -60,21 +53,23 @@ public class CourseDetailActivity extends BaseActivity implements View.OnClickLi
         course_description=findViewById(R.id.course_desc);
         course_image=findViewById(R.id.course_image);
         backBtn=findViewById(R.id.backBtn);
-        rateCourseBar=findViewById(R.id.rateCourseBar);
-        btnProject=findViewById(R.id.btnProject);
-        btnResources=findViewById(R.id.btnResources);
-        tv_takequiz=findViewById(R.id.tv_takequiz);
-        tv_setpref=findViewById(R.id.tv_setpref);
+        l_layout_pref=findViewById(R.id.l_layout_pref);
+        scaleRatingBar=findViewById(R.id.scaleRatingBar);
+        rel_project=findViewById(R.id.rel_project);
+        rel_resources=findViewById(R.id.rel_resources);
+        rel_takequiz=findViewById(R.id.rel_takequiz);
+        //tv_takequiz=findViewById(R.id.tv_takequiz);
+        //tv_setpref=findViewById(R.id.tv_setpref);
         btn_shareimage=findViewById(R.id.btn_shareimage);
         /* cd_takequiz=findViewById(R.id.cd_takequiz);*/
-        cd_forum=findViewById(R.id.cd_forum);
+        rel_forum=findViewById(R.id.rel_forum);
         backBtn.setOnClickListener(this);
-        btnProject.setOnClickListener(this);
-        btnResources.setOnClickListener(this);
-        tv_takequiz.setOnClickListener(this);
-        tv_setpref.setOnClickListener(this);
+        rel_project.setOnClickListener(this);
+        rel_resources.setOnClickListener(this);
+        rel_takequiz.setOnClickListener(this);
+        //tv_setpref.setOnClickListener(this);
 
-        cd_forum.setOnClickListener(this);
+        rel_forum.setOnClickListener(this);
         btn_shareimage.setOnClickListener(this);
 
         vm = new  ViewModelProvider(this).get(CourseDetailViewModel.class);
@@ -149,27 +144,27 @@ public class CourseDetailActivity extends BaseActivity implements View.OnClickLi
                 //startActivity(new Intent(CourseDetailActivity.this, HomeActivity.class));
                 finish();
                 break;
-            case R.id.btnProject:
+            case R.id.rel_project:
                 Intent intent = new Intent(CourseDetailActivity.this, TabProjectctivity.class);
                 intent.putExtra(Constants.COURSEID,1);
                 intent.putExtra(Constants.COURSENAME,"Android");
                 startActivity(intent);
                 break;
-            case R.id.btnResources:
+            case R.id.rel_resources:
                 Intent intent1 = new Intent(CourseDetailActivity.this, TabResourceActivity.class);
                 intent1.putExtra(Constants.COURSEID,1);
                 intent1.putExtra(Constants.COURSENAME,"Android");
                 startActivity(intent1);
                 break;
-            case R.id.tv_takequiz:
+            case R.id.rel_takequiz:
                 Intent intent2 = new Intent(CourseDetailActivity.this, QuizActivity.class);
                 intent2.putExtra(Constants.COURSEID,courseId);
                 startActivity(intent2);
                 break;
-            case R.id.tv_setpref:
+            /*case R.id.tv_setpref:
                 Intent intent3 = new Intent(CourseDetailActivity.this, PreferencesActivity.class);
                 startActivity(intent3);
-                break;
+                break;*/
             case R.id.btn_shareimage:
                 try{
 
@@ -186,7 +181,7 @@ public class CourseDetailActivity extends BaseActivity implements View.OnClickLi
                          e.printStackTrace();
                 }
                 break;
-            case R.id.cd_forum:
+            case R.id.rel_forum:
                 Intent intent4 = new Intent(CourseDetailActivity.this, ForumActivity.class);
                 startActivity(intent4);
                 break;

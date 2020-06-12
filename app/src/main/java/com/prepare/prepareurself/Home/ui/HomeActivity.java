@@ -24,20 +24,14 @@ import com.prepare.prepareurself.courses.data.model.ProjectsModel;
 import com.prepare.prepareurself.courses.data.model.TopicsModel;
 import com.prepare.prepareurself.courses.ui.activity.AllCoursesActivity;
 import com.prepare.prepareurself.courses.ui.activity.CourseDetailActivity;
-import com.prepare.prepareurself.courses.ui.activity.CourseDetalActivity;
 import com.prepare.prepareurself.courses.ui.activity.CoursesActivity;
 import com.prepare.prepareurself.courses.ui.activity.ProjectsActivity;
 import com.prepare.prepareurself.banner.BannerModel;
-import com.prepare.prepareurself.courses.ui.fragmentToActivity.TabProjectctivity;
-import com.prepare.prepareurself.courses.ui.fragmentToActivity.TabResourceActivity;
 import com.prepare.prepareurself.dashboard.data.model.CourseModel;
-import com.prepare.prepareurself.dashboard.data.model.SuggestedProjectModel;
-import com.prepare.prepareurself.dashboard.data.model.SuggestedTopicsModel;
 import com.prepare.prepareurself.dashboard.ui.fragment.DashboardFragment;
 import com.prepare.prepareurself.Home.viewmodel.HomeActivityViewModel;
 import com.prepare.prepareurself.R;
 import com.prepare.prepareurself.authentication.data.model.UserModel;
-import com.prepare.prepareurself.favourites.ui.FavoritesActivity;
 import com.prepare.prepareurself.favourites.ui.FavouritesFragment;
 import com.prepare.prepareurself.feedback.ui.FeedbackFragment;
 import com.prepare.prepareurself.firebase.UpdateHelper;
@@ -60,14 +54,11 @@ import androidx.annotation.NonNull;
 import androidx.appcompat.app.ActionBarDrawerToggle;
 import androidx.appcompat.app.AlertDialog;
 import androidx.core.view.GravityCompat;
-import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentManager;
 import androidx.lifecycle.Observer;
 import androidx.lifecycle.ViewModelProviders;
 import androidx.navigation.NavController;
-import androidx.navigation.Navigation;
 import androidx.navigation.ui.AppBarConfiguration;
-import androidx.navigation.ui.NavigationUI;
 import androidx.drawerlayout.widget.DrawerLayout;
 import androidx.appcompat.widget.Toolbar;
 
@@ -276,11 +267,11 @@ public class HomeActivity extends BaseActivity implements NavigationView.OnNavig
                 viewPager.setCurrentItem(0);
                 break;
             case R.id.nav_star:
-                //redirectToPlayStore();
-                Intent intent = new Intent(HomeActivity.this, CourseDetalActivity.class);
+                redirectToPlayStore();
+                /*Intent intent = new Intent(HomeActivity.this, CourseDetalActivity.class);
                 intent.putExtra(Constants.COURSEID,1);
                 intent.putExtra(Constants.COURSENAME,"Android");
-                startActivity(intent);
+                startActivity(intent);*/
                 break;
             case R.id.nav_share:
                 shareApp();
