@@ -120,12 +120,14 @@
                 android:background="@drawable/darkgrey_rounded_stroked_rectangle"
                 >
                 <ImageView
+                    android:id="@+id/pref_image"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:src="@drawable/ic_add_black_24dp"
                     android:layout_gravity="start"
                     android:layout_marginEnd="5dp"/>
                 <TextView
+                    android:id="@+id/tv_pref_name"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginEnd="5dp"
@@ -178,12 +180,13 @@
                         app:srb_drawableFilled="@drawable/filledstar"
                         app:srb_isIndicator="false"
                         app:srb_minimumStars="0"
+                        app:srb_clearRatingEnabled="true"
                         app:srb_numStars="5"
                         app:srb_scrollable="true"
                         app:srb_starHeight="40dp"
                         app:srb_starPadding="15dp"
                         app:srb_starWidth="40dp"
-                        app:srb_stepSize="0.5"/>
+                        app:srb_stepSize="1"/>
                 </LinearLayout>
 
                 <LinearLayout

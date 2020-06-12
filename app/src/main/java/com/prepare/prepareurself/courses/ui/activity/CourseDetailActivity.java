@@ -1,14 +1,19 @@
 package com.prepare.prepareurself.courses.ui.activity;
 
+import androidx.fragment.app.FragmentTransaction;
 import androidx.lifecycle.Observer;
 import androidx.lifecycle.ViewModelProvider;
 
+import android.app.Dialog;
 import android.content.Intent;
+import android.graphics.drawable.ColorDrawable;
 import android.graphics.drawable.Drawable;
 import android.net.Uri;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
+import android.view.Window;
+import android.widget.FrameLayout;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
@@ -18,6 +23,7 @@ import android.widget.Toast;
 import com.bumptech.glide.GenericTransitionOptions;
 import com.bumptech.glide.Glide;
 import com.bumptech.glide.load.engine.DiskCacheStrategy;
+import com.google.android.material.button.MaterialButton;
 import com.prepare.prepareurself.R;
 import com.prepare.prepareurself.courses.data.model.AddToUserPrefResponseModel;
 import com.prepare.prepareurself.courses.data.model.CourseDetailReponseModel;
@@ -25,16 +31,22 @@ import com.prepare.prepareurself.courses.data.model.RateCourseResponseModel;
 import com.prepare.prepareurself.courses.ui.fragmentToActivity.TabProjectctivity;
 import com.prepare.prepareurself.courses.ui.fragmentToActivity.TabResourceActivity;
 import com.prepare.prepareurself.courses.viewmodels.CourseDetailViewModel;
+import com.prepare.prepareurself.feedback.ui.FeedbackFragment;
 import com.prepare.prepareurself.quizv2.ui.QuizActivity;
 import com.prepare.prepareurself.utils.BaseActivity;
 import com.prepare.prepareurself.utils.Constants;
 import com.prepare.prepareurself.utils.PrefManager;
 import com.prepare.prepareurself.utils.Utility;
+import com.willy.ratingbar.BaseRatingBar;
 
 import java.io.IOException;
 
 public class CourseDetailActivity extends BaseActivity implements View.OnClickListener{
-    private ImageView backBtn ,course_image, btn_shareimage;
+    int starbyuser;
+    String msg;
+    RateCourseResponseModel rateCourseResponseModel;
+
+    private ImageView backBtn ,course_image, btn_shareimage, pref_image;
     private CourseDetailViewModel vm;
     private int courseId = -1;
     private PrefManager prefManager;
@@ -42,7 +54,8 @@ public class CourseDetailActivity extends BaseActivity implements View.OnClickLi
     //private Button btnProject, btnResources;
     private LinearLayout l_layout_pref;
     private RelativeLayout rel_project, rel_resources, rel_forum, rel_takequiz;
-    TextView course_name, course_description;
+    TextView course_name, course_description,tv_pref_name;
+    //private FeedbackFragment feedbackFragment;
     //CardView cd_forum, cd_takequiz;
 
     @Override
@@ -54,23 +67,37 @@ public class CourseDetailActivity extends BaseActivity implements View.OnClickLi
         course_image=findViewById(R.id.course_image);
         backBtn=findViewById(R.id.backBtn);
         l_layout_pref=findViewById(R.id.l_layout_pref);
+        tv_pref_name=findViewById(R.id.tv_pref_name);
+        pref_image=findViewById(R.id.pref_image);
         scaleRatingBar=findViewById(R.id.scaleRatingBar);
         rel_project=findViewById(R.id.rel_project);
         rel_resources=findViewById(R.id.rel_resources);
         rel_takequiz=findViewById(R.id.rel_takequiz);
-        //tv_takequiz=findViewById(R.id.tv_takequiz);
-        //tv_setpref=findViewById(R.id.tv_setpref);
         btn_shareimage=findViewById(R.id.btn_shareimage);
-        /* cd_takequiz=findViewById(R.id.cd_takequiz);*/
         rel_forum=findViewById(R.id.rel_forum);
         backBtn.setOnClickListener(this);
         rel_project.setOnClickListener(this);
         rel_resources.setOnClickListener(this);
         rel_takequiz.setOnClickListener(this);
-        //tv_setpref.setOnClickListener(this);
-
         rel_forum.setOnClickListener(this);
         btn_shareimage.setOnClickListener(this);
+        l_layout_pref.setOnClickListener(this);
+        //int stars=scaleRatingBar.getNumStars();
+        //Log.d("TAG",""+stars);
+        scaleRatingBar.setOnRatingChangeListener(new BaseRatingBar.OnRatingChangeListener() {
+            @Override
+            public void onRatingChange(BaseRatingBar ratingBar, float rating, boolean fromUser) {
+                Log.e("TAGSTAR", "onRatingChange: " + starbyuser);
+                starbyuser= (int) rating;
+                Toast.makeText(CourseDetailActivity.this,""+ msg,Toast.LENGTH_LONG).show();
+                if(rating<=3){
+                    showDialogfeedback();
+                }
+                else if (rating>3){
+                    showDialogplaystore();
+                }
+            }
+        });
 
         vm = new  ViewModelProvider(this).get(CourseDetailViewModel.class);
         prefManager = new PrefManager(this);
@@ -80,7 +107,7 @@ public class CourseDetailActivity extends BaseActivity implements View.OnClickLi
 
         if (courseId!=-1){
             vm.fetchCourseDetails(prefManager.getString(Constants.JWTTOKEN),courseId);
-            vm.fetchRateCourse(prefManager.getString(Constants.JWTTOKEN),courseId,5);
+            vm.fetchRateCourse(prefManager.getString(Constants.JWTTOKEN),courseId,starbyuser);
             vm.courseDetailReponseModelLiveData.observe(this, new Observer<CourseDetailReponseModel>() {
                 @Override
                 public void onChanged(CourseDetailReponseModel courseDetailReponseModel) {
@@ -115,7 +142,9 @@ public class CourseDetailActivity extends BaseActivity implements View.OnClickLi
 
                 @Override
                 public void onChanged(RateCourseResponseModel rateCourseResponseModel) {
-                    Toast.makeText(CourseDetailActivity.this,""+ rateCourseResponseModel.getMessage().toString(),Toast.LENGTH_LONG).show();
+                   // Toast.makeText(CourseDetailActivity.this,""+ rateCourseResponseModel.getMessage(),Toast.LENGTH_LONG).show();
+                         msg=rateCourseResponseModel.getMessage();
+
                 }
             });
             //Adduser pref model
@@ -131,10 +160,82 @@ public class CourseDetailActivity extends BaseActivity implements View.OnClickLi
 
     }
 
+    private void showDialogplaystore() {
+        final Dialog dialog = new Dialog(CourseDetailActivity.this);
+        dialog.requestWindowFeature(Window.FEATURE_NO_TITLE);
+        dialog.setCancelable(false);
+        dialog.setContentView(R.layout.activity_dialog_playstore);
+        com.google.android.material.button.MaterialButton buttonok =dialog.findViewById(R.id.btn_ok);
+        com.google.android.material.button.MaterialButton buttonnotnow =dialog.findViewById(R.id.btn_notnow);
+        buttonok.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Utility.redirectUsingCustomTab(CourseDetailActivity.this,Constants.GOOGLEPLAYLINK);
+                dialog.dismiss();
+
+            }
+        });
+        buttonnotnow.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                dialog.cancel();
+
+            }
+        });
+    }
 
 
-    private void setdetails() {
+    private void showDialogfeedback() {
+        final Dialog dialog = new Dialog(CourseDetailActivity.this);
+        dialog.requestWindowFeature(Window.FEATURE_NO_TITLE);
+        dialog.setCancelable(false);
+        dialog.setContentView(R.layout.activity_dialog);
+        com.google.android.material.button.MaterialButton buttonok =dialog.findViewById(R.id.btn_ok);
+        com.google.android.material.button.MaterialButton buttonnotnow =dialog.findViewById(R.id.btn_notnow);
+        buttonok.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                dialog.dismiss();
+                /*Intent intent = new Intent(CourseDetailActivity.this, FeedbackFragment.class);
+                startActivity(intent);*/
+                //MyFragment fragment = new MyFragment();
+                FragmentTransaction transaction = getSupportFragmentManager().beginTransaction();
+                transaction.replace(R.id.rel_frag_layout, FeedbackFragment);
+                transaction.commit();
+            }
+        });
+        buttonnotnow.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                dialog.cancel();
+                Intent intent = new Intent(CourseDetailActivity.this, FeedbackFragment.class);
+                startActivity(intent);
+            }
+        });
+        //dialog.getWindow().setBackgroundDrawable(new ColorDrawable(android.graphics.Color.TRANSPARENT));
 
+/*
+
+        FrameLayout mDialogNo = dialog.findViewById(R.id.frmNo);
+        mDialogNo.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Toast.makeText(CourseDetailActivity.this,"Cancel",Toast.LENGTH_LONG).show();
+                dialog.dismiss();
+            }
+        });
+
+        FrameLayout mDialogOk = dialog.findViewById(R.id.frmOk);
+        mDialogOk.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Toast.makeText(CourseDetailActivity.this,"Okay" ,Toast.LENGTH_SHORT).show();
+                dialog.cancel();
+            }
+        });
+*/
+
+        dialog.show();
     }
 
     @Override
@@ -185,6 +286,11 @@ public class CourseDetailActivity extends BaseActivity implements View.OnClickLi
                 Intent intent4 = new Intent(CourseDetailActivity.this, ForumActivity.class);
                 startActivity(intent4);
                 break;
+            case R.id.l_layout_pref:
+                Glide.with(CourseDetailActivity.this).load(R.drawable.ic_check_black_24dp).into(pref_image);
+                //image
+                tv_pref_name.setText("Added as preference");
+
     }
 }
 }
