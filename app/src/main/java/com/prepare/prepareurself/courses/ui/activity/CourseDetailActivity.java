@@ -90,7 +90,18 @@ public class CourseDetailActivity extends BaseActivity implements View.OnClickLi
         vm = new  ViewModelProvider(this).get(CourseDetailViewModel.class);
         prefManager = new PrefManager(this);
         Intent intent = getIntent();
-        courseId = intent.getIntExtra(Constants.COURSEID, -1);
+
+        if (intent.getData()!=null){
+            Log.d("deeplink_debug","course avtivity : "+getIntent().getData()+"");
+            String data = intent.getData().toString();
+            String CourseName = data.split("&course_name=")[1];
+            String CourseId = data.split("&course_id=")[1].split("&course_name=")[0];
+            String type = data.split("type=")[1].split("&course_id=")[0];
+
+            courseId = Integer.parseInt(CourseId);
+        }else{
+            courseId = intent.getIntExtra(Constants.COURSEID, -1);
+        }
 
         if (courseId!=-1){
             vm.fetchCourseDetails(prefManager.getString(Constants.JWTTOKEN),courseId);
