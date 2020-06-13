@@ -281,12 +281,12 @@ public class HomeActivity extends BaseActivity implements NavigationView.OnNavig
                 startActivity(intent1);*/
                 break;
             case R.id.nav_about_us :
-                startActivity(new Intent(HomeActivity.this, QuizActivity.class));
-                //viewPager.setCurrentItem(4);
+                //startActivity(new Intent(HomeActivity.this, QuizActivity.class));
+                viewPager.setCurrentItem(4);
                 break;
             case R.id.nav_feedback :
-                startActivity(new Intent(HomeActivity.this, PreferencesActivity.class));
-                //viewPager.setCurrentItem(3);
+                //startActivity(new Intent(HomeActivity.this, PreferencesActivity.class));
+                viewPager.setCurrentItem(3);
                 break;
             case R.id.nav_fav:
                 viewPager.setCurrentItem(2);
@@ -496,7 +496,11 @@ public class HomeActivity extends BaseActivity implements NavigationView.OnNavig
         if (drawer.isDrawerOpen(GravityCompat.START)) {
             drawer.closeDrawer(GravityCompat.START);
         } else {
-            super.onBackPressed();
+            if (viewPager.getCurrentItem()!=0){
+                navigateHome(0);
+            }else{
+                super.onBackPressed();
+            }
         }
     }
 

@@ -61,6 +61,7 @@ public class CourseDetailActivity extends BaseActivity implements View.OnClickLi
     private LinearLayout l_layout_pref;
     private RelativeLayout rel_project, rel_resources, rel_forum, rel_takequiz;
     TextView course_name, course_description,tv_pref_name;
+    private String courseName = "";
     private boolean isAdded = false;
     @Override
     public void onFeedbackBackPressed() { }
@@ -77,7 +78,7 @@ public class CourseDetailActivity extends BaseActivity implements View.OnClickLi
             public void onRatingChange(BaseRatingBar ratingBar, float rating, boolean fromUser) {
                 Log.e("TAGSTAR", "onRatingChange: " + starbyuser);
                 starbyuser= (int) rating;
-                Toast.makeText(CourseDetailActivity.this,""+ msg,Toast.LENGTH_LONG).show();
+                //Toast.makeText(CourseDetailActivity.this,""+ msg,Toast.LENGTH_LONG).show();
                 if(rating<=3){
                     showDialogfeedback();
                 }
@@ -118,6 +119,7 @@ public class CourseDetailActivity extends BaseActivity implements View.OnClickLi
                         String img_url=courseDetailReponseModel.getCourse().getImage_url();
                         //setdetails();
                         course_name.setText(title);
+                        courseName = title;
                         Log.d("TAGdeatal",title);
                         course_description.setText(description);
                         if (img_url!=null && img_url.endsWith(".svg")){
@@ -253,7 +255,7 @@ public class CourseDetailActivity extends BaseActivity implements View.OnClickLi
                 dialog.cancel();
                 getSupportFragmentManager().beginTransaction().add(R.id.feedback_container,FeedbackFragment.newInstance())
                         .commit();
-                Utility.showToast(CourseDetailActivity.this,"abc def");
+               // Utility.showToast(CourseDetailActivity.this,"abc def");
             }
         });
         buttonnotnow.setOnClickListener(new View.OnClickListener() {
@@ -276,19 +278,19 @@ public class CourseDetailActivity extends BaseActivity implements View.OnClickLi
                 break;
             case R.id.rel_project:
                 Intent intent = new Intent(CourseDetailActivity.this, TabProjectctivity.class);
-                intent.putExtra(Constants.COURSEID,1);
-                intent.putExtra(Constants.COURSENAME,"Android");
+                intent.putExtra(Constants.COURSEID,courseId);
                 startActivity(intent);
                 break;
             case R.id.rel_resources:
                 Intent intent1 = new Intent(CourseDetailActivity.this, TabResourceActivity.class);
-                intent1.putExtra(Constants.COURSEID,1);
-                intent1.putExtra(Constants.COURSENAME,"Android");
+                intent1.putExtra(Constants.COURSEID,courseId);
+                //intent1.putExtra(Constants.COURSENAME,"Android");
                 startActivity(intent1);
                 break;
             case R.id.rel_takequiz:
                 Intent intent2 = new Intent(CourseDetailActivity.this, QuizActivity.class);
                 intent2.putExtra(Constants.COURSEID,courseId);
+                intent2.putExtra(Constants.COURSENAME,courseName);
                 startActivity(intent2);
                 break;
             /*case R.id.tv_setpref:
@@ -300,11 +302,10 @@ public class CourseDetailActivity extends BaseActivity implements View.OnClickLi
 
                 Uri uri = Utility.getUriOfBitmap(Utility.getBitmapFromView(course_image),CourseDetailActivity.this);
                 String encodedId = Utility.base64EncodeForInt(courseId);
-                String text = course_name+"\n\n" +
-                        "Prepareurself is providing various courses, projects and resources. " +
+                String text = "Prepareurself is providing various courses, projects and resources. " +
                         "One place to learn skills and test them by developing projects. \n" +
                         "Checkout prepareurself app : \n" +
-                        "prepareurself.in/project/"+encodedId;
+                        "prepareurself.in/course/"+encodedId;
                 Utility.shareContent(CourseDetailActivity.this,uri,text);
                 }
                  catch (IOException e) {

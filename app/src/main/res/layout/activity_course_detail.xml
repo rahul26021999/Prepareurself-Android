@@ -180,7 +180,7 @@
                             android:layout_height="wrap_content"
                             android:layout_gravity="center"
                             app:srb_clickable="true"
-                            app:srb_drawableEmpty="@drawable/emptytar"
+                            app:srb_drawableEmpty="@drawable/emptystarlatest"
                             app:srb_drawableFilled="@drawable/filledstar"
                             app:srb_isIndicator="false"
                             app:srb_minimumStars="0"

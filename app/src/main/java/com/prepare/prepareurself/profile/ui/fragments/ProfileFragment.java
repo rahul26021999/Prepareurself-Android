@@ -39,6 +39,7 @@ import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
 import com.prepare.prepareurself.Home.ui.HomeActivity;
 import com.prepare.prepareurself.authentication.ui.AuthenticationActivity;
+import com.prepare.prepareurself.preferences.ui.PreferencesActivity;
 import com.prepare.prepareurself.profile.data.model.UpdatePreferenceResponseModel;
 import com.prepare.prepareurself.profile.ui.EditPreferenceActivity;
 import com.prepare.prepareurself.profile.ui.activity.UpdatePasswordActivity;
@@ -506,7 +507,7 @@ public class ProfileFragment extends Fragment implements View.OnClickListener {
                 tvCancelAboutMe.setVisibility(View.GONE);
                 break;
             case R.id.tv_preference_edit:
-                startActivity(new Intent(getActivity(), EditPreferenceActivity.class));
+                startActivity(new Intent(getActivity(), PreferencesActivity.class));
                 getActivity().finish();
                 break;
             case R.id.edit_image_vector:
