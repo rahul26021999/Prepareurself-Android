@@ -213,7 +213,7 @@
 
                             <ImageView
                                 android:layout_width="100dp"
-                                android:layout_height="50dp"
+                                android:layout_height="60dp"
                                 android:layout_marginTop="30dp"
                                 android:layout_centerHorizontal="true"
                                 android:src="@drawable/courseresource" />
@@ -226,6 +226,7 @@
                                 android:layout_marginBottom="10dp"
                                 android:layout_centerHorizontal="true"
                                 android:text="Resources"
+                                android:textStyle="bold"
                                 android:textColor="@color/white"
                                 android:textSize="16sp" />
 
@@ -256,6 +257,7 @@
                                 android:layout_marginStart="30dp"
                                 android:layout_marginBottom="10dp"
                                 android:text="Project"
+                                android:textStyle="bold"
                                 android:textColor="@color/white"
                                 android:textSize="16sp" />
 
@@ -281,8 +283,9 @@
                             android:background="@drawable/redgradientbg">
 
                             <ImageView
-                                android:layout_width="110dp"
-                                android:layout_height="60dp"
+                                android:layout_width="100dp"
+                                android:layout_height="70dp"
+                                android:layout_centerHorizontal="true"
                                 android:layout_marginTop="30dp"
                                 android:src="@drawable/coursequiz" />
 
@@ -292,7 +295,9 @@
                                 android:layout_alignParentBottom="true"
                                 android:layout_marginStart="30dp"
                                 android:layout_marginBottom="10dp"
+                                android:layout_centerHorizontal="true"
                                 android:text="Quiz"
+                                android:textStyle="bold"
                                 android:textColor="@color/white"
                                 android:textSize="16sp" />
 
@@ -310,8 +315,9 @@
 
                             <ImageView
                                 android:layout_width="100dp"
-                                android:layout_height="40dp"
-                                android:layout_marginTop="30dp"
+                                android:layout_height="50dp"
+                                android:layout_centerHorizontal="true"
+                                android:layout_marginTop="40dp"
                                 android:src="@drawable/forum" />
 
                             <TextView
@@ -320,6 +326,8 @@
                                 android:layout_alignParentBottom="true"
                                 android:layout_marginStart="30dp"
                                 android:layout_marginBottom="10dp"
+                                android:layout_centerHorizontal="true"
+                                android:textStyle="bold"
                                 android:text="Forum"
                                 android:textColor="@color/white"
                                 android:textSize="16sp" />

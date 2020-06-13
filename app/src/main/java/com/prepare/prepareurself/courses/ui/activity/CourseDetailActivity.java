@@ -1,5 +1,6 @@
 package com.prepare.prepareurself.courses.ui.activity;
 
+import androidx.core.content.ContextCompat;
 import androidx.fragment.app.FragmentTransaction;
 import androidx.lifecycle.LiveData;
 import androidx.lifecycle.Observer;
@@ -11,6 +12,9 @@ import android.graphics.drawable.ColorDrawable;
 import android.graphics.drawable.Drawable;
 import android.net.Uri;
 import android.os.Bundle;
+import android.text.Html;
+import android.text.Spanned;
+import android.text.TextUtils;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -69,6 +73,7 @@ public class CourseDetailActivity extends BaseActivity implements View.OnClickLi
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_course_detail);
+        statusbarcolor();
         getintents();
         setOnclicklisteners();
         //int stars=scaleRatingBar.getNumStars();
@@ -113,15 +118,22 @@ public class CourseDetailActivity extends BaseActivity implements View.OnClickLi
             vm.courseDetailReponseModelLiveData.observe(this, new Observer<CourseDetailReponseModel>() {
                 @Override
                 public void onChanged(CourseDetailReponseModel courseDetailReponseModel) {
-                    if (courseDetailReponseModel!=null){
+                    if (courseDetailReponseModel!=null ){
                         String title=courseDetailReponseModel.getCourse().getName();
                         String description=courseDetailReponseModel.getCourse().getDescription();
+                        //course_description.setText(Html.fromHtml(description));
+                        //String htmlstr= courseDetailReponseModel.getCourse().getDescription();
+                        //String description=Html.fromHtml(htmlstr).toString();
+                        /*Spanned spanned = Html.fromHtml(courseDetailReponseModel.getCourse().getDescription());
+                        char[] chars = new char[spanned.length()];
+                        TextUtils.getChars(spanned, 0, spanned.length(), chars, 0);
+                        String description = new String(chars);*/
+                        //Html.fromHtml(description).toString();
                         String img_url=courseDetailReponseModel.getCourse().getImage_url();
                         //setdetails();
                         course_name.setText(title);
                         courseName = title;
                         Log.d("TAGdeatal",title);
-                        course_description.setText(description);
                         if (img_url!=null && img_url.endsWith(".svg")){
                             Utility.loadSVGImage(CourseDetailActivity.this,Constants.COURSEIMAGEBASEUSRL+ courseDetailReponseModel.getCourse().getImage_url(),course_image);
                         }else{
@@ -186,6 +198,16 @@ public class CourseDetailActivity extends BaseActivity implements View.OnClickLi
 
         }
 
+    }
+
+    private void statusbarcolor() {
+        Window window = this.getWindow();
+        // clear FLAG_TRANSLUCENT_STATUS flag:
+        //window.clearFlags(WindowManager.LayoutParams.FLAG_TRANSLUCENT_STATUS);
+        // add FLAG_DRAWS_SYSTEM_BAR_BACKGROUNDS flag to the window
+        window.addFlags(WindowManager.LayoutParams.FLAG_DRAWS_SYSTEM_BAR_BACKGROUNDS);
+        // finally change the color
+        window.setStatusBarColor(ContextCompat.getColor(this,R.color.seablue));
     }
 
     private void setOnclicklisteners() {
