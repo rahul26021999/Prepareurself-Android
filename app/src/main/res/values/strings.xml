@@ -69,5 +69,13 @@
     <string name="title_activity_demo">DemoActivity</string>
     <string name="rate_us"><u>Rate us</u>.</string>
 
+    //strg array
+    <integer-array name="random_images">
+        <item>@drawable/gradientbglightblue</item>
+        <item>@drawable/gradientbgpeach</item>
+        <item>@drawable/gradientbgpurple</item>
+    </integer-array>
+
+
 
 </resources>

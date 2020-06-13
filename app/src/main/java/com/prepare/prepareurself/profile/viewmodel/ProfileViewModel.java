@@ -8,6 +8,10 @@ import androidx.lifecycle.AndroidViewModel;
 import androidx.lifecycle.LiveData;
 import androidx.lifecycle.MutableLiveData;
 
+import com.prepare.prepareurself.preferences.data.PrefDbRepository;
+import com.prepare.prepareurself.preferences.data.PrefRepository;
+import com.prepare.prepareurself.preferences.data.PreferencesModel;
+import com.prepare.prepareurself.preferences.data.PrefernceResponseModel;
 import com.prepare.prepareurself.profile.data.db.repository.MyPreferenceDbRepository;
 import com.prepare.prepareurself.profile.data.db.repository.PreferncesDbRespoitory;
 import com.prepare.prepareurself.profile.data.model.AllPreferencesResponseModel;
@@ -33,6 +37,8 @@ public class ProfileViewModel extends AndroidViewModel {
     private ProfileRepository profileRepository;
     private PreferncesDbRespoitory preferncesDbRespoitory;
     private MyPreferenceDbRepository myPreferenceDbRepository;
+    private PrefRepository prefRepository;
+    private PrefDbRepository prefDbRepository;
 
     private MutableLiveData<HashMap<String,PreferredTechStack>> listLiveData = new MutableLiveData<>();
     public MutableLiveData<List<PreferredTechStack>> listLiveDataEditable = new MutableLiveData<>();
@@ -44,6 +50,8 @@ public class ProfileViewModel extends AndroidViewModel {
         userModelLiveData = userDBRepository.getUserInfo();
         preferncesDbRespoitory = new PreferncesDbRespoitory(application);
         myPreferenceDbRepository = new MyPreferenceDbRepository(application);
+        prefRepository = new PrefRepository(application);
+        prefDbRepository = new PrefDbRepository(application);
     }
 
     public LiveData<UserModel> getUserModelLiveData() {
@@ -152,9 +160,14 @@ public class ProfileViewModel extends AndroidViewModel {
         return listLiveData;
     }
 
-    public LiveData<UserModel> getUserPrefernces() {
-        return userDBRepository.getUserInfo();
+    public void fetchUserPrefernces(String token) {
+        prefRepository.getUserPreferences(token);
     }
+
+    public LiveData<List<PreferencesModel>> getUserPrefernces(){
+        return prefDbRepository.getPrefs();
+    }
+
 
     public void saveMyPreferenceList(List<MyPreferenceTechStack> myPreferenceTechStacks) {
         for (MyPreferenceTechStack myPreferenceTechStack : myPreferenceTechStacks){

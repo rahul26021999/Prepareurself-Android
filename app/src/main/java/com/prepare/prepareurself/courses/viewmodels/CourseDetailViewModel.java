@@ -11,6 +11,10 @@ import com.prepare.prepareurself.courses.data.model.AddToUserPrefResponseModel;
 import com.prepare.prepareurself.courses.data.model.CourseDetailReponseModel;
 import com.prepare.prepareurself.courses.data.model.RateCourseResponseModel;
 import com.prepare.prepareurself.courses.data.repository.CourseDetailRepository;
+import com.prepare.prepareurself.preferences.data.PrefDbRepository;
+import com.prepare.prepareurself.preferences.data.PrefRepository;
+import com.prepare.prepareurself.preferences.data.PreferencesModel;
+import com.prepare.prepareurself.preferences.data.PrefernceResponseModel;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -21,10 +25,13 @@ public class CourseDetailViewModel extends AndroidViewModel {
     public LiveData<CourseDetailReponseModel> courseDetailReponseModelLiveData = new MutableLiveData<>();
     public LiveData<RateCourseResponseModel> rateCourseResponseModelLiveData=new MutableLiveData<>();
     public  LiveData<AddToUserPrefResponseModel> addToUserPrefResponseModelLiveData= new MutableLiveData<>();
+    private PrefRepository prefRepository;
+    public LiveData<PrefernceResponseModel> prefernceResponseModelLiveData= new MutableLiveData<>();
 
     public CourseDetailViewModel(@NonNull Application application) {
         super(application);
         courseDetailRepository = new CourseDetailRepository();
+        prefRepository= new PrefRepository(application);
     }
 
     public void fetchCourseDetails(String token, int courseId){
@@ -37,4 +44,11 @@ public class CourseDetailViewModel extends AndroidViewModel {
         addToUserPrefResponseModelLiveData=courseDetailRepository.fetchAddUserPref(token,course_id,type);
     }
 
+    public  void  fetchremotePref(String token ){
+        prefernceResponseModelLiveData=prefRepository.getUserPreferences(token);
+    }
+
+
 }
+//error_code:Int?=-1,
+//        var preferences

@@ -62,6 +62,7 @@ class PreferencesActivity : BaseActivity(),PreferenceRvAdapter.PrefListener,Choo
         adapter = PreferenceRvAdapter(this)
         rv_prefs.layoutManager = LinearLayoutManager(this)
         rv_prefs.adapter = adapter
+        rv_prefs.adapter = adapter
 
 //        vm.getPrefs()?.observe(this, Observer {
 //            temList.clear()
@@ -93,6 +94,7 @@ class PreferencesActivity : BaseActivity(),PreferenceRvAdapter.PrefListener,Choo
                         }else{
                             Utility.showToast(this, Constants.SOMETHINGWENTWRONG)
                         }
+                        vm.updatePrefDb(mylist)
                         progress_bar_pref.visibility = View.GONE
                     })
         }

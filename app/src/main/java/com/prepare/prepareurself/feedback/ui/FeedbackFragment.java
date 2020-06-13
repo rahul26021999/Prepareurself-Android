@@ -201,7 +201,8 @@ public class FeedbackFragment extends Fragment {
                                         if (feedbacksubmitModel.getError_code() == 0){
                                             Utility.showToast(getActivity(), "Thank you for your time!");
                                             tempAnswer="";
-                                            getActivity().onBackPressed();
+                                           // getActivity().onBackPressed();
+                                            removeFragment();
                                         }else{
                                             Utility.showToast(getActivity(), "Unable to save feedback at the moment");
                                             tempAnswer="";
@@ -214,6 +215,10 @@ public class FeedbackFragment extends Fragment {
         });
 
 
+    }
+
+    private void removeFragment() {
+        getActivity().getSupportFragmentManager().beginTransaction().remove(this).commit();
     }
 
     private void setView(FeedbackParentModel feedbackParentModel) {

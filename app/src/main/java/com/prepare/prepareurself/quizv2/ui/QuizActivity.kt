@@ -11,6 +11,7 @@ import com.prepare.prepareurself.quizv2.data.OptionsModel
 import com.prepare.prepareurself.quizv2.data.ResponsesModel
 import com.prepare.prepareurself.quizv2.viewmodel.QuizViewModel
 import com.prepare.prepareurself.utils.*
+import kotlinx.android.synthetic.main.activity_course_detail.*
 import kotlinx.android.synthetic.main.activity_quiz2.*
 import java.util.ArrayList
 
@@ -22,6 +23,7 @@ class QuizActivity : BaseActivity(),QuizQuestionPagerAdapter.QuestionInteractor 
     private lateinit var pm:PrefManager
     private var courseId = 0
     private lateinit var responses:ArrayList<ResponsesModel>
+    private var courseName = ""
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -33,9 +35,15 @@ class QuizActivity : BaseActivity(),QuizQuestionPagerAdapter.QuestionInteractor 
         responses = ArrayList<ResponsesModel>()
 
         courseId = intent.getIntExtra(Constants.COURSEID,0)
-
+        courseName = intent.getStringExtra(Constants.COURSENAME)
 //        quizViewModel.fetchQuiz(pm.getString(Constants.JWTTOKEN),1,Constants.EASY)
-        quizViewModel.fetchQuiz(pm.getString(Constants.JWTTOKEN),1,Constants.EASY)
+        if (courseId!=0){
+            quizViewModel.fetchQuiz(pm.getString(Constants.JWTTOKEN),courseId,Constants.EASY)
+            if (courseName.isNullOrEmpty())
+                tv_quiz_title.text = "Quiz"
+            else
+                tv_quiz_title.text = "$courseName Quiz"
+        }
 
         timer = object :CountDownTimer(30000,1000){
             override fun onFinish() {

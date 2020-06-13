@@ -4,13 +4,13 @@
     <color name="colorPrimaryDark">#293859</color>
     <color name="colorPrimaryLight">#E9EAEE</color>
     <color name="colorAccent">#293859</color>
-
     <color name="DarkModePrimaryBlack">#181818</color>
     <color name="DarkModePrimarySelectedBlack">#303030</color>
 
     <color name="colorWhite">#FFFFFF</color>
     <color name="lightred">#ED2E55</color>
     <color name="lightgreen">#469A0A</color>
+
 
     <color name="dark_grey">#aaa</color>
 
@@ -39,6 +39,7 @@
     <color name="green">#20CA0D</color>
 
     <color name="shimmer_background">#dddddd</color>
+    <color name="seablue">#0A8C9C</color>
 
 
 </resources>

@@ -53,7 +53,7 @@ class PrefDbRepository(application: Application){
     class DeleteAllAsyncTask(var dao: PrefDao) : AsyncTask<PreferencesModel?, Void?, Void?>() {
 
         override fun doInBackground(vararg params: PreferencesModel?): Void? {
-            params[0]?.let { dao.deleteAllPrefs() }
+            dao.deleteAllPrefs()
             return null
         }
 

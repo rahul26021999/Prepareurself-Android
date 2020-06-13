@@ -3,11 +3,6 @@
     android:layout_height="match_parent"
     xmlns:android="http://schemas.android.com/apk/res/android">
 
-    <FrameLayout
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:id="@+id/feedback_container"/>
-
     <androidx.core.widget.NestedScrollView xmlns:app="http://schemas.android.com/apk/res-auto"
         xmlns:tools="http://schemas.android.com/tools"
         android:layout_width="match_parent"
@@ -185,8 +180,8 @@
                             android:layout_height="wrap_content"
                             android:layout_gravity="center"
                             app:srb_clickable="true"
-                            app:srb_drawableEmpty="@drawable/emptytar"
-                            app:srb_drawableFilled="@drawable/filledstar"
+                            app:srb_drawableEmpty="@drawable/ic_starnewsvg"
+                            app:srb_drawableFilled="@drawable/ic_starfullnewsvg"
                             app:srb_isIndicator="false"
                             app:srb_minimumStars="0"
                             app:srb_clearRatingEnabled="true"
@@ -218,7 +213,7 @@
 
                             <ImageView
                                 android:layout_width="100dp"
-                                android:layout_height="50dp"
+                                android:layout_height="60dp"
                                 android:layout_marginTop="30dp"
                                 android:layout_centerHorizontal="true"
                                 android:src="@drawable/courseresource" />
@@ -231,6 +226,7 @@
                                 android:layout_marginBottom="10dp"
                                 android:layout_centerHorizontal="true"
                                 android:text="Resources"
+                                android:textStyle="bold"
                                 android:textColor="@color/white"
                                 android:textSize="16sp" />
 
@@ -261,6 +257,7 @@
                                 android:layout_marginStart="30dp"
                                 android:layout_marginBottom="10dp"
                                 android:text="Project"
+                                android:textStyle="bold"
                                 android:textColor="@color/white"
                                 android:textSize="16sp" />
 
@@ -286,8 +283,9 @@
                             android:background="@drawable/redgradientbg">
 
                             <ImageView
-                                android:layout_width="110dp"
-                                android:layout_height="60dp"
+                                android:layout_width="100dp"
+                                android:layout_height="70dp"
+                                android:layout_centerHorizontal="true"
                                 android:layout_marginTop="30dp"
                                 android:src="@drawable/coursequiz" />
 
@@ -297,7 +295,9 @@
                                 android:layout_alignParentBottom="true"
                                 android:layout_marginStart="30dp"
                                 android:layout_marginBottom="10dp"
+                                android:layout_centerHorizontal="true"
                                 android:text="Quiz"
+                                android:textStyle="bold"
                                 android:textColor="@color/white"
                                 android:textSize="16sp" />
 
@@ -315,8 +315,9 @@
 
                             <ImageView
                                 android:layout_width="100dp"
-                                android:layout_height="40dp"
-                                android:layout_marginTop="30dp"
+                                android:layout_height="50dp"
+                                android:layout_centerHorizontal="true"
+                                android:layout_marginTop="40dp"
                                 android:src="@drawable/forum" />
 
                             <TextView
@@ -325,6 +326,8 @@
                                 android:layout_alignParentBottom="true"
                                 android:layout_marginStart="30dp"
                                 android:layout_marginBottom="10dp"
+                                android:layout_centerHorizontal="true"
+                                android:textStyle="bold"
                                 android:text="Forum"
                                 android:textColor="@color/white"
                                 android:textSize="16sp" />
@@ -348,5 +351,10 @@
         </RelativeLayout>
 
     </androidx.core.widget.NestedScrollView>
+
+    <FrameLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:id="@+id/feedback_container"/>
 
 </RelativeLayout>
