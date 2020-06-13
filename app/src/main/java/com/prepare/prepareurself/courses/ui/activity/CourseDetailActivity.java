@@ -121,18 +121,12 @@ public class CourseDetailActivity extends BaseActivity implements View.OnClickLi
                     if (courseDetailReponseModel!=null ){
                         String title=courseDetailReponseModel.getCourse().getName();
                         String description=courseDetailReponseModel.getCourse().getDescription();
-                        //course_description.setText(Html.fromHtml(description));
-                        //String htmlstr= courseDetailReponseModel.getCourse().getDescription();
-                        //String description=Html.fromHtml(htmlstr).toString();
-                        /*Spanned spanned = Html.fromHtml(courseDetailReponseModel.getCourse().getDescription());
-                        char[] chars = new char[spanned.length()];
-                        TextUtils.getChars(spanned, 0, spanned.length(), chars, 0);
-                        String description = new String(chars);*/
-                        //Html.fromHtml(description).toString();
                         String img_url=courseDetailReponseModel.getCourse().getImage_url();
                         //setdetails();
                         course_name.setText(title);
                         courseName = title;
+                        if (description!=null)
+                            course_description.setText(Html.fromHtml(description).toString().trim());
                         Log.d("TAGdeatal",title);
                         if (img_url!=null && img_url.endsWith(".svg")){
                             Utility.loadSVGImage(CourseDetailActivity.this,Constants.COURSEIMAGEBASEUSRL+ courseDetailReponseModel.getCourse().getImage_url(),course_image);
