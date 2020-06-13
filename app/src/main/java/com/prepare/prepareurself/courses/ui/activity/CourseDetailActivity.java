@@ -218,8 +218,8 @@ public class CourseDetailActivity extends BaseActivity implements View.OnClickLi
         final Dialog dialog = new Dialog(CourseDetailActivity.this);
         dialog.requestWindowFeature(Window.FEATURE_NO_TITLE);
         dialog.setCancelable(false);
-        View view = LayoutInflater.from(this).inflate(R.layout.activity_dialog_playstore, null);
-        dialog.setContentView(view);
+        //View view = LayoutInflater.from(this).inflate(R.layout.activity_dialog_playstore, null);
+        dialog.setContentView(R.layout.activity_dialog_playstore);
         com.google.android.material.button.MaterialButton buttonok =dialog.findViewById(R.id.btn_ok);
         com.google.android.material.button.MaterialButton buttonnotnow =dialog.findViewById(R.id.btn_notnow);
         buttonok.setOnClickListener(new View.OnClickListener() {
@@ -235,9 +235,9 @@ public class CourseDetailActivity extends BaseActivity implements View.OnClickLi
                 dialog.cancel();
             }
         });
-
-        dialog.show();
         dialog.getWindow().setLayout(WindowManager.LayoutParams.MATCH_PARENT, WindowManager.LayoutParams.WRAP_CONTENT);
+        dialog.getWindow().setBackgroundDrawable(new ColorDrawable(android.graphics.Color.TRANSPARENT));
+        dialog.show();
     }
 
 
@@ -251,7 +251,6 @@ public class CourseDetailActivity extends BaseActivity implements View.OnClickLi
         buttonok.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-
                 dialog.cancel();
                 getSupportFragmentManager().beginTransaction().add(R.id.feedback_container,FeedbackFragment.newInstance())
                         .commit();
