@@ -61,6 +61,7 @@ public class CourseDetailActivity extends BaseActivity implements View.OnClickLi
     private LinearLayout l_layout_pref;
     private RelativeLayout rel_project, rel_resources, rel_forum, rel_takequiz;
     TextView course_name, course_description,tv_pref_name;
+    private boolean isAdded = false;
     @Override
     public void onFeedbackBackPressed() { }
     @Override
@@ -138,18 +139,26 @@ public class CourseDetailActivity extends BaseActivity implements View.OnClickLi
                 int l_size;
                 @Override
                 public void onChanged(PrefernceResponseModel prefernceResponseModel) {
-                    List<PreferencesModel> preferencesModelslist =prefernceResponseModel.getPreferences();
-                    if (preferencesModelslist!=null && !(preferencesModelslist.isEmpty())){
-                        l_size=preferencesModelslist.size();
-                        Log.d("TAGSZE",""+l_size);
-                        for (int j=0;j<l_size-1;j++){
-                            if(courseId==preferencesModelslist.get(j).getId()){
-                                Glide.with(CourseDetailActivity.this).load(R.drawable.ic_check_black_24dp).into(pref_image);
-                                tv_pref_name.setText("Added as preference");
-                                break;
+
+                    if (prefernceResponseModel!=null){
+                        List<PreferencesModel> preferencesModelslist =prefernceResponseModel.getPreferences();
+                        if (preferencesModelslist!=null && !(preferencesModelslist.isEmpty())){
+                            l_size=preferencesModelslist.size();
+                            Log.d("TAGSZE",""+l_size);
+                            for (int j=0;j<l_size;j++){
+                                if(courseId==preferencesModelslist.get(j).getId()){
+                                    Glide.with(CourseDetailActivity.this).load(R.drawable.ic_check_black_24dp).into(pref_image);
+                                    tv_pref_name.setText("Added as preference");
+                                    isAdded = true;
+                                    break;
+                                }
                             }
                         }
+                    }else{
+                        Utility.showToast(CourseDetailActivity.this,Constants.SOMETHINGWENTWRONG);
                     }
+
+
 
                 }
             });
@@ -296,19 +305,23 @@ public class CourseDetailActivity extends BaseActivity implements View.OnClickLi
                 startActivity(intent4);
                 break;
             case R.id.l_layout_pref:
-                type=1;
-                vm.fetchAddUserPref(prefManager.getString(Constants.JWTTOKEN),courseId,type);
-                vm.addToUserPrefResponseModelLiveData.observe(this, new Observer<AddToUserPrefResponseModel>() {
-                    @Override
-                    public void onChanged(AddToUserPrefResponseModel addToUserPrefResponseModel) {
-                        Toast.makeText(CourseDetailActivity.this,""+addToUserPrefResponseModel.getMessage(),Toast
-                                .LENGTH_LONG).show();
-                    }
-                });
-                Glide.with(CourseDetailActivity.this).load(R.drawable.ic_check_black_24dp).into(pref_image);
-                tv_pref_name.setText("Added as preference");
+                if (!isAdded){
+                    type=1;
+                    vm.fetchAddUserPref(prefManager.getString(Constants.JWTTOKEN),courseId,type);
+                    vm.addToUserPrefResponseModelLiveData.observe(this, new Observer<AddToUserPrefResponseModel>() {
+                        @Override
+                        public void onChanged(AddToUserPrefResponseModel addToUserPrefResponseModel) {
 
-
+                            if (addToUserPrefResponseModel!=null){
+                                Utility.showToast(CourseDetailActivity.this,addToUserPrefResponseModel.getMessage());
+                                Glide.with(CourseDetailActivity.this).load(R.drawable.ic_check_black_24dp).into(pref_image);
+                                tv_pref_name.setText("Added as preference");
+                            }else{
+                                Utility.showToast(CourseDetailActivity.this, Constants.SOMETHINGWENTWRONG);
+                            }
+                        }
+                    });
+                }
     }
 }
 }
