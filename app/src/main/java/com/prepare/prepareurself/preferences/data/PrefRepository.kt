@@ -60,6 +60,7 @@ class PrefRepository(var application: Application) {
                 val res = response.body()
                 if(res!=null && res.error_code ==0){
                     data.value = res
+                    prefDbRepository?.deleteAllPrefs()
                     res.preferences?.forEach {
                         prefDbRepository?.insertPref(it)
                     }

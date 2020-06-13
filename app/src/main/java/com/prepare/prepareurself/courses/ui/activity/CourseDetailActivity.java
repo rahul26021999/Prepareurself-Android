@@ -128,6 +128,7 @@ public class CourseDetailActivity extends BaseActivity implements View.OnClickLi
                         if (description!=null)
                             course_description.setText(Html.fromHtml(description).toString().trim());
                         Log.d("TAGdeatal",title);
+                        scaleRatingBar.setRating(courseDetailReponseModel.getRating());
                         if (img_url!=null && img_url.endsWith(".svg")){
                             Utility.loadSVGImage(CourseDetailActivity.this,Constants.COURSEIMAGEBASEUSRL+ courseDetailReponseModel.getCourse().getImage_url(),course_image);
                         }else{

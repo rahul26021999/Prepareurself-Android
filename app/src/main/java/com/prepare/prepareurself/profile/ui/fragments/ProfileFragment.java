@@ -39,6 +39,8 @@ import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
 import com.prepare.prepareurself.Home.ui.HomeActivity;
 import com.prepare.prepareurself.authentication.ui.AuthenticationActivity;
+import com.prepare.prepareurself.preferences.data.PreferencesModel;
+import com.prepare.prepareurself.preferences.data.PrefernceResponseModel;
 import com.prepare.prepareurself.preferences.ui.PreferencesActivity;
 import com.prepare.prepareurself.profile.data.model.UpdatePreferenceResponseModel;
 import com.prepare.prepareurself.profile.ui.EditPreferenceActivity;
@@ -159,6 +161,18 @@ public class ProfileFragment extends Fragment implements View.OnClickListener {
         recyclerView.setLayoutManager(layoutManager);
         recyclerView.setAdapter(adapter);
 
+        mViewModel.fetchUserPrefernces(prefManager.getString(Constants.JWTTOKEN));
+
+        mViewModel.getUserPrefernces()
+                .observe(getActivity(), new Observer<List<PreferencesModel>>() {
+                    @Override
+                    public void onChanged(List<PreferencesModel> preferencesModels) {
+                        if (preferencesModels!=null && !preferencesModels.isEmpty()){
+                            adapter.setPreferredTechStacks(preferencesModels);
+                        }
+                    }
+                });
+
         tvPreferenceEdit.setOnClickListener(this);
 
         if (HomeActivity.gotoPrefFromBanner){
@@ -273,13 +287,6 @@ public class ProfileFragment extends Fragment implements View.OnClickListener {
                                         .transition(GenericTransitionOptions.<Drawable>with(Utility.getAnimationObject()))
                                         .into(userImageView);
                             }
-                        }
-
-                        if(userModel.getPreferences()!=null) {
-                            preferences.clear();
-                            preferences.addAll(Arrays.asList(mUserModel.getPreferences().split(",")));
-                            adapter.setPreferredTechStacks(preferences);
-                            adapter.notifyDataSetChanged();
                         }
                     }
                 }
@@ -508,7 +515,6 @@ public class ProfileFragment extends Fragment implements View.OnClickListener {
                 break;
             case R.id.tv_preference_edit:
                 startActivity(new Intent(getActivity(), PreferencesActivity.class));
-                getActivity().finish();
                 break;
             case R.id.edit_image_vector:
                 uploadImage();

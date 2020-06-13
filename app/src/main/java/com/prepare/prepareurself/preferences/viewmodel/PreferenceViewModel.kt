@@ -7,6 +7,7 @@ import com.prepare.prepareurself.dashboard.data.db.repository.CourseDbRepository
 import com.prepare.prepareurself.dashboard.data.model.CourseModel
 import com.prepare.prepareurself.preferences.data.*
 import com.prepare.prepareurself.profile.data.repository.ProfileRepository
+import java.util.ArrayList
 
 class PreferenceViewModel(application: Application):AndroidViewModel(application){
 
@@ -43,5 +44,13 @@ class PreferenceViewModel(application: Application):AndroidViewModel(application
     fun updatePref(token: String,list: List<Int>):LiveData<UpdatePrefResponseModel>?{
         return prefRepository?.updatePref(token, list)
     }
+
+    fun updatePrefDb(prefs: List<PreferencesModel>) {
+        predDbRepository?.deleteAllPrefs()
+        prefs.forEach {
+            predDbRepository?.insertPref(it)
+        }
+    }
+
 
 }
