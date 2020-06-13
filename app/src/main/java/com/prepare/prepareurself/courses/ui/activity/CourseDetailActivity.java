@@ -11,8 +11,10 @@ import android.graphics.drawable.Drawable;
 import android.net.Uri;
 import android.os.Bundle;
 import android.util.Log;
+import android.view.LayoutInflater;
 import android.view.View;
 import android.view.Window;
+import android.view.WindowManager;
 import android.widget.FrameLayout;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
@@ -41,7 +43,7 @@ import com.willy.ratingbar.BaseRatingBar;
 
 import java.io.IOException;
 
-public class CourseDetailActivity extends BaseActivity implements View.OnClickListener{
+public class CourseDetailActivity extends BaseActivity implements View.OnClickListener, FeedbackFragment.FeedBackHomeInteractor {
     int starbyuser;
     String msg;
     RateCourseResponseModel rateCourseResponseModel;
@@ -57,6 +59,12 @@ public class CourseDetailActivity extends BaseActivity implements View.OnClickLi
     TextView course_name, course_description,tv_pref_name;
     //private FeedbackFragment feedbackFragment;
     //CardView cd_forum, cd_takequiz;
+
+
+    @Override
+    public void onFeedbackBackPressed() {
+
+    }
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -107,7 +115,6 @@ public class CourseDetailActivity extends BaseActivity implements View.OnClickLi
 
         if (courseId!=-1){
             vm.fetchCourseDetails(prefManager.getString(Constants.JWTTOKEN),courseId);
-            vm.fetchRateCourse(prefManager.getString(Constants.JWTTOKEN),courseId,starbyuser);
             vm.courseDetailReponseModelLiveData.observe(this, new Observer<CourseDetailReponseModel>() {
                 @Override
                 public void onChanged(CourseDetailReponseModel courseDetailReponseModel) {
@@ -164,7 +171,8 @@ public class CourseDetailActivity extends BaseActivity implements View.OnClickLi
         final Dialog dialog = new Dialog(CourseDetailActivity.this);
         dialog.requestWindowFeature(Window.FEATURE_NO_TITLE);
         dialog.setCancelable(false);
-        dialog.setContentView(R.layout.activity_dialog_playstore);
+        View view = LayoutInflater.from(this).inflate(R.layout.activity_dialog_playstore, null);
+        dialog.setContentView(view);
         com.google.android.material.button.MaterialButton buttonok =dialog.findViewById(R.id.btn_ok);
         com.google.android.material.button.MaterialButton buttonnotnow =dialog.findViewById(R.id.btn_notnow);
         buttonok.setOnClickListener(new View.OnClickListener() {
@@ -172,16 +180,17 @@ public class CourseDetailActivity extends BaseActivity implements View.OnClickLi
             public void onClick(View v) {
                 Utility.redirectUsingCustomTab(CourseDetailActivity.this,Constants.GOOGLEPLAYLINK);
                 dialog.dismiss();
-
             }
         });
         buttonnotnow.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 dialog.cancel();
-
             }
         });
+
+        dialog.show();
+        dialog.getWindow().setLayout(WindowManager.LayoutParams.MATCH_PARENT, WindowManager.LayoutParams.WRAP_CONTENT);
     }
 
 
@@ -195,23 +204,23 @@ public class CourseDetailActivity extends BaseActivity implements View.OnClickLi
         buttonok.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                dialog.dismiss();
+               // dialog.cancel();
                 /*Intent intent = new Intent(CourseDetailActivity.this, FeedbackFragment.class);
                 startActivity(intent);*/
                 //MyFragment fragment = new MyFragment();
-                FragmentTransaction transaction = getSupportFragmentManager().beginTransaction();
-                transaction.replace(R.id.rel_frag_layout, FeedbackFragment);
-                transaction.commit();
+                getSupportFragmentManager().beginTransaction().add(R.id.feedback_container,FeedbackFragment.newInstance())
+                        .addToBackStack(null)
+                        .commit();
+                Utility.showToast(CourseDetailActivity.this,"abc def");
             }
         });
         buttonnotnow.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 dialog.cancel();
-                Intent intent = new Intent(CourseDetailActivity.this, FeedbackFragment.class);
-                startActivity(intent);
             }
         });
+       dialog.getWindow().setLayout(WindowManager.LayoutParams.MATCH_PARENT, WindowManager.LayoutParams.WRAP_CONTENT);
         //dialog.getWindow().setBackgroundDrawable(new ColorDrawable(android.graphics.Color.TRANSPARENT));
 
 /*

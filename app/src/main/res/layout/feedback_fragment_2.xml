@@ -14,7 +14,7 @@
 
         <include layout="@layout/feedback_four_options_layout"
             android:visibility="gone"/>
-tc        <include layout="@layout/feedback_two_options_layout"
+        <include layout="@layout/feedback_two_options_layout"
             android:visibility="gone"/>
         <include layout="@layout/feedback_userinput_layout"
             android:visibility="gone"/>
