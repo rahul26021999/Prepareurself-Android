@@ -5,7 +5,8 @@
     android:layout_height="match_parent"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     tools:context=".feedback.ui.FeedbackFragment"
-    android:orientation="vertical">
+    android:orientation="vertical"
+    android:id="@+id/rel_frag_layout">
 
     <LinearLayout
         android:layout_width="match_parent"
@@ -13,7 +14,7 @@
 
         <include layout="@layout/feedback_four_options_layout"
             android:visibility="gone"/>
-tc        <include layout="@layout/feedback_two_options_layout"
+        <include layout="@layout/feedback_two_options_layout"
             android:visibility="gone"/>
         <include layout="@layout/feedback_userinput_layout"
             android:visibility="gone"/>

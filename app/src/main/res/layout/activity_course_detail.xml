@@ -1,338 +1,352 @@
 <?xml version="1.0" encoding="utf-8"?>
-<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
-    xmlns:tools="http://schemas.android.com/tools"
-    android:layout_width="match_parent"
-    android:layout_height="wrap_content"
-    android:fillViewport="false"
-    android:background="@color/white"
-    tools:context=".courses.ui.activity.CourseDetailActivity">
+<RelativeLayout android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    xmlns:android="http://schemas.android.com/apk/res/android">
 
-
-    <RelativeLayout
-        android:id="@+id/rel_layoutmain1"
+    <FrameLayout
         android:layout_width="match_parent"
-        android:layout_height="wrap_content">
+        android:layout_height="match_parent"
+        android:id="@+id/feedback_container"/>
 
-        <LinearLayout
-            android:id="@+id/linearlayout1"
+    <androidx.core.widget.NestedScrollView xmlns:app="http://schemas.android.com/apk/res-auto"
+        xmlns:tools="http://schemas.android.com/tools"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:fillViewport="false"
+        android:background="@color/white"
+        tools:context=".courses.ui.activity.CourseDetailActivity">
+
+
+        <RelativeLayout
+            android:id="@+id/rel_layoutmain1"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:paddingBottom="35dp"
-            android:orientation="vertical"
-            android:background="@drawable/courseblue_gradient">
-
-            <RelativeLayout
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content">
-                <ImageView
-                    android:layout_width="30dp"
-                    android:layout_height="30dp"
-                    android:id="@+id/backBtn"
-                    android:padding="2dp"
-                    android:layout_margin="10dp"
-                    android:background="?attr/selectableItemBackgroundBorderless"
-                    android:src="@drawable/ic_arrow_back_24dp" />
-              <!--  <ImageView
-                    android:id="@+id/courseshare"
-                    android:layout_width="30dp"
-                    android:layout_height="30dp"
-                    android:padding="2dp"
-                    android:src="@drawable/heartempty"
-                    android:layout_toLeftOf="@+id/btn_shareimage"
-                    android:layout_margin="10dp"
-                    android:tooltipText="Like"/>-->
+            android:layout_height="wrap_content">
 
 
-                <ImageView
-                    android:id="@+id/btn_shareimage"
-                    android:layout_width="30dp"
-                    android:layout_height="30dp"
-                    android:padding="2dp"
-                    android:src="@drawable/ic_share_black_24dp"
-                    android:layout_alignParentEnd="true"
-                    android:layout_margin="10dp"
-                    android:tooltipText="share"/>
-            </RelativeLayout>
             <LinearLayout
+                android:id="@+id/linearlayout1"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
+                android:paddingBottom="35dp"
                 android:orientation="vertical"
-                >
-                <TextView
-                    android:id="@+id/coursename"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="Android"
-                    android:paddingStart="8dp"
-                    android:textStyle="bold"
-                    android:textSize="20sp"
-                    android:textColor="@color/white"
-                    android:layout_marginStart="15dp"
-                    android:layout_marginTop="5dp"
-                    android:layout_marginBottom="10dp"
-                    android:layout_toEndOf="@+id/backBtn"
-                    android:tooltipText="share"
-                    />
-                <TextView
-                    android:id="@+id/course_desc"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="my lfe my rules gve hula hula hula hula hula me power of fuck off you and androd s best to blah blah blah"
-                    android:textColor="@color/white"
-                    android:textSize="16sp"
-                    android:textStyle="normal"
-                    android:paddingStart="8dp"
-                    android:layout_marginStart="15dp"
-                    android:layout_marginEnd="30dp"/>
-            </LinearLayout>
-            <LinearLayout
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:orientation="horizontal"
-                android:layout_marginStart="20dp"
-                android:padding="5dp"
-                android:layout_marginTop="10dp"
-                android:background="@drawable/darkgrey_rounded_stroked_rectangle"
-                >
-                <ImageView
-                    android:layout_width="20dp"
-                    android:layout_height="20dp"
-                    android:src="@drawable/ic_star_black_24dp"
-                    android:layout_gravity="start"
-                    android:layout_marginEnd="5dp"/>
-                <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_marginEnd="5dp"
-                    android:text="3.5"
-                    android:textColor="@color/white"
-                    android:layout_gravity="end"/>
-            </LinearLayout>
-            <LinearLayout
-                android:id="@+id/l_layout_pref"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:orientation="horizontal"
-                android:layout_marginStart="20dp"
-                android:padding="5dp"
-                android:layout_marginTop="10dp"
-                android:background="@drawable/darkgrey_rounded_stroked_rectangle"
-                >
-                <ImageView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:src="@drawable/ic_add_black_24dp"
-                    android:layout_gravity="start"
-                    android:layout_marginEnd="5dp"/>
-                <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_marginEnd="5dp"
-                    android:text="Add as Preference"
-                    android:textColor="@color/white"
-                    android:layout_gravity="end"/>
-            </LinearLayout>
+                android:background="@drawable/courseblue_gradient">
 
-        </LinearLayout>
-        <LinearLayout
-            android:id="@+id/ll2"
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:orientation="vertical"
-            android:background="@drawable/courseblue_gradient"
-            android:layout_below="@id/linearlayout1"
-            app:layout_constraintEnd_toEndOf="parent">
+                <RelativeLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content">
+                    <ImageView
+                        android:layout_width="30dp"
+                        android:layout_height="30dp"
+                        android:id="@+id/backBtn"
+                        android:padding="2dp"
+                        android:layout_margin="10dp"
+                        android:background="?attr/selectableItemBackgroundBorderless"
+                        android:src="@drawable/ic_arrow_back_24dp" />
+                    <!--  <ImageView
+                          android:id="@+id/courseshare"
+                          android:layout_width="30dp"
+                          android:layout_height="30dp"
+                          android:padding="2dp"
+                          android:src="@drawable/heartempty"
+                          android:layout_toLeftOf="@+id/btn_shareimage"
+                          android:layout_margin="10dp"
+                          android:tooltipText="Like"/>-->
 
-            <LinearLayout
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:background="@drawable/coursedetailbg2"
-                android:orientation="vertical">
 
+                    <ImageView
+                        android:id="@+id/btn_shareimage"
+                        android:layout_width="30dp"
+                        android:layout_height="30dp"
+                        android:padding="2dp"
+                        android:src="@drawable/ic_share_black_24dp"
+                        android:layout_alignParentEnd="true"
+                        android:layout_margin="10dp"
+                        android:tooltipText="share"/>
+                </RelativeLayout>
                 <LinearLayout
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_marginStart="30dp"
-                    android:layout_marginTop="42dp"
-                    android:layout_marginEnd="30dp"
-                    android:orientation="vertical">
-
+                    android:orientation="vertical"
+                    >
+                    <TextView
+                        android:id="@+id/coursename"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="Android"
+                        android:paddingStart="8dp"
+                        android:textStyle="bold"
+                        android:textSize="20sp"
+                        android:textColor="@color/white"
+                        android:layout_marginStart="15dp"
+                        android:layout_marginTop="5dp"
+                        android:layout_marginBottom="10dp"
+                        android:layout_toEndOf="@+id/backBtn"
+                        android:tooltipText="share"
+                        />
+                    <TextView
+                        android:id="@+id/course_desc"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="my lfe my rules gve hula hula hula hula hula me power of fuck off you and androd s best to blah blah blah"
+                        android:textColor="@color/white"
+                        android:textSize="16sp"
+                        android:textStyle="normal"
+                        android:paddingStart="8dp"
+                        android:layout_marginStart="15dp"
+                        android:layout_marginEnd="30dp"/>
+                </LinearLayout>
+                <LinearLayout
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:orientation="horizontal"
+                    android:layout_marginStart="20dp"
+                    android:padding="5dp"
+                    android:layout_marginTop="10dp"
+                    android:background="@drawable/darkgrey_rounded_stroked_rectangle"
+                    >
+                    <ImageView
+                        android:layout_width="20dp"
+                        android:layout_height="20dp"
+                        android:src="@drawable/ic_star_black_24dp"
+                        android:layout_gravity="start"
+                        android:layout_marginEnd="5dp"/>
                     <TextView
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:layout_marginStart="15dp"
-                        android:fontFamily="@font/roboto_regular"
-                        android:text="Rate this course"
-                        android:textColor="#514E4E"
-                        android:textSize="18sp"
-                        android:textStyle="bold" />
+                        android:layout_marginEnd="5dp"
+                        android:text="3.5"
+                        android:textColor="@color/white"
+                        android:layout_gravity="end"/>
+                </LinearLayout>
+                <LinearLayout
+                    android:id="@+id/l_layout_pref"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:orientation="horizontal"
+                    android:layout_marginStart="20dp"
+                    android:padding="5dp"
+                    android:layout_marginTop="10dp"
+                    android:background="@drawable/darkgrey_rounded_stroked_rectangle"
+                    >
+                    <ImageView
+                        android:id="@+id/pref_image"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:src="@drawable/ic_add_black_24dp"
+                        android:layout_gravity="start"
+                        android:layout_marginEnd="5dp"/>
+                    <TextView
+                        android:id="@+id/tv_pref_name"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginEnd="5dp"
+                        android:text="Add as Preference"
+                        android:textColor="@color/white"
+                        android:layout_gravity="end"/>
+                </LinearLayout>
 
-                    <com.willy.ratingbar.ScaleRatingBar
-                        android:id="@+id/scaleRatingBar"
+            </LinearLayout>
+            <LinearLayout
+                android:id="@+id/ll2"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:orientation="vertical"
+                android:background="@drawable/courseblue_gradient"
+                android:layout_below="@id/linearlayout1"
+                app:layout_constraintEnd_toEndOf="parent">
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:background="@drawable/coursedetailbg2"
+                    android:orientation="vertical">
+
+                    <LinearLayout
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:layout_gravity="center"
-                        app:srb_clickable="true"
-                        app:srb_drawableEmpty="@drawable/emptytar"
-                        app:srb_drawableFilled="@drawable/filledstar"
-                        app:srb_isIndicator="false"
-                        app:srb_minimumStars="0"
-                        app:srb_numStars="5"
-                        app:srb_scrollable="true"
-                        app:srb_starHeight="40dp"
-                        app:srb_starPadding="15dp"
-                        app:srb_starWidth="40dp"
-                        app:srb_stepSize="0.5"/>
-                </LinearLayout>
-
-                <LinearLayout
-                    android:id="@+id/l1"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:orientation="horizontal"
-                    android:weightSum="2">
-
-                    <RelativeLayout
-                        android:id="@+id/rel_resources"
-                        android:layout_width="0dp"
-                        android:layout_height="140dp"
-                        android:layout_marginStart="40dp"
-                        android:layout_marginTop="20dp"
-                        android:layout_marginEnd="20dp"
-                        android:layout_marginBottom="15dp"
-                        android:layout_weight="1"
-                        android:background="@drawable/gradientbglightblue">
-
-                        <ImageView
-                            android:layout_width="100dp"
-                            android:layout_height="50dp"
-                            android:layout_marginTop="30dp"
-                            android:layout_centerHorizontal="true"
-                            android:src="@drawable/courseresource" />
+                        android:layout_marginStart="30dp"
+                        android:layout_marginTop="42dp"
+                        android:layout_marginEnd="30dp"
+                        android:orientation="vertical">
 
                         <TextView
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:layout_alignParentBottom="true"
-                            android:layout_marginStart="30dp"
-                            android:layout_marginBottom="10dp"
-                            android:layout_centerHorizontal="true"
-                            android:text="Resources"
-                            android:textColor="@color/white"
-                            android:textSize="16sp" />
+                            android:layout_marginStart="15dp"
+                            android:fontFamily="@font/roboto_regular"
+                            android:text="Rate this course"
+                            android:textColor="#514E4E"
+                            android:textSize="18sp"
+                            android:textStyle="bold" />
 
-                    </RelativeLayout>
-
-                    <RelativeLayout
-                        android:id="@+id/rel_project"
-                        android:layout_width="0dp"
-                        android:layout_height="140dp"
-                        android:layout_marginTop="20dp"
-                        android:layout_marginEnd="40dp"
-                        android:layout_marginBottom="15dp"
-                        android:layout_weight="1"
-                        android:background="@drawable/gradientbgpeach">
-
-                        <ImageView
-                            android:layout_width="100dp"
-                            android:layout_height="70dp"
-                            android:layout_centerHorizontal="true"
-                            android:layout_marginTop="30dp"
-                            android:src="@drawable/courseprogrammer" />
-
-                        <TextView
-                            android:layout_width="wrap_content"
+                        <com.willy.ratingbar.ScaleRatingBar
+                            android:id="@+id/scaleRatingBar"
+                            android:layout_width="match_parent"
                             android:layout_height="wrap_content"
-                            android:layout_alignParentBottom="true"
-                            android:layout_centerHorizontal="true"
-                            android:layout_marginStart="30dp"
-                            android:layout_marginBottom="10dp"
-                            android:text="Project"
-                            android:textColor="@color/white"
-                            android:textSize="16sp" />
+                            android:layout_gravity="center"
+                            app:srb_clickable="true"
+                            app:srb_drawableEmpty="@drawable/emptytar"
+                            app:srb_drawableFilled="@drawable/filledstar"
+                            app:srb_isIndicator="false"
+                            app:srb_minimumStars="0"
+                            app:srb_clearRatingEnabled="true"
+                            app:srb_numStars="5"
+                            app:srb_scrollable="true"
+                            app:srb_starHeight="40dp"
+                            app:srb_starPadding="15dp"
+                            app:srb_starWidth="40dp"
+                            app:srb_stepSize="1"/>
+                    </LinearLayout>
 
-                    </RelativeLayout>
-                </LinearLayout>
+                    <LinearLayout
+                        android:id="@+id/l1"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:orientation="horizontal"
+                        android:weightSum="2">
 
-                <LinearLayout
-                    android:id="@+id/lbos2"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:orientation="horizontal"
-                    android:weightSum="2">
+                        <RelativeLayout
+                            android:id="@+id/rel_resources"
+                            android:layout_width="0dp"
+                            android:layout_height="140dp"
+                            android:layout_marginStart="40dp"
+                            android:layout_marginTop="20dp"
+                            android:layout_marginEnd="20dp"
+                            android:layout_marginBottom="15dp"
+                            android:layout_weight="1"
+                            android:background="@drawable/gradientbglightblue">
 
-                    <RelativeLayout
-                        android:id="@+id/rel_takequiz"
-                        android:layout_width="0dp"
-                        android:layout_height="140dp"
-                        android:layout_marginStart="40dp"
-                        android:layout_marginTop="10dp"
-                        android:layout_marginEnd="20dp"
-                        android:layout_marginBottom="20dp"
-                        android:layout_weight="1"
-                        android:background="@drawable/redgradientbg">
+                            <ImageView
+                                android:layout_width="100dp"
+                                android:layout_height="50dp"
+                                android:layout_marginTop="30dp"
+                                android:layout_centerHorizontal="true"
+                                android:src="@drawable/courseresource" />
 
-                        <ImageView
-                            android:layout_width="110dp"
-                            android:layout_height="60dp"
-                            android:layout_marginTop="30dp"
-                            android:src="@drawable/coursequiz" />
+                            <TextView
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:layout_alignParentBottom="true"
+                                android:layout_marginStart="30dp"
+                                android:layout_marginBottom="10dp"
+                                android:layout_centerHorizontal="true"
+                                android:text="Resources"
+                                android:textColor="@color/white"
+                                android:textSize="16sp" />
 
-                        <TextView
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:layout_alignParentBottom="true"
-                            android:layout_marginStart="30dp"
-                            android:layout_marginBottom="10dp"
-                            android:text="Quiz"
-                            android:textColor="@color/white"
-                            android:textSize="16sp" />
+                        </RelativeLayout>
 
-                    </RelativeLayout>
+                        <RelativeLayout
+                            android:id="@+id/rel_project"
+                            android:layout_width="0dp"
+                            android:layout_height="140dp"
+                            android:layout_marginTop="20dp"
+                            android:layout_marginEnd="40dp"
+                            android:layout_marginBottom="15dp"
+                            android:layout_weight="1"
+                            android:background="@drawable/gradientbgpeach">
 
-                    <RelativeLayout
-                        android:id="@+id/rel_forum"
-                        android:layout_width="0dp"
-                        android:layout_height="140dp"
-                        android:layout_marginTop="10dp"
-                        android:layout_marginEnd="40dp"
-                        android:layout_marginBottom="20dp"
-                        android:layout_weight="1"
-                        android:background="@drawable/gradientbgpurple">
+                            <ImageView
+                                android:layout_width="100dp"
+                                android:layout_height="70dp"
+                                android:layout_centerHorizontal="true"
+                                android:layout_marginTop="30dp"
+                                android:src="@drawable/courseprogrammer" />
 
-                        <ImageView
-                            android:layout_width="100dp"
-                            android:layout_height="40dp"
-                            android:layout_marginTop="30dp"
-                            android:src="@drawable/forum" />
+                            <TextView
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:layout_alignParentBottom="true"
+                                android:layout_centerHorizontal="true"
+                                android:layout_marginStart="30dp"
+                                android:layout_marginBottom="10dp"
+                                android:text="Project"
+                                android:textColor="@color/white"
+                                android:textSize="16sp" />
 
-                        <TextView
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:layout_alignParentBottom="true"
-                            android:layout_marginStart="30dp"
-                            android:layout_marginBottom="10dp"
-                            android:text="Forum"
-                            android:textColor="@color/white"
-                            android:textSize="16sp" />
-                    </RelativeLayout>
+                        </RelativeLayout>
+                    </LinearLayout>
+
+                    <LinearLayout
+                        android:id="@+id/lbos2"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:orientation="horizontal"
+                        android:weightSum="2">
+
+                        <RelativeLayout
+                            android:id="@+id/rel_takequiz"
+                            android:layout_width="0dp"
+                            android:layout_height="140dp"
+                            android:layout_marginStart="40dp"
+                            android:layout_marginTop="10dp"
+                            android:layout_marginEnd="20dp"
+                            android:layout_marginBottom="20dp"
+                            android:layout_weight="1"
+                            android:background="@drawable/redgradientbg">
+
+                            <ImageView
+                                android:layout_width="110dp"
+                                android:layout_height="60dp"
+                                android:layout_marginTop="30dp"
+                                android:src="@drawable/coursequiz" />
+
+                            <TextView
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:layout_alignParentBottom="true"
+                                android:layout_marginStart="30dp"
+                                android:layout_marginBottom="10dp"
+                                android:text="Quiz"
+                                android:textColor="@color/white"
+                                android:textSize="16sp" />
+
+                        </RelativeLayout>
+
+                        <RelativeLayout
+                            android:id="@+id/rel_forum"
+                            android:layout_width="0dp"
+                            android:layout_height="140dp"
+                            android:layout_marginTop="10dp"
+                            android:layout_marginEnd="40dp"
+                            android:layout_marginBottom="20dp"
+                            android:layout_weight="1"
+                            android:background="@drawable/gradientbgpurple">
+
+                            <ImageView
+                                android:layout_width="100dp"
+                                android:layout_height="40dp"
+                                android:layout_marginTop="30dp"
+                                android:src="@drawable/forum" />
+
+                            <TextView
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:layout_alignParentBottom="true"
+                                android:layout_marginStart="30dp"
+                                android:layout_marginBottom="10dp"
+                                android:text="Forum"
+                                android:textColor="@color/white"
+                                android:textSize="16sp" />
+                        </RelativeLayout>
+                    </LinearLayout>
                 </LinearLayout>
             </LinearLayout>
-        </LinearLayout>
-        <de.hdodenhof.circleimageview.CircleImageView
-            android:id="@+id/course_image"
-            android:layout_width="100dp"
-            android:layout_height="100dp"
-            android:layout_marginEnd="50dp"
-            android:src="@drawable/androcourse"
-            app:civ_border_color="@color/white"
-            app:civ_border_width="2dp"
-            android:layout_alignParentEnd="true"
-            android:layout_marginTop="-50dp"
-            android:layout_below="@id/linearlayout1"
-            />
+            <de.hdodenhof.circleimageview.CircleImageView
+                android:id="@+id/course_image"
+                android:layout_width="100dp"
+                android:layout_height="100dp"
+                android:layout_marginEnd="50dp"
+                android:src="@drawable/androcourse"
+                app:civ_border_color="@color/white"
+                app:civ_border_width="2dp"
+                android:layout_alignParentEnd="true"
+                android:layout_marginTop="-50dp"
+                android:layout_below="@id/linearlayout1"
+                />
 
-    </RelativeLayout>
+        </RelativeLayout>
 
-</ScrollView>
+    </androidx.core.widget.NestedScrollView>
+
+</RelativeLayout>
