@@ -258,7 +258,6 @@ public class SearchFragment extends Fragment implements SearchAdapter.SearchList
     public void onBottomReached(int position) {
         if(!EndOfSearchData){
             currentSearchPage++;
-            Utility.showToast(getActivity(),"hello ray chutiya hai "+currentSearchPage);
             mViewModel.searchWithPagination(prefManager.getString(Constants.JWTTOKEN),query,currentSearchPage);
         }
     }

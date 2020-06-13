@@ -239,8 +239,8 @@ public class CourseDetailActivity extends BaseActivity implements View.OnClickLi
             @Override
             public void onClick(View v) {
 
+                dialog.cancel();
                 getSupportFragmentManager().beginTransaction().add(R.id.feedback_container,FeedbackFragment.newInstance())
-                        .addToBackStack(null)
                         .commit();
                 Utility.showToast(CourseDetailActivity.this,"abc def");
             }
