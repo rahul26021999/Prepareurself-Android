@@ -1,14 +1,14 @@
 <?xml version="1.0" encoding="utf-8"?>
 
 <RelativeLayout android:layout_width="match_parent"
-    android:layout_height="290dp"
+    android:layout_height="wrap_content"
     android:layout_marginStart="5dp"
     android:layout_marginEnd="5dp"
     xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:orientation="vertical"
     android:layout_gravity="center"
-    android:background="@drawable/coursedalogfeed">
+    android:background="@drawable/gradientbggrey">
     <TextView
         android:id="@+id/tv_title"
         android:layout_width="match_parent"
@@ -16,7 +16,7 @@
         android:textColor="@color/black"
         android:text="Thankyou for rating the course! Would you like to give us you valuble feedback for you better experience?"
         android:textAlignment="center"
-        android:textSize="16dp"
+        android:textSize="20dp"
         android:textStyle="bold"
         android:fontFamily="@font/poppins_semibold"
         android:layout_margin="10dp"/>
@@ -25,7 +25,7 @@
         android:layout_height="wrap_content"
         android:layout_below="@+id/tv_title"
         android:weightSum="2"
-        android:layout_marginTop="30dp"
+        android:layout_marginTop="10dp"
         android:layout_marginBottom="5dp"
         android:orientation="horizontal">
 
@@ -36,14 +36,14 @@
             android:textAlignment="center"
             app:cornerRadius="80dp"
             app:backgroundTint="@color/yellow"
-            android:gravity="center_horizontal"
             android:text="Ok"
-            android:textSize="20dp"
+            android:textSize="15dp"
             android:padding="5dp"
             android:layout_weight="1"
             android:layout_marginStart="30dp"
-            android:layout_marginTop="90dp"
+            android:layout_marginTop="30dp"
             android:layout_marginEnd="5dp"
+            android:layout_marginBottom="30dp"
             />
         <com.google.android.material.button.MaterialButton
             android:id="@+id/btn_notnow"
@@ -52,10 +52,11 @@
             app:cornerRadius="80dp"
             app:backgroundTint="@color/yellow"
             android:text="Not now"
-            android:textSize="20dp"
+            android:textSize="15dp"
             android:padding="5dp"
             android:layout_marginStart="5dp"
-            android:layout_marginTop="90dp"
+            android:layout_marginTop="30dp"
+            android:layout_marginBottom="30dp"
             android:layout_marginEnd="30dp"
             android:layout_weight="1"
             />

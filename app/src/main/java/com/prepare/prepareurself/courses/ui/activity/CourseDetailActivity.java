@@ -1,6 +1,7 @@
 package com.prepare.prepareurself.courses.ui.activity;
 
 import androidx.fragment.app.FragmentTransaction;
+import androidx.lifecycle.LiveData;
 import androidx.lifecycle.Observer;
 import androidx.lifecycle.ViewModelProvider;
 
@@ -34,6 +35,10 @@ import com.prepare.prepareurself.courses.ui.fragmentToActivity.TabProjectctivity
 import com.prepare.prepareurself.courses.ui.fragmentToActivity.TabResourceActivity;
 import com.prepare.prepareurself.courses.viewmodels.CourseDetailViewModel;
 import com.prepare.prepareurself.feedback.ui.FeedbackFragment;
+import com.prepare.prepareurself.preferences.data.PrefDbRepository;
+import com.prepare.prepareurself.preferences.data.PreferencesModel;
+import com.prepare.prepareurself.preferences.data.PrefernceResponseModel;
+import com.prepare.prepareurself.preferences.viewmodel.PreferenceViewModel;
 import com.prepare.prepareurself.quizv2.ui.QuizActivity;
 import com.prepare.prepareurself.utils.BaseActivity;
 import com.prepare.prepareurself.utils.Constants;
@@ -42,54 +47,28 @@ import com.prepare.prepareurself.utils.Utility;
 import com.willy.ratingbar.BaseRatingBar;
 
 import java.io.IOException;
+import java.util.ArrayList;
+import java.util.List;
 
 public class CourseDetailActivity extends BaseActivity implements View.OnClickListener, FeedbackFragment.FeedBackHomeInteractor {
-    int starbyuser;
+    int starbyuser,type=0;
     String msg;
-    RateCourseResponseModel rateCourseResponseModel;
-
+    private int courseId = -1;
     private ImageView backBtn ,course_image, btn_shareimage, pref_image;
     private CourseDetailViewModel vm;
-    private int courseId = -1;
     private PrefManager prefManager;
     private com.willy.ratingbar.ScaleRatingBar scaleRatingBar;
-    //private Button btnProject, btnResources;
     private LinearLayout l_layout_pref;
     private RelativeLayout rel_project, rel_resources, rel_forum, rel_takequiz;
     TextView course_name, course_description,tv_pref_name;
-    //private FeedbackFragment feedbackFragment;
-    //CardView cd_forum, cd_takequiz;
-
-
     @Override
-    public void onFeedbackBackPressed() {
-
-    }
-
+    public void onFeedbackBackPressed() { }
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_course_detail);
-        course_name=findViewById(R.id.coursename);
-        course_description=findViewById(R.id.course_desc);
-        course_image=findViewById(R.id.course_image);
-        backBtn=findViewById(R.id.backBtn);
-        l_layout_pref=findViewById(R.id.l_layout_pref);
-        tv_pref_name=findViewById(R.id.tv_pref_name);
-        pref_image=findViewById(R.id.pref_image);
-        scaleRatingBar=findViewById(R.id.scaleRatingBar);
-        rel_project=findViewById(R.id.rel_project);
-        rel_resources=findViewById(R.id.rel_resources);
-        rel_takequiz=findViewById(R.id.rel_takequiz);
-        btn_shareimage=findViewById(R.id.btn_shareimage);
-        rel_forum=findViewById(R.id.rel_forum);
-        backBtn.setOnClickListener(this);
-        rel_project.setOnClickListener(this);
-        rel_resources.setOnClickListener(this);
-        rel_takequiz.setOnClickListener(this);
-        rel_forum.setOnClickListener(this);
-        btn_shareimage.setOnClickListener(this);
-        l_layout_pref.setOnClickListener(this);
+        getintents();
+        setOnclicklisteners();
         //int stars=scaleRatingBar.getNumStars();
         //Log.d("TAG",""+stars);
         scaleRatingBar.setOnRatingChangeListener(new BaseRatingBar.OnRatingChangeListener() {
@@ -109,12 +88,15 @@ public class CourseDetailActivity extends BaseActivity implements View.OnClickLi
 
         vm = new  ViewModelProvider(this).get(CourseDetailViewModel.class);
         prefManager = new PrefManager(this);
-
         Intent intent = getIntent();
         courseId = intent.getIntExtra(Constants.COURSEID, -1);
 
         if (courseId!=-1){
             vm.fetchCourseDetails(prefManager.getString(Constants.JWTTOKEN),courseId);
+            vm.fetchremotePref(prefManager.getString(Constants.JWTTOKEN));
+
+            /*int sze=vm.prefernceResponseModelLiveData.getValue().getPreferences().size();
+            Log.d("TAGSOO",""+sze);*/
             vm.courseDetailReponseModelLiveData.observe(this, new Observer<CourseDetailReponseModel>() {
                 @Override
                 public void onChanged(CourseDetailReponseModel courseDetailReponseModel) {
@@ -136,35 +118,78 @@ public class CourseDetailActivity extends BaseActivity implements View.OnClickLi
                                     .transition(GenericTransitionOptions.<Drawable>with(Utility.getAnimationObject()))
                                     .into(course_image);
                         }
-
-
-                        
                     }else{
                         Utility.showToast(CourseDetailActivity.this,Constants.SOMETHINGWENTWRONG);
                     }
                 }
             });
-            //
+            //rate course
             vm.rateCourseResponseModelLiveData.observe(this, new Observer<RateCourseResponseModel>() {
-
                 @Override
                 public void onChanged(RateCourseResponseModel rateCourseResponseModel) {
                    // Toast.makeText(CourseDetailActivity.this,""+ rateCourseResponseModel.getMessage(),Toast.LENGTH_LONG).show();
-                         msg=rateCourseResponseModel.getMessage();
+                    if(rateCourseResponseModel!=null )
+                        msg=rateCourseResponseModel.getMessage();
+
+                }
+            });
+            //fetch user remote lst
+            vm.prefernceResponseModelLiveData.observe(this, new Observer<PrefernceResponseModel>() {
+                int l_size;
+                @Override
+                public void onChanged(PrefernceResponseModel prefernceResponseModel) {
+                    List<PreferencesModel> preferencesModelslist =prefernceResponseModel.getPreferences();
+                    if (preferencesModelslist!=null && !(preferencesModelslist.isEmpty())){
+                        l_size=preferencesModelslist.size();
+                        Log.d("TAGSZE",""+l_size);
+                        for (int j=0;j<l_size-1;j++){
+                            if(courseId==preferencesModelslist.get(j).getId()){
+                                Glide.with(CourseDetailActivity.this).load(R.drawable.ic_check_black_24dp).into(pref_image);
+                                tv_pref_name.setText("Added as preference");
+                                break;
+                            }
+                        }
+                    }
 
                 }
             });
             //Adduser pref model
-            vm.addToUserPrefResponseModelLiveData.observe(this, new Observer<AddToUserPrefResponseModel>() {
+            /*vm.addToUserPrefResponseModelLiveData.observe(this, new Observer<AddToUserPrefResponseModel>() {
                 @Override
                 public void onChanged(AddToUserPrefResponseModel addToUserPrefResponseModel) {
                     Toast.makeText(CourseDetailActivity.this,""+addToUserPrefResponseModel.getMessage(),Toast
                     .LENGTH_LONG).show();
                 }
-            });
+            });*/
 
         }
 
+    }
+
+    private void setOnclicklisteners() {
+        backBtn.setOnClickListener(this);
+        rel_project.setOnClickListener(this);
+        rel_resources.setOnClickListener(this);
+        rel_takequiz.setOnClickListener(this);
+        rel_forum.setOnClickListener(this);
+        btn_shareimage.setOnClickListener(this);
+        l_layout_pref.setOnClickListener(this);
+    }
+
+    private void getintents() {
+        course_name=findViewById(R.id.coursename);
+        course_description=findViewById(R.id.course_desc);
+        course_image=findViewById(R.id.course_image);
+        backBtn=findViewById(R.id.backBtn);
+        l_layout_pref=findViewById(R.id.l_layout_pref);
+        tv_pref_name=findViewById(R.id.tv_pref_name);
+        pref_image=findViewById(R.id.pref_image);
+        scaleRatingBar=findViewById(R.id.scaleRatingBar);
+        rel_project=findViewById(R.id.rel_project);
+        rel_resources=findViewById(R.id.rel_resources);
+        rel_takequiz=findViewById(R.id.rel_takequiz);
+        btn_shareimage=findViewById(R.id.btn_shareimage);
+        rel_forum=findViewById(R.id.rel_forum);
     }
 
     private void showDialogplaystore() {
@@ -204,10 +229,7 @@ public class CourseDetailActivity extends BaseActivity implements View.OnClickLi
         buttonok.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-               // dialog.cancel();
-                /*Intent intent = new Intent(CourseDetailActivity.this, FeedbackFragment.class);
-                startActivity(intent);*/
-                //MyFragment fragment = new MyFragment();
+
                 getSupportFragmentManager().beginTransaction().add(R.id.feedback_container,FeedbackFragment.newInstance())
                         .addToBackStack(null)
                         .commit();
@@ -220,30 +242,8 @@ public class CourseDetailActivity extends BaseActivity implements View.OnClickLi
                 dialog.cancel();
             }
         });
-       dialog.getWindow().setLayout(WindowManager.LayoutParams.MATCH_PARENT, WindowManager.LayoutParams.WRAP_CONTENT);
+       //dialog.getWindow().setLayout(WindowManager.LayoutParams.MATCH_PARENT, WindowManager.LayoutParams.WRAP_CONTENT);
         //dialog.getWindow().setBackgroundDrawable(new ColorDrawable(android.graphics.Color.TRANSPARENT));
-
-/*
-
-        FrameLayout mDialogNo = dialog.findViewById(R.id.frmNo);
-        mDialogNo.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                Toast.makeText(CourseDetailActivity.this,"Cancel",Toast.LENGTH_LONG).show();
-                dialog.dismiss();
-            }
-        });
-
-        FrameLayout mDialogOk = dialog.findViewById(R.id.frmOk);
-        mDialogOk.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                Toast.makeText(CourseDetailActivity.this,"Okay" ,Toast.LENGTH_SHORT).show();
-                dialog.cancel();
-            }
-        });
-*/
-
         dialog.show();
     }
 
@@ -296,9 +296,18 @@ public class CourseDetailActivity extends BaseActivity implements View.OnClickLi
                 startActivity(intent4);
                 break;
             case R.id.l_layout_pref:
+                type=1;
+                vm.fetchAddUserPref(prefManager.getString(Constants.JWTTOKEN),courseId,type);
+                vm.addToUserPrefResponseModelLiveData.observe(this, new Observer<AddToUserPrefResponseModel>() {
+                    @Override
+                    public void onChanged(AddToUserPrefResponseModel addToUserPrefResponseModel) {
+                        Toast.makeText(CourseDetailActivity.this,""+addToUserPrefResponseModel.getMessage(),Toast
+                                .LENGTH_LONG).show();
+                    }
+                });
                 Glide.with(CourseDetailActivity.this).load(R.drawable.ic_check_black_24dp).into(pref_image);
-                //image
                 tv_pref_name.setText("Added as preference");
+
 
     }
 }
