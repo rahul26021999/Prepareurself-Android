@@ -7,8 +7,9 @@ import androidx.recyclerview.widget.RecyclerView
 import com.prepare.prepareurself.R
 import com.prepare.prepareurself.forum.data.QueryModel
 import kotlinx.android.synthetic.main.queries_adapter_layout.view.*
+import kotlinx.android.synthetic.main.replies_adapter_layout.view.*
 
-class QueriesAdapter(var listener:QueriesListener) : RecyclerView.Adapter<QueriesAdapter.QueriesViewHolder>(){
+class RepliesAdapter() : RecyclerView.Adapter<RepliesAdapter.RepliesViewHolder>(){
 
     private var data:List<QueryModel>?=null
 
@@ -21,25 +22,22 @@ class QueriesAdapter(var listener:QueriesListener) : RecyclerView.Adapter<Querie
         notifyDataSetChanged()
     }
 
-    override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): QueriesViewHolder {
-        return QueriesViewHolder(LayoutInflater.from(parent.context).inflate(R.layout.queries_adapter_layout, parent, false))
+    override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): RepliesViewHolder {
+        return RepliesViewHolder(LayoutInflater.from(parent.context).inflate(R.layout.replies_adapter_layout, parent, false))
     }
 
     override fun getItemCount(): Int {
         return data?.size ?: 0
     }
 
-    override fun onBindViewHolder(holder: QueriesViewHolder, position: Int) {
+    override fun onBindViewHolder(holder: RepliesViewHolder, position: Int) {
         val q = data?.get(position)
         holder.bindView(q)
-        holder.itemView.tv_view_replies.setOnClickListener {
-            q?.let { it1 -> listener.onViewReplies(it1) }
-        }
     }
 
-    class QueriesViewHolder(itemView:View):RecyclerView.ViewHolder(itemView){
+    class RepliesViewHolder(itemView:View):RecyclerView.ViewHolder(itemView){
         fun bindView(q: QueryModel?) {
-            itemView.tv_query_question.text = q?.query
+            itemView.tv_reply_answer.text = q?.reply
         }
 
     }

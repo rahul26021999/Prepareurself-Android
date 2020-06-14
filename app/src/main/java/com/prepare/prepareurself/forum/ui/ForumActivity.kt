@@ -1,6 +1,7 @@
 package com.prepare.prepareurself.forum.ui
 
 import android.app.Dialog
+import android.content.Intent
 import android.graphics.Color
 import android.os.Bundle
 import android.view.LayoutInflater
@@ -11,6 +12,7 @@ import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.prepare.prepareurself.R
+import com.prepare.prepareurself.forum.data.QueryModel
 import com.prepare.prepareurself.forum.viewmodel.ForumViewModel
 import com.prepare.prepareurself.utils.BaseActivity
 import com.prepare.prepareurself.utils.Constants
@@ -25,7 +27,7 @@ import kotlinx.android.synthetic.main.richeditor_layout.*
 import kotlinx.android.synthetic.main.richeditor_layout.view.*
 
 
-class ForumActivity : BaseActivity() {
+class ForumActivity : BaseActivity(), QueriesAdapter.QueriesListener {
 
     private var htmlData = ""
     private lateinit var vm:ForumViewModel
@@ -52,7 +54,7 @@ class ForumActivity : BaseActivity() {
     }
 
     private fun initQueryAdapter() {
-        val adapter = QueriesAdapter()
+        val adapter = QueriesAdapter(this)
         rv_queries.layoutManager = LinearLayoutManager(this)
         rv_queries.adapter = adapter
 
@@ -99,6 +101,13 @@ class ForumActivity : BaseActivity() {
 
         dialog.show()
 
+    }
+
+    override fun onViewReplies(queryModel: QueryModel) {
+        val intent = Intent(this@ForumActivity,RepliesActivity::class.java)
+        intent.putExtra(Constants.QUERY,queryModel.query)
+        intent.putExtra(Constants.QUERYID,queryModel.id)
+        startActivity(intent)
     }
 
     private fun initEditor(view:View) {
