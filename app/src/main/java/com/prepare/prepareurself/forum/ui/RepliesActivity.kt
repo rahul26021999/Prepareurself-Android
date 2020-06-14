@@ -13,6 +13,7 @@ import com.prepare.prepareurself.utils.Constants
 import com.prepare.prepareurself.utils.PrefManager
 import com.prepare.prepareurself.utils.Utility
 import kotlinx.android.synthetic.main.activity_replies.*
+import kotlinx.android.synthetic.main.layout_topbar.*
 import okhttp3.internal.Util
 
 class RepliesActivity : BaseActivity() {
@@ -38,6 +39,10 @@ class RepliesActivity : BaseActivity() {
             }
 
             initAdapter()
+        }
+
+        backBtn.setOnClickListener {
+            finish()
         }
 
     }

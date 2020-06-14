@@ -1,5 +1,6 @@
 package com.prepare.prepareurself.forum.ui
 
+import android.text.Html
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -14,6 +15,7 @@ class QueriesAdapter(var listener:QueriesListener) : RecyclerView.Adapter<Querie
 
     interface QueriesListener{
         fun onViewReplies(queryModel: QueryModel)
+        fun onDoReply(queryModel: QueryModel)
     }
 
     fun setData(list: List<QueryModel>){
@@ -35,11 +37,14 @@ class QueriesAdapter(var listener:QueriesListener) : RecyclerView.Adapter<Querie
         holder.itemView.tv_view_replies.setOnClickListener {
             q?.let { it1 -> listener.onViewReplies(it1) }
         }
+        holder.itemView.tv_do_reply.setOnClickListener {
+            q?.let { it1 -> listener.onDoReply(it1) }
+        }
     }
 
     class QueriesViewHolder(itemView:View):RecyclerView.ViewHolder(itemView){
         fun bindView(q: QueryModel?) {
-            itemView.tv_query_question.text = q?.query
+            itemView.tv_query_question.text = Html.fromHtml(q?.query)
         }
 
     }

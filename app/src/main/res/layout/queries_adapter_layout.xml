@@ -31,6 +31,7 @@
         android:textStyle="bold"
         android:layout_below="@+id/tv_name_qury_user"
         android:layout_marginTop="5dp"
+        android:fontFamily="@font/proximanovaregular"
         android:layout_alignStart="@+id/tv_name_qury_user"
         android:id="@+id/tv_query_question"/>
 
@@ -44,6 +45,19 @@
         android:textColor="@color/colorPrimaryDark"
         android:layout_marginTop="5dp"
         android:id="@+id/tv_view_replies"
+        android:layout_below="@+id/tv_query_question"
+        android:fontFamily="@font/proximanovaregular"/>
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Reply to this query"
+        android:textSize="12sp"
+        android:layout_toEndOf="@+id/tv_view_replies"
+        android:layout_marginStart="@dimen/padding_10"
+        android:textColor="@color/colorPrimaryDark"
+        android:layout_marginTop="5dp"
+        android:id="@+id/tv_do_reply"
         android:layout_below="@+id/tv_query_question"
         android:fontFamily="@font/proximanovaregular"/>
 

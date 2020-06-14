@@ -31,6 +31,7 @@
         android:textStyle="bold"
         android:layout_below="@+id/tv_name_reply_user"
         android:layout_marginTop="5dp"
+        android:fontFamily="@font/proximanovaregular"
         android:layout_alignStart="@+id/tv_name_reply_user"
         android:id="@+id/tv_reply_answer"/>
 

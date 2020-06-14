@@ -23,6 +23,7 @@ import kotlinx.android.synthetic.main.activity_forum2.*
 import kotlinx.android.synthetic.main.activity_forum2.view.*
 import kotlinx.android.synthetic.main.forum_add_query_dialog.*
 import kotlinx.android.synthetic.main.forum_add_query_dialog.view.*
+import kotlinx.android.synthetic.main.layout_topbar.*
 import kotlinx.android.synthetic.main.richeditor_layout.*
 import kotlinx.android.synthetic.main.richeditor_layout.view.*
 
@@ -50,6 +51,10 @@ class ForumActivity : BaseActivity(), QueriesAdapter.QueriesListener {
         }
 
         initQueryAdapter()
+
+        backBtn.setOnClickListener {
+            finish()
+        }
 
     }
 
@@ -97,7 +102,7 @@ class ForumActivity : BaseActivity(), QueriesAdapter.QueriesListener {
         }
 
         val window = dialog.window
-        window?.setLayout(WindowManager.LayoutParams.MATCH_PARENT,WindowManager.LayoutParams.MATCH_PARENT)
+        window?.setLayout(WindowManager.LayoutParams.MATCH_PARENT,WindowManager.LayoutParams.WRAP_CONTENT)
 
         dialog.show()
 
@@ -108,6 +113,40 @@ class ForumActivity : BaseActivity(), QueriesAdapter.QueriesListener {
         intent.putExtra(Constants.QUERY,queryModel.query)
         intent.putExtra(Constants.QUERYID,queryModel.id)
         startActivity(intent)
+    }
+
+    override fun onDoReply(queryModel: QueryModel) {
+        val dialog = Dialog(this)
+        val view = LayoutInflater.from(this).inflate(R.layout.forum_add_query_dialog, null)
+        dialog.setContentView(view)
+        dialog.setTitle("Post your reply here")
+
+        initEditor(view)
+
+        view.btn_post_query.setOnClickListener {
+            if (htmlData.isNotEmpty()){
+                if (courseId!=-1){
+                    vm.doReply(pm.getString(Constants.JWTTOKEN),queryModel.id,htmlData)
+                            ?.observe(this, Observer {
+                                if (it!=null){
+                                    Utility.showToast(this,it.message)
+                                    htmlData = ""
+                                    view.editor.html = ""
+                                }else{
+                                    Utility.showToast(this,Constants.SOMETHINGWENTWRONG)
+                                }
+                                dialog.cancel()
+                            })
+                }
+            }else{
+                Utility.showToast(this,"Please enter a valid Reply")
+            }
+        }
+
+        val window = dialog.window
+        window?.setLayout(WindowManager.LayoutParams.MATCH_PARENT,WindowManager.LayoutParams.WRAP_CONTENT)
+
+        dialog.show()
     }
 
     private fun initEditor(view:View) {

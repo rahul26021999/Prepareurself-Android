@@ -1,5 +1,6 @@
 package com.prepare.prepareurself.forum.ui
 
+import android.text.Html
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -37,7 +38,7 @@ class RepliesAdapter() : RecyclerView.Adapter<RepliesAdapter.RepliesViewHolder>(
 
     class RepliesViewHolder(itemView:View):RecyclerView.ViewHolder(itemView){
         fun bindView(q: QueryModel?) {
-            itemView.tv_reply_answer.text = q?.reply
+            itemView.tv_reply_answer.text = Html.fromHtml(q?.reply)
         }
 
     }
