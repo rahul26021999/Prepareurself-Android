@@ -14,8 +14,6 @@ import androidx.recyclerview.widget.RecyclerView;
 import com.bumptech.glide.GenericTransitionOptions;
 import com.bumptech.glide.Glide;
 import com.prepare.prepareurself.R;
-import com.prepare.prepareurself.courses.data.model.TopicsModel;
-import com.prepare.prepareurself.courses.ui.activity.CoursesActivity;
 import com.prepare.prepareurself.dashboard.data.model.CourseModel;
 import com.prepare.prepareurself.utils.Constants;
 import com.prepare.prepareurself.utils.Utility;

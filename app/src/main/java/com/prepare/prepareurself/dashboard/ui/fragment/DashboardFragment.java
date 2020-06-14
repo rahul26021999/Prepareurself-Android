@@ -31,20 +31,16 @@ import android.widget.EditText;
 import android.widget.FrameLayout;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
-import android.widget.ProgressBar;
-import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import com.facebook.shimmer.ShimmerFrameLayout;
 import com.google.android.material.appbar.AppBarLayout;
-import com.prepare.prepareurself.Home.ui.SearchFragment;
 import com.prepare.prepareurself.courses.data.model.ProjectsModel;
 import com.prepare.prepareurself.courses.data.model.TopicsModel;
 import com.prepare.prepareurself.courses.ui.activity.AllCoursesActivity;
-import com.prepare.prepareurself.courses.ui.activity.CourseDetailActivity;
-import com.prepare.prepareurself.courses.ui.activity.CoursesActivity;
-import com.prepare.prepareurself.courses.ui.activity.ProjectsActivity;
 import com.prepare.prepareurself.banner.BannerModel;
+import com.prepare.prepareurself.courses.ui.fragmentToActivity.TabProjectctivity;
+import com.prepare.prepareurself.courses.ui.fragmentToActivity.TabResourceActivity;
 import com.prepare.prepareurself.dashboard.data.model.CourseModel;
 import com.prepare.prepareurself.dashboard.data.model.HomepageData;
 import com.prepare.prepareurself.dashboard.data.model.HomepageResponseModel;
@@ -405,17 +401,15 @@ public class DashboardFragment extends Fragment implements DashboardRvAdapter.Da
 
     @Override
     public void onTopicSeeAll(int courseId, String courseName) {
-        Intent intent = new Intent(getActivity(), CoursesActivity.class);
+        Intent intent = new Intent(getActivity(), TabResourceActivity.class);
         intent.putExtra(Constants.COURSEID,courseId);
-        intent.putExtra(Constants.SHOWPAGE,Constants.SHOWTOPICS);
         startActivity(intent);
     }
 
     @Override
     public void onProjectSeeAll(int courseId, String courseName) {
-        Intent intent = new Intent(getActivity(), CoursesActivity.class);
+        Intent intent = new Intent(getActivity(), TabProjectctivity.class);
         intent.putExtra(Constants.COURSEID,courseId);
-        intent.putExtra(Constants.SHOWPAGE,Constants.SHOWPROJECTS);
         startActivity(intent);
     }
 

@@ -120,9 +120,7 @@
                     android:scheme="project" />
             </intent-filter>
         </activity>
-        <activity
-            android:name=".courses.ui.activity.CoursesActivity"
-            android:theme="@style/ProfileTheme"></activity>
+
         <activity android:name=".resources.youtubevideoplayer.YoutubePlayerActivity" />
         <activity
             android:name=".resources.ui.activity.ResourcesActivity"
