@@ -6,9 +6,12 @@ import androidx.appcompat.app.AppCompatActivity
 import com.prepare.prepareurself.R
 import com.prepare.prepareurself.utils.BaseActivity
 import kotlinx.android.synthetic.main.activity_forum2.*
+import kotlinx.android.synthetic.main.richeditor_layout.*
 
 
 class ForumActivity : BaseActivity() {
+
+    private var htmlData = ""
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -19,8 +22,8 @@ class ForumActivity : BaseActivity() {
         editor.setPadding(10, 10, 10, 10)
         editor.setPlaceholder("Insert text here...")
 
-        editor.setOnTextChangeListener {
-            text -> preview.text = text
+        editor.setOnTextChangeListener { text ->
+            htmlData = text
         }
 
         action_undo.setOnClickListener {
@@ -71,9 +74,9 @@ class ForumActivity : BaseActivity() {
 
         action_txt_color.setOnClickListener {
             if (isTextColorChanged){
-                editor.setTextColor(Color.BLACK)
-            }else{
                 editor.setTextColor(Color.RED)
+            }else{
+                editor.setTextColor(Color.BLACK)
             }
             isTextColorChanged=!isTextColorChanged
         }
