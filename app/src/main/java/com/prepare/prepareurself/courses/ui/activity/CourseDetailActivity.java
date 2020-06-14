@@ -1,8 +1,6 @@
 package com.prepare.prepareurself.courses.ui.activity;
 
 import androidx.core.content.ContextCompat;
-import androidx.fragment.app.FragmentTransaction;
-import androidx.lifecycle.LiveData;
 import androidx.lifecycle.Observer;
 import androidx.lifecycle.ViewModelProvider;
 
@@ -13,24 +11,18 @@ import android.graphics.drawable.Drawable;
 import android.net.Uri;
 import android.os.Bundle;
 import android.text.Html;
-import android.text.Spanned;
-import android.text.TextUtils;
 import android.util.Log;
-import android.view.LayoutInflater;
 import android.view.View;
 import android.view.Window;
 import android.view.WindowManager;
-import android.widget.FrameLayout;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import com.bumptech.glide.GenericTransitionOptions;
 import com.bumptech.glide.Glide;
 import com.bumptech.glide.load.engine.DiskCacheStrategy;
-import com.google.android.material.button.MaterialButton;
 import com.prepare.prepareurself.R;
 import com.prepare.prepareurself.courses.data.model.AddToUserPrefResponseModel;
 import com.prepare.prepareurself.courses.data.model.CourseDetailReponseModel;
@@ -40,10 +32,8 @@ import com.prepare.prepareurself.courses.ui.fragmentToActivity.TabResourceActivi
 import com.prepare.prepareurself.courses.viewmodels.CourseDetailViewModel;
 import com.prepare.prepareurself.feedback.ui.FeedbackFragment;
 import com.prepare.prepareurself.forum.ui.ForumActivity;
-import com.prepare.prepareurself.preferences.data.PrefDbRepository;
 import com.prepare.prepareurself.preferences.data.PreferencesModel;
 import com.prepare.prepareurself.preferences.data.PrefernceResponseModel;
-import com.prepare.prepareurself.preferences.viewmodel.PreferenceViewModel;
 import com.prepare.prepareurself.quizv2.ui.QuizActivity;
 import com.prepare.prepareurself.utils.BaseActivity;
 import com.prepare.prepareurself.utils.Constants;
@@ -52,7 +42,6 @@ import com.prepare.prepareurself.utils.Utility;
 import com.willy.ratingbar.BaseRatingBar;
 
 import java.io.IOException;
-import java.util.ArrayList;
 import java.util.List;
 
 public class CourseDetailActivity extends BaseActivity implements View.OnClickListener, FeedbackFragment.FeedBackHomeInteractor {
@@ -68,6 +57,7 @@ public class CourseDetailActivity extends BaseActivity implements View.OnClickLi
     TextView course_name, course_description,tv_pref_name;
     private String courseName = "";
     private boolean isAdded = false;
+    private boolean isRateFetching = true;
     @Override
     public void onFeedbackBackPressed() { }
     @Override
@@ -77,22 +67,6 @@ public class CourseDetailActivity extends BaseActivity implements View.OnClickLi
         statusbarcolor();
         getintents();
         setOnclicklisteners();
-        //int stars=scaleRatingBar.getNumStars();
-        //Log.d("TAG",""+stars);
-        scaleRatingBar.setOnRatingChangeListener(new BaseRatingBar.OnRatingChangeListener() {
-            @Override
-            public void onRatingChange(BaseRatingBar ratingBar, float rating, boolean fromUser) {
-                Log.e("TAGSTAR", "onRatingChange: " + starbyuser);
-                starbyuser= (int) rating;
-                //Toast.makeText(CourseDetailActivity.this,""+ msg,Toast.LENGTH_LONG).show();
-                if(rating<=3){
-                    showDialogfeedback();
-                }
-                else if (rating>3){
-                    showDialogplaystore();
-                }
-            }
-        });
 
         vm = new  ViewModelProvider(this).get(CourseDetailViewModel.class);
         prefManager = new PrefManager(this);
@@ -130,6 +104,7 @@ public class CourseDetailActivity extends BaseActivity implements View.OnClickLi
                             course_description.setText(Html.fromHtml(description).toString().trim());
                         Log.d("TAGdeatal",title);
                         scaleRatingBar.setRating(courseDetailReponseModel.getRating());
+                        Log.d("rating_debug","rating : "+courseDetailReponseModel.getRating());
                         if (img_url!=null && img_url.endsWith(".svg")){
                             Utility.loadSVGImage(CourseDetailActivity.this,Constants.COURSEIMAGEBASEUSRL+ courseDetailReponseModel.getCourse().getImage_url(),course_image);
                         }else{
@@ -183,6 +158,21 @@ public class CourseDetailActivity extends BaseActivity implements View.OnClickLi
 
                 }
             });
+
+            scaleRatingBar.setOnRatingChangeListener(new BaseRatingBar.OnRatingChangeListener() {
+                @Override
+                public void onRatingChange(BaseRatingBar ratingBar, float rating, boolean fromUser) {
+                    starbyuser= (int) rating;
+                    Log.e("TAGSTAR", "onRatingChange: " + isRateFetching);
+                    if (!isRateFetching){
+                        vm.fetchRateCourse(prefManager.getString(Constants.JWTTOKEN),courseId,starbyuser);
+                        observeData(starbyuser);
+                    }else{
+                        isRateFetching = false;
+                    }
+                }
+            });
+
             //Adduser pref model
             /*vm.addToUserPrefResponseModelLiveData.observe(this, new Observer<AddToUserPrefResponseModel>() {
                 @Override
@@ -194,6 +184,22 @@ public class CourseDetailActivity extends BaseActivity implements View.OnClickLi
 
         }
 
+    }
+
+    private void observeData(final int starbyuser) {
+        vm.rateCourseResponseModelLiveData.observe(this, new Observer<RateCourseResponseModel>() {
+            @Override
+            public void onChanged(RateCourseResponseModel rateCourseResponseModel) {
+                if (rateCourseResponseModel!=null){
+                    if(starbyuser<=3){
+                        showDialogfeedback();
+                    }
+                    else {
+                        showDialogplaystore();
+                    }
+                }
+            }
+        });
     }
 
     private void statusbarcolor() {
@@ -351,6 +357,7 @@ public class CourseDetailActivity extends BaseActivity implements View.OnClickLi
                         }
                     });
                 }
+                break;
     }
 }
 }
