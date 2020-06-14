@@ -39,6 +39,7 @@ import com.prepare.prepareurself.courses.ui.fragmentToActivity.TabProjectctivity
 import com.prepare.prepareurself.courses.ui.fragmentToActivity.TabResourceActivity;
 import com.prepare.prepareurself.courses.viewmodels.CourseDetailViewModel;
 import com.prepare.prepareurself.feedback.ui.FeedbackFragment;
+import com.prepare.prepareurself.forum.ui.ForumActivity;
 import com.prepare.prepareurself.preferences.data.PrefDbRepository;
 import com.prepare.prepareurself.preferences.data.PreferencesModel;
 import com.prepare.prepareurself.preferences.data.PrefernceResponseModel;

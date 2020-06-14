@@ -4,6 +4,6 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".courses.ui.activity.ForumActivity">
+    tools:context=".forum.ui.ForumActivity">
 
 </androidx.constraintlayout.widget.ConstraintLayout>
