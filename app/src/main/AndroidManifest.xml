@@ -18,15 +18,14 @@
         android:theme="@style/AppTheme"
         android:usesCleartextTraffic="true"
         tools:replace="android:allowBackup">
+        <activity android:name=".forum.ui.ForumActivity"></activity>
         <activity
             android:name=".courses.ui.activity.DemoActivity"
             android:label="@string/title_activity_demo"
             android:theme="@style/ProfileTheme" />
-        <activity android:name=".courses.ui.activity.ForumActivity" />
         <activity
             android:name=".courses.ui.activity.CourseDetailActivity"
-            android:theme="@style/ProfileTheme" >
-
+            android:theme="@style/ProfileTheme">
             <intent-filter>
                 <action android:name="android.intent.action.VIEW" />
 
@@ -37,7 +36,6 @@
                     android:host="app.prepareurself"
                     android:scheme="course" />
             </intent-filter>
-
         </activity>
         <activity
             android:name=".preferences.ui.PreferencesActivity"
@@ -124,9 +122,7 @@
         </activity>
         <activity
             android:name=".courses.ui.activity.CoursesActivity"
-            android:theme="@style/ProfileTheme">
-
-        </activity>
+            android:theme="@style/ProfileTheme"></activity>
         <activity android:name=".resources.youtubevideoplayer.YoutubePlayerActivity" />
         <activity
             android:name=".resources.ui.activity.ResourcesActivity"
