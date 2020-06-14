@@ -1,18 +1,28 @@
 package com.prepare.prepareurself.forum.ui
 
+import android.app.Dialog
 import android.graphics.Color
 import android.os.Bundle
+import android.view.LayoutInflater
+import android.view.View
+import android.view.WindowManager
 import androidx.appcompat.app.AppCompatActivity
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
+import androidx.recyclerview.widget.LinearLayoutManager
 import com.prepare.prepareurself.R
 import com.prepare.prepareurself.forum.viewmodel.ForumViewModel
 import com.prepare.prepareurself.utils.BaseActivity
 import com.prepare.prepareurself.utils.Constants
 import com.prepare.prepareurself.utils.PrefManager
 import com.prepare.prepareurself.utils.Utility
+import jp.wasabeef.richeditor.RichEditor
 import kotlinx.android.synthetic.main.activity_forum2.*
+import kotlinx.android.synthetic.main.activity_forum2.view.*
+import kotlinx.android.synthetic.main.forum_add_query_dialog.*
+import kotlinx.android.synthetic.main.forum_add_query_dialog.view.*
 import kotlinx.android.synthetic.main.richeditor_layout.*
+import kotlinx.android.synthetic.main.richeditor_layout.view.*
 
 
 class ForumActivity : BaseActivity() {
@@ -30,11 +40,41 @@ class ForumActivity : BaseActivity() {
 
         pm = PrefManager(this)
 
+
         courseId = intent.getIntExtra(Constants.COURSEID,-1)
 
-        initEditor()
+        btn_ask_query.setOnClickListener {
+            showPostQueryDialog()
+        }
 
-        btn_post_query.setOnClickListener {
+        initQueryAdapter()
+
+    }
+
+    private fun initQueryAdapter() {
+        val adapter = QueriesAdapter()
+        rv_queries.layoutManager = LinearLayoutManager(this)
+        rv_queries.adapter = adapter
+
+        vm.getQueries(pm.getString(Constants.JWTTOKEN),courseId,1)
+                ?.observe(this, Observer {
+                    if (it!=null){
+                        it.queries?.data?.let { it1 -> adapter.setData(it1) }
+                    }else{
+                        Utility.showToast(this,Constants.SOMETHINGWENTWRONG)
+                    }
+                })
+    }
+
+    private fun showPostQueryDialog() {
+        val dialog = Dialog(this)
+        val view = LayoutInflater.from(this).inflate(R.layout.forum_add_query_dialog, null)
+        dialog.setContentView(view)
+        dialog.setTitle("Post your query here")
+
+        initEditor(view)
+
+        view.btn_post_query.setOnClickListener {
             if (htmlData.isNotEmpty()){
                 if (courseId!=-1){
                     vm.askQuery(pm.getString(Constants.JWTTOKEN),courseId,htmlData)
@@ -42,10 +82,11 @@ class ForumActivity : BaseActivity() {
                                 if (it!=null){
                                     Utility.showToast(this,it.message)
                                     htmlData = ""
-                                    editor.html = ""
+                                    view.editor.html = ""
                                 }else{
                                     Utility.showToast(this,Constants.SOMETHINGWENTWRONG)
                                 }
+                                dialog.cancel()
                             })
                 }
             }else{
@@ -53,125 +94,128 @@ class ForumActivity : BaseActivity() {
             }
         }
 
+        val window = dialog.window
+        window?.setLayout(WindowManager.LayoutParams.MATCH_PARENT,WindowManager.LayoutParams.MATCH_PARENT)
 
+        dialog.show()
 
     }
 
-    private fun initEditor() {
+    private fun initEditor(view:View) {
 
-        editor.setEditorHeight(200)
-        editor.setEditorFontSize(22)
-        editor.setEditorFontColor(Color.RED)
-        editor.setPadding(10, 10, 10, 10)
-        editor.setPlaceholder("Insert text here...")
+        view.editor.setEditorHeight(200)
+        view.editor.setEditorFontSize(22)
+        view.editor.setEditorFontColor(Color.RED)
+        view.editor.setPadding(10, 10, 10, 10)
+        view.editor.setPlaceholder("Insert text here...")
 
-        editor.setOnTextChangeListener { text ->
+        view.editor.setOnTextChangeListener { text ->
             htmlData = text
         }
 
-        action_undo.setOnClickListener {
-            editor.undo()
+        view.action_undo.setOnClickListener {
+            view.editor.undo()
         }
 
-        action_redo.setOnClickListener {
-            editor.redo()
+        view.action_redo.setOnClickListener {
+            view.editor.redo()
         }
-        action_bold.setOnClickListener {
-            editor.setBold()
+        view.action_bold.setOnClickListener {
+            view.editor.setBold()
         }
-        action_italic.setOnClickListener {
-            editor.setItalic()
+        view.action_italic.setOnClickListener {
+            view.editor.setItalic()
         }
-        action_subscript.setOnClickListener {
-            editor.setSubscript()
+        view.action_subscript.setOnClickListener {
+            view.editor.setSubscript()
         }
-        action_superscript.setOnClickListener {
-            editor.setSuperscript()
+        view.action_superscript.setOnClickListener {
+            view.editor.setSuperscript()
         }
-        action_strikethrough.setOnClickListener {
-            editor.setStrikeThrough()
+        view.action_strikethrough.setOnClickListener {
+            view.editor.setStrikeThrough()
         }
-        action_underline.setOnClickListener {
-            editor.setUnderline()
+        view.action_underline.setOnClickListener {
+            view.editor.setUnderline()
         }
-        action_heading1.setOnClickListener {
-            editor.setHeading(1)
+        view.action_heading1.setOnClickListener {
+            view.editor.setHeading(1)
         }
-        action_heading2.setOnClickListener {
-            editor.setHeading(2)
+        view.action_heading2.setOnClickListener {
+            view.editor.setHeading(2)
         }
-        action_heading3.setOnClickListener {
-            editor.setHeading(3)
+        view.action_heading3.setOnClickListener {
+            view.editor.setHeading(3)
         }
-        action_heading4.setOnClickListener {
-            editor.setHeading(4)
+        view.action_heading4.setOnClickListener {
+            view.editor.setHeading(4)
         }
-        action_heading5.setOnClickListener {
-            editor.setHeading(5)
+        view.action_heading5.setOnClickListener {
+            view.editor.setHeading(5)
         }
-        action_heading6.setOnClickListener {
-            editor.setHeading(6)
+        view.action_heading6.setOnClickListener {
+            view.editor.setHeading(6)
         }
 
         var isTextColorChanged = true
 
-        action_txt_color.setOnClickListener {
+        view.action_txt_color.setOnClickListener {
             if (isTextColorChanged){
-                editor.setTextColor(Color.RED)
+                view.editor.setTextColor(Color.RED)
             }else{
-                editor.setTextColor(Color.BLACK)
+                view.editor.setTextColor(Color.BLACK)
             }
             isTextColorChanged=!isTextColorChanged
         }
 
         var isBgColorChanged = true
 
-        action_bg_color.setOnClickListener {
+        view.action_bg_color.setOnClickListener {
             if (isBgColorChanged){
-                editor.setTextBackgroundColor(Color.TRANSPARENT)
+                view.editor.setTextBackgroundColor(Color.TRANSPARENT)
             }else{
-                editor.setTextColor(Color.YELLOW)
+                view.editor.setTextColor(Color.YELLOW)
             }
             isBgColorChanged=!isBgColorChanged
         }
 
 
-        action_indent.setOnClickListener {
-            editor.setIndent()
+        view.action_indent.setOnClickListener {
+            view.editor.setIndent()
         }
 
-        action_outdent.setOnClickListener {
-            editor.setOutdent()
+        view.action_outdent.setOnClickListener {
+            view.editor.setOutdent()
         }
 
-        action_align_left.setOnClickListener {
-            editor.setAlignLeft()
+        view.action_align_left.setOnClickListener {
+            view.editor.setAlignLeft()
         }
 
-        action_align_center.setOnClickListener {
-            editor.setAlignCenter()
+        view.action_align_center.setOnClickListener {
+            view.editor.setAlignCenter()
         }
 
-        action_align_right.setOnClickListener {
-            editor.setAlignRight()
+        view.action_align_right.setOnClickListener {
+            view.editor.setAlignRight()
         }
-        action_blockquote.setOnClickListener {
-            editor.setBlockquote()
+        view.action_blockquote.setOnClickListener {
+            view.editor.setBlockquote()
         }
-        action_insert_bullets.setOnClickListener {
-            editor.setBullets()
+        view.action_insert_bullets.setOnClickListener {
+            view.editor.setBullets()
         }
-        action_insert_numbers.setOnClickListener {
-            editor.setNumbers()
+        view.action_insert_numbers.setOnClickListener {
+            view.editor.setNumbers()
         }
-        action_insert_image.setOnClickListener {
-            editor.insertImage("http://www.1honeywan.com/dachshund/image/7.21/7.21_3_thumb.JPG","image")
+        view.action_insert_image.setOnClickListener {
+            view.editor.insertImage("http://www.1honeywan.com/dachshund/image/7.21/7.21_3_thumb.JPG","image")
         }
-        action_insert_link.setOnClickListener {
-            editor.insertLink("https://github.com/raystatic","github")
+        view.action_insert_link.setOnClickListener {
+            view.editor.insertLink("https://github.com/raystatic","github")
         }
-        action_insert_checkbox.setOnClickListener {
-            editor.insertTodo()
+        view.action_insert_checkbox.setOnClickListener {
+            view.editor.insertTodo()
         }
     }
 }

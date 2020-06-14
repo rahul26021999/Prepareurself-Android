@@ -5,35 +5,35 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     tools:context=".forum.ui.ForumActivity"
-    android:orientation="vertical"
-    android:padding="@dimen/padding_10">
+    android:orientation="vertical">
 
-    <TextView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="Post your query here"
-        android:textColor="@color/black"
-        android:textStyle="bold"
-        android:textSize="16sp"
-        android:fontFamily="@font/proximanovaregular"
-        android:layout_marginBottom="@dimen/padding_10"/>
+    <include layout="@layout/layout_topbar"/>
 
-    <include layout="@layout/richeditor_layout"/>
-
-    <com.google.android.material.button.MaterialButton
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="Post"
-        android:textColor="@color/white"
-        android:background="@color/colorPrimaryDark"
-        android:textSize="16sp"
-        android:layout_marginTop="@dimen/padding_10"
-        android:id="@+id/btn_post_query"/>
-
-    <androidx.recyclerview.widget.RecyclerView
+    <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="10dp"/>
+        android:layout_height="match_parent"
+        android:orientation="vertical"
+        android:padding="@dimen/padding_10">
+
+        <com.google.android.material.button.MaterialButton
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Ask Query"
+            android:textColor="@color/white"
+            android:background="@color/colorPrimaryDark"
+            android:textSize="16sp"
+            android:layout_marginTop="@dimen/padding_10"
+            android:id="@+id/btn_ask_query"/>
+
+        <androidx.recyclerview.widget.RecyclerView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="10dp"
+            android:id="@+id/rv_queries"
+            tools:listitem="@layout/queries_adapter_layout"
+            tools:itemCount="2"/>
+
+    </LinearLayout>
 
 
 </LinearLayout>

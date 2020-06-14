@@ -1,0 +1,37 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout
+    xmlns:android="http://schemas.android.com/apk/res/android" android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:orientation="vertical"
+    android:padding="@dimen/padding_10">
+
+    <de.hdodenhof.circleimageview.CircleImageView
+        android:layout_width="50dp"
+        android:layout_height="50dp"
+        android:src="@drawable/person_placeholder"
+        android:id="@+id/img_person_queries"/>
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Name of the user"
+        android:textSize="14sp"
+        android:layout_toEndOf="@+id/img_person_queries"
+        android:layout_marginStart="@dimen/padding_10"
+        android:textColor="@color/colorPrimaryDark"
+        android:layout_marginTop="@dimen/padding_10"
+        android:id="@+id/tv_name_qury_user"
+        android:fontFamily="@font/proximanovaregular"/>
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="query"
+        android:textSize="16sp"
+        android:textStyle="bold"
+        android:layout_below="@+id/tv_name_qury_user"
+        android:layout_marginTop="@dimen/padding_10"
+        android:layout_alignStart="@+id/tv_name_qury_user"
+        android:id="@+id/tv_query_question"/>
+
+</RelativeLayout>
