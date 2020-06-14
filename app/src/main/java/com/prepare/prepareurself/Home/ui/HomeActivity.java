@@ -24,9 +24,10 @@ import com.prepare.prepareurself.courses.data.model.ProjectsModel;
 import com.prepare.prepareurself.courses.data.model.TopicsModel;
 import com.prepare.prepareurself.courses.ui.activity.AllCoursesActivity;
 import com.prepare.prepareurself.courses.ui.activity.CourseDetailActivity;
-import com.prepare.prepareurself.courses.ui.activity.CoursesActivity;
 import com.prepare.prepareurself.courses.ui.activity.ProjectsActivity;
 import com.prepare.prepareurself.banner.BannerModel;
+import com.prepare.prepareurself.courses.ui.fragmentToActivity.TabProjectctivity;
+import com.prepare.prepareurself.courses.ui.fragmentToActivity.TabResourceActivity;
 import com.prepare.prepareurself.dashboard.data.model.CourseModel;
 import com.prepare.prepareurself.dashboard.ui.fragment.DashboardFragment;
 import com.prepare.prepareurself.Home.viewmodel.HomeActivityViewModel;
@@ -305,19 +306,15 @@ public class HomeActivity extends BaseActivity implements NavigationView.OnNavig
             switch (bannerModel.getScreen()){
                 case "allProject":
                     if (bannerModel.getCourse()!=null){
-                        Intent intent = new Intent(this, CoursesActivity.class);
+                        Intent intent = new Intent(this, TabProjectctivity.class);
                         intent.putExtra(Constants.COURSEID, bannerModel.getCourse().getId());
-                        intent.putExtra(Constants.COURSENAME, bannerModel.getCourse().getName());
-                        intent.putExtra(Constants.SHOWPAGE,Constants.SHOWPROJECTS);
                         startActivity(intent);
                     }
                     break;
                 case "allTopic":
                     if(bannerModel.getCourse()!=null){
-                        Intent intent = new Intent(this, CoursesActivity.class);
+                        Intent intent = new Intent(this, TabResourceActivity.class);
                         intent.putExtra(Constants.COURSEID, bannerModel.getCourse().getId());
-                        intent.putExtra(Constants.COURSENAME, bannerModel.getCourse().getName());
-                        intent.putExtra(Constants.SHOWPAGE,Constants.SHOWTOPICS);
                         startActivity(intent);
                     }
                     break;

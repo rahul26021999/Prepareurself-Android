@@ -29,7 +29,6 @@ import com.prepare.prepareurself.Home.ui.SearchFragment;
 import com.prepare.prepareurself.R;
 import com.prepare.prepareurself.courses.data.model.TopicsModel;
 import com.prepare.prepareurself.courses.data.model.TopicsResponseModel;
-import com.prepare.prepareurself.courses.ui.activity.CoursesActivity;
 import com.prepare.prepareurself.courses.ui.adapters.ResourcesRvAdapter;
 import com.prepare.prepareurself.courses.viewmodels.TopicViewModel;
 import com.prepare.prepareurself.resources.ui.activity.ResourcesActivity;
