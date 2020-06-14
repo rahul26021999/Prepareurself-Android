@@ -3,8 +3,14 @@ package com.prepare.prepareurself.forum.ui
 import android.graphics.Color
 import android.os.Bundle
 import androidx.appcompat.app.AppCompatActivity
+import androidx.lifecycle.Observer
+import androidx.lifecycle.ViewModelProvider
 import com.prepare.prepareurself.R
+import com.prepare.prepareurself.forum.viewmodel.ForumViewModel
 import com.prepare.prepareurself.utils.BaseActivity
+import com.prepare.prepareurself.utils.Constants
+import com.prepare.prepareurself.utils.PrefManager
+import com.prepare.prepareurself.utils.Utility
 import kotlinx.android.synthetic.main.activity_forum2.*
 import kotlinx.android.synthetic.main.richeditor_layout.*
 
@@ -12,10 +18,47 @@ import kotlinx.android.synthetic.main.richeditor_layout.*
 class ForumActivity : BaseActivity() {
 
     private var htmlData = ""
+    private lateinit var vm:ForumViewModel
+    private lateinit var pm:PrefManager
+    private var courseId = -1
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_forum2)
+
+        vm = ViewModelProvider(this)[ForumViewModel::class.java]
+
+        pm = PrefManager(this)
+
+        courseId = intent.getIntExtra(Constants.COURSEID,-1)
+
+        initEditor()
+
+        btn_post_query.setOnClickListener {
+            if (htmlData.isNotEmpty()){
+                if (courseId!=-1){
+                    vm.askQuery(pm.getString(Constants.JWTTOKEN),courseId,htmlData)
+                            ?.observe(this, Observer {
+                                if (it!=null){
+                                    Utility.showToast(this,it.message)
+                                    htmlData = ""
+                                    editor.html = ""
+                                }else{
+                                    Utility.showToast(this,Constants.SOMETHINGWENTWRONG)
+                                }
+                            })
+                }
+            }else{
+                Utility.showToast(this,"Please enter a valid question")
+            }
+        }
+
+
+
+    }
+
+    private fun initEditor() {
+
         editor.setEditorHeight(200)
         editor.setEditorFontSize(22)
         editor.setEditorFontColor(Color.RED)
@@ -130,8 +173,5 @@ class ForumActivity : BaseActivity() {
         action_insert_checkbox.setOnClickListener {
             editor.insertTodo()
         }
-
-
-
     }
 }

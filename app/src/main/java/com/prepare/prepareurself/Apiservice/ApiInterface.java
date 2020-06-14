@@ -16,6 +16,7 @@ import com.prepare.prepareurself.dashboard.data.model.GetSuggestedTopicsModel;
 import com.prepare.prepareurself.dashboard.data.model.HomepageResponseModel;
 import com.prepare.prepareurself.favourites.data.model.FavouritesResponseModel;
 import com.prepare.prepareurself.feedback.data.model.FeedbacksubmitModel;
+import com.prepare.prepareurself.forum.data.ForumPostQueryResponseModel;
 import com.prepare.prepareurself.preferences.data.PrefernceResponseModel;
 import com.prepare.prepareurself.preferences.data.UpdatePrefResponseModel;
 import com.prepare.prepareurself.profile.data.model.UpdatePasswordResponseModel;
@@ -217,5 +218,10 @@ public interface ApiInterface {
                                                       @Query("quiz_id")Integer quizId,
                                                       @Query("question_id")Integer questionId,
                                                       @Query("answer_id")Integer optionId);
+
+    @POST("ask-query")
+    Call<ForumPostQueryResponseModel> askQuery(@Query("token") String token,
+                                               @Query("course_id") int courseId,
+                                               @Query("query") String query);
 
 }
