@@ -26,7 +26,7 @@
             android:theme="@style/ProfileTheme" />
         <activity
             android:name=".courses.ui.activity.CourseDetailActivity"
-            android:theme="@style/ProfileTheme">
+            android:theme="@style/courseDetailsTheme">
             <intent-filter>
                 <action android:name="android.intent.action.VIEW" />
 

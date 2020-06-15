@@ -138,11 +138,10 @@
 
             </LinearLayout>
             <LinearLayout
-                android:id="@+id/ll2"
+                android:id="@+id/lowerLayoutBackgroung"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 android:orientation="vertical"
-                android:background="@drawable/courseblue_gradient"
                 android:layout_below="@id/topCourseBackground"
                 app:layout_constraintEnd_toEndOf="parent">
 
@@ -319,6 +318,8 @@
                 android:layout_width="80dp"
                 android:layout_height="80dp"
                 android:layout_marginEnd="50dp"
+                android:background="@color/white"
+                android:scaleType="centerCrop"
                 android:src="@drawable/androcourse"
                 app:civ_border_color="@color/white"
                 app:civ_border_width="2dp"

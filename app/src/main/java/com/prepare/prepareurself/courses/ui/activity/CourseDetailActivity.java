@@ -1,6 +1,5 @@
 package com.prepare.prepareurself.courses.ui.activity;
 
-import androidx.core.content.ContextCompat;
 import androidx.lifecycle.Observer;
 import androidx.lifecycle.ViewModelProvider;
 
@@ -45,7 +44,6 @@ import com.prepare.prepareurself.utils.Utility;
 import com.willy.ratingbar.BaseRatingBar;
 
 import java.io.IOException;
-import java.util.ArrayList;
 import java.util.List;
 
 public class CourseDetailActivity extends BaseActivity implements View.OnClickListener, FeedbackFragment.FeedBackHomeInteractor {
@@ -56,7 +54,7 @@ public class CourseDetailActivity extends BaseActivity implements View.OnClickLi
     private CourseDetailViewModel vm;
     private PrefManager prefManager;
     private com.willy.ratingbar.ScaleRatingBar scaleRatingBar;
-    private LinearLayout l_layout_pref , topCourseBackground,ll2;
+    private LinearLayout l_layout_pref , topCourseBackground, lowerLayoutBackground;
     private RelativeLayout rel_project, rel_resources, rel_forum, rel_takequiz;
     TextView course_name, course_description,tv_pref_name;
     private String courseName = "";
@@ -81,11 +79,10 @@ public class CourseDetailActivity extends BaseActivity implements View.OnClickLi
         }else{
             courseId = intent.getIntExtra(Constants.COURSEID, -1);
         }
-        statusbarcolor();
+//        statusbarcolor();
         getintents();
         setOnclicklisteners();
-        setbggradientdynamicupperlayout();
-        //String[][] str1= new String[7][2];
+
         if (courseId!=-1){
             vm.fetchCourseDetails(prefManager.getString(Constants.JWTTOKEN),courseId);
             vm.fetchremotePref(prefManager.getString(Constants.JWTTOKEN));
@@ -95,12 +92,15 @@ public class CourseDetailActivity extends BaseActivity implements View.OnClickLi
                 public void onChanged(CourseDetailReponseModel courseDetailReponseModel) {
                     if (courseDetailReponseModel!=null ){
                         CourseModel course=courseDetailReponseModel.getCourse();
+                        setbggradientdynamicupperlayout(course);
+
                         String title=course.getName();
                         String description=course.getDescription();
                         String logo_url=course.getLogo_url();
 
                         course_name.setText(title);
                         courseName = title;
+
 
                         if (description!=null)
                             course_description.setText(Html.fromHtml(description).toString().trim());
@@ -205,16 +205,6 @@ public class CourseDetailActivity extends BaseActivity implements View.OnClickLi
         });
     }
 
-    private void statusbarcolor() {
-        Window window = this.getWindow();
-        // clear FLAG_TRANSLUCENT_STATUS flag:
-        //window.clearFlags(WindowManager.LayoutParams.FLAG_TRANSLUCENT_STATUS);
-        // add FLAG_DRAWS_SYSTEM_BAR_BACKGROUNDS flag to the window
-        window.addFlags(WindowManager.LayoutParams.FLAG_DRAWS_SYSTEM_BAR_BACKGROUNDS);
-        // finally change the color
-        window.setStatusBarColor(ContextCompat.getColor(this,R.color.colorPrimaryDark));
-    }
-
     private void setOnclicklisteners() {
         backBtn.setOnClickListener(this);
         rel_project.setOnClickListener(this);
@@ -224,75 +214,23 @@ public class CourseDetailActivity extends BaseActivity implements View.OnClickLi
         btn_shareimage.setOnClickListener(this);
         l_layout_pref.setOnClickListener(this);
     }
-    private void setbggradientdynamicupperlayout(){
-        String[] colorsTxt = getApplicationContext().getResources().getStringArray(R.array.colors);
-        String[] colorsTxt1 = getApplicationContext().getResources().getStringArray(R.array.colors1);
-        List<Integer> colors = new ArrayList<>();
-        List<Integer> colors1 = new ArrayList<>();
-        for (int i = 0; i < colorsTxt.length; i++) {
-            int newColor = Color.parseColor(colorsTxt[i]);
-            colors.add(newColor);
-        }
-        for (int j = 0; j < colorsTxt1.length; j++) {
-            int newColor1 = Color.parseColor(colorsTxt1[j]);
-            colors1.add(newColor1);
-        }
-        final  Integer colorfromarr;
-        final  Integer color1fromarr1;
-        final int firstColor;
-        final int secondColor;
-        //int rand = new Random().nextInt(colors.size());
-        Log.d("TAGOUT",""+courseId);
-        switch (courseId){
-            case 1: colorfromarr = colors.get(0);
-                color1fromarr1 = colors1.get(0);
-                firstColor=colorfromarr;
-                secondColor= color1fromarr1;
-                Log.d("corseed",""+courseId);
-                break;
-            case 3: colorfromarr = colors.get(1);
-                color1fromarr1 = colors1.get(1);
-                firstColor=colorfromarr;
-                secondColor= color1fromarr1;
-                break;
-            case 10: colorfromarr = colors.get(2);
-                color1fromarr1 = colors1.get(2);
-                firstColor=colorfromarr;
-                secondColor= color1fromarr1;
-                break;
-            case 4: colorfromarr = colors.get(3);
-                color1fromarr1 = colors1.get(3);
-                firstColor=colorfromarr;
-                secondColor= color1fromarr1;
-                break;
-            case 6: colorfromarr = colors.get(4);
-                color1fromarr1 = colors1.get(4);
-                firstColor=colorfromarr;
-                secondColor= color1fromarr1;
-                break;
-            case 8: colorfromarr = colors.get(5);
-                color1fromarr1 = colors1.get(5);
-                firstColor=colorfromarr;
-                secondColor= color1fromarr1;
-                break;
-            case 9: colorfromarr = colors.get(6);
-                color1fromarr1 = colors1.get(6);
-                firstColor=colorfromarr;
-                secondColor= color1fromarr1;
-                break;
-            default: colorfromarr = R.color.white;
-                color1fromarr1 = R.color.white;
-                firstColor=colorfromarr;
-                secondColor= color1fromarr1;
 
+    private void setbggradientdynamicupperlayout(CourseModel course)
+    {
+        if(!course.getColor().equals(""))
+        {
+            String[] list = course.getColor().split(",");
+            Log.i("Colors",course.getColor()+list.length);
+            int[] colors = new int[list.length];
+            for (int i=0;i<list.length;i++){
+                colors[i]=Color.parseColor(list[i]);
+            }
+            GradientDrawable myGradBg = new GradientDrawable(GradientDrawable.Orientation.LEFT_RIGHT, colors);
+            myGradBg.setCornerRadii(new float[]{0f,0f,0f,0f,100f,100f,0f,0f});
+            topCourseBackground.setBackground(myGradBg);
+            lowerLayoutBackground.setBackground(myGradBg);
         }
-        //DONT REMOVE THS COMMENT:final int secondColor = ContextCompat.getColor(CourseDetailActivity.this, color1 );
-        //upperlayout
-//        final MyGradientDrawable myGradBg = new MyGradientDrawable(firstColor, secondColor);
-//        topCourseBackground.setBackground(myGradBg);
-//        //lower layout
-//        final  MyGradientDrawable myGradbg1= new MyGradientDrawable(firstColor, secondColor);
-//        ll2.setBackground(myGradbg1);
+
     }
 
     private void getintents() {
@@ -302,7 +240,7 @@ public class CourseDetailActivity extends BaseActivity implements View.OnClickLi
         backBtn=findViewById(R.id.backBtn);
         l_layout_pref=findViewById(R.id.l_layout_pref);
         topCourseBackground =findViewById(R.id.topCourseBackground);
-        ll2=findViewById(R.id.ll2);
+        lowerLayoutBackground =findViewById(R.id.lowerLayoutBackgroung);
         tv_pref_name=findViewById(R.id.tv_pref_name);
         pref_image=findViewById(R.id.pref_image);
         scaleRatingBar=findViewById(R.id.scaleRatingBar);
@@ -437,18 +375,4 @@ public class CourseDetailActivity extends BaseActivity implements View.OnClickLi
                 break;
     }
 }
-}
-
-final class MyGradientDrawable extends GradientDrawable {
-    MyGradientDrawable(int fromColor, int toColor) {
-        super(Orientation.RIGHT_LEFT, new int[]{fromColor, toColor});
-        setGradientType(LINEAR_GRADIENT);
-        setGradientRadius(90);
-
-    }
-    //float[] radii=new float[]{0f,0f,24f,0f};
-    public void setCornerRadius(float[] radii) {
-        //this.cornerRadius = cornerRadius;
-        setCornerRadii(radii);
-    }
 }
