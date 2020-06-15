@@ -21,12 +21,11 @@ import com.prepare.prepareurself.utils.Constants
 import com.prepare.prepareurself.utils.PrefManager
 import com.prepare.prepareurself.utils.Utility
 import kotlinx.android.synthetic.main.activity_forum2.*
+import kotlinx.android.synthetic.main.activity_forum2.view.*
 import kotlinx.android.synthetic.main.forum_add_query_dialog.*
 import kotlinx.android.synthetic.main.forum_add_query_dialog.view.*
 import kotlinx.android.synthetic.main.insert_link_editor_dialog.view.*
 import kotlinx.android.synthetic.main.layout_topbar.*
-import kotlinx.android.synthetic.main.richeditor_layout.*
-import kotlinx.android.synthetic.main.richeditor_layout.view.*
 import okhttp3.MediaType
 import okhttp3.MultipartBody
 import okhttp3.RequestBody
@@ -59,7 +58,7 @@ class ForumActivity : BaseActivity(), QueriesAdapter.QueriesListener {
 
         initEditor()
 
-        btn_post_query.setOnClickListener {
+        btn_send_query.setOnClickListener {
             if (htmlData.isNotEmpty()){
                 if (courseId!=-1){
                     vm.askQuery(pm.getString(Constants.JWTTOKEN),courseId,htmlData)
@@ -132,7 +131,7 @@ class ForumActivity : BaseActivity(), QueriesAdapter.QueriesListener {
 
         initEditor()
 
-        view.btn_post_query.setOnClickListener {
+        view.btn_send_query.setOnClickListener {
             if (htmlData.isNotEmpty()){
                 if (courseId!=-1){
                     vm.doReply(pm.getString(Constants.JWTTOKEN),queryModel.id,htmlData)
@@ -140,7 +139,7 @@ class ForumActivity : BaseActivity(), QueriesAdapter.QueriesListener {
                                 if (it!=null){
                                     Utility.showToast(this,it.message)
                                     htmlData = ""
-                                    view.editor.html = ""
+                                    editor.html = ""
                                 }else{
                                     Utility.showToast(this,Constants.SOMETHINGWENTWRONG)
                                 }
@@ -217,123 +216,128 @@ class ForumActivity : BaseActivity(), QueriesAdapter.QueriesListener {
 
     private fun initEditor() {
 
-        editor.setEditorHeight(200)
+        editor.setEditorHeight(100)
         editor.setEditorFontSize(22)
-        editor.setEditorFontColor(Color.RED)
+        editor.setEditorFontColor(R.color.colorPrimaryDark)
         editor.setPadding(10, 10, 10, 10)
         editor.setPlaceholder("Insert text here...")
+        editor.requestFocus()
 
         editor.setOnTextChangeListener { text ->
             htmlData = text
         }
 
-        action_undo.setOnClickListener {
-            editor.undo()
-        }
-
-        action_redo.setOnClickListener {
-            editor.redo()
-        }
-        action_bold.setOnClickListener {
+        tv_bold.setOnClickListener {
             editor.setBold()
         }
-        action_italic.setOnClickListener {
+        tv_italic.setOnClickListener {
             editor.setItalic()
         }
-        action_subscript.setOnClickListener {
-            editor.setSubscript()
-        }
-        action_superscript.setOnClickListener {
-            editor.setSuperscript()
-        }
-        action_strikethrough.setOnClickListener {
-            editor.setStrikeThrough()
-        }
-        action_underline.setOnClickListener {
-            editor.setUnderline()
-        }
-        action_heading1.setOnClickListener {
-            editor.setHeading(1)
-        }
-        action_heading2.setOnClickListener {
-            editor.setHeading(2)
-        }
-        action_heading3.setOnClickListener {
-            editor.setHeading(3)
-        }
-        action_heading4.setOnClickListener {
-            editor.setHeading(4)
-        }
-        action_heading5.setOnClickListener {
-            editor.setHeading(5)
-        }
-        action_heading6.setOnClickListener {
-            editor.setHeading(6)
-        }
 
-        var isTextColorChanged = true
-
-        action_txt_color.setOnClickListener {
-            if (isTextColorChanged){
-                editor.setTextColor(Color.RED)
-            }else{
-                editor.setTextColor(Color.BLACK)
-            }
-            isTextColorChanged=!isTextColorChanged
-        }
-
-        var isBgColorChanged = true
-
-        action_bg_color.setOnClickListener {
-            if (isBgColorChanged){
-                editor.setTextBackgroundColor(Color.TRANSPARENT)
-            }else{
-                editor.setTextColor(Color.YELLOW)
-            }
-            isBgColorChanged=!isBgColorChanged
-        }
-
-
-        action_indent.setOnClickListener {
-            editor.setIndent()
-        }
-
-        action_outdent.setOnClickListener {
-            editor.setOutdent()
-        }
-
-        action_align_left.setOnClickListener {
-            editor.setAlignLeft()
-        }
-
-        action_align_center.setOnClickListener {
-            editor.setAlignCenter()
-        }
-
-        action_align_right.setOnClickListener {
-            editor.setAlignRight()
-        }
-        action_blockquote.setOnClickListener {
-            editor.setBlockquote()
-        }
-        action_insert_bullets.setOnClickListener {
-            editor.setBullets()
-        }
-        action_insert_numbers.setOnClickListener {
-            editor.setNumbers()
-        }
-        action_insert_image.setOnClickListener {
+        tv_attach_image.setOnClickListener {
             //editor.insertImage("http://www.1honeywan.com/dachshund/image/7.21/7.21_3_thumb.JPG","image")
             uploadImage()
             editor.setNumbers()
         }
-        action_insert_link.setOnClickListener {
-           // editor.insertLink("https://github.com/raystatic","github")
-            insertLink()
-        }
-        action_insert_checkbox.setOnClickListener {
-            editor.insertTodo()
-        }
+
+//        action_undo.setOnClickListener {
+//            editor.undo()
+//        }
+//
+//        action_redo.setOnClickListener {
+//            editor.redo()
+//        }
+//
+//        action_subscript.setOnClickListener {
+//            editor.setSubscript()
+//        }
+//        action_superscript.setOnClickListener {
+//            editor.setSuperscript()
+//        }
+//        action_strikethrough.setOnClickListener {
+//            editor.setStrikeThrough()
+//        }
+//        tv_underline.setOnClickListener {
+//            editor.setUnderline()
+//        }
+//        action_heading1.setOnClickListener {
+//            editor.setHeading(1)
+//        }
+//        action_heading2.setOnClickListener {
+//            editor.setHeading(2)
+//        }
+//        action_heading3.setOnClickListener {
+//            editor.setHeading(3)
+//        }
+//        action_heading4.setOnClickListener {
+//            editor.setHeading(4)
+//        }
+//        action_heading5.setOnClickListener {
+//            editor.setHeading(5)
+//        }
+//        action_heading6.setOnClickListener {
+//            editor.setHeading(6)
+//        }
+//
+//        var isTextColorChanged = true
+//
+//        action_txt_color.setOnClickListener {
+//            if (isTextColorChanged){
+//                editor.setTextColor(Color.RED)
+//            }else{
+//                editor.setTextColor(Color.BLACK)
+//            }
+//            isTextColorChanged=!isTextColorChanged
+//        }
+//
+//        var isBgColorChanged = true
+//
+//        action_bg_color.setOnClickListener {
+//            if (isBgColorChanged){
+//                editor.setTextBackgroundColor(Color.TRANSPARENT)
+//            }else{
+//                editor.setTextColor(Color.YELLOW)
+//            }
+//            isBgColorChanged=!isBgColorChanged
+//        }
+//
+//
+//        action_indent.setOnClickListener {
+//            editor.setIndent()
+//        }
+//
+//        action_outdent.setOnClickListener {
+//            editor.setOutdent()
+//        }
+//
+//        action_align_left.setOnClickListener {
+//            editor.setAlignLeft()
+//        }
+//
+//        action_align_center.setOnClickListener {
+//            editor.setAlignCenter()
+//        }
+//
+//        action_align_right.setOnClickListener {
+//            editor.setAlignRight()
+//        }
+//        action_blockquote.setOnClickListener {
+//            editor.setBlockquote()
+//        }
+//        action_insert_bullets.setOnClickListener {
+//            editor.setBullets()
+//        }
+//        action_insert_numbers.setOnClickListener {
+//            editor.setNumbers()
+//        }
+//
+//        action_insert_link.setOnClickListener {
+//           // editor.insertLink("https://github.com/raystatic","github")
+//            insertLink()
+//        }
+//        action_insert_checkbox.setOnClickListener {
+//            editor.insertTodo()
+//        }
     }
 
     private fun insertLink() {
