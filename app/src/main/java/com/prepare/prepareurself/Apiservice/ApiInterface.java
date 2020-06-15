@@ -16,7 +16,9 @@ import com.prepare.prepareurself.dashboard.data.model.GetSuggestedTopicsModel;
 import com.prepare.prepareurself.dashboard.data.model.HomepageResponseModel;
 import com.prepare.prepareurself.favourites.data.model.FavouritesResponseModel;
 import com.prepare.prepareurself.feedback.data.model.FeedbacksubmitModel;
+import com.prepare.prepareurself.forum.data.DoReplyResponseModel;
 import com.prepare.prepareurself.forum.data.ForumPostQueryResponseModel;
+import com.prepare.prepareurself.forum.data.GetQueriesResponseModel;
 import com.prepare.prepareurself.preferences.data.PrefernceResponseModel;
 import com.prepare.prepareurself.preferences.data.UpdatePrefResponseModel;
 import com.prepare.prepareurself.profile.data.model.UpdatePasswordResponseModel;
@@ -223,5 +225,22 @@ public interface ApiInterface {
     Call<ForumPostQueryResponseModel> askQuery(@Query("token") String token,
                                                @Query("course_id") int courseId,
                                                @Query("query") String query);
+
+    @POST("get-queries")
+    Call<GetQueriesResponseModel> getQueries(@Query("token") String token,
+                                             @Query("course_id") int courseId,
+                                             @Query("count") int count,
+                                             @Query("page") int page);
+
+    @POST("get-query-replies")
+    Call<GetQueriesResponseModel> getReplies(@Query("token") String token,
+                                             @Query("query_id") int queryId,
+                                             @Query("count") int count,
+                                             @Query("page") int page);
+
+    @POST("do-reply")
+    Call<DoReplyResponseModel> doReply(@Query("token") String token,
+                                       @Query("query_id")int queryId,
+                                       @Query("reply")String reply);
 
 }

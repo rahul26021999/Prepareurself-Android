@@ -18,8 +18,10 @@
         android:theme="@style/AppTheme"
         android:usesCleartextTraffic="true"
         tools:replace="android:allowBackup">
-        <activity android:name=".forum.ui.ForumActivity"
-            android:theme="@style/ProfileTheme"/>
+        <activity android:name=".forum.ui.RepliesActivity"></activity>
+        <activity
+            android:name=".forum.ui.ForumActivity"
+            android:theme="@style/ProfileTheme" />
         <activity
             android:name=".courses.ui.activity.DemoActivity"
             android:label="@string/title_activity_demo"
@@ -121,7 +123,6 @@
                     android:scheme="project" />
             </intent-filter>
         </activity>
-
         <activity android:name=".resources.youtubevideoplayer.YoutubePlayerActivity" />
         <activity
             android:name=".resources.ui.activity.ResourcesActivity"
