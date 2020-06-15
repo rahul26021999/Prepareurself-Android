@@ -1,13 +1,15 @@
 package com.prepare.prepareurself.forum.ui
 
+import android.app.Activity
 import android.app.Dialog
+import android.content.ActivityNotFoundException
 import android.content.Intent
 import android.graphics.Color
+import android.net.Uri
 import android.os.Bundle
+import android.util.Log
 import android.view.LayoutInflater
-import android.view.View
 import android.view.WindowManager
-import androidx.appcompat.app.AppCompatActivity
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.LinearLayoutManager
@@ -18,14 +20,18 @@ import com.prepare.prepareurself.utils.BaseActivity
 import com.prepare.prepareurself.utils.Constants
 import com.prepare.prepareurself.utils.PrefManager
 import com.prepare.prepareurself.utils.Utility
-import jp.wasabeef.richeditor.RichEditor
 import kotlinx.android.synthetic.main.activity_forum2.*
-import kotlinx.android.synthetic.main.activity_forum2.view.*
 import kotlinx.android.synthetic.main.forum_add_query_dialog.*
 import kotlinx.android.synthetic.main.forum_add_query_dialog.view.*
 import kotlinx.android.synthetic.main.layout_topbar.*
 import kotlinx.android.synthetic.main.richeditor_layout.*
 import kotlinx.android.synthetic.main.richeditor_layout.view.*
+import okhttp3.MediaType
+import okhttp3.MultipartBody
+import okhttp3.RequestBody
+import java.io.ByteArrayOutputStream
+import java.io.IOException
+import java.io.InputStream
 
 
 class ForumActivity : BaseActivity(), QueriesAdapter.QueriesListener {
@@ -46,8 +52,30 @@ class ForumActivity : BaseActivity(), QueriesAdapter.QueriesListener {
 
         courseId = intent.getIntExtra(Constants.COURSEID,-1)
 
-        btn_ask_query.setOnClickListener {
-            showPostQueryDialog()
+//        btn_ask_query.setOnClickListener {
+//            showPostQueryDialog()
+//        }
+
+        initEditor()
+
+        btn_post_query.setOnClickListener {
+            if (htmlData.isNotEmpty()){
+                if (courseId!=-1){
+                    vm.askQuery(pm.getString(Constants.JWTTOKEN),courseId,htmlData)
+                            ?.observe(this, Observer {
+                                if (it!=null){
+                                    Utility.showToast(this,it.message)
+                                    htmlData = ""
+                                    editor.html = ""
+                                }else{
+                                    Utility.showToast(this,Constants.SOMETHINGWENTWRONG)
+                                }
+                                dialog.cancel()
+                            })
+                }
+            }else{
+                Utility.showToast(this,"Please enter a valid question")
+            }
         }
 
         initQueryAdapter()
@@ -79,27 +107,7 @@ class ForumActivity : BaseActivity(), QueriesAdapter.QueriesListener {
         dialog.setContentView(view)
         dialog.setTitle("Post your query here")
 
-        initEditor(view)
 
-        view.btn_post_query.setOnClickListener {
-            if (htmlData.isNotEmpty()){
-                if (courseId!=-1){
-                    vm.askQuery(pm.getString(Constants.JWTTOKEN),courseId,htmlData)
-                            ?.observe(this, Observer {
-                                if (it!=null){
-                                    Utility.showToast(this,it.message)
-                                    htmlData = ""
-                                    view.editor.html = ""
-                                }else{
-                                    Utility.showToast(this,Constants.SOMETHINGWENTWRONG)
-                                }
-                                dialog.cancel()
-                            })
-                }
-            }else{
-                Utility.showToast(this,"Please enter a valid question")
-            }
-        }
 
         val window = dialog.window
         window?.setLayout(WindowManager.LayoutParams.MATCH_PARENT,WindowManager.LayoutParams.WRAP_CONTENT)
@@ -121,7 +129,7 @@ class ForumActivity : BaseActivity(), QueriesAdapter.QueriesListener {
         dialog.setContentView(view)
         dialog.setTitle("Post your reply here")
 
-        initEditor(view)
+        initEditor()
 
         view.btn_post_query.setOnClickListener {
             if (htmlData.isNotEmpty()){
@@ -149,121 +157,179 @@ class ForumActivity : BaseActivity(), QueriesAdapter.QueriesListener {
         dialog.show()
     }
 
-    private fun initEditor(view:View) {
+    private fun uploadImage() {
+        val intent = Intent(Intent.ACTION_GET_CONTENT)
+        intent.type = "image/jpeg"
+        try {
+            startActivityForResult(intent, 101)
+        } catch (e: ActivityNotFoundException) {
+            e.printStackTrace()
+        }
+    }
 
-        view.editor.setEditorHeight(200)
-        view.editor.setEditorFontSize(22)
-        view.editor.setEditorFontColor(Color.RED)
-        view.editor.setPadding(10, 10, 10, 10)
-        view.editor.setPlaceholder("Insert text here...")
+    override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
+        super.onActivityResult(requestCode, resultCode, data)
+        if (requestCode == 101) {
+            if (resultCode == Activity.RESULT_OK) {
+                val uri: Uri = data?.data ?: Uri.parse("")
+                try {
+                    val `is`: InputStream? = contentResolver.openInputStream(uri)
+                    if (`is` != null) uploadImageToServer(getBytes(`is`))
+                } catch (e: IOException) {
+                    e.printStackTrace()
+                }
+            }
+        }
+    }
 
-        view.editor.setOnTextChangeListener { text ->
+    private fun uploadImageToServer(bytes: ByteArray?) {
+        val requestFile: RequestBody = RequestBody.create(MediaType.parse("image/jpeg"), bytes)
+        val body = MultipartBody.Part.createFormData("profile_image", "image.jpg", requestFile)
+
+        vm.uploadQueryImage(pm.getString(Constants.JWTTOKEN),0,body)
+                ?.observe(this, Observer {
+                    if (it!=null){
+                        Log.d("upload_query_image","${it.message} ${it.image}")
+                        if (!it.image.isNullOrEmpty()){
+                            editor.insertImage(it.image,"image.jpg")
+                        }else{
+                            Utility.showToast(this,"Cannot insert image at the moment")
+                        }
+                    }else{
+                        Utility.showToast(this,"Cannot insert image at the moment")
+                    }
+                })
+
+    }
+
+    @Throws(IOException::class)
+    private fun getBytes(`is`: InputStream): ByteArray? {
+        val byteBuff = ByteArrayOutputStream()
+        val buffSize = 1024
+        val buff = ByteArray(buffSize)
+        var len = 0
+        while (`is`.read(buff).also { len = it } != -1) {
+            byteBuff.write(buff, 0, len)
+        }
+        return byteBuff.toByteArray()
+    }
+
+    private fun initEditor() {
+
+        editor.setEditorHeight(200)
+        editor.setEditorFontSize(22)
+        editor.setEditorFontColor(Color.RED)
+        editor.setPadding(10, 10, 10, 10)
+        editor.setPlaceholder("Insert text here...")
+
+        editor.setOnTextChangeListener { text ->
             htmlData = text
         }
 
-        view.action_undo.setOnClickListener {
-            view.editor.undo()
+        action_undo.setOnClickListener {
+            editor.undo()
         }
 
-        view.action_redo.setOnClickListener {
-            view.editor.redo()
+        action_redo.setOnClickListener {
+            editor.redo()
         }
-        view.action_bold.setOnClickListener {
-            view.editor.setBold()
+        action_bold.setOnClickListener {
+            editor.setBold()
         }
-        view.action_italic.setOnClickListener {
-            view.editor.setItalic()
+        action_italic.setOnClickListener {
+            editor.setItalic()
         }
-        view.action_subscript.setOnClickListener {
-            view.editor.setSubscript()
+        action_subscript.setOnClickListener {
+            editor.setSubscript()
         }
-        view.action_superscript.setOnClickListener {
-            view.editor.setSuperscript()
+        action_superscript.setOnClickListener {
+            editor.setSuperscript()
         }
-        view.action_strikethrough.setOnClickListener {
-            view.editor.setStrikeThrough()
+        action_strikethrough.setOnClickListener {
+            editor.setStrikeThrough()
         }
-        view.action_underline.setOnClickListener {
-            view.editor.setUnderline()
+        action_underline.setOnClickListener {
+            editor.setUnderline()
         }
-        view.action_heading1.setOnClickListener {
-            view.editor.setHeading(1)
+        action_heading1.setOnClickListener {
+            editor.setHeading(1)
         }
-        view.action_heading2.setOnClickListener {
-            view.editor.setHeading(2)
+        action_heading2.setOnClickListener {
+            editor.setHeading(2)
         }
-        view.action_heading3.setOnClickListener {
-            view.editor.setHeading(3)
+        action_heading3.setOnClickListener {
+            editor.setHeading(3)
         }
-        view.action_heading4.setOnClickListener {
-            view.editor.setHeading(4)
+        action_heading4.setOnClickListener {
+            editor.setHeading(4)
         }
-        view.action_heading5.setOnClickListener {
-            view.editor.setHeading(5)
+        action_heading5.setOnClickListener {
+            editor.setHeading(5)
         }
-        view.action_heading6.setOnClickListener {
-            view.editor.setHeading(6)
+        action_heading6.setOnClickListener {
+            editor.setHeading(6)
         }
 
         var isTextColorChanged = true
 
-        view.action_txt_color.setOnClickListener {
+        action_txt_color.setOnClickListener {
             if (isTextColorChanged){
-                view.editor.setTextColor(Color.RED)
+                editor.setTextColor(Color.RED)
             }else{
-                view.editor.setTextColor(Color.BLACK)
+                editor.setTextColor(Color.BLACK)
             }
             isTextColorChanged=!isTextColorChanged
         }
 
         var isBgColorChanged = true
 
-        view.action_bg_color.setOnClickListener {
+        action_bg_color.setOnClickListener {
             if (isBgColorChanged){
-                view.editor.setTextBackgroundColor(Color.TRANSPARENT)
+                editor.setTextBackgroundColor(Color.TRANSPARENT)
             }else{
-                view.editor.setTextColor(Color.YELLOW)
+                editor.setTextColor(Color.YELLOW)
             }
             isBgColorChanged=!isBgColorChanged
         }
 
 
-        view.action_indent.setOnClickListener {
-            view.editor.setIndent()
+        action_indent.setOnClickListener {
+            editor.setIndent()
         }
 
-        view.action_outdent.setOnClickListener {
-            view.editor.setOutdent()
+        action_outdent.setOnClickListener {
+            editor.setOutdent()
         }
 
-        view.action_align_left.setOnClickListener {
-            view.editor.setAlignLeft()
+        action_align_left.setOnClickListener {
+            editor.setAlignLeft()
         }
 
-        view.action_align_center.setOnClickListener {
-            view.editor.setAlignCenter()
+        action_align_center.setOnClickListener {
+            editor.setAlignCenter()
         }
 
-        view.action_align_right.setOnClickListener {
-            view.editor.setAlignRight()
+        action_align_right.setOnClickListener {
+            editor.setAlignRight()
         }
-        view.action_blockquote.setOnClickListener {
-            view.editor.setBlockquote()
+        action_blockquote.setOnClickListener {
+            editor.setBlockquote()
         }
-        view.action_insert_bullets.setOnClickListener {
-            view.editor.setBullets()
+        action_insert_bullets.setOnClickListener {
+            editor.setBullets()
         }
-        view.action_insert_numbers.setOnClickListener {
-            view.editor.setNumbers()
+        action_insert_numbers.setOnClickListener {
+            editor.setNumbers()
         }
-        view.action_insert_image.setOnClickListener {
-            view.editor.insertImage("http://www.1honeywan.com/dachshund/image/7.21/7.21_3_thumb.JPG","image")
+        action_insert_image.setOnClickListener {
+            //editor.insertImage("http://www.1honeywan.com/dachshund/image/7.21/7.21_3_thumb.JPG","image")
+            uploadImage()
         }
-        view.action_insert_link.setOnClickListener {
-            view.editor.insertLink("https://github.com/raystatic","github")
+        action_insert_link.setOnClickListener {
+            editor.insertLink("https://github.com/raystatic","github")
         }
-        view.action_insert_checkbox.setOnClickListener {
-            view.editor.insertTodo()
+        action_insert_checkbox.setOnClickListener {
+            editor.insertTodo()
         }
     }
 }

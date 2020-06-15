@@ -4,6 +4,8 @@ import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import com.prepare.prepareurself.Apiservice.ApiClient
 import com.prepare.prepareurself.Apiservice.ApiInterface
+import com.prepare.prepareurself.profile.data.model.UploadImageResponse
+import okhttp3.MultipartBody
 import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
@@ -108,6 +110,29 @@ class ForumRepository{
                     data.value = null
                 }
 
+            }
+        })
+
+        return data
+
+    }
+
+    fun uploadImage(token: String, type:Int, body: MultipartBody.Part):LiveData<UploadImageResponseModel>{
+        val data = MutableLiveData<UploadImageResponseModel>()
+
+        apiInterface?.uploadQueryImage(token,type,body)?.enqueue(object : Callback<UploadImageResponseModel>{
+            override fun onFailure(call: Call<UploadImageResponseModel>, t: Throwable) {
+                data.value = null
+            }
+
+            override fun onResponse(call: Call<UploadImageResponseModel>, response: Response<UploadImageResponseModel>) {
+                val res = response.body()
+
+                if (res!=null){
+                    data.value = res
+                }else{
+                    data.value = null
+                }
             }
         })
 

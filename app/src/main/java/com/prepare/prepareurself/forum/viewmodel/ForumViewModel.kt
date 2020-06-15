@@ -3,10 +3,9 @@ package com.prepare.prepareurself.forum.viewmodel
 import android.app.Application
 import androidx.lifecycle.AndroidViewModel
 import androidx.lifecycle.LiveData
-import com.prepare.prepareurself.forum.data.DoReplyResponseModel
-import com.prepare.prepareurself.forum.data.ForumPostQueryResponseModel
-import com.prepare.prepareurself.forum.data.ForumRepository
-import com.prepare.prepareurself.forum.data.GetQueriesResponseModel
+import com.prepare.prepareurself.forum.data.*
+import com.prepare.prepareurself.profile.data.model.UploadImageResponse
+import okhttp3.MultipartBody
 
 class ForumViewModel(application: Application) : AndroidViewModel(application){
 
@@ -30,6 +29,10 @@ class ForumViewModel(application: Application) : AndroidViewModel(application){
 
     fun getQueries(token:String, courseId:Int, page: Int):LiveData<GetQueriesResponseModel>?{
         return forumRepository?.getQueries(token,courseId,page)
+    }
+
+    fun uploadQueryImage(token: String, type:Int, body:MultipartBody.Part): LiveData<UploadImageResponseModel>? {
+        return forumRepository?.uploadImage(token, type, body)
     }
 
 
