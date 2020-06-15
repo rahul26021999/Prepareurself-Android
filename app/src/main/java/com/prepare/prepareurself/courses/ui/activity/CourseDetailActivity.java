@@ -289,17 +289,16 @@ public class CourseDetailActivity extends BaseActivity implements View.OnClickLi
 
         }
         //DONT REMOVE THS COMMENT:final int secondColor = ContextCompat.getColor(CourseDetailActivity.this, color1 );
+        //upperlayout
         final MyGradientDrawable myGradBg = new MyGradientDrawable(firstColor, secondColor);
         float[] radii=new float[]{0f,0f,0f,0f,100f,100f,0f,0f};
         myGradBg.setCornerRadius(radii);
         linearLayout1.setBackground(myGradBg);
+        //lower layout
         final  MyGradientDrawable myGradbg1= new MyGradientDrawable(firstColor, secondColor);
-        float[] radii1=new float[]{100f,100f,0f,0f,0f,0f,0f,0f};
-        myGradBg.setCornerRadius(radii1);
-        linearLayout1.setBackground(myGradbg1);
-
-
-
+        /*float[] radii1=new float[]{100f,100f,0f,0f,0f,0f,0f,0f};
+        myGradbg1.setCornerRadius(radii1);*/
+        ll2.setBackground(myGradbg1);
     }
 
     private void getintents() {
