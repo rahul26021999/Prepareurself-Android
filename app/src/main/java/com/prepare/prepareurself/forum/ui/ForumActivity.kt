@@ -342,12 +342,22 @@ class ForumActivity : BaseActivity(), QueriesAdapter.QueriesListener {
         dialog.setContentView(view)
 
         view.btn_insert_link.setOnClickListener{
-            val name = view.et_editor_name.text
-            val link = view.et_editor_link.text
+            val name = view.et_editor_name.text.toString()
+            val link = view.et_editor_link.text.toString()
 
-//            if (name)
+            if (name.isNotEmpty() && link.isNotEmpty()){
+                editor.insertLink(link,name)
+                dialog.cancel()
+            }else{
+                Utility.showToast(this,"Please enter data carefully")
+            }
 
         }
+
+        val window = dialog.window
+        window?.setLayout(WindowManager.LayoutParams.MATCH_PARENT, WindowManager.LayoutParams.WRAP_CONTENT)
+
+        dialog.show()
 
     }
 }
