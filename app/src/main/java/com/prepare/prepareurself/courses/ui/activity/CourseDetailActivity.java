@@ -90,8 +90,6 @@ public class CourseDetailActivity extends BaseActivity implements View.OnClickLi
             vm.fetchCourseDetails(prefManager.getString(Constants.JWTTOKEN),courseId);
             vm.fetchremotePref(prefManager.getString(Constants.JWTTOKEN));
 
-            /*int sze=vm.prefernceResponseModelLiveData.getValue().getPreferences().size();
-            Log.d("TAGSOO",""+sze);*/
             vm.courseDetailReponseModelLiveData.observe(this, new Observer<CourseDetailReponseModel>() {
                 @Override
                 public void onChanged(CourseDetailReponseModel courseDetailReponseModel) {
@@ -99,7 +97,7 @@ public class CourseDetailActivity extends BaseActivity implements View.OnClickLi
                         CourseModel course=courseDetailReponseModel.getCourse();
                         String title=course.getName();
                         String description=course.getDescription();
-                        String img_url=course.getImage_url();
+                        String logo_url=course.getLogo_url();
 
                         course_name.setText(title);
                         courseName = title;
@@ -107,18 +105,16 @@ public class CourseDetailActivity extends BaseActivity implements View.OnClickLi
                         if (description!=null)
                             course_description.setText(Html.fromHtml(description).toString().trim());
 
-                        Log.d("TAGdeatal",title);
                         scaleRatingBar.setRating(courseDetailReponseModel.getRating());
 
                         if (courseDetailReponseModel.getRating() == 0){
                             isRateFetching = false;
                         }
                         Log.d("rating_debug","rating : "+ courseDetailReponseModel.getRating());
-                        if (img_url!=null && img_url.endsWith(".svg")){
-                            Utility.loadSVGImage(CourseDetailActivity.this,Constants.COURSEIMAGEBASEUSRL+ course.getLogo_url(),course_image);
+                        if (logo_url!=null && logo_url.endsWith(".svg")){
+                            Utility.loadSVGImage(CourseDetailActivity.this, course.getLogo_url(),course_image);
                         }else{
-                            Glide.with(CourseDetailActivity.this).load(
-                                    Constants.COURSEIMAGEBASEUSRL+ course.getLogo_url())
+                            Glide.with(CourseDetailActivity.this).load(course.getLogo_url())
                                     .placeholder(R.drawable.placeholder)
                                     .diskCacheStrategy(DiskCacheStrategy.RESOURCE)
                                     .transition(GenericTransitionOptions.<Drawable>with(Utility.getAnimationObject()))
@@ -133,7 +129,6 @@ public class CourseDetailActivity extends BaseActivity implements View.OnClickLi
             vm.rateCourseResponseModelLiveData.observe(this, new Observer<RateCourseResponseModel>() {
                 @Override
                 public void onChanged(RateCourseResponseModel rateCourseResponseModel) {
-                   // Toast.makeText(CourseDetailActivity.this,""+ rateCourseResponseModel.getMessage(),Toast.LENGTH_LONG).show();
                     if(rateCourseResponseModel!=null)
                         msg=rateCourseResponseModel.getMessage();
 
@@ -293,15 +288,11 @@ public class CourseDetailActivity extends BaseActivity implements View.OnClickLi
         }
         //DONT REMOVE THS COMMENT:final int secondColor = ContextCompat.getColor(CourseDetailActivity.this, color1 );
         //upperlayout
-        final MyGradientDrawable myGradBg = new MyGradientDrawable(firstColor, secondColor);
-//        float[] radii=new float[]{0f,0f,0f,0f,100f,100f,0f,0f};
-//        myGradBg.setCornerRadius(radii);
-        topCourseBackground.setBackground(myGradBg);
-        //lower layout
-        final  MyGradientDrawable myGradbg1= new MyGradientDrawable(firstColor, secondColor);
-        /*float[] radii1=new float[]{100f,100f,0f,0f,0f,0f,0f,0f};
-        myGradbg1.setCornerRadius(radii1);*/
-        ll2.setBackground(myGradbg1);
+//        final MyGradientDrawable myGradBg = new MyGradientDrawable(firstColor, secondColor);
+//        topCourseBackground.setBackground(myGradBg);
+//        //lower layout
+//        final  MyGradientDrawable myGradbg1= new MyGradientDrawable(firstColor, secondColor);
+//        ll2.setBackground(myGradbg1);
     }
 
     private void getintents() {
