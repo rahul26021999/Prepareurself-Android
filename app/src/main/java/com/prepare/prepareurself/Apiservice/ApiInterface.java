@@ -19,11 +19,13 @@ import com.prepare.prepareurself.feedback.data.model.FeedbacksubmitModel;
 import com.prepare.prepareurself.forum.data.DoReplyResponseModel;
 import com.prepare.prepareurself.forum.data.ForumPostQueryResponseModel;
 import com.prepare.prepareurself.forum.data.GetQueriesResponseModel;
+import com.prepare.prepareurself.forum.data.UploadImageResponseModel;
 import com.prepare.prepareurself.preferences.data.PrefernceResponseModel;
 import com.prepare.prepareurself.preferences.data.UpdatePrefResponseModel;
 import com.prepare.prepareurself.profile.data.model.UpdatePasswordResponseModel;
 import com.prepare.prepareurself.profile.data.model.UpdatePreferenceResponseModel;
 import com.prepare.prepareurself.profile.data.model.AllPreferencesResponseModel;
+import com.prepare.prepareurself.profile.data.model.UploadImageResponse;
 import com.prepare.prepareurself.quizv2.data.QuizAnswerResponse;
 import com.prepare.prepareurself.quizv2.data.QuizResponseModel;
 import com.prepare.prepareurself.quizv2.data.ResponsesModel;
@@ -130,6 +132,12 @@ public interface ApiInterface {
     @Multipart
     @POST("update-user")
     Call<UpdatePreferenceResponseModel> uploadImage(@Query("token") String token,
+                                                    @Part MultipartBody.Part image);
+
+    @Multipart
+    @POST("upload-query-image")
+    Call<UploadImageResponseModel> uploadQueryImage(@Query("token") String token,
+                                                    @Query("type") int type,
                                                     @Part MultipartBody.Part image);
 
     @POST("project")
