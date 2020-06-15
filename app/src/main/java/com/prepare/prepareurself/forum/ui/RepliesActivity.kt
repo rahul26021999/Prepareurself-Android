@@ -48,7 +48,7 @@ class RepliesActivity : BaseActivity() {
     }
 
     private fun initAdapter() {
-        val adapter = RepliesAdapter()
+        val adapter = RepliesAdapter(this)
         rv_replies.layoutManager = LinearLayoutManager(this)
         rv_replies.adapter = adapter
 

@@ -8,5 +8,6 @@ data class QueryModel(
     var reply:String?="",
     var image:String?="",
     var created_at:String?="",
-    var updated_at:String?=""
+    var updated_at:String?="",
+    var user:ForumUser?=null
 )

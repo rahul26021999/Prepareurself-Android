@@ -59,7 +59,7 @@ class ForumActivity : BaseActivity(), QueriesAdapter.QueriesListener {
     }
 
     private fun initQueryAdapter() {
-        val adapter = QueriesAdapter(this)
+        val adapter = QueriesAdapter(this, this)
         rv_queries.layoutManager = LinearLayoutManager(this)
         rv_queries.adapter = adapter
 
