@@ -54,7 +54,7 @@ public class CourseDetailActivity extends BaseActivity implements View.OnClickLi
     private CourseDetailViewModel vm;
     private PrefManager prefManager;
     private com.willy.ratingbar.ScaleRatingBar scaleRatingBar;
-    private LinearLayout l_layout_pref , topCourseBackground;
+    private LinearLayout l_layout_pref , topCourseBackground,belowCourseBackgroundContainer;
     private RelativeLayout rel_project, rel_resources, rel_forum, rel_takequiz,mainBackground;
     TextView course_name, course_description,tv_pref_name,averageRating;
     private String courseName = "";
@@ -219,6 +219,7 @@ public class CourseDetailActivity extends BaseActivity implements View.OnClickLi
             myGradBg.setCornerRadii(new float[]{0f,0f,0f,0f,100f,100f,0f,0f});
             topCourseBackground.setBackground(myGradBg);
             mainBackground.setBackground(myGradBg);
+            belowCourseBackgroundContainer.setBackground(myGradBg);
         }
 
     }
@@ -231,6 +232,7 @@ public class CourseDetailActivity extends BaseActivity implements View.OnClickLi
         averageRating=findViewById(R.id.averageRating);
         mainBackground=findViewById(R.id.mainBackground);
         l_layout_pref=findViewById(R.id.l_layout_pref);
+        belowCourseBackgroundContainer=findViewById(R.id.belowCourseBackgroundContainer);
         topCourseBackground =findViewById(R.id.topCourseBackground);
         tv_pref_name=findViewById(R.id.tv_pref_name);
         pref_image=findViewById(R.id.pref_image);
