@@ -59,8 +59,10 @@ class ForumActivity : BaseActivity(), QueriesAdapter.QueriesListener {
         initEditor()
 
         btn_send_query.setOnClickListener {
-            if (htmlData.isNotEmpty()){
+            val data = et_query_forum.text.toString()
+            if (data.isNotEmpty()){
                 if (courseId!=-1){
+                    htmlData = "<p>$data</p>"
                     vm.askQuery(pm.getString(Constants.JWTTOKEN),courseId,htmlData)
                             ?.observe(this, Observer {
                                 if (it!=null){
@@ -94,7 +96,9 @@ class ForumActivity : BaseActivity(), QueriesAdapter.QueriesListener {
         vm.getQueries(pm.getString(Constants.JWTTOKEN),courseId,1)
                 ?.observe(this, Observer {
                     if (it!=null){
-                        it.queries?.data?.let { it1 -> adapter.setData(it1) }
+                        it.queries?.data?.let { it1 ->
+                            adapter.setData(it1)
+                        }
                     }else{
                         Utility.showToast(this,Constants.SOMETHINGWENTWRONG)
                     }
