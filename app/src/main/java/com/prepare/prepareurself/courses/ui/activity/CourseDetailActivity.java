@@ -54,9 +54,9 @@ public class CourseDetailActivity extends BaseActivity implements View.OnClickLi
     private CourseDetailViewModel vm;
     private PrefManager prefManager;
     private com.willy.ratingbar.ScaleRatingBar scaleRatingBar;
-    private LinearLayout l_layout_pref , topCourseBackground, lowerLayoutBackground;
-    private RelativeLayout rel_project, rel_resources, rel_forum, rel_takequiz;
-    TextView course_name, course_description,tv_pref_name;
+    private LinearLayout l_layout_pref , topCourseBackground;
+    private RelativeLayout rel_project, rel_resources, rel_forum, rel_takequiz,mainBackground;
+    TextView course_name, course_description,tv_pref_name,averageRating;
     private String courseName = "";
     private boolean isAdded = false;
     private boolean isRateFetching = true;
@@ -79,7 +79,6 @@ public class CourseDetailActivity extends BaseActivity implements View.OnClickLi
         }else{
             courseId = intent.getIntExtra(Constants.COURSEID, -1);
         }
-//        statusbarcolor();
         getintents();
         setOnclicklisteners();
 
@@ -98,6 +97,7 @@ public class CourseDetailActivity extends BaseActivity implements View.OnClickLi
                         String description=course.getDescription();
                         String logo_url=course.getLogo_url();
 
+                        averageRating.setText("3.5");
                         course_name.setText(title);
                         courseName = title;
 
@@ -175,16 +175,6 @@ public class CourseDetailActivity extends BaseActivity implements View.OnClickLi
                     }
                 }
             });
-
-            //Adduser pref model
-            /*vm.addToUserPrefResponseModelLiveData.observe(this, new Observer<AddToUserPrefResponseModel>() {
-                @Override
-                public void onChanged(AddToUserPrefResponseModel addToUserPrefResponseModel) {
-                    Toast.makeText(CourseDetailActivity.this,""+addToUserPrefResponseModel.getMessage(),Toast
-                    .LENGTH_LONG).show();
-                }
-            });*/
-
         }
 
     }
@@ -228,7 +218,7 @@ public class CourseDetailActivity extends BaseActivity implements View.OnClickLi
             GradientDrawable myGradBg = new GradientDrawable(GradientDrawable.Orientation.LEFT_RIGHT, colors);
             myGradBg.setCornerRadii(new float[]{0f,0f,0f,0f,100f,100f,0f,0f});
             topCourseBackground.setBackground(myGradBg);
-            lowerLayoutBackground.setBackground(myGradBg);
+            mainBackground.setBackground(myGradBg);
         }
 
     }
@@ -238,9 +228,10 @@ public class CourseDetailActivity extends BaseActivity implements View.OnClickLi
         course_description=findViewById(R.id.course_desc);
         course_image=findViewById(R.id.course_image);
         backBtn=findViewById(R.id.backBtn);
+        averageRating=findViewById(R.id.averageRating);
+        mainBackground=findViewById(R.id.mainBackground);
         l_layout_pref=findViewById(R.id.l_layout_pref);
         topCourseBackground =findViewById(R.id.topCourseBackground);
-        lowerLayoutBackground =findViewById(R.id.lowerLayoutBackgroung);
         tv_pref_name=findViewById(R.id.tv_pref_name);
         pref_image=findViewById(R.id.pref_image);
         scaleRatingBar=findViewById(R.id.scaleRatingBar);
