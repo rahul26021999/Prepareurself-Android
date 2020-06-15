@@ -1,10 +1,10 @@
 <?xml version="1.0" encoding="utf-8"?>
 <RelativeLayout android:layout_width="match_parent"
     android:layout_height="match_parent"
-    xmlns:android="http://schemas.android.com/apk/res/android">
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools">
 
     <androidx.core.widget.NestedScrollView xmlns:app="http://schemas.android.com/apk/res-auto"
-        xmlns:tools="http://schemas.android.com/tools"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:fillViewport="false"
@@ -19,7 +19,7 @@
 
 
             <LinearLayout
-                android:id="@+id/linearlayout1"
+                android:id="@+id/topCourseBackground"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:paddingBottom="35dp"
@@ -73,10 +73,9 @@
                         android:textSize="20sp"
                         android:textColor="@color/white"
                         android:layout_marginStart="15dp"
+                        android:lineSpacingExtra="0.1dp"
                         android:layout_marginTop="5dp"
                         android:layout_marginBottom="10dp"
-                        android:layout_toEndOf="@+id/backBtn"
-                        android:tooltipText="share"
                         />
                     <TextView
                         android:id="@+id/course_desc"
@@ -102,16 +101,15 @@
                     <ImageView
                         android:layout_width="20dp"
                         android:layout_height="20dp"
-                        android:src="@drawable/ic_star_black_24dp"
-                        android:layout_gravity="start"
+                        android:src="@drawable/ic_star_white_fill_24dp"
                         android:layout_marginEnd="5dp"/>
                     <TextView
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_marginEnd="5dp"
-                        android:text="3.5"
+                        tools:text="3.5"
                         android:textColor="@color/white"
-                        android:layout_gravity="end"/>
+                        android:layout_gravity="center_vertical"/>
                 </LinearLayout>
                 <LinearLayout
                     android:id="@+id/l_layout_pref"
@@ -121,14 +119,12 @@
                     android:layout_marginStart="20dp"
                     android:padding="5dp"
                     android:layout_marginTop="10dp"
-                    android:background="@drawable/darkgrey_rounded_stroked_rectangle"
-                    >
+                    android:background="@drawable/darkgrey_rounded_stroked_rectangle">
                     <ImageView
                         android:id="@+id/pref_image"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:src="@drawable/ic_add_black_24dp"
-                        android:layout_gravity="start"
                         android:layout_marginEnd="5dp"/>
                     <TextView
                         android:id="@+id/tv_pref_name"
@@ -137,7 +133,7 @@
                         android:layout_marginEnd="5dp"
                         android:text="Add as Preference"
                         android:textColor="@color/white"
-                        android:layout_gravity="end"/>
+                        android:layout_gravity="center_vertical"/>
                 </LinearLayout>
 
             </LinearLayout>
@@ -147,7 +143,7 @@
                 android:layout_height="match_parent"
                 android:orientation="vertical"
                 android:background="@drawable/courseblue_gradient"
-                android:layout_below="@id/linearlayout1"
+                android:layout_below="@id/topCourseBackground"
                 app:layout_constraintEnd_toEndOf="parent">
 
                 <LinearLayout
@@ -186,10 +182,9 @@
                             app:srb_minimumStars="0"
                             app:srb_clearRatingEnabled="true"
                             app:srb_numStars="5"
-                            app:srb_scrollable="true"
-                            app:srb_starHeight="40dp"
+                            app:srb_starHeight="30dp"
                             app:srb_starPadding="15dp"
-                            app:srb_starWidth="40dp"
+                            app:srb_starWidth="30dp"
                             app:srb_stepSize="1"/>
                     </LinearLayout>
 
@@ -197,155 +192,139 @@
                         android:id="@+id/l1"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:orientation="horizontal"
-                        android:weightSum="2">
+                        android:orientation="vertical">
 
                         <RelativeLayout
                             android:id="@+id/rel_resources"
-                            android:layout_width="0dp"
-                            android:layout_height="140dp"
-                            android:layout_marginStart="40dp"
-                            android:layout_marginTop="20dp"
-                            android:layout_marginEnd="20dp"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_marginStart="30dp"
+                            android:layout_marginEnd="30dp"
+                            android:layout_marginTop="15dp"
                             android:layout_marginBottom="15dp"
-                            android:layout_weight="1"
                             android:background="@drawable/gradientbglightblue">
 
                             <ImageView
-                                android:layout_width="100dp"
-                                android:layout_height="60dp"
-                                android:layout_marginTop="30dp"
-                                android:layout_centerHorizontal="true"
+                                android:layout_width="30dp"
+                                android:layout_height="30dp"
+                                android:layout_margin="20dp"
+                                android:id="@+id/resourceIcon"
                                 android:src="@drawable/courseresource" />
 
                             <TextView
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
-                                android:layout_alignParentBottom="true"
-                                android:layout_marginStart="30dp"
-                                android:layout_marginBottom="10dp"
-                                android:layout_centerHorizontal="true"
+                                android:layout_marginStart="10dp"
+                                android:layout_toRightOf="@+id/resourceIcon"
+                                android:layout_centerVertical="true"
                                 android:text="Resources"
-                                android:textStyle="bold"
+                                android:fontFamily="@font/roboto_regular"
                                 android:textColor="@color/white"
-                                android:textSize="16sp" />
+                                android:textSize="18sp" />
 
                         </RelativeLayout>
 
                         <RelativeLayout
                             android:id="@+id/rel_project"
-                            android:layout_width="0dp"
-                            android:layout_height="140dp"
-                            android:layout_marginTop="20dp"
-                            android:layout_marginEnd="40dp"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_marginStart="30dp"
+                            android:layout_marginEnd="30dp"
+                            android:layout_marginTop="15dp"
                             android:layout_marginBottom="15dp"
-                            android:layout_weight="1"
                             android:background="@drawable/gradientbgpeach">
 
                             <ImageView
-                                android:layout_width="100dp"
-                                android:layout_height="70dp"
-                                android:layout_centerHorizontal="true"
-                                android:layout_marginTop="30dp"
+                                android:layout_width="30dp"
+                                android:layout_height="30dp"
+                                android:layout_margin="20dp"
+                                android:id="@+id/projectIcon"
                                 android:src="@drawable/courseprogrammer" />
 
                             <TextView
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
-                                android:layout_alignParentBottom="true"
-                                android:layout_centerHorizontal="true"
-                                android:layout_marginStart="30dp"
-                                android:layout_marginBottom="10dp"
-                                android:text="Project"
-                                android:textStyle="bold"
+                                android:layout_marginStart="10dp"
+                                android:layout_toRightOf="@+id/projectIcon"
+                                android:layout_centerVertical="true"
+                                android:text="Projects"
+                                android:fontFamily="@font/roboto_regular"
                                 android:textColor="@color/white"
-                                android:textSize="16sp" />
+                                android:textSize="18sp"  />
 
                         </RelativeLayout>
-                    </LinearLayout>
-
-                    <LinearLayout
-                        android:id="@+id/lbos2"
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:orientation="horizontal"
-                        android:weightSum="2">
-
                         <RelativeLayout
                             android:id="@+id/rel_takequiz"
-                            android:layout_width="0dp"
-                            android:layout_height="140dp"
-                            android:layout_marginStart="40dp"
-                            android:layout_marginTop="10dp"
-                            android:layout_marginEnd="20dp"
-                            android:layout_marginBottom="20dp"
-                            android:layout_weight="1"
-                            android:background="@drawable/redgradientbg">
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_marginStart="30dp"
+                            android:layout_marginEnd="30dp"
+                            android:layout_marginTop="15dp"
+                            android:layout_marginBottom="15dp"
+                            android:background="@drawable/gradientbgpeach">
 
                             <ImageView
-                                android:layout_width="100dp"
-                                android:layout_height="70dp"
-                                android:layout_centerHorizontal="true"
-                                android:layout_marginTop="30dp"
+                                android:layout_width="30dp"
+                                android:layout_height="30dp"
+                                android:layout_margin="20dp"
+                                android:id="@+id/quizIcon"
                                 android:src="@drawable/coursequiz" />
 
                             <TextView
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
-                                android:layout_alignParentBottom="true"
-                                android:layout_marginStart="30dp"
-                                android:layout_marginBottom="10dp"
-                                android:layout_centerHorizontal="true"
+                                android:layout_marginStart="10dp"
+                                android:layout_toRightOf="@+id/quizIcon"
+                                android:layout_centerVertical="true"
                                 android:text="Quiz"
-                                android:textStyle="bold"
+                                android:fontFamily="@font/roboto_regular"
                                 android:textColor="@color/white"
-                                android:textSize="16sp" />
+                                android:textSize="18sp"  />
 
                         </RelativeLayout>
-
                         <RelativeLayout
                             android:id="@+id/rel_forum"
-                            android:layout_width="0dp"
-                            android:layout_height="140dp"
-                            android:layout_marginTop="10dp"
-                            android:layout_marginEnd="40dp"
-                            android:layout_marginBottom="20dp"
-                            android:layout_weight="1"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_marginStart="30dp"
+                            android:layout_marginEnd="30dp"
+                            android:layout_marginTop="15dp"
+                            android:layout_marginBottom="15dp"
                             android:background="@drawable/gradientbgpurple">
 
                             <ImageView
-                                android:layout_width="100dp"
-                                android:layout_height="50dp"
-                                android:layout_centerHorizontal="true"
-                                android:layout_marginTop="40dp"
+                                android:layout_width="30dp"
+                                android:layout_height="30dp"
+                                android:layout_margin="20dp"
+                                android:id="@+id/forumIcon"
                                 android:src="@drawable/forum" />
 
                             <TextView
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
-                                android:layout_alignParentBottom="true"
-                                android:layout_marginStart="30dp"
-                                android:layout_marginBottom="10dp"
-                                android:layout_centerHorizontal="true"
-                                android:textStyle="bold"
+                                android:layout_marginStart="10dp"
+                                android:layout_toRightOf="@+id/forumIcon"
+                                android:layout_centerVertical="true"
                                 android:text="Forum"
+                                android:fontFamily="@font/roboto_regular"
                                 android:textColor="@color/white"
-                                android:textSize="16sp" />
+                                android:textSize="18sp"  />
+
                         </RelativeLayout>
                     </LinearLayout>
                 </LinearLayout>
             </LinearLayout>
             <de.hdodenhof.circleimageview.CircleImageView
                 android:id="@+id/course_image"
-                android:layout_width="100dp"
-                android:layout_height="100dp"
+                android:layout_width="80dp"
+                android:layout_height="80dp"
                 android:layout_marginEnd="50dp"
                 android:src="@drawable/androcourse"
                 app:civ_border_color="@color/white"
                 app:civ_border_width="2dp"
                 android:layout_alignParentEnd="true"
                 android:layout_marginTop="-50dp"
-                android:layout_below="@id/linearlayout1"
+                android:layout_below="@id/topCourseBackground"
                 />
 
         </RelativeLayout>

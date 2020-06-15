@@ -1,6 +1,5 @@
 package com.prepare.prepareurself.courses.ui.activity;
 
-import androidx.annotation.Nullable;
 import androidx.core.content.ContextCompat;
 import androidx.lifecycle.Observer;
 import androidx.lifecycle.ViewModelProvider;
@@ -33,6 +32,7 @@ import com.prepare.prepareurself.courses.data.model.RateCourseResponseModel;
 import com.prepare.prepareurself.courses.ui.fragmentToActivity.TabProjectctivity;
 import com.prepare.prepareurself.courses.ui.fragmentToActivity.TabResourceActivity;
 import com.prepare.prepareurself.courses.viewmodels.CourseDetailViewModel;
+import com.prepare.prepareurself.dashboard.data.model.CourseModel;
 import com.prepare.prepareurself.feedback.ui.FeedbackFragment;
 import com.prepare.prepareurself.forum.ui.ForumActivity;
 import com.prepare.prepareurself.preferences.data.PreferencesModel;
@@ -47,7 +47,6 @@ import com.willy.ratingbar.BaseRatingBar;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Random;
 
 public class CourseDetailActivity extends BaseActivity implements View.OnClickListener, FeedbackFragment.FeedBackHomeInteractor {
     int starbyuser,type=0;
@@ -57,7 +56,7 @@ public class CourseDetailActivity extends BaseActivity implements View.OnClickLi
     private CourseDetailViewModel vm;
     private PrefManager prefManager;
     private com.willy.ratingbar.ScaleRatingBar scaleRatingBar;
-    private LinearLayout l_layout_pref , linearLayout1,ll2;
+    private LinearLayout l_layout_pref , topCourseBackground,ll2;
     private RelativeLayout rel_project, rel_resources, rel_forum, rel_takequiz;
     TextView course_name, course_description,tv_pref_name;
     private String courseName = "";
@@ -97,25 +96,29 @@ public class CourseDetailActivity extends BaseActivity implements View.OnClickLi
                 @Override
                 public void onChanged(CourseDetailReponseModel courseDetailReponseModel) {
                     if (courseDetailReponseModel!=null ){
-                        String title=courseDetailReponseModel.getCourse().getName();
-                        String description=courseDetailReponseModel.getCourse().getDescription();
-                        String img_url=courseDetailReponseModel.getCourse().getImage_url();
-                        //setdetails();
+                        CourseModel course=courseDetailReponseModel.getCourse();
+                        String title=course.getName();
+                        String description=course.getDescription();
+                        String img_url=course.getImage_url();
+
                         course_name.setText(title);
                         courseName = title;
+
                         if (description!=null)
                             course_description.setText(Html.fromHtml(description).toString().trim());
+
                         Log.d("TAGdeatal",title);
                         scaleRatingBar.setRating(courseDetailReponseModel.getRating());
+
                         if (courseDetailReponseModel.getRating() == 0){
                             isRateFetching = false;
                         }
                         Log.d("rating_debug","rating : "+ courseDetailReponseModel.getRating());
                         if (img_url!=null && img_url.endsWith(".svg")){
-                            Utility.loadSVGImage(CourseDetailActivity.this,Constants.COURSEIMAGEBASEUSRL+ courseDetailReponseModel.getCourse().getImage_url(),course_image);
+                            Utility.loadSVGImage(CourseDetailActivity.this,Constants.COURSEIMAGEBASEUSRL+ course.getLogo_url(),course_image);
                         }else{
                             Glide.with(CourseDetailActivity.this).load(
-                                    Constants.COURSEIMAGEBASEUSRL+ courseDetailReponseModel.getCourse().getImage_url())
+                                    Constants.COURSEIMAGEBASEUSRL+ course.getLogo_url())
                                     .placeholder(R.drawable.placeholder)
                                     .diskCacheStrategy(DiskCacheStrategy.RESOURCE)
                                     .transition(GenericTransitionOptions.<Drawable>with(Utility.getAnimationObject()))
@@ -291,9 +294,9 @@ public class CourseDetailActivity extends BaseActivity implements View.OnClickLi
         //DONT REMOVE THS COMMENT:final int secondColor = ContextCompat.getColor(CourseDetailActivity.this, color1 );
         //upperlayout
         final MyGradientDrawable myGradBg = new MyGradientDrawable(firstColor, secondColor);
-        float[] radii=new float[]{0f,0f,0f,0f,100f,100f,0f,0f};
-        myGradBg.setCornerRadius(radii);
-        linearLayout1.setBackground(myGradBg);
+//        float[] radii=new float[]{0f,0f,0f,0f,100f,100f,0f,0f};
+//        myGradBg.setCornerRadius(radii);
+        topCourseBackground.setBackground(myGradBg);
         //lower layout
         final  MyGradientDrawable myGradbg1= new MyGradientDrawable(firstColor, secondColor);
         /*float[] radii1=new float[]{100f,100f,0f,0f,0f,0f,0f,0f};
@@ -307,7 +310,7 @@ public class CourseDetailActivity extends BaseActivity implements View.OnClickLi
         course_image=findViewById(R.id.course_image);
         backBtn=findViewById(R.id.backBtn);
         l_layout_pref=findViewById(R.id.l_layout_pref);
-        linearLayout1=findViewById(R.id.linearlayout1);
+        topCourseBackground =findViewById(R.id.topCourseBackground);
         ll2=findViewById(R.id.ll2);
         tv_pref_name=findViewById(R.id.tv_pref_name);
         pref_image=findViewById(R.id.pref_image);
