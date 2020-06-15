@@ -36,6 +36,15 @@ public class CourseModel {
     @SerializedName("sequence")
     private int sequence;
 
+    @ColumnInfo(name = "logo_url")
+    @SerializedName("logo_url")
+    private String logo_url;
+
+    @ColumnInfo(name = "color")
+    @SerializedName("color")
+    private String color;
+
+
     public int getTopic_count() {
         return topic_count;
     }
@@ -118,5 +127,21 @@ public class CourseModel {
 
     public void setUpdated_at(String updated_at) {
         this.updated_at = updated_at;
+    }
+
+    public String getLogo_url() {
+        return logo_url;
+    }
+
+    public void setLogo_url(String logo_url) {
+        this.logo_url = logo_url;
+    }
+
+    public String  getColor() {
+        return color;
+    }
+
+    public void setColor(String color) {
+        this.color = color;
     }
 }

@@ -70,11 +70,27 @@
     <string name="rate_us"><u>Rate us</u>.</string>
 
     //strg array
-    <integer-array name="random_images">
-        <item>@drawable/gradientbglightblue</item>
-        <item>@drawable/gradientbgpeach</item>
-        <item>@drawable/gradientbgpurple</item>
-    </integer-array>
+<!--    <string-array name="colors">-->
+<!--        <item>#0A8C9C</item>-->
+<!--        <item>#CF2A2A</item>-->
+<!--        <item>#FFEB3B</item>-->
+<!--        <item>#5A5C5C</item>-->
+<!--        <item>#33638A</item>-->
+<!--        <item>#40A7FA</item>-->
+<!--        <item>#396B71</item>-->
+<!--    </string-array>-->
+<!--    <string-array name="colors1">-->
+<!--        <item>#24C9DD</item>-->
+<!--        <item>#DF9494</item>-->
+<!--        <item>#E8E8E6</item>-->
+<!--        <item>#A1A3A3</item>-->
+<!--        <item>#72AFDF</item>-->
+<!--        <item>#6AB8F6</item>-->
+<!--        <item>#8ED3DC</item>-->
+
+
+<!--    </string-array>-->
+
 
 
 </resources>

@@ -1,13 +1,14 @@
 package com.prepare.prepareurself.courses.ui.activity;
 
-import androidx.core.content.ContextCompat;
 import androidx.lifecycle.Observer;
 import androidx.lifecycle.ViewModelProvider;
 
 import android.app.Dialog;
 import android.content.Intent;
+import android.graphics.Color;
 import android.graphics.drawable.ColorDrawable;
 import android.graphics.drawable.Drawable;
+import android.graphics.drawable.GradientDrawable;
 import android.net.Uri;
 import android.os.Bundle;
 import android.text.Html;
@@ -30,6 +31,7 @@ import com.prepare.prepareurself.courses.data.model.RateCourseResponseModel;
 import com.prepare.prepareurself.courses.ui.fragmentToActivity.TabProjectctivity;
 import com.prepare.prepareurself.courses.ui.fragmentToActivity.TabResourceActivity;
 import com.prepare.prepareurself.courses.viewmodels.CourseDetailViewModel;
+import com.prepare.prepareurself.dashboard.data.model.CourseModel;
 import com.prepare.prepareurself.feedback.ui.FeedbackFragment;
 import com.prepare.prepareurself.forum.ui.ForumActivity;
 import com.prepare.prepareurself.preferences.data.PreferencesModel;
@@ -52,9 +54,10 @@ public class CourseDetailActivity extends BaseActivity implements View.OnClickLi
     private CourseDetailViewModel vm;
     private PrefManager prefManager;
     private com.willy.ratingbar.ScaleRatingBar scaleRatingBar;
-    private LinearLayout l_layout_pref;
-    private RelativeLayout rel_project, rel_resources, rel_forum, rel_takequiz;
-    TextView course_name, course_description,tv_pref_name;
+    private LinearLayout l_layout_pref , topCourseBackground,belowCourseBackgroundContainer;
+    private RelativeLayout rel_project, rel_resources, rel_forum, rel_takequiz,mainBackground;
+    TextView course_name, course_description,tv_pref_name,averageRating;
+    ImageView forumIcon,ProjectIcon,ResourceIcon,QuizIcon;
     private String courseName = "";
     private boolean isAdded = false;
     private boolean isRateFetching = true;
@@ -64,58 +67,60 @@ public class CourseDetailActivity extends BaseActivity implements View.OnClickLi
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_course_detail);
-        statusbarcolor();
-        getintents();
-        setOnclicklisteners();
-
         vm = new  ViewModelProvider(this).get(CourseDetailViewModel.class);
         prefManager = new PrefManager(this);
         Intent intent = getIntent();
-
         if (intent.getData()!=null){
             Log.d("deeplink_debug","course avtivity : "+getIntent().getData()+"");
             String data = intent.getData().toString();
             String CourseName = data.split("&course_name=")[1];
             String CourseId = data.split("&course_id=")[1].split("&course_name=")[0];
             String type = data.split("type=")[1].split("&course_id=")[0];
-
             courseId = Integer.parseInt(CourseId);
         }else{
             courseId = intent.getIntExtra(Constants.COURSEID, -1);
         }
+        getintents();
+        setOnclicklisteners();
 
         if (courseId!=-1){
             vm.fetchCourseDetails(prefManager.getString(Constants.JWTTOKEN),courseId);
             vm.fetchremotePref(prefManager.getString(Constants.JWTTOKEN));
 
-            /*int sze=vm.prefernceResponseModelLiveData.getValue().getPreferences().size();
-            Log.d("TAGSOO",""+sze);*/
             vm.courseDetailReponseModelLiveData.observe(this, new Observer<CourseDetailReponseModel>() {
                 @Override
                 public void onChanged(CourseDetailReponseModel courseDetailReponseModel) {
                     if (courseDetailReponseModel!=null ){
-                        String title=courseDetailReponseModel.getCourse().getName();
-                        String description=courseDetailReponseModel.getCourse().getDescription();
-                        String img_url=courseDetailReponseModel.getCourse().getImage_url();
-                        //setdetails();
+                        CourseModel course=courseDetailReponseModel.getCourse();
+                        setbggradientdynamicupperlayout(course);
+
+                        String title=course.getName();
+                        String description=course.getDescription();
+                        String logo_url=course.getLogo_url();
+                        //course.ra
+
+                        int topic_count=course.getTopic_count();
+                        int project_count=course.getProject_count();
+                        averageRating.setText("3.5");
                         course_name.setText(title);
                         courseName = title;
+
+
                         if (description!=null)
                             course_description.setText(Html.fromHtml(description).toString().trim());
-                        Log.d("TAGdeatal",title);
+
                         scaleRatingBar.setRating(courseDetailReponseModel.getRating());
+
                         if (courseDetailReponseModel.getRating() == 0){
                             isRateFetching = false;
                         }
-                        Log.d("rating_debug","rating : "+courseDetailReponseModel.getRating());
-                        if (img_url!=null && img_url.endsWith(".svg")){
-                            Utility.loadSVGImage(CourseDetailActivity.this,Constants.COURSEIMAGEBASEUSRL+ courseDetailReponseModel.getCourse().getImage_url(),course_image);
+                        Log.d("rating_debug","rating : "+ courseDetailReponseModel.getRating());
+                        if (logo_url!=null && logo_url.endsWith(".svg")){
+                            Utility.loadSVGImage(CourseDetailActivity.this, course.getLogo_url(),course_image);
                         }else{
-                            Glide.with(CourseDetailActivity.this).load(
-                                    Constants.COURSEIMAGEBASEUSRL+ courseDetailReponseModel.getCourse().getImage_url())
+                            Glide.with(CourseDetailActivity.this).load(course.getLogo_url())
                                     .placeholder(R.drawable.placeholder)
                                     .diskCacheStrategy(DiskCacheStrategy.RESOURCE)
-                                    .transition(GenericTransitionOptions.<Drawable>with(Utility.getAnimationObject()))
                                     .into(course_image);
                         }
                     }else{
@@ -127,8 +132,7 @@ public class CourseDetailActivity extends BaseActivity implements View.OnClickLi
             vm.rateCourseResponseModelLiveData.observe(this, new Observer<RateCourseResponseModel>() {
                 @Override
                 public void onChanged(RateCourseResponseModel rateCourseResponseModel) {
-                   // Toast.makeText(CourseDetailActivity.this,""+ rateCourseResponseModel.getMessage(),Toast.LENGTH_LONG).show();
-                    if(rateCourseResponseModel!=null )
+                    if(rateCourseResponseModel!=null)
                         msg=rateCourseResponseModel.getMessage();
 
                 }
@@ -149,8 +153,7 @@ public class CourseDetailActivity extends BaseActivity implements View.OnClickLi
                                     Glide.with(CourseDetailActivity.this).load(R.drawable.ic_check_black_24dp).into(pref_image);
                                     tv_pref_name.setText("Added as preference");
                                     isAdded = true;
-                                    break;
-                                }
+                                    break; }
                             }
                         }
                     }else{
@@ -175,16 +178,6 @@ public class CourseDetailActivity extends BaseActivity implements View.OnClickLi
                     }
                 }
             });
-
-            //Adduser pref model
-            /*vm.addToUserPrefResponseModelLiveData.observe(this, new Observer<AddToUserPrefResponseModel>() {
-                @Override
-                public void onChanged(AddToUserPrefResponseModel addToUserPrefResponseModel) {
-                    Toast.makeText(CourseDetailActivity.this,""+addToUserPrefResponseModel.getMessage(),Toast
-                    .LENGTH_LONG).show();
-                }
-            });*/
-
         }
 
     }
@@ -205,16 +198,6 @@ public class CourseDetailActivity extends BaseActivity implements View.OnClickLi
         });
     }
 
-    private void statusbarcolor() {
-        Window window = this.getWindow();
-        // clear FLAG_TRANSLUCENT_STATUS flag:
-        //window.clearFlags(WindowManager.LayoutParams.FLAG_TRANSLUCENT_STATUS);
-        // add FLAG_DRAWS_SYSTEM_BAR_BACKGROUNDS flag to the window
-        window.addFlags(WindowManager.LayoutParams.FLAG_DRAWS_SYSTEM_BAR_BACKGROUNDS);
-        // finally change the color
-        window.setStatusBarColor(ContextCompat.getColor(this,R.color.seablue));
-    }
-
     private void setOnclicklisteners() {
         backBtn.setOnClickListener(this);
         rel_project.setOnClickListener(this);
@@ -225,12 +208,43 @@ public class CourseDetailActivity extends BaseActivity implements View.OnClickLi
         l_layout_pref.setOnClickListener(this);
     }
 
+    private void setbggradientdynamicupperlayout(CourseModel course)
+    {
+        if(!course.getColor().equals(""))
+        {
+            String[] list = course.getColor().split(",");
+            Log.i("Colors",course.getColor()+list.length);
+            int[] colors = new int[list.length];
+            for (int i=0;i<list.length;i++){
+                colors[i]=Color.parseColor(list[i]);
+            }
+            GradientDrawable myGradBg = new GradientDrawable(GradientDrawable.Orientation.LEFT_RIGHT, colors);
+            myGradBg.setCornerRadii(new float[]{0f,0f,0f,0f,90f,90f,0f,0f});
+            topCourseBackground.setBackground(myGradBg);
+            mainBackground.setBackground(myGradBg);
+            belowCourseBackgroundContainer.setBackground(myGradBg);
+
+            GradientDrawable icongrad = new GradientDrawable(GradientDrawable.Orientation.LEFT_RIGHT, colors);
+            icongrad.setCornerRadius(20f);
+            forumIcon.setBackground(icongrad);
+            ProjectIcon.setBackground(icongrad);
+            ResourceIcon.setBackground(icongrad);
+            QuizIcon.setBackground(icongrad);
+
+        }
+
+    }
+
     private void getintents() {
         course_name=findViewById(R.id.coursename);
         course_description=findViewById(R.id.course_desc);
         course_image=findViewById(R.id.course_image);
         backBtn=findViewById(R.id.backBtn);
+        averageRating=findViewById(R.id.averageRating);
+        mainBackground=findViewById(R.id.mainBackground);
         l_layout_pref=findViewById(R.id.l_layout_pref);
+        belowCourseBackgroundContainer=findViewById(R.id.belowCourseBackgroundContainer);
+        topCourseBackground =findViewById(R.id.topCourseBackground);
         tv_pref_name=findViewById(R.id.tv_pref_name);
         pref_image=findViewById(R.id.pref_image);
         scaleRatingBar=findViewById(R.id.scaleRatingBar);
@@ -239,9 +253,14 @@ public class CourseDetailActivity extends BaseActivity implements View.OnClickLi
         rel_takequiz=findViewById(R.id.rel_takequiz);
         btn_shareimage=findViewById(R.id.btn_shareimage);
         rel_forum=findViewById(R.id.rel_forum);
+        forumIcon=findViewById(R.id.forumIcon);
+        ProjectIcon=findViewById(R.id.projectIcon);
+        QuizIcon=findViewById(R.id.quizIcon);
+        ResourceIcon=findViewById(R.id.resourceIcon);
     }
 
-    private void showDialogplaystore() {
+
+    private void showDialogplaystore(){
         final Dialog dialog = new Dialog(CourseDetailActivity.this);
         dialog.requestWindowFeature(Window.FEATURE_NO_TITLE);
         dialog.setCancelable(false);
