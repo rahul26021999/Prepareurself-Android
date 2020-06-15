@@ -1,5 +1,6 @@
 package com.prepare.prepareurself.forum.data
 
+import android.util.Log
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import com.prepare.prepareurself.Apiservice.ApiClient
@@ -119,6 +120,8 @@ class ForumRepository{
 
     fun uploadImage(token: String, type:Int, body: MultipartBody.Part):LiveData<UploadImageResponseModel>{
         val data = MutableLiveData<UploadImageResponseModel>()
+
+        Log.d("upload_image_query","${apiInterface?.uploadQueryImage(token,type,body)?.request()?.url()}")
 
         apiInterface?.uploadQueryImage(token,type,body)?.enqueue(object : Callback<UploadImageResponseModel>{
             override fun onFailure(call: Call<UploadImageResponseModel>, t: Throwable) {

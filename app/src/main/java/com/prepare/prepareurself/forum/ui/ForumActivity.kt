@@ -23,6 +23,7 @@ import com.prepare.prepareurself.utils.Utility
 import kotlinx.android.synthetic.main.activity_forum2.*
 import kotlinx.android.synthetic.main.forum_add_query_dialog.*
 import kotlinx.android.synthetic.main.forum_add_query_dialog.view.*
+import kotlinx.android.synthetic.main.insert_link_editor_dialog.view.*
 import kotlinx.android.synthetic.main.layout_topbar.*
 import kotlinx.android.synthetic.main.richeditor_layout.*
 import kotlinx.android.synthetic.main.richeditor_layout.view.*
@@ -184,9 +185,9 @@ class ForumActivity : BaseActivity(), QueriesAdapter.QueriesListener {
 
     private fun uploadImageToServer(bytes: ByteArray?) {
         val requestFile: RequestBody = RequestBody.create(MediaType.parse("image/jpeg"), bytes)
-        val body = MultipartBody.Part.createFormData("profile_image", "image.jpg", requestFile)
+        val body = MultipartBody.Part.createFormData("image", "image.jpg", requestFile)
 
-        vm.uploadQueryImage(pm.getString(Constants.JWTTOKEN),0,body)
+        vm.uploadQueryImage(pm.getString(Constants.JWTTOKEN),1,body)
                 ?.observe(this, Observer {
                     if (it!=null){
                         Log.d("upload_query_image","${it.message} ${it.image}")
@@ -324,12 +325,29 @@ class ForumActivity : BaseActivity(), QueriesAdapter.QueriesListener {
         action_insert_image.setOnClickListener {
             //editor.insertImage("http://www.1honeywan.com/dachshund/image/7.21/7.21_3_thumb.JPG","image")
             uploadImage()
+            editor.setNumbers()
         }
         action_insert_link.setOnClickListener {
-            editor.insertLink("https://github.com/raystatic","github")
+           // editor.insertLink("https://github.com/raystatic","github")
+            insertLink()
         }
         action_insert_checkbox.setOnClickListener {
             editor.insertTodo()
         }
+    }
+
+    private fun insertLink() {
+        val dialog = Dialog(this)
+        val view = LayoutInflater.from(this).inflate(R.layout.insert_link_editor_dialog, null)
+        dialog.setContentView(view)
+
+        view.btn_insert_link.setOnClickListener{
+            val name = view.et_editor_name.text
+            val link = view.et_editor_link.text
+
+//            if (name)
+
+        }
+
     }
 }
