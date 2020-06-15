@@ -1,5 +1,6 @@
 package com.prepare.prepareurself.courses.ui.activity;
 
+import androidx.annotation.Nullable;
 import androidx.core.content.ContextCompat;
 import androidx.lifecycle.Observer;
 import androidx.lifecycle.ViewModelProvider;
@@ -71,6 +72,8 @@ public class CourseDetailActivity extends BaseActivity implements View.OnClickLi
         final int firstColor = ContextCompat.getColor(CourseDetailActivity.this, R.color.seablue);
         final int secondColor = ContextCompat.getColor(CourseDetailActivity.this, R.color.seablueend);
         final MyGradientDrawable myGradBg = new MyGradientDrawable(firstColor, secondColor);
+        float[] radii=new float[]{0f,0f,0f,0f,100f,100f,0f,0f};
+        myGradBg.setCornerRadius(radii);
         linearLayout1.setBackground(myGradBg);
         vm = new  ViewModelProvider(this).get(CourseDetailViewModel.class);
         prefManager = new PrefManager(this);
@@ -371,9 +374,13 @@ public class CourseDetailActivity extends BaseActivity implements View.OnClickLi
 final class MyGradientDrawable extends GradientDrawable {
     MyGradientDrawable(int fromColor, int toColor) {
         super(Orientation.RIGHT_LEFT, new int[]{fromColor, toColor});
-        setCornerRadii();
         setGradientType(LINEAR_GRADIENT);
         setGradientRadius(90);
 
+    }
+    //float[] radii=new float[]{0f,0f,24f,0f};
+    public void setCornerRadius(float[] radii) {
+        //this.cornerRadius = cornerRadius;
+        setCornerRadii(radii);
     }
 }
