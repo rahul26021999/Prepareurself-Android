@@ -96,7 +96,10 @@ public class CourseDetailActivity extends BaseActivity implements View.OnClickLi
                         String title=course.getName();
                         String description=course.getDescription();
                         String logo_url=course.getLogo_url();
+                        //course.ra
 
+                        int topic_count=course.getTopic_count();
+                        int project_count=course.getProject_count();
                         averageRating.setText("3.5");
                         course_name.setText(title);
                         courseName = title;
