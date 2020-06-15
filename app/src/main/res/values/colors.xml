@@ -39,8 +39,31 @@
     <color name="green">#20CA0D</color>
 
     <color name="shimmer_background">#dddddd</color>
-    <color name="seablue">#0A8C9C</color>
-    <color name="seablueend">#24C9DD</color>
+   <!-- androd
+    <color name="androseablue">#0A8C9C</color>
+    <color name="androseablueend">#24C9DD</color>
+&lt;!&ndash;
+    //php
+&ndash;&gt;
+    <color name="phpgrey">#5A5C5C</color>
+    <color name="phpgreyend">#A1A3A3</color>
+    &lt;!&ndash;flutter&ndash;&gt;
+    <color name="flutterblue">#40A7FA</color>
+    <color name="flutterblueend">#6AB8F6</color>
+    &lt;!&ndash;laravel&ndash;&gt;
+    <color name="red">#CF2A2A</color>
+    <color name="redend">#DF9494</color>
+    &lt;!&ndash;django&ndash;&gt;
+    <color name="djanogreen">#396B71</color>
+    <color name="djangogreenend">#8ED3DC</color>
+    &lt;!&ndash;gt&ndash;&gt;
+    <color name="gtyellow">#FFEB3B</color>
+    <color name="gtyellowend">#E8E8E6</color>
+    &lt;!&ndash;python&ndash;&gt;
+    <color name="pyblue">#33638A</color>
+    <color name="pyblueend">#72AFDF</color>
+-->
+
 
 
 </resources>
