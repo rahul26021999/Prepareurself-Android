@@ -40,6 +40,7 @@
 
     <color name="shimmer_background">#dddddd</color>
     <color name="seablue">#0A8C9C</color>
+    <color name="seablueend">#24C9DD</color>
 
 
 </resources>

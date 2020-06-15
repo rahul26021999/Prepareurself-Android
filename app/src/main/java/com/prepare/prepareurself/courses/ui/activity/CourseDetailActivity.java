@@ -8,6 +8,7 @@ import android.app.Dialog;
 import android.content.Intent;
 import android.graphics.drawable.ColorDrawable;
 import android.graphics.drawable.Drawable;
+import android.graphics.drawable.GradientDrawable;
 import android.net.Uri;
 import android.os.Bundle;
 import android.text.Html;
@@ -52,7 +53,7 @@ public class CourseDetailActivity extends BaseActivity implements View.OnClickLi
     private CourseDetailViewModel vm;
     private PrefManager prefManager;
     private com.willy.ratingbar.ScaleRatingBar scaleRatingBar;
-    private LinearLayout l_layout_pref;
+    private LinearLayout l_layout_pref , linearLayout1;
     private RelativeLayout rel_project, rel_resources, rel_forum, rel_takequiz;
     TextView course_name, course_description,tv_pref_name;
     private String courseName = "";
@@ -67,23 +68,23 @@ public class CourseDetailActivity extends BaseActivity implements View.OnClickLi
         statusbarcolor();
         getintents();
         setOnclicklisteners();
-
+        final int firstColor = ContextCompat.getColor(CourseDetailActivity.this, R.color.seablue);
+        final int secondColor = ContextCompat.getColor(CourseDetailActivity.this, R.color.seablueend);
+        final MyGradientDrawable myGradBg = new MyGradientDrawable(firstColor, secondColor);
+        linearLayout1.setBackground(myGradBg);
         vm = new  ViewModelProvider(this).get(CourseDetailViewModel.class);
         prefManager = new PrefManager(this);
         Intent intent = getIntent();
-
         if (intent.getData()!=null){
             Log.d("deeplink_debug","course avtivity : "+getIntent().getData()+"");
             String data = intent.getData().toString();
             String CourseName = data.split("&course_name=")[1];
             String CourseId = data.split("&course_id=")[1].split("&course_name=")[0];
             String type = data.split("type=")[1].split("&course_id=")[0];
-
             courseId = Integer.parseInt(CourseId);
         }else{
             courseId = intent.getIntExtra(Constants.COURSEID, -1);
         }
-
         if (courseId!=-1){
             vm.fetchCourseDetails(prefManager.getString(Constants.JWTTOKEN),courseId);
             vm.fetchremotePref(prefManager.getString(Constants.JWTTOKEN));
@@ -107,7 +108,7 @@ public class CourseDetailActivity extends BaseActivity implements View.OnClickLi
                         if (courseDetailReponseModel.getRating() == 0){
                             isRateFetching = false;
                         }
-                        Log.d("rating_debug","rating : "+courseDetailReponseModel.getRating());
+                        Log.d("rating_debug","rating : "+ courseDetailReponseModel.getRating());
                         if (img_url!=null && img_url.endsWith(".svg")){
                             Utility.loadSVGImage(CourseDetailActivity.this,Constants.COURSEIMAGEBASEUSRL+ courseDetailReponseModel.getCourse().getImage_url(),course_image);
                         }else{
@@ -128,7 +129,7 @@ public class CourseDetailActivity extends BaseActivity implements View.OnClickLi
                 @Override
                 public void onChanged(RateCourseResponseModel rateCourseResponseModel) {
                    // Toast.makeText(CourseDetailActivity.this,""+ rateCourseResponseModel.getMessage(),Toast.LENGTH_LONG).show();
-                    if(rateCourseResponseModel!=null )
+                    if(rateCourseResponseModel!=null)
                         msg=rateCourseResponseModel.getMessage();
 
                 }
@@ -149,8 +150,7 @@ public class CourseDetailActivity extends BaseActivity implements View.OnClickLi
                                     Glide.with(CourseDetailActivity.this).load(R.drawable.ic_check_black_24dp).into(pref_image);
                                     tv_pref_name.setText("Added as preference");
                                     isAdded = true;
-                                    break;
-                                }
+                                    break; }
                             }
                         }
                     }else{
@@ -231,6 +231,7 @@ public class CourseDetailActivity extends BaseActivity implements View.OnClickLi
         course_image=findViewById(R.id.course_image);
         backBtn=findViewById(R.id.backBtn);
         l_layout_pref=findViewById(R.id.l_layout_pref);
+        linearLayout1=findViewById(R.id.linearlayout1);
         tv_pref_name=findViewById(R.id.tv_pref_name);
         pref_image=findViewById(R.id.pref_image);
         scaleRatingBar=findViewById(R.id.scaleRatingBar);
@@ -241,7 +242,8 @@ public class CourseDetailActivity extends BaseActivity implements View.OnClickLi
         rel_forum=findViewById(R.id.rel_forum);
     }
 
-    private void showDialogplaystore() {
+
+    private void showDialogplaystore(){
         final Dialog dialog = new Dialog(CourseDetailActivity.this);
         dialog.requestWindowFeature(Window.FEATURE_NO_TITLE);
         dialog.setCancelable(false);
@@ -364,4 +366,14 @@ public class CourseDetailActivity extends BaseActivity implements View.OnClickLi
                 break;
     }
 }
+}
+
+final class MyGradientDrawable extends GradientDrawable {
+    MyGradientDrawable(int fromColor, int toColor) {
+        super(Orientation.RIGHT_LEFT, new int[]{fromColor, toColor});
+        setCornerRadii();
+        setGradientType(LINEAR_GRADIENT);
+        setGradientRadius(90);
+
+    }
 }
