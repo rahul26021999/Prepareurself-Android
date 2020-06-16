@@ -72,27 +72,10 @@
                 android:id="@+id/rv_image_attachment"
                 />
 
-            <jp.wasabeef.richeditor.RichEditor
-                android:id="@+id/editor"
-                android:visibility="gone"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_margin="5dp"/>
-
             <RelativeLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:padding="5dp">
-
-                <LinearLayout
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:orientation="horizontal"
-                    android:padding="@dimen/padding_10">
-
-
-
-                </LinearLayout>
 
                 <TextView
                     android:layout_width="wrap_content"

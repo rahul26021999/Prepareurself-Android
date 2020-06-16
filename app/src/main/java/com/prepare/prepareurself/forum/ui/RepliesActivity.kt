@@ -5,7 +5,6 @@ import android.app.Dialog
 import android.content.ActivityNotFoundException
 import android.content.Intent
 import android.net.Uri
-import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.text.Html
 import android.util.Log
@@ -13,7 +12,6 @@ import android.view.KeyEvent
 import android.view.LayoutInflater
 import android.view.Window
 import android.view.WindowManager
-import android.widget.TextView
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.LinearLayoutManager
@@ -26,14 +24,12 @@ import com.prepare.prepareurself.utils.BaseActivity
 import com.prepare.prepareurself.utils.Constants
 import com.prepare.prepareurself.utils.PrefManager
 import com.prepare.prepareurself.utils.Utility
-import kotlinx.android.synthetic.main.activity_forum2.*
 import kotlinx.android.synthetic.main.activity_replies.*
 import kotlinx.android.synthetic.main.fullscreen_image_dialog.view.*
 import kotlinx.android.synthetic.main.layout_topbar.*
 import okhttp3.MediaType
 import okhttp3.MultipartBody
 import okhttp3.RequestBody
-import okhttp3.internal.Util
 import java.io.ByteArrayOutputStream
 import java.io.IOException
 import java.io.InputStream
@@ -69,9 +65,7 @@ class RepliesActivity : BaseActivity(), RepliesAdapter.RepliesListener, ImageAtt
             initAttachmentAdapter()
 
             tv_attach_image_reply.setOnClickListener {
-                //editor.insertImage("http://www.1honeywan.com/dachshund/image/7.21/7.21_3_thumb.JPG","image")
                 uploadImage()
-                // editor.setNumbers()
             }
         }
 
@@ -86,11 +80,9 @@ class RepliesActivity : BaseActivity(), RepliesAdapter.RepliesListener, ImageAtt
                                 if (it!=null){
                                     Utility.showToast(this,it.message)
                                     htmlData = ""
-                                  //  editor.html = ""
                                 }else{
                                     Utility.showToast(this,Constants.SOMETHINGWENTWRONG)
                                 }
-                              //  dialog.cancel()
                             })
                 }
             }else{
