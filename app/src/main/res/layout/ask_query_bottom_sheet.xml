@@ -1,0 +1,93 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:id="@+id/bottom_sheet_ask_query"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:background="#ffffff"
+    android:orientation="vertical"
+    android:padding="16dp"
+    app:behavior_hideable="false"
+    app:behavior_peekHeight="90dp"
+    app:layout_behavior="com.google.android.material.bottomsheet.BottomSheetBehavior">
+
+    <EditText
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:id="@+id/et_query_forum"
+        android:hint="Enter your query here"
+        android:visibility="visible"
+        android:fontFamily="@font/proximanovaregular"/>
+
+
+    <androidx.recyclerview.widget.RecyclerView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:id="@+id/rv_image_attachment"
+        />
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:padding="5dp">
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Bold"
+            android:textColor="@color/colorPrimaryDark"
+            android:textSize="14sp"
+            android:textStyle="bold"
+            android:visibility="gone"
+            android:id="@+id/tv_bold"
+            android:layout_margin="@dimen/padding_10"/>
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Italic"
+            android:textColor="@color/colorPrimaryDark"
+            android:textSize="14sp"
+            android:textStyle="bold"
+            android:id="@+id/tv_italic"
+            android:visibility="gone"
+            android:layout_margin="@dimen/padding_10"
+            android:layout_toEndOf="@+id/tv_bold"/>
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Underline"
+            android:textColor="@color/colorPrimaryDark"
+            android:textSize="14sp"
+            android:layout_margin="@dimen/padding_10"
+            android:textStyle="bold"
+            android:id="@+id/tv_underline"
+            android:visibility="gone"
+            android:layout_toEndOf="@+id/tv_italic"/>
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Attach Image"
+            android:textColor="@color/colorPrimaryDark"
+            android:textSize="14sp"
+            android:textStyle="bold"
+            android:layout_margin="@dimen/padding_10"
+            android:id="@+id/tv_attach_image"
+            android:layout_toEndOf="@+id/tv_underline"/>
+
+        <com.google.android.material.button.MaterialButton
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Send"
+            android:id="@+id/btn_send_query"
+            android:textSize="14sp"
+            android:background="@color/colorPrimaryDark"
+            android:fontFamily="@font/proximanovaregular"
+            android:textColor="@color/white"
+            android:layout_alignParentEnd="true"/>
+
+    </RelativeLayout>
+
+</LinearLayout>
