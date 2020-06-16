@@ -4,17 +4,20 @@ import android.app.Activity
 import android.app.Dialog
 import android.content.ActivityNotFoundException
 import android.content.Intent
-import android.graphics.Color
 import android.net.Uri
 import android.os.Bundle
 import android.util.Log
+import android.view.KeyEvent
 import android.view.LayoutInflater
-import android.view.View
+import android.view.Window
 import android.view.WindowManager
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.LinearLayoutManager
+import com.bumptech.glide.Glide
+import com.bumptech.glide.load.engine.DiskCacheStrategy
 import com.prepare.prepareurself.R
+import com.prepare.prepareurself.forum.data.OpenForumAttachment
 import com.prepare.prepareurself.forum.data.QueryModel
 import com.prepare.prepareurself.forum.viewmodel.ForumViewModel
 import com.prepare.prepareurself.utils.BaseActivity
@@ -23,8 +26,7 @@ import com.prepare.prepareurself.utils.PrefManager
 import com.prepare.prepareurself.utils.Utility
 import kotlinx.android.synthetic.main.activity_forum2.*
 import kotlinx.android.synthetic.main.activity_forum2.view.*
-import kotlinx.android.synthetic.main.forum_add_query_dialog.*
-import kotlinx.android.synthetic.main.forum_add_query_dialog.view.*
+import kotlinx.android.synthetic.main.fullscreen_image_dialog.view.*
 import kotlinx.android.synthetic.main.insert_link_editor_dialog.view.*
 import kotlinx.android.synthetic.main.layout_topbar.*
 import okhttp3.MediaType
@@ -33,7 +35,6 @@ import okhttp3.RequestBody
 import java.io.ByteArrayOutputStream
 import java.io.IOException
 import java.io.InputStream
-import java.util.*
 import kotlin.collections.ArrayList
 
 
@@ -176,6 +177,8 @@ class ForumActivity : BaseActivity(), QueriesAdapter.QueriesListener, ImageAttac
         dialog.show()
     }
 
+
+
     private fun uploadImage() {
         val intent = Intent(Intent.ACTION_GET_CONTENT)
         intent.type = "image/jpeg"
@@ -210,10 +213,8 @@ class ForumActivity : BaseActivity(), QueriesAdapter.QueriesListener, ImageAttac
                     if (it!=null){
                         Log.d("upload_query_image","${it.message} ${it.image} ${it.path}")
                         if (!it.image.isNullOrEmpty()){
-                            //editor.insertImage(it.image,"image.jpg")
                             imageAttachedList.add(it.image.toString())
                             imageNameList.add("${it.image}")
-                           // lin_image_attached.visibility = View.VISIBLE
                             attachmentAdapter.setData(imageNameList)
                         }else{
                             Utility.showToast(this,"Cannot attach image at the moment")
@@ -392,5 +393,41 @@ class ForumActivity : BaseActivity(), QueriesAdapter.QueriesListener, ImageAttac
         imageAttachedList.removeAt(position)
         imageNameList.removeAt(position)
         attachmentAdapter.notifyItemRemoved(position)
+    }
+
+    override fun onImageClicked(attachment: OpenForumAttachment) {
+        val dialog = Dialog(this,android.R.style.Theme_Light)
+
+        dialog.requestWindowFeature(Window.FEATURE_NO_TITLE)
+        val view = LayoutInflater.from(this).inflate(R.layout.fullscreen_image_dialog, null)
+        dialog.setContentView(view)
+        dialog.setCancelable(false)
+
+        view.tv_name_fullscreen_image.text = attachment.file
+
+        if (attachment.file!=null && attachment.file?.isNotEmpty()!!){
+            val imagUrl = "${Constants.QUERYATTACHMENTBASEURL}${attachment.file}"
+            if (imagUrl.endsWith(".svg")){
+                Utility.loadSVGImage(this, imagUrl, view.fullscreen_image_forum)
+            }else{
+                Glide.with(this)
+                        .load(imagUrl)
+                        .placeholder(R.drawable.placeholder)
+                        .diskCacheStrategy(DiskCacheStrategy.RESOURCE)
+                        .into(view.fullscreen_image_forum)
+            }
+        }
+
+        dialog.setOnKeyListener { d, keyCode, event ->
+            if (keyCode == KeyEvent.KEYCODE_BACK){
+                d.cancel()
+            }
+            return@setOnKeyListener true
+        }
+
+        dialog.show()
+        val window = dialog.window
+        window?.setLayout(WindowManager.LayoutParams.MATCH_PARENT,WindowManager.LayoutParams.MATCH_PARENT)
+
     }
 }

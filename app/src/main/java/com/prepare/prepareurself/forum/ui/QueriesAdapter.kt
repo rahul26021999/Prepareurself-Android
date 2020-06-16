@@ -16,13 +16,14 @@ import com.prepare.prepareurself.utils.Constants
 import com.prepare.prepareurself.utils.Utility
 import kotlinx.android.synthetic.main.queries_adapter_layout.view.*
 
-class QueriesAdapter(var context:Context,var listener:QueriesListener) : RecyclerView.Adapter<QueriesAdapter.QueriesViewHolder>(){
+class QueriesAdapter(var context:Context,var listener:QueriesListener) : RecyclerView.Adapter<QueriesAdapter.QueriesViewHolder>(),QueryImageAttachmentAdapter.AttachmentListenet{
 
     private var data:List<QueryModel>?=null
 
     interface QueriesListener{
         fun onViewReplies(queryModel: QueryModel)
         fun onDoReply(queryModel: QueryModel)
+        fun onImageClicked(attachment: OpenForumAttachment)
     }
 
     fun setData(list: List<QueryModel>){
@@ -40,7 +41,7 @@ class QueriesAdapter(var context:Context,var listener:QueriesListener) : Recycle
 
     override fun onBindViewHolder(holder: QueriesViewHolder, position: Int) {
         val q = data?.get(position)
-        holder.bindView(q, context)
+        holder.bindView(q, context, this)
         holder.itemView.tv_view_replies.setOnClickListener {
             q?.let { it1 -> listener.onViewReplies(it1) }
         }
@@ -50,7 +51,7 @@ class QueriesAdapter(var context:Context,var listener:QueriesListener) : Recycle
     }
 
     class QueriesViewHolder(itemView:View):RecyclerView.ViewHolder(itemView){
-        fun bindView(q: QueryModel?, context: Context) {
+        fun bindView(q: QueryModel?, context: Context, listener:QueryImageAttachmentAdapter.AttachmentListenet) {
             val query = Html.fromHtml(q?.query).trim()
             itemView.tv_query_question.text = query
             if (q?.user?.profile_image!=null && q.user?.profile_image?.isNotEmpty()!!){
@@ -66,7 +67,7 @@ class QueriesAdapter(var context:Context,var listener:QueriesListener) : Recycle
                 }
             }
             itemView.tv_name_qury_user.text = "@${q?.user?.username}"
-            val adapter = QueryImageAttachmentAdapter(context)
+            val adapter = QueryImageAttachmentAdapter(context, listener)
             itemView.rv_attachment_query.layoutManager = LinearLayoutManager(context,LinearLayoutManager.HORIZONTAL,false)
             itemView.rv_attachment_query.adapter = adapter
             q?.open_forum_attachment?.let { adapter.setData(it) }
@@ -74,4 +75,7 @@ class QueriesAdapter(var context:Context,var listener:QueriesListener) : Recycle
 
     }
 
+    override fun onImageClicked(attachment: OpenForumAttachment) {
+        listener.onImageClicked(attachment)
+    }
 }
