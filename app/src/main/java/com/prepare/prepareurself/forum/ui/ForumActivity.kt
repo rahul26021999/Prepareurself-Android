@@ -59,9 +59,10 @@ class ForumActivity : BaseActivity(), QueriesAdapter.QueriesListener {
         initEditor()
 
         btn_send_query.setOnClickListener {
-            val data = et_query_forum.text.toString()
+            var data = et_query_forum.text.toString()
             if (data.isNotEmpty()){
                 if (courseId!=-1){
+                    data = data.replace("\n","<br />", true)
                     htmlData = "<p>$data</p>"
                     vm.askQuery(pm.getString(Constants.JWTTOKEN),courseId,htmlData)
                             ?.observe(this, Observer {
