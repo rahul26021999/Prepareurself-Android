@@ -5,10 +5,12 @@ import android.text.Html
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
 import com.bumptech.glide.load.engine.DiskCacheStrategy
 import com.prepare.prepareurself.R
+import com.prepare.prepareurself.forum.data.OpenForumAttachment
 import com.prepare.prepareurself.forum.data.QueryModel
 import com.prepare.prepareurself.utils.Constants
 import com.prepare.prepareurself.utils.Utility
@@ -49,7 +51,7 @@ class QueriesAdapter(var context:Context,var listener:QueriesListener) : Recycle
 
     class QueriesViewHolder(itemView:View):RecyclerView.ViewHolder(itemView){
         fun bindView(q: QueryModel?, context: Context) {
-            val query = Html.fromHtml(q?.query)
+            val query = Html.fromHtml(q?.query).trim()
             itemView.tv_query_question.text = query
             if (q?.user?.profile_image!=null && q.user?.profile_image?.isNotEmpty()!!){
                 val imagUrl = q.user?.profile_image
@@ -64,6 +66,10 @@ class QueriesAdapter(var context:Context,var listener:QueriesListener) : Recycle
                 }
             }
             itemView.tv_name_qury_user.text = "@${q?.user?.username}"
+            val adapter = QueryImageAttachmentAdapter(context)
+            itemView.rv_attachment_query.layoutManager = LinearLayoutManager(context,LinearLayoutManager.HORIZONTAL,false)
+            itemView.rv_attachment_query.adapter = adapter
+            q?.open_forum_attachment?.let { adapter.setData(it) }
         }
 
     }

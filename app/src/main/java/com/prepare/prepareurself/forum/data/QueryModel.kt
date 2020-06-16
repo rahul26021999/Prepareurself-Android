@@ -9,5 +9,6 @@ data class QueryModel(
     var image:String?="",
     var created_at:String?="",
     var updated_at:String?="",
-    var user:ForumUser?=null
+    var user:ForumUser?=null,
+    var open_forum_attachment:List<OpenForumAttachment>?=null
 )

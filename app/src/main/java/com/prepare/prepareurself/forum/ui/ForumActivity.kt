@@ -205,7 +205,7 @@ class ForumActivity : BaseActivity(), QueriesAdapter.QueriesListener, ImageAttac
         val requestFile: RequestBody = RequestBody.create(MediaType.parse("image/jpeg"), bytes)
         val body = MultipartBody.Part.createFormData("image", "image.jpg", requestFile)
 
-        vm.uploadQueryImage(pm.getString(Constants.JWTTOKEN),1,body)
+        vm.uploadQueryImage(pm.getString(Constants.JWTTOKEN),0,body)
                 ?.observe(this, Observer {
                     if (it!=null){
                         Log.d("upload_query_image","${it.message} ${it.image} ${it.path}")
