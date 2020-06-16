@@ -78,11 +78,11 @@ class ForumActivity : BaseActivity(), QueriesAdapter.QueriesListener, ImageAttac
                                 if (it!=null){
                                     Utility.showToast(this,it.message)
                                     htmlData = ""
-                                    editor.html = ""
+                                 //   editor.html = ""
                                 }else{
                                     Utility.showToast(this,Constants.SOMETHINGWENTWRONG)
                                 }
-                                dialog.cancel()
+                              //  dialog.cancel()
                             })
                 }
             }else{
@@ -144,37 +144,37 @@ class ForumActivity : BaseActivity(), QueriesAdapter.QueriesListener, ImageAttac
     }
 
     override fun onDoReply(queryModel: QueryModel) {
-        val dialog = Dialog(this)
-        val view = LayoutInflater.from(this).inflate(R.layout.forum_add_query_dialog, null)
-        dialog.setContentView(view)
-        dialog.setTitle("Post your reply here")
-
-        initEditor()
-
-        view.btn_send_query.setOnClickListener {
-            if (htmlData.isNotEmpty()){
-                if (courseId!=-1){
-                    vm.doReply(pm.getString(Constants.JWTTOKEN),queryModel.id,htmlData)
-                            ?.observe(this, Observer {
-                                if (it!=null){
-                                    Utility.showToast(this,it.message)
-                                    htmlData = ""
-                                    editor.html = ""
-                                }else{
-                                    Utility.showToast(this,Constants.SOMETHINGWENTWRONG)
-                                }
-                                dialog.cancel()
-                            })
-                }
-            }else{
-                Utility.showToast(this,"Please enter a valid Reply")
-            }
-        }
-
-        val window = dialog.window
-        window?.setLayout(WindowManager.LayoutParams.MATCH_PARENT,WindowManager.LayoutParams.WRAP_CONTENT)
-
-        dialog.show()
+//        val dialog = Dialog(this)
+//        val view = LayoutInflater.from(this).inflate(R.layout.forum_add_query_dialog, null)
+//        dialog.setContentView(view)
+//        dialog.setTitle("Post your reply here")
+//
+//        initEditor()
+//
+//        view.btn_send_query.setOnClickListener {
+//            if (htmlData.isNotEmpty()){
+//                if (courseId!=-1){
+//                    vm.doReply(pm.getString(Constants.JWTTOKEN),queryModel.id,htmlData)
+//                            ?.observe(this, Observer {
+//                                if (it!=null){
+//                                    Utility.showToast(this,it.message)
+//                                    htmlData = ""
+//                                    editor.html = ""
+//                                }else{
+//                                    Utility.showToast(this,Constants.SOMETHINGWENTWRONG)
+//                                }
+//                                dialog.cancel()
+//                            })
+//                }
+//            }else{
+//                Utility.showToast(this,"Please enter a valid Reply")
+//            }
+//        }
+//
+//        val window = dialog.window
+//        window?.setLayout(WindowManager.LayoutParams.MATCH_PARENT,WindowManager.LayoutParams.WRAP_CONTENT)
+//
+//        dialog.show()
     }
 
 

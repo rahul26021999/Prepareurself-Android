@@ -19,8 +19,8 @@ class ForumViewModel(application: Application) : AndroidViewModel(application){
         return forumRepository?.askQuery(token, courseId, query, imageList)
     }
 
-    fun doReply(token: String,queryId:Int,reply:String):LiveData<DoReplyResponseModel>?{
-        return forumRepository?.doReply(token, queryId, reply)
+    fun doReply(token: String,queryId:Int,reply:String, images:ArrayList<String>):LiveData<DoReplyResponseModel>?{
+        return forumRepository?.doReply(token, queryId, reply, images)
     }
 
     fun getRelies(token: String,queryId:Int,page:Int):LiveData<GetQueriesResponseModel>?{

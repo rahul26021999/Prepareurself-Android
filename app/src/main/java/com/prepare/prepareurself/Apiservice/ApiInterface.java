@@ -251,6 +251,7 @@ public interface ApiInterface {
     @POST("do-reply")
     Call<DoReplyResponseModel> doReply(@Query("token") String token,
                                        @Query("query_id")int queryId,
-                                       @Query("reply")String reply);
+                                       @Query("reply")String reply,
+                                       @Query("images[]")ArrayList<String> images);
 
 }

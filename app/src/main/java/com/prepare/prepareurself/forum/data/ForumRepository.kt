@@ -94,10 +94,10 @@ class ForumRepository{
 
     }
 
-    fun doReply(token:String,queryId:Int,reply:String):LiveData<DoReplyResponseModel>{
+    fun doReply(token:String,queryId:Int,reply:String, images:ArrayList<String>):LiveData<DoReplyResponseModel>{
         val data = MutableLiveData<DoReplyResponseModel>()
 
-        apiInterface?.doReply(token, queryId,reply)?.enqueue(object : Callback<DoReplyResponseModel>{
+        apiInterface?.doReply(token, queryId,reply, images)?.enqueue(object : Callback<DoReplyResponseModel>{
             override fun onFailure(call: Call<DoReplyResponseModel>, t: Throwable) {
                 data.value = null
             }

@@ -1,7 +1,8 @@
 <?xml version="1.0" encoding="utf-8"?>
-<RelativeLayout
-    xmlns:android="http://schemas.android.com/apk/res/android" android:layout_width="match_parent"
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
     android:layout_height="wrap_content"
+    xmlns:tools="http://schemas.android.com/tools"
     android:orientation="vertical"
     android:padding="@dimen/padding_10">
 
@@ -34,5 +35,14 @@
         android:fontFamily="@font/proximanovaregular"
         android:layout_alignStart="@+id/tv_name_reply_user"
         android:id="@+id/tv_reply_answer"/>
+
+    <androidx.recyclerview.widget.RecyclerView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/rv_attachment_reply"
+        tools:listitem="@layout/rv_image_attachment_query_layout"
+        android:layout_below="@+id/tv_reply_answer"
+        android:layout_alignStart="@+id/tv_reply_answer"
+        />
 
 </RelativeLayout>
