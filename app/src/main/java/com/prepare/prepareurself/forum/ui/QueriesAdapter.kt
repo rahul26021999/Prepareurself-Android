@@ -49,7 +49,8 @@ class QueriesAdapter(var context:Context,var listener:QueriesListener) : Recycle
 
     class QueriesViewHolder(itemView:View):RecyclerView.ViewHolder(itemView){
         fun bindView(q: QueryModel?, context: Context) {
-            itemView.tv_query_question.text = Html.fromHtml(q?.query)
+            val query = Html.fromHtml(q?.query)
+            itemView.tv_query_question.text = query
             if (q?.user?.profile_image!=null && q.user?.profile_image?.isNotEmpty()!!){
                 val imagUrl = q.user?.profile_image
                 if (imagUrl?.endsWith(".svg")!!){
