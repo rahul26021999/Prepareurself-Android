@@ -83,4 +83,6 @@ public class Constants {
 
     public static final String QUERYID = "query_id";
     public static final String QUERY = "query";
+    public static final String QUERYATTACHMENTBASEURL = "http://prepareurself.in/uploads/openforum/queries/";
+    public static final String REPLYATTACHMENTBASEURL = "http://prepareurself.in/uploads/openforum/replies/";
 }

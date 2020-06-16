@@ -234,7 +234,7 @@ public interface ApiInterface {
     Call<ForumPostQueryResponseModel> askQuery(@Query("token") String token,
                                                @Query("course_id") int courseId,
                                                @Query("query") String query,
-                                               @Query("images")ArrayList<String> images);
+                                               @Query("images[]")ArrayList<String> images);
 
     @POST("get-queries")
     Call<GetQueriesResponseModel> getQueries(@Query("token") String token,
