@@ -118,8 +118,9 @@ public class DashboardRespoisitory {
             @Override
             public void onResponse(Call<HomepageResponseModel> call, Response<HomepageResponseModel> response) {
                 HomepageResponseModel responseModel  = response.body();
-
+                Log.d("TAGRESPONSE",""+responseModel.getError_code());
                 if (response.code() == 401){
+                    Log.d("TAGRESPONSE",""+responseModel.getError_code());
                     PrefManager prefManager = new PrefManager(context);
                     Utility.showLongToast(context,"Session Expired! Please login again");
                     Intent intent = new Intent();
@@ -129,6 +130,8 @@ public class DashboardRespoisitory {
                     ((Activity)context).finish();
                 }
                 if (responseModel!=null){
+                    Log.d("TAGRESPONSE",""+responseModel.getError_code());
+
                     if (responseModel.getError_code()==0){
                         data.setValue(responseModel);
                     }else{
@@ -150,3 +153,4 @@ public class DashboardRespoisitory {
     }
 
 }
+

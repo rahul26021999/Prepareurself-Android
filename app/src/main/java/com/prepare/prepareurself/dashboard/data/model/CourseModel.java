@@ -43,8 +43,17 @@ public class CourseModel {
     @ColumnInfo(name = "color")
     @SerializedName("color")
     private String color;
+    @ColumnInfo(name = "average_rating")
+    @SerializedName("average_rating")
+    private float average_rating;
 
+    public float getAverage_rating() {
+        return average_rating;
+    }
 
+    public void setAverage_rating(float average_rating) {
+        this.average_rating = average_rating;
+    }
     public int getTopic_count() {
         return topic_count;
     }

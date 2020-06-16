@@ -13,7 +13,7 @@
 
 
     <color name="dark_grey">#aaa</color>
-
+    <color name="dark_grey1">#757070</color>
     <!--quiz-->
     <color name="quiz_background">#27254b</color>
     <color name="quiz_selected_circler_color">#1368f1</color>
@@ -40,17 +40,23 @@
 
     <color name="shimmer_background">#dddddd</color>
     <color name="androseablue">#0A8C9C</color>
+
     <color name="androseablueend">#24C9DD</color>
-    <color name="phpgrey">#5A5C5C</color>
-    <color name="phpgreyend">#A1A3A3</color>
+    <color name="androseabluecen">#84D7E1</color>
+
+    <color name="phpgrey">#7070DF</color>
+    <color name="phpgreyend">#9090EF</color>
     <color name="flutterblue">#40A7FA</color>
     <color name="flutterblueend">#6AB8F6</color>
-    <color name="red">#CF2A2A</color>
-    <color name="redend">#DF9494</color>
-    <color name="djanogreen">#396B71</color>
-    <color name="djangogreenend">#8ED3DC</color>
+    <color name="red">#E85858</color>
+    <color name="redend">#D18989</color>
+    <color name="djanogreen">#2D555A</color>
+    <color name="djanogreencenter">#4F7F85</color>
+    <color name="djangogreenend">#6C9BA1</color>
     <color name="gtyellow">#FFEB3B</color>
     <color name="gtyellowend">#E8E8E6</color>
+    <color name="ryellow">#F15E53</color>
+    <color name="ryellowend">#EF968F</color>
     <color name="pyblue">#33638A</color>
     <color name="pyblueend">#72AFDF</color>
    <!-- androd

@@ -56,7 +56,7 @@ public class CourseDetailActivity extends BaseActivity implements View.OnClickLi
     private com.willy.ratingbar.ScaleRatingBar scaleRatingBar;
     private LinearLayout l_layout_pref , topCourseBackground,belowCourseBackgroundContainer;
     private RelativeLayout rel_project, rel_resources, rel_forum, rel_takequiz,mainBackground;
-    TextView course_name, course_description,tv_pref_name,averageRating;
+    TextView course_name, course_description,tv_pref_name,averageRating,count_topics,count_projects;
     ImageView forumIcon,ProjectIcon,ResourceIcon,QuizIcon;
     private String courseName = "";
     private boolean isAdded = false;
@@ -93,24 +93,26 @@ public class CourseDetailActivity extends BaseActivity implements View.OnClickLi
                     if (courseDetailReponseModel!=null ){
                         CourseModel course=courseDetailReponseModel.getCourse();
                         setbggradientdynamicupperlayout(course);
-
                         String title=course.getName();
                         String description=course.getDescription();
                         String logo_url=course.getLogo_url();
-                        //course.ra
+                        float rating=course.getAverage_rating();
+                       // float f = Float.parseFloat("25");
+                       // String s = Float.toString(rating);
+                        String f= String.valueOf(rating);
+                        averageRating.setText(f);
 
                         int topic_count=course.getTopic_count();
+                        Log.d("count",""+topic_count);
+                        //count_topics.setText(topic_count);
                         int project_count=course.getProject_count();
-                        averageRating.setText("3.5");
+                        Log.d("count",""+project_count);
+                        //count_projects.setText(project_count);
                         course_name.setText(title);
                         courseName = title;
-
-
                         if (description!=null)
                             course_description.setText(Html.fromHtml(description).toString().trim());
-
                         scaleRatingBar.setRating(courseDetailReponseModel.getRating());
-
                         if (courseDetailReponseModel.getRating() == 0){
                             isRateFetching = false;
                         }
@@ -246,6 +248,8 @@ public class CourseDetailActivity extends BaseActivity implements View.OnClickLi
         belowCourseBackgroundContainer=findViewById(R.id.belowCourseBackgroundContainer);
         topCourseBackground =findViewById(R.id.topCourseBackground);
         tv_pref_name=findViewById(R.id.tv_pref_name);
+        count_projects=findViewById(R.id.count_topics);
+        count_projects=findViewById(R.id.count_projects);
         pref_image=findViewById(R.id.pref_image);
         scaleRatingBar=findViewById(R.id.scaleRatingBar);
         rel_project=findViewById(R.id.rel_project);
@@ -267,7 +271,7 @@ public class CourseDetailActivity extends BaseActivity implements View.OnClickLi
         //View view = LayoutInflater.from(this).inflate(R.layout.activity_dialog_playstore, null);
         dialog.setContentView(R.layout.activity_dialog_playstore);
         com.google.android.material.button.MaterialButton buttonok =dialog.findViewById(R.id.btn_ok);
-        com.google.android.material.button.MaterialButton buttonnotnow =dialog.findViewById(R.id.btn_notnow);
+        TextView buttonnotnow =dialog.findViewById(R.id.btn_notnow);
         buttonok.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -293,7 +297,7 @@ public class CourseDetailActivity extends BaseActivity implements View.OnClickLi
         dialog.setCancelable(false);
         dialog.setContentView(R.layout.activity_dialog);
         com.google.android.material.button.MaterialButton buttonok =dialog.findViewById(R.id.btn_ok);
-        com.google.android.material.button.MaterialButton buttonnotnow =dialog.findViewById(R.id.btn_notnow);
+        TextView buttonnotnow =dialog.findViewById(R.id.btn_notnow);
         buttonok.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
