@@ -36,6 +36,7 @@ import com.prepare.prepareurself.authentication.data.model.AuthenticationRespons
 import com.prepare.prepareurself.resources.data.model.VideoShareResponseModel;
 import com.prepare.prepareurself.search.models.SearchResponseModel;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import okhttp3.MultipartBody;
@@ -232,7 +233,8 @@ public interface ApiInterface {
     @POST("ask-query")
     Call<ForumPostQueryResponseModel> askQuery(@Query("token") String token,
                                                @Query("course_id") int courseId,
-                                               @Query("query") String query);
+                                               @Query("query") String query,
+                                               @Query("images")ArrayList<String> images);
 
     @POST("get-queries")
     Call<GetQueriesResponseModel> getQueries(@Query("token") String token,
