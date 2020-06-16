@@ -72,7 +72,7 @@ class ForumActivity : BaseActivity(), QueriesAdapter.QueriesListener, ImageAttac
                 if (courseId!=-1){
                     data = data.replace("\n","<br />", true)
                     htmlData = "<p>$data</p>"
-                    vm.askQuery(pm.getString(Constants.JWTTOKEN),courseId,htmlData)
+                    vm.askQuery(pm.getString(Constants.JWTTOKEN),courseId,htmlData, imageNameList)
                             ?.observe(this, Observer {
                                 if (it!=null){
                                     Utility.showToast(this,it.message)
@@ -208,11 +208,11 @@ class ForumActivity : BaseActivity(), QueriesAdapter.QueriesListener, ImageAttac
         vm.uploadQueryImage(pm.getString(Constants.JWTTOKEN),1,body)
                 ?.observe(this, Observer {
                     if (it!=null){
-                        Log.d("upload_query_image","${it.message} ${it.image}")
+                        Log.d("upload_query_image","${it.message} ${it.image} ${it.path}")
                         if (!it.image.isNullOrEmpty()){
                             //editor.insertImage(it.image,"image.jpg")
                             imageAttachedList.add(it.image.toString())
-                            imageNameList.add("${System.currentTimeMillis()/1000}")
+                            imageNameList.add("${it.image}")
                            // lin_image_attached.visibility = View.VISIBLE
                             attachmentAdapter.setData(imageNameList)
                         }else{

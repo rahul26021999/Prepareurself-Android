@@ -24,10 +24,10 @@ class ForumRepository{
     }
 
 
-    fun askQuery(token:String,courseId:Int,query:String):LiveData<ForumPostQueryResponseModel>{
+    fun askQuery(token:String,courseId:Int,query:String, imageList:ArrayList<String>):LiveData<ForumPostQueryResponseModel>{
         val data = MutableLiveData<ForumPostQueryResponseModel>()
 
-        apiInterface?.askQuery(token, courseId, query)?.enqueue(object : Callback<ForumPostQueryResponseModel>{
+        apiInterface?.askQuery(token, courseId, query, imageList)?.enqueue(object : Callback<ForumPostQueryResponseModel>{
             override fun onFailure(call: Call<ForumPostQueryResponseModel>, t: Throwable) {
                 data.value = null
             }
