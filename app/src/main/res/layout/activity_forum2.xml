@@ -66,6 +66,12 @@
                 android:fontFamily="@font/proximanovaregular"/>
 
 
+            <androidx.recyclerview.widget.RecyclerView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:id="@+id/rv_image_attachment"
+                />
+
             <jp.wasabeef.richeditor.RichEditor
                 android:id="@+id/editor"
                 android:visibility="gone"

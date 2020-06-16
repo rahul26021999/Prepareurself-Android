@@ -9,6 +9,7 @@ import android.net.Uri
 import android.os.Bundle
 import android.util.Log
 import android.view.LayoutInflater
+import android.view.View
 import android.view.WindowManager
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
@@ -32,14 +33,19 @@ import okhttp3.RequestBody
 import java.io.ByteArrayOutputStream
 import java.io.IOException
 import java.io.InputStream
+import java.util.*
+import kotlin.collections.ArrayList
 
 
-class ForumActivity : BaseActivity(), QueriesAdapter.QueriesListener {
+class ForumActivity : BaseActivity(), QueriesAdapter.QueriesListener, ImageAttachedAdapter.AttachmentListener {
 
     private var htmlData = ""
     private lateinit var vm:ForumViewModel
     private lateinit var pm:PrefManager
     private var courseId = -1
+    private var imageAttachedList = ArrayList<String>()
+    private var imageNameList = ArrayList<String>()
+    private lateinit var attachmentAdapter: ImageAttachedAdapter
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -57,6 +63,8 @@ class ForumActivity : BaseActivity(), QueriesAdapter.QueriesListener {
 //        }
 
         initEditor()
+
+        initAttachmentAdapter()
 
         btn_send_query.setOnClickListener {
             var data = et_query_forum.text.toString()
@@ -87,6 +95,12 @@ class ForumActivity : BaseActivity(), QueriesAdapter.QueriesListener {
             finish()
         }
 
+    }
+
+    private fun initAttachmentAdapter() {
+        attachmentAdapter = ImageAttachedAdapter(this)
+        rv_image_attachment.layoutManager = LinearLayoutManager(this,LinearLayoutManager.HORIZONTAL, false)
+        rv_image_attachment.adapter = attachmentAdapter
     }
 
     private fun initQueryAdapter() {
@@ -196,12 +210,16 @@ class ForumActivity : BaseActivity(), QueriesAdapter.QueriesListener {
                     if (it!=null){
                         Log.d("upload_query_image","${it.message} ${it.image}")
                         if (!it.image.isNullOrEmpty()){
-                            editor.insertImage(it.image,"image.jpg")
+                            //editor.insertImage(it.image,"image.jpg")
+                            imageAttachedList.add(it.image.toString())
+                            imageNameList.add("${System.currentTimeMillis()/1000}")
+                           // lin_image_attached.visibility = View.VISIBLE
+                            attachmentAdapter.setData(imageNameList)
                         }else{
-                            Utility.showToast(this,"Cannot insert image at the moment")
+                            Utility.showToast(this,"Cannot attach image at the moment")
                         }
                     }else{
-                        Utility.showToast(this,"Cannot insert image at the moment")
+                        Utility.showToast(this,"Cannot attach image at the moment")
                     }
                 })
 
@@ -242,7 +260,7 @@ class ForumActivity : BaseActivity(), QueriesAdapter.QueriesListener {
         tv_attach_image.setOnClickListener {
             //editor.insertImage("http://www.1honeywan.com/dachshund/image/7.21/7.21_3_thumb.JPG","image")
             uploadImage()
-            editor.setNumbers()
+           // editor.setNumbers()
         }
 
 //        action_undo.setOnClickListener {
@@ -368,5 +386,11 @@ class ForumActivity : BaseActivity(), QueriesAdapter.QueriesListener {
 
         dialog.show()
 
+    }
+
+    override fun onCancelled(position: Int) {
+        imageAttachedList.removeAt(position)
+        imageNameList.removeAt(position)
+        attachmentAdapter.notifyItemRemoved(position)
     }
 }
