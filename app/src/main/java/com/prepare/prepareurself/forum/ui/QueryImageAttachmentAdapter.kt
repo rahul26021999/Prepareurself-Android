@@ -18,13 +18,15 @@ import kotlinx.android.synthetic.main.rv_image_attachment_query_layout.view.img_
 class QueryImageAttachmentAdapter(var context: Context, var listener:AttachmentListenet) : RecyclerView.Adapter<QueryImageAttachmentAdapter.ImageAttachmentViewHolder>() {
 
     private var data : List<OpenForumAttachment>?=null
+    private var type = -1
 
     interface AttachmentListenet{
         fun onImageClicked(attachment: OpenForumAttachment)
     }
 
-    fun setData(list: List<OpenForumAttachment>){
+    fun setData(list: List<OpenForumAttachment>, t:Int){
         data = list
+        type = t
         notifyDataSetChanged()
     }
 
@@ -39,7 +41,7 @@ class QueryImageAttachmentAdapter(var context: Context, var listener:AttachmentL
     override fun onBindViewHolder(holder: ImageAttachmentViewHolder, position: Int) {
         val d = data?.get(position)
 
-        holder.bindView(d, context)
+        holder.bindView(d, context, type)
         holder.itemView.setOnClickListener {
             d?.let { it1 -> listener.onImageClicked(it1) }
         }
@@ -47,15 +49,21 @@ class QueryImageAttachmentAdapter(var context: Context, var listener:AttachmentL
     }
 
     class ImageAttachmentViewHolder(itemView:View):RecyclerView.ViewHolder(itemView) {
-        fun bindView(d: OpenForumAttachment?, context:Context) {
+        fun bindView(d: OpenForumAttachment?, context:Context, type:Int) {
 
             if (d?.file!=null && d.file?.isNotEmpty()!!){
-                val imagUrl = "${Constants.QUERYATTACHMENTBASEURL}${d.file}"
-                if (imagUrl.endsWith(".svg")){
-                    Utility.loadSVGImage(context, imagUrl, itemView.img_person_queries)
+                var imageUrl = ""
+                if (type==0){
+                    imageUrl = "${Constants.QUERYATTACHMENTBASEURL}${d.file}"
+                }else if (type == 1){
+                    imageUrl = "${Constants.REPLYATTACHMENTBASEURL}${d.file}"
+                }
+
+                if (imageUrl.endsWith(".svg")){
+                    Utility.loadSVGImage(context, imageUrl, itemView.img_person_queries)
                 }else{
                     Glide.with(context)
-                            .load(imagUrl)
+                            .load(imageUrl)
                             .placeholder(R.drawable.placeholder)
                             .diskCacheStrategy(DiskCacheStrategy.RESOURCE)
                             .into(itemView.img_query_attachment)

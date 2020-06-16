@@ -9,10 +9,9 @@
 
     <include layout="@layout/layout_topbar"/>
 
-    <LinearLayout
+    <RelativeLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:orientation="vertical"
         android:padding="@dimen/padding_10">
 
         <TextView
@@ -29,8 +28,103 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:id="@+id/rv_replies"
+            android:layout_below="@+id/tv_reply_question"
             android:layout_marginTop="@dimen/padding_10"/>
 
-    </LinearLayout>
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            android:id="@+id/lin_bottom_forum"
+            android:layout_alignParentBottom="true"
+            android:background="@drawable/grey_rounded_stroked_rectangle">
+
+            <EditText
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:id="@+id/et_reply_forum"
+                android:hint="Enter your query here"
+                android:visibility="visible"
+                android:fontFamily="@font/proximanovaregular"/>
+
+
+            <androidx.recyclerview.widget.RecyclerView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:id="@+id/rv_image_attachment_reply"
+                />
+
+            <jp.wasabeef.richeditor.RichEditor
+                android:id="@+id/editor"
+                android:visibility="gone"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_margin="5dp"/>
+
+            <RelativeLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:padding="5dp">
+
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Bold"
+                    android:textColor="@color/colorPrimaryDark"
+                    android:textSize="14sp"
+                    android:textStyle="bold"
+                    android:id="@+id/tv_bold"
+                    android:layout_margin="@dimen/padding_10"/>
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Italic"
+                    android:textColor="@color/colorPrimaryDark"
+                    android:textSize="14sp"
+                    android:textStyle="bold"
+                    android:id="@+id/tv_italic"
+                    android:layout_margin="@dimen/padding_10"
+                    android:layout_toEndOf="@+id/tv_bold"/>
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Underline"
+                    android:textColor="@color/colorPrimaryDark"
+                    android:textSize="14sp"
+                    android:layout_margin="@dimen/padding_10"
+                    android:textStyle="bold"
+                    android:id="@+id/tv_underline"
+                    android:layout_toEndOf="@+id/tv_italic"/>
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Attach Image"
+                    android:textColor="@color/colorPrimaryDark"
+                    android:textSize="14sp"
+                    android:textStyle="bold"
+                    android:layout_margin="@dimen/padding_10"
+                    android:id="@+id/tv_attach_image_reply"
+                    android:layout_toEndOf="@+id/tv_underline"/>
+
+                <com.google.android.material.button.MaterialButton
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Send"
+                    android:id="@+id/btn_send_reply"
+                    android:textSize="14sp"
+                    android:fontFamily="@font/proximanovaregular"
+                    android:textColor="@color/white"
+                    android:background="@color/colorPrimaryDark"
+                    android:layout_alignParentEnd="true"/>
+
+            </RelativeLayout>
+
+        </LinearLayout>
+
+    </RelativeLayout>
 
 </LinearLayout>

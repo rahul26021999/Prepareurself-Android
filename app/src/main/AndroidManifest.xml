@@ -18,7 +18,8 @@
         android:theme="@style/AppTheme"
         android:usesCleartextTraffic="true"
         tools:replace="android:allowBackup">
-        <activity android:name=".forum.ui.RepliesActivity"></activity>
+        <activity android:name=".forum.ui.RepliesActivity"
+            android:theme="@style/ProfileTheme"/>
         <activity
             android:name=".forum.ui.ForumActivity"
             android:theme="@style/ProfileTheme" />

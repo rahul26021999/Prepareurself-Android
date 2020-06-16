@@ -70,7 +70,7 @@ class QueriesAdapter(var context:Context,var listener:QueriesListener) : Recycle
             val adapter = QueryImageAttachmentAdapter(context, listener)
             itemView.rv_attachment_query.layoutManager = LinearLayoutManager(context,LinearLayoutManager.HORIZONTAL,false)
             itemView.rv_attachment_query.adapter = adapter
-            q?.open_forum_attachment?.let { adapter.setData(it) }
+            q?.open_forum_attachment?.let { adapter.setData(it,0) }
         }
 
     }
