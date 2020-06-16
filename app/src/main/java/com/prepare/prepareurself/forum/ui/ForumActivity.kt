@@ -59,13 +59,11 @@ class ForumActivity : BaseActivity(), QueriesAdapter.QueriesListener, ImageAttac
 
         courseId = intent.getIntExtra(Constants.COURSEID,-1)
 
-//        btn_ask_query.setOnClickListener {
-//            showPostQueryDialog()
-//        }
-
-        initEditor()
-
         initAttachmentAdapter()
+
+        tv_attach_image.setOnClickListener {
+            uploadImage()
+        }
 
         btn_send_query.setOnClickListener {
             var data = et_query_forum.text.toString()
@@ -78,11 +76,9 @@ class ForumActivity : BaseActivity(), QueriesAdapter.QueriesListener, ImageAttac
                                 if (it!=null){
                                     Utility.showToast(this,it.message)
                                     htmlData = ""
-                                 //   editor.html = ""
                                 }else{
                                     Utility.showToast(this,Constants.SOMETHINGWENTWRONG)
                                 }
-                              //  dialog.cancel()
                             })
                 }
             }else{
@@ -121,62 +117,12 @@ class ForumActivity : BaseActivity(), QueriesAdapter.QueriesListener, ImageAttac
                 })
     }
 
-    private fun showPostQueryDialog() {
-        val dialog = Dialog(this)
-        val view = LayoutInflater.from(this).inflate(R.layout.forum_add_query_dialog, null)
-        dialog.setContentView(view)
-        dialog.setTitle("Post your query here")
-
-
-
-        val window = dialog.window
-        window?.setLayout(WindowManager.LayoutParams.MATCH_PARENT,WindowManager.LayoutParams.WRAP_CONTENT)
-
-        dialog.show()
-
-    }
-
     override fun onViewReplies(queryModel: QueryModel) {
         val intent = Intent(this@ForumActivity,RepliesActivity::class.java)
         intent.putExtra(Constants.QUERY,queryModel.query)
         intent.putExtra(Constants.QUERYID,queryModel.id)
         startActivity(intent)
     }
-
-    override fun onDoReply(queryModel: QueryModel) {
-//        val dialog = Dialog(this)
-//        val view = LayoutInflater.from(this).inflate(R.layout.forum_add_query_dialog, null)
-//        dialog.setContentView(view)
-//        dialog.setTitle("Post your reply here")
-//
-//        initEditor()
-//
-//        view.btn_send_query.setOnClickListener {
-//            if (htmlData.isNotEmpty()){
-//                if (courseId!=-1){
-//                    vm.doReply(pm.getString(Constants.JWTTOKEN),queryModel.id,htmlData)
-//                            ?.observe(this, Observer {
-//                                if (it!=null){
-//                                    Utility.showToast(this,it.message)
-//                                    htmlData = ""
-//                                    editor.html = ""
-//                                }else{
-//                                    Utility.showToast(this,Constants.SOMETHINGWENTWRONG)
-//                                }
-//                                dialog.cancel()
-//                            })
-//                }
-//            }else{
-//                Utility.showToast(this,"Please enter a valid Reply")
-//            }
-//        }
-//
-//        val window = dialog.window
-//        window?.setLayout(WindowManager.LayoutParams.MATCH_PARENT,WindowManager.LayoutParams.WRAP_CONTENT)
-//
-//        dialog.show()
-    }
-
 
 
     private fun uploadImage() {
@@ -236,157 +182,6 @@ class ForumActivity : BaseActivity(), QueriesAdapter.QueriesListener, ImageAttac
             byteBuff.write(buff, 0, len)
         }
         return byteBuff.toByteArray()
-    }
-
-    private fun initEditor() {
-
-        editor.setEditorHeight(100)
-        editor.setEditorFontSize(22)
-        editor.setEditorFontColor(R.color.colorPrimaryDark)
-        editor.setPadding(10, 10, 10, 10)
-        editor.setPlaceholder("Insert text here...")
-        editor.requestFocus()
-
-        editor.setOnTextChangeListener { text ->
-            htmlData = text
-        }
-
-        tv_bold.setOnClickListener {
-            editor.setBold()
-        }
-        tv_italic.setOnClickListener {
-            editor.setItalic()
-        }
-
-        tv_attach_image.setOnClickListener {
-            //editor.insertImage("http://www.1honeywan.com/dachshund/image/7.21/7.21_3_thumb.JPG","image")
-            uploadImage()
-           // editor.setNumbers()
-        }
-
-//        action_undo.setOnClickListener {
-//            editor.undo()
-//        }
-//
-//        action_redo.setOnClickListener {
-//            editor.redo()
-//        }
-//
-//        action_subscript.setOnClickListener {
-//            editor.setSubscript()
-//        }
-//        action_superscript.setOnClickListener {
-//            editor.setSuperscript()
-//        }
-//        action_strikethrough.setOnClickListener {
-//            editor.setStrikeThrough()
-//        }
-//        tv_underline.setOnClickListener {
-//            editor.setUnderline()
-//        }
-//        action_heading1.setOnClickListener {
-//            editor.setHeading(1)
-//        }
-//        action_heading2.setOnClickListener {
-//            editor.setHeading(2)
-//        }
-//        action_heading3.setOnClickListener {
-//            editor.setHeading(3)
-//        }
-//        action_heading4.setOnClickListener {
-//            editor.setHeading(4)
-//        }
-//        action_heading5.setOnClickListener {
-//            editor.setHeading(5)
-//        }
-//        action_heading6.setOnClickListener {
-//            editor.setHeading(6)
-//        }
-//
-//        var isTextColorChanged = true
-//
-//        action_txt_color.setOnClickListener {
-//            if (isTextColorChanged){
-//                editor.setTextColor(Color.RED)
-//            }else{
-//                editor.setTextColor(Color.BLACK)
-//            }
-//            isTextColorChanged=!isTextColorChanged
-//        }
-//
-//        var isBgColorChanged = true
-//
-//        action_bg_color.setOnClickListener {
-//            if (isBgColorChanged){
-//                editor.setTextBackgroundColor(Color.TRANSPARENT)
-//            }else{
-//                editor.setTextColor(Color.YELLOW)
-//            }
-//            isBgColorChanged=!isBgColorChanged
-//        }
-//
-//
-//        action_indent.setOnClickListener {
-//            editor.setIndent()
-//        }
-//
-//        action_outdent.setOnClickListener {
-//            editor.setOutdent()
-//        }
-//
-//        action_align_left.setOnClickListener {
-//            editor.setAlignLeft()
-//        }
-//
-//        action_align_center.setOnClickListener {
-//            editor.setAlignCenter()
-//        }
-//
-//        action_align_right.setOnClickListener {
-//            editor.setAlignRight()
-//        }
-//        action_blockquote.setOnClickListener {
-//            editor.setBlockquote()
-//        }
-//        action_insert_bullets.setOnClickListener {
-//            editor.setBullets()
-//        }
-//        action_insert_numbers.setOnClickListener {
-//            editor.setNumbers()
-//        }
-//
-//        action_insert_link.setOnClickListener {
-//           // editor.insertLink("https://github.com/raystatic","github")
-//            insertLink()
-//        }
-//        action_insert_checkbox.setOnClickListener {
-//            editor.insertTodo()
-//        }
-    }
-
-    private fun insertLink() {
-        val dialog = Dialog(this)
-        val view = LayoutInflater.from(this).inflate(R.layout.insert_link_editor_dialog, null)
-        dialog.setContentView(view)
-
-        view.btn_insert_link.setOnClickListener{
-            val name = view.et_editor_name.text.toString()
-            val link = view.et_editor_link.text.toString()
-
-            if (name.isNotEmpty() && link.isNotEmpty()){
-                editor.insertLink(link,name)
-                dialog.cancel()
-            }else{
-                Utility.showToast(this,"Please enter data carefully")
-            }
-
-        }
-
-        val window = dialog.window
-        window?.setLayout(WindowManager.LayoutParams.MATCH_PARENT, WindowManager.LayoutParams.WRAP_CONTENT)
-
-        dialog.show()
-
     }
 
     override fun onCancelled(position: Int) {

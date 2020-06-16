@@ -22,7 +22,6 @@ class QueriesAdapter(var context:Context,var listener:QueriesListener) : Recycle
 
     interface QueriesListener{
         fun onViewReplies(queryModel: QueryModel)
-        fun onDoReply(queryModel: QueryModel)
         fun onImageClicked(attachment: OpenForumAttachment)
     }
 
@@ -44,9 +43,6 @@ class QueriesAdapter(var context:Context,var listener:QueriesListener) : Recycle
         holder.bindView(q, context, this)
         holder.itemView.tv_view_replies.setOnClickListener {
             q?.let { it1 -> listener.onViewReplies(it1) }
-        }
-        holder.itemView.tv_do_reply.setOnClickListener {
-            q?.let { it1 -> listener.onDoReply(it1) }
         }
     }
 

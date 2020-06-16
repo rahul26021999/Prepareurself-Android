@@ -54,13 +54,6 @@
                 android:id="@+id/rv_image_attachment_reply"
                 />
 
-            <jp.wasabeef.richeditor.RichEditor
-                android:id="@+id/editor"
-                android:visibility="gone"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_margin="5dp"/>
-
             <RelativeLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
