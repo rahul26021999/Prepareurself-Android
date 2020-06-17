@@ -23,6 +23,7 @@ class QueriesAdapter(var context:Context,var listener:QueriesListener) : Recycle
     interface QueriesListener{
         fun onViewReplies(queryModel: QueryModel)
         fun onImageClicked(attachment: OpenForumAttachment)
+        fun onBottomReached()
     }
 
     fun setData(list: List<QueryModel>){
@@ -39,6 +40,9 @@ class QueriesAdapter(var context:Context,var listener:QueriesListener) : Recycle
     }
 
     override fun onBindViewHolder(holder: QueriesViewHolder, position: Int) {
+        if (position == data?.size?.minus(1)){
+            listener.onBottomReached()
+        }
         val q = data?.get(position)
         holder.bindView(q, context, this)
         holder.itemView.tv_view_replies.setOnClickListener {

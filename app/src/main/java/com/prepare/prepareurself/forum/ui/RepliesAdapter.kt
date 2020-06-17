@@ -23,6 +23,7 @@ class RepliesAdapter(var context:Context, var listener:RepliesListener) : Recycl
     interface RepliesListener{
         fun onImageClicked(attachment: OpenForumAttachment)
         fun onClapped(i: Int,position: Int, queryModel: QueryModel)
+        fun onBottomReached()
     }
 
     fun setData(list: List<QueryModel>){
@@ -39,6 +40,9 @@ class RepliesAdapter(var context:Context, var listener:RepliesListener) : Recycl
     }
 
     override fun onBindViewHolder(holder: RepliesViewHolder, position: Int) {
+        if (position == data?.size?.minus(1)){
+            listener.onBottomReached()
+        }
         val q = data?.get(position)
         holder.bindView(q, context, this)
         holder.itemView.tv_doclap_reply.setOnClickListener {
