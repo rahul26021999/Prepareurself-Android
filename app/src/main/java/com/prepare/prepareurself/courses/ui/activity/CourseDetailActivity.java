@@ -101,13 +101,16 @@ public class CourseDetailActivity extends BaseActivity implements View.OnClickLi
                        // String s = Float.toString(rating);
                         String f= String.valueOf(rating);
                         averageRating.setText(f);
-
-                        int topic_count=course.getTopic_count();
+                        int topic_count=courseDetailReponseModel.getTopic_count();
                         Log.d("count",""+topic_count);
-                        //count_topics.setText(topic_count);
-                        int project_count=course.getProject_count();
+                        if (topic_count>0){
+                            count_topics.setText(""+topic_count);
+                        }
+                        int project_count=courseDetailReponseModel.getProject_count();
+                        if (project_count>0){
+                            count_projects.setText(""+project_count);
+                        }
                         Log.d("count",""+project_count);
-                        //count_projects.setText(project_count);
                         course_name.setText(title);
                         courseName = title;
                         if (description!=null)
@@ -248,7 +251,7 @@ public class CourseDetailActivity extends BaseActivity implements View.OnClickLi
         belowCourseBackgroundContainer=findViewById(R.id.belowCourseBackgroundContainer);
         topCourseBackground =findViewById(R.id.topCourseBackground);
         tv_pref_name=findViewById(R.id.tv_pref_name);
-        count_projects=findViewById(R.id.count_topics);
+        count_topics=findViewById(R.id.count_topics);
         count_projects=findViewById(R.id.count_projects);
         pref_image=findViewById(R.id.pref_image);
         scaleRatingBar=findViewById(R.id.scaleRatingBar);

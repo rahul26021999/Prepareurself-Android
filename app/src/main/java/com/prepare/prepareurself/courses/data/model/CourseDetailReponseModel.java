@@ -9,6 +9,25 @@ public class CourseDetailReponseModel {
     private int rating = 0;
     private Boolean preference = false;
 
+    public int getTopic_count() {
+        return topic_count;
+    }
+
+    public void setTopic_count(int topic_count) {
+        this.topic_count = topic_count;
+    }
+
+    public int getProject_count() {
+        return project_count;
+    }
+
+    public void setProject_count(int project_count) {
+        this.project_count = project_count;
+    }
+
+    private int topic_count;
+    private int project_count;
+
     public int getError_code() {
         return error_code;
     }
