@@ -67,6 +67,7 @@
                     android:textColor="@color/colorPrimaryDark"
                     android:textSize="14sp"
                     android:textStyle="bold"
+                    android:visibility="gone"
                     android:id="@+id/tv_bold"
                     android:layout_margin="@dimen/padding_10"/>
 
@@ -77,6 +78,7 @@
                     android:textColor="@color/colorPrimaryDark"
                     android:textSize="14sp"
                     android:textStyle="bold"
+                    android:visibility="gone"
                     android:id="@+id/tv_italic"
                     android:layout_margin="@dimen/padding_10"
                     android:layout_toEndOf="@+id/tv_bold"/>
@@ -87,6 +89,7 @@
                     android:text="Underline"
                     android:textColor="@color/colorPrimaryDark"
                     android:textSize="14sp"
+                    android:visibility="gone"
                     android:layout_margin="@dimen/padding_10"
                     android:textStyle="bold"
                     android:id="@+id/tv_underline"
