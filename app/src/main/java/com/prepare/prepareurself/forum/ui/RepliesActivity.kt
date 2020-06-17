@@ -19,6 +19,7 @@ import com.bumptech.glide.Glide
 import com.bumptech.glide.load.engine.DiskCacheStrategy
 import com.prepare.prepareurself.R
 import com.prepare.prepareurself.forum.data.OpenForumAttachment
+import com.prepare.prepareurself.forum.data.QueryModel
 import com.prepare.prepareurself.forum.viewmodel.ForumViewModel
 import com.prepare.prepareurself.utils.BaseActivity
 import com.prepare.prepareurself.utils.Constants
@@ -44,6 +45,7 @@ class RepliesActivity : BaseActivity(), RepliesAdapter.RepliesListener, ImageAtt
     private var imageAttachedList = ArrayList<String>()
     private var imageNameList = ArrayList<String>()
     private lateinit var attachmentAdapter: ImageAttachedAdapter
+    private lateinit var repliesAdapter:RepliesAdapter
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -108,6 +110,27 @@ class RepliesActivity : BaseActivity(), RepliesAdapter.RepliesListener, ImageAtt
         attachmentAdapter.notifyItemRemoved(position)
     }
 
+    override fun onClapped(i: Int,position: Int, queryModel: QueryModel) {
+        vm.doClap(pm.getString(Constants.JWTTOKEN),queryModel.id, i)
+                ?.observe(this, Observer {
+                    if (it!=null){
+                        Log.d("clap_debug","$it")
+                        if (i==0){
+                            queryModel.clap = 1
+                        }else if (i==1){
+                            queryModel.clap = 0
+                        }
+                       repliesAdapter.notifyItemChanged(position)
+                    }else{
+                        if(i==0){
+                            Utility.showToast(this, "Cannot like at the moment")
+                        }else if(i==1){
+                            Utility.showToast(this, "Cannot unlike at the moment")
+                        }
+                    }
+                })
+    }
+
     private fun uploadImage() {
         val intent = Intent(Intent.ACTION_GET_CONTENT)
         intent.type = "image/jpeg"
@@ -167,14 +190,14 @@ class RepliesActivity : BaseActivity(), RepliesAdapter.RepliesListener, ImageAtt
     }
 
     private fun initAdapter() {
-        val adapter = RepliesAdapter(this, this)
+        repliesAdapter = RepliesAdapter(this, this)
         rv_replies.layoutManager = LinearLayoutManager(this)
-        rv_replies.adapter = adapter
+        rv_replies.adapter = repliesAdapter
 
         vm.getRelies(pm.getString(Constants.JWTTOKEN),queryId,1)
                 ?.observe(this, Observer {
                     if (it!=null){
-                        it.query?.data?.let { it1 -> adapter.setData(it1) }
+                        it.query?.data?.let { it1 -> repliesAdapter.setData(it1) }
                     }else{
                         Utility.showToast(this,Constants.SOMETHINGWENTWRONG)
                     }

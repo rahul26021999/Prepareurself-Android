@@ -22,6 +22,7 @@ class RepliesAdapter(var context:Context, var listener:RepliesListener) : Recycl
 
     interface RepliesListener{
         fun onImageClicked(attachment: OpenForumAttachment)
+        fun onClapped(i: Int,position: Int, queryModel: QueryModel)
     }
 
     fun setData(list: List<QueryModel>){
@@ -40,6 +41,13 @@ class RepliesAdapter(var context:Context, var listener:RepliesListener) : Recycl
     override fun onBindViewHolder(holder: RepliesViewHolder, position: Int) {
         val q = data?.get(position)
         holder.bindView(q, context, this)
+        holder.itemView.tv_doclap_reply.setOnClickListener {
+            if (q?.clap == 0){
+               listener.onClapped(0,position, q)
+            }else if (q?.clap == 1){
+                listener.onClapped(1,position, q)
+            }
+        }
     }
 
     override fun onImageClicked(attachment: OpenForumAttachment) {
@@ -63,6 +71,13 @@ class RepliesAdapter(var context:Context, var listener:RepliesListener) : Recycl
                 }
             }
             itemView.tv_name_reply_user.text = "@${q?.user?.username}"
+            if (q?.clap == 1){
+                itemView.tv_doclap_reply.text = "Clapped"
+                itemView.tv_doclap_reply.setTextColor(context.resources.getColor(R.color.colorPrimaryDark))
+            }else{
+                itemView.tv_doclap_reply.text = "Clap"
+                itemView.tv_doclap_reply.setTextColor(context.resources.getColor(R.color.dark_grey))
+            }
             val adapter = QueryImageAttachmentAdapter(context, listener)
             itemView.rv_attachment_reply.layoutManager = LinearLayoutManager(context, LinearLayoutManager.HORIZONTAL,false)
             itemView.rv_attachment_reply.adapter = adapter
