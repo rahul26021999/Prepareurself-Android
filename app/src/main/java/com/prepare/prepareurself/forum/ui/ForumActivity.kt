@@ -50,6 +50,9 @@ class ForumActivity : BaseActivity(), QueriesAdapter.QueriesListener, ImageAttac
     private var imageNameList = ArrayList<String>()
     private lateinit var attachmentAdapter: ImageAttachedAdapter
     private lateinit var sheetBehaviour:BottomSheetBehavior<View>
+    private var currentPage = 1
+    private var lastPage = 1
+    private var queriesList = ArrayList<QueryModel>()
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -149,11 +152,19 @@ class ForumActivity : BaseActivity(), QueriesAdapter.QueriesListener, ImageAttac
         rv_queries.layoutManager = LinearLayoutManager(this)
         rv_queries.adapter = adapter
 
-        vm.getQueries(pm.getString(Constants.JWTTOKEN),courseId,1)
+        currentPage = 1
+        queriesList.clear()
+
+        vm.getQueries(pm.getString(Constants.JWTTOKEN),courseId,currentPage)
                 ?.observe(this, Observer {
                     if (it!=null){
+                        currentPage += 1
+                        if (it.queries?.last_page!=null){
+                            lastPage = it.queries?.last_page!!
+                        }
                         it.queries?.data?.let { it1 ->
-                            adapter.setData(it1)
+                            queriesList.addAll(it1)
+                            adapter.setData(queriesList)
                         }
                     }else{
                         Utility.showToast(this,Constants.SOMETHINGWENTWRONG)
@@ -232,6 +243,12 @@ class ForumActivity : BaseActivity(), QueriesAdapter.QueriesListener, ImageAttac
         imageAttachedList.removeAt(position)
         imageNameList.removeAt(position)
         attachmentAdapter.notifyItemRemoved(position)
+    }
+
+    override fun onBottomReached() {
+        if (currentPage<=lastPage){
+            vm.getQueries(pm.getString(Constants.JWTTOKEN),courseId, currentPage)
+        }
     }
 
     override fun onImageClicked(attachment: OpenForumAttachment) {

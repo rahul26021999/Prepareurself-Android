@@ -46,6 +46,9 @@ class RepliesActivity : BaseActivity(), RepliesAdapter.RepliesListener, ImageAtt
     private var imageNameList = ArrayList<String>()
     private lateinit var attachmentAdapter: ImageAttachedAdapter
     private lateinit var repliesAdapter:RepliesAdapter
+    private var currentPage = 1
+    private var lastPage = 1
+    private var repliesList = ArrayList<QueryModel>()
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -196,15 +199,32 @@ class RepliesActivity : BaseActivity(), RepliesAdapter.RepliesListener, ImageAtt
         rv_replies.layoutManager = LinearLayoutManager(this)
         rv_replies.adapter = repliesAdapter
 
+        currentPage = 1
+
+        repliesList.clear()
+
         vm.getRelies(pm.getString(Constants.JWTTOKEN),queryId,1)
                 ?.observe(this, Observer {
                     if (it!=null){
-                        it.query?.data?.let { it1 -> repliesAdapter.setData(it1) }
+                        currentPage+=1
+                        if (it.query?.last_page!=null){
+                            lastPage = it.query?.last_page!!
+                        }
+                        it.query?.data?.let { it1 ->
+                            repliesList.addAll(it1)
+                            repliesAdapter.setData(repliesList)
+                        }
                     }else{
                         Utility.showToast(this,Constants.SOMETHINGWENTWRONG)
                     }
                 })
 
+    }
+
+    override fun onBottomReached() {
+        if (currentPage<=lastPage){
+            vm.getRelies(pm.getString(Constants.JWTTOKEN),queryId,currentPage)
+        }
     }
 
     override fun onImageClicked(attachment: OpenForumAttachment) {
