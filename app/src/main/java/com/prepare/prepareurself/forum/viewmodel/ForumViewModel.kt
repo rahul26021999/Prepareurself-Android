@@ -35,5 +35,9 @@ class ForumViewModel(application: Application) : AndroidViewModel(application){
         return forumRepository?.uploadImage(token, type, body)
     }
 
+    fun doClap(token: String, replyId:Int, status:Int): LiveData<DoClapModel>? {
+        return forumRepository?.doClap(token, replyId, status)
+    }
+
 
 }

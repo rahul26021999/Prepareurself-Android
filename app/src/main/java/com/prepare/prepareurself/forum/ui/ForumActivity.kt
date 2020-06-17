@@ -7,15 +7,14 @@ import android.content.Intent
 import android.net.Uri
 import android.os.Bundle
 import android.util.Log
-import android.view.KeyEvent
-import android.view.LayoutInflater
-import android.view.Window
-import android.view.WindowManager
+import android.view.*
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.bumptech.glide.Glide
 import com.bumptech.glide.load.engine.DiskCacheStrategy
+import com.google.android.material.bottomsheet.BottomSheetBehavior
+import com.google.android.material.bottomsheet.BottomSheetDialog
 import com.prepare.prepareurself.R
 import com.prepare.prepareurself.forum.data.OpenForumAttachment
 import com.prepare.prepareurself.forum.data.QueryModel
@@ -26,6 +25,9 @@ import com.prepare.prepareurself.utils.PrefManager
 import com.prepare.prepareurself.utils.Utility
 import kotlinx.android.synthetic.main.activity_forum2.*
 import kotlinx.android.synthetic.main.activity_forum2.view.*
+import kotlinx.android.synthetic.main.activity_forum_content.*
+import kotlinx.android.synthetic.main.ask_query_bottom_sheet.*
+import kotlinx.android.synthetic.main.ask_query_bottom_sheet.view.*
 import kotlinx.android.synthetic.main.fullscreen_image_dialog.view.*
 import kotlinx.android.synthetic.main.insert_link_editor_dialog.view.*
 import kotlinx.android.synthetic.main.layout_topbar.*
@@ -47,6 +49,7 @@ class ForumActivity : BaseActivity(), QueriesAdapter.QueriesListener, ImageAttac
     private var imageAttachedList = ArrayList<String>()
     private var imageNameList = ArrayList<String>()
     private lateinit var attachmentAdapter: ImageAttachedAdapter
+    private lateinit var sheetBehaviour:BottomSheetBehavior<View>
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -59,14 +62,47 @@ class ForumActivity : BaseActivity(), QueriesAdapter.QueriesListener, ImageAttac
 
         courseId = intent.getIntExtra(Constants.COURSEID,-1)
 
-        initAttachmentAdapter()
+        initBottomSheet()
 
-        tv_attach_image.setOnClickListener {
+        initQueryAdapter()
+
+        backBtn.setOnClickListener {
+            finish()
+        }
+
+    }
+
+    private fun initBottomSheet() {
+//        sheetBehaviour = BottomSheetBehavior.from(bottom_sheet_ask_query)
+
+//        btn_ask_query.setOnClickListener {
+//            if (sheetBehaviour.state != BottomSheetBehavior.STATE_EXPANDED){
+//                sheetBehaviour.state = BottomSheetBehavior.STATE_EXPANDED
+//            }else if (sheetBehaviour.state != BottomSheetBehavior.STATE_COLLAPSED){
+//                sheetBehaviour.state = BottomSheetBehavior.STATE_COLLAPSED
+//            }
+//        }
+
+        val view = LayoutInflater.from(this).inflate(R.layout.ask_query_bottom_sheet, null)
+        val dialog = BottomSheetDialog(this)
+        dialog.setContentView(view)
+
+        btn_ask_query.setOnClickListener {
+            dialog.show()
+        }
+
+        //initAttachmentAdapter()
+
+        attachmentAdapter = ImageAttachedAdapter(this)
+        view.rv_image_attachment.layoutManager = LinearLayoutManager(this,LinearLayoutManager.HORIZONTAL, false)
+        view.rv_image_attachment.adapter = attachmentAdapter
+
+        view.tv_attach_image.setOnClickListener {
             uploadImage()
         }
 
-        btn_send_query.setOnClickListener {
-            var data = et_query_forum.text.toString()
+        view.btn_send_query.setOnClickListener {
+            var data = view.et_query_forum.text.toString()
             if (data.isNotEmpty()){
                 if (courseId!=-1){
                     data = data.replace("\n","<br />", true)
@@ -86,11 +122,19 @@ class ForumActivity : BaseActivity(), QueriesAdapter.QueriesListener, ImageAttac
             }
         }
 
-        initQueryAdapter()
 
-        backBtn.setOnClickListener {
-            finish()
-        }
+//        sheetBehaviour.setBottomSheetCallback(object : BottomSheetBehavior.BottomSheetCallback(){
+//            override fun onSlide(bottomSheet: View, slideOffset: Float) {
+//
+//            }
+//
+//            override fun onStateChanged(bottomSheet: View, newState: Int) {
+//                when(newState){
+//                    BottomSheetBehavior.STATE_EXPANDED -> btn_ask_query.text = "Close Dialog"
+//                    BottomSheetBehavior.STATE_COLLAPSED -> btn_ask_query.text = "Ask Query"
+//                }
+//            }
+//        })
 
     }
 

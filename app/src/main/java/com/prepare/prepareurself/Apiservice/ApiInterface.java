@@ -16,6 +16,7 @@ import com.prepare.prepareurself.dashboard.data.model.GetSuggestedTopicsModel;
 import com.prepare.prepareurself.dashboard.data.model.HomepageResponseModel;
 import com.prepare.prepareurself.favourites.data.model.FavouritesResponseModel;
 import com.prepare.prepareurself.feedback.data.model.FeedbacksubmitModel;
+import com.prepare.prepareurself.forum.data.DoClapModel;
 import com.prepare.prepareurself.forum.data.DoReplyResponseModel;
 import com.prepare.prepareurself.forum.data.ForumPostQueryResponseModel;
 import com.prepare.prepareurself.forum.data.GetQueriesResponseModel;
@@ -253,5 +254,10 @@ public interface ApiInterface {
                                        @Query("query_id")int queryId,
                                        @Query("reply")String reply,
                                        @Query("images[]")ArrayList<String> images);
+
+    @POST("clap-on-reply")
+    Call<DoClapModel> doClap(@Query("token") String token,
+                             @Query("reply_id") int replyId,
+                             @Query("status") int status);
 
 }

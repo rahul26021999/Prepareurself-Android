@@ -40,9 +40,40 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:id="@+id/rv_attachment_reply"
-        tools:listitem="@layout/rv_image_attachment_query_layout"
         android:layout_below="@+id/tv_reply_answer"
         android:layout_alignStart="@+id/tv_reply_answer"
         />
+
+    <LinearLayout
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:layout_below="@+id/rv_attachment_reply"
+        android:layout_alignStart="@id/tv_reply_answer"
+        android:layout_marginTop="@dimen/padding_10">
+
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Clap"
+            android:textColor="@color/dark_grey"
+            android:textSize="16sp"
+            android:padding="@dimen/padding_10"
+            android:id="@+id/tv_doclap_reply"
+            android:fontFamily="@font/proximanovaregular"/>
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="10 Claps"
+            android:textColor="@color/colorPrimaryDark"
+            android:textSize="16sp"
+            android:layout_marginStart="@dimen/padding_10"
+            android:padding="@dimen/padding_10"
+            android:id="@+id/tv_total_claps_reply"
+            android:fontFamily="@font/proximanovaregular"/>
+
+    </LinearLayout>
 
 </RelativeLayout>
