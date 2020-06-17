@@ -194,7 +194,6 @@
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
                                 android:layout_toLeftOf="@+id/img_arrow"
-                                android:text="100"
                                 android:layout_centerVertical="true"/>
 
                             <ImageView
@@ -243,7 +242,6 @@
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
                                 android:layout_toLeftOf="@+id/img_arrow1"
-                                android:text="100"
                                 android:layout_centerVertical="true"/>
                             <ImageView
                                 android:id="@+id/img_arrow1"
