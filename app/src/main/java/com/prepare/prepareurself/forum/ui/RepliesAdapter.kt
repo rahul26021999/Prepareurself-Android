@@ -78,6 +78,7 @@ class RepliesAdapter(var context:Context, var listener:RepliesListener) : Recycl
                 itemView.tv_doclap_reply.text = "Clap"
                 itemView.tv_doclap_reply.setTextColor(context.resources.getColor(R.color.dark_grey))
             }
+            itemView.tv_total_claps_reply.text = "${q?.total_claps} Claps"
             val adapter = QueryImageAttachmentAdapter(context, listener)
             itemView.rv_attachment_reply.layoutManager = LinearLayoutManager(context, LinearLayoutManager.HORIZONTAL,false)
             itemView.rv_attachment_reply.adapter = adapter
