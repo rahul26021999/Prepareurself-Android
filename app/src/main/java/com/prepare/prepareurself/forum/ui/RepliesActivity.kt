@@ -117,8 +117,10 @@ class RepliesActivity : BaseActivity(), RepliesAdapter.RepliesListener, ImageAtt
                         Log.d("clap_debug","$it")
                         if (i==0){
                             queryModel.clap = 1
+                            queryModel.total_claps = queryModel.total_claps?.plus(1)
                         }else if (i==1){
                             queryModel.clap = 0
+                            queryModel.total_claps = queryModel.total_claps?.minus(1)
                         }
                        repliesAdapter.notifyItemChanged(position)
                     }else{
