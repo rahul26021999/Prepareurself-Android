@@ -85,6 +85,11 @@ class RepliesActivity : BaseActivity(), RepliesAdapter.RepliesListener, ImageAtt
                                 if (it!=null){
                                     Utility.showToast(this,it.message)
                                     htmlData = ""
+                                    et_reply_forum.setText("")
+                                    it.reply?.let { it1 ->
+                                        repliesList.add(0, it1)
+                                        repliesAdapter.notifyDataSetChanged()
+                                    }
                                 }else{
                                     Utility.showToast(this,Constants.SOMETHINGWENTWRONG)
                                 }

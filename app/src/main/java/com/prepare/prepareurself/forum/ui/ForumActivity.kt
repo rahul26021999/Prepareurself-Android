@@ -23,13 +23,10 @@ import com.prepare.prepareurself.utils.BaseActivity
 import com.prepare.prepareurself.utils.Constants
 import com.prepare.prepareurself.utils.PrefManager
 import com.prepare.prepareurself.utils.Utility
-import kotlinx.android.synthetic.main.activity_forum2.*
-import kotlinx.android.synthetic.main.activity_forum2.view.*
 import kotlinx.android.synthetic.main.activity_forum_content.*
 import kotlinx.android.synthetic.main.ask_query_bottom_sheet.*
 import kotlinx.android.synthetic.main.ask_query_bottom_sheet.view.*
 import kotlinx.android.synthetic.main.fullscreen_image_dialog.view.*
-import kotlinx.android.synthetic.main.insert_link_editor_dialog.view.*
 import kotlinx.android.synthetic.main.layout_topbar.*
 import okhttp3.MediaType
 import okhttp3.MultipartBody
@@ -53,6 +50,7 @@ class ForumActivity : BaseActivity(), QueriesAdapter.QueriesListener, ImageAttac
     private var currentPage = 1
     private var lastPage = 1
     private var queriesList = ArrayList<QueryModel>()
+    private lateinit var queriesAdapter:QueriesAdapter
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -115,6 +113,11 @@ class ForumActivity : BaseActivity(), QueriesAdapter.QueriesListener, ImageAttac
                                 if (it!=null){
                                     Utility.showToast(this,it.message)
                                     htmlData = ""
+                                    view.et_query_forum.setText("")
+                                    it.query?.let { it1 ->
+                                        queriesList.add(0,it1)
+                                        queriesAdapter.notifyDataSetChanged()
+                                    }
                                 }else{
                                     Utility.showToast(this,Constants.SOMETHINGWENTWRONG)
                                 }
@@ -148,9 +151,9 @@ class ForumActivity : BaseActivity(), QueriesAdapter.QueriesListener, ImageAttac
     }
 
     private fun initQueryAdapter() {
-        val adapter = QueriesAdapter(this, this)
+        queriesAdapter = QueriesAdapter(this, this)
         rv_queries.layoutManager = LinearLayoutManager(this)
-        rv_queries.adapter = adapter
+        rv_queries.adapter = queriesAdapter
 
         currentPage = 1
         queriesList.clear()
@@ -164,7 +167,7 @@ class ForumActivity : BaseActivity(), QueriesAdapter.QueriesListener, ImageAttac
                         }
                         it.queries?.data?.let { it1 ->
                             queriesList.addAll(it1)
-                            adapter.setData(queriesList)
+                            queriesAdapter.setData(queriesList)
                         }
                     }else{
                         Utility.showToast(this,Constants.SOMETHINGWENTWRONG)
