@@ -39,6 +39,7 @@ import com.prepare.prepareurself.firebase.UpdateHelper;
 import com.prepare.prepareurself.preferences.ui.PreferencesActivity;
 import com.prepare.prepareurself.profile.ui.fragments.ProfileFragment;
 import com.prepare.prepareurself.quizv2.ui.QuizActivity;
+import com.prepare.prepareurself.quizv2.ui.instructions.InstructionActivity;
 import com.prepare.prepareurself.resources.data.model.ResourceModel;
 import com.prepare.prepareurself.resources.data.model.ResourceViewsResponse;
 import com.prepare.prepareurself.resources.ui.activity.ResourcesActivity;
@@ -283,7 +284,10 @@ public class HomeActivity extends BaseActivity implements NavigationView.OnNavig
                 break;
             case R.id.nav_about_us :
                 //startActivity(new Intent(HomeActivity.this, QuizActivity.class));
-                viewPager.setCurrentItem(4);
+                //viewPager.setCurrentItem(4);
+                Intent intent1 = new Intent(HomeActivity.this, InstructionActivity.class);
+                startActivity(intent1);
+                //intent1.putExtra(Constants.COURSEID,1);
                 break;
             case R.id.nav_feedback :
                 //startActivity(new Intent(HomeActivity.this, PreferencesActivity.class));
