@@ -18,13 +18,15 @@
         android:theme="@style/AppTheme"
         android:usesCleartextTraffic="true"
         tools:replace="android:allowBackup">
-        <activity android:name=".forum.ui.RepliesActivity"
+        <activity android:name=".quizv2.ui.instructions.InstructionActivity"></activity>
+        <activity
+            android:name=".forum.ui.RepliesActivity"
             android:theme="@style/ProfileTheme"
-            android:windowSoftInputMode="adjustPan"/>
+            android:windowSoftInputMode="adjustPan" />
         <activity
             android:name=".forum.ui.ForumActivity"
             android:theme="@style/ProfileTheme"
-            android:windowSoftInputMode="adjustPan"/>
+            android:windowSoftInputMode="adjustPan" />
         <activity
             android:name=".courses.ui.activity.DemoActivity"
             android:label="@string/title_activity_demo"
