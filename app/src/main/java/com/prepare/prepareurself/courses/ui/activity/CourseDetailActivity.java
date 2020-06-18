@@ -102,14 +102,20 @@ public class CourseDetailActivity extends BaseActivity implements View.OnClickLi
                         String f= String.valueOf(rating);
                         averageRating.setText(f);
                         int topic_count=courseDetailReponseModel.getTopic_count();
-                        Log.d("count",""+topic_count);
-                        if (topic_count>0){
-                            count_topics.setText(""+topic_count);
-                        }
                         int project_count=courseDetailReponseModel.getProject_count();
-                        if (project_count>0){
+
+                        Log.d("count",""+topic_count);
+
+                       if(topic_count>0){
+                           rel_resources.setVisibility(View.VISIBLE);
+                           count_topics.setText(""+topic_count);
+                       }
+
+                       if(project_count>0){
+                            rel_project.setVisibility(View.VISIBLE);
                             count_projects.setText(""+project_count);
-                        }
+
+                       }
                         Log.d("count",""+project_count);
                         course_name.setText(title);
                         courseName = title;
@@ -264,6 +270,7 @@ public class CourseDetailActivity extends BaseActivity implements View.OnClickLi
         ProjectIcon=findViewById(R.id.projectIcon);
         QuizIcon=findViewById(R.id.quizIcon);
         ResourceIcon=findViewById(R.id.resourceIcon);
+
     }
 
 
