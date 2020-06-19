@@ -156,4 +156,14 @@ dependencies {
 
     implementation 'jp.wasabeef:richeditor-android:1.2.2'
 
+    //dialogflow
+    implementation 'ai.api:sdk:2.0.7@aar'
+    implementation 'ai.api:libai:1.6.12'
+    implementation 'com.google.code.gson:gson:2.8.5'
+    implementation 'commons-io:commons-io:2.6'
+
+    implementation 'com.github.kittinunf.fuel:fuel-android:1.12.1'
+
+    implementation 'com.github.bassaer:chatmessageview:1.10.0'
+
 }

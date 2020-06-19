@@ -7,6 +7,7 @@
     <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
     <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE" />
     <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
+    <uses-permission android:name="android.permission.RECORD_AUDIO" />
 
     <application
         android:name=".utils.BaseApplication"
@@ -18,10 +19,16 @@
         android:theme="@style/AppTheme"
         android:usesCleartextTraffic="true"
         tools:replace="android:allowBackup">
-        <activity android:name=".forum.ui.RepliesActivity"></activity>
+        <activity android:name=".forum.ui.ChatBotActivity"
+            android:theme="@style/ProfileTheme"/>
+        <activity
+            android:name=".forum.ui.RepliesActivity"
+            android:theme="@style/ProfileTheme"
+            android:windowSoftInputMode="adjustPan" />
         <activity
             android:name=".forum.ui.ForumActivity"
-            android:theme="@style/ProfileTheme" />
+            android:theme="@style/ProfileTheme"
+            android:windowSoftInputMode="adjustPan" />
         <activity
             android:name=".courses.ui.activity.DemoActivity"
             android:label="@string/title_activity_demo"
