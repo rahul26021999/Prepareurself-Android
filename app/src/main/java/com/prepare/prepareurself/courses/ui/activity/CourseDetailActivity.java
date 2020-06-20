@@ -54,9 +54,10 @@ public class CourseDetailActivity extends BaseActivity implements View.OnClickLi
     private CourseDetailViewModel vm;
     private PrefManager prefManager;
     private com.willy.ratingbar.ScaleRatingBar scaleRatingBar;
-    private LinearLayout l_layout_pref , topCourseBackground;
+    private LinearLayout l_layout_pref , topCourseBackground,belowCourseBackgroundContainer;
     private RelativeLayout rel_project, rel_resources, rel_forum, rel_takequiz,mainBackground;
     TextView course_name, course_description,tv_pref_name,averageRating;
+    ImageView forumIcon,ProjectIcon,ResourceIcon,QuizIcon;
     private String courseName = "";
     private boolean isAdded = false;
     private boolean isRateFetching = true;
@@ -96,7 +97,10 @@ public class CourseDetailActivity extends BaseActivity implements View.OnClickLi
                         String title=course.getName();
                         String description=course.getDescription();
                         String logo_url=course.getLogo_url();
+                        //course.ra
 
+                        int topic_count=course.getTopic_count();
+                        int project_count=course.getProject_count();
                         averageRating.setText("3.5");
                         course_name.setText(title);
                         courseName = title;
@@ -117,7 +121,6 @@ public class CourseDetailActivity extends BaseActivity implements View.OnClickLi
                             Glide.with(CourseDetailActivity.this).load(course.getLogo_url())
                                     .placeholder(R.drawable.placeholder)
                                     .diskCacheStrategy(DiskCacheStrategy.RESOURCE)
-                                    .transition(GenericTransitionOptions.<Drawable>with(Utility.getAnimationObject()))
                                     .into(course_image);
                         }
                     }else{
@@ -216,9 +219,18 @@ public class CourseDetailActivity extends BaseActivity implements View.OnClickLi
                 colors[i]=Color.parseColor(list[i]);
             }
             GradientDrawable myGradBg = new GradientDrawable(GradientDrawable.Orientation.LEFT_RIGHT, colors);
-            myGradBg.setCornerRadii(new float[]{0f,0f,0f,0f,100f,100f,0f,0f});
+            myGradBg.setCornerRadii(new float[]{0f,0f,0f,0f,90f,90f,0f,0f});
             topCourseBackground.setBackground(myGradBg);
             mainBackground.setBackground(myGradBg);
+            belowCourseBackgroundContainer.setBackground(myGradBg);
+
+            GradientDrawable icongrad = new GradientDrawable(GradientDrawable.Orientation.LEFT_RIGHT, colors);
+            icongrad.setCornerRadius(20f);
+            forumIcon.setBackground(icongrad);
+            ProjectIcon.setBackground(icongrad);
+            ResourceIcon.setBackground(icongrad);
+            QuizIcon.setBackground(icongrad);
+
         }
 
     }
@@ -231,6 +243,7 @@ public class CourseDetailActivity extends BaseActivity implements View.OnClickLi
         averageRating=findViewById(R.id.averageRating);
         mainBackground=findViewById(R.id.mainBackground);
         l_layout_pref=findViewById(R.id.l_layout_pref);
+        belowCourseBackgroundContainer=findViewById(R.id.belowCourseBackgroundContainer);
         topCourseBackground =findViewById(R.id.topCourseBackground);
         tv_pref_name=findViewById(R.id.tv_pref_name);
         pref_image=findViewById(R.id.pref_image);
@@ -240,6 +253,10 @@ public class CourseDetailActivity extends BaseActivity implements View.OnClickLi
         rel_takequiz=findViewById(R.id.rel_takequiz);
         btn_shareimage=findViewById(R.id.btn_shareimage);
         rel_forum=findViewById(R.id.rel_forum);
+        forumIcon=findViewById(R.id.forumIcon);
+        ProjectIcon=findViewById(R.id.projectIcon);
+        QuizIcon=findViewById(R.id.quizIcon);
+        ResourceIcon=findViewById(R.id.resourceIcon);
     }
 
 

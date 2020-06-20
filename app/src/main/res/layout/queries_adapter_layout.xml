@@ -1,7 +1,8 @@
 <?xml version="1.0" encoding="utf-8"?>
-<RelativeLayout
-    xmlns:android="http://schemas.android.com/apk/res/android" android:layout_width="match_parent"
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
     android:layout_height="wrap_content"
+    xmlns:tools="http://schemas.android.com/tools"
     android:orientation="vertical"
     android:padding="@dimen/padding_10">
 
@@ -35,6 +36,21 @@
         android:layout_alignStart="@+id/tv_name_qury_user"
         android:id="@+id/tv_query_question"/>
 
+    <ImageView
+        android:layout_width="150dp"
+        android:layout_height="150dp"
+        android:id="@+id/img_query_attachment"
+        android:visibility="gone"/>
+
+    <androidx.recyclerview.widget.RecyclerView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/rv_attachment_query"
+        tools:listitem="@layout/rv_image_attachment_query_layout"
+        android:layout_below="@+id/tv_query_question"
+        android:layout_alignStart="@+id/tv_query_question"
+        />
+
     <TextView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
@@ -45,7 +61,7 @@
         android:textColor="@color/colorPrimaryDark"
         android:layout_marginTop="5dp"
         android:id="@+id/tv_view_replies"
-        android:layout_below="@+id/tv_query_question"
+        android:layout_below="@+id/rv_attachment_query"
         android:fontFamily="@font/proximanovaregular"/>
 
     <TextView
@@ -58,7 +74,8 @@
         android:textColor="@color/colorPrimaryDark"
         android:layout_marginTop="5dp"
         android:id="@+id/tv_do_reply"
-        android:layout_below="@+id/tv_query_question"
+        android:visibility="gone"
+        android:layout_below="@+id/rv_attachment_query"
         android:fontFamily="@font/proximanovaregular"/>
 
 </RelativeLayout>

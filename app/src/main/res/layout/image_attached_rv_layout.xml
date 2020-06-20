@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout android:layout_width="wrap_content"
+    android:layout_height="wrap_content"
+    android:orientation="horizontal"
+    android:id="@+id/lin_image_attached"
+    android:visibility="visible"
+    xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Image attached"
+        android:textColor="@color/colorPrimaryDark"
+        android:fontFamily="@font/proximanovaregular"
+        android:id="@+id/tv_image_attached_confrm"/>
+
+    <ImageView
+        android:layout_width="20dp"
+        android:layout_height="20dp"
+        android:src="@drawable/ic_cancel"
+        android:id="@+id/cancel_attached_image"
+        android:layout_marginStart="@dimen/padding_10"/>
+
+</LinearLayout>

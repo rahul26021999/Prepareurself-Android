@@ -16,14 +16,17 @@ import com.prepare.prepareurself.dashboard.data.model.GetSuggestedTopicsModel;
 import com.prepare.prepareurself.dashboard.data.model.HomepageResponseModel;
 import com.prepare.prepareurself.favourites.data.model.FavouritesResponseModel;
 import com.prepare.prepareurself.feedback.data.model.FeedbacksubmitModel;
+import com.prepare.prepareurself.forum.data.DoClapModel;
 import com.prepare.prepareurself.forum.data.DoReplyResponseModel;
 import com.prepare.prepareurself.forum.data.ForumPostQueryResponseModel;
 import com.prepare.prepareurself.forum.data.GetQueriesResponseModel;
+import com.prepare.prepareurself.forum.data.UploadImageResponseModel;
 import com.prepare.prepareurself.preferences.data.PrefernceResponseModel;
 import com.prepare.prepareurself.preferences.data.UpdatePrefResponseModel;
 import com.prepare.prepareurself.profile.data.model.UpdatePasswordResponseModel;
 import com.prepare.prepareurself.profile.data.model.UpdatePreferenceResponseModel;
 import com.prepare.prepareurself.profile.data.model.AllPreferencesResponseModel;
+import com.prepare.prepareurself.profile.data.model.UploadImageResponse;
 import com.prepare.prepareurself.quizv2.data.QuizAnswerResponse;
 import com.prepare.prepareurself.quizv2.data.QuizResponseModel;
 import com.prepare.prepareurself.quizv2.data.ResponsesModel;
@@ -34,6 +37,7 @@ import com.prepare.prepareurself.authentication.data.model.AuthenticationRespons
 import com.prepare.prepareurself.resources.data.model.VideoShareResponseModel;
 import com.prepare.prepareurself.search.models.SearchResponseModel;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import okhttp3.MultipartBody;
@@ -132,6 +136,12 @@ public interface ApiInterface {
     Call<UpdatePreferenceResponseModel> uploadImage(@Query("token") String token,
                                                     @Part MultipartBody.Part image);
 
+    @Multipart
+    @POST("upload-query-image")
+    Call<UploadImageResponseModel> uploadQueryImage(@Query("token") String token,
+                                                    @Query("type") int type,
+                                                    @Part MultipartBody.Part image);
+
     @POST("project")
     Call<ProjectResponseModel> getProjectById(@Query("token") String token,
                                               @Query("project_id") int projectId);
@@ -224,7 +234,8 @@ public interface ApiInterface {
     @POST("ask-query")
     Call<ForumPostQueryResponseModel> askQuery(@Query("token") String token,
                                                @Query("course_id") int courseId,
-                                               @Query("query") String query);
+                                               @Query("query") String query,
+                                               @Query("images[]")ArrayList<String> images);
 
     @POST("get-queries")
     Call<GetQueriesResponseModel> getQueries(@Query("token") String token,
@@ -241,6 +252,12 @@ public interface ApiInterface {
     @POST("do-reply")
     Call<DoReplyResponseModel> doReply(@Query("token") String token,
                                        @Query("query_id")int queryId,
-                                       @Query("reply")String reply);
+                                       @Query("reply")String reply,
+                                       @Query("images[]")ArrayList<String> images);
+
+    @POST("clap-on-reply")
+    Call<DoClapModel> doClap(@Query("token") String token,
+                             @Query("reply_id") int replyId,
+                             @Query("status") int status);
 
 }

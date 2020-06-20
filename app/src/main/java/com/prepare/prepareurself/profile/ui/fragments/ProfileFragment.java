@@ -379,7 +379,7 @@ public class ProfileFragment extends Fragment implements View.OnClickListener {
     private void uploadImageToServer(byte[] imageBytes){
         RequestBody requestFile = RequestBody.create(MediaType.parse("image/jpeg"), imageBytes);
         MultipartBody.Part body = MultipartBody.Part.createFormData("profile_image", "image.jpg", requestFile);
-       // RequestBody name =  RequestBody.create(MediaType.parse("text/html"), "image.jpg");
+        // RequestBody name =  RequestBody.create(MediaType.parse("text/html"), "image.jpg");
         mViewModel.uploadImage(prefManager.getString(Constants.JWTTOKEN),body)
                 .observe(getActivity(), new Observer<UpdatePreferenceResponseModel>() {
                     @Override
