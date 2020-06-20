@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.constraintlayout.widget.ConstraintLayout
+<RelativeLayout
     xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
@@ -12,9 +12,7 @@
         android:layout_width="wrap_content"
         android:id="@+id/relLayout1"
         android:layout_height="wrap_content"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintEnd_toEndOf="parent">
+     >
 
         <include layout="@layout/snippet_search_toolbar"/>
         <include layout="@layout/snippet_view_resources_toolbar"/>
@@ -25,17 +23,15 @@
         android:layout_height="wrap_content"
         android:id="@+id/search_container"
         android:background="@color/white"
-        app:layout_constraintTop_toBottomOf="@+id/relLayout1"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"/>
+        android:layout_below="@+id/relLayout1"
+        />
 
     <RelativeLayout
         android:layout_width="match_parent"
         android:id="@+id/lin_resource_main"
         android:layout_height="wrap_content"
-        app:layout_constraintTop_toBottomOf="@+id/relLayout1"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintEnd_toEndOf="parent">
+        android:layout_below="@+id/relLayout1"
+       >
     <androidx.recyclerview.widget.RecyclerView
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
@@ -55,4 +51,4 @@
     </RelativeLayout>
 
 
-</androidx.constraintlayout.widget.ConstraintLayout>
+</RelativeLayout>
