@@ -7,51 +7,30 @@
     tools:context=".chatbot.ui.ChatBotActivity"
     android:orientation="vertical">
 
-    <Button
+
+    <RelativeLayout
         android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="Bol le"
-        android:visibility="gone"
-        android:id="@+id/btn_speak_bot"
-        android:layout_gravity="center_horizontal"
-        android:layout_marginTop="@dimen/padding_10"/>
+        android:id="@+id/relLayout1"
+        android:layout_height="wrap_content">
 
-    <LinearLayout
+        <include layout="@layout/layout_topbar"/>
+
+    </RelativeLayout>
+
+    <androidx.recyclerview.widget.RecyclerView
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:orientation="vertical">
+        android:layout_height="match_parent"
+        android:layout_above="@+id/send_lin"
+        android:id="@+id/chat_bot_rv"
+        android:layout_below="@+id/relLayout1"
+        android:layout_marginTop="5dp"/>
 
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:id="@+id/inputTextView"
-            android:text="Input Text View"
-            android:layout_marginTop="@dimen/padding_10"
-            android:visibility="gone"/>
-
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:id="@+id/fulfillmentTextView"
-            android:text="Fulfillment Text View"
-            android:layout_marginTop="@dimen/padding_10"
-            android:visibility="visible"/>
-
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:id="@+id/actionTextView"
-            android:text="Action text view"
-            android:layout_marginTop="@dimen/padding_10"
-            android:visibility="gone"/>
-
-    </LinearLayout>
-
-    <LinearLayout
+    <RelativeLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:orientation="horizontal"
         android:weightSum="2"
+        android:id="@+id/send_lin"
         android:layout_alignParentBottom="true"
         android:padding="@dimen/padding_10">
 
@@ -59,15 +38,19 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:id="@+id/et_bot_query"
-            android:layout_weight="1.5"
-            android:hint="Send query"/>
+            android:hint="Send query"
+            android:layout_toStartOf="@+id/btn_send_bot"/>
 
-        <Button
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
+        <com.google.android.material.floatingactionbutton.FloatingActionButton
             android:id="@+id/btn_send_bot"
-            android:layout_weight="0.5"/>
+            android:layout_width="50dp"
+            android:layout_height="50dp"
+            android:layout_alignParentEnd="true"
+            android:layout_marginStart="@dimen/padding_10"
+            android:backgroundTint="@color/white"
+            android:src="@drawable/send_query_white"
+            app:fabSize="auto" />
 
-    </LinearLayout>
+    </RelativeLayout>
 
 </RelativeLayout>
