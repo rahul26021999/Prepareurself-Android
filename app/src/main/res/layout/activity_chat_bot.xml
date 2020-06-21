@@ -4,7 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".forum.ui.ChatBotActivity"
+    tools:context=".chatbot.ui.ChatBotActivity"
     android:orientation="vertical">
 
     <Button
@@ -27,7 +27,7 @@
             android:id="@+id/inputTextView"
             android:text="Input Text View"
             android:layout_marginTop="@dimen/padding_10"
-            />
+            android:visibility="gone"/>
 
         <TextView
             android:layout_width="wrap_content"
@@ -35,7 +35,7 @@
             android:id="@+id/fulfillmentTextView"
             android:text="Fulfillment Text View"
             android:layout_marginTop="@dimen/padding_10"
-            />
+            android:visibility="visible"/>
 
         <TextView
             android:layout_width="wrap_content"
@@ -43,7 +43,7 @@
             android:id="@+id/actionTextView"
             android:text="Action text view"
             android:layout_marginTop="@dimen/padding_10"
-            />
+            android:visibility="gone"/>
 
     </LinearLayout>
 

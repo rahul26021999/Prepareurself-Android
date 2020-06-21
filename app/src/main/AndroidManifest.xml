@@ -20,7 +20,7 @@
         android:usesCleartextTraffic="true"
         tools:replace="android:allowBackup">
 
-        <activity android:name=".forum.ui.ChatBotActivity"
+        <activity android:name=".chatbot.ui.ChatBotActivity"
             android:theme="@style/ProfileTheme"/>
         <activity
             android:name=".forum.ui.RepliesActivity"
