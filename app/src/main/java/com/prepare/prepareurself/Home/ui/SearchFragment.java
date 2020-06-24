@@ -65,6 +65,9 @@ public class SearchFragment extends Fragment implements SearchAdapter.SearchList
         // Required empty public constructor
     }
 
+    public boolean courseSearch =false;
+    public int courseId = -1;
+
     public static SearchFragment newInstance() {
         return new SearchFragment();
     }
@@ -110,7 +113,7 @@ public class SearchFragment extends Fragment implements SearchAdapter.SearchList
             headings.clear();
             currentSearchPage=1;
 
-            mViewModel.searchWithPagination(prefManager.getString(Constants.JWTTOKEN),query,currentSearchPage);
+            mViewModel.searchWithPagination(prefManager.getString(Constants.JWTTOKEN),query,currentSearchPage, courseSearch, courseId);
 
             mViewModel.searchResponseModelLiveData.observe(getActivity(), new Observer<SearchResponseModel>() {
                 @Override
@@ -258,7 +261,7 @@ public class SearchFragment extends Fragment implements SearchAdapter.SearchList
     public void onBottomReached(int position) {
         if(!EndOfSearchData){
             currentSearchPage++;
-            mViewModel.searchWithPagination(prefManager.getString(Constants.JWTTOKEN),query,currentSearchPage);
+            mViewModel.searchWithPagination(prefManager.getString(Constants.JWTTOKEN),query,currentSearchPage, courseSearch, courseId);
         }
     }
 }

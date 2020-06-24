@@ -61,30 +61,55 @@ public class SearchRepository{
     }
 
 
-    public MutableLiveData<SearchResponseModel> searchWithPagination(final String token, final String query, final int page){
+    public MutableLiveData<SearchResponseModel> searchWithPagination(final String token, final String query, final int page, boolean courseSearch, int courseId){
 
-        apiInterface.searchWithPagination(token, query,10,page).enqueue(new Callback<SearchResponseModel>() {
-            @Override
-            public void onResponse(Call<SearchResponseModel> call, Response<SearchResponseModel> response) {
-                SearchResponseModel responseModel = response.body();
-                Log.d("paging_debug",responseModel+"");
-                Log.d("paging_url", apiInterface.searchWithPagination(token, query,10,page).request().url().toString());
-                if (responseModel!=null){
-                    if (responseModel.getError_code()==0){
-                        searchData.setValue(responseModel);
-                    }else{
+        if (courseSearch && courseId!=-1){
+            apiInterface.searchInCourse(token, query,courseId,10,page).enqueue(new Callback<SearchResponseModel>() {
+                @Override
+                public void onResponse(Call<SearchResponseModel> call, Response<SearchResponseModel> response) {
+                    SearchResponseModel responseModel = response.body();
+                    Log.d("paging_debug",responseModel+"");
+                    Log.d("paging_url", apiInterface.searchWithPagination(token, query,10,page).request().url().toString());
+                    if (responseModel!=null){
+                        if (responseModel.getError_code()==0){
+                            searchData.setValue(responseModel);
+                        }else{
+                            searchData.setValue(null);
+                        }
+                    }else {
                         searchData.setValue(null);
                     }
-                }else {
+                }
+
+                @Override
+                public void onFailure(Call<SearchResponseModel> call, Throwable t) {
                     searchData.setValue(null);
                 }
-            }
+            });
+        }else{
+            apiInterface.searchWithPagination(token, query,10,page).enqueue(new Callback<SearchResponseModel>() {
+                @Override
+                public void onResponse(Call<SearchResponseModel> call, Response<SearchResponseModel> response) {
+                    SearchResponseModel responseModel = response.body();
+                    Log.d("paging_debug",responseModel+"");
+                    Log.d("paging_url", apiInterface.searchWithPagination(token, query,10,page).request().url().toString());
+                    if (responseModel!=null){
+                        if (responseModel.getError_code()==0){
+                            searchData.setValue(responseModel);
+                        }else{
+                            searchData.setValue(null);
+                        }
+                    }else {
+                        searchData.setValue(null);
+                    }
+                }
 
-            @Override
-            public void onFailure(Call<SearchResponseModel> call, Throwable t) {
-                searchData.setValue(null);
-            }
-        });
+                @Override
+                public void onFailure(Call<SearchResponseModel> call, Throwable t) {
+                    searchData.setValue(null);
+                }
+            });
+        }
 
         return searchData;
 

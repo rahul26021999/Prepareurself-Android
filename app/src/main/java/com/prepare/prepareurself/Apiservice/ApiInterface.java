@@ -169,6 +169,12 @@ public interface ApiInterface {
                                                    @Query("query") String query,
                                                    @Query("count") int count,
                                                    @Query("page") int page);
+    @POST("search-inside-course")
+    Call<SearchResponseModel> searchInCourse(@Query("token") String token,
+                                                   @Query("query") String query,
+                                                   @Query("course_id") int courseId,
+                                                   @Query("count") int count,
+                                                   @Query("page") int page);
 
     @POST("get-home-page")
     Call<HomepageResponseModel> fetchHomePage(@Query("token") String token);

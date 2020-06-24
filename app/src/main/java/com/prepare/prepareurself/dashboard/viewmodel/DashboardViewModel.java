@@ -86,8 +86,8 @@ public class DashboardViewModel extends AndroidViewModel {
         return searchResponseModelLiveData;
     }
 
-    public void searchWithPagination(String token, String query, int page){
-        searchResponseModelLiveData = searchRepository.searchWithPagination(token,query, page);
+    public void searchWithPagination(String token, String query, int page, boolean courseSearch, int courseId){
+        searchResponseModelLiveData = searchRepository.searchWithPagination(token,query, page, courseSearch, courseId);
     }
 
     public MutableLiveData<SearchResponseModel> getSearchResponseModelLiveData() {
