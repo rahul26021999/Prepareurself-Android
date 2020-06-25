@@ -1,6 +1,8 @@
 package com.prepare.prepareurself.feedback.ui;
 
+import androidx.activity.OnBackPressedCallback;
 import androidx.cardview.widget.CardView;
+import androidx.fragment.app.FragmentManager;
 import androidx.lifecycle.Observer;
 import androidx.lifecycle.ViewModelProviders;
 
@@ -64,6 +66,7 @@ public class FeedbackFragment extends Fragment {
     private PrefManager prefManager;
 
     private FeedBackHomeInteractor listener;
+    public boolean fromCourse = false;
 
     public static FeedbackFragment newInstance() {
         return new FeedbackFragment();
@@ -83,7 +86,11 @@ public class FeedbackFragment extends Fragment {
         backBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                listener.onFeedbackBackPressed();
+                if (!fromCourse){
+                    listener.onFeedbackBackPressed();
+                }else{
+                   removeFragment();
+                }
             }
         });
 
@@ -217,9 +224,10 @@ public class FeedbackFragment extends Fragment {
 
     }
 
-    private void removeFragment() {
+    public void removeFragment() {
         getActivity().getSupportFragmentManager().beginTransaction().remove(this).commit();
     }
+
 
     private void setView(FeedbackParentModel feedbackParentModel) {
         if (feedbackParentModel.getViewType() == 1){
