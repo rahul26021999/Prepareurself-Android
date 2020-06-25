@@ -335,6 +335,7 @@
                         android:paddingStart="30dp"
                         android:visibility="gone"
                         app:cornerRadius="30dp"
+                        android:padding="15dp"
                         android:paddingEnd="30dp"
                         android:textColor="@color/white"
                         android:layout_gravity="center"

@@ -285,8 +285,8 @@ public class HomeActivity extends BaseActivity implements NavigationView.OnNavig
                 viewPager.setCurrentItem(4);
                 break;
             case R.id.nav_feedback :
-                startActivity(new Intent(HomeActivity.this, ChatBotActivity.class));
-                //viewPager.setCurrentItem(3);
+                //startActivity(new Intent(HomeActivity.this, ChatBotActivity.class));
+                viewPager.setCurrentItem(3);
                 break;
             case R.id.nav_fav:
                 viewPager.setCurrentItem(2);
