@@ -144,6 +144,7 @@ public class DashboardRespoisitory {
 
             @Override
             public void onFailure(Call<HomepageResponseModel> call, Throwable t) {
+                Log.d("dashboard_call_failure",t.getLocalizedMessage()+"");
                 data.setValue(null);
             }
         });
