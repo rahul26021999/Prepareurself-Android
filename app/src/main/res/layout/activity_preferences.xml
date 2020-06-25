@@ -13,71 +13,78 @@
         layout="@layout/layout_topbar"/>
 
 
-    <LinearLayout
+    <androidx.core.widget.NestedScrollView
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:orientation="vertical"
-        android:id="@+id/lin_add_pref"
-        android:padding="@dimen/padding_10">
+        android:fillViewport="true">
 
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="Your Preferences"
-            android:textColor="@color/colorPrimaryDark"
-            android:textStyle="bold"
-            android:textSize="16sp"
-            android:visibility="gone"
-            android:fontFamily="@font/proximanovaregular"/>
-
-        <androidx.recyclerview.widget.RecyclerView
+        <LinearLayout
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:id="@+id/rv_prefs"
-            tools:listitem="@layout/preferences_adapter_layout"
-            tools:itemCount="4"
-            android:layout_marginTop="@dimen/padding_10"/>
-
-        <RelativeLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:padding="@dimen/padding_10"
-            android:layout_margin="10dp"
-            android:background="@drawable/grey_rounded_stroked_rectangle">
+            android:layout_height="match_parent"
+            android:orientation="vertical"
+            android:id="@+id/lin_add_pref"
+            android:padding="@dimen/padding_10">
 
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="Add Preferences"
-                android:layout_centerInParent="true"/>
+                android:text="Your Preferences"
+                android:textColor="@color/colorPrimaryDark"
+                android:textStyle="bold"
+                android:textSize="16sp"
+                android:visibility="gone"
+                android:fontFamily="@font/proximanovaregular"/>
 
-        </RelativeLayout>
+            <androidx.recyclerview.widget.RecyclerView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:id="@+id/rv_prefs"
+                tools:listitem="@layout/preferences_adapter_layout"
+                tools:itemCount="4"
+                android:layout_marginTop="@dimen/padding_10"/>
 
-        <com.google.android.material.button.MaterialButton
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="@dimen/padding_10"
-            android:layout_marginStart="40dp"
-            android:layout_marginEnd="40dp"
-            app:cornerRadius="30dp"
-            android:background="@color/colorPrimaryDark"
-            android:text="Save"
-            android:padding="15dp"
-            android:id="@+id/save_pref_btn"
-            android:fontFamily="@font/proximanovaregular"
-            android:textSize="16sp"
-            android:textColor="@color/white"/>
+            <RelativeLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:padding="@dimen/padding_10"
+                android:layout_margin="10dp"
+                android:background="@drawable/grey_rounded_stroked_rectangle">
 
-        <ProgressBar
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:id="@+id/progress_bar_pref"
-            android:indeterminate="true"
-            android:visibility="gone"
-            android:layout_gravity="center_horizontal"
-            android:layout_marginTop="@dimen/padding_10"/>
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Add Preferences"
+                    android:layout_centerInParent="true"/>
 
-    </LinearLayout>
+            </RelativeLayout>
+
+            <com.google.android.material.button.MaterialButton
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/padding_10"
+                android:layout_marginStart="40dp"
+                android:layout_marginEnd="40dp"
+                app:cornerRadius="30dp"
+                android:background="@color/colorPrimaryDark"
+                android:text="Save"
+                android:padding="15dp"
+                android:id="@+id/save_pref_btn"
+                android:fontFamily="@font/proximanovaregular"
+                android:textSize="16sp"
+                android:textColor="@color/white"/>
+
+            <ProgressBar
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:id="@+id/progress_bar_pref"
+                android:indeterminate="true"
+                android:visibility="gone"
+                android:layout_gravity="center_horizontal"
+                android:layout_marginTop="@dimen/padding_10"/>
+
+        </LinearLayout>
+
+    </androidx.core.widget.NestedScrollView>
 
 
 </LinearLayout>
