@@ -360,7 +360,6 @@
                             app:srb_drawableFilled="@drawable/ic_starfullnewsvg"
                             app:srb_isIndicator="false"
                             app:srb_minimumStars="0"
-                            app:srb_clearRatingEnabled="true"
                             app:srb_numStars="5"
                             app:srb_starHeight="30dp"
                             app:srb_starPadding="15dp"

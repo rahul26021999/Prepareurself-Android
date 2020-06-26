@@ -1,5 +1,6 @@
 package com.prepare.prepareurself.quizv2.ui
 
+import android.content.Intent
 import android.os.Bundle
 import android.os.CountDownTimer
 import android.util.Log
@@ -43,6 +44,7 @@ class QuizActivity : BaseActivity(),QuizQuestionPagerAdapter.QuestionInteractor 
                 tv_quiz_title.text = "Quiz"
             else
                 tv_quiz_title.text = "$courseName Quiz"
+
         }
 
         timer = object :CountDownTimer(30000,1000){
@@ -94,6 +96,10 @@ class QuizActivity : BaseActivity(),QuizQuestionPagerAdapter.QuestionInteractor 
                                                 Utility.showToast(this,"Quiz submitted successfully!")
                                                 //it.score
                                                 Log.d("TAGSCORE",""+it.score)
+                                                val intent=Intent(applicationContext, ResultQuizActivity::class.java)
+                                                intent.putExtra("score",it.score)
+                                                //quizViewModel.fetchQuiz()
+                                                startActivity(intent)
 
                                             }else{
                                                 Utility.showToast(this,"There was an error in submitting quiz!")
@@ -156,5 +162,6 @@ class QuizActivity : BaseActivity(),QuizQuestionPagerAdapter.QuestionInteractor 
         var questionId = 0
         var optionId = -1
     }
+
 
 }

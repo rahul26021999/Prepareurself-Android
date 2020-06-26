@@ -18,7 +18,11 @@
         android:theme="@style/AppTheme"
         android:usesCleartextTraffic="true"
         tools:replace="android:allowBackup">
-        <activity android:name=".quizv2.ui.instructions.InstructionActivity"></activity>
+        <activity android:name=".quizv2.ui.ResultQuizActivity"
+            android:theme="@style/ProfileTheme">
+
+        </activity>
+        <activity android:name=".quizv2.ui.instructions.InstructionActivity" />
         <activity
             android:name=".forum.ui.RepliesActivity"
             android:theme="@style/ProfileTheme"

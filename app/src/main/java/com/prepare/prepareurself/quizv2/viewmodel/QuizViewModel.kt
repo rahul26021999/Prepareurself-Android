@@ -28,6 +28,7 @@ class QuizViewModel(application: Application) : AndroidViewModel(application) {
     fun submitIndividualQuiz(token: String,quizId: Int,courseId:Int,questionId:Int, optionId:Int){
         quizRepository?.submitIndividualQuiz(token, quizId, courseId, questionId, optionId)
     }
+    //fun getques(token: String)
 
 //    fun createData(){
 //

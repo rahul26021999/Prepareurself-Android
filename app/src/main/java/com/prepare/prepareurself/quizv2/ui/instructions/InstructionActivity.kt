@@ -45,6 +45,7 @@ class InstructionActivity : BaseActivity() , OneFragment.onNextClick , TwoFragme
         intent.putExtra(Constants.COURSENAME,"Android")
         intent.putExtra(Constants.COURSEID,1)
         startActivity(intent)
+        finish()
     }
 
     override fun onOptionBackThree() {
