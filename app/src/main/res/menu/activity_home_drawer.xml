@@ -20,6 +20,11 @@
             android:title="@string/menu_fav" />
 
         <item
+            android:id="@+id/nav_trending"
+            android:icon="@drawable/ic_trending"
+            android:title="Trendings" />
+
+        <item
             android:id="@+id/nav_contact_us"
             android:icon="@drawable/ic_image_contact_us"
             android:title="@string/menu_contact_us" />

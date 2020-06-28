@@ -41,6 +41,7 @@ import com.prepare.prepareurself.profile.ui.fragments.ProfileFragment;
 import com.prepare.prepareurself.resources.data.model.ResourceModel;
 import com.prepare.prepareurself.resources.data.model.ResourceViewsResponse;
 import com.prepare.prepareurself.resources.ui.activity.ResourcesActivity;
+import com.prepare.prepareurself.trending.ui.TrendingFragment;
 import com.prepare.prepareurself.utils.BaseActivity;
 import com.prepare.prepareurself.utils.Constants;
 import com.google.android.material.navigation.NavigationView;
@@ -71,7 +72,8 @@ public class HomeActivity extends BaseActivity implements NavigationView.OnNavig
         AboutusFragment.AboutUsHomeInteractor,
         FeedbackFragment.FeedBackHomeInteractor,
         ProfileFragment.ProfileHomeInteractor,
-        FavouritesFragment.FavouritesHomeInteractor {
+        FavouritesFragment.FavouritesHomeInteractor,
+        TrendingFragment.TrendingHomeInteractor {
 
     private AppBarConfiguration mAppBarConfiguration;
     private TextView tvNameNavHeader;
@@ -114,7 +116,7 @@ public class HomeActivity extends BaseActivity implements NavigationView.OnNavig
 
         HomeViewPagerAdapter viewPagerAdapter = new HomeViewPagerAdapter(getSupportFragmentManager());
         viewPager.setAdapter(viewPagerAdapter);
-        viewPager.setOffscreenPageLimit(5);
+        viewPager.setOffscreenPageLimit(6);
 
 //        mAppBarConfiguration = new AppBarConfiguration.Builder(
 //                R.id.nav_dashboard, R.id.nav_profile, R.id.nav_contact_us)
@@ -242,7 +244,7 @@ public class HomeActivity extends BaseActivity implements NavigationView.OnNavig
 //    }
 
     public void navigateHome(int position){
-        viewPager.setCurrentItem(position);
+        viewPager.setCurrentItem(position, true);
     }
 
     @Override
@@ -261,10 +263,10 @@ public class HomeActivity extends BaseActivity implements NavigationView.OnNavig
                 startActivity(intentcourse);*/
                 break;
             case R.id.nav_profile :
-                viewPager.setCurrentItem(1);
+                viewPager.setCurrentItem(1, true);
                 break;
             case R.id.nav_dashboard :
-                viewPager.setCurrentItem(0);
+                viewPager.setCurrentItem(0, true);
                 break;
             case R.id.nav_star:
                 redirectToPlayStore();
@@ -282,15 +284,18 @@ public class HomeActivity extends BaseActivity implements NavigationView.OnNavig
                 break;
             case R.id.nav_about_us :
                 //startActivity(new Intent(HomeActivity.this, QuizActivity.class));
-                viewPager.setCurrentItem(4);
+                viewPager.setCurrentItem(5, true);
                 break;
             case R.id.nav_feedback :
                 //startActivity(new Intent(HomeActivity.this, ChatBotActivity.class));
-                viewPager.setCurrentItem(3);
+                viewPager.setCurrentItem(4, true);
                 break;
             case R.id.nav_fav:
-                viewPager.setCurrentItem(2);
+                viewPager.setCurrentItem(2, true);
                 break;
+
+            case R.id.nav_trending:
+                viewPager.setCurrentItem(3, true);
 
         }
 
@@ -520,4 +525,8 @@ public class HomeActivity extends BaseActivity implements NavigationView.OnNavig
         navigateHome(0);
     }
 
+    @Override
+    public void onTrendingBackPressed() {
+        navigateHome(0);
+    }
 }
