@@ -9,7 +9,7 @@ import android.view.ViewGroup
 import android.widget.ImageView
 
 import com.prepare.prepareurself.R
-import layout.onOptionClick
+//import layout.onOptionClick
 
 /**
  * A simple [Fragment] subclass.

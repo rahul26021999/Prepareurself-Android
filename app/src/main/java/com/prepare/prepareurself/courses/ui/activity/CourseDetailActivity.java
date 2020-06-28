@@ -37,6 +37,7 @@ import com.prepare.prepareurself.forum.ui.ForumActivity;
 import com.prepare.prepareurself.preferences.data.PreferencesModel;
 import com.prepare.prepareurself.preferences.data.PrefernceResponseModel;
 import com.prepare.prepareurself.quizv2.ui.QuizActivity;
+import com.prepare.prepareurself.quizv2.ui.QuizDetailActivity;
 import com.prepare.prepareurself.utils.BaseActivity;
 import com.prepare.prepareurself.utils.Constants;
 import com.prepare.prepareurself.utils.PrefManager;
@@ -347,9 +348,10 @@ public class CourseDetailActivity extends BaseActivity implements View.OnClickLi
                 startActivity(intent1);
                 break;
             case R.id.rel_takequiz:
-                Intent intent2 = new Intent(CourseDetailActivity.this, QuizActivity.class);
-                intent2.putExtra(Constants.COURSEID,courseId);
-                intent2.putExtra(Constants.COURSENAME,courseName);
+                //Intent intent2 = new Intent(CourseDetailActivity.this, QuizActivity.class);
+                Intent intent2 = new Intent(CourseDetailActivity.this, QuizDetailActivity.class);
+                //intent2.putExtra(Constants.COURSEID,courseId);
+                //intent2.putExtra(Constants.COURSENAME,courseName);
                 startActivity(intent2);
                 break;
             /*case R.id.tv_setpref:
