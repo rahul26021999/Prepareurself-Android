@@ -53,7 +53,6 @@ public class DashboardRespoisitory {
             @Override
             public void onResponse(Call<HomepageResponseModel> call, Response<HomepageResponseModel> response) {
                 HomepageResponseModel responseModel  = response.body();
-                Log.d("TAGRESPONSE",""+responseModel.getError_code());
                 if (response.code() == 401){
                     Log.d("TAGRESPONSE",""+responseModel.getError_code());
                     PrefManager prefManager = new PrefManager(context);
