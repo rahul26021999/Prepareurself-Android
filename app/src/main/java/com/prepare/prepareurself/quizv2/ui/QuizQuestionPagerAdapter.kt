@@ -27,10 +27,10 @@ QuizSelectableOptionAdapter.OptionListener {
     override fun getCount(): Int {
         return questions.size
     }
-
+    //ray like bindvew?
     override fun instantiateItem(container: ViewGroup, position: Int): Any {
         val view = LayoutInflater.from(context).inflate(R.layout.quiz_pager_adapter_layout,container,false)
-        val question = questions[position]
+        val question = questions[position] //ray
 
         questionId = question.id!!
 

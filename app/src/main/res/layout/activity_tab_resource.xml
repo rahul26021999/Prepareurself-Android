@@ -1,60 +1,56 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.constraintlayout.widget.ConstraintLayout
-    xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:tools="http://schemas.android.com/tools"
-    android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
-    tools:context=".courses.ui.fragmentToActivity.TabResourceActivity">
-
-    <RelativeLayout
-        android:layout_width="wrap_content"
-        android:id="@+id/relLayout1"
-        android:layout_height="wrap_content"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintEnd_toEndOf="parent">
-
-        <include layout="@layout/snippet_search_toolbar"/>
-        <include layout="@layout/snippet_view_resources_toolbar"/>
-
-    </RelativeLayout>
-
-    <FrameLayout
+<RelativeLayout
+        xmlns:android="http://schemas.android.com/apk/res/android"
+        xmlns:tools="http://schemas.android.com/tools"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:id="@+id/search_container"
-        android:background="@color/white"
-        app:layout_constraintTop_toBottomOf="@+id/relLayout1"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"/>
+        xmlns:app="http://schemas.android.com/apk/res-auto"
+        tools:context=".courses.ui.fragmentToActivity.TabResourceActivity">
 
-    <RelativeLayout
-        android:layout_width="match_parent"
-        android:id="@+id/lin_resource_main"
-        android:layout_height="wrap_content"
-        app:layout_constraintTop_toBottomOf="@+id/relLayout1"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintEnd_toEndOf="parent">
+        <RelativeLayout
+            android:layout_width="wrap_content"
+            android:id="@+id/relLayout1"
+            android:layout_height="wrap_content"
+           >
 
-        <androidx.recyclerview.widget.RecyclerView
+            <include layout="@layout/snippet_search_toolbar"/>
+            <include layout="@layout/snippet_view_resources_toolbar"/>
+
+        </RelativeLayout>
+
+        <FrameLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            tools:listitem="@layout/resources_rv_adapter_layout"
-            android:id="@+id/rv_resources"/>
+            android:id="@+id/search_container"
+            android:background="@color/white"
+            android:layout_below="@+id/relLayout1"
+            />
 
-        <TextView
-            android:layout_width="wrap_content"
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:id="@+id/lin_resource_main"
             android:layout_height="wrap_content"
-            android:text="Loading Content..."
-            android:id="@+id/tv_coming_soon"
-            android:layout_centerHorizontal="true"
-            android:layout_marginTop="100dp"
-            android:textSize="16sp"
-            android:fontFamily="@font/proximanovaregular"
-            android:textColor="@color/colorPrimaryDark"
-            android:visibility="visible"/>
+            android:layout_below="@+id/relLayout1"
+            >
+
+            <androidx.recyclerview.widget.RecyclerView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                tools:listitem="@layout/resources_rv_adapter_layout"
+                android:id="@+id/rv_resources"/>
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Loading Content..."
+                android:id="@+id/tv_coming_soon"
+                android:layout_centerHorizontal="true"
+                android:layout_marginTop="100dp"
+                android:textSize="16sp"
+                android:fontFamily="@font/proximanovaregular"
+                android:textColor="@color/colorPrimaryDark"
+                android:visibility="visible"/>
+
+        </RelativeLayout>
 
     </RelativeLayout>
-
-</androidx.constraintlayout.widget.ConstraintLayout>

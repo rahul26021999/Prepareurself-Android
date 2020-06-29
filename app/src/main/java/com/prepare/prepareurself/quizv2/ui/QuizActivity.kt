@@ -1,5 +1,6 @@
 package com.prepare.prepareurself.quizv2.ui
 
+import android.content.Intent
 import android.os.Bundle
 import android.os.CountDownTimer
 import android.util.Log
@@ -43,11 +44,12 @@ class QuizActivity : BaseActivity(),QuizQuestionPagerAdapter.QuestionInteractor 
                 tv_quiz_title.text = "Quiz"
             else
                 tv_quiz_title.text = "$courseName Quiz"
+
         }
 
         timer = object :CountDownTimer(30000,1000){
             override fun onFinish() {
-               btn_next.performClick()
+               btn_next.performClick() //ray why on tmer?
             }
 
             override fun onTick(millisUntilFinished: Long) {
@@ -79,7 +81,7 @@ class QuizActivity : BaseActivity(),QuizQuestionPagerAdapter.QuestionInteractor 
                                 quizViewModel.submitIndividualQuiz(pm.getString(Constants.JWTTOKEN), quizId,courseId, questionId, optionId)
                             }
                             quiz_view_pager.currentItem = quiz_view_pager.currentItem+1
-                        }else if (quiz_view_pager.currentItem + 1 == it.questions?.size){
+                        }else if (quiz_view_pager.currentItem + 1 == it.questions?.size){ //ray
                             if (optionId!=-1){
                                 val responsesModel = ResponsesModel()
                                 responsesModel.answer_id = optionId
@@ -92,6 +94,13 @@ class QuizActivity : BaseActivity(),QuizQuestionPagerAdapter.QuestionInteractor 
                                         if (it!=null){
                                             if (it.error_code == 0){
                                                 Utility.showToast(this,"Quiz submitted successfully!")
+                                                //it.score
+                                                Log.d("TAGSCORE",""+it.score)
+                                                val intent=Intent(applicationContext, ResultQuizActivity::class.java)
+                                                intent.putExtra("score",it.score)
+                                                //quizViewModel.fetchQuiz()
+                                                startActivity(intent)
+
                                             }else{
                                                 Utility.showToast(this,"There was an error in submitting quiz!")
                                             }
@@ -153,5 +162,6 @@ class QuizActivity : BaseActivity(),QuizQuestionPagerAdapter.QuestionInteractor 
         var questionId = 0
         var optionId = -1
     }
+
 
 }

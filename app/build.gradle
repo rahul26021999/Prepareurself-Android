@@ -163,6 +163,10 @@ dependencies {
     //rate bar
     implementation 'com.github.ome450901:SimpleRatingBar:1.5.0'
 
+    implementation 'jp.wasabeef:richeditor-android:1.2.2'
+    //vewpager
+    implementation 'androidx.viewpager:viewpager:1.0.0'
+    implementation 'com.github.lzyzsd:circleprogress:1.2.1'
 
 //    //dialogflow
 //    implementation 'ai.api:sdk:2.0.7@aar'
