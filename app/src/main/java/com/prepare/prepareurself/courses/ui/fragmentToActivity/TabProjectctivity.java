@@ -125,6 +125,8 @@ public class TabProjectctivity extends BaseActivity implements ProjectsRvAdapter
         recyclerView.setAdapter(adapter);
 
         if(courseId!=-1){
+            searchFragment.courseSearch = true;
+            searchFragment.courseId = courseId;
             mViewModel.fetchProjects(prefManager.getString(Constants.JWTTOKEN),
                     courseId,
                     "",

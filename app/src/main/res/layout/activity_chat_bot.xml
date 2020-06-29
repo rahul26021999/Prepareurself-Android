@@ -1,0 +1,56 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".chatbot.ui.ChatBotActivity"
+    android:orientation="vertical">
+
+
+    <RelativeLayout
+        android:layout_width="wrap_content"
+        android:id="@+id/relLayout1"
+        android:layout_height="wrap_content">
+
+        <include layout="@layout/layout_topbar"/>
+
+    </RelativeLayout>
+
+    <androidx.recyclerview.widget.RecyclerView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_above="@+id/send_lin"
+        android:id="@+id/chat_bot_rv"
+        android:layout_below="@+id/relLayout1"
+        android:layout_marginTop="5dp"/>
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:weightSum="2"
+        android:id="@+id/send_lin"
+        android:layout_alignParentBottom="true"
+        android:padding="@dimen/padding_10">
+
+        <EditText
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:id="@+id/et_bot_query"
+            android:hint="Send query"
+            android:layout_toStartOf="@+id/btn_send_bot"/>
+
+        <com.google.android.material.floatingactionbutton.FloatingActionButton
+            android:id="@+id/btn_send_bot"
+            android:layout_width="50dp"
+            android:layout_height="50dp"
+            android:layout_alignParentEnd="true"
+            android:layout_marginStart="@dimen/padding_10"
+            android:backgroundTint="@color/white"
+            android:src="@drawable/send_query_white"
+            app:fabSize="auto" />
+
+    </RelativeLayout>
+
+</RelativeLayout>

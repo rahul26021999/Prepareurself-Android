@@ -86,8 +86,8 @@ public class DashboardViewModel extends AndroidViewModel {
         return searchResponseModelLiveData;
     }
 
-    public void searchWithPagination(String token, String query, int page){
-        searchResponseModelLiveData = searchRepository.searchWithPagination(token,query, page);
+    public void searchWithPagination(String token, String query, int page, boolean courseSearch, int courseId){
+        searchResponseModelLiveData = searchRepository.searchWithPagination(token,query, page, courseSearch, courseId);
     }
 
     public MutableLiveData<SearchResponseModel> getSearchResponseModelLiveData() {
@@ -145,23 +145,6 @@ public class DashboardViewModel extends AndroidViewModel {
         return courseDbRepository.getFiveCourses();
     }
 
-    public LiveData<List<SuggestedTopicsModel>> getSuggestedTopics(String token){
-        LiveData<List<SuggestedTopicsModel>> response = dashboardRespoisitory.fetSuggestedTopics(token);
-        if (response==null){
-            response = suggestedTopicsDbRepository.getAllTopics();
-        }
-
-        return response;
-    }
-
-    public LiveData<List<SuggestedProjectModel>> getSuggestedProjects(String token){
-        LiveData<List<SuggestedProjectModel>> response = dashboardRespoisitory.fetchSuggestedProjects(token);
-        if (response==null){
-            response = suggestedProjectsDbRespository.getAllProjects();
-        }
-
-        return response;
-    }
 
     public LiveData<HomepageResponseModel> fetchHomePageData(String token, Context context){
         return dashboardRespoisitory.fetchHomePageData(token, context);

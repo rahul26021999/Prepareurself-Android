@@ -10,10 +10,11 @@ import com.prepare.prepareurself.dashboard.ui.fragment.DashboardFragment;
 import com.prepare.prepareurself.favourites.ui.FavouritesFragment;
 import com.prepare.prepareurself.feedback.ui.FeedbackFragment;
 import com.prepare.prepareurself.profile.ui.fragments.ProfileFragment;
+import com.prepare.prepareurself.trending.ui.TrendingFragment;
 
 public class HomeViewPagerAdapter extends FragmentPagerAdapter {
 
-    private int count = 5;
+    private int count = 6;
 
     public HomeViewPagerAdapter(@NonNull FragmentManager fm) {
         super(fm);
@@ -30,10 +31,13 @@ public class HomeViewPagerAdapter extends FragmentPagerAdapter {
             break;
             case 2: fragment = FavouritesFragment.newInstance();
             break;
-            case 3: fragment = FeedbackFragment.newInstance();
+            case 3: fragment = new TrendingFragment();
             break;
-            case 4: fragment = AboutusFragment.newInstance();
+            case 4: fragment = FeedbackFragment.newInstance();
             break;
+            case 5: fragment = AboutusFragment.newInstance();
+            break;
+
         }
 
         return fragment;

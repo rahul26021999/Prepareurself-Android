@@ -122,6 +122,8 @@ public class TabResourceActivity extends AppCompatActivity implements ResourcesR
 
         Log.d("course_id", courseId+"");
         if (courseId!=-1){
+            searchFragment.courseSearch = true;
+            searchFragment.courseId = courseId;
             mViewModel.getCourseById(prefManager.getString(Constants.JWTTOKEN),
                     courseId,
                     10,

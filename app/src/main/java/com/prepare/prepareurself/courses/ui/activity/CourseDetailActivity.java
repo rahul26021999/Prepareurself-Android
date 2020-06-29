@@ -1,5 +1,6 @@
 package com.prepare.prepareurself.courses.ui.activity;
 
+import androidx.fragment.app.FragmentManager;
 import androidx.lifecycle.Observer;
 import androidx.lifecycle.ViewModelProvider;
 
@@ -7,12 +8,12 @@ import android.app.Dialog;
 import android.content.Intent;
 import android.graphics.Color;
 import android.graphics.drawable.ColorDrawable;
-import android.graphics.drawable.Drawable;
 import android.graphics.drawable.GradientDrawable;
 import android.net.Uri;
 import android.os.Bundle;
 import android.text.Html;
 import android.util.Log;
+import android.view.MotionEvent;
 import android.view.View;
 import android.view.Window;
 import android.view.WindowManager;
@@ -21,7 +22,6 @@ import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 
-import com.bumptech.glide.GenericTransitionOptions;
 import com.bumptech.glide.Glide;
 import com.bumptech.glide.load.engine.DiskCacheStrategy;
 import com.prepare.prepareurself.R;
@@ -47,7 +47,9 @@ import com.willy.ratingbar.BaseRatingBar;
 import java.io.IOException;
 import java.util.List;
 
-public class CourseDetailActivity extends BaseActivity implements View.OnClickListener, FeedbackFragment.FeedBackHomeInteractor {
+public class CourseDetailActivity extends BaseActivity implements View.OnClickListener,
+        FeedbackFragment.FeedBackHomeInteractor,
+        BaseRatingBar.OnRatingChangeListener {
     int starbyuser,type=0;
     String msg;
     private int courseId = -1;
@@ -62,6 +64,10 @@ public class CourseDetailActivity extends BaseActivity implements View.OnClickLi
     private String courseName = "";
     private boolean isAdded = false;
     private boolean isRateFetching = true;
+    private Dialog playstoreDialog;
+    private Dialog feedbackDialog;
+    private FeedbackFragment feedbackFragment;
+
     @Override
     public void onFeedbackBackPressed() { }
     @Override
@@ -71,6 +77,7 @@ public class CourseDetailActivity extends BaseActivity implements View.OnClickLi
         vm = new  ViewModelProvider(this).get(CourseDetailViewModel.class);
         prefManager = new PrefManager(this);
         Intent intent = getIntent();
+        feedbackFragment = FeedbackFragment.newInstance();
         if (intent.getData()!=null){
             Log.d("deeplink_debug","course avtivity : "+getIntent().getData()+"");
             String data = intent.getData().toString();
@@ -83,6 +90,9 @@ public class CourseDetailActivity extends BaseActivity implements View.OnClickLi
         }
         getintents();
         setOnclicklisteners();
+
+        initFeedbackDialog();
+        initPlayStoreDialog();
 
         if (courseId!=-1){
             vm.fetchCourseDetails(prefManager.getString(Constants.JWTTOKEN),courseId);
@@ -177,21 +187,41 @@ public class CourseDetailActivity extends BaseActivity implements View.OnClickLi
                 }
             });
 
-            scaleRatingBar.setOnRatingChangeListener(new BaseRatingBar.OnRatingChangeListener() {
+            scaleRatingBar.setOnTouchListener(new View.OnTouchListener() {
                 @Override
-                public void onRatingChange(BaseRatingBar ratingBar, float rating, boolean fromUser) {
-                    starbyuser= (int) rating;
-                    Log.e("TAGSTAR", "onRatingChange: " + isRateFetching);
-                    if (!isRateFetching){
-                        vm.fetchRateCourse(prefManager.getString(Constants.JWTTOKEN),courseId,starbyuser);
-                        observeData(starbyuser);
-                    }else{
-                        isRateFetching = false;
+                public boolean onTouch(View v, MotionEvent event) {
+
+                    if (event.getAction() == MotionEvent.ACTION_UP){
+                        Log.d("rate bar", "onTouch: action up");
+                       setRatingListener();
                     }
+                    return false;
                 }
             });
+//            scaleRatingBar.setOnRatingChangeListener(new BaseRatingBar.OnRatingChangeListener() {
+//                @Override
+//                public void onRatingChange(BaseRatingBar ratingBar, float rating, boolean fromUser) {
+//
+//                }
+//            });
         }
 
+    }
+
+    private void setRatingListener() {
+        scaleRatingBar.setOnRatingChangeListener(this);
+    }
+
+    @Override
+    public void onRatingChange(BaseRatingBar ratingBar, float rating, boolean fromUser) {
+        starbyuser= (int) rating;
+        Log.e("TAGSTAR", "onRatingChange: " + isRateFetching);
+        if (!isRateFetching){
+            vm.fetchRateCourse(prefManager.getString(Constants.JWTTOKEN),courseId,starbyuser);
+            observeData(starbyuser);
+        }else{
+            isRateFetching = false;
+        }
     }
 
     private void observeData(final int starbyuser) {
@@ -200,10 +230,16 @@ public class CourseDetailActivity extends BaseActivity implements View.OnClickLi
             public void onChanged(RateCourseResponseModel rateCourseResponseModel) {
                 if (rateCourseResponseModel!=null){
                     if(starbyuser<=3){
-                        showDialogfeedback();
+                        feedbackDialog.show();
+                        if (playstoreDialog.isShowing()){
+                            playstoreDialog.cancel();
+                        }
                     }
                     else {
-                        showDialogplaystore();
+                       playstoreDialog.show();
+                       if (feedbackDialog.isShowing()){
+                           feedbackDialog.cancel();
+                       }
                     }
                 }
             }
@@ -275,45 +311,46 @@ public class CourseDetailActivity extends BaseActivity implements View.OnClickLi
     }
 
 
-    private void showDialogplaystore(){
-        final Dialog dialog = new Dialog(CourseDetailActivity.this);
-        dialog.requestWindowFeature(Window.FEATURE_NO_TITLE);
-        dialog.setCancelable(false);
+    private void initPlayStoreDialog(){
+        playstoreDialog = new Dialog(CourseDetailActivity.this);
+        playstoreDialog.requestWindowFeature(Window.FEATURE_NO_TITLE);
+        playstoreDialog.setCancelable(false);
         //View view = LayoutInflater.from(this).inflate(R.layout.activity_dialog_playstore, null);
-        dialog.setContentView(R.layout.activity_dialog_playstore);
-        com.google.android.material.button.MaterialButton buttonok =dialog.findViewById(R.id.btn_ok);
-        TextView buttonnotnow =dialog.findViewById(R.id.btn_notnow);
+        playstoreDialog.setContentView(R.layout.activity_dialog_playstore);
+        com.google.android.material.button.MaterialButton buttonok =playstoreDialog.findViewById(R.id.btn_ok);
+        TextView buttonnotnow =playstoreDialog.findViewById(R.id.btn_notnow);
         buttonok.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 Utility.redirectUsingCustomTab(CourseDetailActivity.this,Constants.GOOGLEPLAYLINK);
-                dialog.dismiss();
+                playstoreDialog.dismiss();
             }
         });
         buttonnotnow.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                dialog.cancel();
+                playstoreDialog.cancel();
             }
         });
-        dialog.getWindow().setLayout(WindowManager.LayoutParams.MATCH_PARENT, WindowManager.LayoutParams.WRAP_CONTENT);
-        dialog.getWindow().setBackgroundDrawable(new ColorDrawable(android.graphics.Color.TRANSPARENT));
-        dialog.show();
+        playstoreDialog.getWindow().setLayout(WindowManager.LayoutParams.MATCH_PARENT, WindowManager.LayoutParams.WRAP_CONTENT);
+        playstoreDialog.getWindow().setBackgroundDrawable(new ColorDrawable(android.graphics.Color.TRANSPARENT));
     }
 
 
-    private void showDialogfeedback() {
-        final Dialog dialog = new Dialog(CourseDetailActivity.this);
-        dialog.requestWindowFeature(Window.FEATURE_NO_TITLE);
-        dialog.setCancelable(false);
-        dialog.setContentView(R.layout.activity_dialog);
-        com.google.android.material.button.MaterialButton buttonok =dialog.findViewById(R.id.btn_ok);
-        TextView buttonnotnow =dialog.findViewById(R.id.btn_notnow);
+    private void initFeedbackDialog() {
+        feedbackDialog = new Dialog(CourseDetailActivity.this);
+        feedbackDialog.requestWindowFeature(Window.FEATURE_NO_TITLE);
+        feedbackDialog.setCancelable(false);
+        feedbackDialog.setContentView(R.layout.activity_dialog);
+        com.google.android.material.button.MaterialButton buttonok =feedbackDialog.findViewById(R.id.btn_ok);
+        TextView buttonnotnow =feedbackDialog.findViewById(R.id.btn_notnow);
         buttonok.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                dialog.cancel();
-                getSupportFragmentManager().beginTransaction().add(R.id.feedback_container,FeedbackFragment.newInstance())
+                feedbackDialog.cancel();
+                findViewById(R.id.feedback_container).setVisibility(View.VISIBLE);
+                feedbackFragment.fromCourse = true;
+                getSupportFragmentManager().beginTransaction().add(R.id.feedback_container,feedbackFragment)
                         .commit();
                // Utility.showToast(CourseDetailActivity.this,"abc def");
             }
@@ -321,12 +358,11 @@ public class CourseDetailActivity extends BaseActivity implements View.OnClickLi
         buttonnotnow.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                dialog.cancel();
+                feedbackDialog.cancel();
             }
         });
-       dialog.getWindow().setLayout(WindowManager.LayoutParams.MATCH_PARENT, WindowManager.LayoutParams.WRAP_CONTENT);
-       dialog.getWindow().setBackgroundDrawable(new ColorDrawable(android.graphics.Color.TRANSPARENT));
-        dialog.show();
+       feedbackDialog.getWindow().setLayout(WindowManager.LayoutParams.MATCH_PARENT, WindowManager.LayoutParams.WRAP_CONTENT);
+       feedbackDialog.getWindow().setBackgroundDrawable(new ColorDrawable(android.graphics.Color.TRANSPARENT));
     }
 
     @Override
@@ -399,4 +435,19 @@ public class CourseDetailActivity extends BaseActivity implements View.OnClickLi
                 break;
     }
 }
+
+    @Override
+    protected void onResume() {
+        findViewById(R.id.feedback_container).setVisibility(View.GONE);
+        super.onResume();
+    }
+
+    @Override
+    public void onBackPressed() {
+        if (feedbackFragment.isVisible()){
+            feedbackFragment.removeFragment();
+        }else{
+            super.onBackPressed();
+        }
+    }
 }

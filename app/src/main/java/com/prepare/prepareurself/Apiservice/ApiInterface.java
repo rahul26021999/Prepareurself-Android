@@ -2,7 +2,6 @@ package com.prepare.prepareurself.Apiservice;
 
 import com.prepare.prepareurself.authentication.data.model.ForgotPasswordResponseModel;
 import com.prepare.prepareurself.authentication.data.model.RegisterResponseModel;
-import com.prepare.prepareurself.authentication.data.model.UserModel;
 import com.prepare.prepareurself.courses.data.model.AddToUserPrefResponseModel;
 import com.prepare.prepareurself.courses.data.model.CourseDetailReponseModel;
 import com.prepare.prepareurself.courses.data.model.GetProjectResponse;
@@ -11,7 +10,6 @@ import com.prepare.prepareurself.courses.data.model.ProjectResponseModel;
 import com.prepare.prepareurself.banner.BannerImageResponseModel;
 import com.prepare.prepareurself.courses.data.model.RateCourseResponseModel;
 import com.prepare.prepareurself.dashboard.data.model.GetCourseResponseModel;
-import com.prepare.prepareurself.dashboard.data.model.GetSuggestedProjectsModel;
 import com.prepare.prepareurself.dashboard.data.model.GetSuggestedTopicsModel;
 import com.prepare.prepareurself.dashboard.data.model.HomepageResponseModel;
 import com.prepare.prepareurself.favourites.data.model.FavouritesResponseModel;
@@ -26,7 +24,6 @@ import com.prepare.prepareurself.preferences.data.UpdatePrefResponseModel;
 import com.prepare.prepareurself.profile.data.model.UpdatePasswordResponseModel;
 import com.prepare.prepareurself.profile.data.model.UpdatePreferenceResponseModel;
 import com.prepare.prepareurself.profile.data.model.AllPreferencesResponseModel;
-import com.prepare.prepareurself.profile.data.model.UploadImageResponse;
 import com.prepare.prepareurself.quizv2.data.QuizAnswerResponse;
 import com.prepare.prepareurself.quizv2.data.QuizResponseModel;
 import com.prepare.prepareurself.quizv2.data.ResponsesModel;
@@ -36,6 +33,8 @@ import com.prepare.prepareurself.resources.data.model.ResourceViewsResponse;
 import com.prepare.prepareurself.authentication.data.model.AuthenticationResponseModel;
 import com.prepare.prepareurself.resources.data.model.VideoShareResponseModel;
 import com.prepare.prepareurself.search.models.SearchResponseModel;
+import com.prepare.prepareurself.trending.data.TrendingProjectsReponseModel;
+import com.prepare.prepareurself.trending.data.TrendingTopicsResponseModel;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -150,10 +149,10 @@ public interface ApiInterface {
     Call<BannerImageResponseModel> getBanners(@Query("token") String token);
 
     @POST("get-suggested-projects")
-    Call<GetSuggestedProjectsModel> getSuggestedProjects(@Query("token") String token);
+    Call<TrendingProjectsReponseModel> getSuggestedProjects(@Query("token") String token);
 
     @POST("get-suggested-topics")
-    Call<GetSuggestedTopicsModel> getSuggestedTopics(@Query("token") String token);
+    Call<TrendingTopicsResponseModel> getSuggestedTopics(@Query("token") String token);
 
 
     @POST("store-feedback")
@@ -167,6 +166,12 @@ public interface ApiInterface {
     @POST("search")
     Call<SearchResponseModel> searchWithPagination(@Query("token") String token,
                                                    @Query("query") String query,
+                                                   @Query("count") int count,
+                                                   @Query("page") int page);
+    @POST("search-inside-course")
+    Call<SearchResponseModel> searchInCourse(@Query("token") String token,
+                                                   @Query("query") String query,
+                                                   @Query("course_id") int courseId,
                                                    @Query("count") int count,
                                                    @Query("page") int page);
 

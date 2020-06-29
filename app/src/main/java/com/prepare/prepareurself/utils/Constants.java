@@ -85,4 +85,6 @@ public class Constants {
     public static final String QUERY = "query";
     public static final String QUERYATTACHMENTBASEURL = "http://prepareurself.in/uploads/openforum/queries/";
     public static final String REPLYATTACHMENTBASEURL = "http://prepareurself.in/uploads/openforum/replies/";
+
+    public static final String DIALOGFLOWCLIENTACCESSTOKEN = "5f2c94bc97ca4c28a12a0ce1ee8bacbd";
 }
