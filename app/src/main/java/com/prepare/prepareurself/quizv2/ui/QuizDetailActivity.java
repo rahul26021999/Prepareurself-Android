@@ -27,12 +27,17 @@ public class QuizDetailActivity extends AppCompatActivity implements View.OnClic
     @Override
     public void onClick(View v) {
         switch (v.getId()){
-            case R.id.tv_btnquiz : Intent intent=new Intent(getApplicationContext(), InstructionActivity.class);
-                                    startActivity(intent);
-                                    break;
+            case R.id.tv_btnquiz :
+                Intent intent=new Intent(getApplicationContext(), InstructionActivity.class);
+                startActivity(intent);
+                finish();
+                break;
 
             case R.id.tv_btnpractice :
-                Toast.makeText(this,"abhi nah pata",Toast.LENGTH_LONG).show();
+                //Toast.makeText(this,"abhi nah pata",Toast.LENGTH_LONG).show();
+                startActivity(new Intent(this, PracticeQuizActivity.class));
+                finish();
+                break;
 
         }
     }

@@ -67,7 +67,7 @@ class TrendingFragment : Fragment(), DashboardRvAdapter.DashBoardInteractor {
 
         pm = PrefManager(requireActivity())
 
-        title.setText("Trendings")
+        title.text = "Trendings"
 
         backBtn.setOnClickListener(View.OnClickListener {
             //finish();

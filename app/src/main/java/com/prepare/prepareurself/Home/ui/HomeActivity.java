@@ -287,10 +287,10 @@ public class HomeActivity extends BaseActivity implements NavigationView.OnNavig
             case R.id.nav_about_us :
                 //startActivity(new Intent(HomeActivity.this, QuizActivity.class));
                 //viewPager.setCurrentItem(4);
-                Intent intent1 = new Intent(HomeActivity.this, InstructionActivity.class);
-                startActivity(intent1);
+//                Intent intent1 = new Intent(HomeActivity.this, InstructionActivity.class);
+//                startActivity(intent1);
                 //intent1.putExtra(Constants.COURSEID,1);
-                //viewPager.setCurrentItem(5, true);
+                viewPager.setCurrentItem(5, true);
                 break;
             case R.id.nav_feedback :
                 //startActivity(new Intent(HomeActivity.this, ChatBotActivity.class));

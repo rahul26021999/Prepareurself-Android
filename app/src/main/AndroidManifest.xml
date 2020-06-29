@@ -19,15 +19,18 @@
         android:theme="@style/AppTheme"
         android:usesCleartextTraffic="true"
         tools:replace="android:allowBackup">
-        <activity android:name=".quizv2.ui.QuizDetailActivity"
-            android:theme="@style/ProfileTheme"></activity>
+        <activity android:name=".quizv2.ui.PracticeQuizActivity"
+            android:theme="@style/ProfileTheme"/>
+        <activity
+            android:name=".quizv2.ui.QuizDetailActivity"
+            android:theme="@style/ProfileTheme" />
         <activity
             android:name=".quizv2.ui.ResultQuizActivity"
-            android:theme="@style/ProfileTheme"/>
+            android:theme="@style/ProfileTheme" />
         <activity android:name=".quizv2.ui.instructions.InstructionActivity" />
-
-        <activity android:name=".chatbot.ui.ChatBotActivity"
-            android:theme="@style/ProfileTheme"/>
+        <activity
+            android:name=".chatbot.ui.ChatBotActivity"
+            android:theme="@style/ProfileTheme" />
         <activity
             android:name=".forum.ui.RepliesActivity"
             android:theme="@style/ProfileTheme"
