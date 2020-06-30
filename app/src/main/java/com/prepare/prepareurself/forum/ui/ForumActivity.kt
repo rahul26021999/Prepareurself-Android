@@ -54,6 +54,7 @@ class ForumActivity : BaseActivity(), QueriesAdapter.QueriesListener, ImageAttac
     private var lastPage = 1
     private var queriesList = ArrayList<QueryModel>()
     private lateinit var queriesAdapter:QueriesAdapter
+    private var bottomsheetView:View?=null
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -87,9 +88,9 @@ class ForumActivity : BaseActivity(), QueriesAdapter.QueriesListener, ImageAttac
 //            }
 //        }
 
-        val view = LayoutInflater.from(this).inflate(R.layout.ask_query_bottom_sheet, null)
+        bottomsheetView = LayoutInflater.from(this).inflate(R.layout.ask_query_bottom_sheet, null)
         val dialog = BottomSheetDialog(this)
-        dialog.setContentView(view)
+        dialog.setContentView(bottomsheetView!!)
 
         btn_ask_query.setOnClickListener {
             dialog.show()
@@ -97,18 +98,18 @@ class ForumActivity : BaseActivity(), QueriesAdapter.QueriesListener, ImageAttac
 
         //initAttachmentAdapter()
 
-        view.et_query_forum.hint ="Enter your query"
+        bottomsheetView!!.et_query_forum.hint ="Enter your query"
 
         attachmentAdapter = ImageAttachedAdapter(this)
-        view.rv_image_attachment.layoutManager = LinearLayoutManager(this,LinearLayoutManager.HORIZONTAL, false)
-        view.rv_image_attachment.adapter = attachmentAdapter
+        bottomsheetView!!.rv_image_attachment.layoutManager = LinearLayoutManager(this,LinearLayoutManager.HORIZONTAL, false)
+        bottomsheetView!!.rv_image_attachment.adapter = attachmentAdapter
 
-        view.tv_attach_image.setOnClickListener {
+        bottomsheetView!!.tv_attach_image.setOnClickListener {
             uploadImage()
         }
 
-        view.btn_send_query.setOnClickListener {
-            var data = view.et_query_forum.text.toString()
+        bottomsheetView!!.btn_send_query.setOnClickListener {
+            var data = bottomsheetView!!.et_query_forum.text.toString()
             if (data.isNotEmpty()){
                 if (courseId!=-1){
                     data = data.replace("\n","<br />", true)
@@ -118,7 +119,7 @@ class ForumActivity : BaseActivity(), QueriesAdapter.QueriesListener, ImageAttac
                                 if (it!=null){
                                     Utility.showToast(this,"Query submitted successfully!")
                                     htmlData = ""
-                                    view.et_query_forum.setText("")
+                                    bottomsheetView!!.et_query_forum.setText("")
                                     it.query?.let { it1 ->
                                         queriesAdapter.addData(it1)
                                         rv_queries.smoothScrollToPosition(0)
@@ -222,18 +223,25 @@ class ForumActivity : BaseActivity(), QueriesAdapter.QueriesListener, ImageAttac
         super.onActivityResult(requestCode, resultCode, data)
         if (requestCode == 101) {
             if (resultCode == Activity.RESULT_OK) {
+                forum_progress.visibility = View.VISIBLE
+                bottomsheetView?.btn_send_query?.isEnabled = false
+                bottomsheetView?.tv_attach_image?.isEnabled = false
                 val uri: Uri = data?.data ?: Uri.parse("")
                 try {
                     val `is`: InputStream? = contentResolver.openInputStream(uri)
                     if (`is` != null) uploadImageToServer(getBytes(`is`))
                 } catch (e: IOException) {
                     e.printStackTrace()
+                    forum_progress.visibility = View.GONE
                 }
             }
         }
 
         if (requestCode == 102){
             if (resultCode == Activity.RESULT_OK) {
+                forum_progress.visibility = View.VISIBLE
+                bottomsheetView?.btn_send_query?.isEnabled = false
+                bottomsheetView?.tv_attach_image?.isEnabled = false
                 Log.d("camera_intent","$data ${data?.extras?.get("data")} abc ")
                 val photo = data?.extras?.get("data") as Bitmap
                 val uri: Uri = getCapturedImageUri(photo) ?: Uri.parse("")
@@ -242,6 +250,7 @@ class ForumActivity : BaseActivity(), QueriesAdapter.QueriesListener, ImageAttac
                     if (`is` != null) uploadImageToServer(getBytes(`is`))
                 } catch (e: IOException) {
                     e.printStackTrace()
+                    forum_progress.visibility = View.GONE
                 }
             }
         }
@@ -249,8 +258,8 @@ class ForumActivity : BaseActivity(), QueriesAdapter.QueriesListener, ImageAttac
     }
 
     private fun getCapturedImageUri(photo: Bitmap): Uri? {
-        val bytes = ByteArrayOutputStream()
-        photo.compress(Bitmap.CompressFormat.JPEG, 100, bytes)
+//        val bytes = ByteArrayOutputStream()
+//        photo.compress(Bitmap.CompressFormat.JPEG, 100, bytes)
         val path: String = MediaStore.Images.Media.insertImage(this.contentResolver, photo, "${Date().time}", null)
         return Uri.parse(path)
     }
@@ -273,6 +282,9 @@ class ForumActivity : BaseActivity(), QueriesAdapter.QueriesListener, ImageAttac
                     }else{
                         Utility.showToast(this,"Cannot attach image at the moment")
                     }
+                    forum_progress.visibility = View.GONE
+                    bottomsheetView?.btn_send_query?.isEnabled = true
+                    bottomsheetView?.tv_attach_image?.isEnabled = true
                 })
 
     }
