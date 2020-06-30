@@ -11,6 +11,7 @@ import android.view.*
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.LinearLayoutManager
+import androidx.viewpager.widget.ViewPager
 import com.bumptech.glide.Glide
 import com.bumptech.glide.load.engine.DiskCacheStrategy
 import com.google.android.material.bottomsheet.BottomSheetBehavior
@@ -26,6 +27,7 @@ import com.prepare.prepareurself.utils.Utility
 import kotlinx.android.synthetic.main.activity_forum_content.*
 import kotlinx.android.synthetic.main.ask_query_bottom_sheet.*
 import kotlinx.android.synthetic.main.ask_query_bottom_sheet.view.*
+import kotlinx.android.synthetic.main.fullimage_dialog_container.view.*
 import kotlinx.android.synthetic.main.fullscreen_image_dialog.view.*
 import kotlinx.android.synthetic.main.layout_topbar.*
 import okhttp3.MediaType
@@ -256,27 +258,52 @@ class ForumActivity : BaseActivity(), QueriesAdapter.QueriesListener, ImageAttac
         }
     }
 
-    override fun onImageClicked(attachment: OpenForumAttachment) {
+    override fun onImageClicked(attachment: List<OpenForumAttachment>, position: Int) {
         val dialog = Dialog(this,android.R.style.Theme_Light)
 
         dialog.requestWindowFeature(Window.FEATURE_NO_TITLE)
-        val view = LayoutInflater.from(this).inflate(R.layout.fullscreen_image_dialog, null)
+        val view = LayoutInflater.from(this).inflate(R.layout.fullimage_dialog_container, null)
         dialog.setContentView(view)
         dialog.setCancelable(false)
 
-        view.tv_name_fullscreen_image.text = attachment.file
+        val pagerAdapter = ForumImageViewPagerAdapter(attachment, this,1)
+        view.fullscreen_pager.adapter = pagerAdapter
+        view.fullscreen_pager.offscreenPageLimit  = attachment.size
 
-        if (attachment.file!=null && attachment.file?.isNotEmpty()!!){
-            val imagUrl = "${Constants.QUERYATTACHMENTBASEURL}${attachment.file}"
-            if (imagUrl.endsWith(".svg")){
-                Utility.loadSVGImage(this, imagUrl, view.fullscreen_image_forum)
-            }else{
-                Glide.with(this)
-                        .load(imagUrl)
-                        .placeholder(R.drawable.placeholder)
-                        .diskCacheStrategy(DiskCacheStrategy.RESOURCE)
-                        .into(view.fullscreen_image_forum)
+        view.fullscreen_pager.currentItem = position
+
+        view.fullscreen_pager.addOnPageChangeListener(object : ViewPager.OnPageChangeListener{
+            override fun onPageScrollStateChanged(state: Int) {
+
             }
+
+            override fun onPageScrolled(position: Int, positionOffset: Float, positionOffsetPixels: Int) {
+
+            }
+
+            override fun onPageSelected(position: Int) {
+//                if (position == 0){
+//                    view.img_left_swipe.visibility = View.GONE
+//                }
+//
+//                if (position+1 == attachment.size){
+//                    view.img_right_swipe.visibility = View.GONE
+//                }
+//
+//                if (position>0 && position< attachment.size){
+//                    view.img_left_swipe.visibility = View.VISIBLE
+//                    view.img_right_swipe.visibility = View.VISIBLE
+//                }
+
+            }
+        })
+
+        view.img_right_swipe.setOnClickListener {
+            view.fullscreen_pager.currentItem = view.fullscreen_pager.currentItem+1
+        }
+
+        view.img_left_swipe.setOnClickListener {
+            view.fullscreen_pager.currentItem = view.fullscreen_pager.currentItem-1
         }
 
         dialog.setOnKeyListener { d, keyCode, event ->
@@ -288,7 +315,6 @@ class ForumActivity : BaseActivity(), QueriesAdapter.QueriesListener, ImageAttac
 
         dialog.show()
         val window = dialog.window
-        window?.setLayout(WindowManager.LayoutParams.MATCH_PARENT,WindowManager.LayoutParams.MATCH_PARENT)
-
+        window?.setLayout(WindowManager.LayoutParams.MATCH_PARENT, WindowManager.LayoutParams.MATCH_PARENT)
     }
 }

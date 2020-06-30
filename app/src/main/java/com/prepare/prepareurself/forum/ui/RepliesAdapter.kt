@@ -21,7 +21,7 @@ class RepliesAdapter(var context:Context, var listener:RepliesListener) : Recycl
     private var data:List<QueryModel>?=null
 
     interface RepliesListener{
-        fun onImageClicked(attachment: OpenForumAttachment)
+        fun onImageClicked(attachment: List<OpenForumAttachment>, position: Int)
         fun onClapped(i: Int,position: Int, queryModel: QueryModel)
         fun onBottomReached()
     }
@@ -54,8 +54,8 @@ class RepliesAdapter(var context:Context, var listener:RepliesListener) : Recycl
         }
     }
 
-    override fun onImageClicked(attachment: OpenForumAttachment) {
-        listener.onImageClicked(attachment)
+    override fun onImageClicked(attachment: List<OpenForumAttachment>, position: Int) {
+        listener.onImageClicked(attachment, position)
     }
 
     class RepliesViewHolder(itemView:View):RecyclerView.ViewHolder(itemView){

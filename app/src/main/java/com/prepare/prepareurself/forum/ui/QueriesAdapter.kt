@@ -22,7 +22,7 @@ class QueriesAdapter(var context:Context,var listener:QueriesListener) : Recycle
 
     interface QueriesListener{
         fun onViewReplies(queryModel: QueryModel)
-        fun onImageClicked(attachment: OpenForumAttachment)
+        fun onImageClicked(attachment: List<OpenForumAttachment>, position: Int)
         fun onBottomReached()
     }
 
@@ -80,7 +80,7 @@ class QueriesAdapter(var context:Context,var listener:QueriesListener) : Recycle
 
     }
 
-    override fun onImageClicked(attachment: OpenForumAttachment) {
-        listener.onImageClicked(attachment)
+    override fun onImageClicked(attachment: List<OpenForumAttachment>, position: Int) {
+        listener.onImageClicked(attachment, position)
     }
 }

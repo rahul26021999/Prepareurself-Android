@@ -21,7 +21,7 @@ class QueryImageAttachmentAdapter(var context: Context, var listener:AttachmentL
     private var type = -1
 
     interface AttachmentListenet{
-        fun onImageClicked(attachment: OpenForumAttachment)
+        fun onImageClicked(attachment: List<OpenForumAttachment>, position: Int)
     }
 
     fun setData(list: List<OpenForumAttachment>, t:Int){
@@ -43,7 +43,9 @@ class QueryImageAttachmentAdapter(var context: Context, var listener:AttachmentL
 
         holder.bindView(d, context, type)
         holder.itemView.setOnClickListener {
-            d?.let { it1 -> listener.onImageClicked(it1) }
+            d?.let { it1 ->
+                data?.let { it2 -> listener.onImageClicked(it2,position) }
+            }
         }
 
     }
