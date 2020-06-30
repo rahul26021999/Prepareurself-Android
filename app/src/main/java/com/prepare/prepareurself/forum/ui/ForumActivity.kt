@@ -4,16 +4,17 @@ import android.app.Activity
 import android.app.Dialog
 import android.content.ActivityNotFoundException
 import android.content.Intent
+import android.graphics.Bitmap
 import android.net.Uri
 import android.os.Bundle
+import android.provider.MediaStore
 import android.util.Log
 import android.view.*
+import androidx.appcompat.app.AlertDialog
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.viewpager.widget.ViewPager
-import com.bumptech.glide.Glide
-import com.bumptech.glide.load.engine.DiskCacheStrategy
 import com.google.android.material.bottomsheet.BottomSheetBehavior
 import com.google.android.material.bottomsheet.BottomSheetDialog
 import com.prepare.prepareurself.R
@@ -28,7 +29,6 @@ import kotlinx.android.synthetic.main.activity_forum_content.*
 import kotlinx.android.synthetic.main.ask_query_bottom_sheet.*
 import kotlinx.android.synthetic.main.ask_query_bottom_sheet.view.*
 import kotlinx.android.synthetic.main.fullimage_dialog_container.view.*
-import kotlinx.android.synthetic.main.fullscreen_image_dialog.view.*
 import kotlinx.android.synthetic.main.layout_topbar.*
 import okhttp3.MediaType
 import okhttp3.MultipartBody
@@ -36,6 +36,7 @@ import okhttp3.RequestBody
 import java.io.ByteArrayOutputStream
 import java.io.IOException
 import java.io.InputStream
+import java.util.*
 import kotlin.collections.ArrayList
 
 
@@ -188,13 +189,33 @@ class ForumActivity : BaseActivity(), QueriesAdapter.QueriesListener, ImageAttac
 
 
     private fun uploadImage() {
-        val intent = Intent(Intent.ACTION_GET_CONTENT)
-        intent.type = "image/jpeg"
-        try {
-            startActivityForResult(intent, 101)
-        } catch (e: ActivityNotFoundException) {
-            e.printStackTrace()
+
+        val options = arrayOf<CharSequence>("Take Photo", "Choose from Gallery", "Cancel")
+
+        val builder= AlertDialog.Builder(this)
+        builder.setTitle("Choose your preference")
+
+        builder.setItems(options) { dialog, item ->
+            when {
+                options[item] == "Take Photo" -> {
+                    val takePicture = Intent(MediaStore.ACTION_IMAGE_CAPTURE)
+                    startActivityForResult(takePicture, 102)
+                }
+                options[item] == "Choose from Gallery" -> {
+                    val intent = Intent(Intent.ACTION_GET_CONTENT)
+                    intent.type = "image/jpeg"
+                    try {
+                        startActivityForResult(intent, 101)
+                    } catch (e: ActivityNotFoundException) {
+                        e.printStackTrace()
+                    }
+                }
+                options[item] == "Cancel" -> {
+                    dialog!!.dismiss()
+                }
+            }
         }
+        builder.show()
     }
 
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
@@ -210,6 +231,28 @@ class ForumActivity : BaseActivity(), QueriesAdapter.QueriesListener, ImageAttac
                 }
             }
         }
+
+        if (requestCode == 102){
+            if (resultCode == Activity.RESULT_OK) {
+                Log.d("camera_intent","$data ${data?.extras?.get("data")} abc ")
+                val photo = data?.extras?.get("data") as Bitmap
+                val uri: Uri = getCapturedImageUri(photo) ?: Uri.parse("")
+                try {
+                    val `is`: InputStream? = contentResolver.openInputStream(uri)
+                    if (`is` != null) uploadImageToServer(getBytes(`is`))
+                } catch (e: IOException) {
+                    e.printStackTrace()
+                }
+            }
+        }
+
+    }
+
+    private fun getCapturedImageUri(photo: Bitmap): Uri? {
+        val bytes = ByteArrayOutputStream()
+        photo.compress(Bitmap.CompressFormat.JPEG, 100, bytes)
+        val path: String = MediaStore.Images.Media.insertImage(this.contentResolver, photo, "${Date().time}", null)
+        return Uri.parse(path)
     }
 
     private fun uploadImageToServer(bytes: ByteArray?) {
