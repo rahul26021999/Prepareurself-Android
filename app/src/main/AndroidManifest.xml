@@ -33,12 +33,10 @@
             android:theme="@style/ProfileTheme" />
         <activity
             android:name=".forum.ui.RepliesActivity"
-            android:theme="@style/ProfileTheme"
-            android:windowSoftInputMode="adjustPan" />
+            android:theme="@style/ProfileTheme"/>
         <activity
             android:name=".forum.ui.ForumActivity"
-            android:theme="@style/ProfileTheme"
-            android:windowSoftInputMode="adjustPan" />
+            android:theme="@style/ProfileTheme"/>
         <activity
             android:name=".courses.ui.activity.DemoActivity"
             android:label="@string/title_activity_demo"

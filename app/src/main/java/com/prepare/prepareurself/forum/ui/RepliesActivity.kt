@@ -8,24 +8,23 @@ import android.net.Uri
 import android.os.Bundle
 import android.text.Html
 import android.util.Log
-import android.view.KeyEvent
-import android.view.LayoutInflater
-import android.view.Window
-import android.view.WindowManager
+import android.view.*
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.LinearLayoutManager
+import androidx.viewpager.widget.ViewPager
 import com.bumptech.glide.Glide
 import com.bumptech.glide.load.engine.DiskCacheStrategy
+import com.google.android.material.bottomsheet.BottomSheetDialog
 import com.prepare.prepareurself.R
 import com.prepare.prepareurself.forum.data.OpenForumAttachment
 import com.prepare.prepareurself.forum.data.QueryModel
 import com.prepare.prepareurself.forum.viewmodel.ForumViewModel
-import com.prepare.prepareurself.utils.BaseActivity
-import com.prepare.prepareurself.utils.Constants
-import com.prepare.prepareurself.utils.PrefManager
-import com.prepare.prepareurself.utils.Utility
+import com.prepare.prepareurself.utils.*
+import kotlinx.android.synthetic.main.activity_forum_content.*
 import kotlinx.android.synthetic.main.activity_replies.*
+import kotlinx.android.synthetic.main.ask_query_bottom_sheet.view.*
+import kotlinx.android.synthetic.main.fullimage_dialog_container.view.*
 import kotlinx.android.synthetic.main.fullscreen_image_dialog.view.*
 import kotlinx.android.synthetic.main.layout_topbar.*
 import okhttp3.MediaType
@@ -67,15 +66,53 @@ class RepliesActivity : BaseActivity(), RepliesAdapter.RepliesListener, ImageAtt
 
             initAdapter()
 
-            initAttachmentAdapter()
+            initBottomSheet()
 
             tv_attach_image_reply.setOnClickListener {
                 uploadImage()
             }
         }
 
-        btn_send_reply.setOnClickListener {
-            var data = et_reply_forum.text.toString()
+        backBtn.setOnClickListener {
+            finish()
+        }
+
+    }
+
+    private fun initBottomSheet() {
+//        sheetBehaviour = BottomSheetBehavior.from(bottom_sheet_ask_query)
+
+//        btn_ask_query.setOnClickListener {
+//            if (sheetBehaviour.state != BottomSheetBehavior.STATE_EXPANDED){
+//                sheetBehaviour.state = BottomSheetBehavior.STATE_EXPANDED
+//            }else if (sheetBehaviour.state != BottomSheetBehavior.STATE_COLLAPSED){
+//                sheetBehaviour.state = BottomSheetBehavior.STATE_COLLAPSED
+//            }
+//        }
+
+        val view = LayoutInflater.from(this).inflate(R.layout.ask_query_bottom_sheet, null)
+        val dialog = BottomSheetDialog(this)
+        dialog.setContentView(view)
+
+        fab_reply.setOnClickListener {
+            dialog.show()
+        }
+
+        //initAttachmentAdapter()
+
+        view.et_query_forum.hint = "Enter your reply"
+
+        //initAttachmentAdapter()
+
+        attachmentAdapter = ImageAttachedAdapter(this)
+        view.rv_image_attachment.layoutManager = LinearLayoutManager(this,LinearLayoutManager.HORIZONTAL, false)
+        view.rv_image_attachment.adapter = attachmentAdapter
+        view.tv_attach_image.setOnClickListener {
+            uploadImage()
+        }
+
+        view.btn_send_query.setOnClickListener {
+            var data = view.et_query_forum.text.toString()
             if (data.isNotEmpty()){
                 if (queryId!=-1){
                     data = data.replace("\n","<br />", true)
@@ -83,7 +120,7 @@ class RepliesActivity : BaseActivity(), RepliesAdapter.RepliesListener, ImageAtt
                     vm.doReply(pm.getString(Constants.JWTTOKEN),queryId,htmlData, imageNameList)
                             ?.observe(this, Observer {
                                 if (it!=null){
-                                    Utility.showToast(this,it.message)
+                                    Utility.showToast(this,"Reply submitted successfully!")
                                     htmlData = ""
                                     et_reply_forum.setText("")
                                     it.reply?.let { it1 ->
@@ -100,9 +137,19 @@ class RepliesActivity : BaseActivity(), RepliesAdapter.RepliesListener, ImageAtt
             }
         }
 
-        backBtn.setOnClickListener {
-            finish()
-        }
+
+//        sheetBehaviour.setBottomSheetCallback(object : BottomSheetBehavior.BottomSheetCallback(){
+//            override fun onSlide(bottomSheet: View, slideOffset: Float) {
+//
+//            }
+//
+//            override fun onStateChanged(bottomSheet: View, newState: Int) {
+//                when(newState){
+//                    BottomSheetBehavior.STATE_EXPANDED -> btn_ask_query.text = "Close Dialog"
+//                    BottomSheetBehavior.STATE_COLLAPSED -> btn_ask_query.text = "Ask Query"
+//                }
+//            }
+//        })
 
     }
 
@@ -232,27 +279,57 @@ class RepliesActivity : BaseActivity(), RepliesAdapter.RepliesListener, ImageAtt
         }
     }
 
-    override fun onImageClicked(attachment: OpenForumAttachment) {
+    override fun onImageClicked(attachment: List<OpenForumAttachment>,position: Int) {
         val dialog = Dialog(this,android.R.style.Theme_Light)
 
         dialog.requestWindowFeature(Window.FEATURE_NO_TITLE)
-        val view = LayoutInflater.from(this).inflate(R.layout.fullscreen_image_dialog, null)
+        val view = LayoutInflater.from(this).inflate(R.layout.fullimage_dialog_container, null)
         dialog.setContentView(view)
         dialog.setCancelable(false)
 
-        view.tv_name_fullscreen_image.text = attachment.file
+        val pagerAdapter = ForumImageViewPagerAdapter(attachment, this, 2)
+        view.fullscreen_pager.adapter = pagerAdapter
+        view.fullscreen_pager.offscreenPageLimit  = attachment.size
 
-        if (attachment.file!=null && attachment.file?.isNotEmpty()!!){
-            val imagUrl = "${Constants.REPLYATTACHMENTBASEURL}${attachment.file}"
-            if (imagUrl.endsWith(".svg")){
-                Utility.loadSVGImage(this, imagUrl, view.fullscreen_image_forum)
-            }else{
-                Glide.with(this)
-                        .load(imagUrl)
-                        .placeholder(R.drawable.placeholder)
-                        .diskCacheStrategy(DiskCacheStrategy.RESOURCE)
-                        .into(view.fullscreen_image_forum)
+        view.fullscreen_pager.currentItem = position
+        view.img_left_swipe.visibility = View.GONE
+        view.img_right_swipe.visibility = View.GONE
+
+        view.fullscreen_pager.addOnPageChangeListener(object : ViewPager.OnPageChangeListener{
+
+            override fun onPageScrollStateChanged(state: Int) {
+
             }
+
+            override fun onPageScrolled(position: Int, positionOffset: Float, positionOffsetPixels: Int) {
+
+            }
+
+            override fun onPageSelected(position: Int) {
+                Log.d("pager_debug","pager : $position ${attachment.size}")
+//                if (position == 0){
+//                    view.img_left_swipe.visibility = View.GONE
+//                }
+//
+//                if (position+1 == attachment.size){
+//                    Log.d("pager_debug","last item position : $position ${attachment.size}")
+//                    view.img_right_swipe.visibility = View.GONE
+//                }
+//
+//                if (position>0 && position< attachment.size){
+//                    view.img_left_swipe.visibility = View.VISIBLE
+//                    view.img_right_swipe.visibility = View.VISIBLE
+//                }
+
+            }
+        })
+
+        view.img_right_swipe.setOnClickListener {
+            view.fullscreen_pager.currentItem = view.fullscreen_pager.currentItem+1
+        }
+
+        view.img_left_swipe.setOnClickListener {
+            view.fullscreen_pager.currentItem = view.fullscreen_pager.currentItem-1
         }
 
         dialog.setOnKeyListener { d, keyCode, event ->
