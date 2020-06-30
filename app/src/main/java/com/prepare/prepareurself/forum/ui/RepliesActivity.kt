@@ -17,6 +17,7 @@ import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.bumptech.glide.Glide
 import com.bumptech.glide.load.engine.DiskCacheStrategy
+import com.google.android.material.bottomsheet.BottomSheetDialog
 import com.prepare.prepareurself.R
 import com.prepare.prepareurself.forum.data.OpenForumAttachment
 import com.prepare.prepareurself.forum.data.QueryModel
@@ -25,7 +26,9 @@ import com.prepare.prepareurself.utils.BaseActivity
 import com.prepare.prepareurself.utils.Constants
 import com.prepare.prepareurself.utils.PrefManager
 import com.prepare.prepareurself.utils.Utility
+import kotlinx.android.synthetic.main.activity_forum_content.*
 import kotlinx.android.synthetic.main.activity_replies.*
+import kotlinx.android.synthetic.main.ask_query_bottom_sheet.view.*
 import kotlinx.android.synthetic.main.fullscreen_image_dialog.view.*
 import kotlinx.android.synthetic.main.layout_topbar.*
 import okhttp3.MediaType
@@ -67,15 +70,50 @@ class RepliesActivity : BaseActivity(), RepliesAdapter.RepliesListener, ImageAtt
 
             initAdapter()
 
-            initAttachmentAdapter()
+            initBottomSheet()
 
             tv_attach_image_reply.setOnClickListener {
                 uploadImage()
             }
         }
 
-        btn_send_reply.setOnClickListener {
-            var data = et_reply_forum.text.toString()
+        backBtn.setOnClickListener {
+            finish()
+        }
+
+    }
+
+    private fun initBottomSheet() {
+//        sheetBehaviour = BottomSheetBehavior.from(bottom_sheet_ask_query)
+
+//        btn_ask_query.setOnClickListener {
+//            if (sheetBehaviour.state != BottomSheetBehavior.STATE_EXPANDED){
+//                sheetBehaviour.state = BottomSheetBehavior.STATE_EXPANDED
+//            }else if (sheetBehaviour.state != BottomSheetBehavior.STATE_COLLAPSED){
+//                sheetBehaviour.state = BottomSheetBehavior.STATE_COLLAPSED
+//            }
+//        }
+
+        val view = LayoutInflater.from(this).inflate(R.layout.ask_query_bottom_sheet, null)
+        val dialog = BottomSheetDialog(this)
+        dialog.setContentView(view)
+
+        fab_reply.setOnClickListener {
+            dialog.show()
+        }
+
+        //initAttachmentAdapter()
+
+        view.et_query_forum.hint = "Enter your reply"
+
+        initAttachmentAdapter()
+
+        view.tv_attach_image.setOnClickListener {
+            uploadImage()
+        }
+
+        view.btn_send_query.setOnClickListener {
+            var data = view.et_query_forum.text.toString()
             if (data.isNotEmpty()){
                 if (queryId!=-1){
                     data = data.replace("\n","<br />", true)
@@ -83,7 +121,7 @@ class RepliesActivity : BaseActivity(), RepliesAdapter.RepliesListener, ImageAtt
                     vm.doReply(pm.getString(Constants.JWTTOKEN),queryId,htmlData, imageNameList)
                             ?.observe(this, Observer {
                                 if (it!=null){
-                                    Utility.showToast(this,it.message)
+                                    Utility.showToast(this,"Reply submitted successfully!")
                                     htmlData = ""
                                     et_reply_forum.setText("")
                                     it.reply?.let { it1 ->
@@ -100,9 +138,19 @@ class RepliesActivity : BaseActivity(), RepliesAdapter.RepliesListener, ImageAtt
             }
         }
 
-        backBtn.setOnClickListener {
-            finish()
-        }
+
+//        sheetBehaviour.setBottomSheetCallback(object : BottomSheetBehavior.BottomSheetCallback(){
+//            override fun onSlide(bottomSheet: View, slideOffset: Float) {
+//
+//            }
+//
+//            override fun onStateChanged(bottomSheet: View, newState: Int) {
+//                when(newState){
+//                    BottomSheetBehavior.STATE_EXPANDED -> btn_ask_query.text = "Close Dialog"
+//                    BottomSheetBehavior.STATE_COLLAPSED -> btn_ask_query.text = "Ask Query"
+//                }
+//            }
+//        })
 
     }
 

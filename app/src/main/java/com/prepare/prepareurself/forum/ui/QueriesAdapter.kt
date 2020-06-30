@@ -18,7 +18,7 @@ import kotlinx.android.synthetic.main.queries_adapter_layout.view.*
 
 class QueriesAdapter(var context:Context,var listener:QueriesListener) : RecyclerView.Adapter<QueriesAdapter.QueriesViewHolder>(),QueryImageAttachmentAdapter.AttachmentListenet{
 
-    private var data:List<QueryModel>?=null
+    private var data:ArrayList<QueryModel>?=null
 
     interface QueriesListener{
         fun onViewReplies(queryModel: QueryModel)
@@ -26,7 +26,12 @@ class QueriesAdapter(var context:Context,var listener:QueriesListener) : Recycle
         fun onBottomReached()
     }
 
-    fun setData(list: List<QueryModel>){
+    fun addData(queryModel: QueryModel){
+        data?.add(0,queryModel)
+        notifyItemInserted(0)
+    }
+
+    fun setData(list: ArrayList<QueryModel>){
         data = list
         notifyDataSetChanged()
     }
@@ -45,7 +50,7 @@ class QueriesAdapter(var context:Context,var listener:QueriesListener) : Recycle
         }
         val q = data?.get(position)
         holder.bindView(q, context, this)
-        holder.itemView.tv_view_replies.setOnClickListener {
+        holder.itemView.setOnClickListener {
             q?.let { it1 -> listener.onViewReplies(it1) }
         }
     }

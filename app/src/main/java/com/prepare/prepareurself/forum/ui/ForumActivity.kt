@@ -94,6 +94,8 @@ class ForumActivity : BaseActivity(), QueriesAdapter.QueriesListener, ImageAttac
 
         //initAttachmentAdapter()
 
+        view.et_query_forum.hint ="Enter your query"
+
         attachmentAdapter = ImageAttachedAdapter(this)
         view.rv_image_attachment.layoutManager = LinearLayoutManager(this,LinearLayoutManager.HORIZONTAL, false)
         view.rv_image_attachment.adapter = attachmentAdapter
@@ -111,12 +113,12 @@ class ForumActivity : BaseActivity(), QueriesAdapter.QueriesListener, ImageAttac
                     vm.askQuery(pm.getString(Constants.JWTTOKEN),courseId,htmlData, imageNameList)
                             ?.observe(this, Observer {
                                 if (it!=null){
-                                    Utility.showToast(this,it.message)
+                                    Utility.showToast(this,"Query submitted successfully!")
                                     htmlData = ""
                                     view.et_query_forum.setText("")
                                     it.query?.let { it1 ->
-                                        queriesList.add(0,it1)
-                                        queriesAdapter.notifyDataSetChanged()
+                                        queriesAdapter.addData(it1)
+                                        rv_queries.smoothScrollToPosition(0)
                                     }
                                 }else{
                                     Utility.showToast(this,Constants.SOMETHINGWENTWRONG)
