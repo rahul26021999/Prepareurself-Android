@@ -16,19 +16,15 @@ import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.viewpager.widget.ViewPager
-import com.bumptech.glide.Glide
-import com.bumptech.glide.load.engine.DiskCacheStrategy
 import com.google.android.material.bottomsheet.BottomSheetDialog
 import com.prepare.prepareurself.R
 import com.prepare.prepareurself.forum.data.OpenForumAttachment
 import com.prepare.prepareurself.forum.data.QueryModel
 import com.prepare.prepareurself.forum.viewmodel.ForumViewModel
 import com.prepare.prepareurself.utils.*
-import kotlinx.android.synthetic.main.activity_forum_content.*
 import kotlinx.android.synthetic.main.activity_replies.*
 import kotlinx.android.synthetic.main.ask_query_bottom_sheet.view.*
 import kotlinx.android.synthetic.main.fullimage_dialog_container.view.*
-import kotlinx.android.synthetic.main.fullscreen_image_dialog.view.*
 import kotlinx.android.synthetic.main.layout_topbar.*
 import okhttp3.MediaType
 import okhttp3.MultipartBody
@@ -53,6 +49,7 @@ class RepliesActivity : BaseActivity(), RepliesAdapter.RepliesListener, ImageAtt
     private var currentPage = 1
     private var lastPage = 1
     private var repliesList = ArrayList<QueryModel>()
+    private var bottomsheetView:View?=null
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -95,9 +92,9 @@ class RepliesActivity : BaseActivity(), RepliesAdapter.RepliesListener, ImageAtt
 //            }
 //        }
 
-        val view = LayoutInflater.from(this).inflate(R.layout.ask_query_bottom_sheet, null)
+        bottomsheetView = LayoutInflater.from(this).inflate(R.layout.ask_query_bottom_sheet, null)
         val dialog = BottomSheetDialog(this)
-        dialog.setContentView(view)
+        dialog.setContentView(bottomsheetView!!)
 
         fab_reply.setOnClickListener {
             dialog.show()
@@ -105,19 +102,19 @@ class RepliesActivity : BaseActivity(), RepliesAdapter.RepliesListener, ImageAtt
 
         //initAttachmentAdapter()
 
-        view.et_query_forum.hint = "Enter your reply"
+        bottomsheetView!!.et_query_forum.hint = "Enter your reply"
 
         //initAttachmentAdapter()
 
         attachmentAdapter = ImageAttachedAdapter(this)
-        view.rv_image_attachment.layoutManager = LinearLayoutManager(this,LinearLayoutManager.HORIZONTAL, false)
-        view.rv_image_attachment.adapter = attachmentAdapter
-        view.tv_attach_image.setOnClickListener {
+        bottomsheetView!!.rv_image_attachment.layoutManager = LinearLayoutManager(this,LinearLayoutManager.HORIZONTAL, false)
+        bottomsheetView!!.rv_image_attachment.adapter = attachmentAdapter
+        bottomsheetView!!.tv_attach_image.setOnClickListener {
             uploadImage()
         }
 
-        view.btn_send_query.setOnClickListener {
-            var data = view.et_query_forum.text.toString()
+        bottomsheetView!!.btn_send_query.setOnClickListener {
+            var data = bottomsheetView!!.et_query_forum.text.toString()
             if (data.isNotEmpty()){
                 if (queryId!=-1){
                     data = data.replace("\n","<br />", true)
@@ -131,6 +128,7 @@ class RepliesActivity : BaseActivity(), RepliesAdapter.RepliesListener, ImageAtt
                                     it.reply?.let { it1 ->
                                         repliesList.add(0, it1)
                                         repliesAdapter.notifyDataSetChanged()
+                                        dialog.cancel()
                                     }
                                 }else{
                                     Utility.showToast(this,Constants.SOMETHINGWENTWRONG)
@@ -226,18 +224,25 @@ class RepliesActivity : BaseActivity(), RepliesAdapter.RepliesListener, ImageAtt
         super.onActivityResult(requestCode, resultCode, data)
         if (requestCode == 101) {
             if (resultCode == Activity.RESULT_OK) {
+                replies_progress.visibility = View.VISIBLE
+                bottomsheetView?.btn_send_query?.isEnabled = false
+                bottomsheetView?.tv_attach_image?.isEnabled = false
                 val uri: Uri = data?.data ?: Uri.parse("")
                 try {
                     val `is`: InputStream? = contentResolver.openInputStream(uri)
                     if (`is` != null) uploadImageToServer(getBytes(`is`))
                 } catch (e: IOException) {
                     e.printStackTrace()
+                    replies_progress.visibility = View.GONE
                 }
             }
         }
 
         if (requestCode == 102){
             if (resultCode == Activity.RESULT_OK) {
+                replies_progress.visibility = View.VISIBLE
+                bottomsheetView?.btn_send_query?.isEnabled = false
+                bottomsheetView?.tv_attach_image?.isEnabled = false
                 Log.d("camera_intent","$data ${data?.extras?.get("data")} abc ")
                 val photo = data?.extras?.get("data") as Bitmap
                 val uri: Uri = getCapturedImageUri(photo) ?: Uri.parse("")
@@ -246,14 +251,15 @@ class RepliesActivity : BaseActivity(), RepliesAdapter.RepliesListener, ImageAtt
                     if (`is` != null) uploadImageToServer(getBytes(`is`))
                 } catch (e: IOException) {
                     e.printStackTrace()
+                    replies_progress.visibility = View.GONE
                 }
             }
         }
     }
 
     private fun getCapturedImageUri(photo: Bitmap): Uri? {
-        val bytes = ByteArrayOutputStream()
-        photo.compress(Bitmap.CompressFormat.JPEG, 100, bytes)
+//        val bytes = ByteArrayOutputStream()
+//        photo.compress(Bitmap.CompressFormat.JPEG, 100, bytes)
         val path: String = MediaStore.Images.Media.insertImage(this.contentResolver, photo, "${Date().time}", null)
         return Uri.parse(path)
     }
@@ -276,6 +282,9 @@ class RepliesActivity : BaseActivity(), RepliesAdapter.RepliesListener, ImageAtt
                     }else{
                         Utility.showToast(this,"Cannot attach image at the moment")
                     }
+                    replies_progress.visibility = View.GONE
+                    bottomsheetView?.btn_send_query?.isEnabled = true
+                    bottomsheetView?.tv_attach_image?.isEnabled = true
                 })
     }
 
