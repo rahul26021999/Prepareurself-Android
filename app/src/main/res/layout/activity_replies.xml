@@ -39,7 +39,18 @@
             android:tooltipText="Add a Reply"
             android:layout_alignParentBottom="true"
             android:layout_alignParentEnd="true"
-            android:src="@android:drawable/ic_input_add"/>
+            android:src="@drawable/ic_add_white"
+            android:tint="@color/white"
+            app:backgroundTint="@color/colorPrimaryDark"
+            android:layout_marginBottom="@dimen/padding_10"/>
+
+        <ProgressBar
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerInParent="true"
+            android:id="@+id/replies_progress"
+            android:visibility="gone"/>
+
 
         <LinearLayout
             android:layout_width="match_parent"
