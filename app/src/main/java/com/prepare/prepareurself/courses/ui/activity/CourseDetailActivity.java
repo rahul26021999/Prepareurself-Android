@@ -115,7 +115,7 @@ public class CourseDetailActivity extends BaseActivity implements View.OnClickLi
                         float rating=course.getAverage_rating();
                        // float f = Float.parseFloat("25");
                        // String s = Float.toString(rating);
-                        String f= String.valueOf(rating);
+                        String f= String.format("%.1f", rating);
                         averageRating.setText(f);
                         int topic_count=courseDetailReponseModel.getTopic_count();
                         int project_count=courseDetailReponseModel.getProject_count();
