@@ -21,7 +21,7 @@ class RepliesAdapter(var context:Context, var listener:RepliesListener) : Recycl
     private var data:List<QueryModel>?=null
 
     interface RepliesListener{
-        fun onImageClicked(attachment: List<OpenForumAttachment>, position: Int)
+        fun onImageClicked(attachment: List<String>, position: Int)
         fun onClapped(i: Int,position: Int, queryModel: QueryModel)
         fun onBottomReached()
     }
@@ -54,14 +54,19 @@ class RepliesAdapter(var context:Context, var listener:RepliesListener) : Recycl
         }
     }
 
-    override fun onImageClicked(attachment: List<OpenForumAttachment>, position: Int) {
+    override fun onImageClicked(attachment: List<String>, position: Int) {
         listener.onImageClicked(attachment, position)
     }
 
     class RepliesViewHolder(itemView:View):RecyclerView.ViewHolder(itemView){
         fun bindView(q: QueryModel?, context: Context, listener: QueryImageAttachmentAdapter.AttachmentListenet) {
             val query = Html.fromHtml(q?.reply).trim()
-            itemView.tv_reply_answer.text = query
+            if (query.isEmpty()){
+                itemView.tv_reply_answer.visibility = View.GONE
+            }else{
+                itemView.tv_reply_answer.visibility = View.VISIBLE
+                itemView.tv_reply_answer.text = query
+            }
             if (q?.user?.profile_image!=null && q.user?.profile_image?.isNotEmpty()!!){
                 val imagUrl = q.user?.profile_image
                 if (imagUrl?.endsWith(".svg")!!){

@@ -8,6 +8,8 @@ import android.graphics.Bitmap
 import android.net.Uri
 import android.os.Bundle
 import android.provider.MediaStore
+import android.text.Editable
+import android.text.TextWatcher
 import android.util.Log
 import android.view.*
 import androidx.appcompat.app.AlertDialog
@@ -103,7 +105,7 @@ class ForumActivity : BaseActivity(), QueriesAdapter.QueriesListener, ImageAttac
 
         bottomsheetView!!.btn_send_query.setOnClickListener {
             var data = bottomsheetView!!.et_query_forum.text.toString()
-            if (data.isNotEmpty()){
+            if (data.isNotEmpty() || imageNameList.isNotEmpty()){
                 if (courseId!=-1){
                     data = data.replace("\n","<br />", true)
                     htmlData = "<p>$data</p>"
@@ -122,31 +124,10 @@ class ForumActivity : BaseActivity(), QueriesAdapter.QueriesListener, ImageAttac
                                 }
                             })
                 }
-            }else{
-                Utility.showToast(this,"Please enter a valid question")
             }
         }
 
 
-//        sheetBehaviour.setBottomSheetCallback(object : BottomSheetBehavior.BottomSheetCallback(){
-//            override fun onSlide(bottomSheet: View, slideOffset: Float) {
-//
-//            }
-//
-//            override fun onStateChanged(bottomSheet: View, newState: Int) {
-//                when(newState){
-//                    BottomSheetBehavior.STATE_EXPANDED -> btn_ask_query.text = "Close Dialog"
-//                    BottomSheetBehavior.STATE_COLLAPSED -> btn_ask_query.text = "Ask Query"
-//                }
-//            }
-//        })
-
-    }
-
-    private fun initAttachmentAdapter() {
-        attachmentAdapter = ImageAttachedAdapter(this)
-        rv_image_attachment.layoutManager = LinearLayoutManager(this,LinearLayoutManager.HORIZONTAL, false)
-        rv_image_attachment.adapter = attachmentAdapter
     }
 
     private fun initQueryAdapter() {
@@ -204,9 +185,6 @@ class ForumActivity : BaseActivity(), QueriesAdapter.QueriesListener, ImageAttac
                         e.printStackTrace()
                     }
                 }
-                options[item] == "Cancel" -> {
-                    dialog!!.dismiss()
-                }
             }
         }
         builder.show()
@@ -251,8 +229,6 @@ class ForumActivity : BaseActivity(), QueriesAdapter.QueriesListener, ImageAttac
     }
 
     private fun getCapturedImageUri(photo: Bitmap): Uri? {
-//        val bytes = ByteArrayOutputStream()
-//        photo.compress(Bitmap.CompressFormat.JPEG, 100, bytes)
         val path: String = MediaStore.Images.Media.insertImage(this.contentResolver, photo, "${Date().time}", null)
         return Uri.parse(path)
     }
@@ -300,13 +276,17 @@ class ForumActivity : BaseActivity(), QueriesAdapter.QueriesListener, ImageAttac
         attachmentAdapter.notifyItemRemoved(position)
     }
 
+    override fun onItemClicked(list: List<String>, position: Int) {
+        onImageClicked(list,position)
+    }
+
     override fun onBottomReached() {
         if (currentPage<=lastPage){
             vm.getQueries(pm.getString(Constants.JWTTOKEN),courseId, currentPage)
         }
     }
 
-    override fun onImageClicked(attachment: List<OpenForumAttachment>, position: Int) {
+    override fun onImageClicked(attachment: List<String>, position: Int) {
         val dialog = Dialog(this,android.R.style.Theme_Light)
 
         dialog.requestWindowFeature(Window.FEATURE_NO_TITLE)

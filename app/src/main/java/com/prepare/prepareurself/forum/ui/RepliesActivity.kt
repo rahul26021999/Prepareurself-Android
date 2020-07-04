@@ -82,15 +82,6 @@ class RepliesActivity : BaseActivity(), RepliesAdapter.RepliesListener, ImageAtt
     }
 
     private fun initBottomSheet() {
-//        sheetBehaviour = BottomSheetBehavior.from(bottom_sheet_ask_query)
-
-//        btn_ask_query.setOnClickListener {
-//            if (sheetBehaviour.state != BottomSheetBehavior.STATE_EXPANDED){
-//                sheetBehaviour.state = BottomSheetBehavior.STATE_EXPANDED
-//            }else if (sheetBehaviour.state != BottomSheetBehavior.STATE_COLLAPSED){
-//                sheetBehaviour.state = BottomSheetBehavior.STATE_COLLAPSED
-//            }
-//        }
 
         bottomsheetView = LayoutInflater.from(this).inflate(R.layout.ask_query_bottom_sheet, null)
         val dialog = BottomSheetDialog(this)
@@ -100,11 +91,8 @@ class RepliesActivity : BaseActivity(), RepliesAdapter.RepliesListener, ImageAtt
             dialog.show()
         }
 
-        //initAttachmentAdapter()
 
         bottomsheetView!!.et_query_forum.hint = "Enter your reply"
-
-        //initAttachmentAdapter()
 
         attachmentAdapter = ImageAttachedAdapter(this)
         bottomsheetView!!.rv_image_attachment.layoutManager = LinearLayoutManager(this,LinearLayoutManager.HORIZONTAL, false)
@@ -115,7 +103,7 @@ class RepliesActivity : BaseActivity(), RepliesAdapter.RepliesListener, ImageAtt
 
         bottomsheetView!!.btn_send_query.setOnClickListener {
             var data = bottomsheetView!!.et_query_forum.text.toString()
-            if (data.isNotEmpty()){
+            if (data.isNotEmpty() || imageNameList.isNotEmpty()){
                 if (queryId!=-1){
                     data = data.replace("\n","<br />", true)
                     htmlData = "<p>$data</p>"
@@ -135,31 +123,9 @@ class RepliesActivity : BaseActivity(), RepliesAdapter.RepliesListener, ImageAtt
                                 }
                             })
                 }
-            }else{
-                Utility.showToast(this,"Please enter a valid question")
             }
         }
 
-
-//        sheetBehaviour.setBottomSheetCallback(object : BottomSheetBehavior.BottomSheetCallback(){
-//            override fun onSlide(bottomSheet: View, slideOffset: Float) {
-//
-//            }
-//
-//            override fun onStateChanged(bottomSheet: View, newState: Int) {
-//                when(newState){
-//                    BottomSheetBehavior.STATE_EXPANDED -> btn_ask_query.text = "Close Dialog"
-//                    BottomSheetBehavior.STATE_COLLAPSED -> btn_ask_query.text = "Ask Query"
-//                }
-//            }
-//        })
-
-    }
-
-    private fun initAttachmentAdapter() {
-        attachmentAdapter = ImageAttachedAdapter(this)
-        rv_image_attachment_reply.layoutManager = LinearLayoutManager(this,LinearLayoutManager.HORIZONTAL, false)
-        rv_image_attachment_reply.adapter = attachmentAdapter
     }
 
     override fun onCancelled(position: Int) {
@@ -168,7 +134,11 @@ class RepliesActivity : BaseActivity(), RepliesAdapter.RepliesListener, ImageAtt
         attachmentAdapter.notifyItemRemoved(position)
     }
 
-    override fun onClapped(i: Int,position: Int, queryModel: QueryModel) {
+    override fun onItemClicked(list: List<String>, position: Int) {
+        onImageClicked(list, position)
+    }
+
+    override fun onClapped(i: Int, position: Int, queryModel: QueryModel) {
         vm.doClap(pm.getString(Constants.JWTTOKEN),queryModel.id, i)
                 ?.observe(this, Observer {
                     if (it!=null){
@@ -333,7 +303,7 @@ class RepliesActivity : BaseActivity(), RepliesAdapter.RepliesListener, ImageAtt
         }
     }
 
-    override fun onImageClicked(attachment: List<OpenForumAttachment>,position: Int) {
+    override fun onImageClicked(attachment: List<String>,position: Int) {
         val dialog = Dialog(this,android.R.style.Theme_Light)
 
         dialog.requestWindowFeature(Window.FEATURE_NO_TITLE)

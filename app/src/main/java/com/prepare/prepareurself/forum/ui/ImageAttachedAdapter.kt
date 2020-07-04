@@ -13,6 +13,7 @@ class ImageAttachedAdapter(var listener:AttachmentListener) : RecyclerView.Adapt
 
     interface AttachmentListener{
         fun onCancelled(position: Int)
+        fun onItemClicked(list: List<String>,position: Int)
     }
 
     fun setData(list: List<String>){
@@ -34,6 +35,9 @@ class ImageAttachedAdapter(var listener:AttachmentListener) : RecyclerView.Adapt
         holder.bindView(d)
         holder.itemView.cancel_attached_image.setOnClickListener {
             listener.onCancelled(position)
+        }
+        holder.itemView.tv_image_attached_confrm.setOnClickListener {
+            data?.let { it1 -> listener.onItemClicked(it1,position) }
         }
 
     }

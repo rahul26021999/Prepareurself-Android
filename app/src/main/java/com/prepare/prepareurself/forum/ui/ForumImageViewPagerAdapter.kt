@@ -13,7 +13,7 @@ import com.prepare.prepareurself.utils.Constants
 import com.prepare.prepareurself.utils.Utility
 import kotlinx.android.synthetic.main.fullscreen_image_dialog.view.*
 
-class ForumImageViewPagerAdapter(var attachments:List<OpenForumAttachment>,
+class ForumImageViewPagerAdapter(var attachments:List<String>,
                                  var context:Context,
                                  var type:Int): PagerAdapter() {
 
@@ -25,14 +25,14 @@ class ForumImageViewPagerAdapter(var attachments:List<OpenForumAttachment>,
         val view = LayoutInflater.from(container.context).inflate(R.layout.fullscreen_image_dialog,container,false)
         val attachment = attachments[position]
 
-        view.tv_name_fullscreen_image.text = attachment.file
+        view.tv_name_fullscreen_image.text = attachment
 
-        if (attachment.file!=null && attachment.file?.isNotEmpty()!!){
+        if (attachment.isNotEmpty()){
             var imagUrl = ""
             if (type==1){
-                imagUrl = "${Constants.QUERYATTACHMENTBASEURL}${attachment.file}"
+                imagUrl = "${Constants.QUERYATTACHMENTBASEURL}${attachment}"
             }else if (type == 2){
-                imagUrl = "${Constants.REPLYATTACHMENTBASEURL}${attachment.file}"
+                imagUrl = "${Constants.REPLYATTACHMENTBASEURL}${attachment}"
             }
             if (imagUrl.endsWith(".svg")){
                 Utility.loadSVGImage(context, imagUrl, view.fullscreen_image_forum)
