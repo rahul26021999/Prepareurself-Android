@@ -1,6 +1,5 @@
 package com.prepare.prepareurself.courses.ui.activity;
 
-import androidx.fragment.app.FragmentManager;
 import androidx.lifecycle.Observer;
 import androidx.lifecycle.ViewModelProvider;
 
@@ -24,6 +23,7 @@ import android.widget.TextView;
 
 import com.bumptech.glide.Glide;
 import com.bumptech.glide.load.engine.DiskCacheStrategy;
+import com.facebook.shimmer.ShimmerFrameLayout;
 import com.prepare.prepareurself.R;
 import com.prepare.prepareurself.courses.data.model.AddToUserPrefResponseModel;
 import com.prepare.prepareurself.courses.data.model.CourseDetailReponseModel;
@@ -36,7 +36,6 @@ import com.prepare.prepareurself.feedback.ui.FeedbackFragment;
 import com.prepare.prepareurself.forum.ui.ForumActivity;
 import com.prepare.prepareurself.preferences.data.PreferencesModel;
 import com.prepare.prepareurself.preferences.data.PrefernceResponseModel;
-import com.prepare.prepareurself.quizv2.ui.QuizActivity;
 import com.prepare.prepareurself.quizv2.ui.QuizDetailActivity;
 import com.prepare.prepareurself.utils.BaseActivity;
 import com.prepare.prepareurself.utils.Constants;
@@ -67,6 +66,8 @@ public class CourseDetailActivity extends BaseActivity implements View.OnClickLi
     private Dialog playstoreDialog;
     private Dialog feedbackDialog;
     private FeedbackFragment feedbackFragment;
+    private ShimmerFrameLayout mShimmerViewContainer;
+    private RelativeLayout relTop;
 
     @Override
     public void onFeedbackBackPressed() { }
@@ -101,7 +102,11 @@ public class CourseDetailActivity extends BaseActivity implements View.OnClickLi
             vm.courseDetailReponseModelLiveData.observe(this, new Observer<CourseDetailReponseModel>() {
                 @Override
                 public void onChanged(CourseDetailReponseModel courseDetailReponseModel) {
+
                     if (courseDetailReponseModel!=null ){
+                        relTop.setVisibility(View.VISIBLE);
+                        mShimmerViewContainer.stopShimmerAnimation();
+                        mShimmerViewContainer.setVisibility(View.GONE);
                         CourseModel course=courseDetailReponseModel.getCourse();
                         setbggradientdynamicupperlayout(course);
                         String title=course.getName();
@@ -284,6 +289,8 @@ public class CourseDetailActivity extends BaseActivity implements View.OnClickLi
     }
 
     private void getintents() {
+        relTop = findViewById(R.id.rel_layoutmain1);
+        mShimmerViewContainer = findViewById(R.id.course_shimmer_view_container);
         course_name=findViewById(R.id.coursename);
         course_description=findViewById(R.id.course_desc);
         course_image=findViewById(R.id.course_image);
@@ -438,8 +445,17 @@ public class CourseDetailActivity extends BaseActivity implements View.OnClickLi
 
     @Override
     protected void onResume() {
-        findViewById(R.id.feedback_container).setVisibility(View.GONE);
         super.onResume();
+        findViewById(R.id.feedback_container).setVisibility(View.GONE);
+        relTop.setVisibility(View.GONE);
+        mShimmerViewContainer.startShimmerAnimation();
+    }
+
+    @Override
+    protected void onPause() {
+        mShimmerViewContainer.stopShimmerAnimation();
+        super.onPause();
+
     }
 
     @Override
