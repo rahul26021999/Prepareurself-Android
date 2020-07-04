@@ -12,7 +12,6 @@ import com.prepare.prepareurself.forum.data.OpenForumAttachment
 import com.prepare.prepareurself.utils.Constants
 import com.prepare.prepareurself.utils.Utility
 import kotlinx.android.synthetic.main.queries_adapter_layout.view.*
-import kotlinx.android.synthetic.main.rv_image_attachment_query_layout.view.*
 import kotlinx.android.synthetic.main.rv_image_attachment_query_layout.view.img_query_attachment
 
 class QueryImageAttachmentAdapter(var context: Context, var listener:AttachmentListenet) : RecyclerView.Adapter<QueryImageAttachmentAdapter.ImageAttachmentViewHolder>() {
@@ -21,7 +20,7 @@ class QueryImageAttachmentAdapter(var context: Context, var listener:AttachmentL
     private var type = -1
 
     interface AttachmentListenet{
-        fun onImageClicked(attachment: List<String>, position: Int)
+        fun onImageClickedQuery(attachment: List<String>, position: Int)
     }
 
     fun setData(list: List<OpenForumAttachment>, t:Int){
@@ -48,7 +47,7 @@ class QueryImageAttachmentAdapter(var context: Context, var listener:AttachmentL
                 data?.forEach {
                     it.file?.let { it2 -> list.add(it2) }
                 }
-                data?.let { it2 -> listener.onImageClicked(list,position) }
+                data?.let { it2 -> listener.onImageClickedQuery(list,position) }
             }
         }
 

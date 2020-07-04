@@ -1,5 +1,9 @@
 package com.prepare.prepareurself.forum.data
 
+import android.os.Parcelable
+import kotlinx.android.parcel.Parcelize
+
+@Parcelize
 data class QueryModel(
     var id:Int=0,
     var user_id:Int?=0,
@@ -14,4 +18,4 @@ data class QueryModel(
     var updated_at:String?="",
     var user:ForumUser?=null,
     var open_forum_attachment:List<OpenForumAttachment>?=null
-)
+):Parcelable

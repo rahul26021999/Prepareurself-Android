@@ -27,8 +27,15 @@
         <androidx.recyclerview.widget.RecyclerView
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:id="@+id/rv_replies"
+            android:id="@+id/rv_replies_attachment"
             android:layout_below="@+id/tv_reply_question"
+            android:layout_marginTop="@dimen/padding_10"/>
+
+        <androidx.recyclerview.widget.RecyclerView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:id="@+id/rv_replies"
+            android:layout_below="@+id/rv_replies_attachment"
             android:layout_marginTop="@dimen/padding_10"/>
 
         <com.google.android.material.floatingactionbutton.FloatingActionButton

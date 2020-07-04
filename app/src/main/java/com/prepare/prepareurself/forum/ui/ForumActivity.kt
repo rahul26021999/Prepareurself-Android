@@ -8,8 +8,6 @@ import android.graphics.Bitmap
 import android.net.Uri
 import android.os.Bundle
 import android.provider.MediaStore
-import android.text.Editable
-import android.text.TextWatcher
 import android.util.Log
 import android.view.*
 import androidx.appcompat.app.AlertDialog
@@ -20,20 +18,13 @@ import androidx.viewpager.widget.ViewPager
 import com.google.android.material.bottomsheet.BottomSheetBehavior
 import com.google.android.material.bottomsheet.BottomSheetDialog
 import com.prepare.prepareurself.R
-import com.prepare.prepareurself.forum.data.OpenForumAttachment
 import com.prepare.prepareurself.forum.data.QueryModel
 import com.prepare.prepareurself.forum.viewmodel.ForumViewModel
-import com.prepare.prepareurself.utils.BaseActivity
-import com.prepare.prepareurself.utils.Constants
-import com.prepare.prepareurself.utils.PrefManager
-import com.prepare.prepareurself.utils.Utility
+import com.prepare.prepareurself.utils.*
 import kotlinx.android.synthetic.main.activity_forum_content.*
-import kotlinx.android.synthetic.main.ask_query_bottom_sheet.*
 import kotlinx.android.synthetic.main.ask_query_bottom_sheet.view.*
-import kotlinx.android.synthetic.main.ask_query_bottom_sheet.view.rv_image_attachment
 import kotlinx.android.synthetic.main.fullimage_dialog_container.view.*
 import kotlinx.android.synthetic.main.layout_topbar.*
-
 import okhttp3.MediaType
 import okhttp3.MultipartBody
 import okhttp3.RequestBody
@@ -157,7 +148,7 @@ class ForumActivity : BaseActivity(), QueriesAdapter.QueriesListener, ImageAttac
 
     override fun onViewReplies(queryModel: QueryModel) {
         val intent = Intent(this@ForumActivity,RepliesActivity::class.java)
-        intent.putExtra(Constants.QUERY,queryModel.query)
+        intent.putExtra(Constants.QUERY,queryModel)
         intent.putExtra(Constants.QUERYID,queryModel.id)
         startActivity(intent)
     }

@@ -18,7 +18,6 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.viewpager.widget.ViewPager
 import com.google.android.material.bottomsheet.BottomSheetDialog
 import com.prepare.prepareurself.R
-import com.prepare.prepareurself.forum.data.OpenForumAttachment
 import com.prepare.prepareurself.forum.data.QueryModel
 import com.prepare.prepareurself.forum.viewmodel.ForumViewModel
 import com.prepare.prepareurself.utils.*
@@ -35,7 +34,7 @@ import java.io.InputStream
 import java.util.*
 import kotlin.collections.ArrayList
 
-class RepliesActivity : BaseActivity(), RepliesAdapter.RepliesListener, ImageAttachedAdapter.AttachmentListener {
+class RepliesActivity : BaseActivity(), RepliesAdapter.RepliesListener, ImageAttachedAdapter.AttachmentListener, QueryImageAttachmentAdapter.AttachmentListenet {
 
     private lateinit var vm:ForumViewModel
     private lateinit var pm:PrefManager
@@ -50,6 +49,7 @@ class RepliesActivity : BaseActivity(), RepliesAdapter.RepliesListener, ImageAtt
     private var lastPage = 1
     private var repliesList = ArrayList<QueryModel>()
     private var bottomsheetView:View?=null
+    private lateinit var queryModel: QueryModel
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -57,8 +57,9 @@ class RepliesActivity : BaseActivity(), RepliesAdapter.RepliesListener, ImageAtt
         vm = ViewModelProvider(this)[ForumViewModel::class.java]
         pm = PrefManager(this)
 
-        queryId = intent.getIntExtra(Constants.QUERYID,-1)
-        query = intent.getStringExtra(Constants.QUERY)
+        queryModel = intent.getParcelableExtra(Constants.QUERY)
+        queryId = queryModel.query_id!!
+        query = queryModel.query!!
 
         if(queryId!=-1){
 
@@ -70,6 +71,8 @@ class RepliesActivity : BaseActivity(), RepliesAdapter.RepliesListener, ImageAtt
 
             initBottomSheet()
 
+            initAttachments(queryModel)
+
             tv_attach_image_reply.setOnClickListener {
                 uploadImage()
             }
@@ -79,6 +82,13 @@ class RepliesActivity : BaseActivity(), RepliesAdapter.RepliesListener, ImageAtt
             finish()
         }
 
+    }
+
+    private fun initAttachments(queryModel: QueryModel?) {
+        val adapter = QueryImageAttachmentAdapter(this, this)
+        rv_replies_attachment.layoutManager = LinearLayoutManager(this, LinearLayoutManager.HORIZONTAL,false)
+        rv_replies_attachment.adapter = adapter
+        queryModel?.open_forum_attachment?.let { adapter.setData(it, 0) }
     }
 
     private fun initBottomSheet() {
@@ -135,7 +145,7 @@ class RepliesActivity : BaseActivity(), RepliesAdapter.RepliesListener, ImageAtt
     }
 
     override fun onItemClicked(list: List<String>, position: Int) {
-        onImageClicked(list, position)
+        onImageClickedQuery(list, position)
     }
 
     override fun onClapped(i: Int, position: Int, queryModel: QueryModel) {
@@ -303,7 +313,7 @@ class RepliesActivity : BaseActivity(), RepliesAdapter.RepliesListener, ImageAtt
         }
     }
 
-    override fun onImageClicked(attachment: List<String>,position: Int) {
+    override fun onImageClicked(attachment: List<String>, position: Int) {
         val dialog = Dialog(this,android.R.style.Theme_Light)
 
         dialog.requestWindowFeature(Window.FEATURE_NO_TITLE)
@@ -312,6 +322,71 @@ class RepliesActivity : BaseActivity(), RepliesAdapter.RepliesListener, ImageAtt
         dialog.setCancelable(false)
 
         val pagerAdapter = ForumImageViewPagerAdapter(attachment, this, 2)
+        view.fullscreen_pager.adapter = pagerAdapter
+        view.fullscreen_pager.offscreenPageLimit  = attachment.size
+
+        view.fullscreen_pager.currentItem = position
+        view.img_left_swipe.visibility = View.GONE
+        view.img_right_swipe.visibility = View.GONE
+
+        view.fullscreen_pager.addOnPageChangeListener(object : ViewPager.OnPageChangeListener{
+
+            override fun onPageScrollStateChanged(state: Int) {
+
+            }
+
+            override fun onPageScrolled(position: Int, positionOffset: Float, positionOffsetPixels: Int) {
+
+            }
+
+            override fun onPageSelected(position: Int) {
+                Log.d("pager_debug","pager : $position ${attachment.size}")
+//                if (position == 0){
+//                    view.img_left_swipe.visibility = View.GONE
+//                }
+//
+//                if (position+1 == attachment.size){
+//                    Log.d("pager_debug","last item position : $position ${attachment.size}")
+//                    view.img_right_swipe.visibility = View.GONE
+//                }
+//
+//                if (position>0 && position< attachment.size){
+//                    view.img_left_swipe.visibility = View.VISIBLE
+//                    view.img_right_swipe.visibility = View.VISIBLE
+//                }
+
+            }
+        })
+
+        view.img_right_swipe.setOnClickListener {
+            view.fullscreen_pager.currentItem = view.fullscreen_pager.currentItem+1
+        }
+
+        view.img_left_swipe.setOnClickListener {
+            view.fullscreen_pager.currentItem = view.fullscreen_pager.currentItem-1
+        }
+
+        dialog.setOnKeyListener { d, keyCode, event ->
+            if (keyCode == KeyEvent.KEYCODE_BACK){
+                d.cancel()
+            }
+            return@setOnKeyListener true
+        }
+
+        dialog.show()
+        val window = dialog.window
+        window?.setLayout(WindowManager.LayoutParams.MATCH_PARENT, WindowManager.LayoutParams.MATCH_PARENT)
+    }
+
+    override fun onImageClickedQuery(attachment: List<String>, position: Int) {
+        val dialog = Dialog(this,android.R.style.Theme_Light)
+
+        dialog.requestWindowFeature(Window.FEATURE_NO_TITLE)
+        val view = LayoutInflater.from(this).inflate(R.layout.fullimage_dialog_container, null)
+        dialog.setContentView(view)
+        dialog.setCancelable(false)
+
+        val pagerAdapter = ForumImageViewPagerAdapter(attachment, this, 1)
         view.fullscreen_pager.adapter = pagerAdapter
         view.fullscreen_pager.offscreenPageLimit  = attachment.size
 

@@ -54,7 +54,7 @@ class RepliesAdapter(var context:Context, var listener:RepliesListener) : Recycl
         }
     }
 
-    override fun onImageClicked(attachment: List<String>, position: Int) {
+    override fun onImageClickedQuery(attachment: List<String>, position: Int) {
         listener.onImageClicked(attachment, position)
     }
 

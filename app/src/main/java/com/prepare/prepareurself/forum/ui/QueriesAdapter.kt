@@ -94,7 +94,7 @@ class QueriesAdapter(var context:Context,var listener:QueriesListener) : Recycle
 
     }
 
-    override fun onImageClicked(attachment: List<String>, position: Int) {
+    override fun onImageClickedQuery(attachment: List<String>, position: Int) {
         listener.onImageClicked(attachment, position)
     }
 }
