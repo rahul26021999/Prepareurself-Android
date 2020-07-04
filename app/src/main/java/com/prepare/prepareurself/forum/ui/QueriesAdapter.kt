@@ -15,6 +15,7 @@ import com.prepare.prepareurself.forum.data.QueryModel
 import com.prepare.prepareurself.utils.Constants
 import com.prepare.prepareurself.utils.Utility
 import kotlinx.android.synthetic.main.queries_adapter_layout.view.*
+import kotlinx.android.synthetic.main.replies_adapter_layout.view.*
 
 class QueriesAdapter(var context:Context,var listener:QueriesListener) : RecyclerView.Adapter<QueriesAdapter.QueriesViewHolder>(),QueryImageAttachmentAdapter.AttachmentListenet{
 
@@ -71,7 +72,15 @@ class QueriesAdapter(var context:Context,var listener:QueriesListener) : Recycle
                             .into(itemView.img_person_queries)
                 }
             }
-            itemView.tv_name_qury_user.text = "@${q?.user?.username}"
+            val firstName = "${q?.user?.first_name}"
+            val lastName = q?.user?.last_name
+            var name = ""
+            name = if (lastName!=null){
+                "$firstName $lastName"
+            }else{
+                firstName
+            }
+            itemView.tv_name_qury_user.text = "@$name"
             val adapter = QueryImageAttachmentAdapter(context, listener)
             itemView.rv_attachment_query.layoutManager = LinearLayoutManager(context,LinearLayoutManager.HORIZONTAL,false)
             itemView.rv_attachment_query.adapter = adapter

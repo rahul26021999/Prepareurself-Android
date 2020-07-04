@@ -28,8 +28,10 @@ import com.prepare.prepareurself.utils.Utility
 import kotlinx.android.synthetic.main.activity_forum_content.*
 import kotlinx.android.synthetic.main.ask_query_bottom_sheet.*
 import kotlinx.android.synthetic.main.ask_query_bottom_sheet.view.*
+import kotlinx.android.synthetic.main.ask_query_bottom_sheet.view.rv_image_attachment
 import kotlinx.android.synthetic.main.fullimage_dialog_container.view.*
 import kotlinx.android.synthetic.main.layout_topbar.*
+
 import okhttp3.MediaType
 import okhttp3.MultipartBody
 import okhttp3.RequestBody
@@ -77,15 +79,6 @@ class ForumActivity : BaseActivity(), QueriesAdapter.QueriesListener, ImageAttac
     }
 
     private fun initBottomSheet() {
-//        sheetBehaviour = BottomSheetBehavior.from(bottom_sheet_ask_query)
-
-//        btn_ask_query.setOnClickListener {
-//            if (sheetBehaviour.state != BottomSheetBehavior.STATE_EXPANDED){
-//                sheetBehaviour.state = BottomSheetBehavior.STATE_EXPANDED
-//            }else if (sheetBehaviour.state != BottomSheetBehavior.STATE_COLLAPSED){
-//                sheetBehaviour.state = BottomSheetBehavior.STATE_COLLAPSED
-//            }
-//        }
 
         val view = LayoutInflater.from(this).inflate(R.layout.ask_query_bottom_sheet, null)
         val dialog = BottomSheetDialog(this)

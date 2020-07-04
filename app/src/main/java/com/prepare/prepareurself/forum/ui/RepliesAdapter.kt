@@ -74,15 +74,30 @@ class RepliesAdapter(var context:Context, var listener:RepliesListener) : Recycl
                             .into(itemView.img_person_replies)
                 }
             }
-            itemView.tv_name_reply_user.text = "@${q?.user?.username}"
-            if (q?.clap == 1){
-                itemView.tv_doclap_reply.text = "Clapped"
-                itemView.tv_doclap_reply.setTextColor(context.resources.getColor(R.color.colorPrimaryDark))
+            val firstName = "${q?.user?.first_name}"
+            val lastName = q?.user?.last_name
+            var name = ""
+            name = if (lastName!=null){
+                "$firstName $lastName"
             }else{
-                itemView.tv_doclap_reply.text = "Clap"
-                itemView.tv_doclap_reply.setTextColor(context.resources.getColor(R.color.dark_grey))
+                firstName
             }
-            itemView.tv_total_claps_reply.text = "${q?.total_claps} Claps"
+            itemView.tv_name_reply_user.text = "@$name"
+            if (q?.clap == 1){
+                itemView.tv_doclap_reply.setImageDrawable(context.resources.getDrawable(R.drawable.ic_clapped))
+            }else{
+                itemView.tv_doclap_reply.setImageDrawable(context.resources.getDrawable(R.drawable.ic_clapping))
+            }
+            var clapsText= ""
+            val claps = q?.total_claps
+            if (claps != null) {
+                clapsText = if (claps==1){
+                    "$claps clap"
+                }else{
+                    "$claps claps"
+                }
+            }
+            itemView.tv_total_claps_reply.text = clapsText
             val adapter = QueryImageAttachmentAdapter(context, listener)
             itemView.rv_attachment_reply.layoutManager = LinearLayoutManager(context, LinearLayoutManager.HORIZONTAL,false)
             itemView.rv_attachment_reply.adapter = adapter
