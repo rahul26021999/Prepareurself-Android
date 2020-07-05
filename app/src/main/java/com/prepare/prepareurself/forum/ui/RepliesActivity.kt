@@ -58,7 +58,7 @@ class RepliesActivity : BaseActivity(), RepliesAdapter.RepliesListener, ImageAtt
         pm = PrefManager(this)
 
         queryModel = intent.getParcelableExtra(Constants.QUERY)
-        queryId = queryModel.query_id!!
+        queryId = queryModel.id
         query = queryModel.query!!
 
         if(queryId!=-1){
