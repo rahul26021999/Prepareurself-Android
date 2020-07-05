@@ -24,7 +24,9 @@ import android.widget.TextView;
 import com.bumptech.glide.Glide;
 import com.bumptech.glide.load.engine.DiskCacheStrategy;
 import com.facebook.shimmer.ShimmerFrameLayout;
+import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import com.prepare.prepareurself.R;
+import com.prepare.prepareurself.chatbot.ui.ChatBotActivity;
 import com.prepare.prepareurself.courses.data.model.AddToUserPrefResponseModel;
 import com.prepare.prepareurself.courses.data.model.CourseDetailReponseModel;
 import com.prepare.prepareurself.courses.data.model.RateCourseResponseModel;
@@ -68,6 +70,8 @@ public class CourseDetailActivity extends BaseActivity implements View.OnClickLi
     private FeedbackFragment feedbackFragment;
     private ShimmerFrameLayout mShimmerViewContainer;
     private RelativeLayout relTop;
+    private FloatingActionButton botFab;
+
 
     @Override
     public void onFeedbackBackPressed() { }
@@ -107,7 +111,7 @@ public class CourseDetailActivity extends BaseActivity implements View.OnClickLi
                         relTop.setVisibility(View.VISIBLE);
                         mShimmerViewContainer.stopShimmerAnimation();
                         mShimmerViewContainer.setVisibility(View.GONE);
-                        CourseModel course=courseDetailReponseModel.getCourse();
+                        final CourseModel course=courseDetailReponseModel.getCourse();
                         setbggradientdynamicupperlayout(course);
                         String title=course.getName();
                         String description=course.getDescription();
@@ -121,6 +125,15 @@ public class CourseDetailActivity extends BaseActivity implements View.OnClickLi
                         int project_count=courseDetailReponseModel.getProject_count();
 
                         Log.d("count",""+topic_count);
+
+                        botFab.setOnClickListener(new View.OnClickListener() {
+                            @Override
+                            public void onClick(View v) {
+                                Intent intent1 = new Intent(CourseDetailActivity.this, ChatBotActivity.class);
+                                intent1.putExtra(Constants.COURSENAME,course.getName());
+                                startActivity(intent1);
+                            }
+                        });
 
                        if(topic_count>0){
                            rel_resources.setVisibility(View.VISIBLE);
@@ -289,6 +302,7 @@ public class CourseDetailActivity extends BaseActivity implements View.OnClickLi
     }
 
     private void getintents() {
+        botFab = findViewById(R.id.bot_fab);
         relTop = findViewById(R.id.rel_layoutmain1);
         mShimmerViewContainer = findViewById(R.id.course_shimmer_view_container);
         course_name=findViewById(R.id.coursename);

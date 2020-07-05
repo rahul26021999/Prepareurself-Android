@@ -1,18 +1,26 @@
 package com.prepare.prepareurself.chatbot.ui
 
+import android.app.Activity
+import android.text.util.Linkify
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
 import com.prepare.prepareurself.R
 import com.prepare.prepareurself.chatbot.BotModel
+import com.prepare.prepareurself.utils.Utility
 import kotlinx.android.synthetic.main.chat_bot_bot_reply_layout.view.*
 import kotlinx.android.synthetic.main.chat_bot_user_msg_layout.view.*
-import java.lang.IllegalArgumentException
+import me.saket.bettermovementmethod.BetterLinkMovementMethod
+import me.saket.bettermovementmethod.BetterLinkMovementMethod.OnLinkClickListener
 
-class ChatBotAdapter : RecyclerView.Adapter<ChatBotAdapter.BaseViewHolder<*>>() {
+class ChatBotAdapter(var activity: Activity,var listener:BotListener) : RecyclerView.Adapter<ChatBotAdapter.BaseViewHolder<*>>() {
 
     private var data = ArrayList<BotModel>()
+
+    interface BotListener{
+        fun onLinkClicked(url:String)
+    }
 
     fun setData(list: ArrayList<BotModel>){
         data = list
@@ -65,7 +73,22 @@ class ChatBotAdapter : RecyclerView.Adapter<ChatBotAdapter.BaseViewHolder<*>>() 
 
     inner class BotReplyViewHolder(itemView: View): BaseViewHolder<BotModel>(itemView){
         override fun bind(item: BotModel) {
-            itemView.tv_bot_reply.text = item.text
+            var reply = ""
+            reply = if (item.text.contains("http") || item.text.contains("https")){
+                item.text.replace("\n","\n\n")
+                "Here are some links that might help you\n${item.text}"
+            }else{
+                item.text
+            }
+            itemView.tv_bot_reply.text = reply
+            itemView.tv_bot_reply.movementMethod = BetterLinkMovementMethod.newInstance()
+            Linkify.addLinks(itemView.tv_bot_reply, Linkify.WEB_URLS)
+
+            BetterLinkMovementMethod.linkify(Linkify.ALL, activity)
+                    .setOnLinkClickListener { _, url ->
+                        listener.onLinkClicked(url)
+                        true
+                    }
         }
     }
 

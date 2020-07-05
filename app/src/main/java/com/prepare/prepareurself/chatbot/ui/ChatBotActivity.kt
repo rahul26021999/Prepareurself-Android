@@ -12,6 +12,7 @@ import com.prepare.prepareurself.utils.BaseActivity
 import com.prepare.prepareurself.R
 import com.prepare.prepareurself.chatbot.BotModel
 import com.prepare.prepareurself.chatbot.RequestV2Task
+import com.prepare.prepareurself.utils.Constants
 import com.prepare.prepareurself.utils.Utility
 import kotlinx.android.synthetic.main.activity_chat_bot.*
 import kotlinx.android.synthetic.main.layout_topbar.*
@@ -19,7 +20,7 @@ import java.util.*
 import kotlin.collections.ArrayList
 
 
-class ChatBotActivity : BaseActivity() {
+class ChatBotActivity : BaseActivity(), ChatBotAdapter.BotListener {
 
 
     private lateinit var sessionsClient: SessionsClient
@@ -27,12 +28,20 @@ class ChatBotActivity : BaseActivity() {
     private lateinit var uuid:String
     private lateinit var chatBotModel:ArrayList<BotModel>
     private lateinit var adapter: ChatBotAdapter
+    private var courseName = ""
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_chat_bot)
 
-        findViewById<TextView>(R.id.title).text = "ChatBot"
+        val intent = intent
+        if (intent==null){
+            finish()
+        }else{
+            courseName = intent.getStringExtra(Constants.COURSENAME)
+        }
+
+        findViewById<TextView>(R.id.title).text = "$courseName Chat Bot"
 
         chatBotModel = ArrayList()
         initAdapter()
@@ -57,7 +66,7 @@ class ChatBotActivity : BaseActivity() {
     }
 
     private fun initAdapter() {
-        adapter = ChatBotAdapter()
+        adapter = ChatBotAdapter(this, this)
         chat_bot_rv.layoutManager = LinearLayoutManager(this)
         chat_bot_rv.adapter = adapter
     }
@@ -81,7 +90,7 @@ class ChatBotActivity : BaseActivity() {
     private fun sendMessage(msg:String){
         val queryInput = QueryInput.newBuilder()
                 .setText(TextInput.newBuilder()
-                        .setText(msg)
+                        .setText("$msg in $courseName")
                         .setLanguageCode("en-US"))
                 .build()
         RequestV2Task(this@ChatBotActivity,session, sessionsClient, queryInput).execute()
@@ -106,4 +115,7 @@ class ChatBotActivity : BaseActivity() {
         chat_bot_rv.smoothScrollToPosition(pos)
     }
 
+    override fun onLinkClicked(url: String) {
+        Utility.redirectUsingCustomTab(this,url)
+    }
 }

@@ -349,6 +349,19 @@
                                 android:src="@drawable/ic_keyboard_arrow_right_black_24dp"/>
 
                         </RelativeLayout>
+
+
+                        <com.google.android.material.floatingactionbutton.FloatingActionButton
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:backgroundTint="@color/colorPrimaryDark"
+                            android:layout_gravity="end"
+                            android:src="@drawable/ic_action_chat"
+                            android:tint="@color/white"
+                            android:tooltipText="Chat Bot"
+                            android:layout_marginTop="20dp"
+                            android:id="@+id/bot_fab"/>
+
                     </LinearLayout>
                     <LinearLayout
                         android:layout_width="match_parent"
