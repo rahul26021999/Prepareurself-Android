@@ -39,6 +39,7 @@
         android:layout_gravity="center"
         android:orientation="vertical"
         app:duration="800"
+        android:visibility="visible"
         android:layout_below="@+id/toolbar">
 
         <!-- Adding 7 rows of placeholders -->
@@ -358,6 +359,7 @@
                             android:layout_gravity="end"
                             android:src="@drawable/ic_action_chat"
                             android:tint="@color/white"
+                            android:layout_marginEnd="@dimen/padding_10"
                             android:tooltipText="Chat Bot"
                             android:layout_marginTop="20dp"
                             android:id="@+id/bot_fab"/>

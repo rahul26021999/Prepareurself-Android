@@ -156,7 +156,7 @@ class ForumActivity : BaseActivity(), QueriesAdapter.QueriesListener, ImageAttac
 
     private fun uploadImage() {
 
-        val options = arrayOf<CharSequence>("Take Photo", "Choose from Gallery", "Cancel")
+        val options = arrayOf<CharSequence>("Take Photo", "Choose from Gallery")
 
         val builder= AlertDialog.Builder(this)
         builder.setTitle("Choose your preference")

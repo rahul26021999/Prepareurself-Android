@@ -71,6 +71,7 @@ public class CourseDetailActivity extends BaseActivity implements View.OnClickLi
     private ShimmerFrameLayout mShimmerViewContainer;
     private RelativeLayout relTop;
     private FloatingActionButton botFab;
+    private String gradColor = "";
 
 
     @Override
@@ -112,7 +113,9 @@ public class CourseDetailActivity extends BaseActivity implements View.OnClickLi
                         mShimmerViewContainer.stopShimmerAnimation();
                         mShimmerViewContainer.setVisibility(View.GONE);
                         final CourseModel course=courseDetailReponseModel.getCourse();
-                        setbggradientdynamicupperlayout(course);
+                        gradColor = course.getColor();
+                        setbggradientdynamicupperlayout(gradColor);
+
                         String title=course.getName();
                         String description=course.getDescription();
                         String logo_url=course.getLogo_url();
@@ -125,15 +128,6 @@ public class CourseDetailActivity extends BaseActivity implements View.OnClickLi
                         int project_count=courseDetailReponseModel.getProject_count();
 
                         Log.d("count",""+topic_count);
-
-                        botFab.setOnClickListener(new View.OnClickListener() {
-                            @Override
-                            public void onClick(View v) {
-                                Intent intent1 = new Intent(CourseDetailActivity.this, ChatBotActivity.class);
-                                intent1.putExtra(Constants.COURSENAME,course.getName());
-                                startActivity(intent1);
-                            }
-                        });
 
                        if(topic_count>0){
                            rel_resources.setVisibility(View.VISIBLE);
@@ -166,6 +160,14 @@ public class CourseDetailActivity extends BaseActivity implements View.OnClickLi
                     }else{
                         Utility.showToast(CourseDetailActivity.this,Constants.SOMETHINGWENTWRONG);
                     }
+                }
+            });
+            botFab.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    Intent intent1 = new Intent(CourseDetailActivity.this, ChatBotActivity.class);
+                    intent1.putExtra(Constants.COURSENAME,courseName);
+                    startActivity(intent1);
                 }
             });
             //rate course
@@ -274,12 +276,12 @@ public class CourseDetailActivity extends BaseActivity implements View.OnClickLi
         l_layout_pref.setOnClickListener(this);
     }
 
-    private void setbggradientdynamicupperlayout(CourseModel course)
+    private void setbggradientdynamicupperlayout(String gradColor)
     {
-        if(!course.getColor().equals(""))
+        if(!gradColor.equals(""))
         {
-            String[] list = course.getColor().split(",");
-            Log.i("Colors",course.getColor()+list.length);
+            String[] list = gradColor.split(",");
+            Log.i("Colors",gradColor+list.length);
             int[] colors = new int[list.length];
             for (int i=0;i<list.length;i++){
                 colors[i]=Color.parseColor(list[i]);
@@ -463,6 +465,7 @@ public class CourseDetailActivity extends BaseActivity implements View.OnClickLi
         findViewById(R.id.feedback_container).setVisibility(View.GONE);
         relTop.setVisibility(View.GONE);
         mShimmerViewContainer.startShimmerAnimation();
+      //  setbggradientdynamicupperlayout(gradColor);
     }
 
     @Override
