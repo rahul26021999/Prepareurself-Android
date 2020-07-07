@@ -45,7 +45,7 @@
             <androidx.recyclerview.widget.RecyclerView
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
-                android:layout_marginTop="2dp"
+                android:layout_marginTop="4dp"
                 android:overScrollMode="never"
                 android:id="@+id/chat_bot_rv"/>
         </LinearLayout>
@@ -69,7 +69,6 @@
           android:layout_toStartOf="@+id/btn_send_bot"
           app:cardCornerRadius="20dp"
           android:layout_marginStart="@dimen/padding_10"
-          app:cardElevation="0dp"
           android:minHeight="50dp"
           app:cardBackgroundColor="@color/askQueryBackgroundcolor"
           android:layout_height="wrap_content">
