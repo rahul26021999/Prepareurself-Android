@@ -8,14 +8,20 @@ import android.graphics.Bitmap
 import android.net.Uri
 import android.os.Bundle
 import android.provider.MediaStore
+import android.text.Editable
 import android.text.Html
+import android.text.TextWatcher
 import android.util.Log
 import android.view.*
+import android.widget.FrameLayout
+import android.widget.LinearLayout
+import android.widget.TextView
 import androidx.appcompat.app.AlertDialog
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.viewpager.widget.ViewPager
+import com.google.android.material.bottomsheet.BottomSheetBehavior
 import com.google.android.material.bottomsheet.BottomSheetDialog
 import com.prepare.prepareurself.R
 import com.prepare.prepareurself.forum.data.QueryModel
@@ -50,6 +56,7 @@ class RepliesActivity : BaseActivity(), RepliesAdapter.RepliesListener, ImageAtt
     private var repliesList = ArrayList<QueryModel>()
     private var bottomsheetView:View?=null
     private lateinit var queryModel: QueryModel
+    private var courseName = ""
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -58,6 +65,7 @@ class RepliesActivity : BaseActivity(), RepliesAdapter.RepliesListener, ImageAtt
         pm = PrefManager(this)
 
         queryModel = intent.getParcelableExtra(Constants.QUERY)
+        courseName = intent.getStringExtra(Constants.COURSENAME)
         queryId = queryModel.id
         query = queryModel.query!!
 
@@ -73,10 +81,9 @@ class RepliesActivity : BaseActivity(), RepliesAdapter.RepliesListener, ImageAtt
 
             initAttachments(queryModel)
 
-            tv_attach_image_reply.setOnClickListener {
-                uploadImage()
-            }
         }
+
+        findViewById<TextView>(R.id.title).text = "$courseName Replies"
 
         backBtn.setOnClickListener {
             finish()
@@ -111,6 +118,29 @@ class RepliesActivity : BaseActivity(), RepliesAdapter.RepliesListener, ImageAtt
             uploadImage()
         }
 
+        dialog.setOnShowListener {
+            val d = dialog
+            val bottomSheet = d.findViewById<FrameLayout>(R.id.design_bottom_sheet)
+            val bottomSheetBehavior = BottomSheetBehavior.from(bottomSheet as View)
+            bottomSheetBehavior.setState(BottomSheetBehavior.STATE_EXPANDED)
+        }
+
+        bottomsheetView!!.btn_send_query.isEnabled = false
+
+        bottomsheetView!!.et_query_forum.addTextChangedListener(object : TextWatcher {
+            override fun afterTextChanged(s: Editable?) {
+
+            }
+
+            override fun beforeTextChanged(s: CharSequence?, start: Int, count: Int, after: Int) {
+
+            }
+
+            override fun onTextChanged(s: CharSequence?, start: Int, before: Int, count: Int) {
+                bottomsheetView!!.btn_send_query.isEnabled = bottomsheetView!!.et_query_forum.text.toString().isNotEmpty()
+            }
+        })
+
         bottomsheetView!!.btn_send_query.setOnClickListener {
             var data = bottomsheetView!!.et_query_forum.text.toString()
             if (data.isNotEmpty() || imageNameList.isNotEmpty()){
@@ -122,7 +152,7 @@ class RepliesActivity : BaseActivity(), RepliesAdapter.RepliesListener, ImageAtt
                                 if (it!=null){
                                     Utility.showToast(this,"Reply submitted successfully!")
                                     htmlData = ""
-                                    et_reply_forum.setText("")
+                                    bottomsheetView!!.et_query_forum.setText("")
                                     it.reply?.let { it1 ->
                                         repliesList.add(0, it1)
                                         repliesAdapter.notifyDataSetChanged()
@@ -172,7 +202,7 @@ class RepliesActivity : BaseActivity(), RepliesAdapter.RepliesListener, ImageAtt
     }
 
     private fun uploadImage() {
-        val options = arrayOf<CharSequence>("Take Photo", "Choose from Gallery", "Cancel")
+        val options = arrayOf<CharSequence>("Take Photo", "Choose from Gallery")
 
         val builder= AlertDialog.Builder(this)
         builder.setTitle("Choose your preference")
@@ -191,9 +221,6 @@ class RepliesActivity : BaseActivity(), RepliesAdapter.RepliesListener, ImageAtt
                     } catch (e: ActivityNotFoundException) {
                         e.printStackTrace()
                     }
-                }
-                options[item] == "Cancel" -> {
-                    dialog!!.dismiss()
                 }
             }
         }

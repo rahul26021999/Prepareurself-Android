@@ -8,8 +8,13 @@ import android.graphics.Bitmap
 import android.net.Uri
 import android.os.Bundle
 import android.provider.MediaStore
+import android.text.Editable
+import android.text.TextWatcher
 import android.util.Log
 import android.view.*
+import android.widget.FrameLayout
+import android.widget.LinearLayout
+import android.widget.TextView
 import androidx.appcompat.app.AlertDialog
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
@@ -20,7 +25,10 @@ import com.google.android.material.bottomsheet.BottomSheetDialog
 import com.prepare.prepareurself.R
 import com.prepare.prepareurself.forum.data.QueryModel
 import com.prepare.prepareurself.forum.viewmodel.ForumViewModel
-import com.prepare.prepareurself.utils.*
+import com.prepare.prepareurself.utils.BaseActivity
+import com.prepare.prepareurself.utils.Constants
+import com.prepare.prepareurself.utils.PrefManager
+import com.prepare.prepareurself.utils.Utility
 import kotlinx.android.synthetic.main.activity_forum_content.*
 import kotlinx.android.synthetic.main.ask_query_bottom_sheet.view.*
 import kotlinx.android.synthetic.main.fullimage_dialog_container.view.*
@@ -31,6 +39,7 @@ import okhttp3.RequestBody
 import java.io.ByteArrayOutputStream
 import java.io.IOException
 import java.io.InputStream
+import java.lang.reflect.TypeVariable
 import java.util.*
 import kotlin.collections.ArrayList
 
@@ -50,10 +59,12 @@ class ForumActivity : BaseActivity(), QueriesAdapter.QueriesListener, ImageAttac
     private var queriesList = ArrayList<QueryModel>()
     private lateinit var queriesAdapter:QueriesAdapter
     private var bottomsheetView:View?=null
+    private var courseName = ""
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_forum2)
+
 
         vm = ViewModelProvider(this)[ForumViewModel::class.java]
 
@@ -61,10 +72,13 @@ class ForumActivity : BaseActivity(), QueriesAdapter.QueriesListener, ImageAttac
 
 
         courseId = intent.getIntExtra(Constants.COURSEID,-1)
+        courseName =intent.getStringExtra(Constants.COURSENAME)
 
         initBottomSheet()
 
         initQueryAdapter()
+
+        findViewById<TextView>(R.id.title).text = "$courseName Forum"
 
         backBtn.setOnClickListener {
             finish()
@@ -75,7 +89,7 @@ class ForumActivity : BaseActivity(), QueriesAdapter.QueriesListener, ImageAttac
     private fun initBottomSheet() {
 
         bottomsheetView = LayoutInflater.from(this).inflate(R.layout.ask_query_bottom_sheet, null)
-        val dialog = BottomSheetDialog(this)
+        val dialog = BottomSheetDialog(this, R.style.DialogStyle)
         dialog.setContentView(bottomsheetView!!)
 
         btn_ask_query.setOnClickListener {
@@ -84,7 +98,30 @@ class ForumActivity : BaseActivity(), QueriesAdapter.QueriesListener, ImageAttac
 
         //initAttachmentAdapter()
 
+        dialog.setOnShowListener {
+            val d = dialog
+            val bottomSheet = d.findViewById<FrameLayout>(R.id.design_bottom_sheet)
+            val bottomSheetBehavior = BottomSheetBehavior.from(bottomSheet as View)
+            bottomSheetBehavior.setState(BottomSheetBehavior.STATE_EXPANDED)
+        }
+
         bottomsheetView!!.et_query_forum.hint ="Enter your query"
+
+        bottomsheetView!!.btn_send_query.isEnabled = false
+
+        bottomsheetView!!.et_query_forum.addTextChangedListener(object : TextWatcher{
+            override fun afterTextChanged(s: Editable?) {
+
+            }
+
+            override fun beforeTextChanged(s: CharSequence?, start: Int, count: Int, after: Int) {
+
+            }
+
+            override fun onTextChanged(s: CharSequence?, start: Int, before: Int, count: Int) {
+                bottomsheetView!!.btn_send_query.isEnabled = bottomsheetView!!.et_query_forum.text.toString().isNotEmpty()
+            }
+        })
 
         attachmentAdapter = ImageAttachedAdapter(this)
         bottomsheetView!!.rv_image_attachment.layoutManager = LinearLayoutManager(this,LinearLayoutManager.HORIZONTAL, false)
@@ -150,6 +187,7 @@ class ForumActivity : BaseActivity(), QueriesAdapter.QueriesListener, ImageAttac
         val intent = Intent(this@ForumActivity,RepliesActivity::class.java)
         intent.putExtra(Constants.QUERY,queryModel)
         intent.putExtra(Constants.QUERYID,queryModel.id)
+        intent.putExtra(Constants.COURSENAME, courseName)
         startActivity(intent)
     }
 

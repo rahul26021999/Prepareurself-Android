@@ -435,6 +435,7 @@ public class CourseDetailActivity extends BaseActivity implements View.OnClickLi
             case R.id.rel_forum:
                 Intent intent4 = new Intent(CourseDetailActivity.this, ForumActivity.class);
                 intent4.putExtra(Constants.COURSEID,courseId);
+                intent4.putExtra(Constants.COURSENAME,courseName);
                 startActivity(intent4);
                 break;
             case R.id.l_layout_pref:

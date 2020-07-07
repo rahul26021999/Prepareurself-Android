@@ -25,11 +25,14 @@
         android:fontFamily="@font/proximanovaregular"/>
 
     <TextView
-        android:layout_width="wrap_content"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:text="query"
         android:textSize="16sp"
-        android:textStyle="bold"
+        android:textStyle="normal"
+        android:textColor="@color/black"
+        android:background="@color/shimmer_background"
+        android:padding="5dp"
         android:layout_below="@+id/tv_name_reply_user"
         android:layout_marginTop="5dp"
         android:fontFamily="@font/proximanovaregular"
