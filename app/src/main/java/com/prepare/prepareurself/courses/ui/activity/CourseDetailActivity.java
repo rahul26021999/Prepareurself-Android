@@ -25,6 +25,7 @@ import android.widget.TextView;
 import com.bumptech.glide.Glide;
 import com.bumptech.glide.load.engine.DiskCacheStrategy;
 import com.facebook.shimmer.ShimmerFrameLayout;
+import com.google.android.material.floatingactionbutton.ExtendedFloatingActionButton;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import com.prepare.prepareurself.R;
 import com.prepare.prepareurself.chatbot.ui.ChatBotActivity;
@@ -71,7 +72,7 @@ public class CourseDetailActivity extends BaseActivity implements View.OnClickLi
     private FeedbackFragment feedbackFragment;
     private ShimmerFrameLayout mShimmerViewContainer;
     private NestedScrollView relTop;
-    private FloatingActionButton botFab;
+    private ExtendedFloatingActionButton botFab;
     private String gradColor = "";
 
 
@@ -286,6 +287,8 @@ public class CourseDetailActivity extends BaseActivity implements View.OnClickLi
             topCourseBackground.setBackground(myGradBg);
             mainBackground.setBackground(myGradBg);
             belowCourseBackgroundContainer.setBackground(myGradBg);
+
+            botFab.setBackgroundColor(colors[0]);
 
             GradientDrawable icongrad = new GradientDrawable(GradientDrawable.Orientation.LEFT_RIGHT, colors);
             icongrad.setCornerRadius(20f);

@@ -42,6 +42,7 @@ class ChatBotActivity : BaseActivity(), ChatBotAdapter.BotListener {
         }
 
         findViewById<TextView>(R.id.title).text = "$courseName Chat Bot"
+        findViewById<TextView>(R.id.heading_bot).text="You are asking Questions in $courseName"
 
         chatBotModel = ArrayList()
         initAdapter()

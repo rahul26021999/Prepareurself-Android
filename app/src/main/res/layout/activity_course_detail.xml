@@ -354,17 +354,19 @@
                         </RelativeLayout>
 
 
-                        <com.google.android.material.floatingactionbutton.FloatingActionButton
+                        <com.google.android.material.floatingactionbutton.ExtendedFloatingActionButton
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:backgroundTint="@color/colorPrimaryDark"
+                            android:text="Ask Me"
+                            android:layout_marginTop="@dimen/padding_10"
+                            android:layout_marginBottom="@dimen/padding_10"
+                            android:layout_marginEnd="20dp"
                             android:layout_gravity="end"
-                            android:src="@drawable/ic_action_chat"
-                            app:tint="@color/white"
-                            android:layout_marginEnd="@dimen/padding_10"
-                            android:tooltipText="Chat Bot"
-                            android:layout_marginTop="20dp"
-                            android:id="@+id/bot_fab"/>
+                            app:iconTint="@color/white"
+                            android:textColor="@color/white"
+                            android:backgroundTint="@color/colorPrimaryDark"
+                            android:id="@+id/bot_fab"
+                            app:icon="@drawable/ic_chat_white_24dp"/>
 
                     </LinearLayout>
                     <LinearLayout
