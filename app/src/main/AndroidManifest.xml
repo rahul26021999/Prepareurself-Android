@@ -33,11 +33,12 @@
             android:theme="@style/ProfileTheme" />
         <activity
             android:name=".forum.ui.RepliesActivity"
+            android:windowSoftInputMode="stateAlwaysHidden|adjustResize"
             android:theme="@style/ProfileTheme"/>
         <activity
             android:name=".forum.ui.ForumActivity"
             android:theme="@style/ProfileTheme"
-            android:windowSoftInputMode="stateVisible|adjustResize"/>
+            android:windowSoftInputMode="stateAlwaysHidden|adjustResize"/>
         <activity
             android:name=".courses.ui.activity.DemoActivity"
             android:label="@string/title_activity_demo"

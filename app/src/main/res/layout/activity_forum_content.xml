@@ -21,11 +21,13 @@
         android:layout_marginBottom="20dp"/>
 
 
-
     <androidx.recyclerview.widget.RecyclerView
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:id="@+id/rv_queries"
+        android:focusable="true"
+        android:descendantFocusability="beforeDescendants"
+        android:focusableInTouchMode="true"
         tools:listitem="@layout/queries_adapter_layout"
         tools:itemCount="4" />
 
