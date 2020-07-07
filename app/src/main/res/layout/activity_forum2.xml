@@ -7,9 +7,15 @@
     tools:context=".forum.ui.ForumActivity"
     android:orientation="vertical">
 
-    <include layout="@layout/layout_topbar"/>
-    <include layout="@layout/activity_forum_content"/>
-
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:orientation="vertical"
+        android:focusable="true"
+        android:focusableInTouchMode="true"
+        android:layout_height="match_parent">
+        <include layout="@layout/layout_topbar"/>
+        <include layout="@layout/activity_forum_content"/>
+    </LinearLayout>
 <!--    <include layout="@layout/ask_query_bottom_sheet"/>-->
 
 </androidx.coordinatorlayout.widget.CoordinatorLayout >

@@ -15,13 +15,24 @@
     <TextView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="Name of the user"
+        tools:text="Rahul Gupta"
         android:textSize="14sp"
         android:layout_toEndOf="@+id/img_person_replies"
         android:layout_marginStart="@dimen/padding_10"
         android:textColor="@color/colorPrimaryDark"
-        android:layout_marginTop="@dimen/padding_10"
         android:id="@+id/tv_name_reply_user"
+        android:fontFamily="@font/proximanovaregular"/>
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        tools:text="\@rahul26021999@gmail.com"
+        android:textSize="10sp"
+        android:layout_below="@+id/tv_name_reply_user"
+        android:layout_toEndOf="@+id/img_person_replies"
+        android:layout_marginStart="@dimen/padding_10"
+        android:textColor="@color/colorPrimaryDark"
+        android:id="@+id/tv_user_email"
         android:fontFamily="@font/proximanovaregular"/>
 
     <TextView
@@ -31,34 +42,35 @@
         android:textSize="16sp"
         android:textStyle="normal"
         android:textColor="@color/black"
-        android:background="@color/shimmer_background"
+        android:background="@color/askQueryBackgroundcolor"
         android:padding="5dp"
-        android:layout_below="@+id/tv_name_reply_user"
-        android:layout_marginTop="5dp"
+        android:layout_below="@+id/tv_user_email"
         android:fontFamily="@font/proximanovaregular"
         android:layout_alignStart="@+id/tv_name_reply_user"
         android:id="@+id/tv_reply_answer"/>
 
     <androidx.recyclerview.widget.RecyclerView
-        android:layout_width="wrap_content"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:background="@color/askQueryBackgroundcolor"
+        tools:itemCount="1"
+        tools:listitem="@layout/rv_image_attachment_query_layout"
         android:id="@+id/rv_attachment_reply"
         android:layout_below="@+id/tv_reply_answer"
-        android:layout_alignStart="@+id/tv_reply_answer"
-        />
+        android:layout_alignStart="@+id/tv_reply_answer" />
 
     <LinearLayout
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:orientation="horizontal"
+        android:padding="@dimen/padding_10"
         android:layout_below="@+id/rv_attachment_reply"
-        android:layout_alignStart="@id/tv_reply_answer"
-        android:layout_marginTop="@dimen/padding_10">
+        android:layout_alignStart="@id/tv_reply_answer">
 
 
         <ImageView
-            android:layout_width="25dp"
-            android:layout_height="25dp"
+            android:layout_width="18dp"
+            android:layout_height="18dp"
             android:id="@+id/tv_doclap_reply"
             android:layout_marginEnd="@dimen/padding_10"
             android:src="@drawable/ic_clapping"/>
@@ -66,12 +78,12 @@
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="10 Claps"
+            tools:text="10 claps"
             android:textColor="@color/colorPrimaryDark"
-            android:textSize="16sp"
-            android:layout_marginStart="@dimen/padding_10"
+            android:textSize="14sp"
             android:id="@+id/tv_total_claps_reply"
             android:fontFamily="@font/proximanovaregular"/>
+
 
     </LinearLayout>
 

@@ -4,7 +4,10 @@
     android:layout_height="wrap_content"
     xmlns:tools="http://schemas.android.com/tools"
     android:orientation="vertical"
-    android:padding="@dimen/padding_10">
+    android:paddingRight="15dp"
+    android:paddingLeft="15dp"
+    android:paddingTop="@dimen/padding_10"
+    android:paddingBottom="@dimen/padding_10">
 
     <de.hdodenhof.circleimageview.CircleImageView
         android:layout_width="50dp"
@@ -15,26 +18,37 @@
     <TextView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="Name of the user"
+        tools:text="Rahul Gupta"
         android:textSize="14sp"
         android:layout_toEndOf="@+id/img_person_queries"
         android:layout_marginStart="@dimen/padding_10"
         android:textColor="@color/colorPrimaryDark"
-        android:layout_marginTop="@dimen/padding_10"
         android:id="@+id/tv_name_qury_user"
+        android:fontFamily="@font/proximanovaregular"/>
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        tools:text="\@rahul26021999@gmail.com"
+        android:textSize="10sp"
+        android:layout_toEndOf="@+id/img_person_queries"
+        android:layout_marginStart="@dimen/padding_10"
+        android:textColor="@color/colorPrimaryDark"
+        android:layout_below="@id/tv_name_qury_user"
+        android:id="@+id/tv_email_user"
         android:fontFamily="@font/proximanovaregular"/>
 
     <TextView
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="query"
+        tools:text="query"
         android:textSize="16sp"
         android:textStyle="normal"
-        android:layout_below="@+id/tv_name_qury_user"
-        android:layout_marginTop="5dp"
+        android:layout_below="@+id/tv_email_user"
         android:textColor="@color/black"
-        android:background="@color/shimmer_background"
         android:padding="5dp"
+        android:layout_marginTop="5dp"
+        android:background="@color/askQueryBackgroundcolor"
         android:fontFamily="@font/proximanovaregular"
         android:layout_alignStart="@+id/tv_name_qury_user"
         android:id="@+id/tv_query_question"/>
@@ -46,9 +60,11 @@
         android:visibility="gone"/>
 
     <androidx.recyclerview.widget.RecyclerView
-        android:layout_width="wrap_content"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:background="@color/askQueryBackgroundcolor"
         android:id="@+id/rv_attachment_query"
+        tools:itemCount="1"
         tools:listitem="@layout/rv_image_attachment_query_layout"
         android:layout_below="@+id/tv_query_question"
         android:layout_alignStart="@+id/tv_query_question"

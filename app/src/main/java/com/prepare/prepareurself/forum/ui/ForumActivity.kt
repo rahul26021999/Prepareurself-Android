@@ -67,9 +67,7 @@ class ForumActivity : BaseActivity(), QueriesAdapter.QueriesListener, ImageAttac
 
 
         vm = ViewModelProvider(this)[ForumViewModel::class.java]
-
         pm = PrefManager(this)
-
 
         courseId = intent.getIntExtra(Constants.COURSEID,-1)
         courseName =intent.getStringExtra(Constants.COURSENAME)

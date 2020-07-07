@@ -38,6 +38,7 @@
             <androidx.recyclerview.widget.RecyclerView
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
+                android:overScrollMode="never"
                 android:id="@+id/rv_prefs"
                 tools:listitem="@layout/preferences_adapter_layout"
                 tools:itemCount="4"

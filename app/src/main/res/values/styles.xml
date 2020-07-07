@@ -69,11 +69,6 @@
         <item name="colorControlHighlight">@color/white</item>
     </style>
 
-    <style name="SelectableItemBackgroundWhite">
-        <item name="android:theme">@style/SelectableItemTheme</item>
-        <item name="android:background">?attr/selectableItemBackground</item>
-    </style>
-
     <style name="EditTextViewStyleLoginRegister">
         <item name="android:paddingBottom">17dp</item>
         <item name="android:paddingTop">17dp</item>
@@ -84,20 +79,10 @@
         <item name="android:background">@drawable/et_custom</item>
     </style>
 
-    <style name="AppTheme.NoActionBar">
-        <item name="windowActionBar">false</item>
-        <item name="windowNoTitle">true</item>
-    </style>
-
     <!--radiobutton-->
 
 
     <!--coursedetail button theme-->
-    <style name="coursedetailmaterialbutton" parent="Widget.MaterialComponents.Button.TextButton">
-        <item name="android:layout_margin">0dp</item>
-        <item name="android:paddingRight">0dp</item>
-        <item name="paddingStart" >0dp</item>
-    </style>
 
     <style name="DialogStyle" parent="Theme.Design.Light.BottomSheetDialog">
         <item name="android:windowIsFloating">false</item>

@@ -26,14 +26,16 @@
                 android:id="@+id/et_query_forum"
                 android:hint="Enter your query here"
                 android:visibility="visible"
+                android:focusedByDefault="false"
+                android:focusableInTouchMode="false"
+                android:focusable="false"
                 android:fontFamily="@font/proximanovaregular"/>
 
 
             <androidx.recyclerview.widget.RecyclerView
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:id="@+id/rv_image_attachment"
-                />
+                android:id="@+id/rv_image_attachment" />
 
             <RelativeLayout
                 android:layout_width="match_parent"

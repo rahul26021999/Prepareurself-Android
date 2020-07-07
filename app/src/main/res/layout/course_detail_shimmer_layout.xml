@@ -11,7 +11,7 @@
 
         <View
             android:layout_width="match_parent"
-            android:layout_height="250dp"
+            android:layout_height="200dp"
             android:id="@+id/thumbnail3"
             android:layout_marginEnd="@dimen/activityPadding"
             android:layout_marginTop="@dimen/padding_10"
@@ -20,33 +20,55 @@
 
         <View
             android:layout_width="match_parent"
-            android:layout_height="80dp"
-            android:layout_marginEnd="40dp"
-            android:layout_marginTop="@dimen/padding_10"
+            android:layout_height="50dp"
+            android:layout_marginEnd="@dimen/activityPadding"
+            android:layout_marginTop="15dp"
             android:layout_marginStart="@dimen/activityPadding"
             android:background="@color/shimmer_background" />
 
         <View
             android:layout_width="match_parent"
-            android:layout_height="80dp"
-            android:layout_marginEnd="40dp"
-            android:layout_marginTop="@dimen/padding_10"
+            android:layout_height="50dp"
+            android:layout_marginEnd="@dimen/activityPadding"
+            android:layout_marginTop="15dp"
             android:layout_marginStart="@dimen/activityPadding"
             android:background="@color/shimmer_background" />
 
         <View
             android:layout_width="match_parent"
-            android:layout_height="80dp"
-            android:layout_marginEnd="40dp"
-            android:layout_marginTop="@dimen/padding_10"
+            android:layout_height="50dp"
+            android:layout_marginEnd="@dimen/activityPadding"
+            android:layout_marginTop="15dp"
             android:layout_marginStart="@dimen/activityPadding"
             android:background="@color/shimmer_background" />
 
         <View
             android:layout_width="match_parent"
-            android:layout_height="80dp"
-            android:layout_marginEnd="40dp"
-            android:layout_marginTop="@dimen/padding_10"
+            android:layout_height="50dp"
+            android:layout_marginEnd="@dimen/activityPadding"
+            android:layout_marginTop="15dp"
+            android:layout_marginStart="@dimen/activityPadding"
+            android:background="@color/shimmer_background" />
+
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="50dp"
+            android:layout_marginEnd="@dimen/activityPadding"
+            android:layout_marginTop="15dp"
+            android:layout_marginStart="@dimen/activityPadding"
+            android:background="@color/shimmer_background" />
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="50dp"
+            android:layout_marginEnd="@dimen/activityPadding"
+            android:layout_marginTop="50dp"
+            android:layout_marginStart="@dimen/activityPadding"
+            android:background="@color/shimmer_background" />
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="50dp"
+            android:layout_marginEnd="@dimen/activityPadding"
+            android:layout_marginTop="50dp"
             android:layout_marginStart="@dimen/activityPadding"
             android:background="@color/shimmer_background" />
 

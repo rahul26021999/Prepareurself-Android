@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
-<RelativeLayout
-    android:layout_width="match_parent"
+<RelativeLayout android:layout_width="match_parent"
+    xmlns:tools="http://schemas.android.com/tools"
     android:padding="14dp"
     android:background="@color/colorPrimaryDark"
     android:layout_height="wrap_content"
@@ -11,7 +11,7 @@
         android:layout_width="40dp"
         android:layout_height="40dp"
         android:id="@+id/backBtn"
-        android:padding="10dp"
+        android:padding="8dp"
         style="@style/SelectableItemThemeWhite"
         android:background="?attr/selectableItemBackgroundBorderless"
         android:src="@drawable/ic_arrow_back_24dp" />
@@ -23,6 +23,7 @@
         android:textStyle="bold"
         android:textColor="@color/white"
         android:textSize="20sp"
+        tools:text="Project"
         android:layout_centerHorizontal="true"
         android:layout_centerVertical="true" />
 
@@ -33,7 +34,7 @@
         android:layout_alignParentEnd="true"
         android:layout_centerVertical="true"
         style="@style/SelectableItemThemeWhite"
-        android:padding="10dp"
+        android:padding="8dp"
         android:background="?selectableItemBackgroundBorderless"
         android:id="@+id/image_project_share"/>
 

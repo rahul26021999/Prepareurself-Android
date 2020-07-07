@@ -1,5 +1,6 @@
 package com.prepare.prepareurself.courses.ui.activity;
 
+import androidx.core.widget.NestedScrollView;
 import androidx.lifecycle.Observer;
 import androidx.lifecycle.ViewModelProvider;
 
@@ -69,7 +70,7 @@ public class CourseDetailActivity extends BaseActivity implements View.OnClickLi
     private Dialog feedbackDialog;
     private FeedbackFragment feedbackFragment;
     private ShimmerFrameLayout mShimmerViewContainer;
-    private RelativeLayout relTop;
+    private NestedScrollView relTop;
     private FloatingActionButton botFab;
     private String gradColor = "";
 
@@ -94,7 +95,7 @@ public class CourseDetailActivity extends BaseActivity implements View.OnClickLi
         }else{
             courseId = intent.getIntExtra(Constants.COURSEID, -1);
         }
-        getintents();
+        intialiseVariables();
         setOnclicklisteners();
 
         initFeedbackDialog();
@@ -109,9 +110,11 @@ public class CourseDetailActivity extends BaseActivity implements View.OnClickLi
                 public void onChanged(CourseDetailReponseModel courseDetailReponseModel) {
 
                     if (courseDetailReponseModel!=null ){
+
                         relTop.setVisibility(View.VISIBLE);
                         mShimmerViewContainer.stopShimmerAnimation();
                         mShimmerViewContainer.setVisibility(View.GONE);
+
                         final CourseModel course=courseDetailReponseModel.getCourse();
                         gradColor = course.getColor();
                         setbggradientdynamicupperlayout(gradColor);
@@ -120,8 +123,6 @@ public class CourseDetailActivity extends BaseActivity implements View.OnClickLi
                         String description=course.getDescription();
                         String logo_url=course.getLogo_url();
                         float rating=course.getAverage_rating();
-                       // float f = Float.parseFloat("25");
-                       // String s = Float.toString(rating);
                         String f= String.format("%.1f", rating);
                         averageRating.setText(f);
                         int topic_count=courseDetailReponseModel.getTopic_count();
@@ -218,12 +219,6 @@ public class CourseDetailActivity extends BaseActivity implements View.OnClickLi
                     return false;
                 }
             });
-//            scaleRatingBar.setOnRatingChangeListener(new BaseRatingBar.OnRatingChangeListener() {
-//                @Override
-//                public void onRatingChange(BaseRatingBar ratingBar, float rating, boolean fromUser) {
-//
-//                }
-//            });
         }
 
     }
@@ -303,7 +298,8 @@ public class CourseDetailActivity extends BaseActivity implements View.OnClickLi
 
     }
 
-    private void getintents() {
+    private void intialiseVariables() {
+
         botFab = findViewById(R.id.bot_fab);
         relTop = findViewById(R.id.rel_layoutmain1);
         mShimmerViewContainer = findViewById(R.id.course_shimmer_view_container);
@@ -463,15 +459,15 @@ public class CourseDetailActivity extends BaseActivity implements View.OnClickLi
     @Override
     protected void onResume() {
         super.onResume();
-        findViewById(R.id.feedback_container).setVisibility(View.GONE);
-        relTop.setVisibility(View.GONE);
-        mShimmerViewContainer.startShimmerAnimation();
+//        findViewById(R.id.feedback_container).setVisibility(View.GONE);
+//        relTop.setVisibility(View.GONE);
+//        mShimmerViewContainer.startShimmerAnimation();
       //  setbggradientdynamicupperlayout(gradColor);
     }
 
     @Override
     protected void onPause() {
-        mShimmerViewContainer.stopShimmerAnimation();
+//        mShimmerViewContainer.stopShimmerAnimation();
         super.onPause();
 
     }
