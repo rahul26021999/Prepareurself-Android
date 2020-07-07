@@ -76,7 +76,7 @@ class ChatBotAdapter(var activity: Activity,var listener:BotListener) : Recycler
             var reply = ""
             reply = if (item.text.contains("http") || item.text.contains("https")){
                 item.text.replace("\n","\n\n")
-                "Here are some links that might help you\n${item.text}"
+                "Here are some links that might help you\n\n${item.text}"
             }else{
                 item.text
             }

@@ -70,6 +70,7 @@
           app:cardCornerRadius="20dp"
           android:layout_marginStart="@dimen/padding_10"
           android:minHeight="50dp"
+          app:cardElevation="0dp"
           app:cardBackgroundColor="@color/askQueryBackgroundcolor"
           android:layout_height="wrap_content">
           <EditText
