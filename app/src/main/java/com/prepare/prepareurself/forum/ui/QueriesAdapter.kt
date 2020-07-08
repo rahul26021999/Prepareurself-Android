@@ -85,7 +85,8 @@ class QueriesAdapter(var context:Context,var listener:QueriesListener) : Recycle
             }else{
                 firstName
             }
-            itemView.tv_name_qury_user.text = "@$name"
+            itemView.tv_name_qury_user.text = name
+            itemView.tv_email_user.text = "@${q?.user?.email}"
             val adapter = QueryImageAttachmentAdapter(context, listener)
             itemView.rv_attachment_query.layoutManager = LinearLayoutManager(context,LinearLayoutManager.HORIZONTAL,false)
             itemView.rv_attachment_query.adapter = adapter

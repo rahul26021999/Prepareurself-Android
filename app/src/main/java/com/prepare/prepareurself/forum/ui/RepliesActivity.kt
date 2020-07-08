@@ -143,7 +143,7 @@ class RepliesActivity : BaseActivity(), RepliesAdapter.RepliesListener, ImageAtt
 
         bottomsheetView!!.btn_send_query.setOnClickListener {
             var data = bottomsheetView!!.et_query_forum.text.toString()
-            if (data.isNotEmpty() || imageNameList.isNotEmpty()){
+            if (data.isNotEmpty() && imageNameList.isNotEmpty()){
                 if (queryId!=-1){
                     data = data.replace("\n","<br />", true)
                     htmlData = "<p>$data</p>"
@@ -232,7 +232,6 @@ class RepliesActivity : BaseActivity(), RepliesAdapter.RepliesListener, ImageAtt
         if (requestCode == 101) {
             if (resultCode == Activity.RESULT_OK) {
                 replies_progress.visibility = View.VISIBLE
-                bottomsheetView?.btn_send_query?.isEnabled = false
                 bottomsheetView?.tv_attach_image?.isEnabled = false
                 val uri: Uri = data?.data ?: Uri.parse("")
                 try {
@@ -248,7 +247,6 @@ class RepliesActivity : BaseActivity(), RepliesAdapter.RepliesListener, ImageAtt
         if (requestCode == 102){
             if (resultCode == Activity.RESULT_OK) {
                 replies_progress.visibility = View.VISIBLE
-                bottomsheetView?.btn_send_query?.isEnabled = false
                 bottomsheetView?.tv_attach_image?.isEnabled = false
                 Log.d("camera_intent","$data ${data?.extras?.get("data")} abc ")
                 val photo = data?.extras?.get("data") as Bitmap
@@ -290,7 +288,6 @@ class RepliesActivity : BaseActivity(), RepliesAdapter.RepliesListener, ImageAtt
                         Utility.showToast(this,"Cannot attach image at the moment")
                     }
                     replies_progress.visibility = View.GONE
-                    bottomsheetView?.btn_send_query?.isEnabled = true
                     bottomsheetView?.tv_attach_image?.isEnabled = true
                 })
     }

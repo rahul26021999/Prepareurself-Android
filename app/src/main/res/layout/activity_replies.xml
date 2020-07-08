@@ -28,28 +28,25 @@
                     android:id="@+id/tv_reply_question"
                     android:textColor="@color/colorPrimaryDark"
                     android:textSize="16sp"
-                    android:padding="5dp" />
+                    android:padding="5dp"
+                    android:background="@color/askQueryBackgroundcolor"/>
 
-                <RelativeLayout
+                <androidx.recyclerview.widget.RecyclerView
                     android:layout_width="match_parent"
-                    android:layout_height="match_parent"
-                    android:layout_below="@+id/tv_reply_question"
-                    android:layout_marginTop="@dimen/padding_10">
+                    android:layout_height="wrap_content"
+                    android:background="@color/askQueryBackgroundcolor"
+                    android:id="@+id/rv_replies_attachment"
+                    android:layout_below="@+id/tv_reply_question"/>
 
-                    <androidx.recyclerview.widget.RecyclerView
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:id="@+id/rv_replies_attachment"/>
+                <androidx.recyclerview.widget.RecyclerView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:id="@+id/rv_replies"
+                    android:overScrollMode="never"
+                    android:layout_marginStart="20dp"
+                    android:layout_below="@+id/rv_replies_attachment"
+                    android:layout_marginTop="@dimen/padding_10"/>
 
-                    <androidx.recyclerview.widget.RecyclerView
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:id="@+id/rv_replies"
-                        android:overScrollMode="never"
-                        android:layout_below="@+id/rv_replies_attachment"
-                        android:layout_marginTop="@dimen/padding_10"/>
-
-                </RelativeLayout>
 
                 <ProgressBar
                     android:layout_width="wrap_content"

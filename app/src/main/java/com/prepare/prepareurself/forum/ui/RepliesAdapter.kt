@@ -87,7 +87,8 @@ class RepliesAdapter(var context:Context, var listener:RepliesListener) : Recycl
             }else{
                 firstName
             }
-            itemView.tv_name_reply_user.text = "@$name"
+            itemView.tv_name_reply_user.text = name
+            itemView.tv_user_email.text = "@${q?.user?.email}"
             if (q?.clap == 1){
                 itemView.tv_doclap_reply.setImageDrawable(context.resources.getDrawable(R.drawable.ic_clapped))
             }else{
