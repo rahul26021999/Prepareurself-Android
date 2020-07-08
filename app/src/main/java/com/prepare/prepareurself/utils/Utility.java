@@ -77,6 +77,8 @@ public class Utility {
         intentBuilder.setSecondaryToolbarColor(ContextCompat.getColor(context, R.color.colorPrimaryDark));
 
         CustomTabsIntent customTabsIntent = intentBuilder.build();
+        customTabsIntent.intent.setPackage("com.android.chrome");
+        customTabsIntent.intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
 
         customTabsIntent.launchUrl(context, uri);
     }

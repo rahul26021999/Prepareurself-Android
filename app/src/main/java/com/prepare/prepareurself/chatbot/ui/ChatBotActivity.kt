@@ -1,17 +1,20 @@
 package com.prepare.prepareurself.chatbot.ui
 
 
+import android.net.Uri
 import android.os.Bundle
 import android.widget.TextView
+import androidx.browser.customtabs.CustomTabsIntent
+import androidx.core.content.ContextCompat
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.google.api.gax.core.FixedCredentialsProvider
 import com.google.auth.oauth2.GoogleCredentials
 import com.google.auth.oauth2.ServiceAccountCredentials
 import com.google.cloud.dialogflow.v2.*
-import com.prepare.prepareurself.utils.BaseActivity
 import com.prepare.prepareurself.R
 import com.prepare.prepareurself.chatbot.BotModel
 import com.prepare.prepareurself.chatbot.RequestV2Task
+import com.prepare.prepareurself.utils.BaseActivity
 import com.prepare.prepareurself.utils.Constants
 import com.prepare.prepareurself.utils.Utility
 import kotlinx.android.synthetic.main.activity_chat_bot.*
@@ -117,6 +120,17 @@ class ChatBotActivity : BaseActivity(), ChatBotAdapter.BotListener {
     }
 
     override fun onLinkClicked(url: String) {
-        Utility.redirectUsingCustomTab(this,url)
+        //Utility.redirectUsingCustomTab(this,url)
+        Utility.redirectUsingCustomTab(this@ChatBotActivity, url)
+//        val uri = Uri.parse(url)
+//
+//        val intentBuilder = CustomTabsIntent.Builder()
+//
+//        intentBuilder.setToolbarColor(ContextCompat.getColor(this, R.color.colorPrimary))
+//        intentBuilder.setSecondaryToolbarColor(ContextCompat.getColor(this, R.color.colorPrimaryDark))
+//
+//        val customTabsIntent = intentBuilder.build()
+//
+//        customTabsIntent.launchUrl(this, uri)
     }
 }

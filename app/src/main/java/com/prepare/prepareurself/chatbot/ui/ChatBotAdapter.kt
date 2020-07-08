@@ -86,8 +86,9 @@ class ChatBotAdapter(var activity: Activity,var listener:BotListener) : Recycler
 
             BetterLinkMovementMethod.linkify(Linkify.ALL, activity)
                     .setOnLinkClickListener { _, url ->
-                        listener.onLinkClicked(url)
-                        true
+                        //listener.onLinkClicked(url)
+                        Utility.redirectUsingCustomTab(activity,url)
+                        return@setOnLinkClickListener true
                     }
         }
     }
