@@ -110,8 +110,7 @@ dependencies {
 
 
     //chrometabs
-    implementation "androidx.browser:browser:1.2.0"
-
+    implementation 'com.android.support:customtabs:23.3.0'
 
     //android-youtube-player
     implementation 'com.pierfrancescosoffritti.androidyoutubeplayer:core:10.0.5'

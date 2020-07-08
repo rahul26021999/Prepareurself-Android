@@ -5,9 +5,12 @@ import android.text.util.Linkify
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.ArrayAdapter
+import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.prepare.prepareurself.R
 import com.prepare.prepareurself.chatbot.BotModel
+import com.prepare.prepareurself.forum.ui.LinksAdapter
 import com.prepare.prepareurself.utils.Utility
 import kotlinx.android.synthetic.main.chat_bot_bot_reply_layout.view.*
 import kotlinx.android.synthetic.main.chat_bot_user_msg_layout.view.*
@@ -74,22 +77,37 @@ class ChatBotAdapter(var activity: Activity,var listener:BotListener) : Recycler
     inner class BotReplyViewHolder(itemView: View): BaseViewHolder<BotModel>(itemView){
         override fun bind(item: BotModel) {
             var reply = ""
-            reply = if (item.text.contains("http") || item.text.contains("https")){
-//                item.text.replace("\n","\n\n\n")
-                "Here are some links that might help you\n\n${item.text}"
-            }else{
-                item.text
+            when {
+                item.text.contains("http") || item.text.contains("https") -> {
+    //                item.text.replace("\n","\n\n\n")
+                    val list = item.text.split("\n")
+                    reply = "Here are some links that might help you"
+                    displayList(list,reply)
+                }
+                else -> {
+                    reply = item.text
+                    itemView.tv_bot_reply.text = reply
+                    itemView.links_list.visibility = View.GONE
+                }
             }
-            itemView.tv_bot_reply.text = reply
-            itemView.tv_bot_reply.movementMethod = BetterLinkMovementMethod.newInstance()
-            Linkify.addLinks(itemView.tv_bot_reply, Linkify.WEB_URLS)
+ //           itemView.tv_bot_reply.movementMethod = BetterLinkMovementMethod.newInstance()
+//            Linkify.addLinks(itemView.tv_bot_reply, Linkify.WEB_URLS)
+//
+//            BetterLinkMovementMethod.linkify(Linkify.ALL, activity)
+//                    .setOnLinkClickListener { _, url ->
+//                        //listener.onLinkClicked(url)
+//                        Utility.redirectUsingCustomTab(activity,url)
+//                        return@setOnLinkClickListener true
+//                    }
+        }
 
-            BetterLinkMovementMethod.linkify(Linkify.ALL, activity)
-                    .setOnLinkClickListener { _, url ->
-                        //listener.onLinkClicked(url)
-                        Utility.redirectUsingCustomTab(activity,url)
-                        return@setOnLinkClickListener true
-                    }
+        private fun displayList(list: List<String>, reply: String) {
+            itemView.tv_bot_reply.text = reply
+            itemView.links_list.visibility = View.VISIBLE
+            val adapter = LinksAdapter(activity)
+            itemView.links_list.layoutManager = LinearLayoutManager(activity)
+            itemView.links_list.adapter = adapter
+            adapter.setData(list as ArrayList<String>)
         }
     }
 
