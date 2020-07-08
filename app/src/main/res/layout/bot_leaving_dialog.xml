@@ -1,0 +1,57 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:padding="@dimen/padding_10">
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        android:text="Leaving?"
+        android:textColor="@color/black"
+        android:textStyle="bold"
+        android:textSize="20sp"
+        android:id="@+id/bot_dialog_title"/>
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        app:layout_constraintTop_toBottomOf="@+id/bot_dialog_title"
+        app:layout_constraintStart_toStartOf="parent"
+        android:text="Your chats will be deleted. Are you sure want to exit?"
+        android:textStyle="bold"
+        android:layout_marginTop="@dimen/padding_10"
+        android:textSize="16sp"
+        android:id="@+id/bot_dialog_msg" />
+
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/bot_dialog_msg"
+        android:text="YES"
+        android:textColor="@color/colorPrimaryDark"
+        android:textStyle="bold"
+        android:layout_marginTop="20dp"
+        android:layout_marginEnd="@dimen/padding_10"
+        android:padding="@dimen/padding_10"
+        android:id="@+id/bot_dialog_yes"/>
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        app:layout_constraintEnd_toStartOf="@+id/bot_dialog_yes"
+        app:layout_constraintTop_toBottomOf="@+id/bot_dialog_msg"
+        android:text="NO"
+        android:textColor="@color/colorPrimaryDark"
+        android:textStyle="bold"
+        android:layout_marginTop="20dp"
+        android:id="@+id/bot_dialog_no"
+        android:layout_marginEnd="@dimen/padding_10"
+        android:padding="@dimen/padding_10"/>
+
+</androidx.constraintlayout.widget.ConstraintLayout>

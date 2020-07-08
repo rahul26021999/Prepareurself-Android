@@ -1,8 +1,13 @@
 package com.prepare.prepareurself.chatbot.ui
 
 
+import android.app.AlertDialog
+import android.app.Dialog
+import android.content.DialogInterface
 import android.net.Uri
 import android.os.Bundle
+import android.view.LayoutInflater
+import android.view.WindowManager
 import android.widget.TextView
 import androidx.browser.customtabs.CustomTabsIntent
 import androidx.core.content.ContextCompat
@@ -18,6 +23,7 @@ import com.prepare.prepareurself.utils.BaseActivity
 import com.prepare.prepareurself.utils.Constants
 import com.prepare.prepareurself.utils.Utility
 import kotlinx.android.synthetic.main.activity_chat_bot.*
+import kotlinx.android.synthetic.main.bot_leaving_dialog.view.*
 import kotlinx.android.synthetic.main.layout_topbar.*
 import java.util.*
 import kotlin.collections.ArrayList
@@ -63,7 +69,7 @@ class ChatBotActivity : BaseActivity(), ChatBotAdapter.BotListener {
         }
 
         backBtn.setOnClickListener {
-            finish()
+            closeDialog()
         }
 
 
@@ -133,4 +139,30 @@ class ChatBotActivity : BaseActivity(), ChatBotAdapter.BotListener {
 //
 //        customTabsIntent.launchUrl(this, uri)
     }
+
+    private fun closeDialog(){
+        val dialog = Dialog(this)
+        val view = LayoutInflater.from(this).inflate(R.layout.bot_leaving_dialog, null)
+        dialog.setContentView(view)
+
+        view.bot_dialog_yes.setOnClickListener {
+            finish()
+        }
+
+        view.bot_dialog_no.setOnClickListener {
+            dialog.dismiss()
+        }
+
+        dialog.show()
+
+        val window = dialog.window
+
+        window?.setLayout(WindowManager.LayoutParams.MATCH_PARENT, WindowManager.LayoutParams.WRAP_CONTENT)
+
+    }
+
+    override fun onBackPressed() {
+        closeDialog()
+    }
+
 }
