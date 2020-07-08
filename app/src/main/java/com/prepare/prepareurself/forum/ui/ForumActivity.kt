@@ -155,7 +155,7 @@ class ForumActivity : BaseActivity(), QueriesAdapter.QueriesListener, ImageAttac
 
         bottomsheetView!!.btn_send_query.setOnClickListener {
             var data = bottomsheetView!!.et_query_forum.text.toString()
-            if (data.isNotEmpty() && imageNameList.isNotEmpty()){
+            if (data.isNotEmpty()){
                 if (courseId!=-1){
                     data = data.replace("\n","<br />", true)
                     htmlData = "<p>$data</p>"
@@ -168,6 +168,11 @@ class ForumActivity : BaseActivity(), QueriesAdapter.QueriesListener, ImageAttac
                                     it.query?.let { it1 ->
                                         queriesAdapter.addData(it1)
                                         rv_queries.smoothScrollToPosition(0)
+                                        attachmentAdapter.clearData()
+                                        imageAttachedList.clear()
+                                        imageNameList.clear()
+                                        bottomsheetView!!.et_query_forum.setText("")
+                                        dialog.cancel()
                                     }
                                 }else{
                                     Utility.showToast(this,Constants.SOMETHINGWENTWRONG)
@@ -325,7 +330,7 @@ class ForumActivity : BaseActivity(), QueriesAdapter.QueriesListener, ImageAttac
         attachmentAdapter.notifyItemRemoved(position)
     }
 
-    override fun onItemClicked(list: List<String>, position: Int) {
+    override fun onItemClicked(list: ArrayList<String>, position: Int) {
         onImageClicked(list,position)
     }
 

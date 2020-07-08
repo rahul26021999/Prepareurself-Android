@@ -9,15 +9,20 @@ import kotlinx.android.synthetic.main.image_attached_rv_layout.view.*
 
 class ImageAttachedAdapter(var listener:AttachmentListener) : RecyclerView.Adapter<ImageAttachedAdapter.AttachmentViewHolder>(){
 
-    private var data: List<String>?=null
+    private var data: ArrayList<String>?=null
 
     interface AttachmentListener{
         fun onCancelled(position: Int)
-        fun onItemClicked(list: List<String>,position: Int)
+        fun onItemClicked(list: ArrayList<String>,position: Int)
     }
 
-    fun setData(list: List<String>){
+    fun setData(list: ArrayList<String>){
         data = list
+        notifyDataSetChanged()
+    }
+
+    fun clearData(){
+        data?.clear()
         notifyDataSetChanged()
     }
 
