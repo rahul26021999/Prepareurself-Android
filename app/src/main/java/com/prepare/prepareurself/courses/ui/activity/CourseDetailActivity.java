@@ -246,6 +246,7 @@ public class CourseDetailActivity extends BaseActivity implements View.OnClickLi
             @Override
             public void onChanged(RateCourseResponseModel rateCourseResponseModel) {
                 if (rateCourseResponseModel!=null){
+                    Log.d("star_debug", "onRatingChange: "+starbyuser);
                     if(starbyuser<=3){
                         feedbackDialog.show();
                         if (playstoreDialog.isShowing()){
