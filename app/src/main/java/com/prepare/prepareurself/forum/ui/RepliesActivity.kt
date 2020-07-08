@@ -5,6 +5,8 @@ import android.app.Dialog
 import android.content.ActivityNotFoundException
 import android.content.Intent
 import android.graphics.Bitmap
+import android.graphics.Color
+import android.graphics.drawable.GradientDrawable
 import android.net.Uri
 import android.os.Bundle
 import android.provider.MediaStore
@@ -27,6 +29,7 @@ import com.prepare.prepareurself.R
 import com.prepare.prepareurself.forum.data.QueryModel
 import com.prepare.prepareurself.forum.viewmodel.ForumViewModel
 import com.prepare.prepareurself.utils.*
+import kotlinx.android.synthetic.main.activity_forum_content.*
 import kotlinx.android.synthetic.main.activity_replies.*
 import kotlinx.android.synthetic.main.ask_query_bottom_sheet.view.*
 import kotlinx.android.synthetic.main.fullimage_dialog_container.view.*
@@ -57,6 +60,7 @@ class RepliesActivity : BaseActivity(), RepliesAdapter.RepliesListener, ImageAtt
     private var bottomsheetView:View?=null
     private lateinit var queryModel: QueryModel
     private var courseName = ""
+    private var gradColor = ""
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -66,8 +70,11 @@ class RepliesActivity : BaseActivity(), RepliesAdapter.RepliesListener, ImageAtt
 
         queryModel = intent.getParcelableExtra(Constants.QUERY)
         courseName = intent.getStringExtra(Constants.COURSENAME)
+        gradColor = intent.getStringExtra("gradColor")
         queryId = queryModel.id
         query = queryModel.query!!
+
+        setColors(gradColor)
 
         if(queryId!=-1){
 
@@ -89,6 +96,21 @@ class RepliesActivity : BaseActivity(), RepliesAdapter.RepliesListener, ImageAtt
             finish()
         }
 
+    }
+
+    private fun setColors(gradColor: String) {
+        if (gradColor != "") {
+            val list = gradColor.split(",".toRegex()).toTypedArray()
+            Log.i("Colors", gradColor + list.size)
+            val colors = IntArray(list.size)
+            for (i in list.indices) {
+                colors[i] = Color.parseColor(list[i])
+            }
+            val myGradBg = GradientDrawable(GradientDrawable.Orientation.LEFT_RIGHT, colors)
+            myGradBg.cornerRadii = floatArrayOf(0f, 0f, 0f, 0f, 0f, 0f, 0f, 0f)
+            rel_top_bar.background = myGradBg
+            fab_reply.setBackgroundColor(colors[0])
+        }
     }
 
     private fun initAttachments(queryModel: QueryModel?) {

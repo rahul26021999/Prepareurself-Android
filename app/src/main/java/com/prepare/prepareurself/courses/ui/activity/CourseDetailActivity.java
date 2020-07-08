@@ -436,6 +436,7 @@ public class CourseDetailActivity extends BaseActivity implements View.OnClickLi
                 Intent intent4 = new Intent(CourseDetailActivity.this, ForumActivity.class);
                 intent4.putExtra(Constants.COURSEID,courseId);
                 intent4.putExtra(Constants.COURSENAME,courseName);
+                intent4.putExtra("gradColor",gradColor);
                 startActivity(intent4);
                 break;
             case R.id.l_layout_pref:

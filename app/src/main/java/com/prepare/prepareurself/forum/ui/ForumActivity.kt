@@ -5,6 +5,8 @@ import android.app.Dialog
 import android.content.ActivityNotFoundException
 import android.content.Intent
 import android.graphics.Bitmap
+import android.graphics.Color
+import android.graphics.drawable.GradientDrawable
 import android.net.Uri
 import android.os.Bundle
 import android.provider.MediaStore
@@ -29,6 +31,7 @@ import com.prepare.prepareurself.utils.BaseActivity
 import com.prepare.prepareurself.utils.Constants
 import com.prepare.prepareurself.utils.PrefManager
 import com.prepare.prepareurself.utils.Utility
+import kotlinx.android.synthetic.main.activity_chat_bot.*
 import kotlinx.android.synthetic.main.activity_forum_content.*
 import kotlinx.android.synthetic.main.ask_query_bottom_sheet.view.*
 import kotlinx.android.synthetic.main.fullimage_dialog_container.view.*
@@ -60,6 +63,7 @@ class ForumActivity : BaseActivity(), QueriesAdapter.QueriesListener, ImageAttac
     private lateinit var queriesAdapter:QueriesAdapter
     private var bottomsheetView:View?=null
     private var courseName = ""
+    private var gradColor = ""
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -73,6 +77,9 @@ class ForumActivity : BaseActivity(), QueriesAdapter.QueriesListener, ImageAttac
 
         courseId = intent.getIntExtra(Constants.COURSEID,-1)
         courseName =intent.getStringExtra(Constants.COURSENAME)
+        gradColor = intent.getStringExtra("gradColor")
+
+        setColors(gradColor)
 
         initBottomSheet()
 
@@ -84,6 +91,21 @@ class ForumActivity : BaseActivity(), QueriesAdapter.QueriesListener, ImageAttac
             finish()
         }
 
+    }
+
+    private fun setColors(gradColor: String) {
+        if (gradColor != "") {
+            val list = gradColor.split(",".toRegex()).toTypedArray()
+            Log.i("Colors", gradColor + list.size)
+            val colors = IntArray(list.size)
+            for (i in list.indices) {
+                colors[i] = Color.parseColor(list[i])
+            }
+            val myGradBg = GradientDrawable(GradientDrawable.Orientation.LEFT_RIGHT, colors)
+            myGradBg.cornerRadii = floatArrayOf(0f, 0f, 0f, 0f, 0f, 0f, 0f, 0f)
+            rel_top_bar.background = myGradBg
+            btn_ask_query.setBackgroundColor(colors[0])
+        }
     }
 
     private fun initBottomSheet() {
@@ -188,6 +210,7 @@ class ForumActivity : BaseActivity(), QueriesAdapter.QueriesListener, ImageAttac
         intent.putExtra(Constants.QUERY,queryModel)
         intent.putExtra(Constants.QUERYID,queryModel.id)
         intent.putExtra(Constants.COURSENAME, courseName)
+        intent.putExtra("gradColor",gradColor)
         startActivity(intent)
     }
 
