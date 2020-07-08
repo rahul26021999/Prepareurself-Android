@@ -3,6 +3,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:background="@color/colorPrimaryDark"
     android:layout_height="wrap_content"
+    android:id="@+id/rel_top_bar"
     xmlns:android="http://schemas.android.com/apk/res/android">
 
 

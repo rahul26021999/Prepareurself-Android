@@ -84,7 +84,7 @@ public class CourseDetailActivity extends BaseActivity implements View.OnClickLi
         setContentView(R.layout.activity_course_detail);
         vm = new  ViewModelProvider(this).get(CourseDetailViewModel.class);
         prefManager = new PrefManager(this);
-        Intent intent = getIntent();
+        final Intent intent = getIntent();
         feedbackFragment = FeedbackFragment.newInstance();
         if (intent.getData()!=null){
             Log.d("deeplink_debug","course avtivity : "+getIntent().getData()+"");
@@ -169,6 +169,7 @@ public class CourseDetailActivity extends BaseActivity implements View.OnClickLi
                 public void onClick(View v) {
                     Intent intent1 = new Intent(CourseDetailActivity.this, ChatBotActivity.class);
                     intent1.putExtra(Constants.COURSENAME,courseName);
+                    intent1.putExtra("gradColor",gradColor);
                     startActivity(intent1);
                 }
             });

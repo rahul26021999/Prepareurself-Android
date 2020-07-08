@@ -88,19 +88,19 @@
               android:backgroundTint="@color/white" />
       </com.google.android.material.card.MaterialCardView>
 
-        <com.google.android.material.floatingactionbutton.FloatingActionButton
+        <com.google.android.material.floatingactionbutton.ExtendedFloatingActionButton
             android:id="@+id/btn_send_bot"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:background="@color/colorPrimaryDark"
-            app:backgroundTint="@color/colorPrimaryDark"
+            android:layout_width="50dp"
+            android:layout_height="50dp"
             app:tint="@color/white"
             app:elevation="0dp"
             android:layout_alignParentEnd="true"
             android:layout_marginStart="@dimen/padding_10"
             android:layout_marginEnd="@dimen/padding_10"
-            android:src="@drawable/ic_send_white_24dp"
-            app:fabSize="auto"/>
+            android:layout_marginBottom="@dimen/padding_10"
+            app:fabSize="auto"
+            app:iconTint="@color/white"
+            app:icon="@drawable/send_query_white"/>
 
     </RelativeLayout>
 

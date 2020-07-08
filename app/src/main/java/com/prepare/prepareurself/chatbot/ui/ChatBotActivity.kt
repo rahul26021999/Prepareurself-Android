@@ -1,16 +1,14 @@
 package com.prepare.prepareurself.chatbot.ui
 
 
-import android.app.AlertDialog
 import android.app.Dialog
-import android.content.DialogInterface
-import android.net.Uri
+import android.graphics.Color
+import android.graphics.drawable.GradientDrawable
 import android.os.Bundle
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.WindowManager
 import android.widget.TextView
-import androidx.browser.customtabs.CustomTabsIntent
-import androidx.core.content.ContextCompat
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.google.api.gax.core.FixedCredentialsProvider
 import com.google.auth.oauth2.GoogleCredentials
@@ -38,6 +36,7 @@ class ChatBotActivity : BaseActivity(), ChatBotAdapter.BotListener {
     private lateinit var chatBotModel:ArrayList<BotModel>
     private lateinit var adapter: ChatBotAdapter
     private var courseName = ""
+    private var gradColor = ""
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -48,12 +47,14 @@ class ChatBotActivity : BaseActivity(), ChatBotAdapter.BotListener {
             finish()
         }else{
             courseName = intent.getStringExtra(Constants.COURSENAME)
+            gradColor = intent.getStringExtra("gradColor")
         }
 
         findViewById<TextView>(R.id.title).text = "$courseName Chat Bot"
         findViewById<TextView>(R.id.heading_bot).text="You are asking Questions in $courseName"
 
         chatBotModel = ArrayList()
+        setColors(gradColor)
         initAdapter()
         uuid = UUID.randomUUID().toString()
         initChatBot()
@@ -73,6 +74,21 @@ class ChatBotActivity : BaseActivity(), ChatBotAdapter.BotListener {
         }
 
 
+    }
+
+    private fun setColors(gradColor: String) {
+        if (gradColor != "") {
+            val list = gradColor.split(",".toRegex()).toTypedArray()
+            Log.i("Colors", gradColor + list.size)
+            val colors = IntArray(list.size)
+            for (i in list.indices) {
+                colors[i] = Color.parseColor(list[i])
+            }
+            val myGradBg = GradientDrawable(GradientDrawable.Orientation.LEFT_RIGHT, colors)
+            myGradBg.cornerRadii = floatArrayOf(0f, 0f, 0f, 0f, 0f, 0f, 0f, 0f)
+            rel_top_bar.background = myGradBg
+            btn_send_bot.setBackgroundColor(colors[0])
+        }
     }
 
     private fun initAdapter() {
