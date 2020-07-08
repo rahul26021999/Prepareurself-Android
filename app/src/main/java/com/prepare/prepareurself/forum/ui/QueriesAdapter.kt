@@ -1,7 +1,10 @@
 package com.prepare.prepareurself.forum.ui
 
 import android.content.Context
+import android.graphics.Color
+import android.graphics.drawable.GradientDrawable
 import android.text.Html
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -20,6 +23,7 @@ import kotlinx.android.synthetic.main.replies_adapter_layout.view.*
 class QueriesAdapter(var context:Context,var listener:QueriesListener) : RecyclerView.Adapter<QueriesAdapter.QueriesViewHolder>(),QueryImageAttachmentAdapter.AttachmentListenet{
 
     private var data:ArrayList<QueryModel>?=null
+    private var gradColor = ""
 
     interface QueriesListener{
         fun onViewReplies(queryModel: QueryModel)
@@ -32,8 +36,9 @@ class QueriesAdapter(var context:Context,var listener:QueriesListener) : Recycle
         notifyItemInserted(0)
     }
 
-    fun setData(list: ArrayList<QueryModel>){
+    fun setData(list: ArrayList<QueryModel>, color: String){
         data = list
+        gradColor = color
         notifyDataSetChanged()
     }
 
@@ -50,14 +55,14 @@ class QueriesAdapter(var context:Context,var listener:QueriesListener) : Recycle
             listener.onBottomReached()
         }
         val q = data?.get(position)
-        holder.bindView(q, context, this)
+        holder.bindView(q, context, this, gradColor)
         holder.itemView.setOnClickListener {
             q?.let { it1 -> listener.onViewReplies(it1) }
         }
     }
 
     class QueriesViewHolder(itemView:View):RecyclerView.ViewHolder(itemView){
-        fun bindView(q: QueryModel?, context: Context, listener:QueryImageAttachmentAdapter.AttachmentListenet) {
+        fun bindView(q: QueryModel?, context: Context, listener:QueryImageAttachmentAdapter.AttachmentListenet, gradColor:String) {
             val query = Html.fromHtml(q?.query).trim()
             if (query.isEmpty()){
                 itemView.tv_query_question.visibility = View.GONE
@@ -65,7 +70,17 @@ class QueriesAdapter(var context:Context,var listener:QueriesListener) : Recycle
                 itemView.tv_query_question.visibility = View.VISIBLE
                 itemView.tv_query_question.text = query
             }
+            val firstName = "${q?.user?.first_name}"
+            val lastName = q?.user?.last_name
+            var name = ""
+            name = if (lastName!=null){
+                "$firstName $lastName"
+            }else{
+                firstName
+            }
             if (q?.user?.profile_image!=null && q.user?.profile_image?.isNotEmpty()!!){
+                itemView.rel_query_img_placeholder.visibility = View.GONE
+                itemView.img_person_queries.visibility = View.VISIBLE
                 val imagUrl = q.user?.profile_image
                 if (imagUrl?.endsWith(".svg")!!){
                     Utility.loadSVGImage(context, imagUrl, itemView.img_person_queries)
@@ -76,14 +91,28 @@ class QueriesAdapter(var context:Context,var listener:QueriesListener) : Recycle
                             .diskCacheStrategy(DiskCacheStrategy.RESOURCE)
                             .into(itemView.img_person_queries)
                 }
-            }
-            val firstName = "${q?.user?.first_name}"
-            val lastName = q?.user?.last_name
-            var name = ""
-            name = if (lastName!=null){
-                "$firstName $lastName"
             }else{
-                firstName
+                if (gradColor != "") {
+                    itemView.rel_query_img_placeholder.visibility = View.VISIBLE
+                    itemView.img_person_queries.visibility = View.GONE
+                    val list = gradColor.split(",".toRegex()).toTypedArray()
+                    Log.i("Colors", gradColor + list.size)
+                    val colors = IntArray(list.size)
+                    for (i in list.indices) {
+                        colors[i] = Color.parseColor(list[i])
+                    }
+                    val myGradBg = GradientDrawable(GradientDrawable.Orientation.LEFT_RIGHT, colors)
+                    myGradBg.cornerRadii = floatArrayOf(90f, 90f, 90f, 90f, 90f, 90f, 90f, 90f)
+                    itemView.rel_query_img_placeholder.background = myGradBg
+                    var text = ""
+                    text = if (lastName!=null){
+                        "${firstName[0]}${lastName[0]}"
+                    }else{
+                        "${firstName[0]}"
+                    }
+
+                    itemView.tv_query_img_placeholder.text = text
+                }
             }
             itemView.tv_name_qury_user.text = name
             itemView.tv_email_user.text = "@${q?.user?.email}"

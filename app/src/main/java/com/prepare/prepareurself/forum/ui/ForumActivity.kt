@@ -197,7 +197,7 @@ class ForumActivity : BaseActivity(), QueriesAdapter.QueriesListener, ImageAttac
                         }
                         it.queries?.data?.let { it1 ->
                             queriesList.addAll(it1)
-                            queriesAdapter.setData(queriesList)
+                            queriesAdapter.setData(queriesList, gradColor)
                         }
                     }else{
                         Utility.showToast(this,Constants.SOMETHINGWENTWRONG)

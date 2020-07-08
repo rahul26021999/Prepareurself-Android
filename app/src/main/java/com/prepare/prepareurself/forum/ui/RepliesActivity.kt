@@ -344,7 +344,7 @@ class RepliesActivity : BaseActivity(), RepliesAdapter.RepliesListener, ImageAtt
                         }
                         it.query?.data?.let { it1 ->
                             repliesList.addAll(it1)
-                            repliesAdapter.setData(repliesList)
+                            repliesAdapter.setData(repliesList, gradColor)
                         }
                     }else{
                         Utility.showToast(this,Constants.SOMETHINGWENTWRONG)

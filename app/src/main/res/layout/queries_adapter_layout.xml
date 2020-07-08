@@ -9,18 +9,44 @@
     android:paddingTop="@dimen/padding_10"
     android:paddingBottom="@dimen/padding_10">
 
-    <de.hdodenhof.circleimageview.CircleImageView
-        android:layout_width="50dp"
-        android:layout_height="50dp"
-        android:src="@drawable/person_placeholder"
-        android:id="@+id/img_person_queries"/>
+
+
+    <RelativeLayout
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/rel_img_query">
+
+        <de.hdodenhof.circleimageview.CircleImageView
+            android:layout_width="50dp"
+            android:layout_height="50dp"
+            android:src="@drawable/person_placeholder"
+            android:id="@+id/img_person_queries"/>
+
+        <RelativeLayout
+            android:layout_width="50dp"
+            android:layout_height="50dp"
+            android:id="@+id/rel_query_img_placeholder"
+            android:visibility="visible">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="RR"
+                android:textColor="@color/white"
+                android:id="@+id/tv_query_img_placeholder"
+                android:layout_centerInParent="true"/>
+
+        </RelativeLayout>
+
+
+    </RelativeLayout>
 
     <TextView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         tools:text="Rahul Gupta"
         android:textSize="14sp"
-        android:layout_toEndOf="@+id/img_person_queries"
+        android:layout_toEndOf="@+id/rel_img_query"
         android:layout_marginStart="@dimen/padding_10"
         android:textColor="@color/colorPrimaryDark"
         android:id="@+id/tv_name_qury_user"
@@ -31,7 +57,7 @@
         android:layout_height="wrap_content"
         tools:text="\@rahul26021999@gmail.com"
         android:textSize="10sp"
-        android:layout_toEndOf="@+id/img_person_queries"
+        android:layout_toEndOf="@+id/rel_img_query"
         android:layout_marginStart="@dimen/padding_10"
         android:textColor="@color/colorPrimaryDark"
         android:layout_below="@id/tv_name_qury_user"
@@ -75,7 +101,7 @@
         android:layout_height="wrap_content"
         android:text="View Replies"
         android:textSize="12sp"
-        android:layout_toEndOf="@+id/img_person_queries"
+        android:layout_toEndOf="@+id/rel_img_query"
         android:layout_marginStart="@dimen/padding_10"
         android:textColor="@color/colorPrimaryDark"
         android:layout_marginTop="5dp"
