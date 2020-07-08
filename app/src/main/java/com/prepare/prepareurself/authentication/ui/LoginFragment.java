@@ -13,6 +13,8 @@ import androidx.lifecycle.Observer;
 import androidx.lifecycle.ViewModelProviders;
 
 import android.text.TextUtils;
+import android.text.method.HideReturnsTransformationMethod;
+import android.text.method.PasswordTransformationMethod;
 import android.util.Log;
 import android.util.Patterns;
 import android.view.LayoutInflater;
@@ -63,6 +65,8 @@ public class LoginFragment extends Fragment implements View.OnClickListener{
 
     private AuthViewModel viewModel;
 
+    private ImageView showPassBtn;
+
     public LoginFragment() {
         // Required empty public constructor
     }
@@ -84,6 +88,7 @@ public class LoginFragment extends Fragment implements View.OnClickListener{
         arrow =v.findViewById(R.id.arrow);
         tvForgotPassword = v.findViewById(R.id.tv_forgot_password);
         signInButton = v.findViewById(R.id.sign_in_button);
+        showPassBtn = v.findViewById(R.id.show_pass_btn);
 
         btnLogin.setOnClickListener(this);
         signInButton.setOnClickListener(this);
@@ -91,6 +96,27 @@ public class LoginFragment extends Fragment implements View.OnClickListener{
         progressDialog=new ProgressDialog(this.getActivity());
         prefManager=new PrefManager(this.getActivity());
 
+        etPassword.setTransformationMethod(HideReturnsTransformationMethod.getInstance());
+        etPassword.setTransformationMethod(PasswordTransformationMethod.getInstance());
+
+        showPassBtn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                if(etPassword.getTransformationMethod().equals(PasswordTransformationMethod.getInstance())){
+                    showPassBtn.setImageResource(R.drawable.ic_eyebrow);
+
+                    //Show Password
+                    etPassword.setTransformationMethod(HideReturnsTransformationMethod.getInstance());
+                }
+                else{
+                    showPassBtn.setImageResource(R.drawable.ic_eyelash);
+
+                    //Hide Password
+                    etPassword.setTransformationMethod(PasswordTransformationMethod.getInstance());
+
+                }
+            }
+        });
 
         arrow.setOnClickListener(this);
 

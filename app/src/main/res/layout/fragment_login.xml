@@ -46,16 +46,48 @@
            android:inputType="textEmailAddress"
            android:textColorHighlight="@color/white" />
 
-       <EditText
-           android:id="@+id/et_password"
-           android:layout_width="match_parent"
-           android:layout_height="wrap_content"
-           android:hint="@string/password"
-           android:layout_marginLeft="20dp"
-           style="@style/EditTextViewStyleLoginRegister"
-           android:layout_marginRight="20dp"
-           android:layout_marginTop="15dp"
-           android:inputType="textPassword" />
+<!--       <EditText-->
+<!--           android:id="@+id/et_password"-->
+<!--           android:layout_width="match_parent"-->
+<!--           android:layout_height="wrap_content"-->
+<!--           android:hint="@string/password"-->
+<!--           android:layout_marginLeft="20dp"-->
+<!--           style="@style/EditTextViewStyleLoginRegister"-->
+<!--           android:layout_marginRight="20dp"-->
+<!--           android:layout_marginTop="15dp"-->
+<!--           android:visibility="gone"-->
+<!--           android:inputType="textPassword" />-->
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginRight="20dp"
+        android:layout_marginTop="15dp"
+        android:layout_marginLeft="20dp">
+
+        <EditText
+            android:id="@+id/et_password"
+            android:layout_width="fill_parent"
+            android:layout_height="45dp"
+            style="@style/EditTextViewStyleLoginRegister"
+            android:hint="@string/password"
+            android:inputType="textPassword"
+            android:paddingStart="@dimen/padding_10"
+            android:paddingTop="@dimen/padding_10"
+            android:paddingEnd="40dp"
+            android:paddingBottom="@dimen/padding_10"/>
+
+        <ImageView
+            android:id="@+id/show_pass_btn"
+            android:layout_width="40dp"
+            android:layout_height="40dp"
+            android:layout_alignParentEnd="true"
+            android:layout_centerVertical="true"
+            android:layout_marginEnd="5dp"
+            android:alpha=".5"
+            android:padding="5dp"
+            android:src="@drawable/ic_eyelash" />
+    </RelativeLayout>
 
        <com.google.android.material.button.MaterialButton
            android:id="@+id/btn_login"

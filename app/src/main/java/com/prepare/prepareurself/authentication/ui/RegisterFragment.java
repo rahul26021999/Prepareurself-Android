@@ -12,6 +12,8 @@ import androidx.lifecycle.Observer;
 import androidx.lifecycle.ViewModelProviders;
 
 import android.text.TextUtils;
+import android.text.method.HideReturnsTransformationMethod;
+import android.text.method.PasswordTransformationMethod;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -47,6 +49,7 @@ public class RegisterFragment extends Fragment implements View.OnClickListener {
     private ImageView arrow;
     private TextView termsAndConditions;
     private RegisterFragmentListener listener;
+    private ImageView showPassBtn;
 
     private String TermsUrl = "http://prepareurself.in/terms-and-conditions";
 
@@ -73,6 +76,7 @@ public class RegisterFragment extends Fragment implements View.OnClickListener {
         etRetypePassword =v.findViewById(R.id.et_repassword);
         btnRegister =v.findViewById(R.id.btn_register);
         termsAndConditions=v.findViewById(R.id.termsAndConditions);
+        showPassBtn = v.findViewById(R.id.show_pass_btn);
 
         btnRegister.setOnClickListener(this);
         termsAndConditions.setOnClickListener(this);
@@ -80,6 +84,25 @@ public class RegisterFragment extends Fragment implements View.OnClickListener {
 
         prefManager = new PrefManager(this.getActivity());
         dialog = new ProgressDialog(this.getActivity());
+
+        showPassBtn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                if(etRetypePassword.getTransformationMethod().equals(PasswordTransformationMethod.getInstance())){
+                    showPassBtn.setImageResource(R.drawable.ic_eyebrow);
+
+                    //Show Password
+                    etRetypePassword.setTransformationMethod(HideReturnsTransformationMethod.getInstance());
+                }
+                else{
+                    showPassBtn.setImageResource(R.drawable.ic_eyelash);
+
+                    //Hide Password
+                    etRetypePassword.setTransformationMethod(PasswordTransformationMethod.getInstance());
+
+                }
+            }
+        });
      
         return v;
 
