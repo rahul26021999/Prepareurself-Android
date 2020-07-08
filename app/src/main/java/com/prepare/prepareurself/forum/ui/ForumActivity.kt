@@ -193,6 +193,8 @@ class ForumActivity : BaseActivity(), QueriesAdapter.QueriesListener, ImageAttac
         currentPage = 1
         queriesList.clear()
 
+        forum_progress.visibility = View.VISIBLE
+
         vm.getQueries(pm.getString(Constants.JWTTOKEN),courseId,currentPage)
                 ?.observe(this, Observer {
                     if (it!=null){
@@ -207,6 +209,7 @@ class ForumActivity : BaseActivity(), QueriesAdapter.QueriesListener, ImageAttac
                     }else{
                         Utility.showToast(this,Constants.SOMETHINGWENTWRONG)
                     }
+                    forum_progress.visibility = View.GONE
                 })
     }
 

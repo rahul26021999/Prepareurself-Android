@@ -339,6 +339,8 @@ class RepliesActivity : BaseActivity(), RepliesAdapter.RepliesListener, ImageAtt
 
         repliesList.clear()
 
+        replies_progress.visibility = View.VISIBLE
+
         vm.getRelies(pm.getString(Constants.JWTTOKEN),queryId,1)
                 ?.observe(this, Observer {
                     if (it!=null){
@@ -353,6 +355,7 @@ class RepliesActivity : BaseActivity(), RepliesAdapter.RepliesListener, ImageAtt
                     }else{
                         Utility.showToast(this,Constants.SOMETHINGWENTWRONG)
                     }
+                    replies_progress.visibility = View.GONE
                 })
 
     }
