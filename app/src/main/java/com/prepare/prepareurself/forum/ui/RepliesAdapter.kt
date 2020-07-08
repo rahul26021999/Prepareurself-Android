@@ -4,7 +4,6 @@ import android.content.Context
 import android.graphics.Color
 import android.graphics.drawable.GradientDrawable
 import android.text.Html
-import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -13,12 +12,8 @@ import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
 import com.bumptech.glide.load.engine.DiskCacheStrategy
 import com.prepare.prepareurself.R
-import com.prepare.prepareurself.forum.data.OpenForumAttachment
 import com.prepare.prepareurself.forum.data.QueryModel
 import com.prepare.prepareurself.utils.Utility
-import kotlinx.android.synthetic.main.activity_chat_bot.*
-import kotlinx.android.synthetic.main.layout_topbar.*
-import kotlinx.android.synthetic.main.queries_adapter_layout.view.*
 import kotlinx.android.synthetic.main.replies_adapter_layout.view.*
 
 class RepliesAdapter(var context:Context, var listener:RepliesListener) : RecyclerView.Adapter<RepliesAdapter.RepliesViewHolder>(),QueryImageAttachmentAdapter.AttachmentListenet{
@@ -67,6 +62,7 @@ class RepliesAdapter(var context:Context, var listener:RepliesListener) : Recycl
 
     class RepliesViewHolder(itemView:View):RecyclerView.ViewHolder(itemView){
         fun bindView(q: QueryModel?, context: Context, listener: QueryImageAttachmentAdapter.AttachmentListenet, gradColor:String) {
+
             val query = Html.fromHtml(q?.reply).trim()
             if (query.isEmpty()){
                 itemView.tv_reply_answer.visibility = View.GONE
@@ -97,27 +93,23 @@ class RepliesAdapter(var context:Context, var listener:RepliesListener) : Recycl
                             .into(itemView.img_person_replies)
                 }
             }else{
-                if (gradColor != "") {
-                    itemView.rel_reply_img_placeholder.visibility = View.VISIBLE
-                    itemView.img_person_replies.visibility = View.GONE
-                    val list = gradColor.split(",".toRegex()).toTypedArray()
-                    Log.i("Colors", gradColor + list.size)
-                    val colors = IntArray(list.size)
-                    for (i in list.indices) {
-                        colors[i] = Color.parseColor(list[i])
-                    }
-                    val myGradBg = GradientDrawable(GradientDrawable.Orientation.LEFT_RIGHT, colors)
-                    myGradBg.cornerRadii = floatArrayOf(90f, 90f, 90f, 90f, 90f, 90f, 90f, 90f)
-                    itemView.rel_reply_img_placeholder.background = myGradBg
-                    var text = ""
-                    text = if (lastName!=null){
-                        "${firstName[0]}${lastName[0]}"
-                    }else{
-                        "${firstName[0]}"
-                    }
-
-                    itemView.tv_reply_img_placeholder.text = text
+                val colors = arrayOf("#dd310c","#5b0cdd", "#cd0cdd","#dd0c0c","#0cdd58","#0c75dd","#ba0cdd","#dd780c","#878085","#3e1b26")
+                val pos = (0..9).random()
+                itemView.rel_reply_img_placeholder.visibility = View.VISIBLE
+                itemView.img_person_replies.visibility = View.GONE
+                val shape = GradientDrawable()
+                shape.shape = GradientDrawable.OVAL
+                shape.cornerRadii = floatArrayOf(0f, 0f, 0f, 0f, 0f, 0f, 0f, 0f)
+                shape.setColor(Color.parseColor(colors[pos]))
+                itemView.rel_reply_img_placeholder.background = shape
+                var text = ""
+                text = if (lastName!=null){
+                    "${firstName[0]}${lastName[0]}"
+                }else{
+                    "${firstName[0]}"
                 }
+
+                itemView.tv_reply_img_placeholder.text = text
 
             }
 

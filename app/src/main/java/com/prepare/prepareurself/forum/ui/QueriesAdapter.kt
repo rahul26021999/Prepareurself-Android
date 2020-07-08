@@ -92,27 +92,23 @@ class QueriesAdapter(var context:Context,var listener:QueriesListener) : Recycle
                             .into(itemView.img_person_queries)
                 }
             }else{
-                if (gradColor != "") {
-                    itemView.rel_query_img_placeholder.visibility = View.VISIBLE
-                    itemView.img_person_queries.visibility = View.GONE
-                    val list = gradColor.split(",".toRegex()).toTypedArray()
-                    Log.i("Colors", gradColor + list.size)
-                    val colors = IntArray(list.size)
-                    for (i in list.indices) {
-                        colors[i] = Color.parseColor(list[i])
-                    }
-                    val myGradBg = GradientDrawable(GradientDrawable.Orientation.LEFT_RIGHT, colors)
-                    myGradBg.cornerRadii = floatArrayOf(90f, 90f, 90f, 90f, 90f, 90f, 90f, 90f)
-                    itemView.rel_query_img_placeholder.background = myGradBg
-                    var text = ""
-                    text = if (lastName!=null){
-                        "${firstName[0]}${lastName[0]}"
-                    }else{
-                        "${firstName[0]}"
-                    }
-
-                    itemView.tv_query_img_placeholder.text = text
+                val colors = arrayOf("#dd310c","#5b0cdd", "#cd0cdd","#dd0c0c","#0cdd58","#0c75dd","#ba0cdd","#dd780c","#878085","#3e1b26")
+                val pos = (0..9).random()
+                itemView.rel_query_img_placeholder.visibility = View.VISIBLE
+                itemView.img_person_queries.visibility = View.GONE
+                val shape = GradientDrawable()
+                shape.shape = GradientDrawable.OVAL
+                shape.cornerRadii = floatArrayOf(0f, 0f, 0f, 0f, 0f, 0f, 0f, 0f)
+                shape.setColor(Color.parseColor(colors[pos]))
+                itemView.rel_query_img_placeholder.background = shape
+                var text = ""
+                text = if (lastName!=null){
+                    "${firstName[0]}${lastName[0]}"
+                }else{
+                    "${firstName[0]}"
                 }
+
+                itemView.tv_query_img_placeholder.text = text
             }
             itemView.tv_name_qury_user.text = name
             itemView.tv_email_user.text = "@${q?.user?.email}"
