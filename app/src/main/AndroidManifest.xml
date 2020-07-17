@@ -8,6 +8,7 @@
     <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE" />
     <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
     <uses-permission android:name="android.permission.RECORD_AUDIO" />
+    <uses-permission android:name="android.permission.CAMERA" />
 
     <application
         android:name=".utils.BaseApplication"
@@ -19,8 +20,10 @@
         android:theme="@style/AppTheme"
         android:usesCleartextTraffic="true"
         tools:replace="android:allowBackup">
-        <activity android:name=".quizv2.ui.PracticeQuizActivity"
-            android:theme="@style/ProfileTheme"/>
+        <activity android:name=".forum.ui.ImagePickerActivity"></activity>
+        <activity
+            android:name=".quizv2.ui.PracticeQuizActivity"
+            android:theme="@style/ProfileTheme" />
         <activity
             android:name=".quizv2.ui.QuizDetailActivity"
             android:theme="@style/ProfileTheme" />
@@ -33,12 +36,12 @@
             android:theme="@style/ProfileTheme" />
         <activity
             android:name=".forum.ui.RepliesActivity"
-            android:windowSoftInputMode="stateAlwaysHidden|adjustResize"
-            android:theme="@style/ProfileTheme"/>
+            android:theme="@style/ProfileTheme"
+            android:windowSoftInputMode="stateAlwaysHidden|adjustResize" />
         <activity
             android:name=".forum.ui.ForumActivity"
             android:theme="@style/ProfileTheme"
-            android:windowSoftInputMode="stateAlwaysHidden|adjustResize"/>
+            android:windowSoftInputMode="stateAlwaysHidden|adjustResize" />
         <activity
             android:name=".courses.ui.activity.DemoActivity"
             android:label="@string/title_activity_demo"
@@ -192,6 +195,21 @@
                     android:scheme="install" />
             </intent-filter>
         </activity>
+
+        <activity
+            android:name="com.yalantis.ucrop.UCropActivity"
+            android:screenOrientation="portrait"
+            android:theme="@style/Theme.MaterialComponents.NoActionBar" />
+
+        <provider
+            android:name="androidx.core.content.FileProvider"
+            android:authorities="${applicationId}.provider"
+            android:exported="false"
+            android:grantUriPermissions="true">
+            <meta-data
+                android:name="android.support.FILE_PROVIDER_PATHS"
+                android:resource="@xml/file_path" />
+        </provider>
 
         <meta-data
             android:name="preloaded_fonts"

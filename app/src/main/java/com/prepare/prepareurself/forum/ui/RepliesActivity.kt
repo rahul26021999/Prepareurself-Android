@@ -1,15 +1,18 @@
 package com.prepare.prepareurself.forum.ui
 
+import android.Manifest
 import android.app.Activity
 import android.app.Dialog
 import android.content.ActivityNotFoundException
 import android.content.Intent
 import android.graphics.Bitmap
 import android.graphics.Color
+import android.graphics.drawable.Drawable
 import android.graphics.drawable.GradientDrawable
 import android.net.Uri
 import android.os.Bundle
 import android.provider.MediaStore
+import android.provider.Settings
 import android.text.Editable
 import android.text.Html
 import android.text.TextWatcher
@@ -23,8 +26,16 @@ import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.viewpager.widget.ViewPager
+import com.bumptech.glide.Glide
+import com.bumptech.glide.request.target.CustomTarget
+import com.bumptech.glide.request.transition.Transition
 import com.google.android.material.bottomsheet.BottomSheetBehavior
 import com.google.android.material.bottomsheet.BottomSheetDialog
+import com.karumi.dexter.Dexter
+import com.karumi.dexter.MultiplePermissionsReport
+import com.karumi.dexter.PermissionToken
+import com.karumi.dexter.listener.PermissionRequest
+import com.karumi.dexter.listener.multi.MultiplePermissionsListener
 import com.prepare.prepareurself.R
 import com.prepare.prepareurself.forum.data.QueryModel
 import com.prepare.prepareurself.forum.viewmodel.ForumViewModel
@@ -61,6 +72,9 @@ class RepliesActivity : BaseActivity(), RepliesAdapter.RepliesListener, ImageAtt
     private lateinit var queryModel: QueryModel
     private var courseName = ""
     private var gradColor = ""
+
+    val REQUEST_IMAGE_GALLERY = 100
+    val REQUEST_IMAGE_CAMERA = 99
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -228,6 +242,31 @@ class RepliesActivity : BaseActivity(), RepliesAdapter.RepliesListener, ImageAtt
     }
 
     private fun uploadImage() {
+
+        Dexter.withActivity(this)
+                .withPermissions(Manifest.permission.CAMERA, Manifest.permission.WRITE_EXTERNAL_STORAGE)
+                .withListener(object : MultiplePermissionsListener {
+                    override fun onPermissionsChecked(report: MultiplePermissionsReport) {
+                        if (report.areAllPermissionsGranted()) {
+                            showImagePickerOptions()
+                            //showImageDialog()
+                        }
+                        if (report.isAnyPermissionPermanentlyDenied) {
+                            showSettingsDialog()
+                        }
+                    }
+
+                    override fun onPermissionRationaleShouldBeShown(
+                            permissions: List<PermissionRequest?>?,
+                            token: PermissionToken
+                    ) {
+                        token.continuePermissionRequest()
+                    }
+                }).check()
+
+    }
+
+    private fun showImageDialog() {
         val options = arrayOf<CharSequence>("Take Photo", "Choose from Gallery")
 
         val builder= AlertDialog.Builder(this)
@@ -253,8 +292,123 @@ class RepliesActivity : BaseActivity(), RepliesAdapter.RepliesListener, ImageAtt
         builder.show()
     }
 
+    private fun showImagePickerOptions() {
+        ImagePickerActivity.showImagePickerOptions(this, object : ImagePickerActivity.PickerOptionListener {
+            override fun onTakeCameraSelected() {
+                launchCameraIntent()
+            }
+
+            override fun onChooseGallerySelected() {
+                launchGalleryIntent()
+            }
+        })
+    }
+
+    private fun launchCameraIntent() {
+        val intent = Intent(this@RepliesActivity, ImagePickerActivity::class.java)
+        intent.putExtra(
+                ImagePickerActivity.INTENT_IMAGE_PICKER_OPTION,
+                ImagePickerActivity.REQUEST_IMAGE_CAPTURE
+        )
+
+        // setting aspect ratio
+        intent.putExtra(ImagePickerActivity.INTENT_LOCK_ASPECT_RATIO, true)
+        intent.putExtra(ImagePickerActivity.INTENT_ASPECT_RATIO_X, 1) // 16x9, 1x1, 3:4, 3:2
+        intent.putExtra(ImagePickerActivity.INTENT_ASPECT_RATIO_Y, 1)
+
+        // setting maximum bitmap width and height
+        intent.putExtra(ImagePickerActivity.INTENT_SET_BITMAP_MAX_WIDTH_HEIGHT, true)
+        intent.putExtra(ImagePickerActivity.INTENT_BITMAP_MAX_WIDTH, 1000)
+        intent.putExtra(ImagePickerActivity.INTENT_BITMAP_MAX_HEIGHT, 1000)
+        startActivityForResult(intent, REQUEST_IMAGE_CAMERA)
+    }
+
+    private fun launchGalleryIntent() {
+        val intent = Intent(this@RepliesActivity, ImagePickerActivity::class.java)
+        intent.putExtra(
+                ImagePickerActivity.INTENT_IMAGE_PICKER_OPTION,
+                ImagePickerActivity.REQUEST_GALLERY_IMAGE
+        )
+
+        // setting aspect ratio
+        intent.putExtra(ImagePickerActivity.INTENT_LOCK_ASPECT_RATIO, true)
+        intent.putExtra(ImagePickerActivity.INTENT_ASPECT_RATIO_X, 1) // 16x9, 1x1, 3:4, 3:2
+        intent.putExtra(ImagePickerActivity.INTENT_ASPECT_RATIO_Y, 1)
+        startActivityForResult(intent, REQUEST_IMAGE_GALLERY)
+    }
+
+    private fun showSettingsDialog() {
+        val builder: AlertDialog.Builder = AlertDialog.Builder(this)
+        builder.setTitle("Grant Permissions")
+        builder.setMessage("This app needs permission to use this feature. You can grant them in app settings.")
+        builder.setPositiveButton("Go to Settings") { dialog, which ->
+            dialog.cancel()
+            openSettings()
+        }
+        builder.setNegativeButton(
+                "Cancel"
+        ) { dialog, which -> dialog.cancel() }
+        builder.show()
+
+    }
+
+    // navigating user to app settings
+    private fun openSettings() {
+        val intent = Intent(Settings.ACTION_APPLICATION_DETAILS_SETTINGS)
+        val uri = Uri.fromParts("package", packageName, null)
+        intent.data = uri
+        startActivityForResult(intent, 101)
+    }
+
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
         super.onActivityResult(requestCode, resultCode, data)
+
+        if (requestCode == REQUEST_IMAGE_GALLERY && resultCode == Activity.RESULT_OK) {
+            replies_progress.visibility = View.VISIBLE
+            bottomsheetView?.tv_attach_image?.isEnabled = false
+            val uri: Uri? = data?.getParcelableExtra("path")
+            try {
+                val `is`: InputStream? = uri?.let {
+                    contentResolver.openInputStream(it)
+                }
+                if (`is` != null) uploadImageToServer(getBytes(`is`))
+            } catch (e: IOException) {
+                e.printStackTrace()
+                replies_progress.visibility = View.GONE
+            }
+        }else{
+            replies_progress.visibility = View.GONE
+        }
+
+        if (requestCode == REQUEST_IMAGE_CAMERA && resultCode == Activity.RESULT_OK) {
+            replies_progress.visibility = View.VISIBLE
+            bottomsheetView?.tv_attach_image?.isEnabled = false
+            val uri: Uri? = data?.getParcelableExtra("path")
+            Glide.with(this).asBitmap().load(uri)
+                    .into(object : CustomTarget<Bitmap>(){
+                        override fun onResourceReady(resource: Bitmap, transition: Transition<in Bitmap>?) {
+                            //imageView.setImageBitmap(resource)
+                            val pathUri = getCapturedImageUri(resource)
+                            try {
+                                val `is`: InputStream? = pathUri?.let {
+                                    contentResolver.openInputStream(it)
+                                }
+                                if (`is` != null) uploadImageToServer(getBytes(`is`))
+                            } catch (e: IOException) {
+                                e.printStackTrace()
+                                replies_progress.visibility = View.GONE
+                            }
+                        }
+                        override fun onLoadCleared(placeholder: Drawable?) {
+                            // this is called when imageView is cleared on lifecycle call or for
+                            // some other reason.
+                            // if you are referencing the bitmap somewhere else too other than this imageView
+                            // clear it here as you can no longer have the bitmap
+                        }
+                    })
+        }else{
+            replies_progress.visibility = View.GONE
+        }
         if (requestCode == 101) {
             if (resultCode == Activity.RESULT_OK) {
                 replies_progress.visibility = View.VISIBLE
