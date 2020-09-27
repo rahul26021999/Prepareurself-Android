@@ -118,6 +118,7 @@
                         android:orientation="horizontal"
                         android:layout_marginStart="20dp"
                         android:padding="5dp"
+                        android:visibility="gone"
                         android:layout_marginTop="10dp"
                         android:background="@drawable/darkgrey_rounded_stroked_rectangle"
                         >
@@ -363,6 +364,7 @@
                             android:layout_marginEnd="20dp"
                             android:layout_gravity="end"
                             app:iconTint="@color/white"
+                            android:visibility="gone"
                             android:textColor="@color/white"
                             android:backgroundTint="@color/colorPrimaryDark"
                             android:id="@+id/bot_fab"
@@ -375,6 +377,7 @@
                         android:layout_marginStart="20dp"
                         android:layout_marginEnd="20dp"
                         android:paddingBottom="50dp"
+                        android:visibility="gone"
                         android:layout_marginTop="40dp"
                         android:orientation="vertical">
 
