@@ -18,6 +18,7 @@ import android.text.TextWatcher
 import android.util.Log
 import android.view.*
 import android.widget.FrameLayout
+import android.widget.ProgressBar
 import android.widget.TextView
 import androidx.appcompat.app.AlertDialog
 import androidx.lifecycle.Observer
@@ -77,6 +78,8 @@ class ForumActivity : BaseActivity(), QueriesAdapter.QueriesListener, ImageAttac
     private var courseName = ""
     private var gradColor = ""
 
+    private lateinit var bottomSheetDialog:BottomSheetDialog
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_forum2)
@@ -123,17 +126,17 @@ class ForumActivity : BaseActivity(), QueriesAdapter.QueriesListener, ImageAttac
     private fun initBottomSheet() {
 
         bottomsheetView = LayoutInflater.from(this).inflate(R.layout.ask_query_bottom_sheet, null)
-        val dialog = BottomSheetDialog(this, R.style.DialogStyle)
-        dialog.setContentView(bottomsheetView!!)
+        bottomSheetDialog = BottomSheetDialog(this, R.style.DialogStyle)
+        bottomSheetDialog.setContentView(bottomsheetView!!)
 
         btn_ask_query.setOnClickListener {
-            dialog.show()
+            bottomSheetDialog.show()
         }
 
         //initAttachmentAdapter()
 
-        dialog.setOnShowListener {
-            val d = dialog
+        bottomSheetDialog.setOnShowListener {
+            val d = bottomSheetDialog
             val bottomSheet = d.findViewById<FrameLayout>(R.id.design_bottom_sheet)
             val bottomSheetBehavior = BottomSheetBehavior.from(bottomSheet as View)
             bottomSheetBehavior.setState(BottomSheetBehavior.STATE_EXPANDED)
@@ -184,7 +187,7 @@ class ForumActivity : BaseActivity(), QueriesAdapter.QueriesListener, ImageAttac
                                         imageAttachedList.clear()
                                         imageNameList.clear()
                                         bottomsheetView!!.et_query_forum.setText("")
-                                        dialog.cancel()
+                                        bottomSheetDialog.cancel()
                                     }
                                 }else{
                                     Utility.showToast(this,Constants.SOMETHINGWENTWRONG)
@@ -205,7 +208,7 @@ class ForumActivity : BaseActivity(), QueriesAdapter.QueriesListener, ImageAttac
         currentPage = 1
         queriesList.clear()
 
-        forum_progress.visibility = View.VISIBLE
+        //forum_progress.visibility = View.VISIBLE
 
         vm.getQueries(pm.getString(Constants.JWTTOKEN),courseId,currentPage)
                 ?.observe(this, Observer {
@@ -221,7 +224,7 @@ class ForumActivity : BaseActivity(), QueriesAdapter.QueriesListener, ImageAttac
                     }else{
                         Utility.showToast(this,Constants.SOMETHINGWENTWRONG)
                     }
-                    forum_progress.visibility = View.GONE
+                    //forum_progress.visibility = View.GONE
                 })
     }
 
@@ -359,7 +362,8 @@ class ForumActivity : BaseActivity(), QueriesAdapter.QueriesListener, ImageAttac
         super.onActivityResult(requestCode, resultCode, data)
 
         if (requestCode == REQUEST_IMAGE_GALLERY && resultCode == Activity.RESULT_OK) {
-            forum_progress.visibility = View.VISIBLE
+          //  forum_progress.visibility = View.VISIBLE
+            showDialogProgress()
             bottomsheetView?.tv_attach_image?.isEnabled = false
             val uri: Uri? = data?.getParcelableExtra("path")
             try {
@@ -369,14 +373,18 @@ class ForumActivity : BaseActivity(), QueriesAdapter.QueriesListener, ImageAttac
                 if (`is` != null) uploadImageToServer(getBytes(`is`))
             } catch (e: IOException) {
                 e.printStackTrace()
-                forum_progress.visibility = View.GONE
+               // forum_progress.visibility = View.GONE
+                hideDialogProgress()
             }
-        }else{
-            forum_progress.visibility = View.GONE
         }
+//        else{
+//            forum_progress.visibility = View.GONE
+//            hideDialogProgress()
+//        }
 
         if (requestCode == REQUEST_IMAGE_CAMERA && resultCode == Activity.RESULT_OK) {
-            forum_progress.visibility = View.VISIBLE
+           // forum_progress.visibility = View.VISIBLE
+            showDialogProgress()
             bottomsheetView?.tv_attach_image?.isEnabled = false
             val uri: Uri? = data?.getParcelableExtra("path")
             Glide.with(this).asBitmap().load(uri)
@@ -391,7 +399,8 @@ class ForumActivity : BaseActivity(), QueriesAdapter.QueriesListener, ImageAttac
                                 if (`is` != null) uploadImageToServer(getBytes(`is`))
                             } catch (e: IOException) {
                                 e.printStackTrace()
-                                forum_progress.visibility = View.GONE
+                               // forum_progress.visibility = View.GONE
+                                hideDialogProgress()
                             }
                         }
                         override fun onLoadCleared(placeholder: Drawable?) {
@@ -401,13 +410,16 @@ class ForumActivity : BaseActivity(), QueriesAdapter.QueriesListener, ImageAttac
                             // clear it here as you can no longer have the bitmap
                         }
                     })
-        }else{
-            forum_progress.visibility = View.GONE
         }
+//        else{
+//            forum_progress.visibility = View.GONE
+//            hideDialogProgress()
+//        }
 
         if (requestCode == 101) {
             if (resultCode == Activity.RESULT_OK) {
-                forum_progress.visibility = View.VISIBLE
+              //  forum_progress.visibility = View.VISIBLE
+                showDialogProgress()
                 bottomsheetView?.tv_attach_image?.isEnabled = false
                 val uri: Uri = data?.data ?: Uri.parse("")
                 try {
@@ -415,14 +427,16 @@ class ForumActivity : BaseActivity(), QueriesAdapter.QueriesListener, ImageAttac
                     if (`is` != null) uploadImageToServer(getBytes(`is`))
                 } catch (e: IOException) {
                     e.printStackTrace()
-                    forum_progress.visibility = View.GONE
+                   // forum_progress.visibility = View.GONE
+                    hideDialogProgress()
                 }
             }
         }
 
         if (requestCode == 102){
             if (resultCode == Activity.RESULT_OK) {
-                forum_progress.visibility = View.VISIBLE
+              //  forum_progress.visibility = View.VISIBLE
+                showDialogProgress()
                 bottomsheetView?.tv_attach_image?.isEnabled = false
                 Log.d("camera_intent","$data ${data?.extras?.get("data")} abc ")
                 val photo = data?.extras?.get("data") as Bitmap
@@ -433,11 +447,24 @@ class ForumActivity : BaseActivity(), QueriesAdapter.QueriesListener, ImageAttac
                     if (`is` != null) uploadImageToServer(getBytes(`is`))
                 } catch (e: IOException) {
                     e.printStackTrace()
-                    forum_progress.visibility = View.GONE
+                  //  forum_progress.visibility = View.GONE
+                    hideDialogProgress()
                 }
             }
         }
 
+    }
+
+    private fun hideDialogProgress() {
+        if (bottomSheetDialog.isShowing){
+            bottomsheetView?.findViewById<ProgressBar>(R.id.dialog_progress)?.visibility = View.GONE
+        }
+    }
+
+    private fun showDialogProgress() {
+        if (bottomSheetDialog.isShowing){
+            bottomsheetView!!.dialog_progress?.visibility = View.VISIBLE
+        }
     }
 
     private fun getCapturedImageUri(photo: Bitmap): Uri? {
@@ -463,7 +490,8 @@ class ForumActivity : BaseActivity(), QueriesAdapter.QueriesListener, ImageAttac
                     }else{
                         Utility.showToast(this,"Cannot attach image at the moment")
                     }
-                    forum_progress.visibility = View.GONE
+                 //   forum_progress.visibility = View.GONE
+                    hideDialogProgress()
                     bottomsheetView?.tv_attach_image?.isEnabled = true
                 })
 

@@ -19,7 +19,7 @@ import android.text.TextWatcher
 import android.util.Log
 import android.view.*
 import android.widget.FrameLayout
-import android.widget.LinearLayout
+import android.widget.ProgressBar
 import android.widget.TextView
 import androidx.appcompat.app.AlertDialog
 import androidx.lifecycle.Observer
@@ -40,7 +40,6 @@ import com.prepare.prepareurself.R
 import com.prepare.prepareurself.forum.data.QueryModel
 import com.prepare.prepareurself.forum.viewmodel.ForumViewModel
 import com.prepare.prepareurself.utils.*
-import kotlinx.android.synthetic.main.activity_forum_content.*
 import kotlinx.android.synthetic.main.activity_replies.*
 import kotlinx.android.synthetic.main.ask_query_bottom_sheet.view.*
 import kotlinx.android.synthetic.main.fullimage_dialog_container.view.*
@@ -75,6 +74,8 @@ class RepliesActivity : BaseActivity(), RepliesAdapter.RepliesListener, ImageAtt
 
     val REQUEST_IMAGE_GALLERY = 100
     val REQUEST_IMAGE_CAMERA = 99
+
+    private lateinit var bottomSheetDialog:BottomSheetDialog
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -137,11 +138,11 @@ class RepliesActivity : BaseActivity(), RepliesAdapter.RepliesListener, ImageAtt
     private fun initBottomSheet() {
 
         bottomsheetView = LayoutInflater.from(this).inflate(R.layout.ask_query_bottom_sheet, null)
-        val dialog = BottomSheetDialog(this)
-        dialog.setContentView(bottomsheetView!!)
+        bottomSheetDialog = BottomSheetDialog(this)
+        bottomSheetDialog.setContentView(bottomsheetView!!)
 
         fab_reply.setOnClickListener {
-            dialog.show()
+            bottomSheetDialog.show()
         }
 
 
@@ -154,8 +155,8 @@ class RepliesActivity : BaseActivity(), RepliesAdapter.RepliesListener, ImageAtt
             uploadImage()
         }
 
-        dialog.setOnShowListener {
-            val d = dialog
+        bottomSheetDialog.setOnShowListener {
+            val d = bottomSheetDialog
             val bottomSheet = d.findViewById<FrameLayout>(R.id.design_bottom_sheet)
             val bottomSheetBehavior = BottomSheetBehavior.from(bottomSheet as View)
             bottomSheetBehavior.setState(BottomSheetBehavior.STATE_EXPANDED)
@@ -196,7 +197,7 @@ class RepliesActivity : BaseActivity(), RepliesAdapter.RepliesListener, ImageAtt
                                         imageAttachedList.clear()
                                         imageNameList.clear()
                                         bottomsheetView!!.et_query_forum.setText("")
-                                        dialog.cancel()
+                                        bottomSheetDialog.cancel()
                                     }
                                 }else{
                                     Utility.showToast(this,Constants.SOMETHINGWENTWRONG)
@@ -360,11 +361,24 @@ class RepliesActivity : BaseActivity(), RepliesAdapter.RepliesListener, ImageAtt
         startActivityForResult(intent, 101)
     }
 
+    private fun hideDialogProgress() {
+        if (bottomSheetDialog.isShowing){
+            bottomsheetView?.findViewById<ProgressBar>(R.id.dialog_progress)?.visibility = View.GONE
+        }
+    }
+
+    private fun showDialogProgress() {
+        if (bottomSheetDialog.isShowing){
+            bottomsheetView!!.dialog_progress?.visibility = View.VISIBLE
+        }
+    }
+
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
         super.onActivityResult(requestCode, resultCode, data)
 
         if (requestCode == REQUEST_IMAGE_GALLERY && resultCode == Activity.RESULT_OK) {
-            replies_progress.visibility = View.VISIBLE
+          //  replies_progress.visibility = View.VISIBLE
+            showDialogProgress()
             bottomsheetView?.tv_attach_image?.isEnabled = false
             val uri: Uri? = data?.getParcelableExtra("path")
             try {
@@ -374,14 +388,14 @@ class RepliesActivity : BaseActivity(), RepliesAdapter.RepliesListener, ImageAtt
                 if (`is` != null) uploadImageToServer(getBytes(`is`))
             } catch (e: IOException) {
                 e.printStackTrace()
-                replies_progress.visibility = View.GONE
+              //  replies_progress.visibility = View.GONE
+                hideDialogProgress()
             }
-        }else{
-            replies_progress.visibility = View.GONE
         }
 
         if (requestCode == REQUEST_IMAGE_CAMERA && resultCode == Activity.RESULT_OK) {
-            replies_progress.visibility = View.VISIBLE
+           // replies_progress.visibility = View.VISIBLE
+            showDialogProgress()
             bottomsheetView?.tv_attach_image?.isEnabled = false
             val uri: Uri? = data?.getParcelableExtra("path")
             Glide.with(this).asBitmap().load(uri)
@@ -396,7 +410,8 @@ class RepliesActivity : BaseActivity(), RepliesAdapter.RepliesListener, ImageAtt
                                 if (`is` != null) uploadImageToServer(getBytes(`is`))
                             } catch (e: IOException) {
                                 e.printStackTrace()
-                                replies_progress.visibility = View.GONE
+                              //  replies_progress.visibility = View.GONE
+                                hideDialogProgress()
                             }
                         }
                         override fun onLoadCleared(placeholder: Drawable?) {
@@ -406,12 +421,12 @@ class RepliesActivity : BaseActivity(), RepliesAdapter.RepliesListener, ImageAtt
                             // clear it here as you can no longer have the bitmap
                         }
                     })
-        }else{
-            replies_progress.visibility = View.GONE
         }
+
         if (requestCode == 101) {
             if (resultCode == Activity.RESULT_OK) {
-                replies_progress.visibility = View.VISIBLE
+               // replies_progress.visibility = View.VISIBLE
+                showDialogProgress()
                 bottomsheetView?.tv_attach_image?.isEnabled = false
                 val uri: Uri = data?.data ?: Uri.parse("")
                 try {
@@ -419,14 +434,16 @@ class RepliesActivity : BaseActivity(), RepliesAdapter.RepliesListener, ImageAtt
                     if (`is` != null) uploadImageToServer(getBytes(`is`))
                 } catch (e: IOException) {
                     e.printStackTrace()
-                    replies_progress.visibility = View.GONE
+                   // replies_progress.visibility = View.GONE
+                    hideDialogProgress()
                 }
             }
         }
 
         if (requestCode == 102){
             if (resultCode == Activity.RESULT_OK) {
-                replies_progress.visibility = View.VISIBLE
+              //  replies_progress.visibility = View.VISIBLE
+                showDialogProgress()
                 bottomsheetView?.tv_attach_image?.isEnabled = false
                 Log.d("camera_intent","$data ${data?.extras?.get("data")} abc ")
                 val photo = data?.extras?.get("data") as Bitmap
@@ -436,7 +453,8 @@ class RepliesActivity : BaseActivity(), RepliesAdapter.RepliesListener, ImageAtt
                     if (`is` != null) uploadImageToServer(getBytes(`is`))
                 } catch (e: IOException) {
                     e.printStackTrace()
-                    replies_progress.visibility = View.GONE
+                   // replies_progress.visibility = View.GONE
+                    hideDialogProgress()
                 }
             }
         }
@@ -467,7 +485,8 @@ class RepliesActivity : BaseActivity(), RepliesAdapter.RepliesListener, ImageAtt
                     }else{
                         Utility.showToast(this,"Cannot attach image at the moment")
                     }
-                    replies_progress.visibility = View.GONE
+                  //  replies_progress.visibility = View.GONE
+                    hideDialogProgress()
                     bottomsheetView?.tv_attach_image?.isEnabled = true
                 })
     }
@@ -493,7 +512,7 @@ class RepliesActivity : BaseActivity(), RepliesAdapter.RepliesListener, ImageAtt
 
         repliesList.clear()
 
-        replies_progress.visibility = View.VISIBLE
+       // replies_progress.visibility = View.VISIBLE
 
         vm.getRelies(pm.getString(Constants.JWTTOKEN),queryId,1)
                 ?.observe(this, Observer {
@@ -509,7 +528,7 @@ class RepliesActivity : BaseActivity(), RepliesAdapter.RepliesListener, ImageAtt
                     }else{
                         Utility.showToast(this,Constants.SOMETHINGWENTWRONG)
                     }
-                    replies_progress.visibility = View.GONE
+                //    replies_progress.visibility = View.GONE
                 })
 
     }

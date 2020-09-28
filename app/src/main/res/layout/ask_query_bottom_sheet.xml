@@ -22,10 +22,12 @@
 
             <EditText
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content"
+                android:layout_height="100dp"
                 android:id="@+id/et_query_forum"
                 android:hint="Enter your query here"
                 android:visibility="visible"
+                android:singleLine="false"
+                android:gravity="top|start"
                 android:fontFamily="@font/proximanovaregular"/>
 
 
@@ -33,7 +35,13 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:id="@+id/rv_image_attachment"
-                />
+                android:layout_marginBottom="@dimen/padding_10"/>
+
+            <ProgressBar
+                android:layout_width="25dp"
+                android:layout_height="25dp"
+                android:id="@+id/dialog_progress"
+                android:visibility="gone"/>
 
             <RelativeLayout
                 android:layout_width="match_parent"
@@ -74,6 +82,7 @@
                     android:id="@+id/tv_underline"
                     android:visibility="gone"
                     android:layout_toEndOf="@+id/tv_italic"/>
+
 
                 <TextView
                     android:layout_width="wrap_content"
