@@ -89,13 +89,13 @@ public class RegisterFragment extends Fragment implements View.OnClickListener {
             @Override
             public void onClick(View v) {
                 if(etRetypePassword.getTransformationMethod().equals(PasswordTransformationMethod.getInstance())){
-                    showPassBtn.setImageResource(R.drawable.ic_eyebrow);
+                    showPassBtn.setImageResource(R.drawable.ic_opened_eye);
 
                     //Show Password
                     etRetypePassword.setTransformationMethod(HideReturnsTransformationMethod.getInstance());
                 }
                 else{
-                    showPassBtn.setImageResource(R.drawable.ic_eyelash);
+                    showPassBtn.setImageResource(R.drawable.ic_hide);
 
                     //Hide Password
                     etRetypePassword.setTransformationMethod(PasswordTransformationMethod.getInstance());

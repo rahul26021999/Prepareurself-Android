@@ -103,13 +103,13 @@ public class LoginFragment extends Fragment implements View.OnClickListener{
             @Override
             public void onClick(View v) {
                 if(etPassword.getTransformationMethod().equals(PasswordTransformationMethod.getInstance())){
-                    showPassBtn.setImageResource(R.drawable.ic_eyebrow);
+                    showPassBtn.setImageResource(R.drawable.ic_opened_eye);
 
                     //Show Password
                     etPassword.setTransformationMethod(HideReturnsTransformationMethod.getInstance());
                 }
                 else{
-                    showPassBtn.setImageResource(R.drawable.ic_eyelash);
+                    showPassBtn.setImageResource(R.drawable.ic_hide);
 
                     //Hide Password
                     etPassword.setTransformationMethod(PasswordTransformationMethod.getInstance());

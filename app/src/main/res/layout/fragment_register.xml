@@ -86,20 +86,19 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginRight="20dp"
-        android:layout_marginTop="15dp"
         android:layout_marginLeft="20dp">
 
         <EditText
             android:id="@+id/et_repassword"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            style="@style/EditTextViewStyleLoginRegister"
             android:hint="@string/re_type_password"
             android:inputType="textPassword"
-            android:paddingStart="@dimen/padding_10"
-            android:paddingTop="@dimen/padding_10"
-            android:paddingEnd="40dp"
-            android:paddingBottom="@dimen/padding_10"/>
+            android:paddingStart="20dp"
+            style="@style/EditTextViewStyleLoginRegister"
+            android:paddingTop="17dp"
+            android:paddingEnd="20dp"
+            android:paddingBottom="17dp"/>
 
         <ImageView
             android:id="@+id/show_pass_btn"
@@ -110,7 +109,7 @@
             android:layout_marginEnd="5dp"
             android:alpha=".5"
             android:padding="5dp"
-            android:src="@drawable/ic_eyelash" />
+            android:src="@drawable/ic_hide" />
     </RelativeLayout>
 
     <com.google.android.material.button.MaterialButton

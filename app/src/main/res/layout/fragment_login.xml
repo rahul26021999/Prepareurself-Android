@@ -68,14 +68,14 @@
         <EditText
             android:id="@+id/et_password"
             android:layout_width="fill_parent"
-            android:layout_height="45dp"
+            android:layout_height="wrap_content"
             style="@style/EditTextViewStyleLoginRegister"
             android:hint="@string/password"
             android:inputType="textPassword"
-            android:paddingStart="@dimen/padding_10"
-            android:paddingTop="@dimen/padding_10"
-            android:paddingEnd="40dp"
-            android:paddingBottom="@dimen/padding_10"/>
+            android:paddingStart="20dp"
+            android:paddingTop="17dp"
+            android:paddingEnd="20dp"
+            android:paddingBottom="17dp"/>
 
         <ImageView
             android:id="@+id/show_pass_btn"
@@ -86,7 +86,7 @@
             android:layout_marginEnd="5dp"
             android:alpha=".5"
             android:padding="5dp"
-            android:src="@drawable/ic_eyelash" />
+            android:src="@drawable/ic_hide" />
     </RelativeLayout>
 
        <com.google.android.material.button.MaterialButton
