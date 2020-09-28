@@ -43,7 +43,6 @@ import com.prepare.prepareurself.utils.*
 import kotlinx.android.synthetic.main.activity_replies.*
 import kotlinx.android.synthetic.main.ask_query_bottom_sheet.view.*
 import kotlinx.android.synthetic.main.fullimage_dialog_container.view.*
-import kotlinx.android.synthetic.main.layout_topbar.*
 import okhttp3.MediaType
 import okhttp3.MultipartBody
 import okhttp3.RequestBody
@@ -105,7 +104,7 @@ class RepliesActivity : BaseActivity(), RepliesAdapter.RepliesListener, ImageAtt
 
         }
 
-        findViewById<TextView>(R.id.title).text = "$courseName Replies"
+        findViewById<TextView>(R.id.title).text = "$courseName Forum"
 
         backBtn.setOnClickListener {
             finish()
@@ -123,7 +122,7 @@ class RepliesActivity : BaseActivity(), RepliesAdapter.RepliesListener, ImageAtt
             }
             val myGradBg = GradientDrawable(GradientDrawable.Orientation.LEFT_RIGHT, colors)
             myGradBg.cornerRadii = floatArrayOf(0f, 0f, 0f, 0f, 0f, 0f, 0f, 0f)
-            rel_top_bar.background = myGradBg
+            rel_top.background = myGradBg
             fab_reply.setBackgroundColor(colors[0])
         }
     }

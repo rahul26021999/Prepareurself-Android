@@ -42,10 +42,10 @@ import com.prepare.prepareurself.utils.BaseActivity
 import com.prepare.prepareurself.utils.Constants
 import com.prepare.prepareurself.utils.PrefManager
 import com.prepare.prepareurself.utils.Utility
+import kotlinx.android.synthetic.main.activity_forum2.*
 import kotlinx.android.synthetic.main.activity_forum_content.*
 import kotlinx.android.synthetic.main.ask_query_bottom_sheet.view.*
 import kotlinx.android.synthetic.main.fullimage_dialog_container.view.*
-import kotlinx.android.synthetic.main.layout_topbar.*
 import okhttp3.MediaType
 import okhttp3.MultipartBody
 import okhttp3.RequestBody
@@ -118,7 +118,7 @@ class ForumActivity : BaseActivity(), QueriesAdapter.QueriesListener, ImageAttac
             }
             val myGradBg = GradientDrawable(GradientDrawable.Orientation.LEFT_RIGHT, colors)
             myGradBg.cornerRadii = floatArrayOf(0f, 0f, 0f, 0f, 0f, 0f, 0f, 0f)
-            rel_top_bar.background = myGradBg
+            rel_top.background = myGradBg
             btn_ask_query.setBackgroundColor(colors[0])
         }
     }
