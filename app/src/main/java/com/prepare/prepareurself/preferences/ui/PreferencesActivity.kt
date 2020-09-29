@@ -1,13 +1,15 @@
 package com.prepare.prepareurself.preferences.ui
 
 import android.app.Dialog
+import android.graphics.Color
+import android.os.Build
 import android.os.Bundle
 import android.text.Editable
 import android.text.TextWatcher
 import android.util.Log
 import android.view.*
-import android.widget.EditText
 import android.widget.TextView
+import androidx.fragment.app.DialogFragment
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.LinearLayoutManager
@@ -23,6 +25,7 @@ import kotlinx.android.synthetic.main.choose_pref_dialog_layout.view.*
 import kotlinx.android.synthetic.main.layout_topbar.*
 import kotlinx.android.synthetic.main.layout_topbar.view.*
 
+
 class PreferencesActivity : BaseActivity(),PreferenceRvAdapter.PrefListener,ChoosePrefAdapter.ChoosePrefListener {
 
     private lateinit var adapter: PreferenceRvAdapter
@@ -37,6 +40,7 @@ class PreferencesActivity : BaseActivity(),PreferenceRvAdapter.PrefListener,Choo
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_preferences)
+
 
         vm = ViewModelProvider(this)[PreferenceViewModel::class.java]
 
@@ -104,7 +108,7 @@ class PreferencesActivity : BaseActivity(),PreferenceRvAdapter.PrefListener,Choo
 
     private fun showAddPrefDialog() {
 
-        chooseDialog = Dialog(this,android.R.style.Theme_Light)
+        chooseDialog = Dialog(this,R.style.DialogTheme)
 
         chooseDialog.requestWindowFeature(Window.FEATURE_NO_TITLE)
         val view = LayoutInflater.from(this).inflate(R.layout.choose_pref_dialog_layout, null)
