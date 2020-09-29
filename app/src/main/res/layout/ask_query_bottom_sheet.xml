@@ -22,7 +22,8 @@
 
             <EditText
                 android:layout_width="match_parent"
-                android:layout_height="100dp"
+                android:layout_height="wrap_content"
+                android:minHeight="100dp"
                 android:id="@+id/et_query_forum"
                 android:hint="Enter your query here"
                 android:visibility="visible"

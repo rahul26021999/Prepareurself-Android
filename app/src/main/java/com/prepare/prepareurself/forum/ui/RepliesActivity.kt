@@ -137,7 +137,7 @@ class RepliesActivity : BaseActivity(), RepliesAdapter.RepliesListener, ImageAtt
     private fun initBottomSheet() {
 
         bottomsheetView = LayoutInflater.from(this).inflate(R.layout.ask_query_bottom_sheet, null)
-        bottomSheetDialog = BottomSheetDialog(this)
+        bottomSheetDialog = BottomSheetDialog(this,R.style.DialogStyle)
         bottomSheetDialog.setContentView(bottomsheetView!!)
 
         fab_reply.setOnClickListener {

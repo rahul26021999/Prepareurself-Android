@@ -37,7 +37,7 @@
         <activity
             android:name=".forum.ui.RepliesActivity"
             android:theme="@style/courseDetailsTheme"
-            android:windowSoftInputMode="stateAlwaysHidden|adjustResize" />
+            android:windowSoftInputMode="adjustResize|stateAlwaysHidden"/>
         <activity
             android:name=".forum.ui.ForumActivity"
             android:theme="@style/courseDetailsTheme"
