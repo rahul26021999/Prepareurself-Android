@@ -449,7 +449,7 @@ public class CourseDetailActivity extends BaseActivity implements View.OnClickLi
                         public void onChanged(AddToUserPrefResponseModel addToUserPrefResponseModel) {
 
                             if (addToUserPrefResponseModel!=null){
-                                Utility.showToast(CourseDetailActivity.this,addToUserPrefResponseModel.getMessage());
+                                Utility.showToast(CourseDetailActivity.this,"Course added to preference");
                                 Glide.with(CourseDetailActivity.this).load(R.drawable.ic_check_black_24dp).into(pref_image);
                                 tv_pref_name.setText("Added as preference");
                             }else{

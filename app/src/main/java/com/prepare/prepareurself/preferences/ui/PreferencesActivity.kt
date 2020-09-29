@@ -94,7 +94,7 @@ class PreferencesActivity : BaseActivity(),PreferenceRvAdapter.PrefListener,Choo
             vm.updatePref(pm.getString(Constants.JWTTOKEN),sublist)
                     ?.observe(this, Observer {
                         if (it!=null){
-                            Utility.showToast(this,it.message)
+                            Utility.showToast(this,"Preferences updated successfully")
                         }else{
                             Utility.showToast(this, Constants.SOMETHINGWENTWRONG)
                         }
